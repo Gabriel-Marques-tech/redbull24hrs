@@ -118,7 +118,7 @@ _Liste os RF numerados de forma objetiva e verificável. Cada RF deve poder ser 
 
 _Numere e redija as RN de forma implementável e testável. Toda RN deve ter pelo menos um teste automatizado associado a partir da sprint 3._
 
-Regras de negócio são um conjunto de regras que ditam o funcionamento de um sistema, atuando como referencia tecnica para limitar o escopo de algumas funcionalidades
+Regras de negócio são declarações que definem ou restringem aspectos do funcionamento de um sistema, refletindo políticas, condições e obrigações do domínio de negócio. Devem ser implementáveis e testáveis, servindo como referencial técnico para o desenvolvimento e validação da aplicação.
 
 | ID   | Descrição                                                                                                                                                                                                                                                                                                  | RF associado |
 | ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
