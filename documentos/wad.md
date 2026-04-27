@@ -170,6 +170,7 @@ _Preencha os 8 eixos. Cada eixo deve ter ao menos um RNF verificável (com métr
 _Matriz de cobertura mostrando quais RN e endpoints implementam cada RF._
 
 A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcional às suas Regras de Negócio e ao contrato de comunicação com o servidor, definindo o método HTTP e o endpoint responsável por executar aquela funcionalidade. Essa estrutura permite identificar onde cada RF é implementado na API, quais restrições de negócio governam sua execução e como as requisições são enviadas ao servidor.
+A definição dos endpoints e métodos HTTP presentes na matriz segue os princípios da arquitetura REST (Representational State Transfer), segundo a qual "cada recurso é identificado por um identificador de recurso uniforme (URI) e o método HTTP define a natureza da operação realizada sobre ele" (FIELDING, 2000). Dessa forma, a combinação de método e endpoint constitui o contrato de comunicação entre cliente e servidor, permitindo mapear com precisão onde cada Requisito Funcional é executado na API.
 
 | RF    | RN associadas | Endpoint    | Método |
 | ----- | ------------- | ----------- | ------ |
