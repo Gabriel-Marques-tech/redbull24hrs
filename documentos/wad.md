@@ -169,7 +169,7 @@ _Preencha os 8 eixos. Cada eixo deve ter ao menos um RNF verificável (com métr
 
 _Matriz de cobertura mostrando quais RN e endpoints implementam cada RF._
 
-Esta matriz é responsavel por associar os requesitos funcionais as suas respectivas regras de negocio e a um metodo HTTP com um endpoint, ou seja organizando em que url exata será executado o metodo de acordo com a regra de negocios, a matriz possibilita mapear onde o RF é implementado, a quais regras de negocio ele se associa, e como essa ação é enviada para o servidor
+A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcional às suas Regras de Negócio e ao contrato de comunicação com o servidor, definindo o método HTTP e o endpoint responsável por executar aquela funcionalidade. Essa estrutura permite identificar onde cada RF é implementado na API, quais restrições de negócio governam sua execução e como as requisições são enviadas ao servidor.
 
 | RF    | RN associadas | Endpoint    | Método |
 | ----- | ------------- | ----------- | ------ |
