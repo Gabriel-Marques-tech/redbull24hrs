@@ -54,11 +54,17 @@
 
 *Posicione aqui o modelo de 5 Forças de Porter para sustentar o contexto da indústria.*
 
-### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
+### 2.1.2. Análise SWOT da Instituição Parceira
 
-*Preencha com até 100 palavras – sem necessidade de fonte*
+<div align="center">
+  Figura X: Análise SWOT <br><br>
+  <img src="../assets/analise_SWOT.png" width="100%" alt="Análise SWOT - Red Bull"><br>
+  <sub> Fonte: Material produzido pelos autores (2026) </sub><br><br>
+</div>
 
-*Apresente uma visão geral da situação do parceiro com base na matriz SWOT (forças, fraquezas, oportunidades e ameaças). Foque na relação com os concorrentes e o posicionamento da instituição.*
+A Red Bull consolida sua liderança global por meio de sua identidade de marca reconhecida — expressa em seu visual autêntico e no slogan "Red Bull te dá aaasas" — e de uma marca global consolidada, presente em 178 países, aliada a um marketing extremamente disruptivo e alto valor agregado, de maneira a solidificar sua liderança no setor de bebidas energéticas do mundo[¹](#8-referências-sprints). Entretanto, apesar de suas forças, o portfólio extremamente restrito, fechando-se a um público-alvo jovem-adulto, e seu preço elevado, limitam sua acessibilidade. Além disso, quando ingerido em grandes quantidades, o *Core Product* da empresa apresenta riscos à saúde associados ao alto teor de cafeína e taurina, sendo alvo direto de restrições regulatórias em alguns países, como a França[²](#8-referências-sprints), que chegou a proibir a bebida por anos.
+
+Para contornar isso, uma possível expansão em mercados emergentes — como o mercado do bem-estar e da saúde[³](#8-referências-sprints), um dos que mais atraem o público jovem-adulto — representa uma oportunidade relevante. Somado a isso, o fortalecimento de parcerias estratégicas, que vão além do esporte de alto rendimento e se estendem à música, aos e-sports e à cultura urbana, poderia ampliar significativamente o alcance da marca junto ao seu público-alvo. Por fim, o crescente rigor regulatório[⁴](#8-referências-sprints) e a intensificação da concorrência exigem adaptação contínua para sustentar o posicionamento premium da Red Bull. Paradoxalmente, esse próprio alto valor agregado pode se tornar uma ameaça em contextos de retração econômica, tornando a marca vulnerável à substituição por concorrentes com preços mais acessíveis — especialmente em mercados emergentes onde a sensibilidade ao preço é maior.
 
 ### 2.1.3. Solução (sprints 1 a 5)
 
@@ -366,15 +372,15 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 *Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras*
 
-# <a name="c8"></a>8. Referências (sprints 1 a 5)
+# <a name="c8"></a>8. Referências
 
-_Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
+<br> uFoodin. Disponível em: https://ufoodin.com/pt/top-10-energy-drink-brands/. Acesso em: 27 abr. 2026 <br>
 
-LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
-SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
+<br> Reuters. Disponível em: https://www.reuters.com/article/economy/france-ends-12-year-ban-on-energy-drink-red-bull-idUSL15769647/. Acesso em: 27 abr. 2026 <br>
 
-INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
-SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
+<br> VALOR. Globo. Disponível em: https://valor.globo.com/patrocinado/dino/noticia/2026/01/30/jovens-priorizam-bemestar-e-movimentam-mercado-de-wellness-1.ghtml. Acesso em: 27 abr. 2026 <br>
+
+<br> E.M. Foco. Disponível em: https://www.em.com.br/emfoco/2026/03/10/supermercados-terao-que-separar-energeticos-dos-refrigerantes-e-nova-regra-do-governo-ja-comeca-a-mudar-a-organizacao-das-prateleiras/. Acesso em: 27 abr. 2026 <br>
 
 # <a name="c9"></a>Anexos
 
