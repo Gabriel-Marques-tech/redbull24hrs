@@ -118,6 +118,8 @@ _Liste os RF numerados de forma objetiva e verificável. Cada RF deve poder ser 
 
 _Numere e redija as RN de forma implementável e testável. Toda RN deve ter pelo menos um teste automatizado associado a partir da sprint 3._
 
+Regras de negócio são um conjunto de regras que ditam o funcionamento de um sistema, atuando como referencia tecnica para limitar o escopo de algumas funcionalidades
+
 | ID   | Descrição                                                                                                                                                                                                                                                                                                  | RF associado |
 | ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
 | RN01 | Um corredor só pode iniciar um turno se não possuir outro turno com status "em andamento" em nenhuma das esteiras do evento.                                                                                                                                                                               | RF001        |
