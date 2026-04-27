@@ -27,7 +27,7 @@
 
 [7. Conclusões e trabalhos futuros](#c7)
 
-[8. Referências](c#8-referências)
+[8. Referências](#8-referências)
 
 [Anexos](#c9)
 
