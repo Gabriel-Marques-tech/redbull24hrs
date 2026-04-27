@@ -27,7 +27,7 @@
 
 [7. Conclusões e trabalhos futuros](#c7)
 
-[8. Referências](c#8)
+[8. Referências](c#8-referências)
 
 [Anexos](#c9)
 
@@ -57,14 +57,14 @@
 ### 2.1.2. Análise SWOT da Instituição Parceira
 
 <div align="center">
-  Figura X: Análise SWOT <br><br>
-  <img src="../assets/analise_SWOT.png" width="100%" alt="Análise SWOT - Red Bull"><br>
+  Figura 2: Análise SWOT <br><br>
+  <img src="../assets/analise_SWOT.png" width="85%" alt="Análise SWOT - Red Bull"><br>
   <sub> Fonte: Material produzido pelos autores (2026) </sub><br><br>
 </div>
 
-A Red Bull consolida sua liderança global por meio de sua identidade de marca reconhecida — expressa em seu visual autêntico e no slogan "Red Bull te dá aaasas" — e de uma marca global consolidada, presente em 178 países, aliada a um marketing extremamente disruptivo e alto valor agregado, de maneira a solidificar sua liderança no setor de bebidas energéticas do mundo[¹](#8-referências-sprints). Entretanto, apesar de suas forças, o portfólio extremamente restrito, fechando-se a um público-alvo jovem-adulto, e seu preço elevado, limitam sua acessibilidade. Além disso, quando ingerido em grandes quantidades, o *Core Product* da empresa apresenta riscos à saúde associados ao alto teor de cafeína e taurina, sendo alvo direto de restrições regulatórias em alguns países, como a França[²](#8-referências-sprints), que chegou a proibir a bebida por anos.
+A Red Bull consolida sua liderança global por meio de sua identidade de marca reconhecida — expressa em seu visual autêntico e no slogan "Red Bull te dá aaasas" — e de uma marca global consolidada, presente em 178 países, aliada a um marketing extremamente disruptivo e alto valor agregado, de maneira a solidificar sua liderança no setor de bebidas energéticas do mundo[¹](#8-referências). Entretanto, apesar de suas forças, o portfólio extremamente restrito, fechando-se a um público-alvo jovem-adulto, e seu preço elevado, limitam sua acessibilidade. Além disso, quando ingerido em grandes quantidades, o *Core Product* da empresa apresenta riscos à saúde associados ao alto teor de cafeína e taurina, sendo alvo direto de restrições regulatórias em alguns países, como a França[²](#8-referências), que chegou a proibir a bebida por anos.
 
-Para contornar isso, uma possível expansão em mercados emergentes — como o mercado do bem-estar e da saúde[³](#8-referências-sprints), um dos que mais atraem o público jovem-adulto — representa uma oportunidade relevante. Somado a isso, o fortalecimento de parcerias estratégicas, que vão além do esporte de alto rendimento e se estendem à música, aos e-sports e à cultura urbana, poderia ampliar significativamente o alcance da marca junto ao seu público-alvo. Por fim, o crescente rigor regulatório[⁴](#8-referências-sprints) e a intensificação da concorrência exigem adaptação contínua para sustentar o posicionamento premium da Red Bull. Paradoxalmente, esse próprio alto valor agregado pode se tornar uma ameaça em contextos de retração econômica, tornando a marca vulnerável à substituição por concorrentes com preços mais acessíveis — especialmente em mercados emergentes onde a sensibilidade ao preço é maior.
+Para contornar isso, uma possível expansão em mercados emergentes — como o mercado do bem-estar e da saúde[³](#8-referências), um dos que mais atraem o público jovem-adulto — representa uma oportunidade relevante. Somado a isso, o fortalecimento de parcerias estratégicas, que vão além do esporte de alto rendimento e se estendem à música, aos e-sports e à cultura urbana, poderia ampliar significativamente o alcance da marca junto ao seu público-alvo. Por fim, o crescente rigor regulatório[⁴](#8-referências) e a intensificação da concorrência exigem adaptação contínua para sustentar o posicionamento premium da Red Bull. Paradoxalmente, esse próprio alto valor agregado pode se tornar uma ameaça em contextos de retração econômica, tornando a marca vulnerável à substituição por concorrentes com preços mais acessíveis — especialmente em mercados emergentes onde a sensibilidade ao preço é maior.
 
 ### 2.1.3. Solução (sprints 1 a 5)
 
