@@ -393,6 +393,8 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 _Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
 
+BUSINESS RULES GROUP. Business Rules Manifesto: the principles of rule independence. Version 2.0. [S. l.]: Business Rules Group, 2003 Disponível em: https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf. Acesso em: 27 abr. 2026.
+
 LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
 SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
 
