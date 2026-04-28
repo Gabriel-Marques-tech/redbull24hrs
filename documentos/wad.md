@@ -72,6 +72,12 @@ Os fornecedores para a construção deste projeto incluem provedores de hospedag
 
 Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável pela operação do evento. Por se tratar de um projeto customizado e de uso interno exclusivo para uma de suas experiências proprietárias, a Red Bull atua como a única compradora desta solução específica. Isso eleva substancialmente o seu poder de barganha. O cliente tem controle total sobre os requisitos de sucesso do MVP, exigindo que o sistema prove ser superior ao método atual da prancheta em consistência e redução de erros. Se a aplicação não entregar a eficiência operacional esperada, a organização pode facilmente descartar a ferramenta e retornar ao método manual sem grandes prejuízos, ou simplesmente buscar outra agência desenvolvedora. Dessa forma, a poder de negociação do cliente é alto, refletindo sua posição dominante na definição das regras do projeto e na validação final da entrega.
 
+<div align="center">
+  <sub>Imagem 1 - FORÇAS DE PORTER</sub><br>
+  <img src="../assets/forcas_de_porter .png" width="100%" alt="forças de porter"><br>
+  <sup>Fonte: Autores</sup>
+</div>
+
 ### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
 *Preencha com até 100 palavras – sem necessidade de fonte*
