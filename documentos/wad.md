@@ -357,6 +357,10 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 A estrutura de requisitos apresentada acima foi desenhada para transformar a dinâmica complexa do evento Red Bull 24 Horas em um fluxo digital ágil e seguro.
 Com esta base sólida, o projeto segue para a fase de implementação, onde cada ID listado servirá como critério de aceitação para garantir que a apuração final dos quilômetros seja 100% confiável, rastreável e transparente para ambas as equipes.
 
+| ID    | Descrição | Prioridade | Status       |
+|-------|-----------|------------|--------------|
+| RF001 | ...       | Alta       | Implementado |
+| RF002 | ...       | Média      | Planejado    |
 
 ### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
