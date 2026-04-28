@@ -172,9 +172,32 @@ _Matriz de cobertura mostrando quais RN e endpoints implementam cada RF._
 A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcional às suas Regras de Negócio e ao contrato de comunicação com o servidor, definindo o método HTTP e o endpoint responsável por executar aquela funcionalidade. Essa estrutura permite identificar onde cada RF é implementado na API, quais restrições de negócio governam sua execução e como as requisições são enviadas ao servidor.
 A definição dos endpoints e métodos HTTP presentes na matriz segue os princípios da arquitetura REST (Representational State Transfer), segundo a qual "cada recurso é identificado por um identificador de recurso uniforme (URI) e o método HTTP define a natureza da operação realizada sobre ele" (FIELDING, 2000). Dessa forma, a combinação de método e endpoint constitui o contrato de comunicação entre cliente e servidor, permitindo mapear com precisão onde cada Requisito Funcional é executado na API.
 
-| RF    | RN associadas | Endpoint    | Método |
-| ----- | ------------- | ----------- | ------ |
-| RF001 | RN01, RN02    | `/usuarios` | POST   |
+| RF    | RN associadas | Endpoint                                                    | Método |
+| ----- | ------------- | ----------------------------------------------------------- | ------ |
+| RF001 | RN01, RN02    | `/shifts`                                                   | POST   |
+| RF002 | RN03          | `/shifts/{id}/checkpoints`                                  | POST   |
+| RF003 | RN04          | `/shifts/{id}/checkpoints`                                  | POST   |
+| RF004 | RN05          | `/shifts/{id}/finish`                                       | PATCH  |
+| RF005 | RN06          | `/shifts/{id}/finish`                                       | PATCH  |
+| RF006 | RN07          | `/shifts/{id}/stats`                                        | GET    |
+| RF007 | RN08          | `/shifts/{id}/hot-swap`                                     | POST   |
+| RF008 | RN09          | `/teams/{id}/mileage`                                       | GET    |
+| RF009 | RN10          | `/events/{id}/metrics`                                      | GET    |
+| RF010 | RN11          | `/events/{id}/dashboard`                                    | GET    |
+| RF011 | RN12          | `/treadmills/{id}/status`                                   | GET    |
+| RF012 | RN13          | `/events/{id}/history`                                      | GET    |
+| RF013 | RN14          | `/events/{id}/scoreboard`                                   | GET    |
+| RF014 | RN15          | `/teams`                                                    | POST   |
+| RF015 | RN16          | `/runners`                                                  | POST   |
+| RF016 | RN17          | `/teams/{id}/validate`                                      | GET    |
+| RF017 | RN18          | `/events`                                                   | POST   |
+| RF018 | RN19          | `/treadmills`                                               | GET    |
+| RF019 | RN20          | `/teams`                                                    | GET    |
+| RF020 | RN21          | `/runners?available=true`                                   | GET    |
+| RF021 | RN22          | `/events/{id}/history?team={id}&treadmill={id}&runner={id}` | GET    |
+| RF022 | RN23, RN24    | `/records/{id}`                                             | PATCH  |
+| RF023 | RN25          | `/events/{id}/inconsistencies`                              | GET    |
+| RF024 | RN26          | `/events/{id}/export`                                       | GET    |
 
 ## 3.2. Arquitetura (sprints 1 a 5)
 
