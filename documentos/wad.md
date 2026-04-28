@@ -223,7 +223,7 @@ A matriz de riscos é uma ferramenta fundamental para identificar, analisar e pr
 
 <div align="center">
   <sub>Imagem X - Matriz de ameaças</sub><br>
-  <img src="./assets/negocios/ameacas.png" width="100%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
+  <img src="./assets/negocios/Matriz de Riscos/Matriz-de-Riscos.png" width="80%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
@@ -286,7 +286,7 @@ No contexto do desenvolvimento de soluções tecnológicas, as oportunidades sã
 
 <div align="center">
   <sub>Imagem X - Matriz de Oportunidades</sub><br>
-  <img src="./assets/negocios/oportunidades.png" width="100%" alt="Matriz de oportunidades do projeto Red Bull 24 Horas"><br>
+  <img src="./assets/negocios/Matriz de Riscos/Matriz-de-Oportunidades.png" width="80%" alt="Matriz de oportunidades do projeto Red Bull 24 Horas"><br>
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
