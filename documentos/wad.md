@@ -105,16 +105,16 @@ A matriz de riscos é uma ferramenta fundamental para identificar, analisar e pr
 ### 4. Interface complexa para uso sob pressão
 
 * Categoria: UX / usabilidade
-* Impacto: alto | Probabilidade: 50%
+* Impacto: muito alto | Probabilidade: 50%
 * Descrição: trocas de atletas ocorrem em até 15 segundos e o auditor precisa registrar rapidamente. Uma interface com muitos cliques ou campos pode atrasar o registro e gerar inconsistências no cronograma do evento.
-* Plano de ação: priorizar UX minimalista com fluxo de registro em poucos passos, botões grandes adequados ao uso em iPad, atalhos para ações frequentes e testes de usabilidade simulando condições reais de pressão.
+* Plano de ação: priorizar UX minimalista com fluxo de registro em poucos passos, botões grandes adequados ao uso em tablet, atalhos para ações frequentes e testes de usabilidade simulando condições reais de pressão.
 
-### 5. Falha na esteira durante o uso
+### 5. Falha de uma esteira durante o uso
 
 * Categoria: operacional / regra de negócio
 * Impacto: alto | Probabilidade: 30%
-* Descrição: caso a esteira pare de funcionar durante uma corrida, é necessário recuperar o último checkpoint registrado e calcular a quilometragem proporcional, processo que precisa estar previsto na aplicação para não comprometer o resultado da equipe afetada.
-* Plano de ação: implementar checkpoints automáticos a cada 5 minutos com cálculo baseado em pace médio, permitindo recuperação confiável em casos de falha técnica da esteira.
+* Descrição: caso uma esteira pare de funcionar durante a competição, é necessário recuperar o último checkpoint registrado e calcular a quilometragem proporcional, processo que precisa estar previsto na aplicação para não comprometer o resultado da equipe afetada.
+* Plano de ação: implementar checkpoints a cada 5 minutos, permitindo recuperação confiável em casos de falha técnica da esteira.
 
 ### 6. Resistência à adoção pela equipe operacional
 
@@ -123,21 +123,14 @@ A matriz de riscos é uma ferramenta fundamental para identificar, analisar e pr
 * Descrição: a equipe está habituada à prancheta física e pode resistir à mudança para o sistema digital, especialmente se a interface não for intuitiva ou se houver receio de falhas tecnológicas em momento crítico.
 * Plano de ação: envolver os auditores em testes desde as sprints iniciais, produzir guia rápido de uso de uma página e realizar treinamento prévio simulando cenários reais do evento.
 
-### 7. Inconsistência entre registros das duas esteiras de uma mesma equipe
-
-* Categoria: regra de negócio
-* Impacto: alto | Probabilidade: 30%
-* Descrição: como cada equipe utiliza duas esteiras simultaneamente para revezamento, registros sobrepostos ou conflitantes podem gerar duplicidade ou perda na contabilização da quilometragem total.
-* Plano de ação: estruturar o modelo de dados com identificação clara de esteira, equipe e corredor, e implementar validações que impeçam registros conflitantes (ex: mesmo corredor em duas esteiras simultaneamente).
-
-### 8. Incompatibilidade com o dispositivo de operação (iPad)
+### 7. Incompatibilidade com o dispositivo de operação (tablet)
 
 * Categoria: tecnologia
 * Impacto: moderado | Probabilidade: 10%
-* Descrição: como a aplicação será operada principalmente em iPad, problemas de renderização ou comportamento inesperado em Safari iOS podem comprometer a operação durante o evento.
-* Plano de ação: realizar testes específicos em Safari iOS e em diferentes resoluções de iPad ao longo do desenvolvimento, validando os fluxos críticos no dispositivo-alvo.
+* Descrição: como a aplicação será operada principalmente em tablet, problemas de renderização ou comportamento inesperado em Safari iOS ou outros navegadores podem comprometer a operação durante o evento.
+* Plano de ação: realizar testes específicos em Safari iOS e outros navegadores, em diferentes resoluções de tablet ao longo do desenvolvimento, validando os fluxos críticos no dispositivo-alvo.
 
-### 9. Atraso no registro durante trocas rápidas de atletas
+### 8. Atraso no registro durante trocas rápidas de atletas
 
 * Categoria: operacional
 * Impacto: moderado | Probabilidade: 50%
@@ -152,7 +145,7 @@ A matriz de riscos é uma ferramenta fundamental para identificar, analisar e pr
 
 **Síntese da Matriz de Riscos**
 
-Os riscos identificados concentram-se principalmente nos aspectos de confiabilidade do registro digital, operação contínua sob condições adversas (madrugada, locais abertos, pressão de tempo) e integridade dos dados que definem o resultado oficial da competição. As estratégias de mitigação centrais envolvem suporte offline, validações automáticas de consistência, UX otimizada para uso rápido em iPad e testes contínuos com a equipe operacional do parceiro. Dessa forma, busca-se garantir uma solução robusta o suficiente para substituir com segurança o processo manual de prancheta, atendendo aos critérios de sucesso definidos pelo parceiro Red Bull.
+Os riscos identificados concentram-se principalmente nos aspectos de confiabilidade do registro digital, operação contínua sob condições adversas (madrugada, locais abertos, pressão de tempo) e integridade dos dados que definem o resultado oficial da competição. As estratégias de mitigação centrais envolvem suporte offline, validações periódicas de consistência, UX otimizada para uso rápido em tablet e testes contínuos com a equipe operacional do parceiro. Dessa forma, busca-se garantir uma solução robusta o suficiente para substituir com segurança o processo manual de prancheta, atendendo aos critérios de sucesso definidos pelo parceiro Red Bull.
 
 ### Oportunidades
 
@@ -189,14 +182,14 @@ No contexto do desenvolvimento de soluções tecnológicas, as oportunidades sã
 ### 5. Padronização entre as cinco regionais
 
 * Categoria: operacional / escalabilidade
-* Impacto: muito alto | Probabilidade: 50%
+* Impacto: muito alto | Probabilidade: 70%
 * Descrição: hoje cada regional adota pequenas variações no processo manual (ex: aferição de 5 em 5 ou de 30 em 30 minutos). A solução digital permite padronizar o protocolo nacional, aumentando a consistência dos resultados entre etapas.
 * Plano de aproveitamento: implementar protocolo único definido em conjunto com o ponto focal nacional (Bruno Gardesani), eliminando variações operacionais entre regionais.
 
 ### 6. Redução significativa da carga operacional da equipe
 
 * Categoria: eficiência / produtividade
-* Impacto: alto | Probabilidade: 70%
+* Impacto: alto | Probabilidade: 90%
 * Descrição: a digitalização do processo elimina a necessidade de transcrição manual da prancheta para Excel após o evento (que hoje leva horas), liberando a equipe para focar em outras atividades estratégicas durante e após a competição.
 * Plano de aproveitamento: garantir exportação direta em formato CSV/Excel já estruturado para auditoria, eliminando totalmente a etapa de transcrição manual.
 
