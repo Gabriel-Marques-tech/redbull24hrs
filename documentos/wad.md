@@ -123,7 +123,7 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 
 <div align="center">
   <sub>Imagem X - Canvas da Proposta de Valor</sub><br>
-  <img src= "./assets/negocios/canvas-proposta-de-valor.png" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
+  <img src= "./assets/negocios/Value-Proposition-Canvas.png" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
