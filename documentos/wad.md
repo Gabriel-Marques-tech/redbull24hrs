@@ -198,6 +198,7 @@ A definição dos endpoints e métodos HTTP presentes na matriz segue os princí
 | RF022 | RN23, RN24    | `/records/{id}`                                             | PATCH  |
 | RF023 | RN25          | `/events/{id}/inconsistencies`                              | GET    |
 | RF024 | RN26          | `/events/{id}/export`                                       | GET    |
+| RF025 | RN27          | `/sync`                                                     | POST   |
 
 ## 3.2. Arquitetura (sprints 1 a 5)
 
