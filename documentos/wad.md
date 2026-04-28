@@ -109,12 +109,40 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 ### 3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 
-*Liste os RF numerados de forma objetiva e verificável. Cada RF deve poder ser convertido em caso de teste.*
+Para que o desenvolvimento de um software seja bem-sucedido, é fundamental definir seus Requisitos Funcionais (RF). De forma simples, eles são as descrições de todas as tarefas, ações e serviços que o sistema deve realizar. Eles representam o "o quê" o sistema faz: desde o clique de um botão pelo usuário até cálculos automáticos e geração de relatórios feitos "por baixo dos panos".
 
-| ID    | Descrição | Prioridade | Status       |
-|-------|-----------|------------|--------------|
-| RF001 | ...       | Alta       | Implementado |
-| RF002 | ...       | Média      | Planejado    |
+Sua principal função é servir como um guia tanto para os desenvolvedores quanto para os organizadores do evento, garantindo que todas as necessidades operacionais, como o registro de quilometragem e o controle de revezamento, sejam atendidas sem falhas.
+
+| ID   | Descrição                                                                                                                                                                                          | Prioridade | Status    |
+| ---- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------- |
+| RF01 | O sistema deve permitir o cadastro das duas equipes fixas (Equipe A e Equipe B) que competirão no evento.                                                                                          | Alta       | Planejado |
+| RF02 | O sistema deve permitir o cadastro de jogadores vinculados a uma equipe já existente.                                                                                                              | Alta       | Planejado |
+| RF03 | O sistema deve validar se cada equipe possui 16 jogadores cadastrados, emitindo um alerta caso o número seja diferente.                                                                            | Alta       | Planejado |
+| RF04 | O sistema deve permitir o registro do local/região onde a etapa da competição está sendo realizada.                                                                                                | Média      | Planejado |
+| RF05 | O sistema deve permitir que o auditor selecione em qual das duas esteiras o corredor iniciará a atividade.                                                                                         | Alta       | Planejado |
+| RF06 | O sistema deve permitir a seleção da equipe que iniciará o uso da esteira selecionada.                                                                                                             | Alta       | Planejado |
+| RF07 | O sistema deve permitir a seleção de qual corredor da equipe iniciará a corrida.                                                                                                                   | Alta       | Planejado |
+| RF08 | O sistema deve registrar o início da corrida, armazenando o corredor selecionado, a esteira, a quilometragem inicial informada e o horário exato do início.                                        | Alta       | Planejado |
+| RF09 | O sistema deve exibir um pop-up a cada 5 minutos exigindo que o auditor insira a quilometragem atual da esteira para fins de recuperação de dados.                                                 | Média      | Planejado |
+| RF10 | O sistema deve permitir o registro manual de quilometragem a qualquer momento, gerando um timestamp automático para garantir a rastreabilidade.                                                    | Média      | Planejado |
+| RF12 | O sistema deve permitir registrar a finalização da corrida de um membro da equipe.                                                                                                                 | Alta       | Planejado |
+| RF13 | O sistema deve permitir a inserção da quilometragem final lida no display e registrar o horário de término da atividade.                                                                           | Alta       | Planejado |
+| RF14 | O sistema deve calcular automaticamente as estatísticas do corredor ao finalizar a atividade, incluindo a distância total percorrida e o tempo de duração.                                         | Alta       | Planejado |
+| RF15 | O sistema deve permitir que, ao finalizar o turno de um corredor, o próximo possa ser iniciado imediatamente na mesma esteira com um único clique, aproveitando os dados da equipe já selecionada. | Média      | Planejado |
+| RF16 | O sistema deve realizar o cálculo automático da quilometragem total acumulada de cada equipe, somando o desempenho individual de seus membros.                                                     | Alta       | Planejado |
+| RF17 | O sistema deve gerar métricas detalhadas, incluindo a distância percorrida por corredor, a média de quilometragem por turno e a evolução do desempenho ao longo das horas.                         | Média      | Planejado |
+| RF18 | O sistema deve exibir um painel (dashboard) atualizado em tempo real com o placar do evento e as métricas de desempenho para acompanhamento contínuo.                                              | Alta       | Planejado |
+| RF19 | O sistema deve possuir uma interface de alto contraste e visualização simplificada para exibição em monitores externos para público e atletas.                                                     | Média      | Planejado |
+| RF20 | O sistema deve exibir o status de cada esteira (Ocupada/Livre) e sugerir a alternância para evitar o superaquecimento das máquinas.                                                                | Média      | Planejado |
+| RF21 | O sistema deve exibir uma lista (log) de todas as entradas, saídas e checkpoints em ordem decrescente, permitindo a rápida conferência pelo auditor.                                               | Alta       | Planejado |
+| RF22 | O sistema deve permitir filtrar os registros por equipe, esteira ou corredor específico.                                                                                                           | Média      | Planejado |
+| RF23 | O sistema deve permitir que o auditor edite um registro anterior caso haja um erro de digitação ou necessidade de ajuste baseado no último checkpoint confiável (com log de quem alterou).         | Alta       | Planejado |
+| RF24 | O sistema deve permitir a identificação de eventuais inconsistências nos dados registrados através do dashboard ou alertas específicos.                                                            | Média      | Planejado |
+| RF25 | O sistema deve permitir que o usuário com perfil de auditor exporte todos os registros e métricas do evento em formato CSV.                                                                        | Média      | Planejado |
+
+A estrutura de requisitos apresentada acima foi desenhada para transformar a dinâmica complexa do evento Red Bull 24 Horas em um fluxo digital ágil e seguro.
+Com esta base sólida, o projeto segue para a fase de implementação, onde cada ID listado servirá como critério de aceitação para garantir que a apuração final dos quilômetros seja 100% confiável, rastreável e transparente para ambas as equipes.
+
 
 ### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
