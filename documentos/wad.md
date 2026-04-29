@@ -191,7 +191,134 @@ A análise evidencia um forte alinhamento entre as dores operacionais do time de
 
 ## 2.2. Personas (sprint 1)
 
-*Posicione aqui suas Personas em forma de texto markdown com imagens, ou como imagem de template preenchido. Atualize esta seção ao longo do módulo se necessário.*
+Uma persona é um arquétipo de usuário construído a partir de dados empíricos coletados em pesquisas qualitativas e quantitativas — como entrevistas, estudos de campo e surveys — com o objetivo de representar, de forma concreta e memorável, as características, comportamentos, necessidades e objetivos dos usuários reais de um produto ou sistema.
+
+Diferentemente de segmentos de mercado, que apresentam usuários como intervalos numéricos e categorias abstratas, a persona sintetiza esses dados em um único personagem fictício, porém verossímil, dotado de atributos como nome, idade, ocupação, contexto de uso e motivações. Essa concretude explora a tendência cognitiva humana de se engajar mais profundamente com exemplos específicos do que com generalizações estatísticas.
+
+No campo do design centrado no usuário, as personas atuam como instrumentos de mediação epistêmica: ao fornecerem um vocabulário comum e preciso à equipe de projeto, reduzem a ambiguidade sobre quem é o usuário e promovem decisões de design mais coerentes com as necessidades reais do público-alvo. Sua utilidade se estende além da fase de concepção, abrangendo avaliações heurísticas, recrutamento para testes de usabilidade e segmentação de dados analíticos ao longo do ciclo de vida do produto.
+
+No contexto deste projeto, as personas foram utilizadas para representar os diferentes perfis envolvidos na operação do evento Red Bull 24 Horas, especialmente os responsáveis pelo registro manual dos dados e pela validação das informações. A partir dessas representações, foi possível identificar dores relacionadas à inconsistência de registros, ausência de histórico confiável e dificuldade de auditoria, orientando a definição das funcionalidades do sistema proposto.
+
+<div align = "center">
+  <img src="../assets/Persona-Bruna-Gomes.png">
+</div>
+<p align = "center"> Fonte: material produzido pelos autores (2026).</p>
+
+## Informações
+- Idade: 25
+- Localização: São Paulo, SP
+- Formação: Ensino Superior em andamento - Administração
+- Empresa: Red bull
+- Cargo: Assistente de produção de eventos
+
+## Biografia
+
+Bruna Gomes atua como Assistente de Produção de Eventos na Red Bull, sendo responsável por apoiar o planejamento, a organização e a execução de eventos. Possui experiência em logística, controle de equipes e acompanhamento de operações em tempo real. No contexto do evento Red Bull 24 Horas, atua diretamente no registro e acompanhamento dos quilômetros percorridos, garantindo que as informações sejam coletadas de forma consistente e confiável.
+
+## Objetivos
+
+- Registrar início, checkpoints e fim das corridas de forma rápida e padronizada
+- Garantir continuidade dos registros durante toda a operação
+- Reduzir erros no processo de coleta de quilômetros
+- Acompanhar dados em tempo quase real para validação
+- Agilizar trocas de corredores sem comprometer os registros
+
+## Dores 
+
+- Utilização de registros manuais (prancheta/papel), sujeitos a erro
+- Falta de histórico estruturado para conferência
+- Alto nível de atenção exigido por longos períodos (24h)
+- Baixa visibilidade dos dados consolidados durante o evento
+
+## Necessidades
+
+- Sistema simples e rápido para registro de dados
+- Rastreabilidade completa dos registros realizados
+- Exportação de dados para análise e auditoria
+- Facilidade de conferência e validação das informações
+- Interface clara para uso contínuo durante o evento
+
+<div align = "center">
+  <img src="../assets/Persona-Bruno-Gardesani.png">
+</div>
+<p align = "center"> Fonte: material produzido pelos autores (2026).</p>
+
+## Informações
+
+- Idade: 38
+- Localização: São Paulo, SP
+- Formação: Ensino Superior Completo – Administração/Marketing
+- Empresa: Red bull
+- Cargo: Gerente Nacional de Field Marketing
+
+## Biografia
+
+Bruno Gardesani atua como Gerente Nacional de Field Marketing na Red Bull, sendo responsável pela supervisão estratégica dos eventos da marca. No Red Bull 24 Horas, acompanha a operação como um todo, garantindo que os processos ocorram corretamente e que os resultados sejam confiáveis. Seu foco está na validação dos dados e na eficiência da operação.
+
+## Objetivos
+
+- Garantir confiabilidade total dos dados registrados
+- Acompanhar o desempenho das equipes com clareza
+- Reduzir retrabalho na validação dos resultados
+- Ter acesso rápido às informações consolidadas
+- Facilitar auditoria pós-evento
+
+## Dores 
+
+- Falta de confiança nos registros manuais
+- Necessidade de validação constante
+- Dificuldade em visualizar dados consolidados rapidamente
+- Retrabalho para conferência pós-evento
+- Risco de inconsistências comprometerem o resultado final
+
+## Necessidades
+
+- Visão consolidada e organizada dos dados
+- Histórico completo e rastreável
+- Exportação para auditoria
+- Redução de intervenção manual
+- Sistema confiável e transparente
+
+<div align = "center">
+  <img src="../assets/Persona-Lucas-Andrade.png">
+</div>
+<p align = "center"> Fonte: material produzido pelos autores (2026).</p>
+
+## Informações
+
+- Idade: 26
+- Localização: São Paulo, SP
+- Formação: Ensino Superior Completo – Marketing
+- Empresa: Red bull
+- Cargo: Operador de Evento
+
+## Biografia
+
+Lucas Andrade atua como operador de eventos na equipe de Field Marketing, sendo responsável pelo registro manual das informações durante o evento Red Bull 24 Horas. Trabalha diretamente ao lado das esteiras, acompanhando as trocas de corredores e anotando os quilômetros percorridos. Sua rotina exige agilidade, atenção constante e capacidade de lidar com alta pressão durante longos períodos.
+
+## Objetivos
+
+- Registrar dados de forma rápida e sem interrupções
+- Reduzir a necessidade de cálculos ou conferências manuais
+- Evitar perda de informações durante trocas de corredores
+- Conseguir operar o sistema com poucos cliques
+- Manter consistência nos registros ao longo das 24h
+
+## Dores 
+
+- Uso de prancheta e papel, com alto risco de erro
+- Dificuldade em acompanhar ritmo acelerado das trocas
+- Cansaço físico e mental ao longo do evento
+- Falta de feedback imediato se o registro está correto
+- Possibilidade de esquecer anotações em momentos críticos
+
+## Necessidades
+
+- Interface extremamente simples e rápida
+- Feedback visual imediato após registro
+- Processo padronizado para evitar erros
+- Redução de digitação manual
+- Sistema confiável mesmo sob pressão
 
 ## 2.3. User Stories (sprints 1 a 5)
 
