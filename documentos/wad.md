@@ -309,7 +309,50 @@ Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
-*Apresente o diagrama de casos de uso com atores (boneco), casos (elipse) e as relações `<<include>>` / `<<extend>>` com semântica correta. Consulte a notação de referência em `https://www.ivarjacobson.com/files/use-case_3.0_v1.0.pdf`.*
+O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 Horas a partir da prática **Light Use-Case Modeling** descrita em Jacobson et al. (2024), evoluindo para o nível **System Boundary Established** ao incluir todos os atores e casos de uso planejados para o MVP. A notação adotada segue o guia *Use-Case 3.0 — The Definitive Guide*: atores são representados por bonecos-palito, casos de uso por elipses contidas dentro do retângulo do *System of Interest*, associações por linhas contínuas com setas indicando o iniciador da interação, `<<include>>` por seta tracejada apontando do caso-base para o caso obrigatoriamente incluído, e `<<extend>>` por seta tracejada apontando do caso opcional para o caso-base que ele estende.
+
+<div align="center">
+  <sub>Imagem X - Diagrama Casos de Uso</sub><br>
+  <img src= "./assets/negocios/Diagrama-Casos-de-Uso.png" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
+  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+</div>
+
+#### Atores
+
+| Ator | Tipo | Descrição |
+|---|---|---|
+| **Auditor** | Primário | Pessoa do time de Field Marketing da Red Bull responsável pela apuração ao lado da esteira. É quem inicia praticamente todos os fluxos do sistema durante as 24h: cadastra o contexto pré-evento, registra início e fim de cada turno, faz os checkpoints periódicos e edita registros quando necessário. Substitui a operação atual da prancheta. |
+| **Organização do Evento** | Primário (secundário em frequência) | Equipe responsável pela validação final dos resultados e pela auditoria pós-evento. Acessa o painel consolidado e exporta os dados para conferência. |
+
+#### Casos de uso
+
+Os casos de uso foram identificados a partir dos requisitos funcionais da seção 3.1.1 e do escopo do MVP descrito no TAPI. Cada caso representa um caminho até um valor concreto entregue ao usuário, conforme orientação do guia: *"a use case is all the ways of using a system to achieve a goal of a particular user"*.
+
+| Caso de uso | Ator primário | Objetivo |
+|---|---|---|
+| **Cadastrar contexto pré-evento** | Auditor | Cadastrar local, equipes (A e B), esteiras e corredores antes do início da competição. |
+| **Registrar início de turno** | Auditor | Marcar o momento em que um corredor entra na esteira, abrindo uma nova sessão de corrida com a esteira zerada. |
+| **Registrar checkpoint** | Auditor | Registrar a quilometragem do display em intervalos periódicos dentro da sessão atual (referência de 5 em 5 minutos), garantindo backup em caso de falha da esteira. |
+| **Encerrar turno** | Auditor | Marcar o fim da corrida do atleta, registrando a quilometragem final da sessão e somando-a ao total acumulado da equipe. |
+| **Editar registro** | Auditor | Corrigir um registro previamente inserido, mantendo histórico auditável da alteração. |
+| **Visualizar painel consolidado** | Auditor / Organização do Evento | Acompanhar em tempo real o total de km por equipe (soma das sessões encerradas + km parcial das sessões em andamento), o histórico cronológico de registros e o status de cada esteira. |
+| **Exportar dados** | Organização do Evento | Gerar arquivo CSV com todos os registros para auditoria formal pós-evento. |
+
+#### Modelo de sessão de corrida
+
+Como a esteira é zerada a cada troca de corredor (dinâmica do evento), a quilometragem **não é monotônica em relação à esteira nem em relação à equipe** ao longo das 24h — apenas dentro do escopo de uma **sessão de corrida individual** (turno único de um único corredor, do início até o encerramento antes da próxima zeragem). O total acumulado por equipe é, portanto, a soma das quilometragens finais de todas as sessões encerradas mais a quilometragem parcial da sessão atualmente em andamento. Essa estrutura é central para entender a semântica das regras de validação descritas a seguir.
+
+#### Relacionamentos `<<include>>` e `<<extend>>`
+
+Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: **`<<include>>`** representa comportamento *obrigatório* e reutilizável que sempre é executado pelo caso-base; **`<<extend>>`** representa comportamento *opcional* que ocorre apenas em condições específicas, sem que o caso-base precise ter conhecimento do caso estensor. Como recomenda Jacobson et al. (2024) na prática *Structured Use-Case Modeling*, esses recursos foram usados com parcimônia — apenas onde tornam o modelo mais claro, e não para fragmentar o diagrama em micro-fluxos.
+
+| Relacionamento | Caso-base | Caso relacionado | Justificativa |
+|---|---|---|---|
+| `<<include>>` | Registrar início de turno | Validar leitura dentro da sessão | Toda escrita de quilometragem precisa passar por uma validação de consistência relativa à sessão atual (ex.: a leitura inicial de uma nova sessão deve ser zero ou próxima de zero, refletindo a esteira recém-zerada). Por ser obrigatória e compartilhada entre os três casos de leitura, é fatorada como `<<include>>`. |
+| `<<include>>` | Registrar checkpoint | Validar leitura dentro da sessão | Dentro de uma mesma sessão, o valor de km cresce monotonicamente — um checkpoint nunca pode registrar valor menor que o checkpoint anterior da mesma sessão. A regra é compartilhada entre todos os casos que recebem leituras de km dentro de uma sessão em andamento. |
+| `<<include>>` | Encerrar turno | Validar leitura dentro da sessão | Idem. A leitura final da sessão precisa ser maior ou igual ao último checkpoint registrado nela. Concentrar a regra em um único caso evita duplicação no diagrama e na implementação. |
+| `<<extend>>` | Registrar checkpoint | Recuperar último registro válido da sessão | Comportamento *condicional*: só ocorre quando a esteira para de funcionar durante uma sessão e o auditor precisa recuperar a quilometragem com base no último checkpoint conhecido **da sessão atual**. O caso-base não precisa saber que esse fluxo existe — daí o uso de `<<extend>>`. |
+| `<<extend>>` | Registrar início de turno | Detectar quilometragem por OCR | Comportamento *opcional* previsto como evolução: quando habilitado, o auditor pode tirar uma foto do display e o sistema faz a leitura automática. O caso-base permanece válido sem essa extensão (entrada manual continua sendo o caminho padrão). |
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
@@ -521,11 +564,13 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 # <a name="c8"></a>8. Referências
 
+JACOBSON, Ivar; SPENCE, Ian; DE MENDONCA, Keith. **Use-Case 3.0: the guide to succeeding with use cases — refreshed**. Ivar Jacobson International, mai. 2024. E-book. Disponível em: https://www.ivarjacobson.com/files/use-case_3.0_v1.0.pdf. Acesso em: 29 abr. 2026.
+
 PORTER, Michael E. Estratégia competitiva: técnicas para análise de indústrias e da concorrência. 2. ed. Rio de Janeiro: Elsevier, 2004.
 
 MONTGOMERY, Cynthia A.; PORTER, Michael E. (org.). Estratégia: a busca da vantagem competitiva. Rio de Janeiro: Elsevier, 1998.
 
-OSTERWALDER, Alexander; PIGNEUR, Yves. *Value Proposition Design: How to Create Products and Services Customers Want*. Hoboken: Wiley, 2014. 
+OSTERWALDER, Alexander; PIGNEUR, Yves. **Value Proposition Design: How to Create Products and Services Customers Want**. Hoboken: Wiley, 2014. 
 
 # <a name="c9"></a>Anexos
 
