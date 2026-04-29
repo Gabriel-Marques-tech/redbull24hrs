@@ -350,9 +350,8 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 |---|---|---|---|
 | `<<include>>` | Registrar início de turno | Validar leitura dentro da sessão | Toda escrita de quilometragem precisa passar por uma validação de consistência relativa à sessão atual (ex.: a leitura inicial de uma nova sessão deve ser zero ou próxima de zero, refletindo a esteira recém-zerada). Por ser obrigatória e compartilhada entre os três casos de leitura, é fatorada como `<<include>>`. |
 | `<<include>>` | Registrar checkpoint | Validar leitura dentro da sessão | Dentro de uma mesma sessão, o valor de km cresce monotonicamente — um checkpoint nunca pode registrar valor menor que o checkpoint anterior da mesma sessão. A regra é compartilhada entre todos os casos que recebem leituras de km dentro de uma sessão em andamento. |
-| `<<include>>` | Encerrar turno | Validar leitura dentro da sessão | Idem. A leitura final da sessão precisa ser maior ou igual ao último checkpoint registrado nela. Concentrar a regra em um único caso evita duplicação no diagrama e na implementação. |
+| `<<include>>` | Encerrar turno | Validar leitura dentro da sessão | A leitura final da sessão precisa ser maior ou igual ao último checkpoint registrado nela. Concentrar a regra em um único caso evita duplicação no diagrama e na implementação. |
 | `<<extend>>` | Registrar checkpoint | Recuperar último registro válido da sessão | Comportamento *condicional*: só ocorre quando a esteira para de funcionar durante uma sessão e o auditor precisa recuperar a quilometragem com base no último checkpoint conhecido **da sessão atual**. O caso-base não precisa saber que esse fluxo existe — daí o uso de `<<extend>>`. |
-| `<<extend>>` | Registrar início de turno | Detectar quilometragem por OCR | Comportamento *opcional* previsto como evolução: quando habilitado, o auditor pode tirar uma foto do display e o sistema faz a leitura automática. O caso-base permanece válido sem essa extensão (entrada manual continua sendo o caminho padrão). |
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
