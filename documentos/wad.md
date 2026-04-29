@@ -255,11 +255,6 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 A estrutura de requisitos apresentada acima foi desenhada para transformar a dinâmica complexa do evento Red Bull 24 Horas em um fluxo digital ágil e seguro.
 Com esta base sólida, o projeto segue para a fase de implementação, onde cada ID listado servirá como critério de aceitação para garantir que a apuração final dos quilômetros seja 100% confiável, rastreável e transparente para ambas as equipes.
 
-| ID    | Descrição | Prioridade | Status       |
-| ----- | --------- | ---------- | ------------ |
-| RF001 | ...       | Alta       | Implementado |
-| RF002 | ...       | Média      | Planejado    |
-
 ### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
 Regras de negócio são declarações que definem ou restringem aspectos do funcionamento de um sistema, refletindo políticas, condições e obrigações do domínio de negócio. Devem ser implementáveis e testáveis, servindo como referencial técnico para o desenvolvimento e validação da aplicação.
@@ -326,7 +321,7 @@ _Posicione aqui o diagrama de arquitetura da solução, indicando as camadas pri
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
-_Apresente o diagrama de casos de uso com atores (boneco), casos (elipse) e as relações `<<include>>` / `<<extend>>` com semântica correta. Consulte a notação de referência em `in02/suporte/use-case_3.0_v1.0.pdf`._
+_Apresente o diagrama de casos de uso com atores (boneco), casos (elipse) e as relações `<<include>>` / `<<extend>>` com semântica correta. Consulte a notação de referência em `https://www.ivarjacobson.com/files/use-case_3.0_v1.0.pdf`._
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
@@ -539,6 +534,12 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 PORTER, Michael E. Estratégia competitiva: técnicas para análise de indústrias e da concorrência. 2. ed. Rio de Janeiro: Elsevier, 2004.
 
 MONTGOMERY, Cynthia A.; PORTER, Michael E. (org.). Estratégia: a busca da vantagem competitiva. Rio de Janeiro: Elsevier, 1998.
+
+OSTERWALDER, Alexander; PIGNEUR, Yves. _Value Proposition Design: How to Create Products and Services Customers Want_. Hoboken: Wiley, 2014.
+BUSINESS RULES GROUP. Business Rules Manifesto: the principles of rule independence. Version 2.0. [S. l.]: Business Rules Group, 2003 Disponível em: https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf. Acesso em: 27 abr. 2026.
+
+LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
+SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
 
 OSTERWALDER, Alexander; PIGNEUR, Yves. _Value Proposition Design: How to Create Products and Services Customers Want_. Hoboken: Wiley, 2014.
 
