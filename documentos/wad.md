@@ -91,7 +91,7 @@ _Explique detalhadamente os seguintes aspectos (até 60 palavras por item):_
 5. Benefícios esperados
 6. Critério de sucesso e como será avaliado
 
-### 2.1.4. Value Proposition Canvas (sprint 1): 
+### 2.1.4. Value Proposition Canvas (sprint 1):
 
 O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidades do cliente e a solução proposta (Osterwalder; Pigneur, 2011). No contexto deste projeto, evidencia-se o encaixe entre as dificuldades operacionais enfrentadas pelo time de Field Marketing da Red Bull durante a apuração manual dos quilômetros corridos no evento Red Bull 24 Horas e as funcionalidades de uma aplicação web voltada para registro confiável e consolidação automatizada dos dados da competição.
 
@@ -102,43 +102,49 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 ### Tarefas:
 
 **Time Operacional (responsáveis pela apuração):**
-* Registrar o início e fim de cada turno de corrida dos atletas nas duas esteiras por equipe
-* Realizar marcações periódicas (a cada 5 ou 30 minutos) como referência de segurança
-* Consolidar os quilômetros corridos por equipe ao longo das 24 horas ininterruptas
-* Garantir a continuidade do registro durante revezamentos rápidos entre atletas
+
+- Registrar o início e fim de cada turno de corrida dos atletas nas duas esteiras por equipe
+- Realizar marcações periódicas (a cada 5 ou 30 minutos) como referência de segurança
+- Consolidar os quilômetros corridos por equipe ao longo das 24 horas ininterruptas
+- Garantir a continuidade do registro durante revezamentos rápidos entre atletas
 
 **Organização e Juízes:**
-* Validar os resultados finais com base nos registros realizados durante o evento
-* Auditar marcações em caso de divergências ou paradas técnicas das esteiras
-* Acompanhar a evolução da competição em tempo real
+
+- Validar os resultados finais com base nos registros realizados durante o evento
+- Auditar marcações em caso de divergências ou paradas técnicas das esteiras
+- Acompanhar a evolução da competição em tempo real
 
 ### Dores:
 
 **Time Operacional:**
-* Erro humano nas anotações manuais durante 24 horas ininterruptas, especialmente nas madrugadas, quando o cansaço compromete a precisão
-* Processo analógico baseado em prancheta e transcrição posterior para planilha Excel, gerando atraso de até duas horas para visualização do resultado
-* Dificuldade de recuperar informações em caso de falha técnica das esteiras (paradas, travamentos)
-* Retrabalho na transcrição manual de dados do papel para a planilha
-* Inconsistências entre as cinco etapas regionais por falta de padronização do processo
+
+- Erro humano nas anotações manuais durante 24 horas ininterruptas, especialmente nas madrugadas, quando o cansaço compromete a precisão
+- Processo analógico baseado em prancheta e transcrição posterior para planilha Excel, gerando atraso de até duas horas para visualização do resultado
+- Dificuldade de recuperar informações em caso de falha técnica das esteiras (paradas, travamentos)
+- Retrabalho na transcrição manual de dados do papel para a planilha
+- Inconsistências entre as cinco etapas regionais por falta de padronização do processo
 
 **Organização e Juízes:**
-* Baixa rastreabilidade dos registros, dificultando auditoria em casos de margens apertadas (diferenças finais de até 150 metros entre equipes)
-* Impossibilidade de conexão direta com as esteiras Technogym, eliminando soluções automatizadas de captura
-* Inviabilidade do uso de pulseiras de sincronização devido à dinâmica de revezamento rápido (trocas em até 15 segundos) e ao número insuficiente de dispositivos
+
+- Baixa rastreabilidade dos registros, dificultando auditoria em casos de margens apertadas (diferenças finais de até 150 metros entre equipes)
+- Impossibilidade de conexão direta com as esteiras Technogym, eliminando soluções automatizadas de captura
+- Inviabilidade do uso de pulseiras de sincronização devido à dinâmica de revezamento rápido (trocas em até 15 segundos) e ao número insuficiente de dispositivos
 
 ### Ganhos:
 
 **Time Operacional:**
-* Redução significativa do erro humano na apuração dos quilômetros
-* Maior eficiência operacional, com menos carga manual e retrabalho
-* Padronização do processo entre as diferentes etapas regionais
-* Facilidade no cadastro inicial dos participantes e equipes
+
+- Redução significativa do erro humano na apuração dos quilômetros
+- Maior eficiência operacional, com menos carga manual e retrabalho
+- Padronização do processo entre as diferentes etapas regionais
+- Facilidade no cadastro inicial dos participantes e equipes
 
 **Organização e Juízes:**
-* Visão consolidada e organizada do andamento da competição
-* Maior confiabilidade e rastreabilidade dos registros ao longo das 24h
-* Histórico completo para auditoria pós-evento
-* Capacidade de exportar dados estruturados para análise estatística
+
+- Visão consolidada e organizada do andamento da competição
+- Maior confiabilidade e rastreabilidade dos registros ao longo das 24h
+- Histórico completo para auditoria pós-evento
+- Capacidade de exportar dados estruturados para análise estatística
 
 ### B. Mapa de Valor:
 
@@ -150,31 +156,31 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 
 **Produtos e Serviços:**
 
-* Aplicação web responsiva, otimizada para uso em iPad, com interface simples e funcional para operação durante 24 horas ininterruptas
-* Fluxo de cadastro inicial de local, data, equipes e corredores
-* Tela de seleção de equipe e corredor para registro ágil de turnos
-* Funcionalidade de contabilização de quilômetros a cada 5 minutos com timestamp automático
-* Aviso periódico (5 em 5 minutos) para padronização das marcações de segurança
-* Dashboard consolidado com pace médio do evento e quilômetros totais por equipe
-* Histórico cronológico de lançamentos com filtros por equipe e corredor
-* Exportação de dados em formato CSV para auditoria pós-evento
+- Aplicação web responsiva, otimizada para uso em iPad, com interface simples e funcional para operação durante 24 horas ininterruptas
+- Fluxo de cadastro inicial de local, data, equipes e corredores
+- Tela de seleção de equipe e corredor para registro ágil de turnos
+- Funcionalidade de contabilização de quilômetros a cada 5 minutos com timestamp automático
+- Aviso periódico (5 em 5 minutos) para padronização das marcações de segurança
+- Dashboard consolidado com pace médio do evento e quilômetros totais por equipe
+- Histórico cronológico de lançamentos com filtros por equipe e corredor
+- Exportação de dados em formato CSV para auditoria pós-evento
 
 **Analgésicos:**
 
-* O erro humano na apuração é reduzido pela substituição da prancheta por inputs digitais padronizados, com timestamp automático e validação de campos
-* O atraso na consolidação dos dados é eliminado por meio do cálculo automático do total de quilômetros por equipe, exibido em tempo quase real
-* A dificuldade de recuperação em falhas técnicas das esteiras é mitigada pelas marcações periódicas registradas digitalmente, permitindo recuperar a última referência confiável
-* O retrabalho de transcrição entre papel e planilha é eliminado, já que os dados são inseridos diretamente no sistema e exportáveis em CSV
-* A falta de padronização entre etapas regionais é resolvida por um fluxo único e replicável em todas as seletivas
-* A baixa rastreabilidade é resolvida pelo histórico completo de lançamentos com filtros, garantindo auditoria precisa
+- O erro humano na apuração é reduzido pela substituição da prancheta por inputs digitais padronizados, com timestamp automático e validação de campos
+- O atraso na consolidação dos dados é eliminado por meio do cálculo automático do total de quilômetros por equipe, exibido em tempo quase real
+- A dificuldade de recuperação em falhas técnicas das esteiras é mitigada pelas marcações periódicas registradas digitalmente, permitindo recuperar a última referência confiável
+- O retrabalho de transcrição entre papel e planilha é eliminado, já que os dados são inseridos diretamente no sistema e exportáveis em CSV
+- A falta de padronização entre etapas regionais é resolvida por um fluxo único e replicável em todas as seletivas
+- A baixa rastreabilidade é resolvida pelo histórico completo de lançamentos com filtros, garantindo auditoria precisa
 
 **Criadores de Ganho:**
 
-* A eficiência operacional é ampliada por uma interface simples e direta, projetada para uso ágil durante revezamentos de até 15 segundos
-* A confiabilidade dos resultados é fortalecida pelo registro digital com timestamp automático, eliminando dependência de anotações manuais sob pressão
-* A visão consolidada da competição é entregue por meio do dashboard com pace médio e quilometragem total, oferecendo um overview do evento sem expor a comparação direta entre equipes
-* A rastreabilidade pós-evento é garantida pela exportação em CSV e pelo histórico filtrável, possibilitando análise estatística e validação dos resultados
-* A escalabilidade entre etapas regionais é viabilizada por uma solução web acessível em qualquer dispositivo conectado, padronizando a operação em todo o Brasil
+- A eficiência operacional é ampliada por uma interface simples e direta, projetada para uso ágil durante revezamentos de até 15 segundos
+- A confiabilidade dos resultados é fortalecida pelo registro digital com timestamp automático, eliminando dependência de anotações manuais sob pressão
+- A visão consolidada da competição é entregue por meio do dashboard com pace médio e quilometragem total, oferecendo um overview do evento sem expor a comparação direta entre equipes
+- A rastreabilidade pós-evento é garantida pela exportação em CSV e pelo histórico filtrável, possibilitando análise estatística e validação dos resultados
+- A escalabilidade entre etapas regionais é viabilizada por uma solução web acessível em qualquer dispositivo conectado, padronizando a operação em todo o Brasil
 
 **Síntese da Proposta de Valor**
 
@@ -536,7 +542,7 @@ PORTER, Michael E. Estratégia competitiva: técnicas para análise de indústri
 
 MONTGOMERY, Cynthia A.; PORTER, Michael E. (org.). Estratégia: a busca da vantagem competitiva. Rio de Janeiro: Elsevier, 1998.
 
-OSTERWALDER, Alexander; PIGNEUR, Yves. *Value Proposition Design: How to Create Products and Services Customers Want*. Hoboken: Wiley, 2014. 
+OSTERWALDER, Alexander; PIGNEUR, Yves. _Value Proposition Design: How to Create Products and Services Customers Want_. Hoboken: Wiley, 2014.
 
 # <a name="c9"></a>Anexos
 
