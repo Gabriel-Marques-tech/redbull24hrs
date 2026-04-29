@@ -48,11 +48,35 @@
 
 ## 2.1. Escopo do Projeto (sprints 1 e 4)
 
-### 2.1.1. Modelo de 5 Forças de Porter (sprint 1)
+### 2.1.1. Modelo de 5 Forças de Porter
 
-*Preencha com até 400 palavras*
+Criado por Harvard Michael Porter na década de 1970, o modelo das Cinco Forças é uma metodologia estratégica que analisa o ambiente competitivo de um projeto indo além da simples observação dos concorrentes diretos. O framework oferece uma visão sistêmica das pressões externas ao avaliar o cenário com base em cinco pilares: a rivalidade entre concorrentes, a ameaça de novos entrantes, a ameaça de produtos substitutos, e o poder de negociação dos fornecedores e dos clientes. Ao mapear a viabilidade, os riscos e as oportunidades de uma solução no mercado através dessa lente, torna-se possível compreender a fundo o cenário mercadológico e os riscos operacionais do novo sistema de registro do evento Red Bull 24 Horas, como será demonstrado na análise a seguir, que aplica o modelo para detalhar as características exclusivas do projeto frente ao ecossistema em que será inserido.
 
-*Posicione aqui o modelo de 5 Forças de Porter para sustentar o contexto da indústria.*
+1. Rivalidade entre concorrentes
+
+Na indústria de desenvolvimento de softwares e aplicações web sob medida, a rivalidade pode ser considerada alta de forma geral, pois o mercado conta com inúmeras agências de tecnologia, fábricas de software e desenvolvedores independentes capazes de criar sistemas de registro. No entanto, quando se trata de uma solução específica para o evento Red Bull 24 Horas, a rivalidade direta torna-se média a baixa. O projeto exige a criação de um fluxo simples de registro que substitua a prancheta, desenhado especificamente para a dinâmica de revezamento contínuo entre duas equipes operando duas esteiras simultaneamente. Desse modo, a rivalidade tende a ser menor quando a diferenciação e a customização do produto são muito altas para atender a uma necessidade exclusiva. Existem poucas soluções no mercado que se adaptem perfeitamente a esse formato sem gerar atrito na operação, fazendo com que a rivalidade seja restrita a fornecedores que consigam garantir extrema confiabilidade para rodar o sistema por 24 horas ininterruptas.
+
+2. Ameaça de novos entrantes
+
+Embora o desenvolvimento de uma aplicação web com interface simples seja tecnicamente muito acessível, a entrada de novos concorrentes neste nicho específico apresenta barreiras baseadas na confiança operacional. O escopo técnico possui barreiras baixas, contudo, a barreira real é a exigência de validação prática e garantia de zero falhas durante um evento ao vivo de uma marca global. Desenvolvedores iniciantes podem criar o código facilmente, mas conquistar a confiança da marca para substituir um processo analógico que, embora falho, é seguro contra quedas de sistema, exige grande credibilidade. Dessa forma, a ameaça de novos entrantes pode ser classificada como média, equilibrando a facilidade tecnológica com a alta exigência de estabilidade e confiança operacional do cliente.
+
+3. Ameaça de produtos substitutos
+
+Os principais substitutos para essa aplicação web incluem o método atual de apuração manual via prancheta e hardwares vestíveis. No campo tecnológico, existem alternativas como relógios inteligentes ou a própria pulseira da Technogym que sincroniza com a esteira. No entanto, a adaptação superficial dessas tecnologias já existentes não atende à dinâmica ágil do evento. O uso de pulseiras é inviabilizado pelas trocas constantes de corredores, pela falta de equipamentos para todos os participantes e pela ausência de tempo hábil para sincronização pré-corrida. Por outro lado, a prancheta de papel está altamente sujeita a erros humanos, distrações e inconsistências. Portanto, a ameaça de substitutos pode ser classificada como média a baixa, especialmente porque as alternativas existentes falham em oferecer uma visão consolidada, confiável e em tempo real do andamento da competição sem atrapalhar a experiência do usuário.
+
+4. Poder de negociação dos fornecedores
+
+Os fornecedores para a construção deste projeto incluem provedores de hospedagem em nuvem e fabricantes de hardware de interface, como tablets. Diferente de indústrias que dependem de peças altamente especializadas, as ferramentas de desenvolvimento web são amplamente comoditizadas, existindo infinitas opções de servidores e frameworks. Além disso, o projeto possui uma diretriz clara que elimina uma grande dependência técnica: não haverá integração direta com as esteiras Technogym nem captura automática de dados. Como a equipe de desenvolvimento não fica refém de APIs fechadas ou licenças proprietárias da fabricante do equipamento esportivo, a substituição de qualquer tecnologia base do projeto é fácil. Assim, o poder de negociação dos fornecedores é baixo, devido à alta disponibilidade de ferramentas padronizadas no mercado e à ausência de dependência de hardwares exclusivos.
+
+5. Poder de negociação dos clientes
+
+Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável pela operação do evento. Por se tratar de um projeto customizado e de uso interno exclusivo para uma de suas experiências proprietárias, a Red Bull atua como a única compradora desta solução específica. Isso eleva substancialmente o seu poder de barganha. O cliente tem controle total sobre os requisitos de sucesso do MVP, exigindo que o sistema prove ser superior ao método atual da prancheta em consistência e redução de erros. Se a aplicação não entregar a eficiência operacional esperada, a organização pode facilmente descartar a ferramenta e retornar ao método manual sem grandes prejuízos, ou simplesmente buscar outra agência desenvolvedora. Dessa forma, a poder de negociação do cliente é alto, refletindo sua posição dominante na definição das regras do projeto e na validação final da entrega.
+
+<div align="center">
+  <sub>Imagem 1 - FORÇAS DE PORTER</sub><br>
+  <img src="../assets/forcas_de_porter .png" width="100%" alt="forças de porter"><br>
+  <sup>Fonte: Autores</sup>
+</div>
 
 ### 2.1.2. Análise SWOT da Instituição Parceira
 
@@ -246,18 +270,34 @@ Com esta base sólida, o projeto segue para a fase de implementação, onde cada
 
 ### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
-*Preencha os 8 eixos. Cada eixo deve ter ao menos um RNF verificável (com métrica, limite ou critério concreto) ou justificativa explícita de ausência. Evolua do conceitual (sprint 1) ao técnico mensurável (sprint 5).*
+Enquanto os requisitos funcionais descrevem o que o sistema faz, os Requisitos Não Funcionais (RNF) definem como o sistema deve operar. Eles não estão ligados a uma funcionalidade específica, mas sim às características de qualidade e restrições que garantem que o software seja robusto, eficiente e seguro. Eles servem como os critérios de "padrão de qualidade" que validam a experiência do usuário e a integridade técnica da solução sob condições reais de uso.
 
-| Eixo                     | Requisito | Métrica / Critério | Como atendido |
-|--------------------------|-----------|--------------------|---------------|
-| USAB — Usabilidade       | ...       | ...                | ...           |
-| CONF — Confiabilidade    | ...       | ...                | ...           |
-| DES — Desempenho         | ...       | p95 < X ms         | ...           |
-| SUP — Suportabilidade    | ...       | ...                | ...           |
-| SEG — Segurança          | ...       | ...                | ...           |
-| CAP — Capacidade         | ...       | ...                | ...           |
-| REST — Restrições Design | ...       | ...                | ...           |
-| ORG — Organizacionais    | ...       | ...                | ...           |
+Para organizar esses requisitos, utilizamos a estrutura de 8 eixos de qualidade, que segmentam o comportamento do sistema em diferentes perspectivas:
+
+- USAB (Usabilidade): Foca na facilidade de uso e na experiência da interface.
+- CONF (Confiabilidade): Trata da capacidade do sistema de permanecer operacional e sem erros.
+- DES (Desempenho): Mede a velocidade de resposta e eficiência de recursos.
+- SUP (Suportabilidade): Avalia a facilidade de manter, testar e atualizar o código.
+- SEG (Segurança): Define a proteção dos dados e o controle de acesso.
+- CAP (Capacidade): Estipula o volume de dados e usuários que o sistema suporta.
+- REST (Restrições): Delimita limitações técnicas, de design ou de hardware.
+- ORG (Organizacionais): Alinha o projeto a padrões de marca, prazos e normas da empresa.
+  
+
+| Eixo                     | Requisito                                                                                                                                                                                                       | Métrica / Critério                                                                                                                                                             | Como atendido                                                                                                                                           |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| USAB — Usabilidade       | O sistema deve ser otimizado para operação em dispositivos móveis (iPad/Tablets) em ambiente de alta luminosidade e ritmo acelerado, permitindo execução rápida das funções básicas (início, checkpoint e fim). | O tempo de operação do fluxo principal (início → checkpoint → fim) por um auditor não deve exceder 5 minutos; elementos interativos devem possuir área mínima de 44x44 pixels. | Interface de alto contraste, uso de teclados numéricos nativos do iOS/Android para inputs e design touch-friendly.                                      |
+| CONF — Confiabilidade    | O sistema deve garantir a integridade dos dados mesmo em caso de interrupção de conectividade ou queda de energia.                                                                                              | Disponibilidade (uptime) ≥ 99,9% durante as 24h do evento; perda máxima de dados (RPO) ≤ 5 minutos.                                                                            | Implementação de persistência local (LocalStorage ou IndexedDB), mantendo os dados no navegador até confirmação de sincronização com o backend Node.js. |
+| DES — Desempenho         | O sistema deve responder de forma quase instantânea para não impactar o revezamento dos atletas.                                                                                                                | Tempo de resposta das requisições de salvamento (p95) < 200ms; carregamento inicial do dashboard < 2 segundos em rede 4G.                                                      | Otimização de queries no banco de dados, uso de cache para o dashboard e backend leve em Node.js/Express.                                               |
+| SUP — Suportabilidade    | O sistema deve ser de fácil manutenção e permitir correções rápidas sem interrupção da cronometragem.                                                                                                           | Cobertura de testes unitários ≥ 70% nas rotinas de cálculo; documentação de API disponível via Swagger/OpenAPI.                                                                | Arquitetura modular em TypeScript e separação clara entre lógica de cálculo de quilometragem e rotas de interface.                                      |
+| SEG — Segurança          | O sistema deve proteger contra manipulação acidental de dados e garantir rastreabilidade e autoria das alterações.                                                                                              | Todo registro de edição retroativa deve gerar log contendo valor original, novo valor, timestamp e IP do dispositivo.                                                          | Implementação de logs de auditoria no backend e sanitização de inputs para prevenção de SQL Injection e XSS.                                            |
+| CAP — Capacidade         | O sistema deve suportar o volume de dados gerados pelas esteiras simultâneas e múltiplos acessos ao dashboard durante o evento.                                                                                 | Suporte a até 20 conexões simultâneas (auditores + telas de placar) sem degradação perceptível de performance.                                                                 | Dimensionamento adequado da instância Node.js e uso de WebSockets (quando necessário) para atualização eficiente do dashboard.                          |
+| REST — Restrições Design | O sistema deve operar de forma independente, respeitando a infraestrutura limitada de eventos presenciais.                                                                                                      | Não deve haver dependência de APIs externas de terceiros nem de hardware específico das esteiras.                                                                              | Todo processamento de quilometragem realizado internamente e uso de bibliotecas locais (self-hosted).                                                   |
+| ORG — Organizacionais    | O sistema deve estar em conformidade com o cronograma e identidade visual da Red Bull.                                                                                                                          | Interface deve seguir o guia de estilos oficial; entrega da versão estável com 7 dias de antecedência para simulação.                                                          | Uso de paleta de cores e tipografia oficiais no CSS e validação contínua com stakeholders.                                                              |
+
+A definição desses Requisitos Não Funcionais assegura que a aplicação não seja apenas funcional, mas resiliente e eficiente sob as condições reais de campo. Ao estabelecer métricas claras e protocolos de operação, mitigamos os principais riscos tecnológicos que poderiam comprometer a apuração dos resultados.
+
+Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo que a operação foque na gestão do evento enquanto o software garante a precisão, a segurança e a estabilidade de todo o processamento de dados ao longo do período de competição.
 
 ### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
