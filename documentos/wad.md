@@ -396,6 +396,8 @@ PORTER, Michael E. Estratégia competitiva: técnicas para análise de indústri
 
 MONTGOMERY, Cynthia A.; PORTER, Michael E. (org.). Estratégia: a busca da vantagem competitiva. Rio de Janeiro: Elsevier, 1998.
 
+OSTERWALDER, Alexander; PIGNEUR, Yves. *Value Proposition Design: How to Create Products and Services Customers Want*. Hoboken: Wiley, 2014. 
+
 # <a name="c9"></a>Anexos
 
 *Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)*
