@@ -334,11 +334,37 @@ Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo
 
 ### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
-_Matriz de cobertura mostrando quais RN e endpoints implementam cada RF._
+A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcional às suas Regras de Negócio e ao contrato de comunicação com o servidor, definindo o método HTTP e o endpoint responsável por executar aquela funcionalidade. Essa estrutura permite identificar onde cada RF é implementado na API, quais restrições de negócio governam sua execução e como as requisições são enviadas ao servidor.
 
-| RF    | RN associadas | Endpoint    | Método |
-| ----- | ------------- | ----------- | ------ |
-| RF001 | RN01, RN02    | `/usuarios` | POST   |
+A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcional às suas Regras de Negócio e ao contrato de comunicação com o servidor, definindo o método HTTP e o endpoint responsável por executar aquela funcionalidade. Essa estrutura permite identificar onde cada RF é implementado na API, quais restrições de negócio governam sua execução e como as requisições são enviadas ao servidor.
+
+| RF    | RN associadas | Endpoint                                                         | Método |
+| ----- | ------------- | ---------------------------------------------------------------- | ------ |
+| RF001 | RN01, RN02    | `/turnos`                                                        | POST   |
+| RF002 | RN03          | `/turnos/{id}/checkpoints`                                       | POST   |
+| RF003 | RN04          | `/turnos/{id}/checkpoints`                                       | POST   |
+| RF004 | RN05          | `/turnos/{id}/finalizar`                                         | PATCH  |
+| RF005 | RN06          | `/turnos/{id}/finalizar`                                         | PATCH  |
+| RF006 | RN07          | `/turnos/{id}/finalizar`                                         | PATCH  |
+| RF007 | RN08          | `/turnos/{id}/hot-swap`                                          | POST   |
+| RF008 | RN09          | `/equipes/{id}/quilometragem`                                    | GET    |
+| RF009 | RN10          | `/eventos/{id}/metricas`                                         | GET    |
+| RF010 | RN11          | `/eventos/{id}/dashboard`                                        | GET    |
+| RF011 | RN12          | `/esteiras/{id}/status`                                          | GET    |
+| RF012 | RN13          | `/eventos/{id}/historico`                                        | GET    |
+| RF013 | RN14          | `/eventos/{id}/placar`                                           | GET    |
+| RF014 | RN15          | `/equipes`                                                       | POST   |
+| RF015 | RN16          | `/corredores`                                                    | POST   |
+| RF016 | RN17          | `/equipes/{id}/validacao`                                        | GET    |
+| RF017 | RN18          | `/eventos`                                                       | POST   |
+| RF018 | RN19          | `/esteiras`                                                      | GET    |
+| RF019 | RN20          | `/equipes`                                                       | GET    |
+| RF020 | RN21          | `/corredores?disponivel=true`                                    | GET    |
+| RF021 | RN22          | `/eventos/{id}/historico?equipe={id}&esteira={id}&corredor={id}` | GET    |
+| RF022 | RN23, RN24    | `/registros/{id}`                                                | PATCH  |
+| RF023 | RN25          | `/eventos/{id}/inconsistencias`                                  | GET    |
+| RF024 | RN26          | `/eventos/{id}/exportar`                                         | GET    |
+| RF025 | RN27          | `/sync`                                                          | POST   |
 
 ## 3.2. Arquitetura (sprints 1 a 5)
 
