@@ -44,11 +44,35 @@ _Observe a seção 2 e verifique que ali é possível trazer mais detalhes, port
 
 ## 2.1. Escopo do Projeto (sprints 1 e 4)
 
-### 2.1.1. Modelo de 5 Forças de Porter (sprint 1)
+### 2.1.1. Modelo de 5 Forças de Porter
 
-_Preencha com até 400 palavras_
+Criado por Harvard Michael Porter na década de 1970, o modelo das Cinco Forças é uma metodologia estratégica que analisa o ambiente competitivo de um projeto indo além da simples observação dos concorrentes diretos. O framework oferece uma visão sistêmica das pressões externas ao avaliar o cenário com base em cinco pilares: a rivalidade entre concorrentes, a ameaça de novos entrantes, a ameaça de produtos substitutos, e o poder de negociação dos fornecedores e dos clientes. Ao mapear a viabilidade, os riscos e as oportunidades de uma solução no mercado através dessa lente, torna-se possível compreender a fundo o cenário mercadológico e os riscos operacionais do novo sistema de registro do evento Red Bull 24 Horas, como será demonstrado na análise a seguir, que aplica o modelo para detalhar as características exclusivas do projeto frente ao ecossistema em que será inserido.
 
-_Posicione aqui o modelo de 5 Forças de Porter para sustentar o contexto da indústria._
+1. Rivalidade entre concorrentes
+
+Na indústria de desenvolvimento de softwares e aplicações web sob medida, a rivalidade pode ser considerada alta de forma geral, pois o mercado conta com inúmeras agências de tecnologia, fábricas de software e desenvolvedores independentes capazes de criar sistemas de registro. No entanto, quando se trata de uma solução específica para o evento Red Bull 24 Horas, a rivalidade direta torna-se média a baixa. O projeto exige a criação de um fluxo simples de registro que substitua a prancheta, desenhado especificamente para a dinâmica de revezamento contínuo entre duas equipes operando duas esteiras simultaneamente. Desse modo, a rivalidade tende a ser menor quando a diferenciação e a customização do produto são muito altas para atender a uma necessidade exclusiva. Existem poucas soluções no mercado que se adaptem perfeitamente a esse formato sem gerar atrito na operação, fazendo com que a rivalidade seja restrita a fornecedores que consigam garantir extrema confiabilidade para rodar o sistema por 24 horas ininterruptas.
+
+2. Ameaça de novos entrantes
+
+Embora o desenvolvimento de uma aplicação web com interface simples seja tecnicamente muito acessível, a entrada de novos concorrentes neste nicho específico apresenta barreiras baseadas na confiança operacional. O escopo técnico possui barreiras baixas, contudo, a barreira real é a exigência de validação prática e garantia de zero falhas durante um evento ao vivo de uma marca global. Desenvolvedores iniciantes podem criar o código facilmente, mas conquistar a confiança da marca para substituir um processo analógico que, embora falho, é seguro contra quedas de sistema, exige grande credibilidade. Dessa forma, a ameaça de novos entrantes pode ser classificada como média, equilibrando a facilidade tecnológica com a alta exigência de estabilidade e confiança operacional do cliente.
+
+3. Ameaça de produtos substitutos
+
+Os principais substitutos para essa aplicação web incluem o método atual de apuração manual via prancheta e hardwares vestíveis. No campo tecnológico, existem alternativas como relógios inteligentes ou a própria pulseira da Technogym que sincroniza com a esteira. No entanto, a adaptação superficial dessas tecnologias já existentes não atende à dinâmica ágil do evento. O uso de pulseiras é inviabilizado pelas trocas constantes de corredores, pela falta de equipamentos para todos os participantes e pela ausência de tempo hábil para sincronização pré-corrida. Por outro lado, a prancheta de papel está altamente sujeita a erros humanos, distrações e inconsistências. Portanto, a ameaça de substitutos pode ser classificada como média a baixa, especialmente porque as alternativas existentes falham em oferecer uma visão consolidada, confiável e em tempo real do andamento da competição sem atrapalhar a experiência do usuário.
+
+4. Poder de negociação dos fornecedores
+
+Os fornecedores para a construção deste projeto incluem provedores de hospedagem em nuvem e fabricantes de hardware de interface, como tablets. Diferente de indústrias que dependem de peças altamente especializadas, as ferramentas de desenvolvimento web são amplamente comoditizadas, existindo infinitas opções de servidores e frameworks. Além disso, o projeto possui uma diretriz clara que elimina uma grande dependência técnica: não haverá integração direta com as esteiras Technogym nem captura automática de dados. Como a equipe de desenvolvimento não fica refém de APIs fechadas ou licenças proprietárias da fabricante do equipamento esportivo, a substituição de qualquer tecnologia base do projeto é fácil. Assim, o poder de negociação dos fornecedores é baixo, devido à alta disponibilidade de ferramentas padronizadas no mercado e à ausência de dependência de hardwares exclusivos.
+
+5. Poder de negociação dos clientes
+
+Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável pela operação do evento. Por se tratar de um projeto customizado e de uso interno exclusivo para uma de suas experiências proprietárias, a Red Bull atua como a única compradora desta solução específica. Isso eleva substancialmente o seu poder de barganha. O cliente tem controle total sobre os requisitos de sucesso do MVP, exigindo que o sistema prove ser superior ao método atual da prancheta em consistência e redução de erros. Se a aplicação não entregar a eficiência operacional esperada, a organização pode facilmente descartar a ferramenta e retornar ao método manual sem grandes prejuízos, ou simplesmente buscar outra agência desenvolvedora. Dessa forma, a poder de negociação do cliente é alto, refletindo sua posição dominante na definição das regras do projeto e na validação final da entrega.
+
+<div align="center">
+  <sub>Imagem 1 - FORÇAS DE PORTER</sub><br>
+  <img src="../assets/forcas_de_porter .png" width="100%" alt="forças de porter"><br>
+  <sup>Fonte: Autores</sup>
+</div>
 
 ### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
@@ -67,11 +91,94 @@ _Explique detalhadamente os seguintes aspectos (até 60 palavras por item):_
 5. Benefícios esperados
 6. Critério de sucesso e como será avaliado
 
-### 2.1.4. Value Proposition Canvas (sprint 1):
+### 2.1.4. Value Proposition Canvas (sprint 1): 
 
-_Sem limite de palavras – usar template do curso_
+O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidades do cliente e a solução proposta (Osterwalder; Pigneur, 2011). No contexto deste projeto, evidencia-se o encaixe entre as dificuldades operacionais enfrentadas pelo time de Field Marketing da Red Bull durante a apuração manual dos quilômetros corridos no evento Red Bull 24 Horas e as funcionalidades de uma aplicação web voltada para registro confiável e consolidação automatizada dos dados da competição.
 
-_Elaborar o Value Proposition Canvas com base na proposta de solução definida._
+### A. Perfil do Cliente:
+
+O público-alvo é composto pelo time operacional de Field Marketing da Red Bull, responsável pela apuração e acompanhamento do evento Red Bull 24 Horas — atualmente quem opera a prancheta ao lado das esteiras —, além da organização do evento, que utiliza os dados consolidados para validar os resultados, e dos juízes responsáveis pela auditoria final das marcações.
+
+### Tarefas:
+
+**Time Operacional (responsáveis pela apuração):**
+* Registrar o início e fim de cada turno de corrida dos atletas nas duas esteiras por equipe
+* Realizar marcações periódicas (a cada 5 ou 30 minutos) como referência de segurança
+* Consolidar os quilômetros corridos por equipe ao longo das 24 horas ininterruptas
+* Garantir a continuidade do registro durante revezamentos rápidos entre atletas
+
+**Organização e Juízes:**
+* Validar os resultados finais com base nos registros realizados durante o evento
+* Auditar marcações em caso de divergências ou paradas técnicas das esteiras
+* Acompanhar a evolução da competição em tempo real
+
+### Dores:
+
+**Time Operacional:**
+* Erro humano nas anotações manuais durante 24 horas ininterruptas, especialmente nas madrugadas, quando o cansaço compromete a precisão
+* Processo analógico baseado em prancheta e transcrição posterior para planilha Excel, gerando atraso de até duas horas para visualização do resultado
+* Dificuldade de recuperar informações em caso de falha técnica das esteiras (paradas, travamentos)
+* Retrabalho na transcrição manual de dados do papel para a planilha
+* Inconsistências entre as cinco etapas regionais por falta de padronização do processo
+
+**Organização e Juízes:**
+* Baixa rastreabilidade dos registros, dificultando auditoria em casos de margens apertadas (diferenças finais de até 150 metros entre equipes)
+* Impossibilidade de conexão direta com as esteiras Technogym, eliminando soluções automatizadas de captura
+* Inviabilidade do uso de pulseiras de sincronização devido à dinâmica de revezamento rápido (trocas em até 15 segundos) e ao número insuficiente de dispositivos
+
+### Ganhos:
+
+**Time Operacional:**
+* Redução significativa do erro humano na apuração dos quilômetros
+* Maior eficiência operacional, com menos carga manual e retrabalho
+* Padronização do processo entre as diferentes etapas regionais
+* Facilidade no cadastro inicial dos participantes e equipes
+
+**Organização e Juízes:**
+* Visão consolidada e organizada do andamento da competição
+* Maior confiabilidade e rastreabilidade dos registros ao longo das 24h
+* Histórico completo para auditoria pós-evento
+* Capacidade de exportar dados estruturados para análise estatística
+
+### B. Mapa de Valor:
+
+<div align="center">
+  <sub>Imagem X - Canvas da Proposta de Valor</sub><br>
+  <img src= "./assets/negocios/Value-Proposition-Canvas.png" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
+  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+</div>
+
+**Produtos e Serviços:**
+
+* Aplicação web responsiva, otimizada para uso em iPad, com interface simples e funcional para operação durante 24 horas ininterruptas
+* Fluxo de cadastro inicial de local, data, equipes e corredores
+* Tela de seleção de equipe e corredor para registro ágil de turnos
+* Funcionalidade de contabilização de quilômetros a cada 5 minutos com timestamp automático
+* Aviso periódico (5 em 5 minutos) para padronização das marcações de segurança
+* Dashboard consolidado com pace médio do evento e quilômetros totais por equipe
+* Histórico cronológico de lançamentos com filtros por equipe e corredor
+* Exportação de dados em formato CSV para auditoria pós-evento
+
+**Analgésicos:**
+
+* O erro humano na apuração é reduzido pela substituição da prancheta por inputs digitais padronizados, com timestamp automático e validação de campos
+* O atraso na consolidação dos dados é eliminado por meio do cálculo automático do total de quilômetros por equipe, exibido em tempo quase real
+* A dificuldade de recuperação em falhas técnicas das esteiras é mitigada pelas marcações periódicas registradas digitalmente, permitindo recuperar a última referência confiável
+* O retrabalho de transcrição entre papel e planilha é eliminado, já que os dados são inseridos diretamente no sistema e exportáveis em CSV
+* A falta de padronização entre etapas regionais é resolvida por um fluxo único e replicável em todas as seletivas
+* A baixa rastreabilidade é resolvida pelo histórico completo de lançamentos com filtros, garantindo auditoria precisa
+
+**Criadores de Ganho:**
+
+* A eficiência operacional é ampliada por uma interface simples e direta, projetada para uso ágil durante revezamentos de até 15 segundos
+* A confiabilidade dos resultados é fortalecida pelo registro digital com timestamp automático, eliminando dependência de anotações manuais sob pressão
+* A visão consolidada da competição é entregue por meio do dashboard com pace médio e quilometragem total, oferecendo um overview do evento sem expor a comparação direta entre equipes
+* A rastreabilidade pós-evento é garantida pela exportação em CSV e pelo histórico filtrável, possibilitando análise estatística e validação dos resultados
+* A escalabilidade entre etapas regionais é viabilizada por uma solução web acessível em qualquer dispositivo conectado, padronizando a operação em todo o Brasil
+
+**Síntese da Proposta de Valor**
+
+A análise evidencia um forte alinhamento entre as dores operacionais do time de Field Marketing da Red Bull e as funcionalidades propostas pela aplicação web. A substituição do processo analógico via prancheta por um fluxo digital padronizado reduz o erro humano e o retrabalho, enquanto a consolidação automática e o histórico filtrável aumentam a confiabilidade e a rastreabilidade dos registros. Dessa forma, a solução transforma a operação do Red Bull 24 Horas em um processo mais eficiente, auditável e escalável, sem comprometer a dinâmica original do evento — que depende da agilidade das trocas entre atletas e da operação contínua das esteiras ao longo das 24 horas.
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
@@ -107,12 +214,41 @@ _Esta seção formaliza o que o sistema deve fazer, sob quais regras e com quais
 
 ### 3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 
-_Liste os RF numerados de forma objetiva e verificável. Cada RF deve poder ser convertido em caso de teste._
+Para que o desenvolvimento de um software seja bem-sucedido, é fundamental definir seus Requisitos Funcionais (RF). De forma simples, eles são as descrições de todas as tarefas, ações e serviços que o sistema deve realizar. Eles representam o "o quê" o sistema faz: desde o clique de um botão pelo usuário até cálculos automáticos e geração de relatórios feitos "por baixo dos panos".
 
-| ID    | Descrição | Prioridade | Status       |
-| ----- | --------- | ---------- | ------------ |
-| RF001 | ...       | Alta       | Implementado |
-| RF002 | ...       | Média      | Planejado    |
+Sua principal função é servir como um guia tanto para os desenvolvedores quanto para os organizadores do evento, garantindo que todas as necessidades operacionais, como o registro de quilometragem e o controle de revezamento, sejam atendidas sem falhas.
+
+| ID    | Descrição                                                                                                                                                                                                                                                        | Prioridade | Status    |
+| ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------- |
+| RF001 | O sistema deve permitir que o Auditor registre o início de um turno, armazenando corredor, esteira, quilometragem inicial (km ≥ 0) e timestamp automático do servidor, somente se o corredor não possuir turno em aberto e a esteira estiver com status "Livre". | Alta       | Planejado |
+| RF002 | O sistema deve exibir um modal bloqueante a cada 5 minutos a partir do início do turno, impedindo interação até inserção da quilometragem atual (valor ≥ último checkpoint).                                                                                     | Alta       | Planejado |
+| RF003 | O sistema deve permitir o registro manual de quilometragem a qualquer momento, gerando timestamp automático para rastreabilidade.                                                                                                                                | Média      | Planejado |
+| RF004 | O sistema deve permitir que o Auditor finalize o turno de um corredor, disparando o fluxo de encerramento e cálculo de estatísticas.                                                                                                                             | Alta       | Planejado |
+| RF005 | O sistema deve permitir a inserção da quilometragem final, registrando timestamp automático e rejeitando valores menores que o último checkpoint.                                                                                                                | Alta       | Planejado |
+| RF006 | O sistema deve calcular automaticamente distância (km_final − km_inicial), duração (timestamp_fim − timestamp_início) e velocidade média (km/h), persistindo os dados vinculados ao turno.                                                                       | Alta       | Planejado |
+| RF007 | O sistema deve permitir iniciar um novo corredor na mesma esteira com um clique após o término do turno anterior, reutilizando dados da equipe.                                                                                                                  | Média      | Planejado |
+| RF008 | O sistema deve calcular automaticamente a quilometragem total acumulada por equipe somando o desempenho individual dos corredores.                                                                                                                               | Alta       | Planejado |
+| RF009 | O sistema deve gerar métricas por corredor incluindo distância total, média por turno e histórico de evolução por hora com snapshots a cada 60 minutos.                                                                                                          | Média      | Planejado |
+| RF010 | O sistema deve exibir um dashboard com placar e métricas atualizados automaticamente em até 10 segundos sem recarregamento de página.                                                                                                                            | Alta       | Planejado |
+| RF011 | O sistema deve exibir o status das esteiras (Ocupada/Livre) e sugerir alternância para evitar superaquecimento.                                                                                                                                                  | Média      | Planejado |
+| RF012 | O sistema deve exibir um histórico (log) de entradas, saídas e checkpoints em ordem decrescente.                                                                                                                                                                 | Alta       | Planejado |
+| RF013 | O sistema deve disponibilizar modo TV com fonte ≥ 48px, contraste WCAG AA, resolução 1920x1080, operável sem mouse e sem login.                                                                                                                                  | Média      | Planejado |
+| RF014 | O sistema deve permitir o cadastro de exatamente duas equipes com nome e identificador únicos, impedindo duplicatas.                                                                                                                                             | Alta       | Planejado |
+| RF015 | O sistema deve permitir o cadastro de corredores vinculados a uma equipe existente.                                                                                                                                                                              | Alta       | Planejado |
+| RF016 | O sistema deve validar que cada equipe possui exatamente 16 corredores antes do início do evento, bloqueando caso contrário.                                                                                                                                     | Alta       | Planejado |
+| RF017 | O sistema deve permitir o registro do local/região da etapa.                                                                                                                                                                                                     | Baixa      | Planejado |
+| RF018 | O sistema deve permitir a seleção da esteira onde o corredor iniciará a atividade.                                                                                                                                                                               | Alta       | Planejado |
+| RF019 | O sistema deve permitir a seleção da equipe associada à esteira escolhida.                                                                                                                                                                                       | Alta       | Planejado |
+| RF020 | O sistema deve permitir a seleção do corredor da equipe para iniciar a corrida.                                                                                                                                                                                  | Alta       | Planejado |
+| RF021 | O sistema deve permitir a filtragem do histórico por equipe, esteira ou corredor.                                                                                                                                                                                | Média      | Planejado |
+| RF022 | O sistema deve permitir edição retroativa de registros com log automático de auditoria sobre quem realizou a alteração.                                                                                                                                          | Alta       | Planejado |
+| RF023 | O sistema deve identificar inconsistências como km_final < km_inicial, intervalo de checkpoint > 10 min e corredor com turnos simultâneos.                                                                                                                       | Média      | Planejado |
+| RF024 | O sistema deve permitir exportação de dados em CSV contendo turnos e checkpoints registrados.                                                                                                                                                                    | Média      | Planejado |
+| RF025 | O sistema deve permitir o registro de checkpoints e turnos sem conexão com a internet, persistindo os dados localmente e sincronizando automaticamente ao restabelecer a conexão, sem duplicidade de registros.                                                  | Alta       | Planejado |
+
+A estrutura de requisitos apresentada acima foi desenhada para transformar a dinâmica complexa do evento Red Bull 24 Horas em um fluxo digital ágil e seguro.
+Com esta base sólida, o projeto segue para a fase de implementação, onde cada ID listado servirá como critério de aceitação para garantir que a apuração final dos quilômetros seja 100% confiável, rastreável e transparente para ambas as equipes.
+
 
 ### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
@@ -208,7 +344,7 @@ _Posicione aqui o diagrama de arquitetura da solução, indicando as camadas pri
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
-_Apresente o diagrama de casos de uso com atores (boneco), casos (elipse) e as relações `<<include>>` / `<<extend>>` com semântica correta. Consulte a notação de referência em `in02/suporte/use-case_3.0_v1.0.pdf`._
+*Apresente o diagrama de casos de uso com atores (boneco), casos (elipse) e as relações `<<include>>` / `<<extend>>` com semântica correta. Consulte a notação de referência em `https://www.ivarjacobson.com/files/use-case_3.0_v1.0.pdf`.*
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
@@ -270,7 +406,7 @@ _Posicione aqui o DER com cardinalidades explícitas em ambos os lados de cada r
 
 _Posicione aqui os diagramas de modelos relacionais do banco de dados, apresentando todos os esquemas de tabelas e suas relações. Inclua as migrations DDL numeradas e reproduzíveis (`CREATE TABLE`, `CREATE INDEX`, constraints `NOT NULL`, `UNIQUE`, `FOREIGN KEY`, `CHECK`). Utilize texto para complementar suas explicações quando necessário._
 
-### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
+### 3.6.4. Consultas SQL e lógica proposicional (sprint 3)
 
 _posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$_
 
@@ -416,9 +552,9 @@ _Relacione os pontos de melhorias evidenciados nos testes com planos de ações 
 
 _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras_
 
-# <a name="c8"></a>8. Referências (sprints 1 a 5)
+# <a name="c8"></a>8. Referências
 
-_Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
+PORTER, Michael E. Estratégia competitiva: técnicas para análise de indústrias e da concorrência. 2. ed. Rio de Janeiro: Elsevier, 2004.
 
 FIELDING, Roy Thomas. Architectural Styles and the Design of Network-based Software Architectures. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: https://ics.uci.edu/~fielding/pubs/dissertation/top.htm. Acesso em: 27 abr. 2026.
 
@@ -427,8 +563,7 @@ BUSINESS RULES GROUP. Business Rules Manifesto: the principles of rule independe
 LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
 SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
 
-INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
-SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
+OSTERWALDER, Alexander; PIGNEUR, Yves. *Value Proposition Design: How to Create Products and Services Customers Want*. Hoboken: Wiley, 2014. 
 
 # <a name="c9"></a>Anexos
 
