@@ -215,7 +215,21 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 *Esta seção formaliza o que o sistema deve fazer, sob quais regras e com quais qualidades. Atualize a cada sprint conforme os requisitos evoluem.*
 
-### 3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
+## 3.1.1. Minimundo 
+
+O sistema é uma aplicação web desenvolvida com a finalidade de substituir o processo manual de registro de quilômetros no evento Red Bull 24 Horas, tornando a apuração mais confiável, rastreável e eficiente. A solução é direcionada aos auditores do evento, responsáveis por operar o sistema em tempo real durante as 24 horas de competição, em todas as regiões onde o evento é realizado.
+
+O evento é composto por duas equipes fixas, cada uma com seus corredores cadastrados previamente. Antes do início da competição, o auditor realiza o cadastro do local do evento, das equipes participantes e dos corredores vinculados a cada equipe. Cada equipe dispõe de duas esteiras simultâneas para revezamento contínuo dos atletas.
+
+Durante o evento, os corredores se alternam nas esteiras ao longo das 24 horas. Cada vez que um corredor inicia sua corrida, o auditor registra o início do percurso, informando o corredor, a esteira e a quilometragem inicial lida no painel da esteira. A partir desse momento, o sistema contabiliza o andamento do percurso com registros automáticos de quilometragem a cada 5 minutos, garantindo pontos de recuperação caso haja interrupção na esteira. Ao término da corrida, o auditor registra o encerramento do percurso com a quilometragem final, e o sistema calcula automaticamente a distância percorrida e o tempo total daquele corredor.
+
+O sistema é responsável por armazenar todas as informações do evento, realizar o cálculo da quilometragem total acumulada por equipe e gerar métricas de desempenho, como distância por corredor, média por turno e evolução ao longo das horas. 
+
+Essas informações são expostas com a vizualização em uma tela simples e em tempo real, permitindo acompanhamento do placar e identificação de eventuais inconsistências. Ao final do evento, o auditor pode exportar todos os registros e métricas em formato de planilha para fins de auditoria e validação dos resultados.
+
+O sistema não realiza integração direta com as esteiras, não possui autenticação por login e não acessa sistemas externos. Toda a entrada de dados é realizada manualmente pelos auditores durante o evento.
+
+### 3.1.2. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 
 Para que o desenvolvimento de um software seja bem-sucedido, é fundamental definir seus Requisitos Funcionais (RF). De forma simples, eles são as descrições de todas as tarefas, ações e serviços que o sistema deve realizar. Eles representam o "o quê" o sistema faz: desde o clique de um botão pelo usuário até cálculos automáticos e geração de relatórios feitos "por baixo dos panos".
 
@@ -253,7 +267,7 @@ A estrutura de requisitos apresentada acima foi desenhada para transformar a din
 Com esta base sólida, o projeto segue para a fase de implementação, onde cada ID listado servirá como critério de aceitação para garantir que a apuração final dos quilômetros seja 100% confiável, rastreável e transparente para ambas as equipes.
 
 
-### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
+### 3.1.3. Regras de Negócio (sprint 1, refinar até sprint 5)
 
 *Numere e redija as RN de forma implementável e testável. Toda RN deve ter pelo menos um teste automatizado associado a partir da sprint 3.*
 
@@ -262,7 +276,7 @@ Com esta base sólida, o projeto segue para a fase de implementação, onde cada
 | RN01 | ...       | RF001        |
 | RN02 | ...       | RF001        |
 
-### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
+### 3.1.4. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
 Enquanto os requisitos funcionais descrevem o que o sistema faz, os Requisitos Não Funcionais (RNF) definem como o sistema deve operar. Eles não estão ligados a uma funcionalidade específica, mas sim às características de qualidade e restrições que garantem que o software seja robusto, eficiente e seguro. Eles servem como os critérios de "padrão de qualidade" que validam a experiência do usuário e a integridade técnica da solução sob condições reais de uso.
 
@@ -293,7 +307,7 @@ A definição desses Requisitos Não Funcionais assegura que a aplicação não 
 
 Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo que a operação foque na gestão do evento enquanto o software garante a precisão, a segurança e a estabilidade de todo o processamento de dados ao longo do período de competição.
 
-### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
+### 3.1.5. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
 *Matriz de cobertura mostrando quais RN e endpoints implementam cada RF.*
 
@@ -413,7 +427,8 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 
 *Posicione aqui os diagramas de modelos relacionais do banco de dados, apresentando todos os esquemas de tabelas e suas relações. Inclua as migrations DDL numeradas e reproduzíveis (`CREATE TABLE`, `CREATE INDEX`, constraints `NOT NULL`, `UNIQUE`, `FOREIGN KEY`, `CHECK`). Utilize texto para complementar suas explicações quando necessário.*
 
-### 3.6.4. Consultas SQL e lógica proposicional (sprint 3)
+### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
+
 
 *posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
 
@@ -427,31 +442,31 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 
 *Dica: edite a tabela verdade fora do markdown, para ter melhor controle*
 
-## 3.7. WebAPI e endpoints (sprints 3 e 4)
+## 3.8. WebAPI e endpoints (sprints 3 e 4)
 
 *Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema.* 
 
 *Cada endpoint deve conter endereço, método (GET, POST, PUT, PATCH, DELETE), header, body, formatos de response e os status codes possíveis (200, 201, 204, 400, 401, 403, 404, 409, 422, 500).*
 
-## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
+## 3.9. Autenticação, Autorização e Resiliência (sprint 5)
 
-### 3.8.1. Autenticação
+### 3.9.1. Autenticação
 
 *Descreva o fluxo de autenticação implementado: persistência de senha com hash bcrypt/argon2 (parâmetros de custo explícitos e justificados), validação de credenciais e criação de sessão. Senhas em texto plano no banco não são aceitas.*
 
-### 3.8.2. Controle de sessão
+### 3.9.2. Controle de sessão
 
 *Descreva o controle de sessão baseado em `session id` persistido em tabela própria, com expiração. Se optar por JWT, justifique a escolha explicando os trade-offs (stateless, não revogável, payload exposto).*
 
-### 3.8.3. Autorização
+### 3.9.3. Autorização
 
 *Descreva as regras de autorização por rota e por operação, baseadas no perfil do usuário autenticado. A verificação deve ocorrer no backend — o frontend nunca é fonte de verdade para autorização.*
 
-### 3.8.4. Estratégias de Resiliência
+### 3.9.4. Estratégias de Resiliência
 
 *Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.).*
 
-## 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
+## 3.9.5 Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
 
 *A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida toda a cadeia — mantenha-a atualizada a cada sprint. A partir da sprint 3 não deve haver lacunas nos fluxos centrais.*
 
