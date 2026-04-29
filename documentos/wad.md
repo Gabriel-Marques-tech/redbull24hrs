@@ -382,6 +382,12 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 <br> TIMES BRASIL. Disponível em: https://timesbrasil.com.br/empresas-e-negocios/red-bull-marcas-geracao-z/. Acesso em: 28 abr. 2026 <br>
 
+<br> PORTER, Michael E. Estratégia competitiva: técnicas para análise de indústrias e da concorrência. 2. ed. Rio de Janeiro: Elsevier, 2004. <br>
+
+<br> MONTGOMERY, Cynthia A.; PORTER, Michael E. (org.). Estratégia: a busca da vantagem competitiva. Rio de Janeiro: Elsevier, 1998. <br>
+
+<br> OSTERWALDER, Alexander; PIGNEUR, Yves. *Value Proposition Design: How to Create Products and Services Customers Want*. Hoboken: Wiley, 2014. <br>
+
 # <a name="c9"></a>Anexos
 
 *Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)*
