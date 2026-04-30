@@ -4,9 +4,23 @@
 
 ## Nome do Grupo
 
-RED BULLS
+### RED BULLS
 
-#### Nomes dos integrantes do grupo
+## Nome dos integrantes do grupo
+
+#### Fernanda Helena Leitão Bezerra
+
+#### Gabriel Simões Marques
+
+#### Giovanna Scharlau Carettoni
+
+#### Laura Faria Damasceno
+
+#### Miguel Vinícius da Silva
+
+#### Nicoly Mendes Adesanmi
+
+#### Pietro Sansão Lucas
 
 ## Sumário
 
@@ -45,6 +59,7 @@ A proposta substitui um processo frágil por um sistema rastreável e confiável
 ## 2.1. Escopo do Projeto (sprints 1 e 4)
 
 ### 2.1.1. Modelo de 5 Forças de Porter
+---
 
 Criado por Harvard Michael Porter na década de 1970, o modelo das Cinco Forças é uma metodologia estratégica que analisa o ambiente competitivo de um projeto indo além da simples observação dos concorrentes diretos. O framework oferece uma visão sistêmica das pressões externas ao avaliar o cenário com base em cinco pilares: a rivalidade entre concorrentes, a ameaça de novos entrantes, a ameaça de produtos substitutos, e o poder de negociação dos fornecedores e dos clientes. Ao mapear a viabilidade, os riscos e as oportunidades de uma solução no mercado através dessa lente, torna-se possível compreender a fundo o cenário mercadológico e os riscos operacionais do novo sistema de registro do evento Red Bull 24 Horas, como será demonstrado na análise a seguir, que aplica o modelo para detalhar as características exclusivas do projeto frente ao ecossistema em que será inserido.
 
@@ -75,10 +90,11 @@ Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável
 </div>
 
 ### 2.1.2. Análise SWOT da Instituição Parceira
+---
 
 <div align="center">
   <sub>Imagem 2 - Análise SWOT </sub><br>
-  <img src= "" width="85%" alt="Análise SWOT - Red Bull"><br>
+  <img src= "../assets/analise_SWOT.png" width="100%" alt="Análise SWOT - Red Bull"><br>
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
@@ -87,6 +103,7 @@ A Red Bull consolida sua relevância junto à geração atual por meio de um mar
 Diante dessas limitações, duas oportunidades se mostram estrategicamente decisivas: a ascensão da Geração Wellness[³](#8-referências) — público crescente que une performance esportiva e consciência de saúde e bem-estar por diversos motivos — e a possibilidade de nossa plataforma web ser uma promoção direta da marca, transformando o uso de tecnologia em um ponto de melhoria e diminuição burocrática do armazenamento de dados do evento — evitando, assim, possíveis erros. Contudo, o clima instável e a falta de infraestrutura no local do evento impõem riscos operacionais que reverberam diretamente na plataforma: possível falha de internet, o que atrapalha o uso do site, interrupções de esteiras, por falta de energia, o que exige uma comunicação em tempo real com os participantes para que o evento retome ao normal assim que possível. Soma-se ao setor de fraquezas o crescente rigor regulatório sobre o marketing de bebidas energéticas[⁴](#8-referências), o que pode vir a limitar o tom e o alcance da comunicação digital — tensão que a Red Bull deve gerir com cuidado para amplificar o evento sem expô-lo a possíveis frustrações.
 
 ### 2.1.3. Solução (sprints 1 a 5)
+---
 
 ### 2.1.4. Value Proposition Canvas:
 
@@ -145,12 +162,6 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 
 ### B. Mapa de Valor:
 
-<div align="center">
-  <sub>Imagem X - Canvas da Proposta de Valor</sub><br>
-  <img src= "./assets/negocios/Value-Proposition-Canvas.png" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
-</div>
-
 **Produtos e Serviços:**
 
 - Aplicação web responsiva, otimizada para uso em iPad, com interface simples e funcional para operação durante 24 horas ininterruptas
@@ -181,7 +192,7 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 
 <div align="center">
   <sub>Imagem 3 - Canvas da Proposta de Valor</sub><br>
-  <img src= "" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
+  <img src= "../assets/proposta_de_valor.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
@@ -190,6 +201,7 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 A análise evidencia um forte alinhamento entre as dores operacionais do time de Field Marketing da Red Bull e as funcionalidades propostas pela aplicação web. A substituição do processo analógico via prancheta por um fluxo digital padronizado reduz o erro humano e o retrabalho, enquanto a consolidação automática e o histórico filtrável aumentam a confiabilidade e a rastreabilidade dos registros. Dessa forma, a solução transforma a operação do Red Bull 24 Horas em um processo mais eficiente, auditável e escalável, sem comprometer a dinâmica original do evento — que depende da agilidade das trocas entre atletas e da operação contínua das esteiras ao longo das 24 horas.
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
+---
 
 A matriz de riscos é uma ferramenta fundamental para identificar, analisar e priorizar ameaças que podem impactar o desempenho do produto, permitindo a criação de estratégias de mitigação eficazes (PMI, 2021). Para este projeto, foram mapeados riscos diretamente relacionados à confiabilidade do registro manual digitalizado, à operação contínua durante 24 horas, à usabilidade em condições de pressão e à integridade dos dados que definem o resultado oficial da competição Red Bull 24 Horas.
 
@@ -253,7 +265,7 @@ A matriz de riscos é uma ferramenta fundamental para identificar, analisar e pr
 
 <div align="center">
   <sub>Imagem 4 - Matriz de Ameaças</sub><br>
-  <img src="" width="80%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
+  <img src="../assets/matriz_ameacas.jpeg" width="100%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
@@ -316,7 +328,7 @@ No contexto do desenvolvimento de soluções tecnológicas, as oportunidades sã
 
 <div align="center">
   <sub>Imagem 5 - Matriz de Oportunidades</sub><br>
-  <img src="" width="80%" alt="Matriz de Oportunidades do projeto Red Bull 24 Horas"><br>
+  <img src="../assets/matriz_oportunidades.jpeg" width="100%" alt="Matriz de Oportunidades do projeto Red Bull 24 Horas"><br>
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
@@ -466,6 +478,7 @@ Lucas Andrade atua como operador de eventos na equipe de Field Marketing, sendo 
 ## 3.1. Requisitos do Sistema (sprints 1 a 5)
 
 ### 3.1.1. Minimundo
+---
 
 O sistema é uma aplicação web desenvolvida com a finalidade de substituir o processo manual de registro de quilômetros no evento Red Bull 24 Horas, tornando a apuração mais confiável, rastreável e eficiente. A solução é direcionada aos auditores do evento, responsáveis por operar o sistema em tempo real durante as 24 horas de competição, em todas as regiões onde o evento é realizado.
 
@@ -480,6 +493,7 @@ Essas informações são expostas com a vizualização em uma tela simples e em 
 O sistema não realiza integração direta com as esteiras, não possui autenticação por login e não acessa sistemas externos. Toda a entrada de dados é realizada manualmente pelos auditores durante o evento.
 
 ### 3.1.2. Requisitos Funcionais (sprint 1, refinar até sprint 5)
+---
 
 Para que o desenvolvimento de um software seja bem-sucedido, é fundamental definir seus Requisitos Funcionais (RF). De forma simples, eles são as descrições de todas as tarefas, ações e serviços que o sistema deve realizar. Eles representam o "o quê" o sistema faz: desde o clique de um botão pelo usuário até cálculos automáticos e geração de relatórios feitos "por baixo dos panos".
 
@@ -517,6 +531,7 @@ A estrutura de requisitos apresentada acima foi desenhada para transformar a din
 Com esta base sólida, o projeto segue para a fase de implementação, onde cada ID listado servirá como critério de aceitação para garantir que a apuração final dos quilômetros seja 100% confiável, rastreável e transparente para ambas as equipes.
 
 ### 3.1.3. Regras de Negócio (sprint 1, refinar até sprint 5)
+---
 
 Regras de negócio são declarações que definem ou restringem aspectos do funcionamento de um sistema, refletindo políticas, condições e obrigações do domínio de negócio. Devem ser implementáveis e testáveis, servindo como referencial técnico para o desenvolvimento e validação da aplicação.
 Segundo o Business Rules Group (2003, p. 1), regras de negócio são "restrições explícitas sobre comportamento e/ou fornecem suporte ao comportamento" de um sistema ou organização.
@@ -552,6 +567,7 @@ Segundo o Business Rules Group (2003, p. 1), regras de negócio são "restriçõ
 | RN27 | Em caso de ausência de conexão, os registros devem ser persistidos localmente com o timestamp original do momento do registro. Ao restabelecer conexão, a sincronização deve ocorrer automaticamente sem duplicar registros, preservando a ordem cronológica original.                                     | RF025        |
 
 ### 3.1.4. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
+---
 
 Enquanto os requisitos funcionais descrevem o que o sistema faz, os Requisitos Não Funcionais (RNF) definem como o sistema deve operar. Eles não estão ligados a uma funcionalidade específica, mas sim às características de qualidade e restrições que garantem que o software seja robusto, eficiente e seguro. Eles servem como os critérios de "padrão de qualidade" que validam a experiência do usuário e a integridade técnica da solução sob condições reais de uso.
 
@@ -582,6 +598,7 @@ A definição desses Requisitos Não Funcionais assegura que a aplicação não 
 Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo que a operação foque na gestão do evento enquanto o software garante a precisão, a segurança e a estabilidade de todo o processamento de dados ao longo do período de competição.
 
 ### 3.1.5. Matriz RF → RN → Endpoint (sprints 3 a 5)
+---
 
 A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcional às suas Regras de Negócio e ao contrato de comunicação com o servidor, definindo o método HTTP e o endpoint responsável por executar aquela funcionalidade. Essa estrutura permite identificar onde cada RF é implementado na API, quais restrições de negócio governam sua execução e como as requisições são enviadas ao servidor.
 
@@ -618,16 +635,18 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 ## 3.2. Arquitetura (sprints 1 a 5)
 
 ### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
+---
 
 _Posicione aqui o diagrama de arquitetura da solução, indicando as camadas principais (Controller, Service, Repository, Model) e suas responsabilidades. Atualize sempre que necessário._
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
+---
 
 O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 Horas a partir da prática **Light Use-Case Modeling** descrita em Jacobson et al. (2024), evoluindo para o nível **System Boundary Established** ao incluir todos os atores e casos de uso planejados para o MVP. A notação adotada segue o guia _Use-Case 3.0 — The Definitive Guide_: atores são representados por bonecos-palito, casos de uso por elipses contidas dentro do retângulo do _System of Interest_, associações por linhas contínuas com setas indicando o iniciador da interação, `<<include>>` por seta tracejada apontando do caso-base para o caso obrigatoriamente incluído, e `<<extend>>` por seta tracejada apontando do caso opcional para o caso-base que ele estende.
 
 <div align="center">
   <sub>Imagem 9 - Diagrama Casos de Uso</sub><br>
-  <img src= "" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
+  <img src= "../assets/use_case.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
@@ -671,42 +690,52 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 | `<<extend>>`   | Registrar checkpoint      | Recuperar último registro válido da sessão | Comportamento _condicional_: só ocorre quando a esteira para de funcionar durante uma sessão e o auditor precisa recuperar a quilometragem com base no último checkpoint conhecido **da sessão atual**. O caso-base não precisa saber que esse fluxo existe — daí o uso de `<<extend>>`.                                   |
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
+---
 
 _Diagrama UML de classes com entidades, atributos, relacionamentos e responsabilidades. Diferencie **associação**, **agregação** (losango vazio), **composição** (losango cheio) e **herança** (triângulo vazio). Multiplicidade explícita em toda associação._
 
 ### 3.2.4. Diagrama de Sequência UML (sprint 3)
+---
 
 _Ao menos um fluxo prioritário, mostrando a interação entre as camadas Controller → Service → Repository → Banco. Linhas de vida verticais, ativação correta, mensagens síncronas e assíncronas diferenciadas, retornos tracejados._
 
 ### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
+---
 
 _Ao menos um fluxo relevante em UML ou BPMN. Use a notação da ferramenta escolhida de forma consistente (sem misturar convenções)._
 
 ### 3.2.6. Diagrama de Implantação (sprints 4 e 5)
+---
 
 _Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP._
 
 ### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
+---
 
 _Documente os design patterns utilizados (Repository, Strategy, Factory, DTO etc.) e quais princípios SOLID se aplicam. Justifique a adoção de cada padrão com base em uma necessidade real do projeto._
 
 ## 3.3. Wireframes (sprint 2)
+---
 
 _Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização)_
 
 ## 3.4. Guia de estilos (sprint 3)
+---
 
 _Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução_
 
 ### 3.4.1 Cores
+---
 
 _Apresente aqui a paleta de cores, com seus códigos de aplicação e suas respectivas funções_
 
 ### 3.4.2 Tipografia
+---
 
 _Apresente aqui a tipografia da solução, com famílias de fontes e suas respectivas funções_
 
 ### 3.4.3 Iconografia e imagens
+---
 
 _(esta subseção é opcional, caso não existam ícones e imagens, apague esta subseção)_
 
@@ -719,18 +748,22 @@ _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelid
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
+---
 
 _Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture)._
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
+---
 
 _Posicione aqui o DER com cardinalidades explícitas em ambos os lados de cada relação e identificação de PK/FK. O DER deve ser coerente com o diagrama de classes (3.2.3)._
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
+---
 
 _Posicione aqui os diagramas de modelos relacionais do banco de dados, apresentando todos os esquemas de tabelas e suas relações. Inclua as migrations DDL numeradas e reproduzíveis (`CREATE TABLE`, `CREATE INDEX`, constraints `NOT NULL`, `UNIQUE`, `FOREIGN KEY`, `CHECK`). Utilize texto para complementar suas explicações quando necessário._
 
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
+---
 
 _posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$_
 
@@ -754,18 +787,22 @@ _Cada endpoint deve conter endereço, método (GET, POST, PUT, PATCH, DELETE), h
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
 ### 3.8.1. Autenticação
+---
 
 _Descreva o fluxo de autenticação implementado: persistência de senha com hash bcrypt/argon2 (parâmetros de custo explícitos e justificados), validação de credenciais e criação de sessão. Senhas em texto plano no banco não são aceitas._
 
 ### 3.8.2. Controle de sessão
+---
 
 _Descreva o controle de sessão baseado em `session id` persistido em tabela própria, com expiração. Se optar por JWT, justifique a escolha explicando os trade-offs (stateless, não revogável, payload exposto)._
 
 ### 3.8.3. Autorização
+---
 
 _Descreva as regras de autorização por rota e por operação, baseadas no perfil do usuário autenticado. A verificação deve ocorrer no backend — o frontend nunca é fonte de verdade para autorização._
 
 ### 3.8.4. Estratégias de Resiliência
+---
 
 _Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.)._
 
@@ -804,10 +841,12 @@ _Posicione aqui também o relatório de cobertura de testes Jest se houver (atra
 ## 5.2. Testes de usabilidade (sprint 5)
 
 ### 5.2.1. Relatório de testes de guerrilha
+---
 
 _Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização)._
 
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
+---
 
 _Posicione aqui o relatório dos testes SUS realizados._
 
