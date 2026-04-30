@@ -68,7 +68,7 @@ Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável
 
 <div align="center">
   <sub>Imagem 1 - Forças de Porter</sub><br>
-  <img src="../assets/forcas_de_porter .png" width="100%" alt="Forças de Porter"><br>
+  <img src="" width="100%" alt="Forças de Porter"><br>
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
@@ -76,7 +76,7 @@ Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável
 
 <div align="center">
   <sub>Imagem 2 - Análise SWOT </sub><br>
-  <img src= "../assets/analiseSWOT.png" width="100%" alt="Análise SWOT - Red Bull"><br>
+  <img src= "" width="85%" alt="Análise SWOT - Red Bull"><br>
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
@@ -143,13 +143,6 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 
 ### B. Mapa de Valor:
 
-<div align="center">
-  <sub>Imagem X - Canvas da Proposta de Valor</sub><br>
-  <img src= "./assets/negocios/Value-Proposition-Canvas.png" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
-</div>
-
-
 **Produtos e Serviços:**
 
 - Aplicação web responsiva, otimizada para uso em iPad, com interface simples e funcional para operação durante 24 horas ininterruptas
@@ -178,10 +171,15 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 - A rastreabilidade pós-evento é garantida pela exportação em CSV e pelo histórico filtrável, possibilitando análise estatística e validação dos resultados
 - A escalabilidade entre etapas regionais é viabilizada por uma solução web acessível em qualquer dispositivo conectado, padronizando a operação em todo o Brasil
 
+<div align="center">
+  <sub>Imagem 3 - Canvas da Proposta de Valor</sub><br>
+  <img src= "" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
+  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+</div>
+
 **Síntese da Proposta de Valor**
 
 A análise evidencia um forte alinhamento entre as dores operacionais do time de Field Marketing da Red Bull e as funcionalidades propostas pela aplicação web. A substituição do processo analógico via prancheta por um fluxo digital padronizado reduz o erro humano e o retrabalho, enquanto a consolidação automática e o histórico filtrável aumentam a confiabilidade e a rastreabilidade dos registros. Dessa forma, a solução transforma a operação do Red Bull 24 Horas em um processo mais eficiente, auditável e escalável, sem comprometer a dinâmica original do evento — que depende da agilidade das trocas entre atletas e da operação contínua das esteiras ao longo das 24 horas.
-
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 A matriz de riscos é uma ferramenta fundamental para identificar, analisar e priorizar ameaças que podem impactar o desempenho do produto, permitindo a criação de estratégias de mitigação eficazes (PMI, 2021). Para este projeto, foram mapeados riscos diretamente relacionados à confiabilidade do registro manual digitalizado, à operação contínua durante 24 horas, à usabilidade em condições de pressão e à integridade dos dados que definem o resultado oficial da competição Red Bull 24 Horas.
@@ -245,8 +243,8 @@ A matriz de riscos é uma ferramenta fundamental para identificar, analisar e pr
 - Plano de ação: criar fluxo de "troca rápida" no sistema, com pré-cadastro do próximo corredor da equipe e botão único de transição que finaliza o registro anterior e inicia o próximo simultaneamente.
 
 <div align="center">
-  <sub>Imagem X - Matriz de ameaças</sub><br>
-  <img src="./assets/negocios/Matriz de Riscos/Matriz-de-Riscos.png" width="80%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
+  <sub>Imagem 4 - Matriz de Ameaças</sub><br>
+  <img src="" width="80%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
@@ -308,8 +306,8 @@ No contexto do desenvolvimento de soluções tecnológicas, as oportunidades sã
 - Plano de aproveitamento: estruturar arquitetura modular que permita adição futura de novos métodos de captura de dados sem refatoração profunda do sistema.
 
 <div align="center">
-  <sub>Imagem X - Matriz de Oportunidades</sub><br>
-  <img src="./assets/negocios/Matriz de Riscos/Matriz-de-Oportunidades.png" width="80%" alt="Matriz de oportunidades do projeto Red Bull 24 Horas"><br>
+  <sub>Imagem 5 - Matriz de Oportunidades</sub><br>
+  <img src="" width="80%" alt="Matriz de Oportunidades do projeto Red Bull 24 Horas"><br>
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
@@ -328,9 +326,10 @@ No campo do design centrado no usuário, as personas atuam como instrumentos de 
 No contexto deste projeto, as personas foram utilizadas para representar os diferentes perfis envolvidos na operação do evento Red Bull 24 Horas, especialmente os responsáveis pelo registro manual dos dados e pela validação das informações. A partir dessas representações, foi possível identificar dores relacionadas à inconsistência de registros, ausência de histórico confiável e dificuldade de auditoria, orientando a definição das funcionalidades do sistema proposto.
 
 <div align = "center">
-  <img src="../assets/Persona-Bruna-Gomes.png">
+  <sub>Imagem 6 - Persona Bruna Gomes</sub><br>
+  <img src="../assets/Persona-Bruna-Gomes.png" width="100%" alt="Persona Bruna Gomes"><br>
+  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
-<p align = "center"> Fonte: material produzido pelos autores (2026).</p>
 
 ## Informações
 
@@ -368,9 +367,10 @@ Bruna Gomes atua como Assistente de Produção de Eventos na Red Bull, sendo res
 - Interface clara para uso contínuo durante o evento.
 
 <div align = "center">
-  <img src="../assets/Persona-Bruno-Gardesani.png">
+  <sub>Imagem 7 - Persona Bruno Gardesani</sub><br>
+  <img src="../assets/Persona-Bruno-Gardesani.png" width="100%" alt="Persona Bruno Gardesani"><br>
+  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
-<p align = "center"> Fonte: material produzido pelos autores (2026).</p>
 
 ## Informações
 
@@ -409,9 +409,10 @@ Bruno Gardesani atua como Gerente Nacional de Field Marketing na Red Bull, sendo
 - Sistema confiável e transparente.
 
 <div align = "center">
-  <img src="../assets/Persona-Lucas-Andrade.png">
+  <sub>Imagem 8 - Persona Lucas Andrade</sub><br>
+  <img src="../assets/Persona-Lucas-Andrade.png" width="100%" alt="Persona Lucas Andrade"><br>
+  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
-<p align = "center"> Fonte: material produzido pelos autores (2026).</p>
 
 ## Informações
 
@@ -622,8 +623,8 @@ _Posicione aqui o diagrama de arquitetura da solução, indicando as camadas pri
 O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 Horas a partir da prática **Light Use-Case Modeling** descrita em Jacobson et al. (2024), evoluindo para o nível **System Boundary Established** ao incluir todos os atores e casos de uso planejados para o MVP. A notação adotada segue o guia _Use-Case 3.0 — The Definitive Guide_: atores são representados por bonecos-palito, casos de uso por elipses contidas dentro do retângulo do _System of Interest_, associações por linhas contínuas com setas indicando o iniciador da interação, `<<include>>` por seta tracejada apontando do caso-base para o caso obrigatoriamente incluído, e `<<extend>>` por seta tracejada apontando do caso opcional para o caso-base que ele estende.
 
 <div align="center">
-  <sub>Imagem X - Diagrama Casos de Uso</sub><br>
-  <img src= "./assets/negocios/Diagrama-Casos-de-Uso.png" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
+  <sub>Imagem 9 - Diagrama Casos de Uso</sub><br>
+  <img src= "" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
