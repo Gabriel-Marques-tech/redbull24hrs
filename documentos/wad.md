@@ -2,8 +2,6 @@
 
 # WAD - Web Application Document - Módulo 2 - Inteli
 
-**_Os trechos em itálico servem apenas como guia para o preenchimento da seção. Por esse motivo, não devem fazer parte da documentação final_**
-
 ## Nome do Grupo
 
 #### Nomes dos integrantes do grupo
@@ -69,17 +67,17 @@ Os fornecedores para a construção deste projeto incluem provedores de hospedag
 Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável pela operação do evento. Por se tratar de um projeto customizado e de uso interno exclusivo para uma de suas experiências proprietárias, a Red Bull atua como a única compradora desta solução específica. Isso eleva substancialmente o seu poder de barganha. O cliente tem controle total sobre os requisitos de sucesso do MVP, exigindo que o sistema prove ser superior ao método atual da prancheta em consistência e redução de erros. Se a aplicação não entregar a eficiência operacional esperada, a organização pode facilmente descartar a ferramenta e retornar ao método manual sem grandes prejuízos, ou simplesmente buscar outra agência desenvolvedora. Dessa forma, a poder de negociação do cliente é alto, refletindo sua posição dominante na definição das regras do projeto e na validação final da entrega.
 
 <div align="center">
-  <sub>Imagem 1 - FORÇAS DE PORTER</sub><br>
-  <img src="../assets/forcas_de_porter .png" width="100%" alt="forças de porter"><br>
-  <sup>Fonte: Autores</sup>
+  <sub>Imagem 1 - Forças de Porter</sub><br>
+  <img src="../assets/forcas_de_porter .png" width="100%" alt="Forças de Porter"><br>
+  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
 ### 2.1.2. Análise SWOT da Instituição Parceira
 
 <div align="center">
-  Figura 2: Análise SWOT <br><br>
-  <img src="../assets/analiseSWOT.png" width="85%" alt="Análise SWOT - Red Bull"><br>
-  <sub> Fonte: Material produzido pelos autores (2026) </sub><br><br>
+  <sub>Imagem 2 - Análise SWOT </sub><br>
+  <img src= "../assets/analiseSWOT.png" width="100%" alt="Análise SWOT - Red Bull"><br>
+  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
 A Red Bull consolida sua relevância junto à geração atual por meio de um marketing disruptivo — expresso em ativações esportivas e culturais, eventos de nicho e conteúdo gerado em torno de experiências extremas — junto a um reconhecimento global que transcende o produto e posiciona a marca como símbolo de estilo de vida — tornando seu Core Product, a bebida energética, um produto de alto valor desejado. Essa altíssima afinidade com o público jovem-adulto (18 a 30 anos) confere a companhia uma uma força gigantesca para realizar o Red Bull 24 horas: o evento não precisa construir audiência do zero, pois já opera sobre uma base de corredores consolidada[¹](#8-referências) e uma comunidade que se identifica com os valores da marca[²](#8-referências). Entretanto, a forma na qual é auditada a corrida dos atletas no evento herda fragilidades estruturais gigantescas para uma iniciativa desse porte: a suscetibilidade a erros humanos nos processos de auditoria dos atletas compromete a confiabilidade e o resultado final da competição — o que mais importa. Além disso, a falta de automação e tecnologia na gestão dos participantes representa um descuido visível com o Red Bull 24 horas — fraqueza cujo pode ser sanada com nosso MVP. Em um evento de 24 horas, onde o volume de dados gerados é alto por se tratar de uma captação a cada 10 minutos e a margem para falhas é estreita por ser uma competição acirrada, esses pontos exigem atenção prioritária no desenvolvimento da iniciativa da empresa.
@@ -88,30 +86,7 @@ Diante dessas limitações, duas oportunidades se mostram estrategicamente decis
 
 ### 2.1.3. Solução (sprints 1 a 5)
 
-_Explique detalhadamente os seguintes aspectos (até 60 palavras por item):_
-
-1. Problema a ser resolvido
-2. Dados disponíveis (mencionar fonte e conteúdo; se não houver, indicar “não se aplica”)
-3. Solução proposta
-4. Forma de utilização da solução
-5. Benefícios esperados
-6. Critério de sucesso e como será avaliado
-
-<<<<<<<<< Temporary merge branch 1
-
-### 2.1.4. Value Proposition Canvas (sprint 1):
-
-_Sem limite de palavras – usar template do curso_
-
-_Elaborar o Value Proposition Canvas com base na proposta de solução definida._
-
-### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
-
-_Sem limite de palavras – usar template do curso_
-
-# _Registre na matriz os riscos identificados no projeto._
-
-### 2.1.4. Value Proposition Canvas (sprint 1):
+### 2.1.4. Value Proposition Canvas:
 
 O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidades do cliente e a solução proposta (Osterwalder; Pigneur, 2011). No contexto deste projeto, evidencia-se o encaixe entre as dificuldades operacionais enfrentadas pelo time de Field Marketing da Red Bull durante a apuração manual dos quilômetros corridos no evento Red Bull 24 Horas e as funcionalidades de uma aplicação web voltada para registro confiável e consolidação automatizada dos dados da competição.
 
@@ -174,6 +149,7 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
+
 **Produtos e Serviços:**
 
 - Aplicação web responsiva, otimizada para uso em iPad, com interface simples e funcional para operação durante 24 horas ininterruptas
@@ -206,153 +182,8 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 
 A análise evidencia um forte alinhamento entre as dores operacionais do time de Field Marketing da Red Bull e as funcionalidades propostas pela aplicação web. A substituição do processo analógico via prancheta por um fluxo digital padronizado reduz o erro humano e o retrabalho, enquanto a consolidação automática e o histórico filtrável aumentam a confiabilidade e a rastreabilidade dos registros. Dessa forma, a solução transforma a operação do Red Bull 24 Horas em um processo mais eficiente, auditável e escalável, sem comprometer a dinâmica original do evento — que depende da agilidade das trocas entre atletas e da operação contínua das esteiras ao longo das 24 horas.
 
+
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
-
-<<<<<<< HEAD
-_Sem limite de palavras – usar template do curso_
-
-_Registre na matriz os riscos identificados no projeto._
-
-## 2.2. Personas (sprint 1)
-
-Uma persona é um arquétipo de usuário construído a partir de dados empíricos coletados em pesquisas qualitativas e quantitativas — como entrevistas, estudos de campo e surveys — com o objetivo de representar, de forma concreta e memorável, as características, comportamentos, necessidades e objetivos dos usuários reais de um produto ou sistema.
-
-Diferentemente de segmentos de mercado, que apresentam usuários como intervalos numéricos e categorias abstratas, a persona sintetiza esses dados em um único personagem fictício, porém verossímil, dotado de atributos como nome, idade, ocupação, contexto de uso e motivações. Essa concretude explora a tendência cognitiva humana de se engajar mais profundamente com exemplos específicos do que com generalizações estatísticas.
-
-No campo do design centrado no usuário, as personas atuam como instrumentos de mediação epistêmica: ao fornecerem um vocabulário comum e preciso à equipe de projeto, reduzem a ambiguidade sobre quem é o usuário e promovem decisões de design mais coerentes com as necessidades reais do público-alvo. Sua utilidade se estende além da fase de concepção, abrangendo avaliações heurísticas, recrutamento para testes de usabilidade e segmentação de dados analíticos ao longo do ciclo de vida do produto.
-
-No contexto deste projeto, as personas foram utilizadas para representar os diferentes perfis envolvidos na operação do evento Red Bull 24 Horas, especialmente os responsáveis pelo registro manual dos dados e pela validação das informações. A partir dessas representações, foi possível identificar dores relacionadas à inconsistência de registros, ausência de histórico confiável e dificuldade de auditoria, orientando a definição das funcionalidades do sistema proposto.
-
-<div align = "center">
-  <img src="../assets/Persona-Bruna-Gomes.png">
-</div>
-<p align = "center"> Fonte: material produzido pelos autores (2026).</p>
-
-## Informações
-
-- Idade: 25;
-- Localização: São Paulo, SP;
-- Formação: Ensino Superior em andamento - Administração;
-- Empresa: Red bull;
-- Cargo: Assistente de produção de eventos.
-
-## Biografia
-
-Bruna Gomes atua como Assistente de Produção de Eventos na Red Bull, sendo responsável por apoiar o planejamento, a organização e a execução de eventos. Possui experiência em logística, controle de equipes e acompanhamento de operações em tempo real. No contexto do evento Red Bull 24 Horas, atua diretamente no registro e acompanhamento dos quilômetros percorridos, garantindo que as informações sejam coletadas de forma consistente e confiável.
-
-## Objetivos
-
-- Registrar início, checkpoints e fim das corridas de forma rápida e padronizada;
-- Garantir continuidade dos registros durante toda a operação;
-- Reduzir erros no processo de coleta de quilômetros;
-- Acompanhar dados em tempo quase real para validação;
-- Agilizar trocas de corredores sem comprometer os registros.
-
-## Dores
-
-- Utilização de registros manuais (prancheta/papel), sujeitos a erro;
-- Falta de histórico estruturado para conferência;
-- Alto nível de atenção exigido por longos períodos (24h);
-- Baixa visibilidade dos dados consolidados durante o evento.
-
-## Necessidades
-
-- Sistema simples e rápido para registro de dados;
-- Rastreabilidade completa dos registros realizados;
-- Exportação de dados para análise e auditoria;
-- Facilidade de conferência e validação das informações;
-- Interface clara para uso contínuo durante o evento.
-
-<div align = "center">
-  <img src="../assets/Persona-Bruno-Gardesani.png">
-</div>
-<p align = "center"> Fonte: material produzido pelos autores (2026).</p>
-
-## Informações
-
-- Idade: 38;
-- Localização: São Paulo, SP;
-- Formação: Ensino Superior Completo – Administração/Marketing;
-- Empresa: Red bull;
-- Cargo: Gerente Nacional de Field Marketing.
-
-## Biografia
-
-Bruno Gardesani atua como Gerente Nacional de Field Marketing na Red Bull, sendo responsável pela supervisão estratégica dos eventos da marca. No Red Bull 24 Horas, acompanha a operação como um todo, garantindo que os processos ocorram corretamente e que os resultados sejam confiáveis. Seu foco está na validação dos dados e na eficiência da operação.
-
-## Objetivos
-
-- Garantir confiabilidade total dos dados registrados;
-- Acompanhar o desempenho das equipes com clareza;
-- Reduzir retrabalho na validação dos resultados;
-- Ter acesso rápido às informações consolidadas;
-- Facilitar auditoria pós-evento.
-
-## Dores
-
-- Falta de confiança nos registros manuais;
-- Necessidade de validação constante;
-- Dificuldade em visualizar dados consolidados rapidamente;
-- Retrabalho para conferência pós-evento;
-- Risco de inconsistências comprometerem o resultado final.
-
-## Necessidades
-
-- Visão consolidada e organizada dos dados;
-- Histórico completo e rastreável;
-- Exportação para auditoria;
-- Redução de intervenção manual;
-- Sistema confiável e transparente.
-
-<div align = "center">
-  <img src="../assets/Persona-Lucas-Andrade.png">
-</div>
-<p align = "center"> Fonte: material produzido pelos autores (2026).</p>
-
-## Informações
-
-- Idade: 26;
-- Localização: São Paulo, SP;
-- Formação: Ensino Superior Completo – Marketing;
-- Empresa: Red bull;
-- Cargo: Operador de Evento.
-
-## Biografia
-
-Lucas Andrade atua como operador de eventos na equipe de Field Marketing, sendo responsável pelo registro manual das informações durante o evento Red Bull 24 Horas. Trabalha diretamente ao lado das esteiras, acompanhando as trocas de corredores e anotando os quilômetros percorridos. Sua rotina exige agilidade, atenção constante e capacidade de lidar com alta pressão durante longos períodos.
-
-## Objetivos
-
-- Registrar dados de forma rápida e sem interrupções;
-- Reduzir a necessidade de cálculos ou conferências manuais;
-- Evitar perda de informações durante trocas de corredores;
-- Conseguir operar o sistema com poucos cliques;
-- Manter consistência nos registros ao longo das 24h.
-
-## Dores
-
-- Uso de prancheta e papel, com alto risco de erro;
-- Dificuldade em acompanhar ritmo acelerado das trocas;
-- Cansaço físico e mental ao longo do evento;
-- Falta de feedback imediato se o registro está correto;
-- Possibilidade de esquecer anotações em momentos críticos.
-
-## Necessidades
-
-- Interface extremamente simples e rápida;
-- Feedback visual imediato após registro;
-- Processo padronizado para evitar erros;
-- Redução de digitação manual;
-- Sistema confiável mesmo sob pressão.
-
-## 2.3. User Stories (sprints 1 a 5)
-
-_Posicione aqui a lista de User Stories levantadas para o projeto. Siga o template de User Stories e utilize a mesma referência USXX no roadmap de seu quadro Kanban. Indique todas as User Stories mapeadas, mesmo aquelas que não forem implementadas ao longo do projeto. Não se esqueça de explicar o INVEST das 5 User Stories prioritárias_
-
-_ATUALIZE ESTA SEÇÃO SEMPRE QUE ALGUMA DEMANDA MUDAR EM SEU PROJETO_
-
-# _Template de User Story_
-
 A matriz de riscos é uma ferramenta fundamental para identificar, analisar e priorizar ameaças que podem impactar o desempenho do produto, permitindo a criação de estratégias de mitigação eficazes (PMI, 2021). Para este projeto, foram mapeados riscos diretamente relacionados à confiabilidade do registro manual digitalizado, à operação contínua durante 24 horas, à usabilidade em condições de pressão e à integridade dos dados que definem o resultado oficial da competição Red Bull 24 Horas.
 
 ### Ameaças:
@@ -488,45 +319,143 @@ As oportunidades identificadas estão diretamente relacionadas ao potencial de v
 
 ## 2.2. Personas (sprint 1)
 
-_Posicione aqui suas Personas em forma de texto markdown com imagens, ou como imagem de template preenchido. Atualize esta seção ao longo do módulo se necessário._
+Uma persona é um arquétipo de usuário construído a partir de dados empíricos coletados em pesquisas qualitativas e quantitativas — como entrevistas, estudos de campo e surveys — com o objetivo de representar, de forma concreta e memorável, as características, comportamentos, necessidades e objetivos dos usuários reais de um produto ou sistema.
+
+Diferentemente de segmentos de mercado, que apresentam usuários como intervalos numéricos e categorias abstratas, a persona sintetiza esses dados em um único personagem fictício, porém verossímil, dotado de atributos como nome, idade, ocupação, contexto de uso e motivações. Essa concretude explora a tendência cognitiva humana de se engajar mais profundamente com exemplos específicos do que com generalizações estatísticas.
+
+No campo do design centrado no usuário, as personas atuam como instrumentos de mediação epistêmica: ao fornecerem um vocabulário comum e preciso à equipe de projeto, reduzem a ambiguidade sobre quem é o usuário e promovem decisões de design mais coerentes com as necessidades reais do público-alvo. Sua utilidade se estende além da fase de concepção, abrangendo avaliações heurísticas, recrutamento para testes de usabilidade e segmentação de dados analíticos ao longo do ciclo de vida do produto.
+
+No contexto deste projeto, as personas foram utilizadas para representar os diferentes perfis envolvidos na operação do evento Red Bull 24 Horas, especialmente os responsáveis pelo registro manual dos dados e pela validação das informações. A partir dessas representações, foi possível identificar dores relacionadas à inconsistência de registros, ausência de histórico confiável e dificuldade de auditoria, orientando a definição das funcionalidades do sistema proposto.
+
+<div align = "center">
+  <img src="../assets/Persona-Bruna-Gomes.png">
+</div>
+<p align = "center"> Fonte: material produzido pelos autores (2026).</p>
+
+## Informações
+
+- Idade: 25;
+- Localização: São Paulo, SP;
+- Formação: Ensino Superior em andamento - Administração;
+- Empresa: Red bull;
+- Cargo: Assistente de produção de eventos.
+
+## Biografia
+
+Bruna Gomes atua como Assistente de Produção de Eventos na Red Bull, sendo responsável por apoiar o planejamento, a organização e a execução de eventos. Possui experiência em logística, controle de equipes e acompanhamento de operações em tempo real. No contexto do evento Red Bull 24 Horas, atua diretamente no registro e acompanhamento dos quilômetros percorridos, garantindo que as informações sejam coletadas de forma consistente e confiável.
+
+## Objetivos
+
+- Registrar início, checkpoints e fim das corridas de forma rápida e padronizada;
+- Garantir continuidade dos registros durante toda a operação;
+- Reduzir erros no processo de coleta de quilômetros;
+- Acompanhar dados em tempo quase real para validação;
+- Agilizar trocas de corredores sem comprometer os registros.
+
+## Dores
+
+- Utilização de registros manuais (prancheta/papel), sujeitos a erro;
+- Falta de histórico estruturado para conferência;
+- Alto nível de atenção exigido por longos períodos (24h);
+- Baixa visibilidade dos dados consolidados durante o evento.
+
+## Necessidades
+
+- Sistema simples e rápido para registro de dados;
+- Rastreabilidade completa dos registros realizados;
+- Exportação de dados para análise e auditoria;
+- Facilidade de conferência e validação das informações;
+- Interface clara para uso contínuo durante o evento.
+
+<div align = "center">
+  <img src="../assets/Persona-Bruno-Gardesani.png">
+</div>
+<p align = "center"> Fonte: material produzido pelos autores (2026).</p>
+
+## Informações
+
+- Idade: 38;
+- Localização: São Paulo, SP;
+- Formação: Ensino Superior Completo – Administração/Marketing;
+- Empresa: Red bull;
+- Cargo: Gerente Nacional de Field Marketing.
+
+## Biografia
+
+Bruno Gardesani atua como Gerente Nacional de Field Marketing na Red Bull, sendo responsável pela supervisão estratégica dos eventos da marca. No Red Bull 24 Horas, acompanha a operação como um todo, garantindo que os processos ocorram corretamente e que os resultados sejam confiáveis. Seu foco está na validação dos dados e na eficiência da operação.
+
+## Objetivos
+
+- Garantir confiabilidade total dos dados registrados;
+- Acompanhar o desempenho das equipes com clareza;
+- Reduzir retrabalho na validação dos resultados;
+- Ter acesso rápido às informações consolidadas;
+- Facilitar auditoria pós-evento.
+
+## Dores
+
+- Falta de confiança nos registros manuais;
+- Necessidade de validação constante;
+- Dificuldade em visualizar dados consolidados rapidamente;
+- Retrabalho para conferência pós-evento;
+- Risco de inconsistências comprometerem o resultado final.
+
+## Necessidades
+
+- Visão consolidada e organizada dos dados;
+- Histórico completo e rastreável;
+- Exportação para auditoria;
+- Redução de intervenção manual;
+- Sistema confiável e transparente.
+
+<div align = "center">
+  <img src="../assets/Persona-Lucas-Andrade.png">
+</div>
+<p align = "center"> Fonte: material produzido pelos autores (2026).</p>
+
+## Informações
+
+- Idade: 26;
+- Localização: São Paulo, SP;
+- Formação: Ensino Superior Completo – Marketing;
+- Empresa: Red bull;
+- Cargo: Operador de Evento.
+
+## Biografia
+
+Lucas Andrade atua como operador de eventos na equipe de Field Marketing, sendo responsável pelo registro manual das informações durante o evento Red Bull 24 Horas. Trabalha diretamente ao lado das esteiras, acompanhando as trocas de corredores e anotando os quilômetros percorridos. Sua rotina exige agilidade, atenção constante e capacidade de lidar com alta pressão durante longos períodos.
+
+## Objetivos
+
+- Registrar dados de forma rápida e sem interrupções;
+- Reduzir a necessidade de cálculos ou conferências manuais;
+- Evitar perda de informações durante trocas de corredores;
+- Conseguir operar o sistema com poucos cliques;
+- Manter consistência nos registros ao longo das 24h.
+
+## Dores
+
+- Uso de prancheta e papel, com alto risco de erro;
+- Dificuldade em acompanhar ritmo acelerado das trocas;
+- Cansaço físico e mental ao longo do evento;
+- Falta de feedback imediato se o registro está correto;
+- Possibilidade de esquecer anotações em momentos críticos.
+
+## Necessidades
+
+- Interface extremamente simples e rápida;
+- Feedback visual imediato após registro;
+- Processo padronizado para evitar erros;
+- Redução de digitação manual;
+- Sistema confiável mesmo sob pressão.
 
 ## 2.3. User Stories (sprints 1 a 5)
-
-_Posicione aqui a lista de User Stories levantadas para o projeto. Siga o template de User Stories e utilize a mesma referência USXX no roadmap de seu quadro Kanban. Indique todas as User Stories mapeadas, mesmo aquelas que não forem implementadas ao longo do projeto. Não se esqueça de explicar o INVEST das 5 User Stories prioritárias_
-
-_ATUALIZE ESTA SEÇÃO SEMPRE QUE ALGUMA DEMANDA MUDAR EM SEU PROJETO_
-
-_Template de User Story_
-
-> > > > > > > develop
-> > > > > > > Identificação | USXX (troque XX por numeração ordenada das User Stories)
-> > > > > > > --- | ---
-> > > > > > > Persona | nome da Persona
-> > > > > > > User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-> > > > > > > Critério de aceite 1 | CR1: descrever cenário + testes de aceite
-> > > > > > > Critério de aceite 2 | CR2: descrever cenário + testes de aceite
-> > > > > > > Critério de aceite ... | CR...
-> > > > > > > <<<<<<< HEAD
-
-# Critérios INVEST | _(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)_
-
-Critérios INVEST | _(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)_
-
-> > > > > > > develop
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
 
 ## 3.1. Requisitos do Sistema (sprints 1 a 5)
 
-<<<<<<< HEAD
-_Esta seção formaliza o que o sistema deve fazer, sob quais regras e com quais qualidades. Atualize a cada sprint conforme os requisitos evoluem._
-
-### 3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
-
-=======
-_Esta seção formaliza o que o sistema deve fazer, sob quais regras e com quais qualidades. Atualize a cada sprint conforme os requisitos evoluem._
-
-## 3.1.1. Minimundo
+### 3.1.1. Minimundo
 
 O sistema é uma aplicação web desenvolvida com a finalidade de substituir o processo manual de registro de quilômetros no evento Red Bull 24 Horas, tornando a apuração mais confiável, rastreável e eficiente. A solução é direcionada aos auditores do evento, responsáveis por operar o sistema em tempo real durante as 24 horas de competição, em todas as regiões onde o evento é realizado.
 
@@ -541,8 +470,6 @@ Essas informações são expostas com a vizualização em uma tela simples e em 
 O sistema não realiza integração direta com as esteiras, não possui autenticação por login e não acessa sistemas externos. Toda a entrada de dados é realizada manualmente pelos auditores durante o evento.
 
 ### 3.1.2. Requisitos Funcionais (sprint 1, refinar até sprint 5)
-
-> > > > > > > develop
 
 Para que o desenvolvimento de um software seja bem-sucedido, é fundamental definir seus Requisitos Funcionais (RF). De forma simples, eles são as descrições de todas as tarefas, ações e serviços que o sistema deve realizar. Eles representam o "o quê" o sistema faz: desde o clique de um botão pelo usuário até cálculos automáticos e geração de relatórios feitos "por baixo dos panos".
 
@@ -578,8 +505,6 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 
 A estrutura de requisitos apresentada acima foi desenhada para transformar a dinâmica complexa do evento Red Bull 24 Horas em um fluxo digital ágil e seguro.
 Com esta base sólida, o projeto segue para a fase de implementação, onde cada ID listado servirá como critério de aceitação para garantir que a apuração final dos quilômetros seja 100% confiável, rastreável e transparente para ambas as equipes.
-
-> > > > > > > > > Temporary merge branch 2
 
 | ID    | Descrição | Prioridade | Status       |
 | ----- | --------- | ---------- | ------------ |
@@ -623,21 +548,6 @@ Segundo o Business Rules Group (2003, p. 1), regras de negócio são "restriçõ
 
 ### 3.1.4. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
-<<<<<<<<< Temporary merge branch 1
-_Preencha os 8 eixos. Cada eixo deve ter ao menos um RNF verificável (com métrica, limite ou critério concreto) ou justificativa explícita de ausência. Evolua do conceitual (sprint 1) ao técnico mensurável (sprint 5)._
-
-| Eixo                     | Requisito | Métrica / Critério | Como atendido |
-| ------------------------ | --------- | ------------------ | ------------- |
-| USAB — Usabilidade       | ...       | ...                | ...           |
-| CONF — Confiabilidade    | ...       | ...                | ...           |
-| DES — Desempenho         | ...       | p95 < X ms         | ...           |
-| SUP — Suportabilidade    | ...       | ...                | ...           |
-| SEG — Segurança          | ...       | ...                | ...           |
-| CAP — Capacidade         | ...       | ...                | ...           |
-| REST — Restrições Design | ...       | ...                | ...           |
-| ORG — Organizacionais    | ...       | ...                | ...           |
-
-=========
 Enquanto os requisitos funcionais descrevem o que o sistema faz, os Requisitos Não Funcionais (RNF) definem como o sistema deve operar. Eles não estão ligados a uma funcionalidade específica, mas sim às características de qualidade e restrições que garantem que o software seja robusto, eficiente e seguro. Eles servem como os critérios de "padrão de qualidade" que validam a experiência do usuário e a integridade técnica da solução sob condições reais de uso.
 
 Para organizar esses requisitos, utilizamos a estrutura de 8 eixos de qualidade, que segmentam o comportamento do sistema em diferentes perspectivas:
@@ -665,27 +575,7 @@ Para organizar esses requisitos, utilizamos a estrutura de 8 eixos de qualidade,
 A definição desses Requisitos Não Funcionais assegura que a aplicação não seja apenas funcional, mas resiliente e eficiente sob as condições reais de campo. Ao estabelecer métricas claras e protocolos de operação, mitigamos os principais riscos tecnológicos que poderiam comprometer a apuração dos resultados.
 
 Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo que a operação foque na gestão do evento enquanto o software garante a precisão, a segurança e a estabilidade de todo o processamento de dados ao longo do período de competição.
-<<<<<<< HEAD
 
-### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
-
-_Matriz de cobertura mostrando quais RN e endpoints implementam cada RF._
-
-| RF    | RN associadas | Endpoint    | Método |
-| ----- | ------------- | ----------- | ------ |
-| RF001 | RN01, RN02    | `/usuarios` | POST   |
-
-=======
-| Eixo | Requisito | Métrica / Critério | Como atendido |
-| ------------------------ | --------- | ------------------ | ------------- |
-| USAB — Usabilidade | ... | ... | ... |
-| CONF — Confiabilidade | ... | ... | ... |
-| DES — Desempenho | ... | p95 < X ms | ... |
-| SUP — Suportabilidade | ... | ... | ... |
-| SEG — Segurança | ... | ... | ... |
-| CAP — Capacidade | ... | ... | ... |
-| REST — Restrições Design | ... | ... | ... |
-| ORG — Organizacionais | ... | ... | ... |
 
 ### 3.1.5. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
@@ -721,64 +611,9 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 | RF024 | RN26          | `/eventos/{id}/exportar`                                         | GET    |
 | RF025 | RN27          | `/sync`                                                          | POST   |
 
-> > > > > > > develop
-
 ## 3.2. Arquitetura (sprints 1 a 5)
 
 ### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
-
-<<<<<<< HEAD
-_Posicione aqui o diagrama de arquitetura da solução, indicando as camadas principais (Controller, Service, Repository, Model) e suas responsabilidades. Atualize sempre que necessário._
-
-### 3.2.2. Diagrama de Casos de Uso (sprint 1)
-
-_Apresente o diagrama de casos de uso com atores (boneco), casos (elipse) e as relações `<<include>>` / `<<extend>>` com semântica correta. Consulte a notação de referência em `https://www.ivarjacobson.com/files/use-case_3.0_v1.0.pdf`._
-
-### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
-
-_Diagrama UML de classes com entidades, atributos, relacionamentos e responsabilidades. Diferencie **associação**, **agregação** (losango vazio), **composição** (losango cheio) e **herança** (triângulo vazio). Multiplicidade explícita em toda associação._
-
-### 3.2.4. Diagrama de Sequência UML (sprint 3)
-
-_Ao menos um fluxo prioritário, mostrando a interação entre as camadas Controller → Service → Repository → Banco. Linhas de vida verticais, ativação correta, mensagens síncronas e assíncronas diferenciadas, retornos tracejados._
-
-### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
-
-_Ao menos um fluxo relevante em UML ou BPMN. Use a notação da ferramenta escolhida de forma consistente (sem misturar convenções)._
-
-### 3.2.6. Diagrama de Implantação (sprints 4 e 5)
-
-_Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP._
-
-### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
-
-_Documente os design patterns utilizados (Repository, Strategy, Factory, DTO etc.) e quais princípios SOLID se aplicam. Justifique a adoção de cada padrão com base em uma necessidade real do projeto._
-
-## 3.3. Wireframes (sprint 2)
-
-_Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização)_
-
-## 3.4. Guia de estilos (sprint 3)
-
-_Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução_
-
-### 3.4.1 Cores
-
-_Apresente aqui a paleta de cores, com seus códigos de aplicação e suas respectivas funções_
-
-### 3.4.2 Tipografia
-
-_Apresente aqui a tipografia da solução, com famílias de fontes e suas respectivas funções_
-
-### 3.4.3 Iconografia e imagens
-
-_(esta subseção é opcional, caso não existam ícones e imagens, apague esta subseção)_
-
-_posicione aqui imagens e textos contendo exemplos padronizados de ícones e imagens, com seus respectivos atributos de aplicação, utilizadas na solução_
-
-## 3.5 Protótipo de alta fidelidade (sprint 3)
-
-# _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização)_
 
 _Posicione aqui o diagrama de arquitetura da solução, indicando as camadas principais (Controller, Service, Repository, Model) e suas responsabilidades. Atualize sempre que necessário._
 
@@ -877,33 +712,11 @@ _posicione aqui imagens e textos contendo exemplos padronizados de ícones e ima
 
 _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização)_
 
-> > > > > > > develop
-
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-<<<<<<< HEAD
 _Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture)._
-
-### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
-
-_Posicione aqui o DER com cardinalidades explícitas em ambos os lados de cada relação e identificação de PK/FK. O DER deve ser coerente com o diagrama de classes (3.2.3)._
-
-### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
-
-_Posicione aqui os diagramas de modelos relacionais do banco de dados, apresentando todos os esquemas de tabelas e suas relações. Inclua as migrations DDL numeradas e reproduzíveis (`CREATE TABLE`, `CREATE INDEX`, constraints `NOT NULL`, `UNIQUE`, `FOREIGN KEY`, `CHECK`). Utilize texto para complementar suas explicações quando necessário._
-
-### 3.6.4. Consultas SQL e lógica proposicional (sprint 3)
-
-_posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$_
-
-_Template de SQL + lógica proposicional_
-#1 | ---
---- | ---
-**Expressão SQL** | SELECT \* FROM suppliers WHERE (state = 'California' AND supplier*id <> 900) OR (supplier_id = 100);
-=======
-\_Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture).*
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
@@ -922,12 +735,10 @@ _Template de SQL + lógica proposicional_
 --- | ---
 **Expressão SQL** | SELECT \* FROM suppliers WHERE (state = 'California' AND supplier_id <> 900) OR (supplier_id = 100);
 
-> > > > > > > develop
-> > > > > > > **Proposições lógicas** | $A$: O estado é 'California' (state = 'California') <br> $B$: O ID do fornecedor não é 900 (supplier_id ≠ 900) <br> $C$: O ID do fornecedor é 100 (supplier_id = 100)
-> > > > > > > **Expressão lógica proposicional** | $(A \land B) \lor C$
-> > > > > > > **Tabela Verdade** | <table> <thead> <tr> <th>$A$</th> <th>$B$</th> <th>$C$</th> <th>$(A \land B)$</th> <th>$(A \land B) \lor C$</th> </tr> </thead> <tbody> <tr> <td>F</td> <td>F</td> <td>F</td> <td>F</td> <td>F</td> </tr> <tr> <td>F</td> <td>F</td> <td>V</td> <td>F</td> <td>V</td> </tr> <tr> <td>F</td> <td>V</td> <td>F</td> <td>F</td> <td>F</td> </tr> <tr> <td>F</td> <td>V</td> <td>V</td> <td>F</td> <td>V</td> </tr> <tr> <td>V</td> <td>F</td> <td>F</td> <td>F</td> <td>F</td> </tr> <tr> <td>V</td> <td>F</td> <td>V</td> <td>F</td> <td>V</td> </tr> <tr> <td>V</td> <td>V</td> <td>F</td> <td>V</td> <td>V</td> </tr> <tr> <td>V</td> <td>V</td> <td>V</td> <td>V</td> <td>V</td> </tr> </tbody> </table>
+**Proposições lógicas** | $A$: O estado é 'California' (state = 'California') <br> $B$: O ID do fornecedor não é 900 (supplier_id ≠ 900) <br> $C$: O ID do fornecedor é 100 (supplier_id = 100)
+**Expressão lógica proposicional** | $(A \land B) \lor C$
+**Tabela Verdade** | <table> <thead> <tr> <th>$A$</th> <th>$B$</th> <th>$C$</th> <th>$(A \land B)$</th> <th>$(A \land B) \lor C$</th> </tr> </thead> <tbody> <tr> <td>F</td> <td>F</td> <td>F</td> <td>F</td> <td>F</td> </tr> <tr> <td>F</td> <td>F</td> <td>V</td> <td>F</td> <td>V</td> </tr> <tr> <td>F</td> <td>V</td> <td>F</td> <td>F</td> <td>F</td> </tr> <tr> <td>F</td> <td>V</td> <td>V</td> <td>F</td> <td>V</td> </tr> <tr> <td>V</td> <td>F</td> <td>F</td> <td>F</td> <td>F</td> </tr> <tr> <td>V</td> <td>F</td> <td>V</td> <td>F</td> <td>V</td> </tr> <tr> <td>V</td> <td>V</td> <td>F</td> <td>V</td> <td>V</td> </tr> <tr> <td>V</td> <td>V</td> <td>V</td> <td>V</td> <td>V</td> </tr> </tbody> </table>
 
-<<<<<<< HEAD
 _Dica: edite a tabela verdade fora do markdown, para ter melhor controle_
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
@@ -961,57 +772,9 @@ _A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida
 | Persona | RF  | RN  | Endpoint | Tela | Teste | Evidência |
 | ------- | --- | --- | -------- | ---- | ----- | --------- |
 
-=======
-_Dica: edite a tabela verdade fora do markdown, para ter melhor controle_
-
-## 3.8. WebAPI e endpoints (sprints 3 e 4)
-
-_Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema._
-
-_Cada endpoint deve conter endereço, método (GET, POST, PUT, PATCH, DELETE), header, body, formatos de response e os status codes possíveis (200, 201, 204, 400, 401, 403, 404, 409, 422, 500)._
-
-## 3.9. Autenticação, Autorização e Resiliência (sprint 5)
-
-### 3.9.1. Autenticação
-
-_Descreva o fluxo de autenticação implementado: persistência de senha com hash bcrypt/argon2 (parâmetros de custo explícitos e justificados), validação de credenciais e criação de sessão. Senhas em texto plano no banco não são aceitas._
-
-### 3.9.2. Controle de sessão
-
-_Descreva o controle de sessão baseado em `session id` persistido em tabela própria, com expiração. Se optar por JWT, justifique a escolha explicando os trade-offs (stateless, não revogável, payload exposto)._
-
-### 3.9.3. Autorização
-
-_Descreva as regras de autorização por rota e por operação, baseadas no perfil do usuário autenticado. A verificação deve ocorrer no backend — o frontend nunca é fonte de verdade para autorização._
-
-### 3.9.4. Estratégias de Resiliência
-
-_Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.)._
-
-## 3.9.5 Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
-
-_A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida toda a cadeia — mantenha-a atualizada a cada sprint. A partir da sprint 3 não deve haver lacunas nos fluxos centrais._
-
-| Persona | RF  | RN  | Endpoint | Tela | Teste | Evidência |
-| ------- | --- | --- | -------- | ---- | ----- | --------- |
-
-> > > > > > > develop
-> > > > > > > | ... | RF001 | RN01 | `/usuarios` | Cadastro | CT02 | print, log, relatório de cobertura |
-
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
 ## 4.1. Primeira versão da aplicação web (sprint 3)
-
-<<<<<<< HEAD
-_Descreva e ilustre aqui o desenvolvimento da primeira versão do sistema web. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos._
-
-## 4.2. Segunda versão da aplicação web (sprint 4)
-
-_Descreva e ilustre aqui o desenvolvimento da segunda versão do sistema web, com foco no que foi consolidado entre a primeira versão funcional e o sistema operacional integrado. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos._
-
-## 4.3. Versão final da aplicação web (sprint 5)
-
-# _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas._
 
 _Descreva e ilustre aqui o desenvolvimento da primeira versão do sistema web. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos._
 
@@ -1023,19 +786,9 @@ _Descreva e ilustre aqui o desenvolvimento da segunda versão do sistema web, co
 
 _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas._
 
-> > > > > > > develop
-
 # <a name="c5"></a>5. Testes
 
 ## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
-
-<<<<<<< HEAD
-_Liste e descreva os testes automatizados dos endpoints criados e planejados para sua solução, implementados com **Jest**. Cubra as duas abordagens:_
-
-- **_White-box_** _— testes unitários de Service que exercitam ramos internos, exceções e regras de negócio (conhecimento da implementação)._
-- **_Black-box_** _— testes de integração dos endpoints via Jest + Supertest, verificando apenas o contrato HTTP (status, body, efeito observável), sem depender da implementação interna._
-
-# _Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown)._
 
 _Liste e descreva os testes automatizados dos endpoints criados e planejados para sua solução, implementados com **Jest**. Cubra as duas abordagens:_
 
@@ -1044,18 +797,9 @@ _Liste e descreva os testes automatizados dos endpoints criados e planejados par
 
 _Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown)._
 
-> > > > > > > develop
-
 ## 5.2. Testes de usabilidade (sprint 5)
 
 ### 5.2.1. Relatório de testes de guerrilha
-
-<<<<<<< HEAD
-_Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização)._
-
-### 5.2.2. Relatório de testes SUS (System Usability Scale)
-
-# _Posicione aqui o relatório dos testes SUS realizados._
 
 _Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização)._
 
@@ -1063,85 +807,9 @@ _Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de tes
 
 _Posicione aqui o relatório dos testes SUS realizados._
 
-> > > > > > > develop
-
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
 
 ## 6.1 Resumo Executivo
-
-<<<<<<< HEAD
-_Preencher com até 300 palavras, sem necessidade de fonte_
-
-_Apresente de forma clara e objetiva os principais destaques do projeto: oportunidades de mercado, diferenciais competitivos da aplicação web e os objetivos estratégicos pretendidos._
-
-## 6.2 Análise de Mercado
-
-_a) Visão Geral do Setor (até 250 palavras)_
-_Contextualize o setor no qual a aplicação está inserida, considerando aspectos econômicos, tecnológicos e regulatórios. Utilize fontes confiáveis._
-
-_b) Tamanho e Crescimento do Mercado (até 250 palavras)_
-_Apresente dados quantitativos sobre o tamanho atual e projeções de crescimento do mercado. Utilize fontes confiáveis._
-
-_c) Tendências de Mercado (até 300 palavras)_
-_Identifique e analise tendências relevantes (tecnológicas, comportamentais e mercadológicas) que influenciam o setor. Utilize fontes confiáveis._
-
-## 6.3 Análise da Concorrência
-
-_a) Principais Concorrentes (até 250 palavras)_
-_Liste os concorrentes diretos e indiretos, destacando suas principais características e posicionamento no mercado._
-
-_b) Vantagens Competitivas da Aplicação Web (até 250 palavras)_
-_Descreva os diferenciais da sua aplicação em relação aos concorrentes, sem necessidade de citação de fontes._
-
-## 6.4 Público-Alvo
-
-_a) Segmentação de Mercado (até 250 palavras)_
-Descreva os principais segmentos de mercado a serem atendidos pela aplicação. Utilize bases de dados e fontes confiáveis.\*
-
-_b) Perfil do Público-Alvo (até 250 palavras)_
-_Caracterize o público-alvo com dados demográficos, psicográficos e comportamentais, incluindo necessidades específicas. Utilize fontes obrigatórias._
-
-## 6.5 Posicionamento
-
-_a) Proposta de Valor Única (até 250 palavras)_
-_Defina de maneira clara o que torna a sua aplicação única e valiosa para o mercado._
-
-_b) Estratégia de Diferenciação (até 250 palavras)_
-_Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento._
-
-## 6.6 Estratégia de Marketing
-
-_a) Produto/Serviço (até 200 palavras)_
-_Descreva as funcionalidades, benefícios e diferenciais da aplicação_
-
-_b) Preço (até 200 palavras)_
-_Explique o modelo de precificação adotado e justifique com base nas análises anteriores._
-
-_c) Praça (Distribuição) (até 200 palavras)_
-_Apresente os canais digitais utilizados para distribuir e entregar a aplicação ao público._
-
-_d) Promoção (até 200 palavras)_
-_Descreva as estratégias digitais planejadas, como SEO, redes sociais, marketing de conteúdo e campanhas pagas._
-
-# <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
-
-_Escreva de que formas a solução da aplicação web atingiu os objetivos descritos na seção 2 deste documento. Indique pontos fortes e pontos a melhorar de maneira geral._
-
-_Relacione os pontos de melhorias evidenciados nos testes com planos de ações para serem implementadas. O grupo não precisa implementá-las, pode deixar registrado aqui o plano para ações futuras_
-
-_Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras_
-
-# <a name="c8"></a>8. Referências
-
-PORTER, Michael E. Estratégia competitiva: técnicas para análise de indústrias e da concorrência. 2. ed. Rio de Janeiro: Elsevier, 2004.
-
-MONTGOMERY, Cynthia A.; PORTER, Michael E. (org.). Estratégia: a busca da vantagem competitiva. Rio de Janeiro: Elsevier, 1998.
-
-OSTERWALDER, Alexander; PIGNEUR, Yves. _Value Proposition Design: How to Create Products and Services Customers Want_. Hoboken: Wiley, 2014.
-
-# <a name="c9"></a>Anexos
-
-# _Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)_
 
 _Preencher com até 300 palavras, sem necessidade de fonte_
 
@@ -1224,4 +892,4 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 _Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)_
 
-> > > > > > > develop
+
