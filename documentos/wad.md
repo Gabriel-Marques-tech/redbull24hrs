@@ -1,9 +1,12 @@
 <img src="../assets/logointeli.png">
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> develop
+=======
+>>>>>>> docs/RNs
 # WAD - Web Application Document - Módulo 2 - Inteli
 
 **_Os trechos em itálico servem apenas como guia para o preenchimento da seção. Por esse motivo, não devem fazer parte da documentação final_**
@@ -13,10 +16,13 @@
 #### Nomes dos integrantes do grupo
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 =======
 >>>>>>> develop
+=======
+>>>>>>> docs/RNs
 ## Sumário
 
 [1. Introdução](#c1)
@@ -34,15 +40,20 @@
 [7. Conclusões e trabalhos futuros](#c7)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 [8. Referências](c#8)
 =======
 [8. Referências](#8-referências)
 >>>>>>> develop
+=======
+[8. Referências](#8-referências)
+>>>>>>> docs/RNs
 
 [Anexos](#c9)
 
 <br>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 # <a name="c1"></a>1. Introdução (sprints 1 a 5)
@@ -55,6 +66,8 @@
 
 *Observe a seção 2 e verifique que ali é possível trazer mais detalhes, portanto seja objetivo aqui. Atualize esta descrição até a entrega final, conforme desenvolvimento.*
 =======
+=======
+>>>>>>> docs/RNs
 # <a name="c1"></a>1. Introdução (sprints 1 a 5)
 
 _Preencha com até 300 palavras – sem necessidade de fonte_
@@ -64,7 +77,10 @@ _Contextualize aqui a problemática trazida pelo parceiro de projeto._
 _Descreva brevemente a solução desenvolvida para o parceiro de negócios. Descreva os aspectos essenciais para a criação de valor do produto, com o objetivo de ajudar a entender melhor a realidade do cliente e entregar uma solução que está alinhado com o que ele espera._
 
 _Observe a seção 2 e verifique que ali é possível trazer mais detalhes, portanto seja objetivo aqui. Atualize esta descrição até a entrega final, conforme desenvolvimento._
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> docs/RNs
 
 # <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
 
@@ -101,6 +117,7 @@ Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável
 </div>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
 *Preencha com até 100 palavras – sem necessidade de fonte*
@@ -111,6 +128,8 @@ Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável
 
 *Explique detalhadamente os seguintes aspectos (até 60 palavras por item):*
 =======
+=======
+>>>>>>> docs/RNs
 ### 2.1.2. Análise SWOT da Instituição Parceira
 
 <div align="center">
@@ -127,7 +146,10 @@ Diante dessas limitações, duas oportunidades se mostram estrategicamente decis
 
 _Explique detalhadamente os seguintes aspectos (até 60 palavras por item):_
 
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> docs/RNs
 1. Problema a ser resolvido
 2. Dados disponíveis (mencionar fonte e conteúdo; se não houver, indicar “não se aplica”)
 3. Solução proposta
@@ -136,10 +158,14 @@ _Explique detalhadamente os seguintes aspectos (até 60 palavras por item):_
 6. Critério de sucesso e como será avaliado
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ### 2.1.4. Value Proposition Canvas (sprint 1): 
 =======
 ### 2.1.4. Value Proposition Canvas (sprint 1):
 >>>>>>> develop
+=======
+### 2.1.4. Value Proposition Canvas (sprint 1):
+>>>>>>> docs/RNs
 
 O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidades do cliente e a solução proposta (Osterwalder; Pigneur, 2011). No contexto deste projeto, evidencia-se o encaixe entre as dificuldades operacionais enfrentadas pelo time de Field Marketing da Red Bull durante a apuração manual dos quilômetros corridos no evento Red Bull 24 Horas e as funcionalidades de uma aplicação web voltada para registro confiável e consolidação automatizada dos dados da competição.
 
@@ -151,6 +177,7 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 
 **Time Operacional (responsáveis pela apuração):**
 <<<<<<< HEAD
+<<<<<<< HEAD
 * Registrar o início e fim de cada turno de corrida dos atletas nas duas esteiras por equipe
 * Realizar marcações periódicas (a cada 5 ou 30 minutos) como referência de segurança
 * Consolidar os quilômetros corridos por equipe ao longo das 24 horas ininterruptas
@@ -161,6 +188,8 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 * Auditar marcações em caso de divergências ou paradas técnicas das esteiras
 * Acompanhar a evolução da competição em tempo real
 =======
+=======
+>>>>>>> docs/RNs
 
 - Registrar o início e fim de cada turno de corrida dos atletas nas duas esteiras por equipe
 - Realizar marcações periódicas (a cada 5 ou 30 minutos) como referência de segurança
@@ -172,11 +201,15 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 - Validar os resultados finais com base nos registros realizados durante o evento
 - Auditar marcações em caso de divergências ou paradas técnicas das esteiras
 - Acompanhar a evolução da competição em tempo real
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> docs/RNs
 
 ### Dores:
 
 **Time Operacional:**
+<<<<<<< HEAD
 <<<<<<< HEAD
 * Erro humano nas anotações manuais durante 24 horas ininterruptas, especialmente nas madrugadas, quando o cansaço compromete a precisão
 * Processo analógico baseado em prancheta e transcrição posterior para planilha Excel, gerando atraso de até duas horas para visualização do resultado
@@ -189,6 +222,8 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 * Impossibilidade de conexão direta com as esteiras Technogym, eliminando soluções automatizadas de captura
 * Inviabilidade do uso de pulseiras de sincronização devido à dinâmica de revezamento rápido (trocas em até 15 segundos) e ao número insuficiente de dispositivos
 =======
+=======
+>>>>>>> docs/RNs
 
 - Erro humano nas anotações manuais durante 24 horas ininterruptas, especialmente nas madrugadas, quando o cansaço compromete a precisão
 - Processo analógico baseado em prancheta e transcrição posterior para planilha Excel, gerando atraso de até duas horas para visualização do resultado
@@ -201,11 +236,15 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 - Baixa rastreabilidade dos registros, dificultando auditoria em casos de margens apertadas (diferenças finais de até 150 metros entre equipes)
 - Impossibilidade de conexão direta com as esteiras Technogym, eliminando soluções automatizadas de captura
 - Inviabilidade do uso de pulseiras de sincronização devido à dinâmica de revezamento rápido (trocas em até 15 segundos) e ao número insuficiente de dispositivos
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> docs/RNs
 
 ### Ganhos:
 
 **Time Operacional:**
+<<<<<<< HEAD
 <<<<<<< HEAD
 * Redução significativa do erro humano na apuração dos quilômetros
 * Maior eficiência operacional, com menos carga manual e retrabalho
@@ -218,6 +257,8 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 * Histórico completo para auditoria pós-evento
 * Capacidade de exportar dados estruturados para análise estatística
 =======
+=======
+>>>>>>> docs/RNs
 
 - Redução significativa do erro humano na apuração dos quilômetros
 - Maior eficiência operacional, com menos carga manual e retrabalho
@@ -230,7 +271,10 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 - Maior confiabilidade e rastreabilidade dos registros ao longo das 24h
 - Histórico completo para auditoria pós-evento
 - Capacidade de exportar dados estruturados para análise estatística
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> docs/RNs
 
 ### B. Mapa de Valor:
 
@@ -242,6 +286,7 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 
 **Produtos e Serviços:**
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 * Aplicação web responsiva, otimizada para uso em iPad, com interface simples e funcional para operação durante 24 horas ininterruptas
 * Fluxo de cadastro inicial de local, data, equipes e corredores
@@ -269,6 +314,8 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 * A rastreabilidade pós-evento é garantida pela exportação em CSV e pelo histórico filtrável, possibilitando análise estatística e validação dos resultados
 * A escalabilidade entre etapas regionais é viabilizada por uma solução web acessível em qualquer dispositivo conectado, padronizando a operação em todo o Brasil
 =======
+=======
+>>>>>>> docs/RNs
 - Aplicação web responsiva, otimizada para uso em iPad, com interface simples e funcional para operação durante 24 horas ininterruptas
 - Fluxo de cadastro inicial de local, data, equipes e corredores
 - Tela de seleção de equipe e corredor para registro ágil de turnos
@@ -294,7 +341,10 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 - A visão consolidada da competição é entregue por meio do dashboard com pace médio e quilometragem total, oferecendo um overview do evento sem expor a comparação direta entre equipes
 - A rastreabilidade pós-evento é garantida pela exportação em CSV e pelo histórico filtrável, possibilitando análise estatística e validação dos resultados
 - A escalabilidade entre etapas regionais é viabilizada por uma solução web acessível em qualquer dispositivo conectado, padronizando a operação em todo o Brasil
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> docs/RNs
 
 **Síntese da Proposta de Valor**
 
@@ -302,6 +352,7 @@ A análise evidencia um forte alinhamento entre as dores operacionais do time de
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 *Sem limite de palavras – usar template do curso*
 
@@ -446,6 +497,8 @@ Lucas Andrade atua como operador de eventos na equipe de Field Marketing, sendo 
 
 *Template de User Story*
 =======
+=======
+>>>>>>> docs/RNs
 A matriz de riscos é uma ferramenta fundamental para identificar, analisar e priorizar ameaças que podem impactar o desempenho do produto, permitindo a criação de estratégias de mitigação eficazes (PMI, 2021). Para este projeto, foram mapeados riscos diretamente relacionados à confiabilidade do registro manual digitalizado, à operação contínua durante 24 horas, à usabilidade em condições de pressão e à integridade dos dados que definem o resultado oficial da competição Red Bull 24 Horas.
 
 ### Ameaças:
@@ -590,7 +643,10 @@ _Posicione aqui a lista de User Stories levantadas para o projeto. Siga o templa
 _ATUALIZE ESTA SEÇÃO SEMPRE QUE ALGUMA DEMANDA MUDAR EM SEU PROJETO_
 
 _Template de User Story_
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> docs/RNs
 Identificação | USXX (troque XX por numeração ordenada das User Stories)
 --- | ---
 Persona | nome da Persona
@@ -599,20 +655,27 @@ Critério de aceite 1 | CR1: descrever cenário + testes de aceite
 Critério de aceite 2 | CR2: descrever cenário + testes de aceite
 Critério de aceite ... | CR...
 <<<<<<< HEAD
+<<<<<<< HEAD
 Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
 =======
 Critérios INVEST | _(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)_
 >>>>>>> develop
+=======
+Critérios INVEST | _(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)_
+>>>>>>> docs/RNs
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
 
 ## 3.1. Requisitos do Sistema (sprints 1 a 5)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 *Esta seção formaliza o que o sistema deve fazer, sob quais regras e com quais qualidades. Atualize a cada sprint conforme os requisitos evoluem.*
 
 ### 3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 =======
+=======
+>>>>>>> docs/RNs
 _Esta seção formaliza o que o sistema deve fazer, sob quais regras e com quais qualidades. Atualize a cada sprint conforme os requisitos evoluem._
 
 ## 3.1.1. Minimundo 
@@ -630,7 +693,10 @@ Essas informações são expostas com a vizualização em uma tela simples e em 
 O sistema não realiza integração direta com as esteiras, não possui autenticação por login e não acessa sistemas externos. Toda a entrada de dados é realizada manualmente pelos auditores durante o evento.
 
 ### 3.1.2. Requisitos Funcionais (sprint 1, refinar até sprint 5)
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> docs/RNs
 
 Para que o desenvolvimento de um software seja bem-sucedido, é fundamental definir seus Requisitos Funcionais (RF). De forma simples, eles são as descrições de todas as tarefas, ações e serviços que o sistema deve realizar. Eles representam o "o quê" o sistema faz: desde o clique de um botão pelo usuário até cálculos automáticos e geração de relatórios feitos "por baixo dos panos".
 
@@ -668,6 +734,7 @@ A estrutura de requisitos apresentada acima foi desenhada para transformar a din
 Com esta base sólida, o projeto segue para a fase de implementação, onde cada ID listado servirá como critério de aceitação para garantir que a apuração final dos quilômetros seja 100% confiável, rastreável e transparente para ambas as equipes.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 ### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
@@ -682,11 +749,20 @@ Com esta base sólida, o projeto segue para a fase de implementação, onde cada
 =======
 | ID    | Descrição | Prioridade | Status       |
 |-------|-----------|------------|--------------|
+=======
+| ID    | Descrição | Prioridade | Status       |
+| ----- | --------- | ---------- | ------------ |
+>>>>>>> docs/RNs
 | RF001 | ...       | Alta       | Implementado |
 | RF002 | ...       | Média      | Planejado    |
 
 ### 3.1.3. Regras de Negócio (sprint 1, refinar até sprint 5)
 
+<<<<<<< HEAD
+=======
+_Numere e redija as RN de forma implementável e testável. Toda RN deve ter pelo menos um teste automatizado associado a partir da sprint 3._
+
+>>>>>>> docs/RNs
 Regras de negócio são declarações que definem ou restringem aspectos do funcionamento de um sistema, refletindo políticas, condições e obrigações do domínio de negócio. Devem ser implementáveis e testáveis, servindo como referencial técnico para o desenvolvimento e validação da aplicação.
 Segundo o Business Rules Group (2003, p. 1), regras de negócio são "restrições explícitas sobre comportamento e/ou fornecem suporte ao comportamento" de um sistema ou organização.
 
@@ -721,7 +797,10 @@ Segundo o Business Rules Group (2003, p. 1), regras de negócio são "restriçõ
 | RN27 | Em caso de ausência de conexão, os registros devem ser persistidos localmente com o timestamp original do momento do registro. Ao restabelecer conexão, a sincronização deve ocorrer automaticamente sem duplicar registros, preservando a ordem cronológica original.                                     | RF025        |
 
 ### 3.1.4. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> docs/RNs
 
 Enquanto os requisitos funcionais descrevem o que o sistema faz, os Requisitos Não Funcionais (RNF) definem como o sistema deve operar. Eles não estão ligados a uma funcionalidade específica, mas sim às características de qualidade e restrições que garantem que o software seja robusto, eficiente e seguro. Eles servem como os critérios de "padrão de qualidade" que validam a experiência do usuário e a integridade técnica da solução sob condições reais de uso.
 
@@ -736,11 +815,15 @@ Para organizar esses requisitos, utilizamos a estrutura de 8 eixos de qualidade,
 - REST (Restrições): Delimita limitações técnicas, de design ou de hardware.
 - ORG (Organizacionais): Alinha o projeto a padrões de marca, prazos e normas da empresa.
 <<<<<<< HEAD
+<<<<<<< HEAD
   
 =======
 
 _Preencha os 8 eixos. Cada eixo deve ter ao menos um RNF verificável (com métrica, limite ou critério concreto) ou justificativa explícita de ausência. Evolua do conceitual (sprint 1) ao técnico mensurável (sprint 5)._
 >>>>>>> develop
+=======
+  
+>>>>>>> docs/RNs
 
 | Eixo                     | Requisito                                                                                                                                                                                                       | Métrica / Critério                                                                                                                                                             | Como atendido                                                                                                                                           |
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -756,6 +839,7 @@ _Preencha os 8 eixos. Cada eixo deve ter ao menos um RNF verificável (com métr
 A definição desses Requisitos Não Funcionais assegura que a aplicação não seja apenas funcional, mas resiliente e eficiente sob as condições reais de campo. Ao estabelecer métricas claras e protocolos de operação, mitigamos os principais riscos tecnológicos que poderiam comprometer a apuração dos resultados.
 
 Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo que a operação foque na gestão do evento enquanto o software garante a precisão, a segurança e a estabilidade de todo o processamento de dados ao longo do período de competição.
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 ### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
@@ -811,11 +895,22 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 | RF024 | RN26          | `/eventos/{id}/exportar`                                         | GET    |
 | RF025 | RN27          | `/sync`                                                          | POST   |
 >>>>>>> develop
+=======
+
+### 3.1.5. Matriz RF → RN → Endpoint (sprints 3 a 5)
+
+_Matriz de cobertura mostrando quais RN e endpoints implementam cada RF._
+
+| RF    | RN associadas | Endpoint    | Método |
+| ----- | ------------- | ----------- | ------ |
+| RF001 | RN01, RN02    | `/usuarios` | POST   |
+>>>>>>> docs/RNs
 
 ## 3.2. Arquitetura (sprints 1 a 5)
 
 ### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 *Posicione aqui o diagrama de arquitetura da solução, indicando as camadas principais (Controller, Service, Repository, Model) e suas responsabilidades. Atualize sempre que necessário.*
 
@@ -869,6 +964,8 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 
 *posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização)*
 =======
+=======
+>>>>>>> docs/RNs
 _Posicione aqui o diagrama de arquitetura da solução, indicando as camadas principais (Controller, Service, Repository, Model) e suas responsabilidades. Atualize sempre que necessário._
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
@@ -962,12 +1059,16 @@ _posicione aqui imagens e textos contendo exemplos padronizados de ícones e ima
 ## 3.5 Protótipo de alta fidelidade (sprint 3)
 
 _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização)_
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> docs/RNs
 
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 *Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture).*
 
@@ -988,6 +1089,8 @@ _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelid
 --- | ---
 **Expressão SQL** | SELECT * FROM suppliers WHERE (state = 'California' AND supplier_id <> 900) OR (supplier_id = 100); 
 =======
+=======
+>>>>>>> docs/RNs
 _Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture)._
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
@@ -1007,11 +1110,15 @@ _Template de SQL + lógica proposicional_
 #1 | ---
 --- | ---
 **Expressão SQL** | SELECT \* FROM suppliers WHERE (state = 'California' AND supplier_id <> 900) OR (supplier_id = 100);
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> docs/RNs
 **Proposições lógicas** | $A$: O estado é 'California' (state = 'California') <br> $B$: O ID do fornecedor não é 900 (supplier_id ≠ 900) <br> $C$: O ID do fornecedor é 100 (supplier_id = 100)
 **Expressão lógica proposicional** | $(A \land B) \lor C$
 **Tabela Verdade** | <table> <thead> <tr> <th>$A$</th> <th>$B$</th> <th>$C$</th> <th>$(A \land B)$</th> <th>$(A \land B) \lor C$</th> </tr> </thead> <tbody> <tr> <td>F</td> <td>F</td> <td>F</td> <td>F</td> <td>F</td> </tr> <tr> <td>F</td> <td>F</td> <td>V</td> <td>F</td> <td>V</td> </tr> <tr> <td>F</td> <td>V</td> <td>F</td> <td>F</td> <td>F</td> </tr> <tr> <td>F</td> <td>V</td> <td>V</td> <td>F</td> <td>V</td> </tr> <tr> <td>V</td> <td>F</td> <td>F</td> <td>F</td> <td>F</td> </tr> <tr> <td>V</td> <td>F</td> <td>V</td> <td>F</td> <td>V</td> </tr> <tr> <td>V</td> <td>V</td> <td>F</td> <td>V</td> <td>V</td> </tr> <tr> <td>V</td> <td>V</td> <td>V</td> <td>V</td> <td>V</td> </tr> </tbody> </table>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 *Dica: edite a tabela verdade fora do markdown, para ter melhor controle*
 
@@ -1046,6 +1153,8 @@ _Template de SQL + lógica proposicional_
 | Persona | RF    | RN   | Endpoint    | Tela     | Teste | Evidência        |
 |---------|-------|------|-------------|----------|-------|------------------|
 =======
+=======
+>>>>>>> docs/RNs
 _Dica: edite a tabela verdade fora do markdown, para ter melhor controle_
 
 ## 3.8. WebAPI e endpoints (sprints 3 e 4)
@@ -1078,13 +1187,17 @@ _A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida
 
 | Persona | RF    | RN   | Endpoint    | Tela     | Teste | Evidência                          |
 | ------- | ----- | ---- | ----------- | -------- | ----- | ---------------------------------- |
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> docs/RNs
 | ...     | RF001 | RN01 | `/usuarios` | Cadastro | CT02  | print, log, relatório de cobertura |
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
 ## 4.1. Primeira versão da aplicação web (sprint 3)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 *Descreva e ilustre aqui o desenvolvimento da primeira versão do sistema web. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos.*
 
@@ -1096,6 +1209,8 @@ _A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida
 
 *Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas.*
 =======
+=======
+>>>>>>> docs/RNs
 _Descreva e ilustre aqui o desenvolvimento da primeira versão do sistema web. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos._
 
 ## 4.2. Segunda versão da aplicação web (sprint 4)
@@ -1105,12 +1220,16 @@ _Descreva e ilustre aqui o desenvolvimento da segunda versão do sistema web, co
 ## 4.3. Versão final da aplicação web (sprint 5)
 
 _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas._
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> docs/RNs
 
 # <a name="c5"></a>5. Testes
 
 ## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 *Liste e descreva os testes automatizados dos endpoints criados e planejados para sua solução, implementados com **Jest**. Cubra as duas abordagens:*
 
@@ -1119,18 +1238,24 @@ _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com 
 
 *Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown).*
 =======
+=======
+>>>>>>> docs/RNs
 _Liste e descreva os testes automatizados dos endpoints criados e planejados para sua solução, implementados com **Jest**. Cubra as duas abordagens:_
 
 - **_White-box_** _— testes unitários de Service que exercitam ramos internos, exceções e regras de negócio (conhecimento da implementação)._
 - **_Black-box_** _— testes de integração dos endpoints via Jest + Supertest, verificando apenas o contrato HTTP (status, body, efeito observável), sem depender da implementação interna._
 
 _Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown)._
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> docs/RNs
 
 ## 5.2. Testes de usabilidade (sprint 5)
 
 ### 5.2.1. Relatório de testes de guerrilha
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 *Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização).*
 
@@ -1138,17 +1263,23 @@ _Posicione aqui também o relatório de cobertura de testes Jest se houver (atra
 
 *Posicione aqui o relatório dos testes SUS realizados.*
 =======
+=======
+>>>>>>> docs/RNs
 _Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização)._
 
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
 _Posicione aqui o relatório dos testes SUS realizados._
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> docs/RNs
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
 
 ## 6.1 Resumo Executivo
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 *Preencher com até 300 palavras, sem necessidade de fonte*
 
@@ -1225,6 +1356,8 @@ OSTERWALDER, Alexander; PIGNEUR, Yves. *Value Proposition Design: How to Create 
 
 *Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)*
 =======
+=======
+>>>>>>> docs/RNs
 _Preencher com até 300 palavras, sem necessidade de fonte_
 
 _Apresente de forma clara e objetiva os principais destaques do projeto: oportunidades de mercado, diferenciais competitivos da aplicação web e os objetivos estratégicos pretendidos._
@@ -1305,4 +1438,7 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 # <a name="c9"></a>Anexos
 
 _Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)_
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> docs/RNs
