@@ -205,11 +205,11 @@ No contexto deste projeto, as personas foram utilizadas para representar os dife
 <p align = "center"> Fonte: material produzido pelos autores (2026).</p>
 
 ## Informações
-- Idade: 25
-- Localização: São Paulo, SP
-- Formação: Ensino Superior em andamento - Administração
-- Empresa: Red bull
-- Cargo: Assistente de produção de eventos
+- Idade: 25;
+- Localização: São Paulo, SP;
+- Formação: Ensino Superior em andamento - Administração;
+- Empresa: Red bull;
+- Cargo: Assistente de produção de eventos.
 
 ## Biografia
 
@@ -217,26 +217,26 @@ Bruna Gomes atua como Assistente de Produção de Eventos na Red Bull, sendo res
 
 ## Objetivos
 
-- Registrar início, checkpoints e fim das corridas de forma rápida e padronizada
-- Garantir continuidade dos registros durante toda a operação
-- Reduzir erros no processo de coleta de quilômetros
-- Acompanhar dados em tempo quase real para validação
-- Agilizar trocas de corredores sem comprometer os registros
+- Registrar início, checkpoints e fim das corridas de forma rápida e padronizada;
+- Garantir continuidade dos registros durante toda a operação;
+- Reduzir erros no processo de coleta de quilômetros;
+- Acompanhar dados em tempo quase real para validação;
+- Agilizar trocas de corredores sem comprometer os registros.
 
 ## Dores 
 
-- Utilização de registros manuais (prancheta/papel), sujeitos a erro
-- Falta de histórico estruturado para conferência
-- Alto nível de atenção exigido por longos períodos (24h)
-- Baixa visibilidade dos dados consolidados durante o evento
+- Utilização de registros manuais (prancheta/papel), sujeitos a erro;
+- Falta de histórico estruturado para conferência;
+- Alto nível de atenção exigido por longos períodos (24h);
+- Baixa visibilidade dos dados consolidados durante o evento.
 
 ## Necessidades
 
-- Sistema simples e rápido para registro de dados
-- Rastreabilidade completa dos registros realizados
-- Exportação de dados para análise e auditoria
-- Facilidade de conferência e validação das informações
-- Interface clara para uso contínuo durante o evento
+- Sistema simples e rápido para registro de dados;
+- Rastreabilidade completa dos registros realizados;
+- Exportação de dados para análise e auditoria;
+- Facilidade de conferência e validação das informações;
+- Interface clara para uso contínuo durante o evento.
 
 <div align = "center">
   <img src="../assets/Persona-Bruno-Gardesani.png">
@@ -245,11 +245,11 @@ Bruna Gomes atua como Assistente de Produção de Eventos na Red Bull, sendo res
 
 ## Informações
 
-- Idade: 38
-- Localização: São Paulo, SP
-- Formação: Ensino Superior Completo – Administração/Marketing
-- Empresa: Red bull
-- Cargo: Gerente Nacional de Field Marketing
+- Idade: 38;
+- Localização: São Paulo, SP;
+- Formação: Ensino Superior Completo – Administração/Marketing;
+- Empresa: Red bull;
+- Cargo: Gerente Nacional de Field Marketing.
 
 ## Biografia
 
@@ -257,27 +257,27 @@ Bruno Gardesani atua como Gerente Nacional de Field Marketing na Red Bull, sendo
 
 ## Objetivos
 
-- Garantir confiabilidade total dos dados registrados
-- Acompanhar o desempenho das equipes com clareza
-- Reduzir retrabalho na validação dos resultados
-- Ter acesso rápido às informações consolidadas
-- Facilitar auditoria pós-evento
+- Garantir confiabilidade total dos dados registrados;
+- Acompanhar o desempenho das equipes com clareza;
+- Reduzir retrabalho na validação dos resultados;
+- Ter acesso rápido às informações consolidadas;
+- Facilitar auditoria pós-evento.
 
 ## Dores 
 
-- Falta de confiança nos registros manuais
-- Necessidade de validação constante
-- Dificuldade em visualizar dados consolidados rapidamente
-- Retrabalho para conferência pós-evento
-- Risco de inconsistências comprometerem o resultado final
+- Falta de confiança nos registros manuais;
+- Necessidade de validação constante;
+- Dificuldade em visualizar dados consolidados rapidamente;
+- Retrabalho para conferência pós-evento;
+- Risco de inconsistências comprometerem o resultado final.
 
 ## Necessidades
 
-- Visão consolidada e organizada dos dados
-- Histórico completo e rastreável
-- Exportação para auditoria
-- Redução de intervenção manual
-- Sistema confiável e transparente
+- Visão consolidada e organizada dos dados;
+- Histórico completo e rastreável;
+- Exportação para auditoria;
+- Redução de intervenção manual;
+- Sistema confiável e transparente.
 
 <div align = "center">
   <img src="../assets/Persona-Lucas-Andrade.png">
@@ -286,11 +286,11 @@ Bruno Gardesani atua como Gerente Nacional de Field Marketing na Red Bull, sendo
 
 ## Informações
 
-- Idade: 26
-- Localização: São Paulo, SP
-- Formação: Ensino Superior Completo – Marketing
-- Empresa: Red bull
-- Cargo: Operador de Evento
+- Idade: 26;
+- Localização: São Paulo, SP;
+- Formação: Ensino Superior Completo – Marketing;
+- Empresa: Red bull;
+- Cargo: Operador de Evento.
 
 ## Biografia
 
@@ -298,27 +298,27 @@ Lucas Andrade atua como operador de eventos na equipe de Field Marketing, sendo 
 
 ## Objetivos
 
-- Registrar dados de forma rápida e sem interrupções
-- Reduzir a necessidade de cálculos ou conferências manuais
-- Evitar perda de informações durante trocas de corredores
-- Conseguir operar o sistema com poucos cliques
-- Manter consistência nos registros ao longo das 24h
+- Registrar dados de forma rápida e sem interrupções;
+- Reduzir a necessidade de cálculos ou conferências manuais;
+- Evitar perda de informações durante trocas de corredores;
+- Conseguir operar o sistema com poucos cliques;
+- Manter consistência nos registros ao longo das 24h.
 
 ## Dores 
 
-- Uso de prancheta e papel, com alto risco de erro
-- Dificuldade em acompanhar ritmo acelerado das trocas
-- Cansaço físico e mental ao longo do evento
-- Falta de feedback imediato se o registro está correto
-- Possibilidade de esquecer anotações em momentos críticos
+- Uso de prancheta e papel, com alto risco de erro;
+- Dificuldade em acompanhar ritmo acelerado das trocas;
+- Cansaço físico e mental ao longo do evento;
+- Falta de feedback imediato se o registro está correto;
+- Possibilidade de esquecer anotações em momentos críticos.
 
 ## Necessidades
 
-- Interface extremamente simples e rápida
-- Feedback visual imediato após registro
-- Processo padronizado para evitar erros
-- Redução de digitação manual
-- Sistema confiável mesmo sob pressão
+- Interface extremamente simples e rápida;
+- Feedback visual imediato após registro;
+- Processo padronizado para evitar erros;
+- Redução de digitação manual;
+- Sistema confiável mesmo sob pressão.
 
 ## 2.3. User Stories (sprints 1 a 5)
 
