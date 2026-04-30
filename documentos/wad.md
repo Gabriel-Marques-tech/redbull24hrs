@@ -70,7 +70,7 @@ Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável
 
 <div align="center">
   <sub>Imagem 1 - Forças de Porter</sub><br>
-  <img src="" width="100%" alt="Forças de Porter"><br>
+  <img src="../assets/forca_de_porter.png" width="100%" alt="Forças de Porter"><br>
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
