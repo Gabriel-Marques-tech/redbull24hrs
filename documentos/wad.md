@@ -4,8 +4,6 @@
 
 ## Nome do Grupo
 
-RED BULLS
-
 #### Nomes dos integrantes do grupo
 
 ## Sumário
