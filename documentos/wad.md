@@ -97,20 +97,6 @@ _Explique detalhadamente os seguintes aspectos (até 60 palavras por item):_
 5. Benefícios esperados
 6. Critério de sucesso e como será avaliado
 
-<<<<<<<<< Temporary merge branch 1
-
-### 2.1.4. Value Proposition Canvas (sprint 1):
-
-_Sem limite de palavras – usar template do curso_
-
-_Elaborar o Value Proposition Canvas com base na proposta de solução definida._
-
-### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
-
-_Sem limite de palavras – usar template do curso_
-
-# _Registre na matriz os riscos identificados no projeto._
-
 ### 2.1.4. Value Proposition Canvas (sprint 1):
 
 O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidades do cliente e a solução proposta (Osterwalder; Pigneur, 2011). No contexto deste projeto, evidencia-se o encaixe entre as dificuldades operacionais enfrentadas pelo time de Field Marketing da Red Bull durante a apuração manual dos quilômetros corridos no evento Red Bull 24 Horas e as funcionalidades de uma aplicação web voltada para registro confiável e consolidação automatizada dos dados da competição.
