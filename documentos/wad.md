@@ -149,7 +149,6 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
-
 **Produtos e Serviços:**
 
 - Aplicação web responsiva, otimizada para uso em iPad, com interface simples e funcional para operação durante 24 horas ininterruptas
@@ -182,8 +181,8 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 
 A análise evidencia um forte alinhamento entre as dores operacionais do time de Field Marketing da Red Bull e as funcionalidades propostas pela aplicação web. A substituição do processo analógico via prancheta por um fluxo digital padronizado reduz o erro humano e o retrabalho, enquanto a consolidação automática e o histórico filtrável aumentam a confiabilidade e a rastreabilidade dos registros. Dessa forma, a solução transforma a operação do Red Bull 24 Horas em um processo mais eficiente, auditável e escalável, sem comprometer a dinâmica original do evento — que depende da agilidade das trocas entre atletas e da operação contínua das esteiras ao longo das 24 horas.
 
-
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
+
 A matriz de riscos é uma ferramenta fundamental para identificar, analisar e priorizar ameaças que podem impactar o desempenho do produto, permitindo a criação de estratégias de mitigação eficazes (PMI, 2021). Para este projeto, foram mapeados riscos diretamente relacionados à confiabilidade do registro manual digitalizado, à operação contínua durante 24 horas, à usabilidade em condições de pressão e à integridade dos dados que definem o resultado oficial da competição Red Bull 24 Horas.
 
 ### Ameaças:
@@ -506,11 +505,6 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 A estrutura de requisitos apresentada acima foi desenhada para transformar a dinâmica complexa do evento Red Bull 24 Horas em um fluxo digital ágil e seguro.
 Com esta base sólida, o projeto segue para a fase de implementação, onde cada ID listado servirá como critério de aceitação para garantir que a apuração final dos quilômetros seja 100% confiável, rastreável e transparente para ambas as equipes.
 
-| ID    | Descrição | Prioridade | Status       |
-| ----- | --------- | ---------- | ------------ |
-| RF001 | ...       | Alta       | Implementado |
-| RF002 | ...       | Média      | Planejado    |
-
 ### 3.1.3. Regras de Negócio (sprint 1, refinar até sprint 5)
 
 Regras de negócio são declarações que definem ou restringem aspectos do funcionamento de um sistema, refletindo políticas, condições e obrigações do domínio de negócio. Devem ser implementáveis e testáveis, servindo como referencial técnico para o desenvolvimento e validação da aplicação.
@@ -575,7 +569,6 @@ Para organizar esses requisitos, utilizamos a estrutura de 8 eixos de qualidade,
 A definição desses Requisitos Não Funcionais assegura que a aplicação não seja apenas funcional, mas resiliente e eficiente sob as condições reais de campo. Ao estabelecer métricas claras e protocolos de operação, mitigamos os principais riscos tecnológicos que poderiam comprometer a apuração dos resultados.
 
 Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo que a operação foque na gestão do evento enquanto o software garante a precisão, a segurança e a estabilidade de todo o processamento de dados ao longo do período de competição.
-
 
 ### 3.1.5. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
@@ -873,6 +866,11 @@ _Relacione os pontos de melhorias evidenciados nos testes com planos de ações 
 _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras_
 
 # <a name="c8"></a>8. Referências
+
+BUSINESS RULES GROUP. Business Rules Manifesto: the principles of rule independence. Version 2.0. [S. l.]: Business Rules Group, 2003. Disponível em: https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf. Acesso em: 27 abr. 2026.
+
+FIELDING, Roy Thomas. Architectural Styles and the Design of Network-based Software Architectures. 2000. Tese (Doutorado em
+Ciências da Computação) — University of California, Irvine, 2000. Disponível em: https://ics.uci.edu/~fielding/pubs/dissertation/top.htm. Acesso em: 27 abr. 2026.
 
 <br> ESMP. Disponível em: https://www.espm.br/blog/runaholic-club-lifestyle-e-comunidade-de-wellness-para-a-geracao-z/. Acesso em: 28 abr. 2026 <br>
 
