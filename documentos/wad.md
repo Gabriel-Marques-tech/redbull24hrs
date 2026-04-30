@@ -891,5 +891,3 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 # <a name="c9"></a>Anexos
 
 _Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)_
-
-
