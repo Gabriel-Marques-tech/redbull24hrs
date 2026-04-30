@@ -71,9 +71,93 @@
 6. Critério de sucesso e como será avaliado
 
 ### 2.1.4. Value Proposition Canvas (sprint 1): 
-*Sem limite de palavras – usar template do curso*
 
-*Elaborar o Value Proposition Canvas com base na proposta de solução definida.*
+O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidades do cliente e a solução proposta (Osterwalder; Pigneur, 2011). No contexto deste projeto, evidencia-se o encaixe entre as dificuldades operacionais enfrentadas pelo time de Field Marketing da Red Bull durante a apuração manual dos quilômetros corridos no evento Red Bull 24 Horas e as funcionalidades de uma aplicação web voltada para registro confiável e consolidação automatizada dos dados da competição.
+
+### A. Perfil do Cliente:
+
+O público-alvo é composto pelo time operacional de Field Marketing da Red Bull, responsável pela apuração e acompanhamento do evento Red Bull 24 Horas — atualmente quem opera a prancheta ao lado das esteiras —, além da organização do evento, que utiliza os dados consolidados para validar os resultados, e dos juízes responsáveis pela auditoria final das marcações.
+
+### Tarefas:
+
+**Time Operacional (responsáveis pela apuração):**
+* Registrar o início e fim de cada turno de corrida dos atletas nas duas esteiras por equipe
+* Realizar marcações periódicas (a cada 5 ou 30 minutos) como referência de segurança
+* Consolidar os quilômetros corridos por equipe ao longo das 24 horas ininterruptas
+* Garantir a continuidade do registro durante revezamentos rápidos entre atletas
+
+**Organização e Juízes:**
+* Validar os resultados finais com base nos registros realizados durante o evento
+* Auditar marcações em caso de divergências ou paradas técnicas das esteiras
+* Acompanhar a evolução da competição em tempo real
+
+### Dores:
+
+**Time Operacional:**
+* Erro humano nas anotações manuais durante 24 horas ininterruptas, especialmente nas madrugadas, quando o cansaço compromete a precisão
+* Processo analógico baseado em prancheta e transcrição posterior para planilha Excel, gerando atraso de até duas horas para visualização do resultado
+* Dificuldade de recuperar informações em caso de falha técnica das esteiras (paradas, travamentos)
+* Retrabalho na transcrição manual de dados do papel para a planilha
+* Inconsistências entre as cinco etapas regionais por falta de padronização do processo
+
+**Organização e Juízes:**
+* Baixa rastreabilidade dos registros, dificultando auditoria em casos de margens apertadas (diferenças finais de até 150 metros entre equipes)
+* Impossibilidade de conexão direta com as esteiras Technogym, eliminando soluções automatizadas de captura
+* Inviabilidade do uso de pulseiras de sincronização devido à dinâmica de revezamento rápido (trocas em até 15 segundos) e ao número insuficiente de dispositivos
+
+### Ganhos:
+
+**Time Operacional:**
+* Redução significativa do erro humano na apuração dos quilômetros
+* Maior eficiência operacional, com menos carga manual e retrabalho
+* Padronização do processo entre as diferentes etapas regionais
+* Facilidade no cadastro inicial dos participantes e equipes
+
+**Organização e Juízes:**
+* Visão consolidada e organizada do andamento da competição
+* Maior confiabilidade e rastreabilidade dos registros ao longo das 24h
+* Histórico completo para auditoria pós-evento
+* Capacidade de exportar dados estruturados para análise estatística
+
+### B. Mapa de Valor:
+
+<div align="center">
+  <sub>Imagem X - Canvas da Proposta de Valor</sub><br>
+  <img src= "./assets/negocios/Value-Proposition-Canvas.png" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
+  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+</div>
+
+**Produtos e Serviços:**
+
+* Aplicação web responsiva, otimizada para uso em iPad, com interface simples e funcional para operação durante 24 horas ininterruptas
+* Fluxo de cadastro inicial de local, data, equipes e corredores
+* Tela de seleção de equipe e corredor para registro ágil de turnos
+* Funcionalidade de contabilização de quilômetros a cada 5 minutos com timestamp automático
+* Aviso periódico (5 em 5 minutos) para padronização das marcações de segurança
+* Dashboard consolidado com pace médio do evento e quilômetros totais por equipe
+* Histórico cronológico de lançamentos com filtros por equipe e corredor
+* Exportação de dados em formato CSV para auditoria pós-evento
+
+**Analgésicos:**
+
+* O erro humano na apuração é reduzido pela substituição da prancheta por inputs digitais padronizados, com timestamp automático e validação de campos
+* O atraso na consolidação dos dados é eliminado por meio do cálculo automático do total de quilômetros por equipe, exibido em tempo quase real
+* A dificuldade de recuperação em falhas técnicas das esteiras é mitigada pelas marcações periódicas registradas digitalmente, permitindo recuperar a última referência confiável
+* O retrabalho de transcrição entre papel e planilha é eliminado, já que os dados são inseridos diretamente no sistema e exportáveis em CSV
+* A falta de padronização entre etapas regionais é resolvida por um fluxo único e replicável em todas as seletivas
+* A baixa rastreabilidade é resolvida pelo histórico completo de lançamentos com filtros, garantindo auditoria precisa
+
+**Criadores de Ganho:**
+
+* A eficiência operacional é ampliada por uma interface simples e direta, projetada para uso ágil durante revezamentos de até 15 segundos
+* A confiabilidade dos resultados é fortalecida pelo registro digital com timestamp automático, eliminando dependência de anotações manuais sob pressão
+* A visão consolidada da competição é entregue por meio do dashboard com pace médio e quilometragem total, oferecendo um overview do evento sem expor a comparação direta entre equipes
+* A rastreabilidade pós-evento é garantida pela exportação em CSV e pelo histórico filtrável, possibilitando análise estatística e validação dos resultados
+* A escalabilidade entre etapas regionais é viabilizada por uma solução web acessível em qualquer dispositivo conectado, padronizando a operação em todo o Brasil
+
+**Síntese da Proposta de Valor**
+
+A análise evidencia um forte alinhamento entre as dores operacionais do time de Field Marketing da Red Bull e as funcionalidades propostas pela aplicação web. A substituição do processo analógico via prancheta por um fluxo digital padronizado reduz o erro humano e o retrabalho, enquanto a consolidação automática e o histórico filtrável aumentam a confiabilidade e a rastreabilidade dos registros. Dessa forma, a solução transforma a operação do Red Bull 24 Horas em um processo mais eficiente, auditável e escalável, sem comprometer a dinâmica original do evento — que depende da agilidade das trocas entre atletas e da operação contínua das esteiras ao longo das 24 horas.
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
@@ -185,7 +269,7 @@ Com esta base sólida, o projeto segue para a fase de implementação, onde cada
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
-*Apresente o diagrama de casos de uso com atores (boneco), casos (elipse) e as relações `<<include>>` / `<<extend>>` com semântica correta. Consulte a notação de referência em `in02/suporte/use-case_3.0_v1.0.pdf`.*
+*Apresente o diagrama de casos de uso com atores (boneco), casos (elipse) e as relações `<<include>>` / `<<extend>>` com semântica correta. Consulte a notação de referência em `https://www.ivarjacobson.com/files/use-case_3.0_v1.0.pdf`.*
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
@@ -247,7 +331,7 @@ Com esta base sólida, o projeto segue para a fase de implementação, onde cada
 
 *Posicione aqui os diagramas de modelos relacionais do banco de dados, apresentando todos os esquemas de tabelas e suas relações. Inclua as migrations DDL numeradas e reproduzíveis (`CREATE TABLE`, `CREATE INDEX`, constraints `NOT NULL`, `UNIQUE`, `FOREIGN KEY`, `CHECK`). Utilize texto para complementar suas explicações quando necessário.*
 
-### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
+### 3.6.4. Consultas SQL e lógica proposicional (sprint 3)
 
 *posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
 
@@ -399,11 +483,8 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 _Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
 
-LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
-SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
+OSTERWALDER, Alexander; PIGNEUR, Yves. *Value Proposition Design: How to Create Products and Services Customers Want*. Hoboken: Wiley, 2014.
 
-INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
-SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
 
 # <a name="c9"></a>Anexos
 
