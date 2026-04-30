@@ -367,12 +367,6 @@ Essas informações são expostas com a vizualização em uma tela simples e em 
 
 O sistema não realiza integração direta com as esteiras, não possui autenticação por login e não acessa sistemas externos. Toda a entrada de dados é realizada manualmente pelos auditores durante o evento.
 
-O usuário quer o texto melhorado — sem pedir Word ou arquivo. Vou responder inline com o texto revisado e aprimorado.
-
-Aqui está o texto reescrito com linguagem mais fluida, precisa e profissional:
-
----
-
 ### 3.1.2. Requisitos Funcionais (Sprint 1, refinar até Sprint 5)
 
 Para que o desenvolvimento de um software seja bem-sucedido, é fundamental definir seus Requisitos Funcionais (RF). De forma objetiva, eles descrevem todas as tarefas, ações e serviços que o sistema deve ser capaz de executar, representando o "o quê" o sistema faz, desde interações diretas do usuário, como o clique em um botão, até processos automatizados como cálculos e geração de relatórios realizados em segundo plano.
