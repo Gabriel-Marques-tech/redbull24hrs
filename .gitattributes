@@ -1,2 +1,19 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Normaliza tudo pra LF no repositório
+* text=auto eol=lf
+
+# Arquivos especificamente texto (force LF)
+*.md   text eol=lf
+*.txt  text eol=lf
+*.json text eol=lf
+*.js   text eol=lf
+*.ts   text eol=lf
+*.html text eol=lf
+*.css  text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+
+# Binários (não mexer)
+*.png  binary
+*.jpg  binary
+*.pdf  binary
+*.ico  binary
