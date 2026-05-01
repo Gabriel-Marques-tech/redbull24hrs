@@ -695,9 +695,9 @@ Durante o evento, os corredores se alternam nas esteiras ao longo das 24 horas. 
 
 O sistema é responsável por armazenar todas as informações do evento, realizar o cálculo da quilometragem total acumulada por equipe e gerar métricas de desempenho, como distância por corredor, média por turno e evolução ao longo das horas.
 
-Essas informações são expostas com a vizualização em uma tela simples e em tempo real, permitindo acompanhamento do placar e identificação de eventuais inconsistências. Ao final do evento, o auditor pode exportar todos os registros e métricas em formato de planilha para fins de auditoria e validação dos resultados.
+Essas informações são expostas com a visualização em uma tela simples e em tempo real, permitindo acompanhamento do placar e identificação de eventuais inconsistências. Ao final do evento, o auditor pode exportar todos os registros e métricas em formato de planilha para fins de auditoria e validação dos resultados.
 
-O sistema não realiza integração direta com as esteiras, não possui autenticação por login e não acessa sistemas externos. Toda a entrada de dados é realizada manualmente pelos auditores durante o evento.
+O sistema não realiza integração direta com as esteiras e não acessa sistemas externos. Toda a entrada de dados é realizada manualmente pelos auditores durante o evento.
 
 ### 3.1.2. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 
