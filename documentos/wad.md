@@ -4,8 +4,6 @@
 
 ## Nome do Grupo
 
-### RED BULLS
-
 ## Nome dos integrantes do grupo
 
 #### Fernanda Helena Leitão Bezerra
