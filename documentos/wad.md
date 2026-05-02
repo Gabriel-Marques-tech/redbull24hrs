@@ -89,9 +89,10 @@ Os fornecedores para a construção deste projeto incluem provedores de hospedag
 Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável pela operação do evento. Por se tratar de um projeto customizado e de uso interno exclusivo para uma de suas experiências proprietárias, a Red Bull atua como a única compradora desta solução específica. Isso eleva substancialmente o seu poder de barganha. O cliente tem controle total sobre os requisitos de sucesso do MVP, exigindo que o sistema prove ser superior ao método atual da prancheta em consistência e redução de erros. Se a aplicação não entregar a eficiência operacional esperada, a organização pode facilmente descartar a ferramenta e retornar ao método manual sem grandes prejuízos, ou simplesmente buscar outra agência desenvolvedora. Dessa forma, o poder de negociação do cliente é alto, refletindo sua posição dominante na definição das regras do projeto e na validação final da entrega.
 
 <div align="center">
-  <sub>Imagem 1 - Forças de Porter</sub><br>
   <img src="../assets/forca_de_porter.png" width="100%" alt="Forças de Porter"><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Imagem 1 - Forças de Porter</sub><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 ### 2.1.2. Análise SWOT da Instituição Parceira
@@ -99,9 +100,10 @@ Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável
 ---
 
 <div align="center">
-  <sub>Imagem 2 - Análise SWOT </sub><br>
   <img src= "../assets/analise_SWOT.png" width="100%" alt="Análise SWOT - Red Bull"><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Imagem 2 - Análise SWOT</sub><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 A Red Bull consolida sua relevância junto à geração atual por meio de um marketing disruptivo — expresso em ativações esportivas e culturais, eventos de nicho e conteúdo gerado em torno de experiências extremas — junto a um reconhecimento global que transcende o produto e posiciona a marca como símbolo de estilo de vida — tornando seu Core Product, a bebida energética, um produto de alto valor desejado. Essa altíssima afinidade com o público jovem-adulto (18 a 30 anos) confere a companhia uma força gigantesca para realizar o Red Bull 24 horas: o evento não precisa construir audiência do zero, pois já opera sobre uma base de corredores consolidada[¹](#8-referências) e uma comunidade que se identifica com os valores da marca[²](#8-referências). Entretanto, a forma na qual é auditada a corrida dos atletas no evento herda fragilidades estruturais gigantescas para uma iniciativa desse porte: a suscetibilidade a erros humanos nos processos de auditoria dos atletas compromete a confiabilidade e o resultado final da competição — o que mais importa. Além disso, a falta de automação e tecnologia na gestão dos participantes representa um descuido visível com o Red Bull 24 horas — fraqueza que pode ser sanada com nosso MVP. Em um evento de 24 horas, onde o volume de dados gerados é alto por se tratar de uma captação a cada 10 minutos e a margem para falhas é estreita por ser uma competição acirrada, esses pontos exigem atenção prioritária no desenvolvimento da iniciativa da empresa.
@@ -224,9 +226,10 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 - A escalabilidade entre etapas regionais é viabilizada por uma solução web acessível em qualquer dispositivo conectado, padronizando a operação em todo o Brasil
 
 <div align="center">
-  <sub>Imagem 3 - Canvas da Proposta de Valor</sub><br>
   <img src= "../assets/proposta_de_valor.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Imagem 3 - Canvas da Proposta de Valor</sub><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 **Síntese da Proposta de Valor**
@@ -298,9 +301,10 @@ A matriz de riscos é uma ferramenta fundamental para identificar, analisar e pr
 - Plano de ação: criar fluxo de "troca rápida" no sistema, com pré-cadastro do próximo corredor da equipe e botão único de transição que finaliza o registro anterior e inicia o próximo simultaneamente.
 
 <div align="center">
-  <sub>Imagem 4 - Matriz de Ameaças</sub><br>
   <img src="../assets/matriz_ameacas.jpeg" width="100%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Imagem 4 - Matriz de Ameaças</sub><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 **Síntese da Matriz de Riscos**
@@ -361,9 +365,10 @@ No contexto do desenvolvimento de soluções tecnológicas, as oportunidades sã
 - Plano de aproveitamento: estruturar arquitetura modular que permita adição futura de novos métodos de captura de dados sem refatoração profunda do sistema.
 
 <div align="center">
-  <sub>Imagem 5 - Matriz de Oportunidades</sub><br>
   <img src="../assets/matriz_oportunidades.jpeg" width="100%" alt="Matriz de Oportunidades do projeto Red Bull 24 Horas"><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Imagem 5 - Matriz de Oportunidades</sub><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 **Síntese da Matriz de Oportunidades**
@@ -383,9 +388,10 @@ No campo do design centrado no usuário, as personas atuam como instrumentos de 
 No contexto deste projeto, as personas foram utilizadas para representar os diferentes perfis envolvidos na operação do evento Red Bull 24 Horas, especialmente os responsáveis pelo registro manual dos dados e pela validação das informações. A partir dessas representações, foi possível identificar dores relacionadas à inconsistência de registros, ausência de histórico confiável e dificuldade de auditoria, orientando a definição das funcionalidades do sistema proposto.
 
 <div align = "center">
-  <sub>Imagem 6 - Persona Bruna Gomes</sub><br>
   <img src="../assets/Persona-Bruna-Gomes.png" width="100%" alt="Persona Bruna Gomes"><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Imagem 6 - Persona Bruna Gomes</sub><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 ## Informações
@@ -424,9 +430,10 @@ Bruna Gomes atua como Assistente de Produção de Eventos na Red Bull, sendo res
 - Interface clara para uso contínuo durante o evento.
 
 <div align = "center">
-  <sub>Imagem 7 - Persona Bruno Gardesani</sub><br>
   <img src="../assets/Persona-Bruno-Gardesani.png" width="100%" alt="Persona Bruno Gardesani"><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Imagem 7 - Persona Bruno Gardesani</sub><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 ## Informações
@@ -466,9 +473,10 @@ Bruno Gardesani atua como Gerente Nacional de Field Marketing na Red Bull, sendo
 - Sistema confiável e transparente.
 
 <div align = "center">
-  <sub>Imagem 8 - Persona Lucas Andrade</sub><br>
   <img src="../assets/Persona-Lucas-Andrade.png" width="100%" alt="Persona Lucas Andrade"><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Imagem 8 - Persona Lucas Andrade</sub><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 ## Informações
@@ -527,7 +535,8 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 
 <div align = "center">
   <sub> Quadro 1 - US01 </sub><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 | Identificação            | [US02](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/31)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
@@ -544,7 +553,8 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 
 <div align = "center">
   <sub> Quadro 2 - US02 </sub><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 | Identificação            | [US03](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/32)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
@@ -561,7 +571,8 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 
 <div align = "center">
   <sub> Quadro 3 - US03</sub><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 | Identificação            | [US04](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/33)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
@@ -578,7 +589,8 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 
 <div align = "center">
   <sub> Quadro 4 - US04 </sub><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 | Identificação            | [US05](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/34)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
@@ -595,7 +607,8 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 
 <div align = "center">
   <sub> Quadro 5 - US05 </sub><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 | Identificação            | [US06](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/38)                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
@@ -610,7 +623,8 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 
 <div align = "center">
   <sub> Quadro 6 - US06 </sub><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 | Identificação            | [US07](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/39)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
@@ -625,7 +639,8 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 
 <div align = "center">
   <sub> Quadro 7 - US07 </sub><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 | Identificação            | [US08](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/40)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
@@ -640,7 +655,8 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 
 <div align = "center">
   <sub> Quadro 8 - US08 </sub><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 | Identificação            | [US09](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/41)                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
@@ -655,7 +671,8 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 
 <div align = "center">
   <sub> Quadro 9 - US09 </sub><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 | Identificação            | [US10](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/42)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
@@ -670,7 +687,8 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 
 <div align = "center">
   <sub> Quadro 10 - US10 </sub><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
@@ -735,7 +753,8 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 
 <div align = "center">
   <sub> Quadro 11 - Requisitos Funcionais </sub><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
 </div>
 
 A estrutura de requisitos apresentada acima foi desenhada para transformar a dinâmica complexa do evento Red Bull 24 Horas em um fluxo digital ágil e seguro.
@@ -780,7 +799,8 @@ Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio 
 
 <div align = "center">
   <sub> Quadro 12 - Regras de Negócios </sub><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
 </div>
 
 ### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
@@ -819,7 +839,8 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 
 <div align = "center">
   <sub> Quadro 14 - Matriz RF → RN → Endpoint </sub><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
 </div>
 
 ### 3.1.5. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
@@ -852,7 +873,8 @@ Para organizar esses requisitos, utilizamos a estrutura de 8 eixos de qualidade,
 
 <div align = "center">
   <sub> Quadro 13 - Requisitos Não Funcionais </sub><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
 </div>
 
 A definição desses Requisitos Não Funcionais assegura que a aplicação não seja apenas funcional, mas resiliente e eficiente sob as condições reais de campo. Ao estabelecer métricas claras e protocolos de operação, mitigamos os principais riscos tecnológicos que poderiam comprometer a apuração dos resultados.
@@ -876,9 +898,10 @@ _Posicione aqui o diagrama de arquitetura da solução, indicando as camadas pri
 O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 Horas a partir da prática **Light Use-Case Modeling** descrita em Jacobson et al.[⁹](#8-referências), evoluindo para o nível **System Boundary Established** ao incluir todos os atores e casos de uso planejados para o MVP. A notação adotada segue o guia _Use-Case 3.0 — The Definitive Guide_: atores são representados por bonecos-palito, casos de uso por elipses contidas dentro do retângulo do _System of Interest_, associações por linhas contínuas com setas indicando o iniciador da interação, `<<include>>` por seta tracejada apontando do caso-base para o caso obrigatoriamente incluído, e `<<extend>>` por seta tracejada apontando do caso opcional para o caso-base que ele estende.
 
 <div align="center">
-  <sub>Imagem 9 - Diagrama Casos de Uso</sub><br>
   <img src= "../assets/use_case.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Imagem 9 - Diagrama Casos de Uso</sub><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 </div>
 
 #### Atores
@@ -890,7 +913,8 @@ O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 H
 
 <div align = "center">
   <sub> Quadro 15 - Atores de Casos de Uso </sub><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
 </div>
 
 #### Casos de uso
@@ -909,7 +933,8 @@ Os casos de uso foram identificados a partir dos requisitos funcionais da seçã
 
 <div align = "center">
   <sub> Quadro 16 - Casos de Uso </sub><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
 </div>
 
 #### Modelo de sessão de corrida
@@ -929,7 +954,8 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 
 <div align = "center">
   <sub> Quadro 17 - Relacionamentos include e extend </sub><br>
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
 </div>
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
