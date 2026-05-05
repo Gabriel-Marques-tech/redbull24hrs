@@ -388,46 +388,41 @@ No campo do design centrado no usuário, as personas atuam como instrumentos de 
 No contexto deste projeto, as personas foram utilizadas para representar os diferentes perfis envolvidos na operação do evento Red Bull 24 Horas, especialmente os responsáveis pelo registro manual dos dados e pela validação das informações. A partir dessas representações, foi possível identificar dores relacionadas à inconsistência de registros, ausência de histórico confiável e dificuldade de auditoria, orientando a definição das funcionalidades do sistema proposto.
 
 <div align = "center">
-  <img src="../assets/Persona-Bruna-Gomes.png" width="100%" alt="Persona Bruna Gomes"><br>
-  <sub>Imagem 6 - Persona Bruna Gomes</sub><br>
+  <sub>Imagem 6 - Persona Nicole Rauen</sub><br>
+  <img src="../assets/Persona-Nicole-Rauen.png" width="100%" alt="Persona Bruna Gomes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 ## Informações
 
-- Idade: 25;
+- Idade: 22;
 - Localização: São Paulo, SP;
-- Formação: Ensino Superior em andamento - Administração;
-- Empresa: Red bull;
-- Cargo: Assistente de produção de eventos.
+- Formação: Ensino Superior em andamento - Educação Física;
+- Cargo: Atlêta amadora - Influenciadora
 
 ## Biografia
 
-Bruna Gomes atua como Assistente de Produção de Eventos na Red Bull, sendo responsável por apoiar o planejamento, a organização e a execução de eventos. Possui experiência em logística, controle de equipes e acompanhamento de operações em tempo real. No contexto do evento Red Bull 24 Horas, atua diretamente no registro e acompanhamento dos quilômetros percorridos, garantindo que as informações sejam coletadas de forma consistente e confiável.
+Nicole Rauen é corredora amadora e influenciadora digital, compartilhando treinos, hábitos saudáveis e participação em desafios esportivos. No Red Bull 24 Horas, busca desempenho, superação pessoal e geração de conteúdo sobre corrida.
 
 ## Objetivos
 
-- Registrar início, checkpoints e fim das corridas de forma rápida e padronizada;
-- Garantir continuidade dos registros durante toda a operação;
-- Reduzir erros no processo de coleta de quilômetros;
-- Acompanhar dados em tempo quase real para validação;
-- Agilizar trocas de corredores sem comprometer os registros.
+- Melhorar desempenho na competição;
+- Monitorar evolução individual;
+- Compartilhar resultados nas redes sociais;
+- Superar metas pessoais.
 
 ## Dores
 
-- Utilização de registros manuais (prancheta/papel), sujeitos a erro;
-- Falta de histórico estruturado para conferência;
-- Alto nível de atenção exigido por longos períodos (24h);
-- Baixa visibilidade dos dados consolidados durante o evento.
+- Falta de acesso ao desempenho em tempo real;
+- Visualização limitada de dados individuais;
+- Dificuldade para compartilhar resultados.
 
 ## Necessidades
 
-- Sistema simples e rápido para registro de dados;
-- Rastreabilidade completa dos registros realizados;
-- Exportação de dados para análise e auditoria;
-- Facilidade de conferência e validação das informações;
-- Interface clara para uso contínuo durante o evento.
+- Ter acesso aos dados individuais;
+- Exportar ou compartilhar resultados;
+- Interface clara e organizada.
 
 <div align = "center">
   <img src="../assets/Persona-Bruno-Gardesani.png" width="100%" alt="Persona Bruno Gardesani"><br>
