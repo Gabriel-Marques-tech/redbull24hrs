@@ -708,6 +708,23 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
+| Identificação| [US12](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/46) 
+| --- | --- |
+| **Persona** | Nicole Rauen |
+| **User Story** | “Como atleta participante, quero visualizar o meu desempenho final e compartilhar o resultado, para expor minha conquista e gerar reconhecimento." |
+| **Critério de aceite 1** | CR1: o sistema deve disponibilizar uma tela ou painel de "Resultados" exibindo as métricas finais da atleta após o encerramento do evento.<br>**Validação:** verificar a renderização correta dos dados consolidados da atleta. |
+| **Teste de aceitação 1** | Acessar o ambiente da atleta após a finalização do evento. <br>**Esperado:** sistema exibe os dados finais corretos (ex: Nome, Equipe, Quilômetros totais percorridos e Tempo de corrida). |
+| **Critério de aceite 2** | CR2:  deve haver um botão de "Compartilhar"  gerando um link direto/imagem. <br>**Validação:** clicar no botão de compartilhamento e verificar a abertura do menu do sistema operacional para copiar link. |
+| **Teste de aceitação 2** |Na tela de resultado final, clicar em "Compartilhar". <br>**Esperado:**o painel nativo do dispositivo abre com a opção de copiar link e/ou baixar imagem.  |
+| **Critério de aceite 3** | CR3:o conteúdo a ser compartilhado deve trazer um texto formatado dinamicamente com os dados da conquista e menção ao evento. <br>**Validação:** verificar se os dados injetados na mensagem compartilhada batem com a tela de resultado. |
+| **Teste de aceitação 3** | Finalizar a cópia do link ou concluir o download da imagem.
+<br>**Esperado:** o texto colado/baixado reflete os dados corretos (ex: "Acabei de correr 10km pela Equipe A no Evento X!"). |
+| **Critérios INVEST** | **Independente:**a leitura e compartilhamento ocorrem após o fluxo de operação do evento ser finalizado. <br>**Negociável:** o formato do compartilhamento (ser apenas texto, link ou imagem estática) pode ser negociado conforme o tempo técnico. <br>**Valiosa:** melhora a experiência da atleta (gamificação/reconhecimento) e promove marketing orgânico do evento e da marca. <br>**Estimável:** consumo simples de dados e uso de APIs nativas de compartilhamento padrão de mercado. <br>**Pequena:** foca exclusivamente na interface de leitura do usuário final e no gatilho de share. <br>**Testável:** pode ser validada visualizando a tela final e testando o disparo da ação de compartilhamento em dispositivos mobile. |
+
+<div align = "center">
+  <sub> Quadro 12 - US012 </sub><br>
+  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+</div>
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
 
