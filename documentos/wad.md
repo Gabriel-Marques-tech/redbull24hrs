@@ -388,46 +388,41 @@ No campo do design centrado no usuário, as personas atuam como instrumentos de 
 No contexto deste projeto, as personas foram utilizadas para representar os diferentes perfis envolvidos na operação do evento Red Bull 24 Horas, especialmente os responsáveis pelo registro manual dos dados e pela validação das informações. A partir dessas representações, foi possível identificar dores relacionadas à inconsistência de registros, ausência de histórico confiável e dificuldade de auditoria, orientando a definição das funcionalidades do sistema proposto.
 
 <div align = "center">
-  <img src="../assets/Persona-Bruna-Gomes.png" width="100%" alt="Persona Bruna Gomes"><br>
-  <sub>Imagem 6 - Persona Bruna Gomes</sub><br>
+  <sub>Imagem 6 - Persona Nicole Rauen</sub><br>
+  <img src="../assets/Persona-Nicole-Rauen.png" width="100%" alt="Persona Bruna Gomes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 ## Informações
 
-- Idade: 25;
+- Idade: 22;
 - Localização: São Paulo, SP;
-- Formação: Ensino Superior em andamento - Administração;
-- Empresa: Red bull;
-- Cargo: Assistente de produção de eventos.
+- Formação: Ensino Superior em andamento - Educação Física;
+- Cargo: Atlêta amadora - Influenciadora
 
 ## Biografia
 
-Bruna Gomes atua como Assistente de Produção de Eventos na Red Bull, sendo responsável por apoiar o planejamento, a organização e a execução de eventos. Possui experiência em logística, controle de equipes e acompanhamento de operações em tempo real. No contexto do evento Red Bull 24 Horas, atua diretamente no registro e acompanhamento dos quilômetros percorridos, garantindo que as informações sejam coletadas de forma consistente e confiável.
+Nicole Rauen é corredora amadora e influenciadora digital, compartilhando treinos, hábitos saudáveis e participação em desafios esportivos. No Red Bull 24 Horas, busca desempenho, superação pessoal e geração de conteúdo sobre corrida.
 
 ## Objetivos
 
-- Registrar início, checkpoints e fim das corridas de forma rápida e padronizada;
-- Garantir continuidade dos registros durante toda a operação;
-- Reduzir erros no processo de coleta de quilômetros;
-- Acompanhar dados em tempo quase real para validação;
-- Agilizar trocas de corredores sem comprometer os registros.
+- Melhorar desempenho na competição;
+- Monitorar evolução individual;
+- Compartilhar resultados nas redes sociais;
+- Superar metas pessoais.
 
 ## Dores
 
-- Utilização de registros manuais (prancheta/papel), sujeitos a erro;
-- Falta de histórico estruturado para conferência;
-- Alto nível de atenção exigido por longos períodos (24h);
-- Baixa visibilidade dos dados consolidados durante o evento.
+- Falta de acesso ao desempenho em tempo real;
+- Visualização limitada de dados individuais;
+- Dificuldade para compartilhar resultados.
 
 ## Necessidades
 
-- Sistema simples e rápido para registro de dados;
-- Rastreabilidade completa dos registros realizados;
-- Exportação de dados para análise e auditoria;
-- Facilidade de conferência e validação das informações;
-- Interface clara para uso contínuo durante o evento.
+- Ter acesso aos dados individuais;
+- Exportar ou compartilhar resultados;
+- Interface clara e organizada.
 
 <div align = "center">
   <img src="../assets/Persona-Bruno-Gardesani.png" width="100%" alt="Persona Bruno Gardesani"><br>
@@ -725,7 +720,7 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 
 | ID    | Descrição                                                                                                                                                                                                                                                        | Prioridade | Status    |
 | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------- |
-| RF001 | O sistema deve permitir o cadastro de exatamente duas equipes(por evento) com nome e identificador únicos, impedindo duplicatas.                                                                                                                                 | Alta       | Planejado |
+| RF001 | O sistema deve permitir o cadastro de exatamente duas equipes (por evento) com nome e identificador únicos, impedindo duplicatas.                                                                                                                                | Alta       | Planejado |
 | RF002 | O sistema deve permitir o cadastro de corredores vinculados a uma única equipe das duas existentes por evento.                                                                                                                                                   | Alta       | Planejado |
 | RF003 | O sistema deve validar que cada equipe possui exatamente 16 corredores antes do início do evento, bloqueando caso contrário.                                                                                                                                     | Alta       | Planejado |
 | RF004 | O sistema deve permitir a seleção da esteira onde o corredor iniciará a atividade.                                                                                                                                                                               | Alta       | Planejado |
@@ -741,16 +736,22 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 | RF014 | O sistema deve exibir um histórico (log) de entradas, saídas e checkpoints em ordem decrescente.                                                                                                                                                                 | Alta       | Planejado |
 | RF015 | O sistema deve permitir edição retroativa de registros com log automático de auditoria sobre quem realizou a alteração.                                                                                                                                          | Alta       | Planejado |
 | RF016 | O sistema deve permitir o registro de checkpoints e turnos sem conexão com a internet, persistindo os dados localmente e sincronizando automaticamente ao restabelecer a conexão, sem duplicidade de registros.                                                  | Alta       | Planejado |
-| RF017 | O sistema deve permitir o registro manual de quilometragem a qualquer momento, gerando timestamp automático para rastreabilidade.                                                                                                                                | Média      | Planejado |
-| RF018 | O sistema deve permitir iniciar um novo corredor na esteira adjacente com poucos cliques após o término do turno anterior, reutilizando dados da equipe.                                                                                                         | Média      | Planejado |
-| RF019 | O sistema deve gerar métricas por corredor incluindo distância total, média por turno e histórico de evolução por hora com snapshots a cada 60 minutos.                                                                                                          | Média      | Planejado |
-| RF020 | O sistema deve exibir o status das esteiras (Ocupada/Livre) e sugerir alternância para evitar superaquecimento.                                                                                                                                                  | Média      | Planejado |
-| RF021 | O sistema deve disponibilizar modo TV com fonte ≥ 48px, contraste WCAG AA, resolução 1920x1080, operável sem mouse e sem login.                                                                                                                                  | Média      | Planejado |
-| RF022 | O sistema deve permitir a filtragem do histórico por equipe, esteira ou corredor.                                                                                                                                                                                | Média      | Planejado |
-| RF023 | O sistema deve identificar inconsistências como km_final < km_inicial, intervalo de checkpoint > 10 min e corredor com turnos simultâneos.                                                                                                                       | Média      | Planejado |
-| RF024 | O sistema deve permitir exportação de dados em CSV contendo turnos e checkpoints registrados.                                                                                                                                                                    | Média      | Planejado |
-| RF025 | O sistema deve permitir o registro do local/região da etapa.                                                                                                                                                                                                     | Baixa      | Planejado |
-
+| RF017 | O sistema deve exigir autenticação (login e senha) para os perfis de Administrador e Auditor antes de permitir qualquer alteração nos dados.                                                                                                                      | Alta       | Planejado |
+| RF018 | O sistema deve detectar automaticamente inconsistências nos dados inseridos com base no histórico do corredor, equipe e esteira, gerando alertas em tempo real para o Auditor.                                                                                   | Alta       | Planejado |
+| RF019 | O sistema deve exibir notificações visuais e/ou sonoras ao identificar inconsistências, bloqueando a confirmação do dado até revisão ou justificativa do Auditor.                                                                                                | Alta       | Planejado |
+| RF020 | O sistema deve permitir que o Auditor revise e corrija inconsistências detectadas antes da persistência final dos dados.                                                                                                                                          | Alta       | Planejado |
+| RF021 | O sistema deve permitir o registro manual de quilometragem a qualquer momento, gerando timestamp automático para rastreabilidade.                                                                                                                                | Média      | Planejado |
+| RF022 | O sistema deve permitir iniciar um novo corredor na esteira adjacente com poucos cliques após o término do turno anterior, reutilizando dados da equipe.                                                                                                         | Média      | Planejado |
+| RF023 | O sistema deve gerar métricas por corredor incluindo distância total, média por turno e histórico de evolução por hora com snapshots a cada 60 minutos.                                                                                                          | Média      | Planejado |
+| RF024 | O sistema deve exibir o status das esteiras (Ocupada/Livre) e sugerir alternância para evitar superaquecimento.                                                                                                                                                  | Média      | Planejado |
+| RF025 | O sistema deve disponibilizar modo TV com fonte ≥ 48px, contraste WCAG AA, resolução 1920x1080, operável sem mouse e sem login.                                                                                                                                  | Média      | Planejado |
+| RF026 | O sistema deve permitir a filtragem do histórico por equipe, esteira ou corredor.                                                                                                                                                                                | Média      | Planejado |
+| RF027 | O sistema deve identificar inconsistências como km_final < km_inicial, intervalo de checkpoint > 10 min e corredor com turnos simultâneos.                                                                                                                       | Média      | Planejado |
+| RF028 | O sistema deve permitir exportação de dados em CSV contendo turnos e checkpoints registrados.                                                                                                                                                                    | Média      | Planejado |
+| RF029 | O sistema deve disponibilizar uma tela de desempenho final por corredor ao término do evento, contendo métricas como distância total, tempo total e velocidade média.                                                                                            | Média      | Planejado |
+| RF030 | O sistema deve permitir o compartilhamento do desempenho final do corredor por meio de um link gerado automaticamente.                                                                                                                                   | Média      | Planejado |
+| RF031 | O sistema deve permitir o registro do local/região da etapa.                                                                                                                                                                                                     | Baixa      | Planejado |
+| RF032 | O sistema deve permitir que o corredor acesse seu histórico completo de desempenho no evento após sua finalização.                                                                                                                                               | Baixa      | Planejado |
 <div align = "center">
   <sub> Quadro 11 - Requisitos Funcionais </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
