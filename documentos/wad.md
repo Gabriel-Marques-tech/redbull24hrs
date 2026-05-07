@@ -995,9 +995,7 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
----
-
-_Diagrama UML de classes com entidades, atributos, relacionamentos e responsabilidades. Diferencie **associação**, **agregação** (losango vazio), **composição** (losango cheio) e **herança** (triângulo vazio). Multiplicidade explícita em toda associação._
+Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação UML, com o objetivo de representar a estrutura do sistema por meio de suas classes, atributos, relacionamentos e responsabilidades. A modelagem organiza logicamente os elementos do domínio do evento Red Bull 24h, facilitando a compreensão das dependências entre as entidades e da solução proposta pelo grupo.
 
 ### 3.2.4. Diagrama de Sequência UML (sprint 3)
 
