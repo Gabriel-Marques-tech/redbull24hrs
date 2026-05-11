@@ -1,0 +1,92 @@
+
+%%{init: {
+"theme": "base",
+"darkMode": false,
+"themeVariables": {
+"background": "#FFFFFF",
+"mainBkg": "#FFFFFF",
+"primaryColor": "#0F0069",
+"primaryTextColor": "#FFFFFF",
+"primaryBorderColor": "#D2003C",
+"secondaryColor": "#D2003C",
+"secondaryTextColor": "#FFFFFF",
+"secondaryBorderColor": "#D2003C",
+"tertiaryColor": "#E8E8F5",
+"tertiaryTextColor": "#0F0069",
+"tertiaryBorderColor": "#0F0069",
+"noteBkgColor": "#FFCC00",
+"noteTextColor": "#0F0069",
+"noteBorderColor": "#D2003C",
+"activationBkgColor": "#D2003C",
+"activationBorderColor": "#0F0069",
+"sequenceNumberColor": "#FFCC00",
+"actorBkg": "#0F0069",
+"actorTextColor": "#FFFFFF",
+"actorBorderColor": "#D2003C",
+"actorLineColor": "#000000",
+"signalColor": "#000000",
+"signalTextColor": "#000000",
+"labelBoxBkgColor": "#E8E8F5",
+"labelBoxBorderColor": "#0F0069",
+"labelTextColor": "#0F0069",
+"loopTextColor": "#0F0069",
+"fontFamily": "Arial, sans-serif",
+"fontSize": "14px"
+  }
+}}%%
+sequenceDiagram
+autonumber
+participant C as Client
+participant CT as EventoController
+participant ES as EventoService
+participant ER as EventoRepository
+Note over C,ER: 1 · Criar evento (RF025 · RN22)
+C->>CT: POST /eventos {nome, data, local, esteiras[]}
+CT->>ES: criarEvento(dto)
+ES->>ER: verificarConflitoDataLocal(data, local)
+alt conflito encontrado
+ER-->>ES: evento existente {id, data, local}
+ES-->>CT: ConflictException
+CT-->>C: 409 {mensagem: ja existe evento nessa data e local}
+else sem conflito
+ER-->>ES: null
+ES->>ER: save(evento)
+ER-->>ES: evento {id, status: aguardando}
+ES-->>CT: eventoDTO
+CT-->>C: 201 {evento_id, status: aguardando}
+end
+Note over C,ER: 2 · Metricas em tempo real (RF019 · RN10)
+C->>CT: GET /eventos/{id}/metricas
+CT->>ES: calcularMetricas(eventoId)
+ES->>ER: findTurnosAtivos(eventoId)
+ER-->>ES: turnos[]
+Note right of ES: calcula km total por equipe
+Note right of ES: calcula velocidade media
+Note right of ES: conta equipes em pista
+ES-->>CT: metricasDTO
+CT-->>C: 200 {km_total, velocidade_media, equipes_em_pista}
+Note over C,ER: 3 · Placar (RF014 · RN14)
+C->>CT: GET /eventos/{id}/placar
+CT->>ES: obterPlacar(eventoId)
+ES->>ER: findQuilometragemPorEquipe(eventoId)
+ER-->>ES: equipes[] com km acumulado
+Note right of ES: ordena equipes por km decrescente
+ES-->>CT: placarDTO
+CT-->>C: 200 {placar[{equipe_id, nome, km_acumulado, posicao}]}
+Note over C,ER: 4 · Inconsistencias (RF023 · RN25)
+C->>CT: GET /eventos/{id}/inconsistencias
+CT->>ES: verificarInconsistencias(eventoId)
+ES->>ER: findRegistrosAuditoria(eventoId)
+ER-->>ES: registros[]
+Note right of ES: detecta gaps de checkpoint
+Note right of ES: detecta km retroativo
+ES-->>CT: inconsistenciasDTO
+CT-->>C: 200 {inconsistencias[{tipo, turno_id, descricao}]}
+Note over C,ER: 5 · Exportar dados (RF024 · RN26)
+C->>CT: GET /eventos/{id}/exportar
+CT->>ES: exportarDados(eventoId)
+ES->>ER: findDadosCompletos(eventoId)
+ER-->>ES: dadosCompletos{}
+Note right of ES: serializa turnos, checkpoints e metricas
+ES-->>CT: arquivoDTO
+CT-->>C: 200 {arquivo, formato, timestamp_geracao}
