@@ -1020,8 +1020,12 @@ Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação
 
 ### 3.2.4. Diagrama de Sequência UML (sprint 3)
 
-TEXTO DO DIAGRAMA DE SEQUENCIA AQUI
-
+<div align="center">
+  <sub>Imagem xx - Diagrama de Sequencia: Turnos</sub><br>
+  <img src="assets/UML_Diagram/Turns_SequenceDiagram.svg" width="100%" alt="Diagrama de sequencia do processo de turnos"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
 ---
 
 _Ao menos um fluxo prioritário, mostrando a interação entre as camadas Controller → Service → Repository → Banco. Linhas de vida verticais, ativação correta, mensagens síncronas e assíncronas diferenciadas, retornos tracejados._
@@ -1331,3 +1335,11 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 ---
 
 _Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)_
+
+```
+
+```
+
+```
+
+```
