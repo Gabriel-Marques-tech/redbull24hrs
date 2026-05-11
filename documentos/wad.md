@@ -884,16 +884,23 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 
 Enquanto os Requisitos Funcionais (RF) descrevem *o que* o sistema faz, os Requisitos Não Funcionais (RNF) definem *como* ele deve operar. Eles estabelecem os padrões de qualidade, segurança e eficiência essenciais para que o software seja robusto sob condições reais de uso.
 
-Essas restrições podem atuar de forma transversal no sistema (impactando-o globalmente) ou governar a execução de fluxos críticos específicos. Para organizar essas características, utilizamos uma estrutura de 8 eixos de qualidade:
+Essas restrições podem atuar de forma transversal no sistema, impactando sua operação como um todo, ou governar fluxos críticos específicos da aplicação. Para estruturar essas características de qualidade, foi adotado um modelo baseado nos oito eixos da ISO/IEC 25010, adaptados às necessidades operacionais do parceiro e às condições reais de execução do evento esportivo.
 
-* **USAB (Usabilidade):** Foca na facilidade de uso e na experiência da interface.
-* **CONF (Confiabilidade):** Trata da capacidade do sistema de permanecer operacional e sem erros.
-* **DES (Desempenho):** Mede a velocidade de resposta e a eficiência de recursos.
-* **SUP (Suportabilidade):** Avalia a facilidade de manter, testar e atualizar o código.
-* **SEG (Segurança):** Define a proteção dos dados e o controle de acesso.
-* **CAP (Capacidade):** Estipula o volume de dados e de usuários que o sistema suporta.
-* **REST (Restrições):** Delimita limitações técnicas, de arquitetura ou de hardware.
-* **ORG (Organizacionais):** Alinha o projeto a padrões de marca, prazos e normas da empresa.
+* **USAB (Usabilidade):** Relaciona-se à facilidade de uso, clareza visual e eficiência da interação humano-computador. Sua definição deriva do contexto operacional dos Auditores, que utilizam o sistema em ambientes externos, sob pressão temporal e alta movimentação, exigindo fluxos rápidos, interfaces legíveis e baixa incidência de erros operacionais.
+
+* **CONF (Confiabilidade):** Refere-se à capacidade do sistema de manter funcionamento consistente e íntegro mesmo diante de falhas parciais. Esse eixo foi definido considerando a necessidade de andamento contínuo da competição, evitando perda, duplicidade ou inconsistência de registros durante instabilidades de rede ou interrupções temporárias.
+
+* **DES (Desempenho):** Está associado ao tempo de resposta e à eficiência no processamento das operações críticas. Sua relevância decorre da necessidade de atualização quase em tempo real dos dados operacionais, dashboards e informações exibidas ao público durante o evento.
+
+* **SUP (Suportabilidade):** Envolve a facilidade de manutenção, evolução, testes e correções do sistema. Esse eixo foi incorporado devido ao caráter incremental do desenvolvimento ao longo das sprints e à necessidade de rápida adaptação antes da execução oficial do evento.
+
+* **SEG (Segurança):** Abrange mecanismos de autenticação, controle de acesso e rastreabilidade das operações. Sua adoção busca garantir que apenas usuários autorizados possam manipular informações críticas da competição, preservando a integridade dos resultados e a auditabilidade das alterações realizadas.
+
+* **CAP (Capacidade):** Define os limites operacionais relacionados ao volume de acessos, registros e processamento simultâneo. Esse eixo foi estabelecido considerando o uso concorrente do sistema por operadores, dashboards em tempo real e processos contínuos de coleta de dados durante a competição.
+
+* **REST (Restrições):** Representa limitações técnicas, arquiteturais e de infraestrutura impostas pelo contexto operacional do parceiro. Inclui compatibilidade com dispositivos específicos, dependência mínima de serviços externos e adequação às condições físicas do ambiente de execução.
+
+* **ORG (Organizacionais):** Relaciona o sistema às diretrizes institucionais, padrões visuais e exigências operacionais do parceiro. Esse eixo contempla a aderência à identidade visual do evento, além da necessidade de estabilização e congelamento da versão antes da operação oficial.
 
 | ID | Eixo | RF Relacionado | Requisito Não Funcional | Critério Mensurável (SMART) |
 | :--- | :--- | :--- | :--- | :--- |
@@ -912,7 +919,7 @@ Essas restrições podem atuar de forma transversal no sistema (impactando-o glo
 | **RNF013** | SEG — Segurança | RF015, Global | O sistema deve manter uma trilha de auditoria para edições retroativas e alterações críticas. | **100%** das edições devem registrar obrigatoriamente: `Usuário`, `Timestamp` e `Dado Anterior`. |
 | **RNF014** | SUP — Suportabilidade | Global | A arquitetura do sistema deve isolar o processamento e as regras de negócio exclusivamente na API (Backend). | A camada visual (Frontend) deve atuar apenas como consumidora; **100%** dos cálculos estatísticos e validações de regras de negócio devem ocorrer no backend. |
 | **RNF015** | SUP — Suportabilidade | Global | O código-fonte deve garantir facilidade de suporte técnico através de testes automatizados. | Cobertura mínima de **75% em testes unitários** nos módulos de sincronização e regras de inconsistência. |
-| **RNF016** | CAP — Capacidade | Global (Acessos) | O sistema deve suportar múltiplos acessos simultâneos (Auditores + Modo TV + Registros). | Suportar no mínimo **20 usuários simultâneos** ativos mantendo o tempo de resposta geral abaixo de **500ms**. |
+| **RNF016** | CAP — Capacidade | Global (Acessos) | O sistema deve suportar múltiplos acessos simultâneos (Auditores + Modo TV + Registros). | Suportar no mínimo **50 usuários simultâneos** ativos mantendo o tempo de resposta geral abaixo de **500ms**. |
 | **RNF017** | CAP — Capacidade | RF014, RF023, RF026, RF028 | O sistema deve manter o desempenho ao lidar com o histórico acumulado de logs e turnos. | Consultas e exportações de até **10.000 registros** de histórico não devem ultrapassar **3 segundos** de processamento. |
 | **RNF018** | REST — Restrições | Global |A compatibilidade do sistema cliente é restrita aos dispositivos e navegadores definidos para a operação do evento. | A operação do sistema é garantida exclusivamente em **Tablets Android 10+** rodando as duas últimas versões estáveis dos navegadores **Chrome ou Safari**. |
 | **RNF019** | REST — Restrições | RF018 | O sistema possui restrição de dependência externa para garantir a autonomia da operação principal. | Nenhuma funcionalidade de registro pode travar ou falhar devido à indisponibilidade de APIs externas. |
