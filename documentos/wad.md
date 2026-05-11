@@ -1022,7 +1022,14 @@ Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação
 
 <div align="center">
   <sub>Imagem xx - Diagrama de Sequencia: Turnos</sub><br>
-  <img src="assets/UML_Diagram/Turns_SequenceDiagram.svg" width="100%" alt="Diagrama de sequencia do processo de turnos"><br>
+  <img src="assets/UML_Diagram/Turns_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de turnos"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem xx - Diagrama de Sequencia: Eventos</sub><br>
+  <img src="assets/UML_Diagram/Events_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
