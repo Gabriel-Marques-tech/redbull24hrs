@@ -1100,9 +1100,73 @@ _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelid
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
----
 
-_Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture)._
+
+O Modelo Entidade-Relacionamento (MER) é a representação conceitual do banco de dados, na qual se descrevem as entidades do domínio, seus atributos e os relacionamentos que as conectam, abstraindo decisões de implementação física como tipos de dados, índices ou chaves estrangeiras. Para este projeto, o MER traduz em linguagem de dados o domínio do Red Bull 24 Horas modelado nas seções anteriores: o evento operado por um gerente, suas equipes e atletas, e o registro de cada sessão de corrida (turno) auditada à beira da esteira, com os checkpoints periódicos e logs que sustentam a apuração oficial da competição. A notação adotada é a de **Peter Chen**, na qual entidades são representadas por retângulos, atributos por elipses (com elipses preenchidas indicando chave primária e atributos compostos derivados do atributo-pai), relacionamentos por losangos e a cardinalidade explicitada nas extremidades de cada relacionamento com a razão (1) e (N).
+
+<div align="center">
+  <img src="./assets/modelo-entidade-relacionamento/Modelo-ER.png" width="80%" alt="Modelo Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
+  <sub>Imagem 10 - Modelo Entidade-Relacionamento</sub><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+#### Entidades e atributos
+
+As entidades foram derivadas diretamente do domínio descrito no TAPI e dos casos de uso da seção 3.2.2, garantindo coerência entre o modelo conceitual de dados e o modelo comportamental do sistema. Cada entidade representa um conceito do mundo real que precisa ser persistido para sustentar a apuração e a auditoria das 24 horas de competição.
+
+| Entidade       | Descrição                                                                                                                                                                       | Atributos                                                            | Chave primária |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------- |
+| **Gerente**    | Gerente regional do time de Field Marketing da Red Bull, responsável por instanciar e gerir os eventos sob sua regional.                                                        | `ID`, `NOME`                                                         | `ID`           |
+| **Evento**     | Instância de uma etapa do Red Bull 24 Horas (regional ou final nacional), identificada por local e título da edição.                                                            | `ID`, `LOCAL`, `TITLE`                                                | `ID`           |
+| **Equipe**     | Uma das duas equipes que competem no evento (tradicionalmente "azul" e "vermelha"), à qual os atletas são vinculados antes do início da competição.                             | `ID`, `NAME`                                                         | `ID`           |
+| **Atleta**     | Corredor inscrito que reveza com seu time durante as 24 horas, identificado pessoalmente por CPF para fins de auditoria pós-evento.                                             | `ID`, `NAME`, `CPF`, `GENDER`                                        | `ID`           |
+| **Auditor**    | Operador do sistema (substituindo a operação atual da prancheta) que registra os turnos e seus checkpoints à beira da esteira.                                                  | `ID`, `STATUS`, `NUMBER`                                             | `ID`           |
+| **Turno**      | Sessão individual de corrida — um único atleta em uma única esteira, do play até o stop, antes da próxima zeragem. É a entidade central do registro operacional do evento.      | `ID`, `STATUS`, `INIT`, `END`, `TIME`, `SPEED`, `KM_INIT`, `KM_END`, `GENDER` | `ID`           |
+| **Esteira**    | Equipamento físico (Technogym) onde os turnos ocorrem. Cada equipe opera duas esteiras simultaneamente durante o evento.                                                        | `ID`, `STATUS`, `NUMBER`                                             | `ID`           |
+| **Checkpoint** | Marcação periódica de segurança (referência de 5 em 5 minutos) que registra a quilometragem parcial dentro de um turno em andamento, permitindo recuperação em caso de falha técnica da esteira. | `ID`, `TIMESTAMP`, `TYPE` (`MANDATORY` / `VOLUNTARY`), `DISTANCE`    | `ID`           |
+| **Log**        | Registro auditável das ações executadas dentro de um turno (início, checkpoint e fim), garantindo rastreabilidade completa para a auditoria formal pós-evento.                  | `ID`, `TIMESTAMP`, `TYPE` (`INIT` / `CHECKPOINT` / `END`)            | `ID`           |
+
+<div align="center">
+  <sub>Quadro 18 - Entidades e atributos do MER</sub><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+#### Relacionamentos e cardinalidades
+
+Os relacionamentos foram modelados a partir das regras de negócio levantadas na seção 3.1 e da dinâmica operacional descrita pelo parceiro: um gerente regional gere múltiplos eventos ao longo da temporada; cada evento conta com exatamente duas equipes; cada equipe escala vários atletas que se revezam continuamente; cada atleta realiza diversos turnos ao longo das 24 horas; e cada turno é monitorado por um auditor e produz uma sequência de checkpoints e um log de ações.
+
+| Relacionamento | Entidade A | Cardinalidade | Entidade B  | Descrição                                                                                                                                                                                                |
+| -------------- | ---------- | ------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Gerencia**   | Gerente    | (1, N)        | Evento      | Um gerente regional pode gerir vários eventos (etapas regionais distintas ao longo da temporada), mas cada evento é gerido por exatamente um gerente responsável.                                        |
+| **Possui**     | Evento     | (1, N)        | Equipe      | Cada evento possui múltiplas equipes (no mínimo as duas equipes que se enfrentam), e cada equipe pertence a um único evento — a entidade Equipe é instanciada por edição, refletindo a natureza efêmera da competição. |
+| **Escala**     | Equipe     | (1, N)        | Atleta      | Uma equipe escala vários atletas (tipicamente 16 por equipe, conforme briefing), e cada atleta pertence a uma única equipe dentro de um mesmo evento.                                                    |
+| **Realiza**    | Atleta     | (1, N)        | Turno       | Um atleta realiza vários turnos durante as 24 horas (cada entrada na esteira é um turno distinto), e cada turno é realizado por exatamente um atleta — refletindo a regra de que a esteira é zerada a cada troca de corredor. |
+| **Audita**     | Auditor    | (1, N)        | Turno       | Um auditor é responsável por auditar diversos turnos ao longo do seu plantão na operação, e cada turno é auditado por exatamente um auditor, garantindo responsabilidade unívoca sobre cada registro.    |
+| **Ocorre**     | Turno      | (N, 1)        | Esteira     | Vários turnos ocorrem ao longo das 24 horas em uma mesma esteira (que é zerada entre eles), enquanto cada turno acontece em uma única esteira específica.                                                |
+| **Guarda**     | Turno      | (1, N)        | Checkpoint  | Cada turno guarda múltiplos checkpoints periódicos (a marcação de 5 em 5 minutos descrita pelo parceiro), enquanto cada checkpoint pertence a exatamente um turno — não existe checkpoint isolado fora de uma sessão de corrida ativa. |
+| **Guarda**     | Turno      | (1, 1)        | Log         | Cada turno guarda exatamente um log de ações associado, que armazena cronologicamente os eventos `INIT`, `CHECKPOINT` e `END` daquela sessão, sustentando a trilha de auditoria pós-evento.              |
+
+<div align="center">
+  <sub>Quadro 19 - Relacionamentos e cardinalidades do MER</sub><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+#### Decisões de modelagem
+
+Três decisões merecem destaque por traduzirem diretamente as regras de negócio do Red Bull 24 Horas para o modelo de dados:
+
+- **Turno como entidade central:** a quilometragem do evento não é monotônica em relação à esteira nem à equipe, pois a esteira é zerada a cada troca de corredor (dinâmica detalhada no Modelo de Sessão de Corrida da seção 3.2.2). Por isso, o **Turno** foi modelado como entidade de primeira classe — com `KM_INIT`, `KM_END`, `INIT` e `END` próprios — e não como um simples registro derivado da esteira ou da equipe. O total acumulado de uma equipe é, portanto, sempre uma função agregada sobre os turnos finalizados de seus atletas, e não um atributo persistido diretamente.
+
+- **Checkpoint tipado (`MANDATORY` / `VOLUNTARY`):** o atributo `TYPE` do Checkpoint distingue as marcações automáticas obrigatórias (de 5 em 5 minutos, conforme protocolo) das marcações voluntárias feitas pelo auditor (por exemplo, antes de uma troca de velocidade decidida pelo atleta). Essa distinção é essencial para a auditoria pós-evento e para a oportunidade de padronização entre as cinco regionais identificada na matriz de riscos (seção 2.1.5).
+
+- **Log como entidade dedicada à auditoria:** apesar de aparentemente redundante em relação aos timestamps já presentes em Turno e Checkpoint, o **Log** isola a trilha de auditoria do modelo operacional. Ele responde diretamente ao risco "Erro humano na leitura e digitação da quilometragem" (seção 2.1.5), garantindo o histórico de alterações exigido pelo caso de uso "Editar registro" (seção 3.2.2) sem poluir as entidades de negócio com colunas de controle.
+
+**Síntese do Modelo Entidade-Relacionamento**
+
+O MER traduz o domínio do Red Bull 24 Horas em um modelo conceitual de dados rastreável, no qual cada entidade tem propósito claro dentro do fluxo operacional (cadastro pré-evento → registro de turnos → checkpoints periódicos → encerramento → auditoria). A escolha do Turno como entidade central refletindo o conceito de **sessão de corrida**, somada às entidades Checkpoint e Log que sustentam a confiabilidade e a rastreabilidade dos dados, alinha o modelo de dados às prioridades de mitigação de risco da seção 2.1.5 e aos casos de uso da seção 3.2.2. Esse alinhamento garante que o banco de dados forneça base sólida tanto para a operação em tempo real durante as 24h quanto para a auditoria formal pós-evento e para as análises estatísticas inéditas identificadas como oportunidades do projeto.
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
