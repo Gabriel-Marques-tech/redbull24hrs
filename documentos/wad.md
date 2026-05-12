@@ -1033,6 +1033,13 @@ Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
+
+<div align="center">
+  <sub>Imagem xx - Diagrama de Sequencia: Historico</sub><br>
+  <img src="assets/UML_Diagram/History_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
 ---
 
 _Ao menos um fluxo prioritário, mostrando a interação entre as camadas Controller → Service → Repository → Banco. Linhas de vida verticais, ativação correta, mensagens síncronas e assíncronas diferenciadas, retornos tracejados._
