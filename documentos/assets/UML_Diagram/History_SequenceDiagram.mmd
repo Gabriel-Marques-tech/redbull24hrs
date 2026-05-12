@@ -1,0 +1,105 @@
+
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "primaryColor": "#0F0069",
+    "primaryTextColor": "#FFFFFF",
+    "primaryBorderColor": "#D2003C",
+    "secondaryColor": "#D2003C",
+    "secondaryTextColor": "#FFFFFF",
+    "secondaryBorderColor": "#D2003C",
+    "tertiaryColor": "#E8E8F5",
+    "tertiaryTextColor": "#0F0069",
+    "tertiaryBorderColor": "#0F0069",
+    "noteBkgColor": "#FFCC00",
+    "noteTextColor": "#0F0069",
+    "noteBorderColor": "#D2003C",
+    "activationBkgColor": "#D2003C",
+    "activationBorderColor": "#0F0069",
+    "actorBkg": "#0F0069",
+    "actorTextColor": "#FFFFFF",
+    "actorBorderColor": "#D2003C",
+    "actorLineColor": "#000000",
+    "signalColor": "#000000",
+    "signalTextColor": "#000000",
+    "labelBoxBkgColor": "#E8E8F5",
+    "labelBoxBorderColor": "#0F0069",
+    "labelTextColor": "#0F0069",
+    "loopTextColor": "#0F0069",
+    "fontFamily": "Arial, sans-serif",
+    "fontSize": "14px",
+    "background": "#FFFFFF"
+  }
+}}%%
+sequenceDiagram
+    participant C as Client
+    participant DC as DashboardController
+    participant HC as HistoricoController
+    participant DS as DashboardService
+    participant HS as HistoricoService
+    participant DR as DashboardRepository
+    participant TR as TurnoRepository
+
+    %% ─────────────────────────────
+    %% 1. Dashboard — polling automático
+    %% ─────────────────────────────
+    Note over C,TR: 1 · Dashboard — polling automático ≤10s (RF013)
+
+    loop A cada ≤10s
+        C->>DC: 1. GET /dashboard
+        DC->>DS: 2. obterDadosDashboard()
+        DS->>DR: 3. buscarKmTotalPorEquipe()
+        DR-->>DS: 4. [ { equipe_id, km_total } ]
+        DS->>DR: 5. buscarStatusEsteiras()
+        DR-->>DS: 6. [ { esteira_id, status, corredor_atual } ]
+        DS->>DR: 7. buscarSnapshotsPorHora()
+        DR-->>DS: 8. [ { hora, equipe_id, km_acumulado } ]
+        DC-->>C: 9. 200 { placar, esteiras, snapshots }
+        C->>DC: 10. GET /status
+        DC-->>C: 11. 200 { db: "ok", timestamp }
+    end
+
+    Note over C,DC: Se /status retornar erro, exibir<br/>indicador "dados desatualizados" + timestamp (RN11)
+
+    %% ─────────────────────────────
+    %% 2. Histórico — listagem
+    %% ─────────────────────────────
+    Note over C,TR: 2 · Histórico — listagem de eventos (RF014)
+
+    C->>HC: 12. GET /historico?equipe_id=&esteira_id=&corredor_id=
+    HC->>HS: 13. listarEventos(filtros)
+    HS->>TR: 14. buscarTurnos(filtros)
+    TR-->>HS: 15. [ { turno, corredor, esteira, equipe } ]
+    HS->>TR: 16. buscarCheckpoints(turno_ids[])
+    TR-->>HS: 17. [ { checkpoint, tipo, timestamp } ]
+    HS-->>HS: 18. ordenarDecrescente(eventos)<br/>prioridade: encerramento > checkpoint > início
+    HC-->>C: 19. 200 { eventos[] }
+
+    %% ─────────────────────────────
+    %% 3. Troca de corredor — visualização no histórico
+    %% ─────────────────────────────
+    Note over C,TR: 3 · Troca de corredor — registro visível no histórico (RF020)
+
+    C->>HC: 20. GET /historico?esteira_id=1
+    HC->>HS: 21. listarEventos({ esteira_id: 1 })
+    HS->>TR: 22. buscarTrocasDeCorredor(esteira_id)
+    TR-->>HS: 23. [ { turno_anterior, turno_novo,<br/>timestamp_troca, tipo: "hot_swap" } ]
+    HC-->>C: 24. 200 { eventos[] com entradas tipo "troca_corredor" }
+
+    %% ─────────────────────────────
+    %% 4. Edição retroativa — checkpoint
+    %% ─────────────────────────────
+    Note over C,TR: 4 · Edição retroativa de checkpoint (RF015 + RN23 + RN24)
+
+    C->>HC: 25. PATCH /historico/checkpoints/{id}<br/>{ km_novo }
+    HC->>HS: 26. editarCheckpoint(checkpoint_id, km_novo, auditor_id)
+    HS->>TR: 27. buscarCheckpoint(checkpoint_id)
+    TR-->>HS: 28. checkpoint { km_atual, turno_id }
+    HS->>TR: 29. buscarCheckpointsAdjacentesTurno(turno_id, checkpoint_id)
+    TR-->>HS: 30. { anterior: km_ant, proximo: km_prox }
+    Note right of HS: valida km_ant <= km_novo <= km_prox (RN24)
+    HS->>TR: 31. atualizarCheckpoint(checkpoint_id, km_novo)
+    TR-->>HS: 32. checkpoint atualizado
+    HS->>TR: 33. registrarAuditoria({<br/>registro_id: checkpoint_id,<br/>valor_anterior: km_atual,<br/>valor_novo: km_novo,<br/>timestamp: tempo_correto,<br/>auditor_id: auditor_id })<br/>(RN23 — imutável)
+    TR-->>HS: 34. log_auditoria { id }
+    HC-->>C: 35. 200 { checkpoint_id, km_novo, auditoria_id }
