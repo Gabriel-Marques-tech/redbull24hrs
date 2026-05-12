@@ -1027,7 +1027,7 @@ Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação
 
 <div align = "center">
   <sub>Imagem 18 - Diagrama de Classes de Domínio</sub><br>
-  <img src="../assets/diagrama_de_classes.png" width="100%" alt="Diagrama de Classes"><br>
+  <img src="./assets/diagrama_classes_corrigido.png" width="100%" alt="Diagrama de Classes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
