@@ -90,7 +90,7 @@ Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável
 
 <div align="center">
   <sub>Imagem 1 - Forças de Porter</sub><br>
-  <img src="./assets/secao_2/forca_de_porter.png" width="100%" alt="Forças de Porter"><br>
+  <img src="./assets/secao_2_1/secao_2_1_1/forca_de_porter.png" width="100%" alt="Forças de Porter"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -101,7 +101,7 @@ Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável
 
 <div align="center">
   <sub>Imagem 2 - Análise SWOT</sub><br>
-  <img src= "./assets/secao_2/analise_SWOT.png" width="100%" alt="Análise SWOT - Red Bull"><br>
+  <img src= "./assets/secao_2_1/secao_2_1_2/analise_SWOT.png" width="100%" alt="Análise SWOT - Red Bull"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -227,7 +227,7 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 
 <div align="center">
   <sub>Imagem 3 - Canvas da Proposta de Valor</sub><br>
-  <img src= "./assets/secao_2/proposta_de_valor.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
+  <img src= "./assets/secao_2_1/secao_2_1_4/proposta_de_valor.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -302,7 +302,7 @@ A matriz de riscos é uma ferramenta fundamental para identificar, analisar e pr
 
 <div align="center">
   <sub>Imagem 4 - Matriz de Ameaças</sub><br>
-  <img src="./assets/secao_2/matriz_ameacas.jpeg" width="100%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
+  <img src="./assets/secao_2_1/secao_2_1_5/matriz_ameacas.jpeg" width="100%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -366,7 +366,7 @@ No contexto do desenvolvimento de soluções tecnológicas, as oportunidades sã
 
 <div align="center">
   <sub>Imagem 5 - Matriz de Oportunidades</sub><br>
-  <img src="./assets/secao_2/matriz_oportunidades.jpeg" width="100%" alt="Matriz de Oportunidades do projeto Red Bull 24 Horas"><br>
+  <img src="./assets/secao_2_1/secao_2_1_5/matriz_oportunidades.jpeg" width="100%" alt="Matriz de Oportunidades do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -389,7 +389,7 @@ No contexto deste projeto, as personas foram utilizadas para representar os dife
 
 <div align = "center">
   <sub>Imagem 6 - Persona Nicole Rauen</sub><br>
-  <img src="./assets/secao_2/secao_2_2/Persona-Nicole-Rauen.png" width="100%" alt="Persona Bruna Gomes"><br>
+  <img src="./assets/secao_2_2/Persona-Nicole-Rauen.png" width="100%" alt="Persona Bruna Gomes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -426,7 +426,7 @@ Nicole Rauen é corredora amadora e influenciadora digital, compartilhando trein
 
 <div align = "center">
   <sub>Imagem 7 - Persona Bruno Gardesani</sub><br>
-  <img src="./assets/secao_2/secao_2_2/Persona-Bruno-Gardesani.png" width="100%" alt="Persona Bruno Gardesani"><br>
+  <img src="./assets/secao_2_2/Persona-Bruno-Gardesani.png" width="100%" alt="Persona Bruno Gardesani"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -469,7 +469,7 @@ Bruno Gardesani atua como Gerente Nacional de Field Marketing na Red Bull, sendo
 
 <div align = "center">
   <sub>Imagem 8 - Persona Lucas Andrade</sub><br>
-  <img src="./assets/secao_2/secao_2_2/Persona-Lucas-Andrade.png" width="100%" alt="Persona Lucas Andrade"><br>
+  <img src="./assets/secao_2_2/Persona-Lucas-Andrade.png" width="100%" alt="Persona Lucas Andrade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -962,7 +962,7 @@ O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 H
 
 <div align="center">
   <sub>Imagem 9 - Diagrama Casos de Uso</sub><br>
-  <img src= "./assets/secao_3/secao_3_2_2/use_case.jpeg" width="100%" alt="Diagrama Casos de Uso"><br>
+  <img src= "" width="100%" alt="Diagrama Casos de Uso"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1027,7 +1027,7 @@ Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação
 
 <div align = "center">
   <sub>Imagem 10 - Diagrama de Classes de Domínio</sub><br>
-  <img src="./assets/diagrama_classes_corrigido.png" width="100%" alt="Diagrama de Classes"><br>
+  <img src="./assets/secao_3/secao_3_2_3/diagrama_classes_corrigido.png" width="100%" alt="Diagrama de Classes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
