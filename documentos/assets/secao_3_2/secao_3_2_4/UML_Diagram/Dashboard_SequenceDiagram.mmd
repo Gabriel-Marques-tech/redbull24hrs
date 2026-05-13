@@ -43,19 +43,19 @@ sequenceDiagram
     loop A cada ≤10s
         C->>+DC: 1. GET /dashboard
         DC->>+DS: 2. obterDadosDashboard()
-        DS->>+DR: 3. buscarKmTotalPorEquipe()
-        DR->>+BD: 4. SELECT km total por equipe (finalizados)
-        BD-->>-DR: 5. [ { equipe_id, km_total } ]
-        DR-->>-DS: 6. [ { equipe_id, km_total } ]
-        DS->>+DR: 7. buscarStatusEsteiras()
-        DR->>+BD: 8. SELECT esteiras + corredor atual
-        BD-->>-DR: 9. [ { esteira_id, status, corredor_atual } ]
-        DR-->>-DS: 10. [ { esteira_id, status, corredor_atual } ]
+        DS->>+DR: 3. buscarKmTotalPorTeam()
+        DR->>+BD: 4. SELECT km total por Team (Shifts finalizados)
+        BD-->>-DR: 5. [ { team_id, km_total } ]
+        DR-->>-DS: 6. [ { team_id, km_total } ]
+        DS->>+DR: 7. buscarStatusTreadmills()
+        DR->>+BD: 8. SELECT Treadmill + Athlete atual
+        BD-->>-DR: 9. [ { treadmill_id, status, athlete_atual } ]
+        DR-->>-DS: 10. [ { treadmill_id, status, athlete_atual } ]
         DS->>+DR: 11. buscarSnapshotsPorHora()
-        DR->>+BD: 12. SELECT snapshots ordenados por hora
-        BD-->>-DR: 13. [ { hora, equipe_id, km_acumulado } ]
-        DR-->>-DS: 14. [ { hora, equipe_id, km_acumulado } ]
-        DC-->>-C: 15. 200 { placar, esteiras, snapshots }
+        DR->>+BD: 12. SELECT snapshots por hora do Event
+        BD-->>-DR: 13. [ { hora, team_id, km_acumulado } ]
+        DR-->>-DS: 14. [ { hora, team_id, km_acumulado } ]
+        DC-->>-C: 15. 200 { placar, treadmills, snapshots }
         deactivate DS
     end
 
@@ -66,5 +66,3 @@ sequenceDiagram
     BD-->>-DC: 18. ok
     DC-->>-C: 19. 200 { db: "ok", timestamp }
     Note over C,DC: Se falhar — exibir "dados desatualizados" + timestamp
-
-
