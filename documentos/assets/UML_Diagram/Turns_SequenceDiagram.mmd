@@ -1,3 +1,4 @@
+
 %%{init: {
   "theme": "base",
   "themeVariables": {
@@ -15,7 +16,6 @@
     "noteBorderColor": "#D2003C",
     "activationBkgColor": "#D2003C",
     "activationBorderColor": "#0F0069",
-    "sequenceNumberColor": "#FFCC00",
     "actorBkg": "#0F0069",
     "actorTextColor": "#FFFFFF",
     "actorBorderColor": "#D2003C",
@@ -32,54 +32,78 @@
   }
 }}%%
 sequenceDiagram
-    autonumber
     participant C as Client
     participant CT as TurnoController
     participant TS as TurnoService
     participant TR as TurnoRepository
+    participant BD as Banco de Dados
 
-    Note over C,TR: 1 · Iniciar turno
+    Note over C,BD: 1 · Iniciar turno
 
-    C->>CT: POST /turnos/iniciar {corredor_id, esteira_id, km_inicial}
-    CT->>TS: validarDisponibilidade(corredor_id, esteira_id)
-    TS->>TR: buscarTurnoAtivo(corredor_id)
-    TR-->>TS: null (corredor livre)
-    TS->>TR: buscarStatusEsteira(esteira_id)
-    TR-->>TS: "Livre"
-    TS->>TR: criarTurno({corredor_id, esteira_id, km_inicial, timestamp_inicio})
-    TR-->>TS: turno { id, status: "em_andamento" }
-    TS->>TR: atualizarStatusEsteira(esteira_id, "Ocupada")
-    CT-->>C: 201 { turno_id, timestamp_inicio }
+    C->>+CT: 1. POST /turnos/iniciar
+    CT->>+TS: 2. validarDisponibilidade()
+    TS->>+TR: 3. buscarTurnoAtivo(corredor_id)
+    TR->>+BD: 4. SELECT turno em andamento do corredor
+    BD-->>-TR: 5. null
+    TR-->>-TS: 6. null (corredor livre)
+    TS->>+TR: 7. buscarStatusEsteira(esteira_id)
+    TR->>+BD: 8. SELECT status da esteira
+    BD-->>-TR: 9. "Livre"
+    TR-->>-TS: 10. "Livre"
+    TS->>+TR: 11. criarTurno()
+    TR->>+BD: 12. INSERT novo turno
+    BD-->>-TR: 13. turno { id, status: "em_andamento" }
+    TR-->>-TS: 14. turno { id, status: "em_andamento" }
+    TS->>+TR: 15. atualizarStatusEsteira("Ocupada")
+    TR->>+BD: 16. UPDATE esteira → "Ocupada"
+    BD-->>-TR: 17. ok
+    TR-->>-TS: 18. ok
+    CT-->>-C: 19. 201 { turno_id, timestamp_inicio }
+    deactivate TS
 
-    Note over C,TR: 2 · Checkpoint obrigatório — modal bloqueante a cada 5 min
+    Note over C,BD: 2 · Checkpoint obrigatório — modal bloqueante a cada 5 min
 
     loop A cada 300s desde timestamp_inicio
-        C->>CT: POST /turnos/{id}/checkpoints {km, tipo: "obrigatorio"}
-        CT->>TS: registrarCheckpoint(turno_id, km, tipo)
+        C->>+CT: 20. POST /turnos/{id}/checkpoints
+        CT->>+TS: 21. registrarCheckpoint(km, tipo: "obrigatorio")
         Note right of TS: valida km >= ultimo checkpoint
-        TS->>TR: salvarCheckpoint({turno_id, km, timestamp, tipo})
-        TR-->>TS: checkpoint { id, timestamp }
-        CT-->>C: 201 { checkpoint_id }
+        TS->>+TR: 22. salvarCheckpoint()
+        TR->>+BD: 23. INSERT checkpoint obrigatório
+        BD-->>-TR: 24. checkpoint { id, timestamp }
+        TR-->>-TS: 25. checkpoint { id, timestamp }
+        CT-->>-C: 26. 201 { checkpoint_id }
+        deactivate TS
     end
 
-    Note over C,TR: 3 · Checkpoint voluntário — auditor registra a qualquer momento
+    Note over C,BD: 3 · Checkpoint voluntário — auditor registra a qualquer momento
 
-    C->>CT: POST /turnos/{id}/checkpoints {km, tipo: "voluntario"}
-    CT->>TS: registrarCheckpoint(turno_id, km, tipo)
+    C->>+CT: 27. POST /turnos/{id}/checkpoints
+    CT->>+TS: 28. registrarCheckpoint(km, tipo: "voluntario")
     Note right of TS: valida km >= ultimo checkpoint
-    TS->>TR: salvarCheckpoint({turno_id, km, timestamp, tipo})
-    TR-->>TS: checkpoint { id, timestamp }
-    CT-->>C: 201 { checkpoint_id }
+    TS->>+TR: 29. salvarCheckpoint()
+    TR->>+BD: 30. INSERT checkpoint voluntário
+    BD-->>-TR: 31. checkpoint { id, timestamp }
+    TR-->>-TS: 32. checkpoint { id, timestamp }
+    CT-->>-C: 33. 201 { checkpoint_id }
+    deactivate TS
 
-    Note over C,TR: 4 · Finalizar turno — auditor informa km_final lido na esteira
+    Note over C,BD: 4 · Finalizar turno — auditor informa km_final lido na esteira
 
-    C->>CT: POST /turnos/{id}/finalizar {km_final}
-    CT->>TS: finalizarTurno(turno_id, km_final)
-    TS->>TR: buscarTurno(turno_id)
-    TR-->>TS: turno { km_inicial, checkpoints[] }
+    C->>+CT: 34. POST /turnos/{id}/finalizar
+    CT->>+TS: 35. finalizarTurno(km_final)
+    TS->>+TR: 36. buscarTurno(turno_id)
+    TR->>+BD: 37. SELECT turno com checkpoints
+    BD-->>-TR: 38. turno { km_inicial, checkpoints[] }
+    TR-->>-TS: 39. turno { km_inicial, checkpoints[] }
     Note right of TS: valida km_final >= ultimo checkpoint
-    Note right of TS: distancia = km_final - km_inicial / duracao = timestamp_fim - timestamp_inicio / vel_media = distancia / (duracao / 60)
-    TS->>TR: atualizarTurno({status:"finalizado", km_final, distancia, duracao_min, velocidade_media})
-    TR-->>TS: turno atualizado
-    TS->>TR: atualizarStatusEsteira(esteira_id, "Livre")
-    CT-->>C: 200 { distancia, duracao_min, velocidade_media }
+    Note right of TS: calcula distancia, duracao e vel_media
+    TS->>+TR: 40. atualizarTurno(finalizado + métricas)
+    TR->>+BD: 41. UPDATE turno → status, km_final, métricas
+    BD-->>-TR: 42. turno atualizado
+    TR-->>-TS: 43. turno atualizado
+    TS->>+TR: 44. atualizarStatusEsteira("Livre")
+    TR->>+BD: 45. UPDATE esteira → "Livre"
+    BD-->>-TR: 46. ok
+    TR-->>-TS: 47. ok
+    CT-->>-C: 48. 200 { distancia, duracao_min, vel_media }
+    deactivate TS
