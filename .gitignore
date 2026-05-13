@@ -1,3 +1,8 @@
+#Arquivos de documentação
+documentos/outros/regras_de_negocio.md
+documentos/outros/requisitos_funcionais.md
+documentos/outros/requisitos_nao_funcionais.md
+documentos/outros/user_stories.md
 # Logs
 logs
 *.log
