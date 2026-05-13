@@ -962,7 +962,7 @@ O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 H
 
 <div align="center">
   <sub>Imagem 9 - Diagrama Casos de Uso</sub><br>
-  <img src= "" width="100%" alt="Diagrama Casos de Uso"><br>
+  <img src= "./assets/secao_3/secao_3_2_2/use_case.jpeg" width="100%" alt="Diagrama Casos de Uso"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
