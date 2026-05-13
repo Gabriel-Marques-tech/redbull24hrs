@@ -89,8 +89,8 @@ Os fornecedores para a construção deste projeto incluem provedores de hospedag
 Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável pela operação do evento. Por se tratar de um projeto customizado e de uso interno exclusivo para uma de suas experiências proprietárias, a Red Bull atua como a única compradora desta solução específica. Isso eleva substancialmente o seu poder de barganha. O cliente tem controle total sobre os requisitos de sucesso do MVP, exigindo que o sistema prove ser superior ao método atual da prancheta em consistência e redução de erros. Se a aplicação não entregar a eficiência operacional esperada, a organização pode facilmente descartar a ferramenta e retornar ao método manual sem grandes prejuízos, ou simplesmente buscar outra agência desenvolvedora. Dessa forma, o poder de negociação do cliente é alto, refletindo sua posição dominante na definição das regras do projeto e na validação final da entrega.
 
 <div align="center">
-  <img src="../assets/forca_de_porter.png" width="100%" alt="Forças de Porter"><br>
   <sub>Imagem 1 - Forças de Porter</sub><br>
+  <img src="./assets/secao_2/forca_de_porter.png" width="100%" alt="Forças de Porter"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -100,8 +100,8 @@ Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável
 ---
 
 <div align="center">
-  <img src= "../assets/analise_SWOT.png" width="100%" alt="Análise SWOT - Red Bull"><br>
   <sub>Imagem 2 - Análise SWOT</sub><br>
+  <img src= "./assets/secao_2/analise_SWOT.png" width="100%" alt="Análise SWOT - Red Bull"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -226,8 +226,8 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 - A escalabilidade entre etapas regionais é viabilizada por uma solução web acessível em qualquer dispositivo conectado, padronizando a operação em todo o Brasil
 
 <div align="center">
-  <img src= "../assets/proposta_de_valor.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
   <sub>Imagem 3 - Canvas da Proposta de Valor</sub><br>
+  <img src= "./assets/secao_2/proposta_de_valor.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -301,8 +301,8 @@ A matriz de riscos é uma ferramenta fundamental para identificar, analisar e pr
 - Plano de ação: criar fluxo de "troca rápida" no sistema, com pré-cadastro do próximo corredor da equipe e botão único de transição que finaliza o registro anterior e inicia o próximo simultaneamente.
 
 <div align="center">
-  <img src="../assets/matriz_ameacas.jpeg" width="100%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
   <sub>Imagem 4 - Matriz de Ameaças</sub><br>
+  <img src="./assets/secao_2/matriz_ameacas.jpeg" width="100%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -365,8 +365,8 @@ No contexto do desenvolvimento de soluções tecnológicas, as oportunidades sã
 - Plano de aproveitamento: estruturar arquitetura modular que permita adição futura de novos métodos de captura de dados sem refatoração profunda do sistema.
 
 <div align="center">
-  <img src="../assets/matriz_oportunidades.jpeg" width="100%" alt="Matriz de Oportunidades do projeto Red Bull 24 Horas"><br>
   <sub>Imagem 5 - Matriz de Oportunidades</sub><br>
+  <img src="./assets/secao_2/matriz_oportunidades.jpeg" width="100%" alt="Matriz de Oportunidades do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -389,7 +389,7 @@ No contexto deste projeto, as personas foram utilizadas para representar os dife
 
 <div align = "center">
   <sub>Imagem 6 - Persona Nicole Rauen</sub><br>
-  <img src="../assets/Persona-Nicole-Rauen.png" width="100%" alt="Persona Bruna Gomes"><br>
+  <img src="./assets/secao_2/secao_2_2/Persona-Nicole-Rauen.png" width="100%" alt="Persona Bruna Gomes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -425,8 +425,8 @@ Nicole Rauen é corredora amadora e influenciadora digital, compartilhando trein
 - Interface clara e organizada.
 
 <div align = "center">
-  <img src="../assets/Persona-Bruno-Gardesani.png" width="100%" alt="Persona Bruno Gardesani"><br>
   <sub>Imagem 7 - Persona Bruno Gardesani</sub><br>
+  <img src="./assets/secao_2/secao_2_2/Persona-Bruno-Gardesani.png" width="100%" alt="Persona Bruno Gardesani"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -468,8 +468,8 @@ Bruno Gardesani atua como Gerente Nacional de Field Marketing na Red Bull, sendo
 - Sistema confiável e transparente.
 
 <div align = "center">
-  <img src="../assets/Persona-Lucas-Andrade.png" width="100%" alt="Persona Lucas Andrade"><br>
   <sub>Imagem 8 - Persona Lucas Andrade</sub><br>
+  <img src="./assets/secao_2/secao_2_2/Persona-Lucas-Andrade.png" width="100%" alt="Persona Lucas Andrade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -788,7 +788,7 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 | RF032 | O sistema deve permitir que o corredor acesse seu histórico completo de desempenho no evento após sua finalização.                                                                                                                                               | Baixa      | Planejado |
 
 <div align = "center">
-  <sub> Quadro 11 - Requisitos Funcionais </sub><br>
+  <sub> Quadro 13 - Requisitos Funcionais </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -840,7 +840,7 @@ Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio 
 | RN33 | Cada evento deve ter exatamente um local/região registrado, informado no momento do cadastro do evento. O local deve ser único por instância de evento ativa e é utilizado como identificador no nome do arquivo CSV exportado conforme RN26. O campo não pode ser nulo ou vazio.                                                                                                     | RF031                      |
 
 <div align = "center">
-  <sub> Quadro 12 - Regras de Negócios </sub><br>
+  <sub> Quadro 14 - Regras de Negócios </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -880,7 +880,7 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 | RF016 | RN27          | `/sync`                                                          | POST   |
 
 <div align = "center">
-  <sub> Quadro 14 - Matriz RF → RN → Endpoint </sub><br>
+  <sub> Quadro 15 - Matriz RF → RN → Endpoint </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -935,7 +935,7 @@ Para organizar esses requisitos, utilizamos a estrutura de 8 eixos de qualidade,
 
 
 <div align = "center">
-  <sub> Quadro 13 - Requisitos Não Funcionais </sub><br>
+  <sub> Quadro 16 - Requisitos Não Funcionais </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -961,8 +961,8 @@ _Posicione aqui o diagrama de arquitetura da solução, indicando as camadas pri
 O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 Horas a partir da prática **Light Use-Case Modeling** descrita em Jacobson et al.[⁹](#8-referências), evoluindo para o nível **System Boundary Established** ao incluir todos os atores e casos de uso planejados para o MVP. A notação adotada segue o guia _Use-Case 3.0 — The Definitive Guide_: atores são representados por bonecos-palito, casos de uso por elipses contidas dentro do retângulo do _System of Interest_, associações por linhas contínuas com setas indicando o iniciador da interação, `<<include>>` por seta tracejada apontando do caso-base para o caso obrigatoriamente incluído, e `<<extend>>` por seta tracejada apontando do caso opcional para o caso-base que ele estende.
 
 <div align="center">
-  <img src= "../assets/use_case.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
   <sub>Imagem 9 - Diagrama Casos de Uso</sub><br>
+  <img src= "./assets/secao_3/secao_3_2_2/use_case.jpeg" width="100%" alt="Diagrama Casos de Uso"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -975,7 +975,7 @@ O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 H
 | **Organização do Evento** | Primário (secundário em frequência) | Equipe responsável pela validação final dos resultados e pela auditoria pós-evento. Acessa o painel consolidado e exporta os dados para conferência.                                                                                                                                                                                               |
 
 <div align = "center">
-  <sub> Quadro 15 - Atores de Casos de Uso </sub><br>
+  <sub> Quadro 17 - Atores de Casos de Uso </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -995,7 +995,7 @@ Os casos de uso foram identificados a partir dos requisitos funcionais da seçã
 | **Exportar dados**                | Organização do Evento           | Gerar arquivo CSV com todos os registros para auditoria formal pós-evento.                                                                                                              | Ao menos um registro existente no sistema.                                          | Auditor (pode acionar a exportação conjuntamente).                          | Arquivo CSV gerado com todos os registros; dados disponíveis para auditoria formal pós-evento.           |
 
 <div align = "center">
-  <sub> Quadro 16 - Casos de Uso </sub><br>
+  <sub> Quadro 18 - Casos de Uso </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -1016,7 +1016,7 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 | `<<extend>>`   | Registrar checkpoint      | Recuperar último registro válido da sessão | Comportamento _condicional_: só ocorre quando a esteira para de funcionar durante uma sessão e o auditor precisa recuperar a quilometragem com base no último checkpoint conhecido **da sessão atual**. O caso-base não precisa saber que esse fluxo existe — daí o uso de `<<extend>>`.                                   |
 
 <div align = "center">
-  <sub> Quadro 17 - Relacionamentos include e extend </sub><br>
+  <sub> Quadro 19 - Relacionamentos include e extend </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -1024,6 +1024,13 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
 Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação UML, com o objetivo de representar a estrutura do sistema por meio de suas classes, atributos, relacionamentos e responsabilidades. A modelagem organiza logicamente os elementos do domínio do evento Red Bull 24h, facilitando a compreensão das dependências entre as entidades e da solução proposta pelo grupo.
+
+<div align = "center">
+  <sub>Imagem 10 - Diagrama de Classes de Domínio</sub><br>
+  <img src="../assets/diagrama_de_classes.png" width="100%" alt="Diagrama de Classes"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
 
 ### 3.2.4. Diagrama de Sequência UML (sprint 3)
 
