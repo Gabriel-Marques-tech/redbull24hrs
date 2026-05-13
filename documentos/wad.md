@@ -1104,11 +1104,17 @@ _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelid
 
 _Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture)._
 
-### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
+### 3.6.2. Diagrama Entidade-Relacionamento (DER)
 
 ---
 
-_Posicione aqui o DER com cardinalidades explícitas em ambos os lados de cada relação e identificação de PK/FK. O DER deve ser coerente com o diagrama de classes (3.2.3)._
+<div align = "center">
+  <sub> Imagem 12 - Diagrama Entidade-Relacionamento </sub><br>
+  <img src=".\assets\diagramaDERcTabela.png"
+  width="100%" alt="Diagrama de Entidade-Relacionamento"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
