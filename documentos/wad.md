@@ -1074,7 +1074,7 @@ O módulo de Equipes é a base de organização dos competidores. O Red Bull 24 
 
 <div align="center">
   <sub>Imagem XX - Diagrama de Sequência: Equipes</sub>
-    <br><img src="assets\secao_3_2\secao_3_2_4\UML_Diagram\Teams_SequenceDiagram.png" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
+    <br><img src="assets/secao_3_2/secao_3_2_4/UML_Diagram/Teams_SequenceDiagram.png" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026 </sub>
   <br><br><br>
 </div>
