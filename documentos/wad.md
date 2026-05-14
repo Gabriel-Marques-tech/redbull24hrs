@@ -1060,7 +1060,18 @@ _Documente os design patterns utilizados (Repository, Strategy, Factory, DTO etc
 
 ---
 
-_Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização)_
+O wireframe é um rascunho do sistema que mostra como o projeto ira funcionar. Ele é usado para mostrar como as telas vão ser organizadas e como o usuário vai navegar por elas, tudo isso antes de qualquer linha de código ser escrita. 
+
+Ele serve pra deixar as ideias mais claras, dar direcionamento para o projeto e evitar retrabalho no fim, além de garantir que todos da equipe estão alinhados. Essa é uma etapa essencial para a organização do projeto e do grupo, para ficar claro como o sistema irá funcionar. 
+
+A seguir, serão apresentados os wireframes de baixa e média fidelidade que foram desenvolvidos durante a sprint 2.
+
+<div align = "center">
+  <sub>Imagem 11 - Wireframe Baixa Fidelidade </sub><br>
+  <img src="./assets/secao_3/secao_3_3/wireframe-baixa-fidelidade.svg" width="100%" alt="Diagrama de Classes"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
 
 ## 3.4. Guia de estilos (sprint 3)
 
