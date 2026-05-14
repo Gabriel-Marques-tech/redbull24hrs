@@ -1117,15 +1117,97 @@ _Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Us
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER)
 
----
+O DER traduz o modelo conceitual do MER para a estrutura relacional do banco de dados (PostgreSQL), adotando a **notação de tabelas relacionais** com tipos de dados, restrições (`NOT NULL`, `UNIQUE`, `CHECK`), chaves primárias (`PK`) e chaves estrangeiras (`FK`).
 
-<div align = "center">
-  <sub> Imagem 12 - Diagrama Entidade-Relacionamento </sub><br>
-  <img src=".\assets\diagramaDERcTabela.png"
-  width="100%" alt="Diagrama de Entidade-Relacionamento"><br>
+<div align="center">
+  <img src="./assets/diagrama-entidade-relacionamento/DER.png" width="90%" alt="Diagrama Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
+  <sub>Imagem 12 - Diagrama Entidade-Relacionamento</sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
+  <br><br>
 </div>
+
+<div align="center">
+  <sub>Quadro 22 - Tabelas e colunas do DER</sub>
+</div>
+
+| Tabela          | Coluna               | Tipo      | Restrições                                    | Descrição                                                       |
+| --------------- | -------------------- | --------- | --------------------------------------------- | --------------------------------------------------------------- |
+| **Managers**    | `id`                 | SERIAL    | PK                                            | Identificador único do gerente                                  |
+|                 | `cpf`                | VARCHAR   | UNIQUE                                        | CPF do gerente                                                  |
+|                 | `name`               | VARCHAR   | NOT NULL                                      | Nome completo                                                   |
+| **Events**      | `id`                 | SERIAL    | PK                                            | Identificador único do evento                                   |
+|                 | `title`              | VARCHAR   | NOT NULL UNIQUE                               | Título da edição (ex.: "Red Bull 24 Horas SP 2026")             |
+|                 | `local`              | VARCHAR   | NOT NULL UNIQUE                               | Local de realização                                             |
+|                 | `manager_id`         | INT       | FK → Managers(id)                             | Gerente responsável                                             |
+| **Teams**       | `id`                 | SERIAL    | PK                                            | Identificador único da equipe                                   |
+|                 | `name`               | VARCHAR   | NOT NULL UNIQUE                               | Nome da equipe (ex.: "Azul", "Vermelha")                        |
+|                 | `event_id`           | INT       | FK → Events(id)                               | Evento ao qual a equipe pertence                                |
+| **Athletes**    | `id`                 | SERIAL    | PK                                            | Identificador único do atleta                                   |
+|                 | `name`               | VARCHAR   | NOT NULL                                      | Nome completo                                                   |
+|                 | `gender`             | VARCHAR   | NOT NULL                                      | Gênero, utilizado para apuração por categoria                   |
+|                 | `cpf`                | VARCHAR   | UNIQUE                                        | CPF do atleta                                                   |
+|                 | `team_id`            | INT       | FK → Teams(id)                                | Equipe à qual o atleta pertence                                 |
+| **Auditors**    | `id`                 | SERIAL    | PK                                            | Identificador único do auditor                                  |
+|                 | `name`               | VARCHAR   | NOT NULL                                      | Nome do auditor                                                 |
+|                 | `cpf`                | VARCHAR   | UNIQUE                                        | CPF do auditor                                                  |
+|                 | `registration_number`| INT       | NOT NULL UNIQUE                               | Número de registro funcional                                    |
+|                 | `is_active`          | BOOLEAN   | DEFAULT FALSE                                 | Indica se o auditor está ativo no sistema                       |
+| **Treadmills**  | `id`                 | SERIAL    | PK                                            | Identificador único da esteira                                  |
+|                 | `shift_id`           | INT       | FK → Shifts(id)                               | Turno atualmente em execução                                    |
+|                 | `treadmill_number`   | INT       | NOT NULL UNIQUE                               | Número físico da esteira (Technogym)                            |
+| **Shifts**      | `id`                 | SERIAL    | PK                                            | Identificador único do turno                                    |
+|                 | `status`             | VARCHAR   | NOT NULL CHECK ('pending','in progress','completed') | Estado do turno                                          |
+|                 | `athlete_id`         | INT       | FK → Athletes(id)                             | Atleta realizando o turno                                       |
+|                 | `auditor_id`         | INT       | FK → Auditors(id)                             | Auditor responsável pelo registro                               |
+|                 | `start_at`           | TIMESTAMP | —                                             | Início do turno                                                 |
+|                 | `end_at`             | TIMESTAMP | —                                             | Encerramento do turno                                           |
+|                 | `time_total`         | INTERVAL  | —                                             | Duração total (calculada ao finalizar)                          |
+|                 | `speed`              | INT       | NOT NULL                                      | Velocidade configurada (km/h)                                   |
+|                 | `km_start`           | INT       | NOT NULL                                      | Quilometragem inicial no odômetro                               |
+|                 | `km_end`             | INT       | NOT NULL                                      | Quilometragem final no odômetro                                 |
+|                 | `distance`           | INT       | NOT NULL                                      | Distância percorrida (`km_end - km_start`)                      |
+| **Checkpoints** | `id`                 | SERIAL    | PK                                            | Identificador único do checkpoint                               |
+|                 | `shift_id`           | INT       | FK → Shifts(id)                               | Turno ao qual o checkpoint pertence                             |
+|                 | `timestamp`          | TIMESTAMP | —                                             | Data e hora do registro                                         |
+|                 | `distance`           | INT       | NOT NULL                                      | Quilometragem parcial no momento do checkpoint                  |
+|                 | `type`               | VARCHAR   | CHECK ('mandatory', 'voluntary')              | Obrigatório (a cada 5 min) ou voluntário                        |
+| **Logs**        | `id`                 | SERIAL    | PK                                            | Identificador único do log                                      |
+|                 | `shift_id`           | INT       | FK NOT NULL → Shifts(id)                      | Turno ao qual o log está vinculado                              |
+|                 | `timestamp`          | TIMESTAMP | NOT NULL                                      | Data e hora da ação                                             |
+|                 | `type`               | VARCHAR   | CHECK ('created', 'updated', 'finished')      | Tipo da ação auditada                                           |
+
+<div align="center">
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+<div align="center">
+  <sub>Quadro 23 - Relacionamentos e chaves estrangeiras do DER</sub>
+</div>
+
+| Tabela origem   | Coluna FK            | Tabela referenciada | Cardinalidade | Relacionamento                                               |
+| --------------- | -------------------- | ------------------- | ------------- | ------------------------------------------------------------ |
+| **Events**      | `manager_id`         | Managers            | N : 1         | Vários eventos podem ser geridos pelo mesmo gerente          |
+| **Teams**       | `event_id`           | Events              | N : 1         | Várias equipes pertencem a um evento                         |
+| **Athletes**    | `team_id`            | Teams               | N : 1         | Vários atletas compõem uma equipe                            |
+| **Treadmills**  | `shift_id`           | Shifts              | N : 1         | Uma esteira recebe vários turnos ao longo das 24 horas       |
+| **Shifts**      | `athlete_id`         | Athletes            | N : 1         | Um atleta realiza vários turnos durante a competição         |
+| **Shifts**      | `auditor_id`         | Auditors            | N : 1         | Um auditor é responsável por vários turnos no seu plantão    |
+| **Checkpoints** | `shift_id`           | Shifts              | N : 1         | Vários checkpoints são registrados dentro de um turno        |
+| **Logs**        | `shift_id`           | Shifts              | N : 1         | Vários logs são gerados ao longo do ciclo de vida de um turno|
+
+<div align="center">
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+Três decisões traduzem regras de negócio para restrições concretas no banco:
+
+- **`CHECK` nos campos de estado:** `status` em Shifts e `type` em Checkpoints e Logs aceitam apenas valores predefinidos, eliminando inconsistências sem depender exclusivamente da camada de aplicação.
+- **`treadmill_number` como `UNIQUE`:** impede cadastro duplicado de equipamentos, espelhando a unicidade física de cada esteira Technogym.
+- **`shift_id` em Logs como `FK NOT NULL`:** garante que todo log esteja vinculado a um turno, assegurando a trilha de auditoria pós-evento.
+
+A cadeia `Managers → Events → Teams → Athletes → Shifts → Checkpoints / Logs` reflete o fluxo operacional completo do sistema, do cadastro pré-evento à auditoria pós-evento.
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
