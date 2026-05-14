@@ -1101,7 +1101,7 @@ O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na estei
 
 <div align="center">
   <sub>Imagem xx - Diagrama de Sequencia: Turnos</sub><br>
-  <img src="assets\secao_3_2\secao_3_2_4\UML_Diagram\Turns_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de turnos"><br>
+  <img src="assets/secao_3_2/secao_3_2_4/UML_Diagram/Logs_SequenceDiagram.png" width="900px" alt="Diagrama de sequencia do processo de turnos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div
