@@ -1047,7 +1047,7 @@ A gestão de Eventos representa a visão macro da competição, sendo a configur
 
 <div align="center">
   <sub>Imagem xx - Diagrama de Sequencia: Eventos</sub><br>
-  <img src="assets\secao_3_2\secao_3_2_4\UML_Diagram\Events_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
+  <img src="assets/secao_3_2/secao_3_2_4/UML_Diagram/Events_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div
