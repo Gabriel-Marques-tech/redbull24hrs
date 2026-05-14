@@ -89,6 +89,7 @@ Os fornecedores para a construção deste projeto incluem provedores de hospedag
 Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável pela operação do evento. Por se tratar de um projeto customizado e de uso interno exclusivo para uma de suas experiências proprietárias, a Red Bull atua como a única compradora desta solução específica. Isso eleva substancialmente o seu poder de barganha. O cliente tem controle total sobre os requisitos de sucesso do MVP, exigindo que o sistema prove ser superior ao método atual da prancheta em consistência e redução de erros. Se a aplicação não entregar a eficiência operacional esperada, a organização pode facilmente descartar a ferramenta e retornar ao método manual sem grandes prejuízos, ou simplesmente buscar outra agência desenvolvedora. Dessa forma, o poder de negociação do cliente é alto, refletindo sua posição dominante na definição das regras do projeto e na validação final da entrega.
 
 <div align="center">
+  <img src="../assets/forca_de_porter.png" width="100%" alt="Forças de Porter"><br>
   <sub>Imagem 1 - Forças de Porter</sub><br>
   <img src="./assets/secao_2_1/secao_2_1_1/forca_de_porter.png" width="100%" alt="Forças de Porter"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -100,6 +101,7 @@ Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável
 ---
 
 <div align="center">
+  <img src= "../assets/analise_SWOT.png" width="100%" alt="Análise SWOT - Red Bull"><br>
   <sub>Imagem 2 - Análise SWOT</sub><br>
   <img src= "./assets/secao_2_1/secao_2_1_2/analise_SWOT.png" width="100%" alt="Análise SWOT - Red Bull"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -226,6 +228,7 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 - A escalabilidade entre etapas regionais é viabilizada por uma solução web acessível em qualquer dispositivo conectado, padronizando a operação em todo o Brasil
 
 <div align="center">
+  <img src= "../assets/proposta_de_valor.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
   <sub>Imagem 3 - Canvas da Proposta de Valor</sub><br>
   <img src= "./assets/secao_2_1/secao_2_1_4/proposta_de_valor.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -301,6 +304,7 @@ A matriz de riscos é uma ferramenta fundamental para identificar, analisar e pr
 - Plano de ação: criar fluxo de "troca rápida" no sistema, com pré-cadastro do próximo corredor da equipe e botão único de transição que finaliza o registro anterior e inicia o próximo simultaneamente.
 
 <div align="center">
+  <img src="../assets/matriz_ameacas.jpeg" width="100%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
   <sub>Imagem 4 - Matriz de Ameaças</sub><br>
   <img src="./assets/secao_2_1/secao_2_1_5/matriz_ameacas.jpeg" width="100%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -365,6 +369,7 @@ No contexto do desenvolvimento de soluções tecnológicas, as oportunidades sã
 - Plano de aproveitamento: estruturar arquitetura modular que permita adição futura de novos métodos de captura de dados sem refatoração profunda do sistema.
 
 <div align="center">
+  <img src="../assets/matriz_oportunidades.jpeg" width="100%" alt="Matriz de Oportunidades do projeto Red Bull 24 Horas"><br>
   <sub>Imagem 5 - Matriz de Oportunidades</sub><br>
   <img src="./assets/secao_2_1/secao_2_1_5/matriz_oportunidades.jpeg" width="100%" alt="Matriz de Oportunidades do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -425,6 +430,7 @@ Nicole Rauen é corredora amadora e influenciadora digital, compartilhando trein
 - Interface clara e organizada.
 
 <div align = "center">
+  <img src="../assets/Persona-Bruno-Gardesani.png" width="100%" alt="Persona Bruno Gardesani"><br>
   <sub>Imagem 7 - Persona Bruno Gardesani</sub><br>
   <img src="./assets/secao_2_2/Persona-Bruno-Gardesani.png" width="100%" alt="Persona Bruno Gardesani"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -468,6 +474,7 @@ Bruno Gardesani atua como Gerente Nacional de Field Marketing na Red Bull, sendo
 - Sistema confiável e transparente.
 
 <div align = "center">
+  <img src="../assets/Persona-Lucas-Andrade.png" width="100%" alt="Persona Lucas Andrade"><br>
   <sub>Imagem 8 - Persona Lucas Andrade</sub><br>
   <img src="./assets/secao_2_2/Persona-Lucas-Andrade.png" width="100%" alt="Persona Lucas Andrade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -770,10 +777,10 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 | RF014 | O sistema deve exibir um histórico (log) de entradas, saídas e checkpoints em ordem decrescente.                                                                                                                                                                 | Alta       | Planejado |
 | RF015 | O sistema deve permitir edição retroativa de registros com log automático de auditoria sobre quem realizou a alteração.                                                                                                                                          | Alta       | Planejado |
 | RF016 | O sistema deve permitir o registro de checkpoints e turnos sem conexão com a internet, persistindo os dados localmente e sincronizando automaticamente ao restabelecer a conexão, sem duplicidade de registros.                                                  | Alta       | Planejado |
-| RF017 | O sistema deve exigir autenticação (login e senha) para os perfis de Administrador e Auditor antes de permitir qualquer alteração nos dados.                                                                                                                     | Alta       | Planejado |
+| RF017 | O sistema deve exigir autenticação (login e senha) para os perfis de Administrador e Auditor antes de permitir qualquer alteração nos dados.                                                                                                                      | Alta       | Planejado |
 | RF018 | O sistema deve detectar automaticamente inconsistências nos dados inseridos com base no histórico do corredor, equipe e esteira, gerando alertas em tempo real para o Auditor.                                                                                   | Alta       | Planejado |
 | RF019 | O sistema deve exibir notificações visuais e/ou sonoras ao identificar inconsistências, bloqueando a confirmação do dado até revisão ou justificativa do Auditor.                                                                                                | Alta       | Planejado |
-| RF020 | O sistema deve permitir que o Auditor revise e corrija inconsistências detectadas antes da persistência final dos dados.                                                                                                                                         | Alta       | Planejado |
+| RF020 | O sistema deve permitir que o Auditor revise e corrija inconsistências detectadas antes da persistência final dos dados.                                                                                                                                          | Alta       | Planejado |
 | RF021 | O sistema deve permitir o registro manual de quilometragem a qualquer momento, gerando timestamp automático para rastreabilidade.                                                                                                                                | Média      | Planejado |
 | RF022 | O sistema deve permitir iniciar um novo corredor na esteira adjacente com poucos cliques após o término do turno anterior, reutilizando dados da equipe.                                                                                                         | Média      | Planejado |
 | RF023 | O sistema deve gerar métricas por corredor incluindo distância total, média por turno e histórico de evolução por hora com snapshots a cada 60 minutos.                                                                                                          | Média      | Planejado |
@@ -783,12 +790,11 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 | RF027 | O sistema deve identificar inconsistências como km_final < km_inicial, intervalo de checkpoint > 10 min e corredor com turnos simultâneos.                                                                                                                       | Média      | Planejado |
 | RF028 | O sistema deve permitir exportação de dados em CSV contendo turnos e checkpoints registrados.                                                                                                                                                                    | Média      | Planejado |
 | RF029 | O sistema deve disponibilizar uma tela de desempenho final por corredor ao término do evento, contendo métricas como distância total, tempo total e velocidade média.                                                                                            | Média      | Planejado |
-| RF030 | O sistema deve permitir o compartilhamento do desempenho final do corredor por meio de um link gerado automaticamente.                                                                                                                                           | Média      | Planejado |
+| RF030 | O sistema deve permitir o compartilhamento do desempenho final do corredor por meio de um link gerado automaticamente.                                                                                                                                   | Média      | Planejado |
 | RF031 | O sistema deve permitir o registro do local/região da etapa.                                                                                                                                                                                                     | Baixa      | Planejado |
 | RF032 | O sistema deve permitir que o corredor acesse seu histórico completo de desempenho no evento após sua finalização.                                                                                                                                               | Baixa      | Planejado |
-
 <div align = "center">
-  <sub> Quadro 13 - Requisitos Funcionais </sub><br>
+  <sub> Quadro 11 - Requisitos Funcionais </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -803,44 +809,38 @@ Com esta base sólida, o projeto segue para a fase de implementação, onde cada
 Regras de negócio são declarações que definem ou restringem aspectos do funcionamento de um sistema, refletindo políticas, condições e obrigações do domínio de negócio. Devem ser implementáveis e testáveis, servindo como referencial técnico para o desenvolvimento e validação da aplicação.
 Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio são "restrições explícitas sobre comportamento e/ou fornecem suporte ao comportamento" de um sistema ou organização.
 
-| ID   | Descrição                                                                                                                                                                                                                                                                                                                                                                             | RF associado               |
-| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
-| RN01 | Um corredor só pode iniciar um turno se não possuir outro turno com status "em andamento" em nenhuma das esteiras do evento.                                                                                                                                                                                                                                                          | RF007                      |
-| RN02 | A esteira selecionada deve estar com status "Livre" para que um novo turno possa ser iniciado. Esteiras "Ocupadas" não podem receber novo turno.                                                                                                                                                                                                                                      | RF007                      |
-| RN03 | O modal de checkpoint obrigatório deve ser disparado exatamente a cada 300 segundos (5 minutos) a partir do timestamp de início do turno. Nenhuma outra ação pode ser executada até que o auditor confirme o valor informado.                                                                                                                                                         | RF008                      |
-| RN04 | A quilometragem informada em um checkpoint voluntário deve ser maior ou igual à quilometragem do checkpoint imediatamente anterior registrado no mesmo turno (ou à km_inicial, se for o primeiro checkpoint).                                                                                                                                                                         | RF021                      |
-| RN05 | Um turno só pode ser finalizado se possuir ao menos um checkpoint registrado (obrigatório ou voluntário) após o início. Turnos sem nenhum checkpoint não podem ser encerrados.                                                                                                                                                                                                        | RF009                      |
-| RN06 | A quilometragem final informada deve ser maior ou igual à quilometragem do último checkpoint registrado no turno. Valores menores devem ser rejeitados antes de qualquer persistência.                                                                                                                                                                                                | RF010                      |
-| RN07 | Ao finalizar um turno, o sistema deve calcular automaticamente: distância = km_final − km_inicial; duração = timestamp_fim − timestamp_início (em minutos); velocidade_média = distância / (duração / 60). Os três valores devem ser persistidos vinculados ao turno antes de retornar sucesso ao cliente.                                                                            | RF011                      |
-| RN08 | O hot swap só pode ser acionado imediatamente após a finalização de um turno na esteira adjacente. O próximo corredor deve pertencer à mesma equipe já configurada. Não é permitido hot swap sem turno anterior finalizado ou com esteira em status ocupado.                                                                                                                          | RF022                      |
-| RN09 | A quilometragem total de uma equipe é a soma dos valores de distância (km_final − km_inicial) de todos os turnos com status "finalizado". Turnos em andamento, cancelados ou inconsistentes não entram no cálculo.                                                                                                                                                                    | RF012                      |
-| RN10 | Snapshots de distância acumulada por hora devem ser gerados automaticamente ao completar cada hora cheia desde o início do evento (t+60min, t+120min, etc.). Snapshots já gerados são imutáveis e não podem ser recalculados retroativamente.                                                                                                                                         | RF023                      |
-| RN11 | O dashboard deve ser atualizado em intervalos máximos de 10 segundos. Em caso de falha de conexão, o painel deve exibir indicador visual de "dados desatualizados" com timestamp da última atualização bem-sucedida — nunca exibir dados em branco.                                                                                                                                   | RF013                      |
-| RN12 | Uma esteira é "Ocupada" enquanto houver turno com status "em andamento" vinculado a ela, e passa para "Livre" imediatamente após o encerramento. O sistema deve sugerir revezamento quando uma esteira acumular 45 minutos contínuos de uso no mesmo turno.                                                                                                                           | RF024                      |
-| RN13 | O histórico deve listar todos os eventos em ordem decrescente de timestamp. Eventos com o mesmo timestamp devem obedecer a seguinte prioridade de exibição: encerramento > checkpoint > início.                                                                                                                                                                                       | RF014                      |
-| RN14 | No modo TV nenhuma ação de escrita pode ser executada — a interface é estritamente somente leitura. O acesso ao modo TV não requer autenticação. Qualquer tentativa de POST/PUT/DELETE originada do modo TV deve ser bloqueada no servidor.                                                                                                                                           | RF025                      |
-| RN15 | O sistema permite o cadastro de exatamente 2 equipes por evento. A tentativa de cadastrar uma terceira equipe deve ser bloqueada com mensagem de erro. Nomes de equipes devem ser únicos dentro do evento.                                                                                                                                                                            | RF001                      |
-| RN16 | Um corredor só pode ser vinculado a uma única equipe por evento. Após o início do primeiro turno do evento, não é permitido adicionar, remover ou transferir corredores entre equipes.                                                                                                                                                                                                | RF002                      |
-| RN17 | O sistema deve bloquear o início de qualquer turno enquanto qualquer uma das duas equipes não possuir exatamente 16 corredores com status "ativo". O bloqueio deve ser verificado a cada tentativa de início de turno, não apenas no cadastro.                                                                                                                                        | RF003                      |
-| RN18 | O campo local/região é obrigatório e deve ser preenchido antes do início do primeiro turno. Após o início do evento, o local não pode ser alterado — qualquer tentativa deve ser rejeitada.                                                                                                                                                                                           | RF031                      |
-| RN19 | Apenas esteiras com status "Livre" podem ser selecionadas para iniciar um novo turno. Esteiras "Ocupadas" devem aparecer visualmente desabilitadas na interface e não aceitar seleção.                                                                                                                                                                                                | RF004                      |
-| RN20 | A equipe selecionada para uma esteira fica associada durante todo o turno em andamento. Não é permitido trocar a equipe de uma esteira enquanto houver turno em andamento nela.                                                                                                                                                                                                       | RF005                      |
-| RN21 | Apenas corredores com status "ativo" e sem turno em andamento podem ser selecionados. Corredores já em execução em qualquer esteira devem aparecer indisponíveis (desabilitados) na lista de seleção.                                                                                                                                                                                 | RF006                      |
-| RN22 | Os filtros de equipe, esteira e corredor podem ser combinados (operação AND). A aplicação de filtros não altera os dados persistidos — apenas restringe a visibilidade dos registros exibidos. Remover filtros deve restaurar a visão completa.                                                                                                                                       | RF026                      |
-| RN23 | Toda edição retroativa deve gerar um registro de auditoria imutável com: id do registro alterado, valor anterior, valor novo, timestamp da alteração e id do auditor. O registro de auditoria não pode ser excluído nem modificado por nenhum perfil.                                                                                                                                 | RF015                      |
-| RN24 | A edição de quilometragem em um checkpoint só é válida se o novo valor for maior ou igual ao checkpoint imediatamente anterior e menor ou igual ao checkpoint imediatamente posterior do mesmo turno.                                                                                                                                                                                 | RF015                      |
-| RN25 | O sistema deve marcar como inconsistente qualquer turno onde: (a) km_final < km_inicial; (b) gap entre checkpoints superior a 10 minutos sem justificativa registrada; (c) corredor com dois turnos simultâneos. Inconsistências devem ser sinalizadas no dashboard sem bloquear a operação em andamento.                                                                             | RF027                      |
-| RN26 | O CSV exportado deve conter duas seções: (1) turnos — corredor, equipe, esteira, km*inicial, km_final, duracao_min, timestamp_inicio, timestamp_fim; (2) checkpoints — turno_id, km, timestamp, tipo. O nome do arquivo deve seguir o padrão `evento*{local}\_{data-ISO}.csv`.                                                                                                        | RF028                      |
-| RN27 | Em caso de ausência de conexão, os registros devem ser persistidos localmente com o timestamp original do momento do registro. Ao restabelecer conexão, a sincronização deve ocorrer automaticamente sem duplicar registros, preservando a ordem cronológica original.                                                                                                                | RF016                      |
-| RN28 | A tela de desempenho final só deve ser exibida após o encerramento oficial do evento. Enquanto o evento estiver em andamento, o acesso deve ser bloqueado para todos os perfis, exceto Administrador.                                                                                                                                                                                 | RF029                      |
-| RN29 | O link de compartilhamento de desempenho individual deve ser gerado apenas para corredores com ao menos um turno com status "finalizado". O link deve ser somente leitura, acessível sem autenticação, e não deve expor dados de outros corredores nem do placar geral do evento.                                                                                                     | RF030                      |
-| RN30 | O histórico de desempenho acessível pelo corredor via RF032 deve ser restrito aos dados do próprio corredor — turnos, checkpoints, distância total, tempo total e velocidade média. Nenhuma informação de outros corredores ou da outra equipe pode ser retornada nesse contexto.                                                                                                     | RF032                      |
-| RN31 | O fluxo de início de turno segue uma sequência obrigatória e bloqueante: (1) seleção do evento/local, (2) seleção da equipe — que carrega automaticamente os corredores vinculados —, (3) seleção da esteira, (4) seleção do corredor. Nenhuma etapa pode ser pulada. O botão de confirmar início de turno permanece desabilitado até que todos os quatro campos estejam preenchidos. | RF004, RF005, RF006, RF007 |
-| RN32 | A lista de equipes disponíveis para seleção só é populada após a escolha de um evento ativo. A lista de corredores disponíveis só é populada após a seleção de uma equipe. Essas dependências devem ser respeitadas tanto na interface quanto na API — requisições que tentem buscar corredores sem equipe selecionada, ou equipes sem evento selecionado, devem ser rejeitadas.      | RF005, RF006               |
-| RN33 | Cada evento deve ter exatamente um local/região registrado, informado no momento do cadastro do evento. O local deve ser único por instância de evento ativa e é utilizado como identificador no nome do arquivo CSV exportado conforme RN26. O campo não pode ser nulo ou vazio.                                                                                                     | RF031                      |
+| ID   | Descrição                                                                                                                                                                                                                                                                                                  | RF associado |
+| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| RN01 | Um corredor só pode iniciar um turno se não possuir outro turno com status "em andamento" em nenhuma das esteiras do evento.                                                                                                                                                                               | RF007        |
+| RN02 | A esteira selecionada deve estar com status "Livre" para que um novo turno possa ser iniciado. Esteiras "Ocupadas" não podem receber novo turno.                                                                                                                                                           | RF007        |
+| RN03 | O modal de checkpoint obrigatório deve ser disparado exatamente a cada 300 segundos (5 minutos) a partir do timestamp de início do turno. Nenhuma outra ação pode ser executada até que o auditor confirme o valor informado.                                                                              | RF008        |
+| RN04 | A quilometragem informada em um checkpoint voluntário deve ser maior ou igual à quilometragem do checkpoint imediatamente anterior registrado no mesmo turno (ou à km_inicial, se for o primeiro checkpoint).                                                                                              | RF017        |
+| RN05 | Um turno só pode ser finalizado se possuir ao menos um checkpoint registrado (obrigatório ou voluntário) após o início. Turnos sem nenhum checkpoint não podem ser encerrados.                                                                                                                             | RF009        |
+| RN06 | A quilometragem final informada deve ser maior ou igual à quilometragem do último checkpoint registrado no turno. Valores menores devem ser rejeitados antes de qualquer persistência.                                                                                                                     | RF010        |
+| RN07 | Ao finalizar um turno, o sistema deve calcular automaticamente: distância = km_final − km_inicial; duração = timestamp_fim − timestamp_início (em minutos); velocidade_média = distância / (duração / 60). Os três valores devem ser persistidos vinculados ao turno antes de retornar sucesso ao cliente. | RF011        |
+| RN08 | O hot swap só pode ser acionado imediatamente após a finalização de um turno na esteira adjacente. O próximo corredor deve pertencer à mesma equipe já configurada. Não é permitido hot swap(Troca de competidores em tempo real) sem turno anterior finalizado, ou com esteira em status ocupado.         | RF018        |
+| RN09 | A quilometragem total de uma equipe é a soma dos valores de distância (km_final − km_inicial) de todos os turnos com status "finalizado". Turnos em andamento, cancelados ou inconsistentes não entram no cálculo.                                                                                         | RF012        |
+| RN10 | Snapshots de distância acumulada por hora devem ser gerados automaticamente ao completar cada hora cheia desde o início do evento (t+60min, t+120min, etc.). Snapshots já gerados são imutáveis e não podem ser recalculados retroativamente.                                                              | RF019        |
+| RN11 | O dashboard deve ser atualizado em intervalos máximos de 10 segundos. Em caso de falha de conexão, o painel deve exibir indicador visual de "dados desatualizados" com timestamp da última atualização bem-sucedida — nunca exibir dados em branco.                                                        | RF013        |
+| RN12 | Uma esteira é "Ocupada" enquanto houver turno com status "em andamento" vinculado a ela, e passa para "Livre" imediatamente após o encerramento. O sistema deve sugerir revezamento quando uma esteira acumular 45 minutos contínuos de uso no mesmo turno.                                                | RF020        |
+| RN13 | O histórico deve listar todos os eventos em ordem decrescente de timestamp. Eventos com o mesmo timestamp devem obedecer a seguinte prioridade de exibição: encerramento > checkpoint > início.                                                                                                            | RF014        |
+| RN14 | No modo TV nenhuma ação de escrita pode ser executada — a interface é estritamente somente leitura. O acesso ao modo TV não requer autenticação. Qualquer tentativa de POST/PUT/DELETE originada do modo TV deve ser bloqueada no servidor.                                                                | RF021        |
+| RN15 | O sistema permite o cadastro de exatamente 2 equipes por evento. A tentativa de cadastrar uma terceira equipe deve ser bloqueada com mensagem de erro. Nomes de equipes devem ser únicos dentro do evento.                                                                                                 | RF001        |
+| RN16 | Um corredor só pode ser vinculado a uma única equipe por evento. Após o início do primeiro turno do evento, não é permitido adicionar, remover ou transferir corredores entre equipes.                                                                                                                     | RF002        |
+| RN17 | O sistema deve bloquear o início de qualquer turno enquanto qualquer uma das duas equipes não possuir exatamente 16 corredores com status "ativo". O bloqueio deve ser verificado a cada tentativa de início de turno, não apenas no cadastro.                                                             | RF003        |
+| RN18 | O campo local/região é obrigatório e deve ser preenchido antes do início do primeiro turno. Após o início do evento, o local não pode ser alterado — qualquer tentativa deve ser rejeitada.                                                                                                                | RF025        |
+| RN19 | Apenas esteiras com status "Livre" podem ser selecionadas para iniciar um novo turno. Esteiras "Ocupadas" devem aparecer visualmente desabilitadas na interface e não aceitar seleção.                                                                                                                     | RF004        |
+| RN20 | A equipe selecionada para uma esteira fica associada durante todo o turno em andamento. Não é permitido trocar a equipe de uma esteira enquanto houver turno em andamento nela.                                                                                                                            | RF005        |
+| RN21 | Apenas corredores com status "ativo" e sem turno em andamento podem ser selecionados. Corredores já em execução em qualquer esteira devem aparecer indisponíveis (desabilitados) na lista de seleção.                                                                                                      | RF006        |
+| RN22 | Os filtros de equipe, esteira e corredor podem ser combinados (operação AND). A aplicação de filtros não altera os dados persistidos — apenas restringe a visibilidade dos registros exibidos. Remover filtros deve restaurar a visão completa.                                                            | RF022        |
+| RN23 | Toda edição retroativa deve gerar um registro de auditoria imutável com: id do registro alterado, valor anterior, valor novo, timestamp da alteração e id do auditor. O registro de auditoria não pode ser excluído nem modificado por nenhum perfil.                                                      | RF015        |
+| RN24 | A edição de quilometragem em um checkpoint só é válida se o novo valor for maior ou igual ao checkpoint imediatamente anterior e menor ou igual ao checkpoint imediatamente posterior do mesmo turno.                                                                                                      | RF015        |
+| RN25 | O sistema deve marcar como inconsistente qualquer turno onde: (a) km_final < km_inicial; (b) gap entre checkpoints superior a 10 minutos sem justificativa registrada; (c) corredor com dois turnos simultâneos. Inconsistências devem ser sinalizadas no dashboard sem bloquear a operação em andamento.  | RF023        |
+| RN26 | O CSV exportado deve conter duas seções: (1) turnos — corredor, equipe, esteira, km*inicial, km_final, duracao_min, timestamp_inicio, timestamp_fim; (2) checkpoints — turno_id, km, timestamp, tipo. O nome do arquivo deve seguir o padrão evento*{local}\_{data-ISO}.csv.                               | RF024        |
+| RN27 | Em caso de ausência de conexão, os registros devem ser persistidos localmente com o timestamp original do momento do registro. Ao restabelecer conexão, a sincronização deve ocorrer automaticamente sem duplicar registros, preservando a ordem cronológica original.                                     | RF016        |
 
 <div align = "center">
-  <sub> Quadro 14 - Regras de Negócios </sub><br>
+  <sub> Quadro 12 - Regras de Negócios </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -880,7 +880,7 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 | RF016 | RN27          | `/sync`                                                          | POST   |
 
 <div align = "center">
-  <sub> Quadro 15 - Matriz RF → RN → Endpoint </sub><br>
+  <sub> Quadro 14 - Matriz RF → RN → Endpoint </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -889,53 +889,52 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 
 ---
 
-Enquanto os requisitos funcionais descrevem o que o sistema faz, os Requisitos Não Funcionais (RNF) definem como o sistema deve operar. Eles não estão ligados a uma funcionalidade específica, mas sim às características de qualidade e restrições que garantem que o software seja robusto, eficiente e seguro. Eles servem como os critérios de "padrão de qualidade" que validam a experiência do usuário e a integridade técnica da solução sob condições reais de uso.
+Enquanto os Requisitos Funcionais (RF) descrevem *o que* o sistema faz, os Requisitos Não Funcionais (RNF) definem *como* ele deve operar. Eles estabelecem os padrões de qualidade, segurança e eficiência essenciais para que o software seja robusto sob condições reais de uso.
 
-Para organizar esses requisitos, utilizamos a estrutura de 8 eixos de qualidade, que segmentam o comportamento do sistema em diferentes perspectivas:
+Essas restrições podem atuar de forma transversal no sistema, impactando sua operação como um todo, ou governar fluxos críticos específicos da aplicação. Para estruturar essas características de qualidade, foi adotado um modelo baseado nos oito eixos da ISO/IEC 25010, adaptados às necessidades operacionais do parceiro e às condições reais de execução do evento esportivo.
 
-- USAB (Usabilidade): Foca na facilidade de uso e na experiência da interface.
-- CONF (Confiabilidade): Trata da capacidade do sistema de permanecer operacional e sem erros.
-- DES (Desempenho): Mede a velocidade de resposta e eficiência de recursos.
-- SUP (Suportabilidade): Avalia a facilidade de manter, testar e atualizar o código.
-- SEG (Segurança): Define a proteção dos dados e o controle de acesso.
-- CAP (Capacidade): Estipula o volume de dados e usuários que o sistema suporta.
-- REST (Restrições): Delimita limitações técnicas, de design ou de hardware.
-- ORG (Organizacionais): Alinha o projeto a padrões de marca, prazos e normas da empresa.
+* **USAB (Usabilidade):** Relaciona-se à facilidade de uso, clareza visual e eficiência da interação humano-computador. Sua definição deriva do contexto operacional dos Auditores, que utilizam o sistema em ambientes externos, sob pressão temporal e alta movimentação, exigindo fluxos rápidos, interfaces legíveis e baixa incidência de erros operacionais.
 
-| Eixo                     | Origem no contexto do parceiro            | RF relacionado                    | Requisito                                                                                          | Métrica / Critério                                                                                  | Como atendido                                                |
-| ------------------------ | ----------------------------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
-| USAB — Usabilidade       | Operação rápida durante troca de corredor | RF004, RF005, RF006, RF007, RF009 | O sistema deve permitir execução rápida do fluxo principal (início → fim).                         | Tempo total do fluxo ≤ 5 minutos.                                                                   | Interface simplificada e otimizada para toque.               |
-| USAB — Usabilidade       | Ambiente com alta luminosidade            | RF008, RF013                      | O sistema deve garantir legibilidade em ambientes externos.                                        | Contraste mínimo compatível com WCAG AA.                                                            | Uso de alto contraste e tipografia adequada.                 |
-| USAB — Usabilidade       | Prevenção de erro humano                  | RF018, RF019                      | O sistema deve apresentar alertas claros e compreensíveis para inconsistências.                    | Tempo de compreensão do alerta ≤ 2 segundos em pelo menos 75% dos testes com usuários.              | Feedback visual com cores, ícones e mensagens diretas.       |
-| USAB — Usabilidade       | Operação contínua em ritmo acelerado      | RF007, RF008                      | O sistema deve minimizar a quantidade de interações necessárias por ação.                          | Máximo de 3 interações por ação crítica.                                                            | Uso de autofill, defaults e atalhos de interface.            |
-| CONF — Confiabilidade    | Possível perda de conexão                 | RF016                             | O sistema deve operar offline e sincronizar dados automaticamente quando houver conexão.           | Nenhuma perda de dados durante períodos de desconexão em testes controlados.                        | Persistência local (IndexedDB) com sincronização automática. |
-| CONF — Confiabilidade    | Garantia de integridade de dados          | RF010, RF011                      | O sistema deve impedir persistência de dados com formato inválido ou campos obrigatórios ausentes. | 100% dos registros inválidos devem ser bloqueados antes do salvamento.                              | Validação de regras antes do salvamento.                     |
-| CONF — Confiabilidade    | Inserção incorreta de dados (erro humano) | RF018, RF019, RF020               | O sistema deve detectar inconsistências relacionadas às regras de negócio antes da persistência.   | 100% das inconsistências definidas nas regras de negócio devem ser detectadas antes da confirmação. | Validação em tempo real com bloqueio de ação.                |
-| CONF — Confiabilidade    | Continuidade da operação                  | RF007, RF009                      | O sistema deve garantir consistência de estado entre turnos.                                       | Nenhum corredor pode possuir mais de um turno ativo simultaneamente.                                | Controle de estado no backend.                               |
-| DES — Desempenho         | Tempo limitado entre trocas               | RF007, RF009, RF010               | O sistema deve responder rapidamente às ações do usuário.                                          | Tempo de resposta (p95) < 200ms.                                                                    | Backend otimizado e operações assíncronas.                   |
-| DES — Desempenho         | Feedback imediato ao usuário              | RF018, RF019                      | O sistema deve apresentar alertas em tempo real após ações inválidas.                              | Tempo até exibição do alerta < 100ms após a ação do usuário.                                        | Processamento local + validação leve.                        |
-| DES — Desempenho         | Visualização do placar                    | RF013                             | O sistema deve atualizar o dashboard em tempo quase real.                                          | Atualização ≤ 10 segundos sem necessidade de recarregamento manual.                                 | Uso de polling ou WebSocket.                                 |
-| DES — Desempenho         | Geração de resultados individuais         | RF029, RF030                      | O sistema deve gerar dados de desempenho rapidamente.                                              | Tempo de geração ≤ 1 segundo.                                                                       | Pré-processamento e cache de dados.                          |
-| SEG — Segurança          | Controle de acesso                        | RF017                             | O sistema deve restringir ações críticas apenas a usuários autorizados.                            | 100% das ações críticas acessíveis apenas mediante validação de permissão.                          | Controle de permissões e autenticação de sessão.             |
-| SEG — Segurança          | Rastreabilidade                           | RF015                             | O sistema deve registrar todas as alterações realizadas.                                           | 100% das edições com log completo (antes/depois/usuário/timestamp).                                 | Logs de auditoria no backend.                                |
-| SEG — Segurança          | Correção de inconsistências               | RF019, RF020                      | O sistema deve registrar quem realizou correções de inconsistências.                               | Toda correção deve conter usuário responsável e timestamp.                                          | Auditoria detalhada.                                         |
-| SEG — Segurança          | Integridade contra manipulação            | RF010, RF018                      | O sistema deve impedir persistência de valores fora das regras definidas pelo sistema.             | 100% dos valores fora das regras de validação devem ser rejeitados.                                 | Validação e sanitização de inputs.                           |
-| SUP — Suportabilidade    | Evolução futura do sistema                | RF011, RF018, RF020               | O sistema deve permitir fácil modificação das regras de negócio.                                   | Tempo médio de alteração de regra ≤ 1 dia útil.                                                     | Arquitetura modular.                                         |
-| SUP — Suportabilidade    | Facilidade de manutenção                  | RF007, RF010                      | O sistema deve ser facilmente testável e compreensível.                                            | Cobertura de testes automatizados ≥ 70%.                                                            | Testes unitários e documentação.                             |
-| SUP — Suportabilidade    | Organização do código                     | RF011                             | O sistema deve separar lógica de cálculo da interface.                                             | Nenhuma regra crítica implementada diretamente na camada de interface.                              | Camadas bem definidas (backend/frontend).                    |
-| CAP — Capacidade         | Múltiplos usuários simultâneos            | RF013, RF021                      | O sistema deve suportar acessos simultâneos sem degradação perceptível.                            | Até 20 conexões simultâneas com tempo de resposta dentro do limite definido.                        | Infra dimensionada adequadamente.                            |
-| CAP — Capacidade         | Crescimento do uso                        | RF029, RF030                      | O sistema deve suportar aumento progressivo de acessos às telas de resultados.                     | Sistema deve manter desempenho estável com aumento de até 50% no número de acessos simultâneos.     | Arquitetura preparada para expansão de carga.                |
-| CAP — Capacidade         | Volume de dados                           | RF011, RF023                      | O sistema deve lidar com grande volume de registros.                                               | Processamento sem degradação perceptível em bases com até 10 mil registros.                         | Banco otimizado e indexado.                                  |
-| REST — Restrições Design | Ambiente instável                         | RF016                             | O sistema não deve depender de conexão constante.                                                  | Sistema funcional durante ausência temporária de internet.                                          | Armazenamento local.                                         |
-| REST — Restrições Design | Infraestrutura variável                   | RF007, RF008                      | O sistema deve funcionar em diferentes dispositivos.                                               | Compatibilidade com tablets e navegadores modernos homologados.                                     | Design responsivo.                                           |
-| REST — Restrições Design | Independência tecnológica                 | RF018                             | O sistema deve operar sem dependência de APIs externas críticas.                                   | Nenhuma funcionalidade crítica dependente de serviços externos.                                     | Processamento interno.                                       |
-| ORG — Organizacionais    | Alinhamento com evento                    | RF021, RF025                      | O sistema deve seguir identidade visual da marca.                                                  | 100% aderência ao design guideline definido pelo parceiro.                                          | Uso de design system oficial.                                |
-| ORG — Organizacionais    | Cronograma do evento                      | RF013                             | O sistema deve estar pronto antes do evento.                                                       | Entrega homologada ≥ 1 mês antes do evento.                                                         | Planejamento e validação contínua.                           |
-| ORG — Organizacionais    | Experiência do atleta                     | RF029, RF030                      | O sistema deve permitir visualização e compartilhamento de resultados.                             | 100% dos atletas cadastrados devem conseguir acessar seus resultados.                               | Tela dedicada + geração de link/imagem.                      |
+* **CONF (Confiabilidade):** Refere-se à capacidade do sistema de manter funcionamento consistente e íntegro mesmo diante de falhas parciais. Esse eixo foi definido considerando a necessidade de andamento contínuo da competição, evitando perda, duplicidade ou inconsistência de registros durante instabilidades de rede ou interrupções temporárias.
 
+* **DES (Desempenho):** Está associado ao tempo de resposta e à eficiência no processamento das operações críticas. Sua relevância decorre da necessidade de atualização quase em tempo real dos dados operacionais, dashboards e informações exibidas ao público durante o evento.
+
+* **SUP (Suportabilidade):** Envolve a facilidade de manutenção, evolução, testes e correções do sistema. Esse eixo foi incorporado devido ao caráter incremental do desenvolvimento ao longo das sprints e à necessidade de rápida adaptação antes da execução oficial do evento.
+
+* **SEG (Segurança):** Abrange mecanismos de autenticação, controle de acesso e rastreabilidade das operações. Sua adoção busca garantir que apenas usuários autorizados possam manipular informações críticas da competição, preservando a integridade dos resultados e a auditabilidade das alterações realizadas.
+
+* **CAP (Capacidade):** Define os limites operacionais relacionados ao volume de acessos, registros e processamento simultâneo. Esse eixo foi estabelecido considerando o uso concorrente do sistema por operadores, dashboards em tempo real e processos contínuos de coleta de dados durante a competição.
+
+* **REST (Restrições):** Representa limitações técnicas, arquiteturais e de infraestrutura impostas pelo contexto operacional do parceiro. Inclui compatibilidade com dispositivos específicos, dependência mínima de serviços externos e adequação às condições físicas do ambiente de execução.
+
+* **ORG (Organizacionais):** Relaciona o sistema às diretrizes institucionais, padrões visuais e exigências operacionais do parceiro. Esse eixo contempla a aderência à identidade visual do evento, além da necessidade de estabilização e congelamento da versão antes da operação oficial.
+
+| ID | Eixo | RF Relacionado | Requisito Não Funcional | Critério Mensurável (SMART) |
+| :--- | :--- | :--- | :--- | :--- |
+| **RNF001** | USAB — Usabilidade | RF004, RF005, RF006, RF007, RF009, RF022 | O fluxo principal de operação (troca de corredores e início de turno) deve ser ágil para o Auditor. | **95%** dos operadores devem concluir o fluxo de início/troca em até **3 minutos** (via testes de usabilidade). |
+| **RNF002** | USAB — Usabilidade | RF013, RF025 | O sistema deve manter alta legibilidade visual em ambientes externos e no modo TV. | A interface deve atender ao nível **AA da WCAG 2.1** com contraste mínimo de **4.5:1** e fonte ≥ 48px no modo TV. |
+| **RNF003** | USAB — Usabilidade | Global | O sistema deve fornecer mensagens de erro com ações corretivas claras, evitando códigos técnicos. | **100%** das mensagens de erro de validação devem sugerir a correção (ex: "km final deve ser > km inicial"). |
+| **RNF004** | USAB — Usabilidade | RF007, RF008, RF022 | O sistema deve minimizar a quantidade de cliques e telas necessárias para que o Auditor execute ações operacionais urgentes durante o uso da esteira. | Nenhuma ação operacional crítica (início/checkpoint/troca) deve exigir mais de **3 cliques/toques**. |
+| **RNF005** | CONF — Confiabilidade | RF016 | O sistema deve possuir tolerância a falhas de rede, permitindo a operação contínua do evento. | **100%** dos dados registrados offline devem ser sincronizados em até **30 segundos** após a reconexão, sem duplicidade. |
+| **RNF006** | CONF — Confiabilidade | Global | O sistema deve garantir a integridade transacional, impedindo dados que firam as regras de negócio. | **100%** das tentativas de persistência de dados inválidos (ex: duplicatas) devem ser bloqueadas no servidor. |
+| **RNF007** | CONF — Confiabilidade | RF018, RF027 | O sistema deve ser resiliente na detecção de falhas operacionais e inconsistências lógicas. | **100%** das inconsistências definidas no RF027 devem gerar alertas sonoros/visuais automáticos. |
+| **RNF008** | DES — Desempenho | RF007, RF008, RF009, RF010, RF021 | O sistema deve processar os registros operacionais de turnos e checkpoints com baixa latência. | O tempo de resposta da API para registros operacionais (P95) deve ser inferior a **200ms**. |
+| **RNF009** | DES — Desempenho | Global | O sistema deve fornecer feedback visual imediato após ações do usuário na interface. | Alertas de inconsistência e validações de campo devem ser exibidos em até **100ms**. |
+| **RNF010** | DES — Desempenho | RF013, RF025 | O dashboard e o modo TV devem apresentar dados atualizados de forma contínua para o público. | A atualização automática de métricas e placares deve ocorrer em no máximo **10 segundos** sem recarregamento manual. |
+| **RNF011** | DES — Desempenho | RF011, RF012, RF023, RF029 | O sistema deve consolidar e exibir as estatísticas de desempenho final de forma quase instantânea. | O processamento e renderização de métricas consolidadas deve ser concluído em até **1 segundo**. |
+| **RNF012** | SEG — Segurança | RF017 | O sistema deve aplicar controle de acesso estrito para perfis administrativos e de auditoria. | **100%** das tentativas de acesso sem autenticação válida (Login/Senha) devem ser rejeitadas com erro 401. |
+| **RNF013** | SEG — Segurança | RF015, Global | O sistema deve manter uma trilha de auditoria para edições retroativas e alterações críticas. | **100%** das edições devem registrar obrigatoriamente: `Usuário`, `Timestamp` e `Dado Anterior`. |
+| **RNF014** | SUP — Suportabilidade | Global | A arquitetura do sistema deve isolar o processamento e as regras de negócio exclusivamente na API (Backend). | A camada visual (Frontend) deve atuar apenas como consumidora; **100%** dos cálculos estatísticos e validações de regras de negócio devem ocorrer no backend. |
+| **RNF015** | SUP — Suportabilidade | Global | O código-fonte deve garantir facilidade de suporte técnico através de testes automatizados. | Cobertura mínima de **75% em testes unitários** nos módulos de sincronização e regras de inconsistência. |
+| **RNF016** | CAP — Capacidade | Global | O sistema deve suportar múltiplos acessos simultâneos (Auditores + Modo TV + Registros). | Suportar no mínimo **50 usuários simultâneos** ativos mantendo o tempo de resposta geral abaixo de **500ms**. |
+| **RNF017** | CAP — Capacidade | RF014, RF023, RF026, RF028 | O sistema deve manter o desempenho ao lidar com o histórico acumulado de logs e turnos. | Consultas e exportações de até **10.000 registros** de histórico não devem ultrapassar **3 segundos** de processamento. |
+| **RNF018** | REST — Restrições | Global |A compatibilidade do sistema cliente é restrita aos dispositivos e navegadores definidos para a operação do evento. | A operação do sistema é garantida exclusivamente em **Tablets Android 10+** rodando as duas últimas versões estáveis dos navegadores **Chrome ou Safari**. |
+| **RNF019** | REST — Restrições | Global | O sistema possui restrição de dependência externa para garantir a autonomia da operação principal. | Nenhuma funcionalidade de registro pode travar ou falhar devido à indisponibilidade de APIs externas. |
+| **RNF020** | ORG — Organizacionais | Global | A interface deve respeitar a identidade visual do parceiro e patrocinadores do evento. | **100%** dos componentes de UI devem seguir o *Design System* aprovado, validado em auditoria pré-sprint. |
+| **RNF021** | ORG — Organizacionais | Global | O desenvolvimento do sistema deve ser concluído e bloqueado com antecedência para garantir a segurança da operação ao vivo. | A versão final do software deve ser testada, aprovada e bloqueada para novas alterações com pelo menos **30 dias de antecedência** da data do evento. |
 
 <div align = "center">
-  <sub> Quadro 16 - Requisitos Não Funcionais </sub><br>
+  <sub> Quadro 13 - Requisitos Não Funcionais </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -961,8 +960,8 @@ _Posicione aqui o diagrama de arquitetura da solução, indicando as camadas pri
 O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 Horas a partir da prática **Light Use-Case Modeling** descrita em Jacobson et al.[⁹](#8-referências), evoluindo para o nível **System Boundary Established** ao incluir todos os atores e casos de uso planejados para o MVP. A notação adotada segue o guia _Use-Case 3.0 — The Definitive Guide_: atores são representados por bonecos-palito, casos de uso por elipses contidas dentro do retângulo do _System of Interest_, associações por linhas contínuas com setas indicando o iniciador da interação, `<<include>>` por seta tracejada apontando do caso-base para o caso obrigatoriamente incluído, e `<<extend>>` por seta tracejada apontando do caso opcional para o caso-base que ele estende.
 
 <div align="center">
+  <img src= "../assets/use_case.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
   <sub>Imagem 9 - Diagrama Casos de Uso</sub><br>
-  <img src= "./assets/secao_3/secao_3_2_2/use_case.jpeg" width="100%" alt="Diagrama Casos de Uso"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -975,7 +974,7 @@ O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 H
 | **Organização do Evento** | Primário (secundário em frequência) | Equipe responsável pela validação final dos resultados e pela auditoria pós-evento. Acessa o painel consolidado e exporta os dados para conferência.                                                                                                                                                                                               |
 
 <div align = "center">
-  <sub> Quadro 17 - Atores de Casos de Uso </sub><br>
+  <sub> Quadro 15 - Atores de Casos de Uso </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -995,7 +994,7 @@ Os casos de uso foram identificados a partir dos requisitos funcionais da seçã
 | **Exportar dados**                | Organização do Evento           | Gerar arquivo CSV com todos os registros para auditoria formal pós-evento.                                                                                                              | Ao menos um registro existente no sistema.                                          | Auditor (pode acionar a exportação conjuntamente).                          | Arquivo CSV gerado com todos os registros; dados disponíveis para auditoria formal pós-evento.           |
 
 <div align = "center">
-  <sub> Quadro 18 - Casos de Uso </sub><br>
+  <sub> Quadro 16 - Casos de Uso </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -1016,7 +1015,7 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 | `<<extend>>`   | Registrar checkpoint      | Recuperar último registro válido da sessão | Comportamento _condicional_: só ocorre quando a esteira para de funcionar durante uma sessão e o auditor precisa recuperar a quilometragem com base no último checkpoint conhecido **da sessão atual**. O caso-base não precisa saber que esse fluxo existe — daí o uso de `<<extend>>`.                                   |
 
 <div align = "center">
-  <sub> Quadro 19 - Relacionamentos include e extend </sub><br>
+  <sub> Quadro 17 - Relacionamentos include e extend </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -1060,18 +1059,7 @@ _Documente os design patterns utilizados (Repository, Strategy, Factory, DTO etc
 
 ---
 
-O wireframe é um rascunho do sistema que mostra como o projeto ira funcionar. Ele é usado para mostrar como as telas vão ser organizadas e como o usuário vai navegar por elas, tudo isso antes de qualquer linha de código ser escrita. 
-
-Ele serve pra deixar as ideias mais claras, dar direcionamento para o projeto e evitar retrabalho no fim, além de garantir que todos da equipe estão alinhados. Essa é uma etapa essencial para a organização do projeto e do grupo, para ficar claro como o sistema irá funcionar. 
-
-A seguir, serão apresentados os wireframes de baixa e média fidelidade que foram desenvolvidos durante a sprint 2.
-
-<div align = "center">
-  <sub>Imagem 11 - Wireframe Baixa Fidelidade </sub><br>
-  <img src="./assets/secao_3/secao_3_3/wireframe-baixa-fidelidade.svg" width="100%" alt="Diagrama de Classes"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
+_Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização)_
 
 ## 3.4. Guia de estilos (sprint 3)
 
