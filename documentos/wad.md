@@ -72,19 +72,19 @@ Criado por Michael E. Porter, professor de Harvard, na década de 1970, o modelo
 
 Na indústria de desenvolvimento de softwares e aplicações web sob medida, a rivalidade pode ser considerada alta de forma geral, pois o mercado conta com inúmeras agências de tecnologia, fábricas de software e desenvolvedores independentes capazes de criar sistemas de registro. No entanto, quando se trata de uma solução específica para o evento Red Bull 24 Horas, a rivalidade direta torna-se média a baixa. O projeto exige a criação de um fluxo simples de registro que substitua a prancheta, desenhado especificamente para a dinâmica de revezamento contínuo entre duas equipes operando duas esteiras simultaneamente. Desse modo, a rivalidade tende a ser menor quando a diferenciação e a customização do produto são muito altas para atender a uma necessidade exclusiva. Existem poucas soluções no mercado que se adaptem perfeitamente a esse formato sem gerar atrito na operação, fazendo com que a rivalidade seja restrita a fornecedores que consigam garantir extrema confiabilidade para rodar o sistema por 24 horas ininterruptas.
 
-2. Ameaça de novos entrantes
+1. Ameaça de novos entrantes
 
 Embora o desenvolvimento de uma aplicação web com interface simples seja tecnicamente muito acessível, a entrada de novos concorrentes neste nicho específico apresenta barreiras baseadas na confiança operacional. O escopo técnico possui barreiras baixas, contudo, a barreira real é a exigência de validação prática e garantia de zero falhas durante um evento ao vivo de uma marca global. Desenvolvedores iniciantes podem criar o código facilmente, mas conquistar a confiança da marca para substituir um processo analógico que, embora falho, é seguro contra quedas de sistema, exige grande credibilidade. Dessa forma, a ameaça de novos entrantes pode ser classificada como média, equilibrando a facilidade tecnológica com a alta exigência de estabilidade e confiança operacional do cliente.
 
-3. Ameaça de produtos substitutos
+1. Ameaça de produtos substitutos
 
 Os principais substitutos para essa aplicação web incluem o método atual de apuração manual via prancheta e hardwares vestíveis. No campo tecnológico, existem alternativas como relógios inteligentes ou a própria pulseira da Technogym que sincroniza com a esteira. No entanto, a adaptação superficial dessas tecnologias já existentes não atende à dinâmica ágil do evento. O uso de pulseiras é inviabilizado pelas trocas constantes de corredores, pela falta de equipamentos para todos os participantes e pela ausência de tempo hábil para sincronização pré-corrida. Por outro lado, a prancheta de papel está altamente sujeita a erros humanos, distrações e inconsistências. Portanto, a ameaça de substitutos pode ser classificada como média a baixa, especialmente porque as alternativas existentes falham em oferecer uma visão consolidada, confiável e em tempo real do andamento da competição sem atrapalhar a experiência do usuário.
 
-4. Poder de negociação dos fornecedores
+1. Poder de negociação dos fornecedores
 
 Os fornecedores para a construção deste projeto incluem provedores de hospedagem em nuvem e fabricantes de hardware de interface, como tablets. Diferente de indústrias que dependem de peças altamente especializadas, as ferramentas de desenvolvimento web são amplamente comoditizadas, existindo infinitas opções de servidores e frameworks. Além disso, o projeto possui uma diretriz clara que elimina uma grande dependência técnica: não haverá integração direta com as esteiras Technogym nem captura automática de dados. Como a equipe de desenvolvimento não fica refém de APIs fechadas ou licenças proprietárias da fabricante do equipamento esportivo, a substituição de qualquer tecnologia base do projeto é fácil. Assim, o poder de negociação dos fornecedores é baixo, devido à alta disponibilidade de ferramentas padronizadas no mercado e à ausência de dependência de hardwares exclusivos.
 
-5. Poder de negociação dos clientes
+1. Poder de negociação dos clientes
 
 Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável pela operação do evento. Por se tratar de um projeto customizado e de uso interno exclusivo para uma de suas experiências proprietárias, a Red Bull atua como a única compradora desta solução específica. Isso eleva substancialmente o seu poder de barganha. O cliente tem controle total sobre os requisitos de sucesso do MVP, exigindo que o sistema prove ser superior ao método atual da prancheta em consistência e redução de erros. Se a aplicação não entregar a eficiência operacional esperada, a organização pode facilmente descartar a ferramenta e retornar ao método manual sem grandes prejuízos, ou simplesmente buscar outra agência desenvolvedora. Dessa forma, o poder de negociação do cliente é alto, refletindo sua posição dominante na definição das regras do projeto e na validação final da entrega.
 
@@ -144,11 +144,11 @@ O sistema será validado em simulação pré evento, com comparação entre os r
 
 O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidades do cliente e a solução proposta [⁶](#8-referências). No contexto deste projeto, evidencia-se o encaixe entre as dificuldades operacionais enfrentadas pelo time de Field Marketing da Red Bull durante a apuração manual dos quilômetros corridos no evento Red Bull 24 Horas e as funcionalidades de uma aplicação web voltada para registro confiável e consolidação automatizada dos dados da competição.
 
-### A. Perfil do Cliente:
+### A. Perfil do Cliente
 
 O público-alvo é composto pelo time operacional de Field Marketing da Red Bull, responsável pela apuração e acompanhamento do evento Red Bull 24 Horas — atualmente quem opera a prancheta ao lado das esteiras —, além da organização do evento, que utiliza os dados consolidados para validar os resultados, e dos juízes responsáveis pela auditoria final das marcações.
 
-### Tarefas:
+### Tarefas
 
 **Time Operacional (responsáveis pela apuração):**
 
@@ -163,7 +163,7 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 - Auditar marcações em caso de divergências ou paradas técnicas das esteiras
 - Acompanhar a evolução da competição em tempo real
 
-### Dores:
+### Dores
 
 **Time Operacional:**
 
@@ -179,7 +179,7 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 - Impossibilidade de conexão direta com as esteiras Technogym, eliminando soluções automatizadas de captura
 - Inviabilidade do uso de pulseiras de sincronização devido à dinâmica de revezamento rápido (trocas em até 15 segundos) e ao número insuficiente de dispositivos
 
-### Ganhos:
+### Ganhos
 
 **Time Operacional:**
 
@@ -195,7 +195,7 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 - Histórico completo para auditoria pós-evento
 - Capacidade de exportar dados estruturados para análise estatística
 
-### B. Mapa de Valor:
+### B. Mapa de Valor
 
 **Produtos e Serviços:**
 
@@ -242,7 +242,7 @@ A análise evidencia um forte alinhamento entre as dores operacionais do time de
 
 A matriz de riscos é uma ferramenta fundamental para identificar, analisar e priorizar ameaças que podem impactar o desempenho do produto, permitindo a criação de estratégias de mitigação eficazes [⁷](#8-referências). Para este projeto, foram mapeados riscos diretamente relacionados à confiabilidade do registro manual digitalizado, à operação contínua durante 24 horas, à usabilidade em condições de pressão e à integridade dos dados que definem o resultado oficial da competição Red Bull 24 Horas.
 
-### Ameaças:
+### Ameaças
 
 ### 1. Perda de dados durante as 24 horas de competição
 
@@ -1033,19 +1033,97 @@ Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação
 
 ### 3.2.4. Diagrama de Sequência UML (sprint 3)
 
-<div align="center">
-  <sub>Imagem xx - Diagrama de Sequencia: Turnos</sub><br>
-  <img src="assets/UML_Diagram/Turns_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de turnos"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
+A modelagem de software é uma etapa fundamental no desenvolvimento de aplicações, pois permite que equipes de desenvolvimento visualizem, comuniquem e validem o comportamento do sistema antes mesmo de escrever a primeira linha de código. Dentro das ferramentas de modelagem, a UML (Unified Modeling Language, ou Linguagem de Modelagem Unificada) é o padrão mais amplamente adotado na indústria de software. Trata-se de um conjunto de notações gráficas que descrevem diferentes aspectos de um sistema  desde sua estrutura estática até o seu comportamento dinâmico em tempo de execução.
+
+Entre os diversos tipos de diagramas que a UML oferece, os Diagramas de Sequência são especialmente úteis para representar a troca de mensagens entre os componentes de um sistema ao longo do tempo. Em termos simples, eles respondem à pergunta: quem faz o quê, em qual ordem, e como os componentes se comunicam para realizar uma determinada tarefa? Cada participante do sistema, como um controlador, um serviço ou um banco de dados, é representado como uma coluna vertical (chamada de lifeline), e as setas horizontais entre essas colunas representam as chamadas e respostas trocadas durante a execução de um processo.
+
+No contexto deste projeto, os Diagramas de Sequência foram utilizados para modelar os principais fluxos de interação da aplicação, cobrindo funcionalidades como o gerenciamento de turnos, a exibição e sincronização de eventos, o controle de histórico, o cadastro de equipes e o registro de dados com suporte a operação offline. A camada de comunicação segue uma arquitetura em camadas típica de aplicações web modernas: o Controller recebe as requisições do usuário, delega ao Service a lógica de negócio, que por sua vez aciona o Repository para persistir ou recuperar dados no BancoDeDados.
+
+A seguir, cada diagrama é apresentado com uma descrição detalhada de seus fluxos principal e alternativo, contextualizando sua relevância dentro da aplicação.
+
+#### 3.2.4.1. Diagrama de Sequência: Eventos
+
+A gestão de Eventos representa a visão macro da competição, sendo a configuração inicial e o núcleo organizacional do desafio Red Bull 24 Horas. O Diagrama de Sequência de Eventos descreve como a aplicação web orquestra processos fundamentais, como a criação do evento (incluindo a validação de data, local e esteiras), o cálculo de métricas em tempo real, como quilometragem total por equipe, velocidade média e equipes em pista  e a manutenção do placar oficial. Neste contexto, um evento é a unidade central da plataforma que coordena a disputa entre as duas equipes de 16 atletas, gerindo os dados das duas esteiras por equipe para garantir uma apuração precisa que substitua o método manual, permitindo ainda a detecção automática de inconsistências (como gaps de checkpoints) e a exportação de dados consolidados para auditoria pós-evento.
 
 <div align="center">
   <sub>Imagem xx - Diagrama de Sequencia: Eventos</sub><br>
   <img src="assets/UML_Diagram/Events_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
+</div
+
+**Fluxo Principal (Caminho Feliz)**
+
+**1. Criação do Evento:** O administrador envia as configurações gerais (nome, data, local e lista de esteiras) via `POST /eventos`. O EventoService verifica a inexistência de conflitos de data/local e persiste o evento com o status "aguardando".
+
+**2. Métricas em Tempo Real e Placar:** Para alimentar o painel ou "modo TV", requisições periódicas do tipo GET são feitas aos endpoints de métricas e placar. O EventoService busca os turnos ativos, soma a quilometragem acumulada de cada equipe e ordena o placar de forma decrescente, devolvendo esses dados organizados para exibição instantânea.
+
+**3. Auditoria e Exportação:** Ao final ou durante o evento, requisições para `GET /eventos/{id}/` inconsistencias varrem os registros buscando saltos suspeitos ou lacunas de checkpoints. Por fim, a rota `GET /eventos/{id}/exportar` serializa todas as informações consolidadas em um arquivo padronizado (como CSV) para prestação de contas.
+
+**Fluxos Alternativos e Exceções**
+
+**1. Conflito de Agendamento:** Na criação do evento, caso o repositório encontre um evento previamente cadastrado para a mesma data e local, o controlador retorna o código HTTP `409 (Conflict)`, solicitando o ajuste das informações.
+
+**2. Ausência de Dados para Exportação:** Se a exportação for solicitada antes da existência de registros consolidados, o sistema gera um arquivo base contendo apenas as estruturas de cabeçalho ou notifica a interface sobre a ausência de volumetria.
+
+#### 3.2.4.2 Diagrama de Sequência: Equipes
+
+O módulo de Equipes é a base de organização dos competidores. O Red Bull 24 Horas possui uma regra estrita: o confronto ocorre exatamente entre duas equipes, sendo cada uma composta por 16 pessoas. Este fluxo mapeia o cadastro e a validação estrutural dos times, a exibição dos perfis e o cálculo de métricas de desempenho coletivo e individual.
+
+<div align="center">
+  <sub>Imagem XX - Diagrama de Sequência: Equipes</sub>
+    <br><img src="assets/UML_Diagram/Teams_SequenceDiagram.png" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026 </sub>
+  <br><br><br>
 </div>
+
+**Fluxo Principal (Caminho Feliz)**
+
+**1. Cadastro da Equipe:** O usuário envia uma requisição de cadastro contendo o nome da equipe e um vetor (array) contendo exatamente os 16 atletas. O EquipeService valida se o limite de equipes no evento ainda não foi atingido e se a contagem de participantes está perfeitamente alinhada à regra. Em seguida, grava a equipe e itera sobre a lista de atletas para salvar cada corredor vinculado ao identificador da equipe.
+
+**2. Exibição dos Dados:** Ao solicitar a exibição da equipe, o sistema realiza uma busca conjunta (JOIN) no banco de dados, retornando a entidade da equipe e seus respectivos membros de forma consolidada.
+
+**3. Métricas de Desempenho:** Para analisar a performance, o endpoint de métricas aciona o banco para somar a quilometragem total, extrair a média por corredor e identificar os atletas com melhor desempenho (top atletas), retornando esses indicadores agregados para a interface.
+
+**Fluxos Alternativos e Exceções**
+
+**1. Violação do Limite de Equipes:** Se o sistema identificar que já existem 2 equipes cadastradas para o evento em questão, o cadastro é bloqueado e uma mensagem de erro informa que o limite regulamentar foi atingido.
+
+**2. Número Incorreto de Atletas:** Caso a lista enviada contenha menos ou mais de 16 corredores, o EquipeService interrompe o processo antes de salvar qualquer informação no banco, retornando um erro de validação (exigindo exatamente 16 inscrições).
+
+---
+
+#### 3.2.4.3. Diagrama de Sequência: Turnos
+
+O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na esteira. Como a dinâmica do evento exige trocas rápidas de corredores sem interrupção na contagem de quilômetros, este fluxo mapeia desde a entrada do corredor no equipamento, passando pelos registros periódicos de segurança (checkpoints), até a finalização do turno com a leitura final da quilometragem. Turnos, neste contexto, representam os intervalos de atividade atribuídos a cada corredor ao longo de um ciclo na esteira, definindo quando cada atleta entra e sai da atividade.
+
+<div align="center">
+  <sub>Imagem xx - Diagrama de Sequencia: Turnos</sub><br>
+  <img src="assets/UML_Diagram/Turns_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de turnos"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div
+
+**Fluxo Principal (Caminho Feliz)**
+
+**1. Início do Turno:** O Cliente envia uma requisição `POST /turnos/iniciar` contendo as identificações do corredor e da esteira, além da quilometragem inicial. O TurnoController aciona o TurnoService para validar se o atleta e a esteira estão livres. Confirmada a disponibilidade, o turno é criado com status "em andamento" e o estado da esteira é atualizado para "Ocupada" no banco de dados.
+iodicamente (como a cada 5 minutos através de um alerta na interface ou a cada 30 minutos como backup), o auditor da prova envia a quilometragem atual da esteira via `POST /turnos/{id}/checkpoints`. O sistema valida se o valor atual é maior ou igual ao último registro, gravando a marcação de tempo (timestamp) para garantir um histórico seguro caso ocorram falhas no equipamento.
+
+**2. Checkpoints Obrigatórios e Voluntários:** Periodicamente (como a cada 5 minutos através de um alerta na interface ou a cada 30 minutos como backup), o auditor da prova envia a quilometragem atual da esteira via `POST /turnos/{id}/checkpoints`. O sistema valida se o valor atual é maior ou igual ao último registro, gravando a marcação de tempo (timestamp) para garantir um histórico seguro caso ocorram falhas no equipamento. 
+
+**3. Finalização do Turno:** Quando o atleta encerra sua corrida, envia-se a requisição `POST /turnos/{id}/finalizar` com o valor final lido na esteira. O serviço calcula automaticamente a distância percorrida no turno (diferença entre o km final e o inicial), a duração exata e a velocidade média. O turno é encerrado e a esteira volta ao status de "Livre".
+
+**Fluxos Alternativos e Exceções**
+
+**1. Esteira ou Atleta Ocupados:** Se no início do turno o TurnoService identificar que a esteira solicitada já consta como "Ocupada" ou que o corredor já possui um turno ativo, o sistema bloqueia a ação e retorna um erro de conflito, impedindo sobreposições indevidas.
+
+**2. Inconsistência de Quilometragem nos Checkpoints:** Caso o auditor insira um valor de quilometragem inferior ao do último checkpoint registrado (o que configuraria um erro de digitação ou leitura), o TurnoService rejeita a inserção para proteger a integridade da apuração.
+
+---
+
+#### 3.2.4.4. Diagrama de Sequência: Histórico
+
+A funcionalidade de Histórico fornece total rastreabilidade e transparência ao longo das 24 horas de evento. Ela permite que a organização e os auditores visualizem uma linha do tempo cronológica detalhada de todas as ações que ocorreram nas esteiras, provendo uma ferramenta ágil para sanar dúvidas ou contestar apurações durante a competição.
 
 <div align="center">
   <sub>Imagem xx - Diagrama de Sequencia: Historico</sub><br>
@@ -1053,9 +1131,54 @@ Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
+
+**Fluxo Principal (Caminho Feliz)**
+
+**1. Consulta de Linha do Tempo:** O Cliente solicita a listagem cronológica através de um endpoint de histórico (por exemplo, filtrando por equipe ou por esteira específica).
+
+**2. Processamento e Ordenação:** O controlador repassa a requisição ao serviço de histórico, que aciona o banco de dados para resgatar todos os eventos associados (inícios de turno, checkpoints parciais, encerramentos e ajustes retroativos).
+
+**3. Retorno Formatado:** O serviço compila essas informações, ordenando-as pelo timestamp mais recente, e monta um objeto de transferência de dados contendo o autor da marcação, o valor registrado e o tipo de evento. O Cliente recebe os dados e renderiza a linha do tempo organizada na interface web.
+
+**Fluxos Alternativos e Exceções**
+
+**1. Filtros Inexistentes ou Vazios:** Caso a consulta busque o histórico de uma esteira que ainda não foi ativada na competição, o repositório retorna uma lista vazia. O controlador repassa essa informação com sucesso (código HTTP 200), e a interface informa visualmente que não há registros para o período ou equipamento selecionado.
+
+**2. Paginação de Alto Volume:** Devido à longa duração do evento (24 horas), o volume de dados pode se tornar expressivo. O serviço aplica técnicas de paginação (entregando os dados em blocos) para evitar lentidão no carregamento da interface.
+
 ---
 
-_Ao menos um fluxo prioritário, mostrando a interação entre as camadas Controller → Service → Repository → Banco. Linhas de vida verticais, ativação correta, mensagens síncronas e assíncronas diferenciadas, retornos tracejados._
+#### 3.2.4.5. Diagrama de Sequência: Registros e Sincronização (Sync)
+
+Garantir a operação ininterrupta do sistema em um ambiente de evento físico é um grande desafio, pois podem ocorrer instabilidades na conexão de internet. Este diagrama mapeia duas rotinas avançadas de resiliência: a Edição Retroativa (para corrigir erros de digitação passados mantendo uma trilha de auditoria) e a Sincronização Offline (Sync), que permite à interface armazenar dados localmente em caso de queda de rede e enviá-los ao servidor assim que a conexão for restabelecida.
+
+<div align="center">
+  <sub>Imagem xx - Diagrama de Sequencia: Registros/Sync</sub><br>
+  <img src="assets/UML_Diagram/Logs_SequenceDiagram.png" width="900px" alt="Diagrama de sequencia do processo de registros e sync"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+**Fluxo Principal (Caminho Feliz)**
+
+**1. Edição Retroativa com Auditoria:** Caso um auditor perceba que digitou um valor incorreto, ele aciona uma rota de atualização parcial (PATCH /registros/{id}) fornecendo o novo valor ajustado e o motivo da correção. O serviço valida se o novo número respeita a lógica sequencial (ficando entre o checkpoint anterior e o posterior). Se válido, o banco atualiza o registro e insere automaticamente uma linha na tabela de auditoria, registrando o valor antigo, o valor novo e o autor da mudança.
+
+**2. Sincronização de Dados Offline:** Se o dispositivo Cliente operar sem internet, os registros de quilometragem são salvos na memória local do iPad. Ao detectar que a conexão foi restabelecida, a aplicação dispara um envio em lote através da rota POST /sync. O RegistroService analisa cada item do lote, verifica a inexistência de duplicidades com base no ID e timestamp, e insere os registros atrasados no banco de dados, garantindo que nenhum quilômetro corrido seja perdido.
+
+**Fluxos Alternativos e Exceções**
+
+**1. Valor Retroativo Incompatível:** Na tentativa de edição, se o novo valor informado quebrar a ordem cronológica da esteira (por exemplo, informando um valor menor que o checkpoint anterior), o sistema rejeita o ajuste com o erro HTTP 422 (Unprocessable Entity).
+
+**2. Tratamento de Duplicidades no Sync:** Durante a sincronização do cache offline, se o serviço identificar que um determinado registro já foi gravado anteriormente no banco (evitando reenvios acidentais causados por instabilidade de rede), ele ignora silenciosamente o item duplicado e prossegue salvando apenas os dados inéditos.
+
+---
+
+A modelagem da aplicação web do Red Bull 24 Horas por meio dos Diagramas de Sequência UML demonstra a robustez arquitetural planejada para o sistema. Ao destrinchar visualmente as trocas de mensagens entre as interfaces de operação e as camadas lógicas de backend, o projeto mitiga os principais riscos mapeados na operação atual, como a dependência excessiva de anotações manuais vulneráveis a falhas e distrações.
+
+Cada um dos fluxos detalhados cumpre um papel estratégico: a gestão de Equipes e Eventos assegura o cumprimento do regulamento e a centralização dos dados; o fluxo de Turnos viabiliza o dinamismo extremo do revezamento sem sobrecarregar a equipe operacional; a rotina de Histórico fornece transparência imediata; e os mecanismos de Registros e Sincronização Offline blindam a competição contra quedas de conectividade e falhas de digitação.
+
+Em suma, a aplicação desta metodologia na fase de concepção do software (Web Application Development) garante que a transição da prancheta física para o ecossistema digital ocorra de maneira fluida, estável e perfeitamente auditável, entregando aos parceiros da Red Bull uma ferramenta de alto nível para o controle de suas experiências esportivas.
+
 
 ### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
 
@@ -1142,7 +1265,8 @@ _Posicione aqui os diagramas de modelos relacionais do banco de dados, apresenta
 _posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$_
 
 _Template de SQL + lógica proposicional_
-#1 | ---
+
+# 1 | ---
 --- | ---
 **Expressão SQL** | SELECT \* FROM suppliers WHERE (state = 'California' AND supplier_id <> 900) OR (supplier_id = 100);
 
@@ -1335,19 +1459,19 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ---
 
-[⁸] BUSINESS RULES GROUP. **Business Rules Manifesto:** the principles of rule independence. Version 2.0. [S. l.]: Business Rules Group, 2003. Disponível em: https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf. Acesso em: 27 abr. 2026.
+[⁸] BUSINESS RULES GROUP. **Business Rules Manifesto:** the principles of rule independence. Version 2.0. [S. l.]: Business Rules Group, 2003. Disponível em: <https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf>. Acesso em: 27 abr. 2026.
 
-[³] ESPM. **Runaholic Club: lifestyle e comunidade de wellness para a Geração Z**. Disponível em: https://www.espm.br/blog/runaholic-club-lifestyle-e-comunidade-de-wellness-para-a-geracao-z/. Acesso em: 28 abr. 2026.
+[³] ESPM. **Runaholic Club: lifestyle e comunidade de wellness para a Geração Z**. Disponível em: <https://www.espm.br/blog/runaholic-club-lifestyle-e-comunidade-de-wellness-para-a-geracao-z/>. Acesso em: 28 abr. 2026.
 
-[¹⁰] FIELDING, Roy Thomas. **Architectural Styles and the Design of Network-based Software Architectures**. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: https://ics.uci.edu/~fielding/pubs/dissertation/top.htm. Acesso em: 27 abr. 2026.
+[¹⁰] FIELDING, Roy Thomas. **Architectural Styles and the Design of Network-based Software Architectures**. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: <https://ics.uci.edu/~fielding/pubs/dissertation/top.htm>. Acesso em: 27 abr. 2026.
 
-[³] H.PRIME SAÚDE. **A revolução da geração wellness: por que a saúde se tornou o novo símbolo de sucesso**. Disponível em: https://hprimesaude.com.br/blog/a-revolucao-da-geracao-wellness-por-que-a-saude-se-tornou-o-novo-simbolo-de-sucesso/. Acesso em: 28 abr. 2026.
+[³] H.PRIME SAÚDE. **A revolução da geração wellness: por que a saúde se tornou o novo símbolo de sucesso**. Disponível em: <https://hprimesaude.com.br/blog/a-revolucao-da-geracao-wellness-por-que-a-saude-se-tornou-o-novo-simbolo-de-sucesso/>. Acesso em: 28 abr. 2026.
 
 [⁹] JACOBSON, Ivar; SPENCE, Ian; BITTNER, Kurt. **Use-Case 3.0 — The Definitive Guide**. [S. l.]: Ivar Jacobson International, 2024.
 
 [¹¹] MONTGOMERY, Cynthia A.; PORTER, Michael E. (org.). **Estratégia:** a busca da vantagem competitiva. Rio de Janeiro: Elsevier, 1998.
 
-[⁴] MUNDO DO MARKETING. **Baly Brasil ultrapassa Red Bull e assume vice-liderança no mercado de energéticos**. Disponível em: https://mundodomarketing.com.br/baly-brasil-ultrapassa-red-bull-e-assume-vice-lideranca-no-mercado-de-energeticos. Acesso em: 28 abr. 2026.
+[⁴] MUNDO DO MARKETING. **Baly Brasil ultrapassa Red Bull e assume vice-liderança no mercado de energéticos**. Disponível em: <https://mundodomarketing.com.br/baly-brasil-ultrapassa-red-bull-e-assume-vice-lideranca-no-mercado-de-energeticos>. Acesso em: 28 abr. 2026.
 
 [⁶] OSTERWALDER, Alexander; PIGNEUR, Yves. **Value Proposition Design:** how to create products and services customers want. Hoboken: Wiley, 2014.
 
@@ -1355,7 +1479,7 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 [⁷] PROJECT MANAGEMENT INSTITUTE. **Um guia do conhecimento em gerenciamento de projetos (Guia PMBOK®)**. 7. ed. Newtown Square: PMI, 2021.
 
-[¹][²] TIMES BRASIL. **Red Bull e marcas para a Geração Z**. Disponível em: https://timesbrasil.com.br/empresas-e-negocios/red-bull-marcas-geracao-z/. Acesso em: 28 abr. 2026.
+[¹][²] TIMES BRASIL. **Red Bull e marcas para a Geração Z**. Disponível em: <https://timesbrasil.com.br/empresas-e-negocios/red-bull-marcas-geracao-z/>. Acesso em: 28 abr. 2026.
 
 # <a name="c9"></a>Anexos
 
