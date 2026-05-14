@@ -1068,7 +1068,7 @@ A seguir, serão apresentados os wireframes de baixa e média fidelidade que for
 
 <div align = "center">
   <sub>Imagem 11 - Wireframe Baixa Fidelidade </sub><br>
-  <img src="./assets/secao_3/secao_3_3/wireframe baixa fidelidade.svg" width="100%" alt="Diagrama de Classes"><br>
+  <img src="./assets/secao_3/secao_3_3/wireframe-baixa-fidelidade.svg" width="100%" alt="Diagrama de Classes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
