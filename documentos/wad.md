@@ -1129,7 +1129,7 @@ A funcionalidade de Histórico fornece total rastreabilidade e transparência ao
 
 <div align="center">
   <sub>Imagem xx - Diagrama de Sequencia: Historico</sub><br>
-  <img src="assets\secao_3_2\secao_3_2_4\UML_Diagram\History_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
+  <img src="assets/secao_3_2/secao_3_2_4/UML_Diagram/History_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
