@@ -800,8 +800,12 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 ### Critérios de Aceite (formato Gherkin)
 
 Os Critérios de Aceite formalizados nesta seção seguem a sintaxe Gherkin, estruturada nos blocos:
-> Dado (pré-condição do sistema), Quando (ação executada pelo ator) e Então (resultado esperado e verificável).
-Essa abordagem, amplamente adotada em metodologias ágeis como BDD (Behavior-Driven Development), transforma cada requisito em um ou mais cenários comportamentais testáveis ponta a ponta, eliminando ambiguidades de interpretação e servindo diretamente como base para os testes automatizados previstos na Sprint 3. Os critérios cobrem todos os RFs de prioridade Alta e Média; RFs de prioridade Baixa serão detalhados em iteração futura, à medida que se aproximarem do ciclo de implementação.
+```gherkin
+Dado (pré-condição do sistema)
+Quando (ação executada pelo ator)
+Então (resultado esperado e verificável).
+```
+Essa abordagem, amplamente adotada em metodologias ágeis como BDD (Behavior-Driven Development), transforma cada requisito em um ou mais cenários comportamentais testáveis ponta a ponta, eliminando ambiguidades de interpretação e servindo diretamente como base para testes automatizados.
 
 **RF001 – Cadastro de equipes**
 
