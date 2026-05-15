@@ -399,7 +399,7 @@ No contexto deste projeto, as personas foram utilizadas para representar os dife
 - Idade: 22;
 - Localização: São Paulo, SP;
 - Formação: Ensino Superior em andamento - Educação Física;
-- Cargo: Atlêta amadora - Influenciadora
+- Cargo: Atleta amadora - Influenciadora
 
 ## Biografia
 
