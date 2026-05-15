@@ -42,7 +42,7 @@
 
 <br>
 
-# <a name="c1"></a>1. Introdução (sprints 1 a 5)
+# <a id="c1"></a>1. Introdução (sprints 1 a 5)
 
 ---
 
@@ -54,7 +54,7 @@ A solução proposta é uma aplicação web voltada aos auditores do evento. Por
 
 A proposta substitui um processo frágil por um sistema rastreável e confiável, reduzindo erros operacionais e garantindo maior integridade nos resultados da competição.
 
-# <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
+# <a id="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
 
 ---
 
@@ -89,10 +89,8 @@ Os fornecedores para a construção deste projeto incluem provedores de hospedag
 Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável pela operação do evento. Por se tratar de um projeto customizado e de uso interno exclusivo para uma de suas experiências proprietárias, a Red Bull atua como a única compradora desta solução específica. Isso eleva substancialmente o seu poder de barganha. O cliente tem controle total sobre os requisitos de sucesso do MVP, exigindo que o sistema prove ser superior ao método atual da prancheta em consistência e redução de erros. Se a aplicação não entregar a eficiência operacional esperada, a organização pode facilmente descartar a ferramenta e retornar ao método manual sem grandes prejuízos, ou simplesmente buscar outra agência desenvolvedora. Dessa forma, o poder de negociação do cliente é alto, refletindo sua posição dominante na definição das regras do projeto e na validação final da entrega.
 
 <div align="center">
-  <img src="../assets/forca_de_porter.png" width="100%" alt="Forças de Porter"><br>
   <sub>Imagem 1 - Forças de Porter</sub><br>
-  <img src="./assets/secao_2_1/secao_2_1_1/forca_de_porter.png" width="100%" alt="Forças de Porter"><br>
-  <img src="./assets/secao_2_1/secao_2_1_1/forca_de_porter.png" width="100%" alt="Forças de Porter"><br>
+  <img src="./assets/negocios/secao_2_1_1/forca_de_porter.png" width="100%" alt="Forças de Porter"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -102,10 +100,8 @@ Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável
 ---
 
 <div align="center">
-  <img src= "../assets/analise_SWOT.png" width="100%" alt="Análise SWOT - Red Bull"><br>
   <sub>Imagem 2 - Análise SWOT</sub><br>
-  <img src= "./assets/secao_2_1/secao_2_1_2/analise_SWOT.png" width="100%" alt="Análise SWOT - Red Bull"><br>
-  <img src= "./assets/secao_2_1/secao_2_1_2/analise_SWOT.png" width="100%" alt="Análise SWOT - Red Bull"><br>
+  <img src= "./assets/negocios/secao_2_1_2/analise_SWOT.png" width="100%" alt="Análise SWOT - Red Bull"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -230,10 +226,8 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 - A escalabilidade entre etapas regionais é viabilizada por uma solução web acessível em qualquer dispositivo conectado, padronizando a operação em todo o Brasil
 
 <div align="center">
-  <img src= "../assets/proposta_de_valor.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
   <sub>Imagem 3 - Canvas da Proposta de Valor</sub><br>
-  <img src= "./assets/secao_2_1/secao_2_1_4/proposta_de_valor.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
-  <img src= "./assets/secao_2_1/secao_2_1_4/proposta_de_valor.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
+  <img src= "./assets/negocios/secao_2_1_4/proposta_de_valor.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -307,10 +301,8 @@ A matriz de riscos é uma ferramenta fundamental para identificar, analisar e pr
 - Plano de ação: criar fluxo de "troca rápida" no sistema, com pré-cadastro do próximo corredor da equipe e botão único de transição que finaliza o registro anterior e inicia o próximo simultaneamente.
 
 <div align="center">
-  <img src="../assets/matriz_ameacas.jpeg" width="100%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
   <sub>Imagem 4 - Matriz de Ameaças</sub><br>
-  <img src="./assets/secao_2_1/secao_2_1_5/matriz_ameacas.jpeg" width="100%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
-  <img src="./assets/secao_2_1/secao_2_1_5/matriz_ameacas.jpeg" width="100%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
+  <img src="./assets/negocios/secao_2_1_5/matriz_ameacas.jpeg" width="100%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -373,10 +365,8 @@ No contexto do desenvolvimento de soluções tecnológicas, as oportunidades sã
 - Plano de aproveitamento: estruturar arquitetura modular que permita adição futura de novos métodos de captura de dados sem refatoração profunda do sistema.
 
 <div align="center">
-  <img src="../assets/matriz_oportunidades.jpeg" width="100%" alt="Matriz de Oportunidades do projeto Red Bull 24 Horas"><br>
   <sub>Imagem 5 - Matriz de Oportunidades</sub><br>
-  <img src="./assets/secao_2_1/secao_2_1_5/matriz_oportunidades.jpeg" width="100%" alt="Matriz de Oportunidades do projeto Red Bull 24 Horas"><br>
-  <img src="./assets/secao_2_1/secao_2_1_5/matriz_oportunidades.jpeg" width="100%" alt="Matriz de Oportunidades do projeto Red Bull 24 Horas"><br>
+  <img src="./assets/negocios/secao_2_1_5/matriz_oportunidades.jpeg" width="100%" alt="Matriz de Oportunidades do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -399,8 +389,7 @@ No contexto deste projeto, as personas foram utilizadas para representar os dife
 
 <div align = "center">
   <sub>Imagem 6 - Persona Nicole Rauen</sub><br>
-  <img src="./assets/secao_2_2/Persona-Nicole-Rauen.png" width="100%" alt="Persona Bruna Gomes"><br>
-  <img src="./assets/secao_2_2/Persona-Nicole-Rauen.png" width="100%" alt="Persona Nicole Rauen"><br>
+  <img src="./assets/personas/Persona-Nicole-Rauen.png" width="100%" alt="Persona Nicole Rauen"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -436,10 +425,8 @@ Nicole Rauen é corredora amadora e influenciadora digital, compartilhando trein
 - Interface clara e organizada.
 
 <div align = "center">
-  <img src="../assets/Persona-Bruno-Gardesani.png" width="100%" alt="Persona Bruno Gardesani"><br>
   <sub>Imagem 7 - Persona Bruno Gardesani</sub><br>
-  <img src="./assets/secao_2_2/Persona-Bruno-Gardesani.png" width="100%" alt="Persona Bruno Gardesani"><br>
-  <img src="./assets/secao_2_2/Persona-Bruno-Gardesani.png" width="100%" alt="Persona Bruno Gardesani"><br>
+  <img src="./assets/personas/Persona-Bruno-Gardesani.png" width="100%" alt="Persona Bruno Gardesani"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -481,10 +468,8 @@ Bruno Gardesani atua como Gerente Nacional de Field Marketing na Red Bull, sendo
 - Sistema confiável e transparente.
 
 <div align = "center">
-  <img src="../assets/Persona-Lucas-Andrade.png" width="100%" alt="Persona Lucas Andrade"><br>
   <sub>Imagem 8 - Persona Lucas Andrade</sub><br>
-  <img src="./assets/secao_2_2/Persona-Lucas-Andrade.png" width="100%" alt="Persona Lucas Andrade"><br>
-  <img src="./assets/secao_2_2/Persona-Lucas-Andrade.png" width="100%" alt="Persona Lucas Andrade"><br>
+  <img src="./assets/personas/Persona-Lucas-Andrade.png" width="100%" alt="Persona Lucas Andrade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -735,7 +720,7 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
-# <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
+# <a id="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
 
 ---
 
@@ -802,7 +787,7 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 | RF031 | O sistema deve permitir o registro do local/região da etapa.                                                                                                                                                                                                     | Baixa      | Planejado |
 | RF032 | O sistema deve permitir que o corredor acesse seu histórico completo de desempenho no evento após sua finalização.                                                                                                                                               | Baixa      | Planejado |
 <div align = "center">
-  <sub> Quadro 11 - Requisitos Funcionais </sub><br>
+  <sub> Quadro 13 - Requisitos Funcionais </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -848,7 +833,7 @@ Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio 
 | RN27 | Em caso de ausência de conexão, os registros devem ser persistidos localmente com o timestamp original do momento do registro. Ao restabelecer conexão, a sincronização deve ocorrer automaticamente sem duplicar registros, preservando a ordem cronológica original.                                     | RF016        |
 
 <div align = "center">
-  <sub> Quadro 12 - Regras de Negócios </sub><br>
+  <sub> Quadro 14 - Regras de Negócios </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -888,7 +873,7 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 | RF016 | RN27          | `/sync`                                                          | POST   |
 
 <div align = "center">
-  <sub> Quadro 14 - Matriz RF → RN → Endpoint </sub><br>
+  <sub> Quadro 15 - Matriz RF → RN → Endpoint </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -905,8 +890,6 @@ Essas restrições podem atuar de forma transversal no sistema, impactando sua o
 
 * **CONF (Confiabilidade):** Refere-se à capacidade do sistema de manter funcionamento consistente e íntegro mesmo diante de falhas parciais. Esse eixo foi definido considerando a necessidade de andamento contínuo da competição, evitando perda, duplicidade ou inconsistência de registros durante instabilidades de rede ou interrupções temporárias.
 
-<<<<<<< HEAD
-=======
 * **DES (Desempenho):** Está associado ao tempo de resposta e à eficiência no processamento das operações críticas. Sua relevância decorre da necessidade de atualização quase em tempo real dos dados operacionais, dashboards e informações exibidas ao público durante o evento.
 
 * **SUP (Suportabilidade):** Envolve a facilidade de manutenção, evolução, testes e correções do sistema. Esse eixo foi incorporado devido ao caráter incremental do desenvolvimento ao longo das sprints e à necessidade de rápida adaptação antes da execução oficial do evento.
@@ -943,9 +926,8 @@ Essas restrições podem atuar de forma transversal no sistema, impactando sua o
 | **RNF020** | ORG — Organizacionais | Global | A interface deve respeitar a identidade visual do parceiro e patrocinadores do evento. | **100%** dos componentes de UI devem seguir o *Design System* aprovado, validado em auditoria pré-sprint. |
 | **RNF021** | ORG — Organizacionais | Global | O desenvolvimento do sistema deve ser concluído e bloqueado com antecedência para garantir a segurança da operação ao vivo. | A versão final do software deve ser testada, aprovada e bloqueada para novas alterações com pelo menos **30 dias de antecedência** da data do evento. |
 
->>>>>>> 021a9f3c3828b4c530f9bc15f94b695b3f3bccf3
 <div align = "center">
-  <sub> Quadro 13 - Requisitos Não Funcionais </sub><br>
+  <sub> Quadro 16 - Requisitos Não Funcionais </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -971,7 +953,7 @@ _Posicione aqui o diagrama de arquitetura da solução, indicando as camadas pri
 O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 Horas a partir da prática **Light Use-Case Modeling** descrita em Jacobson et al.[⁹](#8-referências), evoluindo para o nível **System Boundary Established** ao incluir todos os atores e casos de uso planejados para o MVP. A notação adotada segue o guia _Use-Case 3.0 — The Definitive Guide_: atores são representados por bonecos-palito, casos de uso por elipses contidas dentro do retângulo do _System of Interest_, associações por linhas contínuas com setas indicando o iniciador da interação, `<<include>>` por seta tracejada apontando do caso-base para o caso obrigatoriamente incluído, e `<<extend>>` por seta tracejada apontando do caso opcional para o caso-base que ele estende.
 
 <div align="center">
-  <img src= "../assets/use_case.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
+  <img src= "./assets/use_case/use_case.jpeg" width="100%" alt="Casos de uso"><br>
   <sub>Imagem 9 - Diagrama Casos de Uso</sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -985,7 +967,7 @@ O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 H
 | **Organização do Evento** | Primário (secundário em frequência) | Equipe responsável pela validação final dos resultados e pela auditoria pós-evento. Acessa o painel consolidado e exporta os dados para conferência.                                                                                                                                                                                               |
 
 <div align = "center">
-  <sub> Quadro 15 - Atores de Casos de Uso </sub><br>
+  <sub> Quadro 17 - Atores de Casos de Uso </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -1005,7 +987,7 @@ Os casos de uso foram identificados a partir dos requisitos funcionais da seçã
 | **Exportar dados**                | Organização do Evento           | Gerar arquivo CSV com todos os registros para auditoria formal pós-evento.                                                                                                              | Ao menos um registro existente no sistema.                                          | Auditor (pode acionar a exportação conjuntamente).                          | Arquivo CSV gerado com todos os registros; dados disponíveis para auditoria formal pós-evento.           |
 
 <div align = "center">
-  <sub> Quadro 16 - Casos de Uso </sub><br>
+  <sub> Quadro 18 - Casos de Uso </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -1026,7 +1008,7 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 | `<<extend>>`   | Registrar checkpoint      | Recuperar último registro válido da sessão | Comportamento _condicional_: só ocorre quando a esteira para de funcionar durante uma sessão e o auditor precisa recuperar a quilometragem com base no último checkpoint conhecido **da sessão atual**. O caso-base não precisa saber que esse fluxo existe — daí o uso de `<<extend>>`.                                   |
 
 <div align = "center">
-  <sub> Quadro 17 - Relacionamentos include e extend </sub><br>
+  <sub> Quadro 19 - Relacionamentos include e extend </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -1037,8 +1019,7 @@ Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação
 
 <div align = "center">
   <sub>Imagem 10 - Diagrama de Classes de Domínio</sub><br>
-  <img src="./assets/secao_3/secao_3_2_3/diagrama_classes_corrigido.png" width="100%" alt="Diagrama de Classes"><br>
-  <img src="./assets/secao_3/secao_3_2_3/diagrama_classes_corrigido.png" width="100%" alt="Diagrama de Classes"><br>
+  <img src="./assets/classes_dominio/diagrama_classes_corrigido.png" width="100%" alt="Diagrama de Classes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1058,8 +1039,8 @@ A seguir, cada diagrama é apresentado com uma descrição detalhada de seus flu
 A gestão de Eventos representa a visão macro da competição, sendo a configuração inicial e o núcleo organizacional do desafio Red Bull 24 Horas. O Diagrama de Sequência de Eventos descreve como a aplicação web orquestra processos fundamentais, como a criação do evento (incluindo a validação de data, local e esteiras), o cálculo de métricas em tempo real, como quilometragem total por equipe, velocidade média e equipes em pista  e a manutenção do placar oficial. Neste contexto, um evento é a unidade central da plataforma que coordena a disputa entre as duas equipes de 16 atletas, gerindo os dados das duas esteiras por equipe para garantir uma apuração precisa que substitua o método manual, permitindo ainda a detecção automática de inconsistências (como gaps de checkpoints) e a exportação de dados consolidados para auditoria pós-evento.
 
 <div align="center">
-  <sub>Imagem xx - Diagrama de Sequencia: Eventos</sub><br>
-  <img src="assets/secao_3_2/secao_3_2_4/UML_Diagram/Events_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
+  <sub>Imagem 11 - Diagrama de Sequencia: Eventos</sub><br>
+  <img src="./assets/diagrama_sequencia/Events_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div
@@ -1085,8 +1066,8 @@ A gestão de Eventos representa a visão macro da competição, sendo a configur
 O módulo de Equipes é a base de organização dos competidores. O Red Bull 24 Horas possui uma regra estrita: o confronto ocorre exatamente entre duas equipes, sendo cada uma composta por 16 pessoas. Este fluxo mapeia o cadastro e a validação estrutural dos times, a exibição dos perfis e o cálculo de métricas de desempenho coletivo e individual.
 
 <div align="center">
-  <sub>Imagem XX - Diagrama de Sequência: Equipes</sub>
-    <br><img src="assets/secao_3_2/secao_3_2_4/UML_Diagram/Teams_SequenceDiagram.png" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
+  <sub>Imagem 12 - Diagrama de Sequência: Equipes</sub>
+    <br><img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.png" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026 </sub>
   <br><br><br>
 </div>
@@ -1112,8 +1093,8 @@ O módulo de Equipes é a base de organização dos competidores. O Red Bull 24 
 O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na esteira. Como a dinâmica do evento exige trocas rápidas de corredores sem interrupção na contagem de quilômetros, este fluxo mapeia desde a entrada do corredor no equipamento, passando pelos registros periódicos de segurança (checkpoints), até a finalização do turno com a leitura final da quilometragem. Turnos, neste contexto, representam os intervalos de atividade atribuídos a cada corredor ao longo de um ciclo na esteira, definindo quando cada atleta entra e sai da atividade.
 
 <div align="center">
-  <sub>Imagem xx - Diagrama de Sequencia: Turnos</sub><br>
-  <img src="assets/secao_3_2/secao_3_2_4/UML_Diagram/Logs_SequenceDiagram.png" width="900px" alt="Diagrama de sequencia do processo de turnos"><br>
+  <sub>Imagem 13 - Diagrama de Sequencia: Turnos</sub><br>
+  <img src="./assets/diagrama_sequencia/Turns_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de turnos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div
@@ -1140,8 +1121,8 @@ iodicamente (como a cada 5 minutos através de um alerta na interface ou a cada 
 A funcionalidade de Histórico fornece total rastreabilidade e transparência ao longo das 24 horas de evento. Ela permite que a organização e os auditores visualizem uma linha do tempo cronológica detalhada de todas as ações que ocorreram nas esteiras, provendo uma ferramenta ágil para sanar dúvidas ou contestar apurações durante a competição.
 
 <div align="center">
-  <sub>Imagem xx - Diagrama de Sequencia: Historico</sub><br>
-  <img src="assets/secao_3_2/secao_3_2_4/UML_Diagram/History_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
+  <sub>Imagem 14 - Diagrama de Sequencia: Historico</sub><br>
+  <img src="./assets/diagrama_sequencia/History_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1167,8 +1148,8 @@ A funcionalidade de Histórico fornece total rastreabilidade e transparência ao
 Garantir a operação ininterrupta do sistema em um ambiente de evento físico é um grande desafio, pois podem ocorrer instabilidades na conexão de internet. Este diagrama mapeia duas rotinas avançadas de resiliência: a Edição Retroativa (para corrigir erros de digitação passados mantendo uma trilha de auditoria) e a Sincronização Offline (Sync), que permite à interface armazenar dados localmente em caso de queda de rede e enviá-los ao servidor assim que a conexão for restabelecida.
 
 <div align="center">
-  <sub>Imagem xx - Diagrama de Sequencia: Registros/Sync</sub><br>
-  <img src="assets/secao_3_2/secao_3_2_4/UML_Diagram/Logs_SequenceDiagram.png" width="900px" alt="Diagrama de sequencia do processo de registros e sync"><br>
+  <sub>Imagem 15 - Diagrama de Sequencia: Registros/Sync</sub><br>
+  <img src="./assets/diagrama_sequencia/Logs_SequenceDiagram.png" width="900px" alt="Diagrama de sequencia do processo de registros e sync"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1214,9 +1195,18 @@ _Documente os design patterns utilizados (Repository, Strategy, Factory, DTO etc
 
 ## 3.3. Wireframes (sprint 2)
 
----
+O wireframe é um rascunho do sistema que mostra como o projeto ira funcionar. Ele é usado para mostrar como as telas vão ser organizadas e como o usuário vai navegar por elas, tudo isso antes de qualquer linha de código ser escrita.
 
-_Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização)_
+Ele serve pra deixar as ideias mais claras, dar direcionamento para o projeto e evitar retrabalho no fim, além de garantir que todos da equipe estão alinhados. Essa é uma etapa essencial para a organização do projeto e do grupo, para ficar claro como o sistema irá funcionar.
+
+A seguir, serão apresentados os wireframes de baixa e média fidelidade que foram desenvolvidos durante a sprint 2.
+
+<div align="center">
+  <sub>Imagem 16 - Wireframe de Baixa Fidelidade</sub><br>
+  <img src="./assets/wireframes/wireframe-baixa-fidelidade.svg" width="900px" alt="Wireframe de baixa fidelidade"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
 
 ## 3.4. Guia de estilos (sprint 3)
 
@@ -1261,8 +1251,8 @@ _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelid
 O Modelo Entidade-Relacionamento (MER) é a representação conceitual do banco de dados, na qual se descrevem as entidades do domínio, seus atributos e os relacionamentos que as conectam, abstraindo decisões de implementação física como tipos de dados, índices ou chaves estrangeiras. Para este projeto, o MER traduz em linguagem de dados o domínio do Red Bull 24 Horas modelado nas seções anteriores: o evento operado por um gerente (Manager), suas equipes (Team) e atletas (Athlete), e o registro de cada sessão de corrida (Shift) auditada à beira da esteira (Treadmill), com os checkpoints periódicos e logs que sustentam a apuração oficial da competição. A notação adotada é a de **Peter Chen**, na qual entidades são representadas por retângulos, atributos por elipses (com elipses preenchidas indicando chave primária e atributos compostos derivados do atributo-pai), relacionamentos por losangos e a cardinalidade explicitada nas extremidades de cada relacionamento com a razão (1) e (N). Os nomes de entidades, atributos e relacionamentos foram padronizados em inglês para garantir consistência com a nomenclatura técnica adotada no modelo relacional e no código-fonte da aplicação.
 
 <div align="center">
-  <img src="./assets/modelo-entidade-relacionamento/Modelo-ER.png" width="80%" alt="Modelo Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
-  <sub>Imagem 10 - Modelo Entidade-Relacionamento</sub><br>
+  <sub>Imagem 17 - Modelo Entidade-Relacionamento</sub><br>
+  <img src="./assets/modelo_entidade_relacionamento/Modelo-ER.png" width="80%" alt="Modelo Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1272,7 +1262,7 @@ O Modelo Entidade-Relacionamento (MER) é a representação conceitual do banco 
 As entidades foram derivadas diretamente do domínio descrito no TAPI e dos casos de uso da seção 3.2.2, garantindo coerência entre o modelo conceitual de dados e o modelo comportamental do sistema. Cada entidade representa um conceito do mundo real que precisa ser persistido para sustentar a apuração e a auditoria das 24 horas de competição.
 
 <div align="center">
-  <sub>Quadro XX - Entidades e atributos do MER</sub>
+  <sub>Quadro 20 - Entidades e atributos do MER</sub>
 </div>
 
 | Entidade       | Descrição                                                                                                                                                                       | Atributos                                                                       | Chave primária |
@@ -1297,7 +1287,7 @@ As entidades foram derivadas diretamente do domínio descrito no TAPI e dos caso
 Os relacionamentos foram modelados a partir das regras de negócio levantadas na seção 3.1 e da dinâmica operacional descrita pelo parceiro: um gerente regional gere múltiplos eventos ao longo da temporada; cada evento conta com exatamente duas equipes; cada equipe escala vários atletas que se revezam continuamente; cada atleta realiza diversos turnos ao longo das 24 horas; e cada turno é monitorado por um auditor e produz uma sequência de checkpoints e um log de ações.
 
 <div align="center">
-  <sub>Quadro XX - Relacionamentos e cardinalidades do MER</sub>
+  <sub>Quadro 21 - Relacionamentos e cardinalidades do MER</sub>
 </div>
 
 | Relacionamento | Entidade A | Cardinalidade | Entidade B  | Descrição                                                                                                                                                                                                |
@@ -1335,8 +1325,8 @@ O MER traduz o domínio do Red Bull 24 Horas em um modelo conceitual de dados ra
 O DER traduz o modelo conceitual do MER para a estrutura relacional do banco de dados (PostgreSQL), adotando a **notação de tabelas relacionais** com tipos de dados, restrições (`NOT NULL`, `UNIQUE`, `CHECK`), chaves primárias (`PK`) e chaves estrangeiras (`FK`).
 
 <div align="center">
-  <img src="../documentos/assets/secao_3/secao_3.6/diagramaEntidadeRelacionamento.jpg" width="90%" alt="Diagrama Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
-  <sub>Imagem 12 - Diagrama Entidade-Relacionamento</sub><br>
+  <sub>Imagem 18 - Diagrama Entidade-Relacionamento</sub><br>
+  <img src="./assets/diagrama_entidade_relacionamento/diagramaEntidadeRelacionamento.jpg" width="90%" alt="Diagrama Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -1493,7 +1483,7 @@ _A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida
 | Persona | RF  | RN  | Endpoint | Tela | Teste | Evidência |
 | ------- | --- | --- | -------- | ---- | ----- | --------- |
 
-# <a name="c4"></a>4. Desenvolvimento da Aplicação Web
+# <a id="c4"></a>4. Desenvolvimento da Aplicação Web
 
 ---
 
@@ -1515,7 +1505,7 @@ _Descreva e ilustre aqui o desenvolvimento da segunda versão do sistema web, co
 
 _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas._
 
-# <a name="c5"></a>5. Testes
+# <a id="c5"></a>5. Testes
 
 ---
 
@@ -1546,7 +1536,7 @@ _Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de tes
 
 _Posicione aqui o relatório dos testes SUS realizados._
 
-# <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
+# <a id="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
 
 ---
 
@@ -1617,7 +1607,7 @@ _Apresente os canais digitais utilizados para distribuir e entregar a aplicaçã
 _d) Promoção (até 200 palavras)_
 _Descreva as estratégias digitais planejadas, como SEO, redes sociais, marketing de conteúdo e campanhas pagas._
 
-# <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
+# <a id="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
 ---
 
@@ -1627,33 +1617,33 @@ _Relacione os pontos de melhorias evidenciados nos testes com planos de ações 
 
 _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras_
 
-# <a name="c8"></a>8. Referências
+# <a id="c8"></a>8. Referências
 
 ---
 
-[⁸] BUSINESS RULES GROUP. **Business Rules Manifesto:** the principles of rule independence. Version 2.0. [S. l.]: Business Rules Group, 2003. Disponível em: <https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf>. Acesso em: 27 abr. 2026.
+⁸ BUSINESS RULES GROUP. **Business Rules Manifesto:** the principles of rule independence. Version 2.0. S. l.: Business Rules Group, 2003. Disponível em: <https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf>. Acesso em: 27 abr. 2026.
 
-[³] ESPM. **Runaholic Club: lifestyle e comunidade de wellness para a Geração Z**. Disponível em: <https://www.espm.br/blog/runaholic-club-lifestyle-e-comunidade-de-wellness-para-a-geracao-z/>. Acesso em: 28 abr. 2026.
+³ ESPM. **Runaholic Club: lifestyle e comunidade de wellness para a Geração Z**. Disponível em: <https://www.espm.br/blog/runaholic-club-lifestyle-e-comunidade-de-wellness-para-a-geracao-z/>. Acesso em: 28 abr. 2026.
 
-[¹⁰] FIELDING, Roy Thomas. **Architectural Styles and the Design of Network-based Software Architectures**. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: <https://ics.uci.edu/~fielding/pubs/dissertation/top.htm>. Acesso em: 27 abr. 2026.
+¹⁰ FIELDING, Roy Thomas. **Architectural Styles and the Design of Network-based Software Architectures**. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: <https://ics.uci.edu/~fielding/pubs/dissertation/top.htm>. Acesso em: 27 abr. 2026.
 
-[³] H.PRIME SAÚDE. **A revolução da geração wellness: por que a saúde se tornou o novo símbolo de sucesso**. Disponível em: <https://hprimesaude.com.br/blog/a-revolucao-da-geracao-wellness-por-que-a-saude-se-tornou-o-novo-simbolo-de-sucesso/>. Acesso em: 28 abr. 2026.
+³ H.PRIME SAÚDE. **A revolução da geração wellness: por que a saúde se tornou o novo símbolo de sucesso**. Disponível em: <https://hprimesaude.com.br/blog/a-revolucao-da-geracao-wellness-por-que-a-saude-se-tornou-o-novo-simbolo-de-sucesso/>. Acesso em: 28 abr. 2026.
 
-[⁹] JACOBSON, Ivar; SPENCE, Ian; BITTNER, Kurt. **Use-Case 3.0 — The Definitive Guide**. [S. l.]: Ivar Jacobson International, 2024.
+⁹ JACOBSON, Ivar; SPENCE, Ian; BITTNER, Kurt. **Use-Case 3.0 — The Definitive Guide**. S. l.: Ivar Jacobson International, 2024.
 
-[¹¹] MONTGOMERY, Cynthia A.; PORTER, Michael E. (org.). **Estratégia:** a busca da vantagem competitiva. Rio de Janeiro: Elsevier, 1998.
+¹¹ MONTGOMERY, Cynthia A.; PORTER, Michael E. (org.). **Estratégia:** a busca da vantagem competitiva. Rio de Janeiro: Elsevier, 1998.
 
-[⁴] MUNDO DO MARKETING. **Baly Brasil ultrapassa Red Bull e assume vice-liderança no mercado de energéticos**. Disponível em: <https://mundodomarketing.com.br/baly-brasil-ultrapassa-red-bull-e-assume-vice-lideranca-no-mercado-de-energeticos>. Acesso em: 28 abr. 2026.
+⁴ MUNDO DO MARKETING. **Baly Brasil ultrapassa Red Bull e assume vice-liderança no mercado de energéticos**. Disponível em: <https://mundodomarketing.com.br/baly-brasil-ultrapassa-red-bull-e-assume-vice-lideranca-no-mercado-de-energeticos>. Acesso em: 28 abr. 2026.
 
-[⁶] OSTERWALDER, Alexander; PIGNEUR, Yves. **Value Proposition Design:** how to create products and services customers want. Hoboken: Wiley, 2014.
+⁶ OSTERWALDER, Alexander; PIGNEUR, Yves. **Value Proposition Design:** how to create products and services customers want. Hoboken: Wiley, 2014.
 
-[⁵] PORTER, Michael E. **Estratégia competitiva:** técnicas para análise de indústrias e da concorrência. 2. ed. Rio de Janeiro: Elsevier, 2004.
+⁵ PORTER, Michael E. **Estratégia competitiva:** técnicas para análise de indústrias e da concorrência. 2. ed. Rio de Janeiro: Elsevier, 2004.
 
-[⁷] PROJECT MANAGEMENT INSTITUTE. **Um guia do conhecimento em gerenciamento de projetos (Guia PMBOK®)**. 7. ed. Newtown Square: PMI, 2021.
+⁷ PROJECT MANAGEMENT INSTITUTE. **Um guia do conhecimento em gerenciamento de projetos (Guia PMBOK®)**. 7. ed. Newtown Square: PMI, 2021.
 
-[¹][²] TIMES BRASIL. **Red Bull e marcas para a Geração Z**. Disponível em: <https://timesbrasil.com.br/empresas-e-negocios/red-bull-marcas-geracao-z/>. Acesso em: 28 abr. 2026.
+¹ ² TIMES BRASIL. **Red Bull e marcas para a Geração Z**. Disponível em: <https://timesbrasil.com.br/empresas-e-negocios/red-bull-marcas-geracao-z/>. Acesso em: 28 abr. 2026.
 
-# <a name="c9"></a>Anexos
+# <a id="c9"></a>Anexos
 
 ---
 
