@@ -1893,6 +1893,69 @@ A seguir, serão apresentados os wireframes de baixa e média fidelidade que for
   <br><br><br>
 </div>
 
+### Wireframes da Média Fidelidade
+
+Nesta seção, são apresentados os wireframes de fidelidade média desenvolvidos a partir da evolução das versões iniciais. Esses wireframes incorporam melhorias visuais e funcionais. Além de aperfeiçoar a classificação visual e o layout das telas, essa etapa buscou aproximar o design final da experiência real do usuário, mantendo a coerência com o Wireframe de baixa fidelidade e as User Stories previamente mapeadas. Também foram realizadas adequações que visam melhorar a navegabilidade, esclarecer as informações e a acessibilidade da interface.
+
+<div align="center">
+  <sub>Imagem 17 - Wireframe de Média Fidelidade</sub><br>
+  <img src="./assets/wireframes/Wireframe-Média-Fidelidade.svg" width="900px" alt="Wireframe de baixa fidelidade"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <a href="https://canva.link/gfp64835f9nm3je">Link de acesso ao Wireframe</a>
+</div>
+
+#### Tela de Login
+
+A tela de login é padronizada para todos os usuários (auditores e administradores) e permite acesso à aplicação web, alinhando-se ao wireframe de média fidelidade como ponto de entrada obrigatório para qualquer operação no sistema.
+
+#### Tela Inicial — Seleção de Ação
+
+Desenvolvida como tela principal de navegação, a tela inicial reúne as duas ações centrais do sistema: adicionar dados e visualizar histórico. Atende às necessidades da US04, US05 e US06, ao organizar o acesso às funcionalidades de registro e consulta consolidada de quilometragem por equipe.
+
+#### Telas de Registro Pré-Evento
+
+Conjunto de telas destinadas ao cadastro do contexto inicial do evento, contemplando o registro de atletas, locais, equipes e auditores, com listagem dos itens já cadastrados em cada formulário. Atendem à US07, ao permitir que os corredores sejam vinculados às suas respectivas equipes antes do início da competição.
+
+#### Tela de Seleção de Registro
+
+Tela acessada pelo auditor para escolher qual entidade será registrada: auditor, equipe, atleta ou local, direcionando o fluxo correto de cadastro. Atende à US01 e US07, como etapa preparatória obrigatória para o início da operação.
+
+#### Tela de Confirmação de Cadastro
+
+Exibida após o cadastro bem-sucedido de qualquer entidade, a tela de confirmação apresenta a mensagem de sucesso e oferece a opção de retornar ao fluxo anterior, fornecendo feedback visual imediato ao operador e atendendo a todas as user stories relacionadas ao cadastro.
+
+#### Tela de Acompanhamento de Esteiras
+
+Desenvolvida como tela central da operação, exibe as duas esteiras lado a lado com seus respectivos status (ocupada ou livre) e o placar consolidado por equipe atualizado em tempo real. Atende à US04 e US06, permitindo que o auditor acompanhe continuamente a operação e visualize a quilometragem acumulada por cada equipe ao longo das 24 horas.
+
+#### Tela de Seleção de Corredor e Registro de Início
+
+Permite ao auditor selecionar a equipe, a esteira e o corredor para iniciar um novo turno, acionando o registro estruturado de início de corrida. Atende à US01, substituindo diretamente o processo manual de anotação em prancheta.
+
+#### Modal de Checkpoint Obrigatório
+
+Desenvolvido como modal bloqueante disparado automaticamente a cada 5 minutos durante um turno ativo, impede qualquer outra interação até que o auditor insira a quilometragem atual lida no display da esteira. Atende à US02 e US09, garantindo o registro periódico contínuo e o alerta em caso de inatividade prolongada.
+
+#### Tela de Detalhes da Corrida em Andamento
+
+Exibida durante um turno ativo, apresenta as informações do atleta, equipe e tempo decorrido, com imagem de referência da esteira para apoiar a leitura correta da quilometragem. Atende à US03 e US07, contextualizando o turno em andamento e apoiando o encerramento correto do ciclo de corrida.
+
+#### Tela de Inconsistência Detectada
+
+Desenvolvida para alertar o auditor quando o sistema identifica um valor de quilometragem incompatível com o histórico do turno, a tela exibe o último valor válido registrado e oferece as opções de corrigir ou confirmar o dado. Atende à US11, bloqueando a persistência de dados inconsistentes e orientando a correção rápida sob pressão operacional.
+
+#### Fluxo de Registro de Fim de Turno
+
+Sequência de telas para encerramento do turno ativo, contemplando a seleção da esteira, a inserção do valor final de quilômetros com imagem de referência e a confirmação do checkpoint final. Ao concluir, a esteira é liberada para o próximo corredor e o total acumulado da equipe é atualizado. Atende à US03.
+
+#### Tela de Desempenho Final
+
+Disponibilizada ao término do evento, a tela de desempenho final exibe a tabela consolidada por equipe com quilômetros totais e tempo de corrida, além do destaque individual do atleta com opção de compartilhamento. Atende à US05, US10 e US12, entregando as métricas finais para auditoria e permitindo que cada atleta visualize e compartilhe seu resultado.
+
 ## 3.4. Guia de estilos (sprint 3)
 
 ---
