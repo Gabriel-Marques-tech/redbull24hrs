@@ -1416,7 +1416,212 @@ A cadeia `Managers → Events → Teams → Athletes → Shifts → Checkpoints 
 
 ---
 
-_Posicione aqui os diagramas de modelos relacionais do banco de dados, apresentando todos os esquemas de tabelas e suas relações. Inclua as migrations DDL numeradas e reproduzíveis (`CREATE TABLE`, `CREATE INDEX`, constraints `NOT NULL`, `UNIQUE`, `FOREIGN KEY`, `CHECK`). Utilize texto para complementar suas explicações quando necessário._
+O modelo físico implementa o DER da seção 3.6.2 como **migrations DDL versionadas** em SQL puro (PostgreSQL), armazenadas em [src/database/migrations/](../src/database/migrations/) com prefixo numérico sequencial (`001_`, `002_`, ...) que define a ordem de aplicação. A estratégia garante reprodutibilidade, já que qualquer ambiente (desenvolvimento, homologação ou produção) pode reconstruir o schema completo executando as migrations em ordem, além de rastreabilidade das mudanças de schema ao longo do projeto.
+
+<div align="center">
+  <sub>Quadro 24 - Migrations registradas</sub>
+</div>
+
+| Arquivo                                                                     | Sprint | Descrição                                                                                                                                                                                                                                                  |
+| --------------------------------------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`001_initialSchema.sql`](../src/database/migrations/001_initialSchema.sql) | 2      | Cria as nove tabelas do domínio (`managers`, `events`, `teams`, `athletes`, `auditors`, `shifts`, `treadmills`, `logs`, `checkpoints`), suas constraints (`PK`, `FK`, `UNIQUE`, `NOT NULL`, `CHECK`) e os índices auxiliares sobre as chaves estrangeiras. |
+
+<div align="center">
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+#### Migration 001: Schema inicial
+
+A migration `001_initialSchema.sql` reúne em um único script o schema operacional do sistema. As tabelas são criadas seguindo a ordem das dependências (entidades-pai antes das entidades-filha), de modo que cada `FOREIGN KEY` referencia uma tabela já existente no momento da execução. Os blocos a seguir percorrem a migration na ordem em que é executada, comentando o propósito de cada bloco DDL.
+
+##### Tabela `managers`
+
+Primeira tabela criada por estar no topo da hierarquia operacional (não depende de outra tabela). Identifica o gerente regional responsável por instanciar eventos. O `cpf` é opcional (`NULL` permitido), mas, quando preenchido, é `UNIQUE` e validado pelo `CHECK` `chk_managers_cpf`, que exige exatamente 11 dígitos numéricos via expressão regular. Essa é uma garantia de formato aplicada no próprio banco, independentemente da camada de aplicação.
+
+```sql
+CREATE TABLE managers (
+	id SERIAL PRIMARY KEY,
+	cpf VARCHAR(11) UNIQUE,
+	name VARCHAR(100) NOT NULL,
+	CONSTRAINT chk_managers_cpf CHECK (cpf IS NULL OR cpf ~ '^[0-9]{11}$')
+);
+```
+
+##### Tabela `events`
+
+Representa uma edição (regional ou final) do Red Bull 24 Horas. Tanto `title` quanto `local` são `NOT NULL UNIQUE`, ou seja, não existem duas edições com o mesmo título nem dois eventos simultâneos no mesmo local. A `FOREIGN KEY` para `managers` usa `ON DELETE RESTRICT`: um gerente com eventos vinculados não pode ser removido, o que protege a integridade histórica da operação. Já o `ON UPDATE CASCADE` permite que a chave-pai mude (caso o `SERIAL` seja realocado em uma migração futura) sem quebrar referências.
+
+```sql
+CREATE TABLE events (
+	id SERIAL PRIMARY KEY,
+	title VARCHAR(100) UNIQUE NOT NULL,
+	local VARCHAR(100) UNIQUE NOT NULL,
+	manager_id INT NOT NULL,
+	CONSTRAINT fk_events_manager
+		FOREIGN KEY (manager_id) REFERENCES managers(id)
+		ON UPDATE CASCADE ON DELETE RESTRICT
+);
+```
+
+##### Tabela `teams`
+
+Cada equipe pertence a um único evento e tem `name` único. Diferente da relação `events → managers`, aqui a política é `ON DELETE CASCADE`: ao excluir um evento, suas duas equipes são removidas junto, já que a equipe só faz sentido no contexto de uma edição específica do Red Bull 24 Horas e não tem existência própria fora dele.
+
+```sql
+CREATE TABLE teams (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(100) UNIQUE NOT NULL,
+	event_id INT NOT NULL,
+	CONSTRAINT fk_teams_event
+		FOREIGN KEY (event_id) REFERENCES events(id)
+		ON UPDATE CASCADE ON DELETE CASCADE
+);
+```
+
+##### Tabela `athletes`
+
+Cadastro dos corredores inscritos em uma equipe. O `gender` é `NOT NULL` por ser usado na apuração por categoria; o `cpf` segue o mesmo padrão de `managers` (opcional, mas validado por regex quando presente). A `FK` para `teams` cascateia no delete, mantendo a coerência da hierarquia `event → team → athlete`: ao remover a edição, todos os atletas vinculados àquela equipe também são apagados.
+
+```sql
+CREATE TABLE athletes (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	gender VARCHAR(20) NOT NULL,
+	cpf VARCHAR(11) UNIQUE,
+	team_id INT NOT NULL,
+	CONSTRAINT chk_athletes_cpf CHECK (cpf IS NULL OR cpf ~ '^[0-9]{11}$'),
+	CONSTRAINT fk_athletes_team
+		FOREIGN KEY (team_id) REFERENCES teams(id)
+		ON UPDATE CASCADE ON DELETE CASCADE
+);
+```
+
+##### Tabela `auditors`
+
+Operadores do sistema. Como o auditor é uma pessoa de carreira (não vinculada a uma edição específica), `auditors` é uma entidade independente, sem `FK` para event ou team. O `registration_number` é `NOT NULL UNIQUE`, o que garante identificação funcional única do auditor na operação. O campo `is_active` (default `TRUE`) permite desativar auditores sem removê-los do banco, preservando o vínculo histórico com os turnos que já auditaram.
+
+```sql
+CREATE TABLE auditors (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	cpf VARCHAR(11) UNIQUE,
+	registration_number INT UNIQUE NOT NULL,
+	is_active BOOLEAN NOT NULL DEFAULT TRUE,
+	CONSTRAINT chk_auditors_cpf CHECK (cpf IS NULL OR cpf ~ '^[0-9]{11}$')
+);
+```
+
+##### Tabela `shifts`
+
+Entidade central do registro operacional, conforme detalhado na seção 3.6.1. Concentra a maior parte das regras de negócio do evento expressas no banco:
+
+- `status` tem `DEFAULT 'pending'` e é restringido pelo `CHECK` `chk_shifts_status` a três valores possíveis (`pending`, `in_progress`, `completed`), o que elimina estados inválidos no banco;
+- `chk_shifts_speed` e `chk_shifts_distance` impedem valores negativos em campos que representam grandezas físicas;
+- `chk_shifts_km` (`km_end >= km_start`) e `chk_shifts_period` (`end_at IS NULL OR end_at >= start_at`) bloqueiam turnos fisicamente impossíveis, como um corredor andando "para trás" no odômetro ou um turno terminando antes de começar;
+- Tanto a `FK` para `athletes` quanto a para `auditors` usam `ON DELETE RESTRICT`, o que protege o histórico de auditoria pós-evento contra remoção acidental de pessoas que já têm turnos registrados.
+
+```sql
+CREATE TABLE shifts (
+	id SERIAL PRIMARY KEY,
+	status VARCHAR(20) NOT NULL DEFAULT 'pending',
+	athlete_id INT NOT NULL,
+	auditor_id INT NOT NULL,
+	start_at TIMESTAMP NOT NULL,
+	total_time INTERVAL,
+	end_at TIMESTAMP,
+	speed INT NOT NULL,
+	km_start INT NOT NULL,
+	km_end INT NOT NULL,
+	distance INT NOT NULL,
+	CONSTRAINT fk_shifts_athlete
+		FOREIGN KEY (athlete_id) REFERENCES athletes(id)
+		ON UPDATE CASCADE ON DELETE RESTRICT,
+	CONSTRAINT fk_shifts_auditor
+		FOREIGN KEY (auditor_id) REFERENCES auditors(id)
+		ON UPDATE CASCADE ON DELETE RESTRICT,
+	CONSTRAINT chk_shifts_status CHECK (status IN ('pending', 'in_progress', 'completed')),
+	CONSTRAINT chk_shifts_speed CHECK (speed >= 0),
+	CONSTRAINT chk_shifts_km CHECK (km_end >= km_start),
+	CONSTRAINT chk_shifts_distance CHECK (distance >= 0),
+	CONSTRAINT chk_shifts_period CHECK (end_at IS NULL OR end_at >= start_at)
+);
+```
+
+##### Tabela `treadmills`
+
+Representa o equipamento físico (Technogym) onde os turnos ocorrem. O `number` é `NOT NULL UNIQUE`, refletindo a unicidade de cada esteira no espaço físico do evento. A tabela é criada **depois** de `shifts` porque a `FK` `shift_id` aponta para o turno em execução naquela esteira, ordem necessária para que a referência seja válida no momento do `CREATE TABLE`.
+
+```sql
+CREATE TABLE treadmills (
+	id SERIAL PRIMARY KEY,
+	shift_id INT NOT NULL,
+	number INT UNIQUE NOT NULL,
+	CONSTRAINT fk_treadmills_shift
+		FOREIGN KEY (shift_id) REFERENCES shifts(id)
+		ON UPDATE CASCADE ON DELETE CASCADE
+);
+```
+
+##### Tabela `logs`
+
+Registro auditável das ações executadas dentro de um turno. O `timestamp` usa `DEFAULT CURRENT_TIMESTAMP`, ou seja, é gerado pelo próprio banco no momento do `INSERT`. Isso elimina a dependência do relógio da aplicação e garante que o registro corresponda ao instante real da persistência. O `CHECK` `chk_logs_type` restringe `type` aos três eventos do ciclo de vida do turno (`created`, `updated`, `finished`), evitando categorias inválidas que poderiam quebrar relatórios de auditoria.
+
+```sql
+CREATE TABLE logs (
+	id SERIAL PRIMARY KEY,
+	shift_id INT NOT NULL,
+	timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	type VARCHAR(20) NOT NULL,
+	CONSTRAINT fk_logs_shift
+		FOREIGN KEY (shift_id) REFERENCES shifts(id)
+		ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT chk_logs_type CHECK (type IN ('created', 'updated', 'finished'))
+);
+```
+
+##### Tabela `checkpoints`
+
+Marcações periódicas dentro de um turno (de 5 em 5 minutos ou voluntárias, conforme regra de negócio do parceiro). Como `logs`, usa `DEFAULT CURRENT_TIMESTAMP` para garantir consistência temporal. O `chk_checkpoints_distance` impede quilometragem negativa, e o `chk_checkpoints_type` restringe `type` às duas categorias funcionais (`mandatory` automática e `voluntary` registrada pelo auditor), distinção importante para a auditoria pós-evento.
+
+```sql
+CREATE TABLE checkpoints (
+	id SERIAL PRIMARY KEY,
+	shift_id INT NOT NULL,
+	timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	distance INT NOT NULL,
+	type VARCHAR(20) NOT NULL,
+	CONSTRAINT fk_checkpoints_shift
+		FOREIGN KEY (shift_id) REFERENCES shifts(id)
+		ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT chk_checkpoints_distance CHECK (distance >= 0),
+	CONSTRAINT chk_checkpoints_type CHECK (type IN ('mandatory', 'voluntary'))
+);
+```
+
+##### Índices secundários
+
+O PostgreSQL cria índices automaticamente apenas sobre `PRIMARY KEY` e `UNIQUE`, mas **não** sobre colunas de `FOREIGN KEY`. Como praticamente toda consulta operacional do sistema usa essas colunas (listar turnos de um atleta, checkpoints de um turno, logs de uma sessão, equipes de um evento), os oito `CREATE INDEX` abaixo são criados explicitamente após todas as tabelas. Isso garante que essas consultas sejam atendidas por busca indexada em vez de _sequential scan_, diferença importante de desempenho à medida que a base cresce ao longo das edições.
+
+```sql
+CREATE INDEX idx_events_manager_id      ON events(manager_id);
+CREATE INDEX idx_teams_event_id         ON teams(event_id);
+CREATE INDEX idx_athletes_team_id       ON athletes(team_id);
+CREATE INDEX idx_shifts_athlete_id      ON shifts(athlete_id);
+CREATE INDEX idx_shifts_auditor_id      ON shifts(auditor_id);
+CREATE INDEX idx_treadmills_shift_id    ON treadmills(shift_id);
+CREATE INDEX idx_logs_shift_id          ON logs(shift_id);
+CREATE INDEX idx_checkpoints_shift_id   ON checkpoints(shift_id);
+```
+
+<div align="center">
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+**Síntese do modelo físico**
+
+A migration 001 entrega o schema completo do sistema em um único arquivo versionado e reproduzível, com integridade referencial e regras de domínio garantidas no próprio banco. As políticas `ON DELETE` diferenciadas (`CASCADE` ao longo das entidades temporárias do evento, `RESTRICT` para entidades de carreira como gerentes, auditores e atletas), os `CHECK` sobre estados e quilometragem, e os índices secundários sobre todas as FKs traduzem as regras operacionais do Red Bull 24 Horas em estrutura física do PostgreSQL, apoiando tanto a operação em tempo real durante o evento quanto a auditoria formal posterior.
 
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
