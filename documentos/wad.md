@@ -764,6 +764,9 @@ Para que o desenvolvimento de um software seja bem-sucedido, é fundamental defi
 
 Sua principal função é servir como um guia tanto para os desenvolvedores quanto para os organizadores do evento, garantindo que todas as necessidades operacionais, como o registro de quilometragem e o controle de revezamento, sejam atendidas sem falhas.
 
+<div align = "center">
+  <sub> Quadro 13 - Requisitos Funcionais </sub><br>
+  
 | ID    | Descrição                                                                                                                                                                                 | Prioridade | Status    |
 | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------- |
 | RF001 | O sistema deve permitir o cadastro de exatamente duas equipes por evento, com nome e identificador únicos, impedindo duplicatas.                                                          | Alta       | Planejado |
@@ -819,8 +822,6 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 | RF051 | O sistema deve permitir o registro do local/região da etapa.                                                                                                                              | Baixa      | Planejado |
 | RF052 | O sistema deve permitir que o corredor acesse seu histórico completo de desempenho no evento após sua finalização.                                                                        | Baixa      | Planejado |
 
-<div align = "center">
-  <sub> Quadro 13 - Requisitos Funcionais </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
