@@ -752,60 +752,60 @@ Para que o desenvolvimento de um software seja bem-sucedido, é fundamental defi
 
 Sua principal função é servir como um guia tanto para os desenvolvedores quanto para os organizadores do evento, garantindo que todas as necessidades operacionais, como o registro de quilometragem e o controle de revezamento, sejam atendidas sem falhas.
 
-| ID | Descrição | Prioridade | Status |
-|---|---|---|---|
-| RF001 | O sistema deve permitir o cadastro de exatamente duas equipes por evento, com nome e identificador únicos, impedindo duplicatas. | Alta | Planejado |
-| RF002 | O sistema deve permitir o cadastro de corredores vinculados a uma única equipe das duas existentes por evento. | Alta | Planejado |
-| RF003 | O sistema deve validar que cada equipe possui exatamente 16 corredores antes do início do evento, bloqueando o início caso a condição não seja atendida. | Alta | Planejado |
-| RF004 | O sistema deve permitir a seleção da esteira onde o corredor iniciará a atividade. | Alta | Planejado |
-| RF005 | O sistema deve permitir a seleção da equipe associada à esteira escolhida. | Alta | Planejado |
-| RF006 | O sistema deve permitir a seleção do corredor da equipe para iniciar a corrida. | Alta | Planejado |
-| RF007 | O sistema deve registrar o início de um turno somente se o corredor selecionado não possuir turno em aberto, rejeitando a operação caso contrário. | Alta | Planejado |
-| RF008 | O sistema deve registrar o início de um turno somente se a esteira selecionada possuir status "Livre", rejeitando a operação caso contrário. | Alta | Planejado |
-| RF009 | O sistema deve armazenar o corredor e a esteira selecionados no registro de início de turno. | Alta | Planejado |
-| RF010 | O sistema deve armazenar a quilometragem inicial informada pelo Auditor no registro de início de turno, rejeitando valores menores que zero. | Alta | Planejado |
-| RF011 | O sistema deve gerar automaticamente o timestamp de início de turno a partir do relógio do servidor, sem permitir entrada manual desse valor. | Alta | Planejado |
-| RF012 | O sistema deve exibir um modal bloqueante a cada 5 minutos a partir do início do turno, impedindo qualquer interação com a interface até que o Auditor insira a quilometragem atual. | Alta | Planejado |
-| RF013 | O sistema deve rejeitar a quilometragem informada no checkpoint caso o valor seja menor que o último checkpoint registrado. | Alta | Planejado |
-| RF014 | O sistema deve permitir que o Auditor finalize o turno de um corredor, disparando o fluxo de encerramento. | Alta | Planejado |
-| RF015 | O sistema deve rejeitar a quilometragem final informada caso o valor seja menor que o último checkpoint registrado. | Alta | Planejado |
-| RF016 | O sistema deve gerar automaticamente o timestamp de encerramento de turno a partir do relógio do servidor, sem permitir entrada manual desse valor. | Alta | Planejado |
-| RF017 | O sistema deve calcular automaticamente a distância percorrida no turno (km_final − km_inicial) e persistir o resultado vinculado ao turno. | Alta | Planejado |
-| RF018 | O sistema deve calcular automaticamente a duração do turno (timestamp_fim − timestamp_início) e persistir o resultado vinculado ao turno. | Alta | Planejado |
-| RF019 | O sistema deve calcular automaticamente a velocidade média do turno (distância / duração em km/h) e persistir o resultado vinculado ao turno. | Alta | Planejado |
-| RF020 | O sistema deve calcular automaticamente a quilometragem total acumulada por equipe somando a distância percorrida em todos os turnos finalizados pelos seus corredores. | Alta | Planejado |
-| RF021 | O sistema deve exibir um dashboard com placar e métricas atualizados automaticamente em até 10 segundos, sem atualização da página. | Alta | Planejado |
-| RF022 | O sistema deve exibir um histórico (log) de entradas, saídas e checkpoints em ordem decrescente de timestamp. | Alta | Planejado |
-| RF023 | O sistema deve permitir a edição retroativa de registros por usuário autenticado. | Alta | Planejado |
-| RF024 | O sistema deve registrar automaticamente em log de auditoria toda edição retroativa, contendo identidade do usuário, campo alterado, valor anterior, valor novo e timestamp da alteração. | Alta | Planejado |
-| RF025 | O sistema deve permitir o registro de checkpoints sem conexão com a internet, persistindo os dados localmente até que a conexão seja restabelecida. | Alta | Planejado |
-| RF026 | O sistema deve sincronizar automaticamente os dados registrados offline ao restabelecer a conexão, sem gerar duplicidade de registros. | Alta | Planejado |
-| RF027 | O sistema deve exigir autenticação (login e senha) para os perfis de Administrador e Auditor antes de permitir qualquer alteração nos dados. | Alta | Planejado |
-| RF028 | O sistema deve detectar automaticamente inconsistências nos dados inseridos com base no histórico do corredor, equipe e esteira, gerando alertas em tempo real para o Auditor. | Alta | Planejado |
-| RF029 | O sistema deve exibir notificação visual destacada ao identificar inconsistências, bloqueando a confirmação do dado até revisão ou justificativa do Auditor. | Alta | Planejado |
-| RF030 | O sistema deve emitir sinal sonoro ao identificar inconsistências, quando o som estiver habilitado nas configurações. | Alta | Planejado |
-| RF031 | O sistema deve permitir que o Auditor revise e corrija inconsistências detectadas antes da persistência final dos dados. | Alta | Planejado |
-| RF032 | O sistema deve permitir o registro manual de quilometragem a qualquer momento durante um turno ativo. | Média | Planejado |
-| RF033 | O sistema deve gerar timestamp automático do servidor para todo registro manual de quilometragem. | Média | Planejado |
-| RF034 | O sistema deve permitir iniciar um novo turno para outro corredor na mesma esteira em até 3 cliques a partir da tela de encerramento do turno anterior. | Média | Planejado |
-| RF035 | O sistema deve gerar a métrica de distância total percorrida por corredor ao longo do evento. | Média | Planejado |
-| RF036 | O sistema deve gerar a métrica de média de distância por turno por corredor ao longo do evento. | Média | Planejado |
-| RF037 | O sistema deve gerar snapshots de evolução de quilometragem por corredor a cada 60 minutos de evento decorrido. | Média | Planejado |
-| RF038 | O sistema deve exibir o status de cada esteira (Ocupada/Livre) em tempo real no painel de controle. | Média | Planejado |
-| RF039 | O sistema deve sugerir alternância de esteira quando uma esteira permanecer ocupada por mais de 30 minutos consecutivos, exibindo alerta visual para o Auditor. | Média | Planejado |
-| RF040 | O sistema deve disponibilizar modo TV com fonte ≥ 48px, contraste mínimo de 4,5:1 conforme WCAG AA, resolução 1920×1080, operável sem mouse e sem necessidade de login. | Média | Planejado |
-| RF041 | O sistema deve permitir a filtragem do histórico por equipe. | Média | Planejado |
-| RF042 | O sistema deve permitir a filtragem do histórico por esteira. | Média | Planejado |
-| RF043 | O sistema deve permitir a filtragem do histórico por corredor. | Média | Planejado |
-| RF044 | O sistema deve identificar e sinalizar a inconsistência de quilometragem final menor que a quilometragem inicial no encerramento de um turno. | Média | Planejado |
-| RF045 | O sistema deve identificar e sinalizar a inconsistência de intervalo entre checkpoints consecutivos superior a 10 minutos. | Média | Planejado |
-| RF046 | O sistema deve identificar e sinalizar a inconsistência de corredor com mais de um turno simultâneo em aberto. | Média | Planejado |
-| RF047 | O sistema deve permitir exportação de dados em CSV contendo todos os turnos registrados. | Média | Planejado |
-| RF048 | O sistema deve permitir exportação de dados em CSV contendo todos os checkpoints registrados. | Média | Planejado |
-| RF049 | O sistema deve disponibilizar uma tela de desempenho final por corredor ao término do evento, contendo distância total percorrida, tempo total em pista e velocidade média geral. | Média | Planejado |
-| RF050 | O sistema deve permitir o compartilhamento do desempenho final do corredor por meio de um link gerado automaticamente, acessível sem autenticação. | Média | Planejado |
-| RF051 | O sistema deve permitir o registro do local/região da etapa. | Baixa | Planejado |
-| RF052 | O sistema deve permitir que o corredor acesse seu histórico completo de desempenho no evento após sua finalização. | Baixa | Planejado |
+| ID    | Descrição                                                                                                                                                                                 | Prioridade | Status    |
+| ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------- |
+| RF001 | O sistema deve permitir o cadastro de exatamente duas equipes por evento, com nome e identificador únicos, impedindo duplicatas.                                                          | Alta       | Planejado |
+| RF002 | O sistema deve permitir o cadastro de corredores vinculados a uma única equipe das duas existentes por evento.                                                                            | Alta       | Planejado |
+| RF003 | O sistema deve validar que cada equipe possui exatamente 16 corredores antes do início do evento, bloqueando o início caso a condição não seja atendida.                                  | Alta       | Planejado |
+| RF004 | O sistema deve permitir a seleção da esteira onde o corredor iniciará a atividade.                                                                                                        | Alta       | Planejado |
+| RF005 | O sistema deve permitir a seleção da equipe associada à esteira escolhida.                                                                                                                | Alta       | Planejado |
+| RF006 | O sistema deve permitir a seleção do corredor da equipe para iniciar a corrida.                                                                                                           | Alta       | Planejado |
+| RF007 | O sistema deve registrar o início de um turno somente se o corredor selecionado não possuir turno em aberto, rejeitando a operação caso contrário.                                        | Alta       | Planejado |
+| RF008 | O sistema deve registrar o início de um turno somente se a esteira selecionada possuir status "Livre", rejeitando a operação caso contrário.                                              | Alta       | Planejado |
+| RF009 | O sistema deve armazenar o corredor e a esteira selecionados no registro de início de turno.                                                                                              | Alta       | Planejado |
+| RF010 | O sistema deve armazenar a quilometragem inicial informada pelo Auditor no registro de início de turno, rejeitando valores menores que zero.                                              | Alta       | Planejado |
+| RF011 | O sistema deve gerar automaticamente o timestamp de início de turno a partir do relógio do servidor, sem permitir entrada manual desse valor.                                             | Alta       | Planejado |
+| RF012 | O sistema deve exibir um modal bloqueante a cada 5 minutos a partir do início do turno, impedindo qualquer interação com a interface até que o Auditor insira a quilometragem atual.      | Alta       | Planejado |
+| RF013 | O sistema deve rejeitar a quilometragem informada no checkpoint caso o valor seja menor que o último checkpoint registrado.                                                               | Alta       | Planejado |
+| RF014 | O sistema deve permitir que o Auditor finalize o turno de um corredor, disparando o fluxo de encerramento.                                                                                | Alta       | Planejado |
+| RF015 | O sistema deve rejeitar a quilometragem final informada caso o valor seja menor que o último checkpoint registrado.                                                                       | Alta       | Planejado |
+| RF016 | O sistema deve gerar automaticamente o timestamp de encerramento de turno a partir do relógio do servidor, sem permitir entrada manual desse valor.                                       | Alta       | Planejado |
+| RF017 | O sistema deve calcular automaticamente a distância percorrida no turno (km_final − km_inicial) e persistir o resultado vinculado ao turno.                                               | Alta       | Planejado |
+| RF018 | O sistema deve calcular automaticamente a duração do turno (timestamp_fim − timestamp_início) e persistir o resultado vinculado ao turno.                                                 | Alta       | Planejado |
+| RF019 | O sistema deve calcular automaticamente a velocidade média do turno (distância / duração em km/h) e persistir o resultado vinculado ao turno.                                             | Alta       | Planejado |
+| RF020 | O sistema deve calcular automaticamente a quilometragem total acumulada por equipe somando a distância percorrida em todos os turnos finalizados pelos seus corredores.                   | Alta       | Planejado |
+| RF021 | O sistema deve exibir um dashboard com placar e métricas atualizados automaticamente em até 10 segundos, sem atualização da página.                                                       | Alta       | Planejado |
+| RF022 | O sistema deve exibir um histórico (log) de entradas, saídas e checkpoints em ordem decrescente de timestamp.                                                                             | Alta       | Planejado |
+| RF023 | O sistema deve permitir a edição retroativa de registros por usuário autenticado.                                                                                                         | Alta       | Planejado |
+| RF024 | O sistema deve registrar automaticamente em log de auditoria toda edição retroativa, contendo identidade do usuário, campo alterado, valor anterior, valor novo e timestamp da alteração. | Alta       | Planejado |
+| RF025 | O sistema deve permitir o registro de checkpoints sem conexão com a internet, persistindo os dados localmente até que a conexão seja restabelecida.                                       | Alta       | Planejado |
+| RF026 | O sistema deve sincronizar automaticamente os dados registrados offline ao restabelecer a conexão, sem gerar duplicidade de registros.                                                    | Alta       | Planejado |
+| RF027 | O sistema deve exigir autenticação (login e senha) para os perfis de Administrador e Auditor antes de permitir qualquer alteração nos dados.                                              | Alta       | Planejado |
+| RF028 | O sistema deve detectar automaticamente inconsistências nos dados inseridos com base no histórico do corredor, equipe e esteira, gerando alertas em tempo real para o Auditor.            | Alta       | Planejado |
+| RF029 | O sistema deve exibir notificação visual destacada ao identificar inconsistências, bloqueando a confirmação do dado até revisão ou justificativa do Auditor.                              | Alta       | Planejado |
+| RF030 | O sistema deve emitir sinal sonoro ao identificar inconsistências, quando o som estiver habilitado nas configurações.                                                                     | Alta       | Planejado |
+| RF031 | O sistema deve permitir que o Auditor revise e corrija inconsistências detectadas antes da persistência final dos dados.                                                                  | Alta       | Planejado |
+| RF032 | O sistema deve permitir o registro manual de quilometragem a qualquer momento durante um turno ativo.                                                                                     | Média      | Planejado |
+| RF033 | O sistema deve gerar timestamp automático do servidor para todo registro manual de quilometragem.                                                                                         | Média      | Planejado |
+| RF034 | O sistema deve permitir iniciar um novo turno para outro corredor na mesma esteira em até 3 cliques a partir da tela de encerramento do turno anterior.                                   | Média      | Planejado |
+| RF035 | O sistema deve gerar a métrica de distância total percorrida por corredor ao longo do evento.                                                                                             | Média      | Planejado |
+| RF036 | O sistema deve gerar a métrica de média de distância por turno por corredor ao longo do evento.                                                                                           | Média      | Planejado |
+| RF037 | O sistema deve gerar snapshots de evolução de quilometragem por corredor a cada 60 minutos de evento decorrido.                                                                           | Média      | Planejado |
+| RF038 | O sistema deve exibir o status de cada esteira (Ocupada/Livre) em tempo real no painel de controle.                                                                                       | Média      | Planejado |
+| RF039 | O sistema deve sugerir alternância de esteira quando uma esteira permanecer ocupada por mais de 30 minutos consecutivos, exibindo alerta visual para o Auditor.                           | Média      | Planejado |
+| RF040 | O sistema deve disponibilizar modo TV com fonte ≥ 48px, contraste mínimo de 4,5:1 conforme WCAG AA, resolução 1920×1080, operável sem mouse e sem necessidade de login.                   | Média      | Planejado |
+| RF041 | O sistema deve permitir a filtragem do histórico por equipe.                                                                                                                              | Média      | Planejado |
+| RF042 | O sistema deve permitir a filtragem do histórico por esteira.                                                                                                                             | Média      | Planejado |
+| RF043 | O sistema deve permitir a filtragem do histórico por corredor.                                                                                                                            | Média      | Planejado |
+| RF044 | O sistema deve identificar e sinalizar a inconsistência de quilometragem final menor que a quilometragem inicial no encerramento de um turno.                                             | Média      | Planejado |
+| RF045 | O sistema deve identificar e sinalizar a inconsistência de intervalo entre checkpoints consecutivos superior a 10 minutos.                                                                | Média      | Planejado |
+| RF046 | O sistema deve identificar e sinalizar a inconsistência de corredor com mais de um turno simultâneo em aberto.                                                                            | Média      | Planejado |
+| RF047 | O sistema deve permitir exportação de dados em CSV contendo todos os turnos registrados.                                                                                                  | Média      | Planejado |
+| RF048 | O sistema deve permitir exportação de dados em CSV contendo todos os checkpoints registrados.                                                                                             | Média      | Planejado |
+| RF049 | O sistema deve disponibilizar uma tela de desempenho final por corredor ao término do evento, contendo distância total percorrida, tempo total em pista e velocidade média geral.         | Média      | Planejado |
+| RF050 | O sistema deve permitir o compartilhamento do desempenho final do corredor por meio de um link gerado automaticamente, acessível sem autenticação.                                        | Média      | Planejado |
+| RF051 | O sistema deve permitir o registro do local/região da etapa.                                                                                                                              | Baixa      | Planejado |
+| RF052 | O sistema deve permitir que o corredor acesse seu histórico completo de desempenho no evento após sua finalização.                                                                        | Baixa      | Planejado |
 
 <div align = "center">
   <sub> Quadro 13 - Requisitos Funcionais </sub><br>
@@ -816,11 +816,13 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 ### Critérios de Aceite (formato Gherkin)
 
 Os Critérios de Aceite formalizados nesta seção seguem a sintaxe Gherkin, estruturada nos blocos:
+
 ```gherkin
 Dado (pré-condição do sistema)
 Quando (ação executada pelo ator)
 Então (resultado esperado e verificável).
 ```
+
 Essa abordagem, amplamente adotada em metodologias ágeis como BDD (Behavior-Driven Development), transforma cada requisito em um ou mais cenários comportamentais testáveis ponta a ponta, eliminando ambiguidades de interpretação e servindo diretamente como base para testes automatizados.
 
 **RF001 – Cadastro de equipes**
@@ -1475,8 +1477,6 @@ Então o sistema deve exibir apenas os dados de desempenho do corredor, sem aces
 
 ---
 
-
-
 A estrutura de requisitos apresentada acima foi desenhada para transformar a dinâmica complexa do evento Red Bull 24 Horas em um fluxo digital ágil e seguro.
 Com esta base sólida, o projeto segue para a fase de implementação, onde cada ID listado servirá como critério de aceitação para garantir que a apuração final dos quilômetros seja 100% confiável, rastreável e transparente para ambas as equipes.
 
@@ -1567,49 +1567,49 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 
 ---
 
-Enquanto os Requisitos Funcionais (RF) descrevem *o que* o sistema faz, os Requisitos Não Funcionais (RNF) definem *como* ele deve operar. Eles estabelecem os padrões de qualidade, segurança e eficiência essenciais para que o software seja robusto sob condições reais de uso.
+Enquanto os Requisitos Funcionais (RF) descrevem _o que_ o sistema faz, os Requisitos Não Funcionais (RNF) definem _como_ ele deve operar. Eles estabelecem os padrões de qualidade, segurança e eficiência essenciais para que o software seja robusto sob condições reais de uso.
 
 Essas restrições podem atuar de forma transversal no sistema, impactando sua operação como um todo, ou governar fluxos críticos específicos da aplicação. Para estruturar essas características de qualidade, foi adotado um modelo baseado nos oito eixos da ISO/IEC 25010, adaptados às necessidades operacionais do parceiro e às condições reais de execução do evento esportivo.
 
-* **USAB (Usabilidade):** Relaciona-se à facilidade de uso, clareza visual e eficiência da interação humano-computador. Sua definição deriva do contexto operacional dos Auditores, que utilizam o sistema em ambientes externos, sob pressão temporal e alta movimentação, exigindo fluxos rápidos, interfaces legíveis e baixa incidência de erros operacionais.
+- **USAB (Usabilidade):** Relaciona-se à facilidade de uso, clareza visual e eficiência da interação humano-computador. Sua definição deriva do contexto operacional dos Auditores, que utilizam o sistema em ambientes externos, sob pressão temporal e alta movimentação, exigindo fluxos rápidos, interfaces legíveis e baixa incidência de erros operacionais.
 
-* **CONF (Confiabilidade):** Refere-se à capacidade do sistema de manter funcionamento consistente e íntegro mesmo diante de falhas parciais. Esse eixo foi definido considerando a necessidade de andamento contínuo da competição, evitando perda, duplicidade ou inconsistência de registros durante instabilidades de rede ou interrupções temporárias.
+- **CONF (Confiabilidade):** Refere-se à capacidade do sistema de manter funcionamento consistente e íntegro mesmo diante de falhas parciais. Esse eixo foi definido considerando a necessidade de andamento contínuo da competição, evitando perda, duplicidade ou inconsistência de registros durante instabilidades de rede ou interrupções temporárias.
 
 * **DES (Desempenho):** Está associado ao tempo de resposta e à eficiência no processamento das operações críticas. Sua relevância decorre da necessidade de atualização quase em tempo real dos dados operacionais, dashboards e informações exibidas ao público durante o evento.
 
-* **SUP (Suportabilidade):** Envolve a facilidade de manutenção, evolução, testes e correções do sistema. Esse eixo foi incorporado devido ao caráter incremental do desenvolvimento ao longo das sprints e à necessidade de rápida adaptação antes da execução oficial do evento.
+- **SUP (Suportabilidade):** Envolve a facilidade de manutenção, evolução, testes e correções do sistema. Esse eixo foi incorporado devido ao caráter incremental do desenvolvimento ao longo das sprints e à necessidade de rápida adaptação antes da execução oficial do evento.
 
-* **SEG (Segurança):** Abrange mecanismos de autenticação, controle de acesso e rastreabilidade das operações. Sua adoção busca garantir que apenas usuários autorizados possam manipular informações críticas da competição, preservando a integridade dos resultados e a auditabilidade das alterações realizadas.
+- **SEG (Segurança):** Abrange mecanismos de autenticação, controle de acesso e rastreabilidade das operações. Sua adoção busca garantir que apenas usuários autorizados possam manipular informações críticas da competição, preservando a integridade dos resultados e a auditabilidade das alterações realizadas.
 
-* **CAP (Capacidade):** Define os limites operacionais relacionados ao volume de acessos, registros e processamento simultâneo. Esse eixo foi estabelecido considerando o uso concorrente do sistema por operadores, dashboards em tempo real e processos contínuos de coleta de dados durante a competição.
+- **CAP (Capacidade):** Define os limites operacionais relacionados ao volume de acessos, registros e processamento simultâneo. Esse eixo foi estabelecido considerando o uso concorrente do sistema por operadores, dashboards em tempo real e processos contínuos de coleta de dados durante a competição.
 
-* **REST (Restrições):** Representa limitações técnicas, arquiteturais e de infraestrutura impostas pelo contexto operacional do parceiro. Inclui compatibilidade com dispositivos específicos, dependência mínima de serviços externos e adequação às condições físicas do ambiente de execução.
+- **REST (Restrições):** Representa limitações técnicas, arquiteturais e de infraestrutura impostas pelo contexto operacional do parceiro. Inclui compatibilidade com dispositivos específicos, dependência mínima de serviços externos e adequação às condições físicas do ambiente de execução.
 
-* **ORG (Organizacionais):** Relaciona o sistema às diretrizes institucionais, padrões visuais e exigências operacionais do parceiro. Esse eixo contempla a aderência à identidade visual do evento, além da necessidade de estabilização e congelamento da versão antes da operação oficial.
+- **ORG (Organizacionais):** Relaciona o sistema às diretrizes institucionais, padrões visuais e exigências operacionais do parceiro. Esse eixo contempla a aderência à identidade visual do evento, além da necessidade de estabilização e congelamento da versão antes da operação oficial.
 
-| ID | Eixo | RF Relacionado | Requisito Não Funcional | Critério Mensurável (SMART) |
-| :--- | :--- | :--- | :--- | :--- |
-| **RNF001** | USAB — Usabilidade | RF004, RF005, RF006, RF007, RF009, RF022 | O fluxo principal de operação (troca de corredores e início de turno) deve ser ágil para o Auditor. | **95%** dos operadores devem concluir o fluxo de início/troca em até **3 minutos** (via testes de usabilidade). |
-| **RNF002** | USAB — Usabilidade | RF013, RF025 | O sistema deve manter alta legibilidade visual em ambientes externos e no modo TV. | A interface deve atender ao nível **AA da WCAG 2.1** com contraste mínimo de **4.5:1** e fonte ≥ 48px no modo TV. |
-| **RNF003** | USAB — Usabilidade | Global | O sistema deve fornecer mensagens de erro com ações corretivas claras, evitando códigos técnicos. | **100%** das mensagens de erro de validação devem sugerir a correção (ex: "km final deve ser > km inicial"). |
-| **RNF004** | USAB — Usabilidade | RF007, RF008, RF022 | O sistema deve minimizar a quantidade de cliques e telas necessárias para que o Auditor execute ações operacionais urgentes durante o uso da esteira. | Nenhuma ação operacional crítica (início/checkpoint/troca) deve exigir mais de **3 cliques/toques**. |
-| **RNF005** | CONF — Confiabilidade | RF016 | O sistema deve possuir tolerância a falhas de rede, permitindo a operação contínua do evento. | **100%** dos dados registrados offline devem ser sincronizados em até **30 segundos** após a reconexão, sem duplicidade. |
-| **RNF006** | CONF — Confiabilidade | Global | O sistema deve garantir a integridade transacional, impedindo dados que firam as regras de negócio. | **100%** das tentativas de persistência de dados inválidos (ex: duplicatas) devem ser bloqueadas no servidor. |
-| **RNF007** | CONF — Confiabilidade | RF018, RF027 | O sistema deve ser resiliente na detecção de falhas operacionais e inconsistências lógicas. | **100%** das inconsistências definidas no RF027 devem gerar alertas sonoros/visuais automáticos. |
-| **RNF008** | DES — Desempenho | RF007, RF008, RF009, RF010, RF021 | O sistema deve processar os registros operacionais de turnos e checkpoints com baixa latência. | O tempo de resposta da API para registros operacionais (P95) deve ser inferior a **200ms**. |
-| **RNF009** | DES — Desempenho | Global | O sistema deve fornecer feedback visual imediato após ações do usuário na interface. | Alertas de inconsistência e validações de campo devem ser exibidos em até **100ms**. |
-| **RNF010** | DES — Desempenho | RF013, RF025 | O dashboard e o modo TV devem apresentar dados atualizados de forma contínua para o público. | A atualização automática de métricas e placares deve ocorrer em no máximo **10 segundos** sem recarregamento manual. |
-| **RNF011** | DES — Desempenho | RF011, RF012, RF023, RF029 | O sistema deve consolidar e exibir as estatísticas de desempenho final de forma quase instantânea. | O processamento e renderização de métricas consolidadas deve ser concluído em até **1 segundo**. |
-| **RNF012** | SEG — Segurança | RF017 | O sistema deve aplicar controle de acesso estrito para perfis administrativos e de auditoria. | **100%** das tentativas de acesso sem autenticação válida (Login/Senha) devem ser rejeitadas com erro 401. |
-| **RNF013** | SEG — Segurança | RF015, Global | O sistema deve manter uma trilha de auditoria para edições retroativas e alterações críticas. | **100%** das edições devem registrar obrigatoriamente: `Usuário`, `Timestamp` e `Dado Anterior`. |
-| **RNF014** | SUP — Suportabilidade | Global | A arquitetura do sistema deve isolar o processamento e as regras de negócio exclusivamente na API (Backend). | A camada visual (Frontend) deve atuar apenas como consumidora; **100%** dos cálculos estatísticos e validações de regras de negócio devem ocorrer no backend. |
-| **RNF015** | SUP — Suportabilidade | Global | O código-fonte deve garantir facilidade de suporte técnico através de testes automatizados. | Cobertura mínima de **75% em testes unitários** nos módulos de sincronização e regras de inconsistência. |
-| **RNF016** | CAP — Capacidade | Global | O sistema deve suportar múltiplos acessos simultâneos (Auditores + Modo TV + Registros). | Suportar no mínimo **50 usuários simultâneos** ativos mantendo o tempo de resposta geral abaixo de **500ms**. |
-| **RNF017** | CAP — Capacidade | RF014, RF023, RF026, RF028 | O sistema deve manter o desempenho ao lidar com o histórico acumulado de logs e turnos. | Consultas e exportações de até **10.000 registros** de histórico não devem ultrapassar **3 segundos** de processamento. |
-| **RNF018** | REST — Restrições | Global |A compatibilidade do sistema cliente é restrita aos dispositivos e navegadores definidos para a operação do evento. | A operação do sistema é garantida exclusivamente em **Tablets Android 10+** rodando as duas últimas versões estáveis dos navegadores **Chrome ou Safari**. |
-| **RNF019** | REST — Restrições | Global | O sistema possui restrição de dependência externa para garantir a autonomia da operação principal. | Nenhuma funcionalidade de registro pode travar ou falhar devido à indisponibilidade de APIs externas. |
-| **RNF020** | ORG — Organizacionais | Global | A interface deve respeitar a identidade visual do parceiro e patrocinadores do evento. | **100%** dos componentes de UI devem seguir o *Design System* aprovado, validado em auditoria pré-sprint. |
-| **RNF021** | ORG — Organizacionais | Global | O desenvolvimento do sistema deve ser concluído e bloqueado com antecedência para garantir a segurança da operação ao vivo. | A versão final do software deve ser testada, aprovada e bloqueada para novas alterações com pelo menos **30 dias de antecedência** da data do evento. |
+| ID         | Eixo                  | RF Relacionado                           | Requisito Não Funcional                                                                                                                               | Critério Mensurável (SMART)                                                                                                                                   |
+| :--------- | :-------------------- | :--------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **RNF001** | USAB — Usabilidade    | RF004, RF005, RF006, RF007, RF009, RF022 | O fluxo principal de operação (troca de corredores e início de turno) deve ser ágil para o Auditor.                                                   | **95%** dos operadores devem concluir o fluxo de início/troca em até **3 minutos** (via testes de usabilidade).                                               |
+| **RNF002** | USAB — Usabilidade    | RF013, RF025                             | O sistema deve manter alta legibilidade visual em ambientes externos e no modo TV.                                                                    | A interface deve atender ao nível **AA da WCAG 2.1** com contraste mínimo de **4.5:1** e fonte ≥ 48px no modo TV.                                             |
+| **RNF003** | USAB — Usabilidade    | Global                                   | O sistema deve fornecer mensagens de erro com ações corretivas claras, evitando códigos técnicos.                                                     | **100%** das mensagens de erro de validação devem sugerir a correção (ex: "km final deve ser > km inicial").                                                  |
+| **RNF004** | USAB — Usabilidade    | RF007, RF008, RF022                      | O sistema deve minimizar a quantidade de cliques e telas necessárias para que o Auditor execute ações operacionais urgentes durante o uso da esteira. | Nenhuma ação operacional crítica (início/checkpoint/troca) deve exigir mais de **3 cliques/toques**.                                                          |
+| **RNF005** | CONF — Confiabilidade | RF016                                    | O sistema deve possuir tolerância a falhas de rede, permitindo a operação contínua do evento.                                                         | **100%** dos dados registrados offline devem ser sincronizados em até **30 segundos** após a reconexão, sem duplicidade.                                      |
+| **RNF006** | CONF — Confiabilidade | Global                                   | O sistema deve garantir a integridade transacional, impedindo dados que firam as regras de negócio.                                                   | **100%** das tentativas de persistência de dados inválidos (ex: duplicatas) devem ser bloqueadas no servidor.                                                 |
+| **RNF007** | CONF — Confiabilidade | RF018, RF027                             | O sistema deve ser resiliente na detecção de falhas operacionais e inconsistências lógicas.                                                           | **100%** das inconsistências definidas no RF027 devem gerar alertas sonoros/visuais automáticos.                                                              |
+| **RNF008** | DES — Desempenho      | RF007, RF008, RF009, RF010, RF021        | O sistema deve processar os registros operacionais de turnos e checkpoints com baixa latência.                                                        | O tempo de resposta da API para registros operacionais (P95) deve ser inferior a **200ms**.                                                                   |
+| **RNF009** | DES — Desempenho      | Global                                   | O sistema deve fornecer feedback visual imediato após ações do usuário na interface.                                                                  | Alertas de inconsistência e validações de campo devem ser exibidos em até **100ms**.                                                                          |
+| **RNF010** | DES — Desempenho      | RF013, RF025                             | O dashboard e o modo TV devem apresentar dados atualizados de forma contínua para o público.                                                          | A atualização automática de métricas e placares deve ocorrer em no máximo **10 segundos** sem recarregamento manual.                                          |
+| **RNF011** | DES — Desempenho      | RF011, RF012, RF023, RF029               | O sistema deve consolidar e exibir as estatísticas de desempenho final de forma quase instantânea.                                                    | O processamento e renderização de métricas consolidadas deve ser concluído em até **1 segundo**.                                                              |
+| **RNF012** | SEG — Segurança       | RF017                                    | O sistema deve aplicar controle de acesso estrito para perfis administrativos e de auditoria.                                                         | **100%** das tentativas de acesso sem autenticação válida (Login/Senha) devem ser rejeitadas com erro 401.                                                    |
+| **RNF013** | SEG — Segurança       | RF015, Global                            | O sistema deve manter uma trilha de auditoria para edições retroativas e alterações críticas.                                                         | **100%** das edições devem registrar obrigatoriamente: `Usuário`, `Timestamp` e `Dado Anterior`.                                                              |
+| **RNF014** | SUP — Suportabilidade | Global                                   | A arquitetura do sistema deve isolar o processamento e as regras de negócio exclusivamente na API (Backend).                                          | A camada visual (Frontend) deve atuar apenas como consumidora; **100%** dos cálculos estatísticos e validações de regras de negócio devem ocorrer no backend. |
+| **RNF015** | SUP — Suportabilidade | Global                                   | O código-fonte deve garantir facilidade de suporte técnico através de testes automatizados.                                                           | Cobertura mínima de **75% em testes unitários** nos módulos de sincronização e regras de inconsistência.                                                      |
+| **RNF016** | CAP — Capacidade      | Global                                   | O sistema deve suportar múltiplos acessos simultâneos (Auditores + Modo TV + Registros).                                                              | Suportar no mínimo **50 usuários simultâneos** ativos mantendo o tempo de resposta geral abaixo de **500ms**.                                                 |
+| **RNF017** | CAP — Capacidade      | RF014, RF023, RF026, RF028               | O sistema deve manter o desempenho ao lidar com o histórico acumulado de logs e turnos.                                                               | Consultas e exportações de até **10.000 registros** de histórico não devem ultrapassar **3 segundos** de processamento.                                       |
+| **RNF018** | REST — Restrições     | Global                                   | A compatibilidade do sistema cliente é restrita aos dispositivos e navegadores definidos para a operação do evento.                                   | A operação do sistema é garantida exclusivamente em **Tablets Android 10+** rodando as duas últimas versões estáveis dos navegadores **Chrome ou Safari**.    |
+| **RNF019** | REST — Restrições     | Global                                   | O sistema possui restrição de dependência externa para garantir a autonomia da operação principal.                                                    | Nenhuma funcionalidade de registro pode travar ou falhar devido à indisponibilidade de APIs externas.                                                         |
+| **RNF020** | ORG — Organizacionais | Global                                   | A interface deve respeitar a identidade visual do parceiro e patrocinadores do evento.                                                                | **100%** dos componentes de UI devem seguir o _Design System_ aprovado, validado em auditoria pré-sprint.                                                     |
+| **RNF021** | ORG — Organizacionais | Global                                   | O desenvolvimento do sistema deve ser concluído e bloqueado com antecedência para garantir a segurança da operação ao vivo.                           | A versão final do software deve ser testada, aprovada e bloqueada para novas alterações com pelo menos **30 dias de antecedência** da data do evento.         |
 
 <div align = "center">
   <sub> Quadro 16 - Requisitos Não Funcionais </sub><br>
@@ -1711,7 +1711,7 @@ Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação
 
 ### 3.2.4. Diagrama de Sequência UML (sprint 3)
 
-A modelagem de software é uma etapa fundamental no desenvolvimento de aplicações, pois permite que equipes de desenvolvimento visualizem, comuniquem e validem o comportamento do sistema antes mesmo de escrever a primeira linha de código. Dentro das ferramentas de modelagem, a UML (Unified Modeling Language, ou Linguagem de Modelagem Unificada) é o padrão mais amplamente adotado na indústria de software. Trata-se de um conjunto de notações gráficas que descrevem diferentes aspectos de um sistema  desde sua estrutura estática até o seu comportamento dinâmico em tempo de execução.
+A modelagem de software é uma etapa fundamental no desenvolvimento de aplicações, pois permite que equipes de desenvolvimento visualizem, comuniquem e validem o comportamento do sistema antes mesmo de escrever a primeira linha de código. Dentro das ferramentas de modelagem, a UML (Unified Modeling Language, ou Linguagem de Modelagem Unificada) é o padrão mais amplamente adotado na indústria de software. Trata-se de um conjunto de notações gráficas que descrevem diferentes aspectos de um sistema desde sua estrutura estática até o seu comportamento dinâmico em tempo de execução.
 
 Entre os diversos tipos de diagramas que a UML oferece, os Diagramas de Sequência são especialmente úteis para representar a troca de mensagens entre os componentes de um sistema ao longo do tempo. Em termos simples, eles respondem à pergunta: quem faz o quê, em qual ordem, e como os componentes se comunicam para realizar uma determinada tarefa? Cada participante do sistema, como um controlador, um serviço ou um banco de dados, é representado como uma coluna vertical (chamada de lifeline), e as setas horizontais entre essas colunas representam as chamadas e respostas trocadas durante a execução de um processo.
 
@@ -1721,7 +1721,7 @@ A seguir, cada diagrama é apresentado com uma descrição detalhada de seus flu
 
 #### 3.2.4.1. Diagrama de Sequência: Eventos
 
-A gestão de Eventos representa a visão macro da competição, sendo a configuração inicial e o núcleo organizacional do desafio Red Bull 24 Horas. O Diagrama de Sequência de Eventos descreve como a aplicação web orquestra processos fundamentais, como a criação do evento (incluindo a validação de data, local e esteiras), o cálculo de métricas em tempo real, como quilometragem total por equipe, velocidade média e equipes em pista  e a manutenção do placar oficial. Neste contexto, um evento é a unidade central da plataforma que coordena a disputa entre as duas equipes de 16 atletas, gerindo os dados das duas esteiras por equipe para garantir uma apuração precisa que substitua o método manual, permitindo ainda a detecção automática de inconsistências (como gaps de checkpoints) e a exportação de dados consolidados para auditoria pós-evento.
+A gestão de Eventos representa a visão macro da competição, sendo a configuração inicial e o núcleo organizacional do desafio Red Bull 24 Horas. O Diagrama de Sequência de Eventos descreve como a aplicação web orquestra processos fundamentais, como a criação do evento (incluindo a validação de data, local e esteiras), o cálculo de métricas em tempo real, como quilometragem total por equipe, velocidade média e equipes em pista e a manutenção do placar oficial. Neste contexto, um evento é a unidade central da plataforma que coordena a disputa entre as duas equipes de 16 atletas, gerindo os dados das duas esteiras por equipe para garantir uma apuração precisa que substitua o método manual, permitindo ainda a detecção automática de inconsistências (como gaps de checkpoints) e a exportação de dados consolidados para auditoria pós-evento.
 
 <div align="center">
   <sub>Imagem 11 - Diagrama de Sequencia: Eventos</sub><br>
@@ -1789,7 +1789,7 @@ O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na estei
 **1. Início do Turno:** O Cliente envia uma requisição `POST /turnos/iniciar` contendo as identificações do corredor e da esteira, além da quilometragem inicial. O TurnoController aciona o TurnoService para validar se o atleta e a esteira estão livres. Confirmada a disponibilidade, o turno é criado com status "em andamento" e o estado da esteira é atualizado para "Ocupada" no banco de dados.
 iodicamente (como a cada 5 minutos através de um alerta na interface ou a cada 30 minutos como backup), o auditor da prova envia a quilometragem atual da esteira via `POST /turnos/{id}/checkpoints`. O sistema valida se o valor atual é maior ou igual ao último registro, gravando a marcação de tempo (timestamp) para garantir um histórico seguro caso ocorram falhas no equipamento.
 
-**2. Checkpoints Obrigatórios e Voluntários:** Periodicamente (como a cada 5 minutos através de um alerta na interface ou a cada 30 minutos como backup), o auditor da prova envia a quilometragem atual da esteira via `POST /turnos/{id}/checkpoints`. O sistema valida se o valor atual é maior ou igual ao último registro, gravando a marcação de tempo (timestamp) para garantir um histórico seguro caso ocorram falhas no equipamento. 
+**2. Checkpoints Obrigatórios e Voluntários:** Periodicamente (como a cada 5 minutos através de um alerta na interface ou a cada 30 minutos como backup), o auditor da prova envia a quilometragem atual da esteira via `POST /turnos/{id}/checkpoints`. O sistema valida se o valor atual é maior ou igual ao último registro, gravando a marcação de tempo (timestamp) para garantir um histórico seguro caso ocorram falhas no equipamento.
 
 **3. Finalização do Turno:** Quando o atleta encerra sua corrida, envia-se a requisição `POST /turnos/{id}/finalizar` com o valor final lido na esteira. O serviço calcula automaticamente a distância percorrida no turno (diferença entre o km final e o inicial), a duração exata e a velocidade média. O turno é encerrado e a esteira volta ao status de "Livre".
 
@@ -1858,7 +1858,6 @@ A modelagem da aplicação web do Red Bull 24 Horas por meio dos Diagramas de Se
 Cada um dos fluxos detalhados cumpre um papel estratégico: a gestão de Equipes e Eventos assegura o cumprimento do regulamento e a centralização dos dados; o fluxo de Turnos viabiliza o dinamismo extremo do revezamento sem sobrecarregar a equipe operacional; a rotina de Histórico fornece transparência imediata; e os mecanismos de Registros e Sincronização Offline blindam a competição contra quedas de conectividade e falhas de digitação.
 
 Em suma, a aplicação desta metodologia na fase de concepção do software garante que a transição da prancheta física para o ecossistema digital ocorra de maneira fluida, estável e perfeitamente auditável, entregando aos parceiros da Red Bull uma ferramenta de alto nível para o controle de suas experiências esportivas.
-
 
 ### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
 
@@ -1994,8 +1993,6 @@ _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelid
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-
-
 O Modelo Entidade-Relacionamento (MER) é a representação conceitual do banco de dados, na qual se descrevem as entidades do domínio, seus atributos e os relacionamentos que as conectam, abstraindo decisões de implementação física como tipos de dados, índices ou chaves estrangeiras. Para este projeto, o MER traduz em linguagem de dados o domínio do Red Bull 24 Horas modelado nas seções anteriores: o evento operado por um gerente (Manager), suas equipes (Team) e atletas (Athlete), e o registro de cada sessão de corrida (Shift) auditada à beira da esteira (Treadmill), com os checkpoints periódicos e logs que sustentam a apuração oficial da competição. A notação adotada é a de **Peter Chen**, na qual entidades são representadas por retângulos, atributos por elipses (com elipses preenchidas indicando chave primária e atributos compostos derivados do atributo-pai), relacionamentos por losangos e a cardinalidade explicitada nas extremidades de cada relacionamento com a razão (1) e (N). Os nomes de entidades, atributos e relacionamentos foram padronizados em inglês para garantir consistência com a nomenclatura técnica adotada no modelo relacional e no código-fonte da aplicação.
 
 <div align="center">
@@ -2013,17 +2010,17 @@ As entidades foram derivadas diretamente do domínio descrito no TAPI e dos caso
   <sub>Quadro 20 - Entidades e atributos do MER</sub>
 </div>
 
-| Entidade       | Descrição                                                                                                                                                                       | Atributos                                                                       | Chave primária |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | -------------- |
-| **Manager**    | Gerente regional do time de Field Marketing da Red Bull, responsável por instanciar e gerir os eventos sob sua regional.                                                        | `ID`, `NAME`                                                                    | `ID`           |
-| **Event**      | Instância de uma etapa do Red Bull 24 Horas (regional ou final nacional), identificada por local e título da edição.                                                            | `ID`, `LOCAL`, `TITLE`                                                          | `ID`           |
-| **Team**       | Uma das duas equipes que competem no evento (tradicionalmente "azul" e "vermelha"), à qual os atletas são vinculados antes do início da competição.                             | `ID`, `NAME`                                                                    | `ID`           |
-| **Athlete**    | Corredor inscrito que reveza com seu time durante as 24 horas, identificado pessoalmente por CPF para fins de auditoria pós-evento.                                             | `ID`, `NAME`, `CPF`, `GENDER`                                                   | `ID`           |
-| **Auditor**    | Operador do sistema (substituindo a operação atual da prancheta) que registra os turnos e seus checkpoints à beira da esteira.                                                  | `ID`, `STATUS`, `NUMBER`                                                        | `ID`           |
-| **Shift**      | Sessão individual de corrida — um único atleta em uma única esteira, do play até o stop, antes da próxima zeragem. É a entidade central do registro operacional do evento.      | `ID`, `STATUS`, `INIT`, `END`, `TIME`, `SPEED`, `KM_INIT`, `KM_END`, `DISTANCE` | `ID`           |
-| **Treadmill**  | Equipamento físico (Technogym) onde os turnos ocorrem. Cada equipe opera duas esteiras simultaneamente durante o evento.                                                        | `ID`, `STATUS`, `NUMBER`                                                        | `ID`           |
+| Entidade       | Descrição                                                                                                                                                                                        | Atributos                                                                       | Chave primária |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- | -------------- |
+| **Manager**    | Gerente regional do time de Field Marketing da Red Bull, responsável por instanciar e gerir os eventos sob sua regional.                                                                         | `ID`, `NAME`                                                                    | `ID`           |
+| **Event**      | Instância de uma etapa do Red Bull 24 Horas (regional ou final nacional), identificada por local e título da edição.                                                                             | `ID`, `LOCAL`, `TITLE`                                                          | `ID`           |
+| **Team**       | Uma das duas equipes que competem no evento (tradicionalmente "azul" e "vermelha"), à qual os atletas são vinculados antes do início da competição.                                              | `ID`, `NAME`                                                                    | `ID`           |
+| **Athlete**    | Corredor inscrito que reveza com seu time durante as 24 horas, identificado pessoalmente por CPF para fins de auditoria pós-evento.                                                              | `ID`, `NAME`, `CPF`, `GENDER`                                                   | `ID`           |
+| **Auditor**    | Operador do sistema (substituindo a operação atual da prancheta) que registra os turnos e seus checkpoints à beira da esteira.                                                                   | `ID`, `STATUS`, `NUMBER`                                                        | `ID`           |
+| **Shift**      | Sessão individual de corrida — um único atleta em uma única esteira, do play até o stop, antes da próxima zeragem. É a entidade central do registro operacional do evento.                       | `ID`, `STATUS`, `INIT`, `END`, `TIME`, `SPEED`, `KM_INIT`, `KM_END`, `DISTANCE` | `ID`           |
+| **Treadmill**  | Equipamento físico (Technogym) onde os turnos ocorrem. Cada equipe opera duas esteiras simultaneamente durante o evento.                                                                         | `ID`, `STATUS`, `NUMBER`                                                        | `ID`           |
 | **Checkpoint** | Marcação periódica de segurança (referência de 5 em 5 minutos) que registra a quilometragem parcial dentro de um turno em andamento, permitindo recuperação em caso de falha técnica da esteira. | `ID`, `TIMESTAMP`, `TYPE` (`MANDATORY` / `VOLUNTARY`), `DISTANCE`               | `ID`           |
-| **Log**        | Registro auditável das ações executadas dentro de um turno (início, checkpoint e fim), garantindo rastreabilidade completa para a auditoria formal pós-evento.                  | `ID`, `TIMESTAMP`, `TYPE` (`INIT` / `CHECKPOINT` / `END`)                       | `ID`           |
+| **Log**        | Registro auditável das ações executadas dentro de um turno (início, checkpoint e fim), garantindo rastreabilidade completa para a auditoria formal pós-evento.                                   | `ID`, `TIMESTAMP`, `TYPE` (`INIT` / `CHECKPOINT` / `END`)                       | `ID`           |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -2038,16 +2035,16 @@ Os relacionamentos foram modelados a partir das regras de negócio levantadas na
   <sub>Quadro 21 - Relacionamentos e cardinalidades do MER</sub>
 </div>
 
-| Relacionamento | Entidade A | Cardinalidade | Entidade B  | Descrição                                                                                                                                                                                                |
-| -------------- | ---------- | ------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Manages**    | Manager    | (1, N)        | Event       | Um gerente regional pode gerir vários eventos (etapas regionais distintas ao longo da temporada), mas cada evento é gerido por exatamente um gerente responsável.                                        |
-| **Has**        | Event      | (1, N)        | Team        | Cada evento possui duas equipes, e cada uma pertence a um único evento. A entidade Team é instanciada por edição, refletindo a natureza efêmera da competição. |
-| **Rosters**    | Team       | (1, N)        | Athlete     | Uma equipe escala vários atletas (tipicamente 16 por equipe, conforme briefing), e cada atleta pertence a uma única equipe dentro de um mesmo evento.                                                    |
-| **Performs**   | Athlete    | (1, N)        | Shift       | Um atleta realiza vários turnos durante as 24 horas (cada entrada na esteira é um turno distinto), e cada turno é realizado por exatamente um atleta refletindo a regra de que a esteira é zerada a cada troca de corredor. |
-| **Audits**     | Auditor    | (1, N)        | Shift       | Um auditor é responsável por auditar diversos turnos ao longo do seu plantão na operação, e cada turno é auditado por exatamente um auditor, garantindo responsabilidade unívoca sobre cada registro.    |
-| **Occurs On**  | Shift      | (N, 1)        | Treadmill   | Vários turnos ocorrem ao longo das 24 horas em uma mesma esteira (que é zerada entre eles), enquanto cada turno acontece em uma única esteira específica.                                                |
-| **Records**    | Shift      | (1, N)        | Checkpoint  | Cada turno guarda múltiplos checkpoints periódicos (a marcação de 5 em 5 minutos descrita pelo parceiro), enquanto cada checkpoint pertence a exatamente um turno, não existe checkpoint isolado fora de uma sessão de corrida ativa. |
-| **Has**        | Shift      | (1, 1)        | Log         | Cada turno guarda exatamente um log de ações associado, que armazena cronologicamente os eventos `INIT`, `CHECKPOINT` e `END` daquela sessão, sustentando a trilha de auditoria pós-evento.              |
+| Relacionamento | Entidade A | Cardinalidade | Entidade B | Descrição                                                                                                                                                                                                                             |
+| -------------- | ---------- | ------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Manages**    | Manager    | (1, N)        | Event      | Um gerente regional pode gerir vários eventos (etapas regionais distintas ao longo da temporada), mas cada evento é gerido por exatamente um gerente responsável.                                                                     |
+| **Has**        | Event      | (1, N)        | Team       | Cada evento possui duas equipes, e cada uma pertence a um único evento. A entidade Team é instanciada por edição, refletindo a natureza efêmera da competição.                                                                        |
+| **Rosters**    | Team       | (1, N)        | Athlete    | Uma equipe escala vários atletas (tipicamente 16 por equipe, conforme briefing), e cada atleta pertence a uma única equipe dentro de um mesmo evento.                                                                                 |
+| **Performs**   | Athlete    | (1, N)        | Shift      | Um atleta realiza vários turnos durante as 24 horas (cada entrada na esteira é um turno distinto), e cada turno é realizado por exatamente um atleta refletindo a regra de que a esteira é zerada a cada troca de corredor.           |
+| **Audits**     | Auditor    | (1, N)        | Shift      | Um auditor é responsável por auditar diversos turnos ao longo do seu plantão na operação, e cada turno é auditado por exatamente um auditor, garantindo responsabilidade unívoca sobre cada registro.                                 |
+| **Occurs On**  | Shift      | (N, 1)        | Treadmill  | Vários turnos ocorrem ao longo das 24 horas em uma mesma esteira (que é zerada entre eles), enquanto cada turno acontece em uma única esteira específica.                                                                             |
+| **Records**    | Shift      | (1, N)        | Checkpoint | Cada turno guarda múltiplos checkpoints periódicos (a marcação de 5 em 5 minutos descrita pelo parceiro), enquanto cada checkpoint pertence a exatamente um turno, não existe checkpoint isolado fora de uma sessão de corrida ativa. |
+| **Has**        | Shift      | (1, 1)        | Log        | Cada turno guarda exatamente um log de ações associado, que armazena cronologicamente os eventos `INIT`, `CHECKPOINT` e `END` daquela sessão, sustentando a trilha de auditoria pós-evento.                                           |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -2083,51 +2080,51 @@ O DER traduz o modelo conceitual do MER para a estrutura relacional do banco de 
   <sub>Quadro 22 - Tabelas e colunas do DER</sub>
 </div>
 
-| Tabela          | Coluna               | Tipo      | Restrições                                    | Descrição                                                       |
-| --------------- | -------------------- | --------- | --------------------------------------------- | --------------------------------------------------------------- |
-| **Managers**    | `id`                 | SERIAL    | PK                                            | Identificador único do gerente                                  |
-|                 | `cpf`                | VARCHAR   | UNIQUE                                        | CPF do gerente                                                  |
-|                 | `name`               | VARCHAR   | NOT NULL                                      | Nome completo                                                   |
-| **Events**      | `id`                 | SERIAL    | PK                                            | Identificador único do evento                                   |
-|                 | `title`              | VARCHAR   | NOT NULL UNIQUE                               | Título da edição (ex.: "Red Bull 24 Horas SP 2026")             |
-|                 | `local`              | VARCHAR   | NOT NULL UNIQUE                               | Local de realização                                             |
-|                 | `manager_id`         | INT       | FK → Managers(id)                             | Gerente responsável                                             |
-| **Teams**       | `id`                 | SERIAL    | PK                                            | Identificador único da equipe                                   |
-|                 | `name`               | VARCHAR   | NOT NULL UNIQUE                               | Nome da equipe (ex.: "Azul", "Vermelha")                        |
-|                 | `event_id`           | INT       | FK → Events(id)                               | Evento ao qual a equipe pertence                                |
-| **Athletes**    | `id`                 | SERIAL    | PK                                            | Identificador único do atleta                                   |
-|                 | `name`               | VARCHAR   | NOT NULL                                      | Nome completo                                                   |
-|                 | `gender`             | VARCHAR   | NOT NULL                                      | Gênero, utilizado para apuração por categoria                   |
-|                 | `cpf`                | VARCHAR   | UNIQUE                                        | CPF do atleta                                                   |
-|                 | `team_id`            | INT       | FK → Teams(id)                                | Equipe à qual o atleta pertence                                 |
-| **Auditors**    | `id`                 | SERIAL    | PK                                            | Identificador único do auditor                                  |
-|                 | `name`               | VARCHAR   | NOT NULL                                      | Nome do auditor                                                 |
-|                 | `cpf`                | VARCHAR   | UNIQUE                                        | CPF do auditor                                                  |
-|                 | `registration_number`| INT       | NOT NULL UNIQUE                               | Número de registro funcional                                    |
-|                 | `is_active`          | BOOLEAN   | DEFAULT FALSE                                 | Indica se o auditor está ativo no sistema                       |
-| **Treadmills**  | `id`                 | SERIAL    | PK                                            | Identificador único da esteira                                  |
-|                 | `shift_id`           | INT       | FK → Shifts(id)                               | Turno atualmente em execução                                    |
-|                 | `treadmill_number`   | INT       | NOT NULL UNIQUE                               | Número físico da esteira (Technogym)                            |
-| **Shifts**      | `id`                 | SERIAL    | PK                                            | Identificador único do turno                                    |
-|                 | `status`             | VARCHAR   | NOT NULL CHECK ('pending','in progress','completed') | Estado do turno                                          |
-|                 | `athlete_id`         | INT       | FK → Athletes(id)                             | Atleta realizando o turno                                       |
-|                 | `auditor_id`         | INT       | FK → Auditors(id)                             | Auditor responsável pelo registro                               |
-|                 | `start_at`           | TIMESTAMP | —                                             | Início do turno                                                 |
-|                 | `end_at`             | TIMESTAMP | —                                             | Encerramento do turno                                           |
-|                 | `time_total`         | INTERVAL  | —                                             | Duração total (calculada ao finalizar)                          |
-|                 | `speed`              | INT       | NOT NULL                                      | Velocidade configurada (km/h)                                   |
-|                 | `km_start`           | INT       | NOT NULL                                      | Quilometragem inicial no odômetro                               |
-|                 | `km_end`             | INT       | NOT NULL                                      | Quilometragem final no odômetro                                 |
-|                 | `distance`           | INT       | NOT NULL                                      | Distância percorrida (`km_end - km_start`)                      |
-| **Checkpoints** | `id`                 | SERIAL    | PK                                            | Identificador único do checkpoint                               |
-|                 | `shift_id`           | INT       | FK → Shifts(id)                               | Turno ao qual o checkpoint pertence                             |
-|                 | `timestamp`          | TIMESTAMP | —                                             | Data e hora do registro                                         |
-|                 | `distance`           | INT       | NOT NULL                                      | Quilometragem parcial no momento do checkpoint                  |
-|                 | `type`               | VARCHAR   | CHECK ('mandatory', 'voluntary')              | Obrigatório (a cada 5 min) ou voluntário                        |
-| **Logs**        | `id`                 | SERIAL    | PK                                            | Identificador único do log                                      |
-|                 | `shift_id`           | INT       | FK NOT NULL → Shifts(id)                      | Turno ao qual o log está vinculado                              |
-|                 | `timestamp`          | TIMESTAMP | NOT NULL                                      | Data e hora da ação                                             |
-|                 | `type`               | VARCHAR   | CHECK ('created', 'updated', 'finished')      | Tipo da ação auditada                                           |
+| Tabela          | Coluna                | Tipo      | Restrições                                           | Descrição                                           |
+| --------------- | --------------------- | --------- | ---------------------------------------------------- | --------------------------------------------------- |
+| **Managers**    | `id`                  | SERIAL    | PK                                                   | Identificador único do gerente                      |
+|                 | `cpf`                 | VARCHAR   | UNIQUE                                               | CPF do gerente                                      |
+|                 | `name`                | VARCHAR   | NOT NULL                                             | Nome completo                                       |
+| **Events**      | `id`                  | SERIAL    | PK                                                   | Identificador único do evento                       |
+|                 | `title`               | VARCHAR   | NOT NULL UNIQUE                                      | Título da edição (ex.: "Red Bull 24 Horas SP 2026") |
+|                 | `local`               | VARCHAR   | NOT NULL UNIQUE                                      | Local de realização                                 |
+|                 | `manager_id`          | INT       | FK → Managers(id)                                    | Gerente responsável                                 |
+| **Teams**       | `id`                  | SERIAL    | PK                                                   | Identificador único da equipe                       |
+|                 | `name`                | VARCHAR   | NOT NULL UNIQUE                                      | Nome da equipe (ex.: "Azul", "Vermelha")            |
+|                 | `event_id`            | INT       | FK → Events(id)                                      | Evento ao qual a equipe pertence                    |
+| **Athletes**    | `id`                  | SERIAL    | PK                                                   | Identificador único do atleta                       |
+|                 | `name`                | VARCHAR   | NOT NULL                                             | Nome completo                                       |
+|                 | `gender`              | VARCHAR   | NOT NULL                                             | Gênero, utilizado para apuração por categoria       |
+|                 | `cpf`                 | VARCHAR   | UNIQUE                                               | CPF do atleta                                       |
+|                 | `team_id`             | INT       | FK → Teams(id)                                       | Equipe à qual o atleta pertence                     |
+| **Auditors**    | `id`                  | SERIAL    | PK                                                   | Identificador único do auditor                      |
+|                 | `name`                | VARCHAR   | NOT NULL                                             | Nome do auditor                                     |
+|                 | `cpf`                 | VARCHAR   | UNIQUE                                               | CPF do auditor                                      |
+|                 | `registration_number` | INT       | NOT NULL UNIQUE                                      | Número de registro funcional                        |
+|                 | `is_active`           | BOOLEAN   | DEFAULT FALSE                                        | Indica se o auditor está ativo no sistema           |
+| **Treadmills**  | `id`                  | SERIAL    | PK                                                   | Identificador único da esteira                      |
+|                 | `shift_id`            | INT       | FK → Shifts(id)                                      | Turno atualmente em execução                        |
+|                 | `treadmill_number`    | INT       | NOT NULL UNIQUE                                      | Número físico da esteira (Technogym)                |
+| **Shifts**      | `id`                  | SERIAL    | PK                                                   | Identificador único do turno                        |
+|                 | `status`              | VARCHAR   | NOT NULL CHECK ('pending','in progress','completed') | Estado do turno                                     |
+|                 | `athlete_id`          | INT       | FK → Athletes(id)                                    | Atleta realizando o turno                           |
+|                 | `auditor_id`          | INT       | FK → Auditors(id)                                    | Auditor responsável pelo registro                   |
+|                 | `start_at`            | TIMESTAMP | —                                                    | Início do turno                                     |
+|                 | `end_at`              | TIMESTAMP | —                                                    | Encerramento do turno                               |
+|                 | `time_total`          | INTERVAL  | —                                                    | Duração total (calculada ao finalizar)              |
+|                 | `speed`               | INT       | NOT NULL                                             | Velocidade configurada (km/h)                       |
+|                 | `km_start`            | INT       | NOT NULL                                             | Quilometragem inicial no odômetro                   |
+|                 | `km_end`              | INT       | NOT NULL                                             | Quilometragem final no odômetro                     |
+|                 | `distance`            | INT       | NOT NULL                                             | Distância percorrida (`km_end - km_start`)          |
+| **Checkpoints** | `id`                  | SERIAL    | PK                                                   | Identificador único do checkpoint                   |
+|                 | `shift_id`            | INT       | FK → Shifts(id)                                      | Turno ao qual o checkpoint pertence                 |
+|                 | `timestamp`           | TIMESTAMP | —                                                    | Data e hora do registro                             |
+|                 | `distance`            | INT       | NOT NULL                                             | Quilometragem parcial no momento do checkpoint      |
+|                 | `type`                | VARCHAR   | CHECK ('mandatory', 'voluntary')                     | Obrigatório (a cada 5 min) ou voluntário            |
+| **Logs**        | `id`                  | SERIAL    | PK                                                   | Identificador único do log                          |
+|                 | `shift_id`            | INT       | FK NOT NULL → Shifts(id)                             | Turno ao qual o log está vinculado                  |
+|                 | `timestamp`           | TIMESTAMP | NOT NULL                                             | Data e hora da ação                                 |
+|                 | `type`                | VARCHAR   | CHECK ('created', 'updated', 'finished')             | Tipo da ação auditada                               |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -2138,16 +2135,16 @@ O DER traduz o modelo conceitual do MER para a estrutura relacional do banco de 
   <sub>Quadro 23 - Relacionamentos e chaves estrangeiras do DER</sub>
 </div>
 
-| Tabela origem   | Coluna FK            | Tabela referenciada | Cardinalidade | Relacionamento                                               |
-| --------------- | -------------------- | ------------------- | ------------- | ------------------------------------------------------------ |
-| **Events**      | `manager_id`         | Managers            | N : 1         | Vários eventos podem ser geridos pelo mesmo gerente          |
-| **Teams**       | `event_id`           | Events              | N : 1         | Várias equipes pertencem a um evento                         |
-| **Athletes**    | `team_id`            | Teams               | N : 1         | Vários atletas compõem uma equipe                            |
-| **Treadmills**  | `shift_id`           | Shifts              | N : 1         | Uma esteira recebe vários turnos ao longo das 24 horas       |
-| **Shifts**      | `athlete_id`         | Athletes            | N : 1         | Um atleta realiza vários turnos durante a competição         |
-| **Shifts**      | `auditor_id`         | Auditors            | N : 1         | Um auditor é responsável por vários turnos no seu plantão    |
-| **Checkpoints** | `shift_id`           | Shifts              | N : 1         | Vários checkpoints são registrados dentro de um turno        |
-| **Logs**        | `shift_id`           | Shifts              | N : 1         | Vários logs são gerados ao longo do ciclo de vida de um turno|
+| Tabela origem   | Coluna FK    | Tabela referenciada | Cardinalidade | Relacionamento                                                |
+| --------------- | ------------ | ------------------- | ------------- | ------------------------------------------------------------- |
+| **Events**      | `manager_id` | Managers            | N : 1         | Vários eventos podem ser geridos pelo mesmo gerente           |
+| **Teams**       | `event_id`   | Events              | N : 1         | Várias equipes pertencem a um evento                          |
+| **Athletes**    | `team_id`    | Teams               | N : 1         | Vários atletas compõem uma equipe                             |
+| **Treadmills**  | `shift_id`   | Shifts              | N : 1         | Uma esteira recebe vários turnos ao longo das 24 horas        |
+| **Shifts**      | `athlete_id` | Athletes            | N : 1         | Um atleta realiza vários turnos durante a competição          |
+| **Shifts**      | `auditor_id` | Auditors            | N : 1         | Um auditor é responsável por vários turnos no seu plantão     |
+| **Checkpoints** | `shift_id`   | Shifts              | N : 1         | Vários checkpoints são registrados dentro de um turno         |
+| **Logs**        | `shift_id`   | Shifts              | N : 1         | Vários logs são gerados ao longo do ciclo de vida de um turno |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -2166,7 +2163,212 @@ A cadeia `Managers → Events → Teams → Athletes → Shifts → Checkpoints 
 
 ---
 
-_Posicione aqui os diagramas de modelos relacionais do banco de dados, apresentando todos os esquemas de tabelas e suas relações. Inclua as migrations DDL numeradas e reproduzíveis (`CREATE TABLE`, `CREATE INDEX`, constraints `NOT NULL`, `UNIQUE`, `FOREIGN KEY`, `CHECK`). Utilize texto para complementar suas explicações quando necessário._
+O modelo físico implementa o DER da seção 3.6.2 como **migrations DDL versionadas** em SQL puro (PostgreSQL), armazenadas em [src/database/migrations/](../src/database/migrations/) com prefixo numérico sequencial (`001_`, `002_`, ...) que define a ordem de aplicação. A estratégia garante reprodutibilidade, já que qualquer ambiente (desenvolvimento, homologação ou produção) pode reconstruir o schema completo executando as migrations em ordem, além de rastreabilidade das mudanças de schema ao longo do projeto.
+
+<div align="center">
+  <sub>Quadro 24 - Migrations registradas</sub>
+</div>
+
+| Arquivo                                                                     | Sprint | Descrição                                                                                                                                                                                                                                                  |
+| --------------------------------------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`001_initialSchema.sql`](../src/database/migrations/001_initialSchema.sql) | 2      | Cria as nove tabelas do domínio (`managers`, `events`, `teams`, `athletes`, `auditors`, `shifts`, `treadmills`, `logs`, `checkpoints`), suas constraints (`PK`, `FK`, `UNIQUE`, `NOT NULL`, `CHECK`) e os índices auxiliares sobre as chaves estrangeiras. |
+
+<div align="center">
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+#### Migration 001: Schema inicial
+
+A migration `001_initialSchema.sql` reúne em um único script o schema operacional do sistema. As tabelas são criadas seguindo a ordem das dependências (entidades-pai antes das entidades-filha), de modo que cada `FOREIGN KEY` referencia uma tabela já existente no momento da execução. Os blocos a seguir percorrem a migration na ordem em que é executada, comentando o propósito de cada bloco DDL.
+
+##### Tabela `managers`
+
+Primeira tabela criada por estar no topo da hierarquia operacional (não depende de outra tabela). Identifica o gerente regional responsável por instanciar eventos. O `cpf` é opcional (`NULL` permitido), mas, quando preenchido, é `UNIQUE` e validado pelo `CHECK` `chk_managers_cpf`, que exige exatamente 11 dígitos numéricos via expressão regular. Essa é uma garantia de formato aplicada no próprio banco, independentemente da camada de aplicação.
+
+```sql
+CREATE TABLE managers (
+	id SERIAL PRIMARY KEY,
+	cpf VARCHAR(11) UNIQUE,
+	name VARCHAR(100) NOT NULL,
+	CONSTRAINT chk_managers_cpf CHECK (cpf IS NULL OR cpf ~ '^[0-9]{11}$')
+);
+```
+
+##### Tabela `events`
+
+Representa uma edição (regional ou final) do Red Bull 24 Horas. Tanto `title` quanto `local` são `NOT NULL UNIQUE`, ou seja, não existem duas edições com o mesmo título nem dois eventos simultâneos no mesmo local. A `FOREIGN KEY` para `managers` usa `ON DELETE RESTRICT`: um gerente com eventos vinculados não pode ser removido, o que protege a integridade histórica da operação. Já o `ON UPDATE CASCADE` permite que a chave-pai mude (caso o `SERIAL` seja realocado em uma migração futura) sem quebrar referências.
+
+```sql
+CREATE TABLE events (
+	id SERIAL PRIMARY KEY,
+	title VARCHAR(100) UNIQUE NOT NULL,
+	local VARCHAR(100) UNIQUE NOT NULL,
+	manager_id INT NOT NULL,
+	CONSTRAINT fk_events_manager
+		FOREIGN KEY (manager_id) REFERENCES managers(id)
+		ON UPDATE CASCADE ON DELETE RESTRICT
+);
+```
+
+##### Tabela `teams`
+
+Cada equipe pertence a um único evento e tem `name` único. Diferente da relação `events → managers`, aqui a política é `ON DELETE CASCADE`: ao excluir um evento, suas duas equipes são removidas junto, já que a equipe só faz sentido no contexto de uma edição específica do Red Bull 24 Horas e não tem existência própria fora dele.
+
+```sql
+CREATE TABLE teams (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(100) UNIQUE NOT NULL,
+	event_id INT NOT NULL,
+	CONSTRAINT fk_teams_event
+		FOREIGN KEY (event_id) REFERENCES events(id)
+		ON UPDATE CASCADE ON DELETE CASCADE
+);
+```
+
+##### Tabela `athletes`
+
+Cadastro dos corredores inscritos em uma equipe. O `gender` é `NOT NULL` por ser usado na apuração por categoria; o `cpf` segue o mesmo padrão de `managers` (opcional, mas validado por regex quando presente). A `FK` para `teams` cascateia no delete, mantendo a coerência da hierarquia `event → team → athlete`: ao remover a edição, todos os atletas vinculados àquela equipe também são apagados.
+
+```sql
+CREATE TABLE athletes (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	gender VARCHAR(20) NOT NULL,
+	cpf VARCHAR(11) UNIQUE,
+	team_id INT NOT NULL,
+	CONSTRAINT chk_athletes_cpf CHECK (cpf IS NULL OR cpf ~ '^[0-9]{11}$'),
+	CONSTRAINT fk_athletes_team
+		FOREIGN KEY (team_id) REFERENCES teams(id)
+		ON UPDATE CASCADE ON DELETE CASCADE
+);
+```
+
+##### Tabela `auditors`
+
+Operadores do sistema. Como o auditor é uma pessoa de carreira (não vinculada a uma edição específica), `auditors` é uma entidade independente, sem `FK` para event ou team. O `registration_number` é `NOT NULL UNIQUE`, o que garante identificação funcional única do auditor na operação. O campo `is_active` (default `TRUE`) permite desativar auditores sem removê-los do banco, preservando o vínculo histórico com os turnos que já auditaram.
+
+```sql
+CREATE TABLE auditors (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	cpf VARCHAR(11) UNIQUE,
+	registration_number INT UNIQUE NOT NULL,
+	is_active BOOLEAN NOT NULL DEFAULT TRUE,
+	CONSTRAINT chk_auditors_cpf CHECK (cpf IS NULL OR cpf ~ '^[0-9]{11}$')
+);
+```
+
+##### Tabela `shifts`
+
+Entidade central do registro operacional, conforme detalhado na seção 3.6.1. Concentra a maior parte das regras de negócio do evento expressas no banco:
+
+- `status` tem `DEFAULT 'pending'` e é restringido pelo `CHECK` `chk_shifts_status` a três valores possíveis (`pending`, `in_progress`, `completed`), o que elimina estados inválidos no banco;
+- `chk_shifts_speed` e `chk_shifts_distance` impedem valores negativos em campos que representam grandezas físicas;
+- `chk_shifts_km` (`km_end >= km_start`) e `chk_shifts_period` (`end_at IS NULL OR end_at >= start_at`) bloqueiam turnos fisicamente impossíveis, como um corredor andando "para trás" no odômetro ou um turno terminando antes de começar;
+- Tanto a `FK` para `athletes` quanto a para `auditors` usam `ON DELETE RESTRICT`, o que protege o histórico de auditoria pós-evento contra remoção acidental de pessoas que já têm turnos registrados.
+
+```sql
+CREATE TABLE shifts (
+	id SERIAL PRIMARY KEY,
+	status VARCHAR(20) NOT NULL DEFAULT 'pending',
+	athlete_id INT NOT NULL,
+	auditor_id INT NOT NULL,
+	start_at TIMESTAMP NOT NULL,
+	total_time INTERVAL,
+	end_at TIMESTAMP,
+	speed INT NOT NULL,
+	km_start INT NOT NULL,
+	km_end INT NOT NULL,
+	distance INT NOT NULL,
+	CONSTRAINT fk_shifts_athlete
+		FOREIGN KEY (athlete_id) REFERENCES athletes(id)
+		ON UPDATE CASCADE ON DELETE RESTRICT,
+	CONSTRAINT fk_shifts_auditor
+		FOREIGN KEY (auditor_id) REFERENCES auditors(id)
+		ON UPDATE CASCADE ON DELETE RESTRICT,
+	CONSTRAINT chk_shifts_status CHECK (status IN ('pending', 'in_progress', 'completed')),
+	CONSTRAINT chk_shifts_speed CHECK (speed >= 0),
+	CONSTRAINT chk_shifts_km CHECK (km_end >= km_start),
+	CONSTRAINT chk_shifts_distance CHECK (distance >= 0),
+	CONSTRAINT chk_shifts_period CHECK (end_at IS NULL OR end_at >= start_at)
+);
+```
+
+##### Tabela `treadmills`
+
+Representa o equipamento físico (Technogym) onde os turnos ocorrem. O `number` é `NOT NULL UNIQUE`, refletindo a unicidade de cada esteira no espaço físico do evento. A tabela é criada **depois** de `shifts` porque a `FK` `shift_id` aponta para o turno em execução naquela esteira, ordem necessária para que a referência seja válida no momento do `CREATE TABLE`.
+
+```sql
+CREATE TABLE treadmills (
+	id SERIAL PRIMARY KEY,
+	shift_id INT NOT NULL,
+	number INT UNIQUE NOT NULL,
+	CONSTRAINT fk_treadmills_shift
+		FOREIGN KEY (shift_id) REFERENCES shifts(id)
+		ON UPDATE CASCADE ON DELETE CASCADE
+);
+```
+
+##### Tabela `logs`
+
+Registro auditável das ações executadas dentro de um turno. O `timestamp` usa `DEFAULT CURRENT_TIMESTAMP`, ou seja, é gerado pelo próprio banco no momento do `INSERT`. Isso elimina a dependência do relógio da aplicação e garante que o registro corresponda ao instante real da persistência. O `CHECK` `chk_logs_type` restringe `type` aos três eventos do ciclo de vida do turno (`created`, `updated`, `finished`), evitando categorias inválidas que poderiam quebrar relatórios de auditoria.
+
+```sql
+CREATE TABLE logs (
+	id SERIAL PRIMARY KEY,
+	shift_id INT NOT NULL,
+	timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	type VARCHAR(20) NOT NULL,
+	CONSTRAINT fk_logs_shift
+		FOREIGN KEY (shift_id) REFERENCES shifts(id)
+		ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT chk_logs_type CHECK (type IN ('created', 'updated', 'finished'))
+);
+```
+
+##### Tabela `checkpoints`
+
+Marcações periódicas dentro de um turno (de 5 em 5 minutos ou voluntárias, conforme regra de negócio do parceiro). Como `logs`, usa `DEFAULT CURRENT_TIMESTAMP` para garantir consistência temporal. O `chk_checkpoints_distance` impede quilometragem negativa, e o `chk_checkpoints_type` restringe `type` às duas categorias funcionais (`mandatory` automática e `voluntary` registrada pelo auditor), distinção importante para a auditoria pós-evento.
+
+```sql
+CREATE TABLE checkpoints (
+	id SERIAL PRIMARY KEY,
+	shift_id INT NOT NULL,
+	timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	distance INT NOT NULL,
+	type VARCHAR(20) NOT NULL,
+	CONSTRAINT fk_checkpoints_shift
+		FOREIGN KEY (shift_id) REFERENCES shifts(id)
+		ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT chk_checkpoints_distance CHECK (distance >= 0),
+	CONSTRAINT chk_checkpoints_type CHECK (type IN ('mandatory', 'voluntary'))
+);
+```
+
+##### Índices secundários
+
+O PostgreSQL cria índices automaticamente apenas sobre `PRIMARY KEY` e `UNIQUE`, mas **não** sobre colunas de `FOREIGN KEY`. Como praticamente toda consulta operacional do sistema usa essas colunas (listar turnos de um atleta, checkpoints de um turno, logs de uma sessão, equipes de um evento), os oito `CREATE INDEX` abaixo são criados explicitamente após todas as tabelas. Isso garante que essas consultas sejam atendidas por busca indexada em vez de _sequential scan_, diferença importante de desempenho à medida que a base cresce ao longo das edições.
+
+```sql
+CREATE INDEX idx_events_manager_id      ON events(manager_id);
+CREATE INDEX idx_teams_event_id         ON teams(event_id);
+CREATE INDEX idx_athletes_team_id       ON athletes(team_id);
+CREATE INDEX idx_shifts_athlete_id      ON shifts(athlete_id);
+CREATE INDEX idx_shifts_auditor_id      ON shifts(auditor_id);
+CREATE INDEX idx_treadmills_shift_id    ON treadmills(shift_id);
+CREATE INDEX idx_logs_shift_id          ON logs(shift_id);
+CREATE INDEX idx_checkpoints_shift_id   ON checkpoints(shift_id);
+```
+
+<div align="center">
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+**Síntese do modelo físico**
+
+A migration 001 entrega o schema completo do sistema em um único arquivo versionado e reproduzível, com integridade referencial e regras de domínio garantidas no próprio banco. As políticas `ON DELETE` diferenciadas (`CASCADE` ao longo das entidades temporárias do evento, `RESTRICT` para entidades de carreira como gerentes, auditores e atletas), os `CHECK` sobre estados e quilometragem, e os índices secundários sobre todas as FKs traduzem as regras operacionais do Red Bull 24 Horas em estrutura física do PostgreSQL, apoiando tanto a operação em tempo real durante o evento quanto a auditoria formal posterior.
 
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
@@ -2177,6 +2379,7 @@ _posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end d
 _Template de SQL + lógica proposicional_
 
 # 1 | ---
+
 --- | ---
 **Expressão SQL** | SELECT \* FROM suppliers WHERE (state = 'California' AND supplier_id <> 900) OR (supplier_id = 100);
 
