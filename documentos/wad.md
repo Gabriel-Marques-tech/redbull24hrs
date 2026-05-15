@@ -42,7 +42,7 @@
 
 <br>
 
-# <a id="c1"></a>1. Introdução (sprints 1 a 5)
+# <a name="c1"></a>1. Introdução (sprints 1 a 5)
 
 ---
 
@@ -54,7 +54,7 @@ A solução proposta é uma aplicação web voltada aos auditores do evento. Por
 
 A proposta substitui um processo frágil por um sistema rastreável e confiável, reduzindo erros operacionais e garantindo maior integridade nos resultados da competição.
 
-# <a id="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
+# <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
 
 ---
 
@@ -720,7 +720,7 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
-# <a id="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
+# <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
 
 ---
 
@@ -1483,7 +1483,7 @@ _A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida
 | Persona | RF  | RN  | Endpoint | Tela | Teste | Evidência |
 | ------- | --- | --- | -------- | ---- | ----- | --------- |
 
-# <a id="c4"></a>4. Desenvolvimento da Aplicação Web
+# <a name="c4"></a>>4. Desenvolvimento da Aplicação Web
 
 ---
 
@@ -1505,7 +1505,7 @@ _Descreva e ilustre aqui o desenvolvimento da segunda versão do sistema web, co
 
 _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas._
 
-# <a id="c5"></a>5. Testes
+# <a name="c5"></a>5. Testes
 
 ---
 
@@ -1536,7 +1536,7 @@ _Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de tes
 
 _Posicione aqui o relatório dos testes SUS realizados._
 
-# <a id="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
+# <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
 
 ---
 
@@ -1607,7 +1607,7 @@ _Apresente os canais digitais utilizados para distribuir e entregar a aplicaçã
 _d) Promoção (até 200 palavras)_
 _Descreva as estratégias digitais planejadas, como SEO, redes sociais, marketing de conteúdo e campanhas pagas._
 
-# <a id="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
+# <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
 ---
 
@@ -1617,7 +1617,7 @@ _Relacione os pontos de melhorias evidenciados nos testes com planos de ações 
 
 _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras_
 
-# <a id="c8"></a>8. Referências
+# <a name="c8"></a>8. Referências
 
 ---
 
@@ -1643,7 +1643,7 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ¹ ² TIMES BRASIL. **Red Bull e marcas para a Geração Z**. Disponível em: <https://timesbrasil.com.br/empresas-e-negocios/red-bull-marcas-geracao-z/>. Acesso em: 28 abr. 2026.
 
-# <a id="c9"></a>Anexos
+# <a name="c9"></a>Anexos
 
 ---
 
