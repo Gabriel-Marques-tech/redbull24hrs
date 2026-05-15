@@ -1853,6 +1853,31 @@ Garantir a operação ininterrupta do sistema em um ambiente de evento físico �
 
 ---
 
+#### 3.2.4.6. Diagrama de Sequência: Dashboard
+
+O Dashboard atua como o principal ponto de visualização em tempo real do evento Red Bull 24 Horas. Esta interface (geralmente exibida em telões no local da prova) precisa refletir com exatidão a disputa acirrada entre as duas equipes, mostrando o placar geral, quem está correndo no momento e o ritmo da corrida ao longo do tempo. Para que os dados na tela estejam sempre vivos sem que ninguém precise atualizar a página manualmente, a aplicação utiliza uma técnica chamada Polling (consultas automáticas e contínuas ao servidor) atrelada a um sistema de verificação de integridade da conexão (Healthcheck).
+
+<div align="center">
+  <sub>Imagem 06 - Diagrama de Sequência: Dashboard</sub><br>
+  <img src="assets/diagrama_sequencia/Dashboard_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do painel de controle (dashboard)"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+**Fluxo Principal (Caminho Feliz)**
+
+**1. Atualização Automática (Polling):** Em intervalos regulares, o Client dispara uma requisição `GET /dashboard`. O controller repassa a demanda ao serviço, que orquestra três consultas estratégicas junto ao Banco de Dados: Placar Geral (soma dos quilômetros totais), Status das Esteiras (verificação de ocupação atual) e Histórico por Hora (desempenho acumulado em formato de *snapshots*). O servidor então devolve o pacote consolidado para o Cliente redesenhar a tela instantaneamente.
+
+**2. Monitoramento de Saúde do Sistema (Healthcheck):** Paralelamente, o Cliente realiza requisições rápidas para `GET /status`. O servidor executa um "ping" no Banco de Dados para atestar que os sistemas estão comunicando perfeitamente. Confirmando a conexão, o servidor retorna um status "ok" junto com a hora exata da checagem (*timestamp*).
+
+**Fluxos Alternativos e Exceções**
+
+**1. Falha de Conexão ou Instabilidade:** Se o teste de Healthcheck falhar, a interface congela as informações no último estado válido e exibe um alerta indicando "dados desatualizados", acompanhado do *timestamp* da última comunicação bem-sucedida, garantindo transparência para a organização e público.
+
+**2. Ausência de Dados nas Esteiras:** Durante o momento exato de transição de um corredor, o retorno da consulta pode indicar que a esteira está livre. A interface mapeia esse cenário e exibe o *status* como "Aguardando próximo corredor", até que no próximo ciclo de *polling* de 10 segundos o novo atleta seja exibido correndo.
+
+---
+
 A modelagem da aplicação web do Red Bull 24 Horas por meio dos Diagramas de Sequência UML demonstra a robustez arquitetural planejada para o sistema. Ao destrinchar visualmente as trocas de mensagens entre as interfaces de operação e as camadas lógicas de backend, o projeto mitiga os principais riscos mapeados na operação atual, como a dependência excessiva de anotações manuais vulneráveis a falhas e distrações.
 
 Cada um dos fluxos detalhados cumpre um papel estratégico: a gestão de Equipes e Eventos assegura o cumprimento do regulamento e a centralização dos dados; o fluxo de Turnos viabiliza o dinamismo extremo do revezamento sem sobrecarregar a equipe operacional; a rotina de Histórico fornece transparência imediata; e os mecanismos de Registros e Sincronização Offline blindam a competição contra quedas de conectividade e falhas de digitação.
