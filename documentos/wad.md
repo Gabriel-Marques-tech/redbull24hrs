@@ -514,7 +514,7 @@ Lucas Andrade atua como operador de eventos na equipe de Field Marketing, sendo 
 
 ---
 
-As user stories (ou histórias do usuário) consistem em documentos que demonstram as funcionalidades de uma solução a partir da perspectiva do usuário, sem linguagem técnica. A seguir, são apresentadas as user stories norteadoras do presente projeto, nos Quadros 1 a 10 a seguir.
+As user stories (ou histórias do usuário) consistem em documentos que demonstram as funcionalidades de uma solução a partir da perspectiva do usuário, sem linguagem técnica. A seguir, são apresentadas as user stories norteadoras do presente projeto, nos Quadros 1 a 12 a seguir.
 
 <div align = "center">
   <sub> Quadro 1 - US01 </sub><br>
