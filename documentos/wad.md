@@ -766,7 +766,7 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 
 <div align = "center">
   <sub> Quadro 13 - Requisitos Funcionais </sub><br>
-  
+
 | ID    | Descrição                                                                                                                                                                                 | Prioridade | Status    |
 | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------- |
 | RF001 | O sistema deve permitir o cadastro de exatamente duas equipes por evento, com nome e identificador únicos, impedindo duplicatas.                                                          | Alta       | Planejado |
@@ -1500,6 +1500,9 @@ Com esta base sólida, o projeto segue para a fase de implementação, onde cada
 Regras de negócio são declarações que definem ou restringem aspectos do funcionamento de um sistema, refletindo políticas, condições e obrigações do domínio de negócio. Devem ser implementáveis e testáveis, servindo como referencial técnico para o desenvolvimento e validação da aplicação.
 Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio são "restrições explícitas sobre comportamento e/ou fornecem suporte ao comportamento" de um sistema ou organização.
 
+<div align = "center">
+  <sub> Quadro 14 - Regras de Negócio </sub><br>
+
 | ID   | Descrição                                                                                                                                                                                                                                                                                                  | RF associado |
 | ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
 | RN01 | Um corredor só pode iniciar um turno se não possuir outro turno com status "em andamento" em nenhuma das esteiras do evento.                                                                                                                                                                               | RF007        |
@@ -1530,8 +1533,6 @@ Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio 
 | RN26 | O CSV exportado deve conter duas seções: (1) turnos — corredor, equipe, esteira, km*inicial, km_final, duracao_min, timestamp_inicio, timestamp_fim; (2) checkpoints — turno_id, km, timestamp, tipo. O nome do arquivo deve seguir o padrão evento*{local}\_{data-ISO}.csv.                               | RF024        |
 | RN27 | Em caso de ausência de conexão, os registros devem ser persistidos localmente com o timestamp original do momento do registro. Ao restabelecer conexão, a sincronização deve ocorrer automaticamente sem duplicar registros, preservando a ordem cronológica original.                                     | RF016        |
 
-<div align = "center">
-  <sub> Quadro 14 - Regras de Negócios </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
