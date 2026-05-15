@@ -720,7 +720,7 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
-# <a id="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
+# <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
 
 ---
 
@@ -1483,7 +1483,7 @@ _A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida
 | Persona | RF  | RN  | Endpoint | Tela | Teste | Evidência |
 | ------- | --- | --- | -------- | ---- | ----- | --------- |
 
-# <a id="c4"></a>4. Desenvolvimento da Aplicação Web
+# <a name="c4"></a>>4. Desenvolvimento da Aplicação Web
 
 ---
 
