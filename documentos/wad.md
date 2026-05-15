@@ -1545,7 +1545,7 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 
 <div align = "center">
   <sub> Quadro 15 - Matriz RF → RN → Endpoint </sub><br>
-  
+
 | RF    | RN associadas | Endpoint                                                         | Método |
 | ----- | ------------- | ---------------------------------------------------------------- | ------ |
 | RF007 | RN01, RN02    | `/turnos`                                                        | POST   |
@@ -1602,6 +1602,9 @@ Essas restrições podem atuar de forma transversal no sistema, impactando sua o
 
 - **ORG (Organizacionais):** Relaciona o sistema às diretrizes institucionais, padrões visuais e exigências operacionais do parceiro. Esse eixo contempla a aderência à identidade visual do evento, além da necessidade de estabilização e congelamento da versão antes da operação oficial.
 
+<div align = "center">
+  <sub> Quadro 16 - Requisitos Não Funcionais </sub><br>
+  
 | ID         | Eixo                  | RF Relacionado                           | Requisito Não Funcional                                                                                                                               | Critério Mensurável (SMART)                                                                                                                                   |
 | :--------- | :-------------------- | :--------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **RNF001** | USAB — Usabilidade    | RF004, RF005, RF006, RF007, RF009, RF022 | O fluxo principal de operação (troca de corredores e início de turno) deve ser ágil para o Auditor.                                                   | **95%** dos operadores devem concluir o fluxo de início/troca em até **3 minutos** (via testes de usabilidade).                                               |
@@ -1626,8 +1629,6 @@ Essas restrições podem atuar de forma transversal no sistema, impactando sua o
 | **RNF020** | ORG — Organizacionais | Global                                   | A interface deve respeitar a identidade visual do parceiro e patrocinadores do evento.                                                                | **100%** dos componentes de UI devem seguir o _Design System_ aprovado, validado em auditoria pré-sprint.                                                     |
 | **RNF021** | ORG — Organizacionais | Global                                   | O desenvolvimento do sistema deve ser concluído e bloqueado com antecedência para garantir a segurança da operação ao vivo.                           | A versão final do software deve ser testada, aprovada e bloqueada para novas alterações com pelo menos **30 dias de antecedência** da data do evento.         |
 
-<div align = "center">
-  <sub> Quadro 16 - Requisitos Não Funcionais </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
