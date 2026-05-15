@@ -42,7 +42,7 @@
 
 <br>
 
-# <a name="c1"></a>1. Introdução (sprints 1 a 5)
+# <a id="c1"></a>1. Introdução (sprints 1 a 5)
 
 ---
 
@@ -54,7 +54,7 @@ A solução proposta é uma aplicação web voltada aos auditores do evento. Por
 
 A proposta substitui um processo frágil por um sistema rastreável e confiável, reduzindo erros operacionais e garantindo maior integridade nos resultados da competição.
 
-# <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
+# <a id="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
 
 ---
 
@@ -72,25 +72,25 @@ Criado por Michael E. Porter, professor de Harvard, na década de 1970, o modelo
 
 Na indústria de desenvolvimento de softwares e aplicações web sob medida, a rivalidade pode ser considerada alta de forma geral, pois o mercado conta com inúmeras agências de tecnologia, fábricas de software e desenvolvedores independentes capazes de criar sistemas de registro. No entanto, quando se trata de uma solução específica para o evento Red Bull 24 Horas, a rivalidade direta torna-se média a baixa. O projeto exige a criação de um fluxo simples de registro que substitua a prancheta, desenhado especificamente para a dinâmica de revezamento contínuo entre duas equipes operando duas esteiras simultaneamente. Desse modo, a rivalidade tende a ser menor quando a diferenciação e a customização do produto são muito altas para atender a uma necessidade exclusiva. Existem poucas soluções no mercado que se adaptem perfeitamente a esse formato sem gerar atrito na operação, fazendo com que a rivalidade seja restrita a fornecedores que consigam garantir extrema confiabilidade para rodar o sistema por 24 horas ininterruptas.
 
-2. Ameaça de novos entrantes
+1. Ameaça de novos entrantes
 
 Embora o desenvolvimento de uma aplicação web com interface simples seja tecnicamente muito acessível, a entrada de novos concorrentes neste nicho específico apresenta barreiras baseadas na confiança operacional. O escopo técnico possui barreiras baixas, contudo, a barreira real é a exigência de validação prática e garantia de zero falhas durante um evento ao vivo de uma marca global. Desenvolvedores iniciantes podem criar o código facilmente, mas conquistar a confiança da marca para substituir um processo analógico que, embora falho, é seguro contra quedas de sistema, exige grande credibilidade. Dessa forma, a ameaça de novos entrantes pode ser classificada como média, equilibrando a facilidade tecnológica com a alta exigência de estabilidade e confiança operacional do cliente.
 
-3. Ameaça de produtos substitutos
+1. Ameaça de produtos substitutos
 
 Os principais substitutos para essa aplicação web incluem o método atual de apuração manual via prancheta e hardwares vestíveis. No campo tecnológico, existem alternativas como relógios inteligentes ou a própria pulseira da Technogym que sincroniza com a esteira. No entanto, a adaptação superficial dessas tecnologias já existentes não atende à dinâmica ágil do evento. O uso de pulseiras é inviabilizado pelas trocas constantes de corredores, pela falta de equipamentos para todos os participantes e pela ausência de tempo hábil para sincronização pré-corrida. Por outro lado, a prancheta de papel está altamente sujeita a erros humanos, distrações e inconsistências. Portanto, a ameaça de substitutos pode ser classificada como média a baixa, especialmente porque as alternativas existentes falham em oferecer uma visão consolidada, confiável e em tempo real do andamento da competição sem atrapalhar a experiência do usuário.
 
-4. Poder de negociação dos fornecedores
+1. Poder de negociação dos fornecedores
 
 Os fornecedores para a construção deste projeto incluem provedores de hospedagem em nuvem e fabricantes de hardware de interface, como tablets. Diferente de indústrias que dependem de peças altamente especializadas, as ferramentas de desenvolvimento web são amplamente comoditizadas, existindo infinitas opções de servidores e frameworks. Além disso, o projeto possui uma diretriz clara que elimina uma grande dependência técnica: não haverá integração direta com as esteiras Technogym nem captura automática de dados. Como a equipe de desenvolvimento não fica refém de APIs fechadas ou licenças proprietárias da fabricante do equipamento esportivo, a substituição de qualquer tecnologia base do projeto é fácil. Assim, o poder de negociação dos fornecedores é baixo, devido à alta disponibilidade de ferramentas padronizadas no mercado e à ausência de dependência de hardwares exclusivos.
 
-5. Poder de negociação dos clientes
+1. Poder de negociação dos clientes
 
 Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável pela operação do evento. Por se tratar de um projeto customizado e de uso interno exclusivo para uma de suas experiências proprietárias, a Red Bull atua como a única compradora desta solução específica. Isso eleva substancialmente o seu poder de barganha. O cliente tem controle total sobre os requisitos de sucesso do MVP, exigindo que o sistema prove ser superior ao método atual da prancheta em consistência e redução de erros. Se a aplicação não entregar a eficiência operacional esperada, a organização pode facilmente descartar a ferramenta e retornar ao método manual sem grandes prejuízos, ou simplesmente buscar outra agência desenvolvedora. Dessa forma, o poder de negociação do cliente é alto, refletindo sua posição dominante na definição das regras do projeto e na validação final da entrega.
 
 <div align="center">
-  <img src="../assets/forca_de_porter.png" width="100%" alt="Forças de Porter"><br>
   <sub>Imagem 1 - Forças de Porter</sub><br>
+  <img src="./assets/negocios/secao_2_1_1/forca_de_porter.png" width="100%" alt="Forças de Porter"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -100,8 +100,8 @@ Neste contexto, o cliente é o time de Field Marketing da Red Bull, responsável
 ---
 
 <div align="center">
-  <img src= "../assets/analise_SWOT.png" width="100%" alt="Análise SWOT - Red Bull"><br>
   <sub>Imagem 2 - Análise SWOT</sub><br>
+  <img src= "./assets/negocios/secao_2_1_2/analise_SWOT.png" width="100%" alt="Análise SWOT - Red Bull"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -144,11 +144,11 @@ O sistema será validado em simulação pré evento, com comparação entre os r
 
 O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidades do cliente e a solução proposta [⁶](#8-referências). No contexto deste projeto, evidencia-se o encaixe entre as dificuldades operacionais enfrentadas pelo time de Field Marketing da Red Bull durante a apuração manual dos quilômetros corridos no evento Red Bull 24 Horas e as funcionalidades de uma aplicação web voltada para registro confiável e consolidação automatizada dos dados da competição.
 
-### A. Perfil do Cliente:
+### A. Perfil do Cliente
 
 O público-alvo é composto pelo time operacional de Field Marketing da Red Bull, responsável pela apuração e acompanhamento do evento Red Bull 24 Horas — atualmente quem opera a prancheta ao lado das esteiras —, além da organização do evento, que utiliza os dados consolidados para validar os resultados, e dos juízes responsáveis pela auditoria final das marcações.
 
-### Tarefas:
+### Tarefas
 
 **Time Operacional (responsáveis pela apuração):**
 
@@ -163,7 +163,7 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 - Auditar marcações em caso de divergências ou paradas técnicas das esteiras
 - Acompanhar a evolução da competição em tempo real
 
-### Dores:
+### Dores
 
 **Time Operacional:**
 
@@ -179,7 +179,7 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 - Impossibilidade de conexão direta com as esteiras Technogym, eliminando soluções automatizadas de captura
 - Inviabilidade do uso de pulseiras de sincronização devido à dinâmica de revezamento rápido (trocas em até 15 segundos) e ao número insuficiente de dispositivos
 
-### Ganhos:
+### Ganhos
 
 **Time Operacional:**
 
@@ -195,7 +195,7 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 - Histórico completo para auditoria pós-evento
 - Capacidade de exportar dados estruturados para análise estatística
 
-### B. Mapa de Valor:
+### B. Mapa de Valor
 
 **Produtos e Serviços:**
 
@@ -226,8 +226,8 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 - A escalabilidade entre etapas regionais é viabilizada por uma solução web acessível em qualquer dispositivo conectado, padronizando a operação em todo o Brasil
 
 <div align="center">
-  <img src= "../assets/proposta_de_valor.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
   <sub>Imagem 3 - Canvas da Proposta de Valor</sub><br>
+  <img src= "./assets/negocios/secao_2_1_4/proposta_de_valor.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -242,7 +242,7 @@ A análise evidencia um forte alinhamento entre as dores operacionais do time de
 
 A matriz de riscos é uma ferramenta fundamental para identificar, analisar e priorizar ameaças que podem impactar o desempenho do produto, permitindo a criação de estratégias de mitigação eficazes [⁷](#8-referências). Para este projeto, foram mapeados riscos diretamente relacionados à confiabilidade do registro manual digitalizado, à operação contínua durante 24 horas, à usabilidade em condições de pressão e à integridade dos dados que definem o resultado oficial da competição Red Bull 24 Horas.
 
-### Ameaças:
+### Ameaças
 
 ### 1. Perda de dados durante as 24 horas de competição
 
@@ -301,8 +301,8 @@ A matriz de riscos é uma ferramenta fundamental para identificar, analisar e pr
 - Plano de ação: criar fluxo de "troca rápida" no sistema, com pré-cadastro do próximo corredor da equipe e botão único de transição que finaliza o registro anterior e inicia o próximo simultaneamente.
 
 <div align="center">
-  <img src="../assets/matriz_ameacas.jpeg" width="100%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
   <sub>Imagem 4 - Matriz de Ameaças</sub><br>
+  <img src="./assets/negocios/secao_2_1_5/matriz_ameacas.jpeg" width="100%" alt="Matriz de riscos do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -365,8 +365,8 @@ No contexto do desenvolvimento de soluções tecnológicas, as oportunidades sã
 - Plano de aproveitamento: estruturar arquitetura modular que permita adição futura de novos métodos de captura de dados sem refatoração profunda do sistema.
 
 <div align="center">
-  <img src="../assets/matriz_oportunidades.jpeg" width="100%" alt="Matriz de Oportunidades do projeto Red Bull 24 Horas"><br>
   <sub>Imagem 5 - Matriz de Oportunidades</sub><br>
+  <img src="./assets/negocios/secao_2_1_5/matriz_oportunidades.jpeg" width="100%" alt="Matriz de Oportunidades do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -389,7 +389,7 @@ No contexto deste projeto, as personas foram utilizadas para representar os dife
 
 <div align = "center">
   <sub>Imagem 6 - Persona Nicole Rauen</sub><br>
-  <img src="../assets/Persona-Nicole-Rauen.png" width="100%" alt="Persona Bruna Gomes"><br>
+  <img src="./assets/personas/Persona-Nicole-Rauen.png" width="100%" alt="Persona Nicole Rauen"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -425,8 +425,8 @@ Nicole Rauen é corredora amadora e influenciadora digital, compartilhando trein
 - Interface clara e organizada.
 
 <div align = "center">
-  <img src="../assets/Persona-Bruno-Gardesani.png" width="100%" alt="Persona Bruno Gardesani"><br>
   <sub>Imagem 7 - Persona Bruno Gardesani</sub><br>
+  <img src="./assets/personas/Persona-Bruno-Gardesani.png" width="100%" alt="Persona Bruno Gardesani"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -468,8 +468,8 @@ Bruno Gardesani atua como Gerente Nacional de Field Marketing na Red Bull, sendo
 - Sistema confiável e transparente.
 
 <div align = "center">
-  <img src="../assets/Persona-Lucas-Andrade.png" width="100%" alt="Persona Lucas Andrade"><br>
   <sub>Imagem 8 - Persona Lucas Andrade</sub><br>
+  <img src="./assets/personas/Persona-Lucas-Andrade.png" width="100%" alt="Persona Lucas Andrade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -555,9 +555,9 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 | Identificação            | [US03](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/32)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Persona**              | Lucas Andrade                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| **User Story**           | "Como operador de evento, quero registrar o fim de uma corrida em andamento, informando o valor final de quilômetros, para encerrar corretamente o turno do corredor, consolidar os dados da corrida e evitar inconsistências no controle manual realizado anteriormente."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| **Critério de aceite 1** | CR1: deve ser possível finalizar corrida apenas quando houver corrida ativa, com inserção manual do valor final de km.<br>**Validação:** verificar se o campo de finalização está disponível somente com corrida ativa.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| **Teste de aceitação 1** | Com corrida ativa, inserir valor final de km e finalizar; verificar data/horário automáticos e persistência.<br>**Esperado:** corrida finalizada e dados persistidos corretamente.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| **User Story**           | "Como operador de evento, quero registrar o fim de um ciclo em andamento, informando o valor final de quilômetros, baseando-se em uma imagem de referência, para encerrar corretamente o turno do corredor, consolidar os dados do ciclo e evitar inconsistências no controle manual realizado anteriormente."                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| **Critério de aceite 1** | CR1: deve ser possível finalizar corrida apenas quando houver corrida ativa, com inserção manual do valor final de km, baseando na imagem de referência.<br>**Validação:** verificar se o campo de finalização está disponível somente com corrida ativa.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| **Teste de aceitação 1** | Com corrida ativa, inserir valor final de km igual ao valor da imagem de referência e finalizar; verificar data/horário automáticos e persistência.<br>**Esperado:** corrida finalizada e dados persistidos corretamente.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | **Critério de aceite 2** | CR2: após a finalização, a esteira deve ser marcada como disponível para nova corrida.<br>**Validação:** verificar liberação da esteira após encerramento da corrida.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | **Teste de aceitação 2** | Finalizar corrida e tentar iniciar em outra esteira.<br>**Esperado:** esteira disponível e nova corrida pode ser iniciada normalmente.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | **Critério de aceite 3** | CR3: o sistema deve apresentar mensagem de erro caso não exista corrida ativa na esteira.<br>**Validação:** tentar finalizar sem corrida ativa e verificar mensagem de erro.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
@@ -686,7 +686,41 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
   <br><br><br>
 </div>
 
-# <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
+| Identificação            | [US11](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/45)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Persona**              | Lucas Andrade                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| **User Story**           | "Como operador de eventos, quero ser avisado quando houver inconsistências nos dados inseridos de acordo com o histórico, para evitar erro humano e falha na inserção de dados."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| **Critério de aceite 1** | CR1: o sistema deve validar se o valor de quilômetros inserido (seja em um novo checkpoint ou na finalização) não apresenta discrepâncias aos últimos registros inseridos no mesmo turno. <br>**Validação:** tentar inserir um valor de km com grande diferença aos registros anteriores e verificar o bloqueio da ação.                                                                                                                                                                                                                                                                                                                                                                                                              |
+| **Teste de aceitação 1** | Com uma corrida ativa que já possui um registro de 5km, tentar registrar um novo checkpoint, após 5 minutos, com valor de 30km.<br>**Esperado:** o sistema bloqueia a ação e não realiza a gravação no banco de dados, e exibe uma tela de destaque.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| **Critério de aceite 2** | CR2: sistema deve exibir um alerta visual claro e imediato em tela, informando a natureza da inconsistência.<br>**Validação:** verificar se a mensagem de erro informa claramente que o valor é inválido em relação ao histórico.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| **Teste de aceitação 2** | Inserir um dado inconsistente propositalmente.<br>**Esperado:** exibição imediata de um pop-up ou mensagem de erro em vermelho (ex: "Erro: O valor inserido apresenta discrepância em relação aos últimos registros").                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| **Critério de aceite 3** | CR3:a mensagem de aviso deve apresentar o último valor registrado válido para auxiliar o operador na correção rápida do dado.<br>**Validação:** verificar se o valor do último registro consta na mensagem de alerta.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| **Teste de aceitação 3** | Acionar a validação de erro informando um valor com discrepâncias.<br>**Esperado:** a mensagem de erro exibe a informação complementar (ex: "Último registro válido na esteira: 5km").                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| **Critérios INVEST**     | **Independente:** pode ser acoplada à funcionalidade de inserção sem afetar a lógica de outras histórias finalizadas.<br>**Negociável:** os limites de alerta (como validar uma velocidade impossível além da quilometragem regressiva) podem ser evoluídos. <br>**Valiosa:** previne erros de digitação cruciais sob a pressão da operação, garantindo integridade e confiabilidade da base. <br>**Estimável:** validação matemática e lógica simples (comparação com estado anterior), de fácil dimensionamento. <br>**Pequena:** trata apenas de uma camada de validação no momento do input de dados. <br>**Testável:** facilmente simulada injetando dados logicamente decrescentes ou inconsistentes durante uma corrida ativa. |
+
+<div align = "center">
+  <sub> Quadro 11 - US011 </sub><br>
+  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+</div>
+
+| Identificação            | [US12](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/46)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Persona**              | Nicole Rauen                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| **User Story**           | “Como atleta participante, quero visualizar o meu desempenho final e compartilhar o resultado, para expor minha conquista e gerar reconhecimento."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| **Critério de aceite 1** | CR1: o sistema deve disponibilizar uma tela ou painel de "Resultados" exibindo as métricas finais da atleta após o encerramento do evento.<br>**Validação:** verificar a renderização correta dos dados consolidados da atleta.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| **Teste de aceitação 1** | Acessar o ambiente da atleta após a finalização do evento. <br>**Esperado:** sistema exibe os dados finais corretos (ex: Nome, Equipe, Quilômetros totais percorridos e Tempo de corrida).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| **Critério de aceite 2** | CR2: deve haver um botão de "Compartilhar" gerando um link direto/imagem. <br>**Validação:** clicar no botão de compartilhamento e verificar a abertura do menu do sistema operacional para copiar link.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| **Teste de aceitação 2** | Na tela de resultado final, clicar em "Compartilhar". <br>**Esperado:**o painel nativo do dispositivo abre com a opção de copiar link e/ou baixar imagem.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| **Critério de aceite 3** | CR3:o conteúdo a ser compartilhado deve trazer um texto formatado dinamicamente com os dados da conquista e menção ao evento. <br>**Validação:** verificar se os dados injetados na mensagem compartilhada batem com a tela de resultado.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| **Teste de aceitação 3** | Finalizar a cópia do link ou concluir o download da imagem. <br> **Esperado:** o texto colado/baixado reflete os dados corretos (ex: "Acabei de correr 10km pela Equipe A no Evento X!").                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| **Critérios INVEST**     | **Independente:**a leitura e compartilhamento ocorrem após o fluxo de operação do evento ser finalizado. <br>**Negociável:** o formato do compartilhamento (ser apenas texto, link ou imagem estática) pode ser negociado conforme o tempo técnico. <br>**Valiosa:** melhora a experiência da atleta (gamificação/reconhecimento) e promove marketing orgânico do evento e da marca. <br>**Estimável:** consumo simples de dados e uso de APIs nativas de compartilhamento padrão de mercado. <br>**Pequena:** foca exclusivamente na interface de leitura do usuário final e no gatilho de share. <br>**Testável:** pode ser validada visualizando a tela final e testando o disparo da ação de compartilhamento em dispositivos mobile. |
+
+<div align = "center">
+  <sub> Quadro 12 - US012 </sub><br>
+  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+</div>
+
+# <a id="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
 
 ---
 
@@ -753,7 +787,7 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 | RF031 | O sistema deve permitir o registro do local/região da etapa.                                                                                                                                                                                                     | Baixa      | Planejado |
 | RF032 | O sistema deve permitir que o corredor acesse seu histórico completo de desempenho no evento após sua finalização.                                                                                                                                               | Baixa      | Planejado |
 <div align = "center">
-  <sub> Quadro 11 - Requisitos Funcionais </sub><br>
+  <sub> Quadro 13 - Requisitos Funcionais </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -799,7 +833,7 @@ Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio 
 | RN27 | Em caso de ausência de conexão, os registros devem ser persistidos localmente com o timestamp original do momento do registro. Ao restabelecer conexão, a sincronização deve ocorrer automaticamente sem duplicar registros, preservando a ordem cronológica original.                                     | RF016        |
 
 <div align = "center">
-  <sub> Quadro 12 - Regras de Negócios </sub><br>
+  <sub> Quadro 14 - Regras de Negócios </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -814,32 +848,32 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 | ----- | ------------- | ---------------------------------------------------------------- | ------ |
 | RF007 | RN01, RN02    | `/turnos`                                                        | POST   |
 | RF008 | RN03          | `/turnos/{id}/checkpoints`                                       | POST   |
-| RF017 | RN04          | `/turnos/{id}/checkpoints`                                       | POST   |
+| RF021 | RN04          | `/turnos/{id}/checkpoints`                                       | POST   |
 | RF009 | RN05          | `/turnos/{id}/finalizar`                                         | PATCH  |
 | RF010 | RN06          | `/turnos/{id}/finalizar`                                         | PATCH  |
 | RF011 | RN07          | `/turnos/{id}/finalizar`                                         | PATCH  |
-| RF018 | RN08          | `/turnos/{id}/hot-swap`                                          | POST   |
+| RF022 | RN08          | `/turnos/{id}/hot-swap`                                          | POST   |
 | RF012 | RN09          | `/equipes/{id}/quilometragem`                                    | GET    |
-| RF019 | RN10          | `/eventos/{id}/metricas`                                         | GET    |
+| RF023 | RN10          | `/eventos/{id}/metricas`                                         | GET    |
 | RF013 | RN11          | `/eventos/{id}/dashboard`                                        | GET    |
-| RF020 | RN12          | `/esteiras/{id}/status`                                          | GET    |
+| RF024 | RN12          | `/esteiras/{id}/status`                                          | GET    |
 | RF014 | RN13          | `/eventos/{id}/historico`                                        | GET    |
-| RF021 | RN14          | `/eventos/{id}/placar`                                           | GET    |
+| RF025 | RN14          | `/eventos/{id}/placar`                                           | GET    |
 | RF001 | RN15          | `/equipes`                                                       | POST   |
 | RF002 | RN16          | `/corredores`                                                    | POST   |
 | RF003 | RN17          | `/equipes/{id}/validacao`                                        | GET    |
-| RF025 | RN18          | `/eventos`                                                       | POST   |
+| RF031 | RN18          | `/eventos`                                                       | POST   |
 | RF004 | RN19          | `/esteiras`                                                      | GET    |
 | RF005 | RN20          | `/equipes`                                                       | GET    |
 | RF006 | RN21          | `/corredores?disponivel=true`                                    | GET    |
-| RF022 | RN22          | `/eventos/{id}/historico?equipe={id}&esteira={id}&corredor={id}` | GET    |
+| RF026 | RN22          | `/eventos/{id}/historico?equipe={id}&esteira={id}&corredor={id}` | GET    |
 | RF015 | RN23, RN24    | `/registros/{id}`                                                | PATCH  |
-| RF023 | RN25          | `/eventos/{id}/inconsistencias`                                  | GET    |
-| RF024 | RN26          | `/eventos/{id}/exportar`                                         | GET    |
+| RF027 | RN25          | `/eventos/{id}/inconsistencias`                                  | GET    |
+| RF028 | RN26          | `/eventos/{id}/exportar`                                         | GET    |
 | RF016 | RN27          | `/sync`                                                          | POST   |
 
 <div align = "center">
-  <sub> Quadro 14 - Matriz RF → RN → Endpoint </sub><br>
+  <sub> Quadro 15 - Matriz RF → RN → Endpoint </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -848,32 +882,52 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 
 ---
 
-Enquanto os requisitos funcionais descrevem o que o sistema faz, os Requisitos Não Funcionais (RNF) definem como o sistema deve operar. Eles não estão ligados a uma funcionalidade específica, mas sim às características de qualidade e restrições que garantem que o software seja robusto, eficiente e seguro. Eles servem como os critérios de "padrão de qualidade" que validam a experiência do usuário e a integridade técnica da solução sob condições reais de uso.
+Enquanto os Requisitos Funcionais (RF) descrevem *o que* o sistema faz, os Requisitos Não Funcionais (RNF) definem *como* ele deve operar. Eles estabelecem os padrões de qualidade, segurança e eficiência essenciais para que o software seja robusto sob condições reais de uso.
 
-Para organizar esses requisitos, utilizamos a estrutura de 8 eixos de qualidade, que segmentam o comportamento do sistema em diferentes perspectivas:
+Essas restrições podem atuar de forma transversal no sistema, impactando sua operação como um todo, ou governar fluxos críticos específicos da aplicação. Para estruturar essas características de qualidade, foi adotado um modelo baseado nos oito eixos da ISO/IEC 25010, adaptados às necessidades operacionais do parceiro e às condições reais de execução do evento esportivo.
 
-- USAB (Usabilidade): Foca na facilidade de uso e na experiência da interface.
-- CONF (Confiabilidade): Trata da capacidade do sistema de permanecer operacional e sem erros.
-- DES (Desempenho): Mede a velocidade de resposta e eficiência de recursos.
-- SUP (Suportabilidade): Avalia a facilidade de manter, testar e atualizar o código.
-- SEG (Segurança): Define a proteção dos dados e o controle de acesso.
-- CAP (Capacidade): Estipula o volume de dados e usuários que o sistema suporta.
-- REST (Restrições): Delimita limitações técnicas, de design ou de hardware.
-- ORG (Organizacionais): Alinha o projeto a padrões de marca, prazos e normas da empresa.
+* **USAB (Usabilidade):** Relaciona-se à facilidade de uso, clareza visual e eficiência da interação humano-computador. Sua definição deriva do contexto operacional dos Auditores, que utilizam o sistema em ambientes externos, sob pressão temporal e alta movimentação, exigindo fluxos rápidos, interfaces legíveis e baixa incidência de erros operacionais.
 
-| Eixo                     | Origem no contexto do parceiro                                                                                                                                                                                                                                                                                                                   | RF relacionado                                         | Requisito                                                                                                                                                                                                       | Métrica / Critério                                                                                                                                                             | Como atendido                                                                                                                                           |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| USAB — Usabilidade       | O evento pode ocorrer em ambientes outdoor ou indoor, com condições de luminosidade variável. Auditores operam tablets em ritmo acelerado, com trocas de corredor de no máximo 1 minuto, sendo essa a janela disponível para encerrar o turno anterior e iniciar o próximo sem lacunas no registro.                                              | RF004, RF005, RF006, RF007, RF008, RF009, RF010, RF018 | O sistema deve ser otimizado para operação em dispositivos móveis (iPad/Tablets) em ambiente de alta luminosidade e ritmo acelerado, permitindo execução rápida das funções básicas (início, checkpoint e fim). | O tempo de operação do fluxo principal (início → checkpoint → fim) por um auditor não deve exceder 5 minutos; elementos interativos devem possuir área mínima de 44x44 pixels. | Interface de alto contraste, uso de teclados numéricos nativos do iOS/Android para inputs e design touch-friendly.                                      |
-| CONF — Confiabilidade    | O evento pode contar com disponibilidade de internet no local, mas o sistema deve funcionar com ou sem ela, pois adversidades climáticas e operacionais podem interrompê-la a qualquer momento durante as 24 horas. Uma perda de dados invalida a apuração oficial e inviabiliza a definição da equipe vencedora.                                | RF016                                                  | O sistema deve garantir a integridade dos dados mesmo em caso de interrupção de conectividade ou queda de energia.                                                                                              | Disponibilidade (uptime) ≥ 99,9% durante as 24h do evento; perda máxima de dados (RPO) ≤ 5 minutos.                                                                            | Implementação de persistência local (LocalStorage ou IndexedDB), mantendo os dados no navegador até confirmação de sincronização com o backend Node.js. |
-| DES — Desempenho         | A troca de corredor exige que a esteira pare; nesse intervalo, de no máximo 1 minuto, o Auditor precisa encerrar o turno anterior e registrar o início do próximo. Lentidão no salvamento pode gerar lacunas no histórico ou contabilização incorreta de quilometragem.                                                                          | RF007, RF008, RF009, RF010, RF013                      | O sistema deve responder de forma quase instantânea para não impactar o revezamento dos atletas.                                                                                                                | Tempo de resposta das requisições de salvamento (p95) < 200ms; carregamento inicial do dashboard < 2 segundos em rede 4G.                                                      | Otimização de queries no banco de dados, uso de cache para o dashboard e backend leve em Node.js/Express.                                               |
-| SUP — Suportabilidade    | O sistema será mantido e evoluído por equipes futuras sem relação com o time de desenvolvimento original. Para que novas features e correções sejam implementadas com segurança e sem regressão, a arquitetura deve seguir padrões reconhecidos de organização e documentação de código.                                                         | RF007, RF008, RF010, RF011                             | O sistema deve ser de fácil manutenção e permitir correções rápidas sem interrupção da cronometragem.                                                                                                           | Cobertura de testes unitários ≥ 70% nas rotinas de cálculo; documentação de API disponível via Swagger/OpenAPI.                                                                | Arquitetura modular em TypeScript e separação clara entre lógica de cálculo de quilometragem e rotas de interface.                                      |
-| SEG — Segurança          | Os dados de quilometragem não são pessoalmente sensíveis, mas sua divulgação antes do encerramento oficial comprometeria o suspense do vencedor, elemento central da experiência do evento Red Bull 24 Horas. O acesso ao placar em tempo real deve ser controlado para preservar a integridade competitiva até o anúncio oficial.               | RF015, RF023                                           | O sistema deve proteger contra manipulação acidental de dados e garantir rastreabilidade e autoria das alterações.                                                                                              | Todo registro de edição retroativa deve gerar log contendo valor original, novo valor, timestamp e IP do dispositivo.                                                          | Implementação de logs de auditoria no backend e sanitização de inputs para prevenção de SQL Injection e XSS.                                            |
-| CAP — Capacidade         | O evento possui cerca de 2 operadores por etapa, com até 5 etapas regionais podendo ocorrer simultaneamente, somadas às telas de placar em modo TV acessadas sem login. O sistema deve suportar no mínimo 10 conexões simultâneas, com margem de segurança projetada para 20.                                                                    | RF013, RF021                                           | O sistema deve suportar o volume de dados gerados pelas esteiras simultâneas e múltiplos acessos ao dashboard durante o evento.                                                                                 | Suporte a até 20 conexões simultâneas (auditores + telas de placar) sem degradação perceptível de performance.                                                                 | Dimensionamento adequado da instância Node.js e uso de WebSockets (quando necessário) para atualização eficiente do dashboard.                          |
-| REST — Restrições Design | O local do evento pode ter infraestrutura disponível, mas condições climáticas e adversidades tornam sua garantia incerta. A independência de APIs externas e hardware proprietário das esteiras reduz o risco operacional e garante que o sistema funcione em qualquer cenário de campo.                                                        | RF007, RF008, RF009, RF010, RF011, RF016               | O sistema deve operar de forma independente, respeitando a infraestrutura limitada de eventos presenciais.                                                                                                      | Não deve haver dependência de APIs externas de terceiros nem de hardware específico das esteiras.                                                                              | Todo processamento de quilometragem realizado internamente e uso de bibliotecas locais (self-hosted).                                                   |
-| ORG — Organizacionais    | O sistema é entregue alinhado ao calendário do evento Red Bull 24 Horas, que ocorre no próximo ano. A interface integra a identidade visual da Red Bull, tornando-se parte dos sistemas oficiais da marca durante a realização das etapas, com tablets e telas de placar representando a marca em tempo real para a organização e participantes. | RF021, RF024, RF025                                    | O sistema deve estar em conformidade com o cronograma e identidade visual da Red Bull.                                                                                                                          | Interface deve seguir o guia de estilos oficial; entrega da versão estável com antecedência para simulação.                                                                    | Uso de paleta de cores e tipografia oficiais no CSS e validação contínua com stakeholders.                                                              |
+* **CONF (Confiabilidade):** Refere-se à capacidade do sistema de manter funcionamento consistente e íntegro mesmo diante de falhas parciais. Esse eixo foi definido considerando a necessidade de andamento contínuo da competição, evitando perda, duplicidade ou inconsistência de registros durante instabilidades de rede ou interrupções temporárias.
+
+* **DES (Desempenho):** Está associado ao tempo de resposta e à eficiência no processamento das operações críticas. Sua relevância decorre da necessidade de atualização quase em tempo real dos dados operacionais, dashboards e informações exibidas ao público durante o evento.
+
+* **SUP (Suportabilidade):** Envolve a facilidade de manutenção, evolução, testes e correções do sistema. Esse eixo foi incorporado devido ao caráter incremental do desenvolvimento ao longo das sprints e à necessidade de rápida adaptação antes da execução oficial do evento.
+
+* **SEG (Segurança):** Abrange mecanismos de autenticação, controle de acesso e rastreabilidade das operações. Sua adoção busca garantir que apenas usuários autorizados possam manipular informações críticas da competição, preservando a integridade dos resultados e a auditabilidade das alterações realizadas.
+
+* **CAP (Capacidade):** Define os limites operacionais relacionados ao volume de acessos, registros e processamento simultâneo. Esse eixo foi estabelecido considerando o uso concorrente do sistema por operadores, dashboards em tempo real e processos contínuos de coleta de dados durante a competição.
+
+* **REST (Restrições):** Representa limitações técnicas, arquiteturais e de infraestrutura impostas pelo contexto operacional do parceiro. Inclui compatibilidade com dispositivos específicos, dependência mínima de serviços externos e adequação às condições físicas do ambiente de execução.
+
+* **ORG (Organizacionais):** Relaciona o sistema às diretrizes institucionais, padrões visuais e exigências operacionais do parceiro. Esse eixo contempla a aderência à identidade visual do evento, além da necessidade de estabilização e congelamento da versão antes da operação oficial.
+
+| ID | Eixo | RF Relacionado | Requisito Não Funcional | Critério Mensurável (SMART) |
+| :--- | :--- | :--- | :--- | :--- |
+| **RNF001** | USAB — Usabilidade | RF004, RF005, RF006, RF007, RF009, RF022 | O fluxo principal de operação (troca de corredores e início de turno) deve ser ágil para o Auditor. | **95%** dos operadores devem concluir o fluxo de início/troca em até **3 minutos** (via testes de usabilidade). |
+| **RNF002** | USAB — Usabilidade | RF013, RF025 | O sistema deve manter alta legibilidade visual em ambientes externos e no modo TV. | A interface deve atender ao nível **AA da WCAG 2.1** com contraste mínimo de **4.5:1** e fonte ≥ 48px no modo TV. |
+| **RNF003** | USAB — Usabilidade | Global | O sistema deve fornecer mensagens de erro com ações corretivas claras, evitando códigos técnicos. | **100%** das mensagens de erro de validação devem sugerir a correção (ex: "km final deve ser > km inicial"). |
+| **RNF004** | USAB — Usabilidade | RF007, RF008, RF022 | O sistema deve minimizar a quantidade de cliques e telas necessárias para que o Auditor execute ações operacionais urgentes durante o uso da esteira. | Nenhuma ação operacional crítica (início/checkpoint/troca) deve exigir mais de **3 cliques/toques**. |
+| **RNF005** | CONF — Confiabilidade | RF016 | O sistema deve possuir tolerância a falhas de rede, permitindo a operação contínua do evento. | **100%** dos dados registrados offline devem ser sincronizados em até **30 segundos** após a reconexão, sem duplicidade. |
+| **RNF006** | CONF — Confiabilidade | Global | O sistema deve garantir a integridade transacional, impedindo dados que firam as regras de negócio. | **100%** das tentativas de persistência de dados inválidos (ex: duplicatas) devem ser bloqueadas no servidor. |
+| **RNF007** | CONF — Confiabilidade | RF018, RF027 | O sistema deve ser resiliente na detecção de falhas operacionais e inconsistências lógicas. | **100%** das inconsistências definidas no RF027 devem gerar alertas sonoros/visuais automáticos. |
+| **RNF008** | DES — Desempenho | RF007, RF008, RF009, RF010, RF021 | O sistema deve processar os registros operacionais de turnos e checkpoints com baixa latência. | O tempo de resposta da API para registros operacionais (P95) deve ser inferior a **200ms**. |
+| **RNF009** | DES — Desempenho | Global | O sistema deve fornecer feedback visual imediato após ações do usuário na interface. | Alertas de inconsistência e validações de campo devem ser exibidos em até **100ms**. |
+| **RNF010** | DES — Desempenho | RF013, RF025 | O dashboard e o modo TV devem apresentar dados atualizados de forma contínua para o público. | A atualização automática de métricas e placares deve ocorrer em no máximo **10 segundos** sem recarregamento manual. |
+| **RNF011** | DES — Desempenho | RF011, RF012, RF023, RF029 | O sistema deve consolidar e exibir as estatísticas de desempenho final de forma quase instantânea. | O processamento e renderização de métricas consolidadas deve ser concluído em até **1 segundo**. |
+| **RNF012** | SEG — Segurança | RF017 | O sistema deve aplicar controle de acesso estrito para perfis administrativos e de auditoria. | **100%** das tentativas de acesso sem autenticação válida (Login/Senha) devem ser rejeitadas com erro 401. |
+| **RNF013** | SEG — Segurança | RF015, Global | O sistema deve manter uma trilha de auditoria para edições retroativas e alterações críticas. | **100%** das edições devem registrar obrigatoriamente: `Usuário`, `Timestamp` e `Dado Anterior`. |
+| **RNF014** | SUP — Suportabilidade | Global | A arquitetura do sistema deve isolar o processamento e as regras de negócio exclusivamente na API (Backend). | A camada visual (Frontend) deve atuar apenas como consumidora; **100%** dos cálculos estatísticos e validações de regras de negócio devem ocorrer no backend. |
+| **RNF015** | SUP — Suportabilidade | Global | O código-fonte deve garantir facilidade de suporte técnico através de testes automatizados. | Cobertura mínima de **75% em testes unitários** nos módulos de sincronização e regras de inconsistência. |
+| **RNF016** | CAP — Capacidade | Global | O sistema deve suportar múltiplos acessos simultâneos (Auditores + Modo TV + Registros). | Suportar no mínimo **50 usuários simultâneos** ativos mantendo o tempo de resposta geral abaixo de **500ms**. |
+| **RNF017** | CAP — Capacidade | RF014, RF023, RF026, RF028 | O sistema deve manter o desempenho ao lidar com o histórico acumulado de logs e turnos. | Consultas e exportações de até **10.000 registros** de histórico não devem ultrapassar **3 segundos** de processamento. |
+| **RNF018** | REST — Restrições | Global |A compatibilidade do sistema cliente é restrita aos dispositivos e navegadores definidos para a operação do evento. | A operação do sistema é garantida exclusivamente em **Tablets Android 10+** rodando as duas últimas versões estáveis dos navegadores **Chrome ou Safari**. |
+| **RNF019** | REST — Restrições | Global | O sistema possui restrição de dependência externa para garantir a autonomia da operação principal. | Nenhuma funcionalidade de registro pode travar ou falhar devido à indisponibilidade de APIs externas. |
+| **RNF020** | ORG — Organizacionais | Global | A interface deve respeitar a identidade visual do parceiro e patrocinadores do evento. | **100%** dos componentes de UI devem seguir o *Design System* aprovado, validado em auditoria pré-sprint. |
+| **RNF021** | ORG — Organizacionais | Global | O desenvolvimento do sistema deve ser concluído e bloqueado com antecedência para garantir a segurança da operação ao vivo. | A versão final do software deve ser testada, aprovada e bloqueada para novas alterações com pelo menos **30 dias de antecedência** da data do evento. |
 
 <div align = "center">
-  <sub> Quadro 13 - Requisitos Não Funcionais </sub><br>
+  <sub> Quadro 16 - Requisitos Não Funcionais </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -899,7 +953,7 @@ _Posicione aqui o diagrama de arquitetura da solução, indicando as camadas pri
 O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 Horas a partir da prática **Light Use-Case Modeling** descrita em Jacobson et al.[⁹](#8-referências), evoluindo para o nível **System Boundary Established** ao incluir todos os atores e casos de uso planejados para o MVP. A notação adotada segue o guia _Use-Case 3.0 — The Definitive Guide_: atores são representados por bonecos-palito, casos de uso por elipses contidas dentro do retângulo do _System of Interest_, associações por linhas contínuas com setas indicando o iniciador da interação, `<<include>>` por seta tracejada apontando do caso-base para o caso obrigatoriamente incluído, e `<<extend>>` por seta tracejada apontando do caso opcional para o caso-base que ele estende.
 
 <div align="center">
-  <img src= "../assets/use_case.jpeg" width="100%" alt="Canvas da Proposta de Valor do projeto Red Bull 24 Horas"><br>
+  <img src= "./assets/use_case/use_case.jpeg" width="100%" alt="Casos de uso"><br>
   <sub>Imagem 9 - Diagrama Casos de Uso</sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -913,7 +967,7 @@ O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 H
 | **Organização do Evento** | Primário (secundário em frequência) | Equipe responsável pela validação final dos resultados e pela auditoria pós-evento. Acessa o painel consolidado e exporta os dados para conferência.                                                                                                                                                                                               |
 
 <div align = "center">
-  <sub> Quadro 15 - Atores de Casos de Uso </sub><br>
+  <sub> Quadro 17 - Atores de Casos de Uso </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -933,7 +987,7 @@ Os casos de uso foram identificados a partir dos requisitos funcionais da seçã
 | **Exportar dados**                | Organização do Evento           | Gerar arquivo CSV com todos os registros para auditoria formal pós-evento.                                                                                                              | Ao menos um registro existente no sistema.                                          | Auditor (pode acionar a exportação conjuntamente).                          | Arquivo CSV gerado com todos os registros; dados disponíveis para auditoria formal pós-evento.           |
 
 <div align = "center">
-  <sub> Quadro 16 - Casos de Uso </sub><br>
+  <sub> Quadro 18 - Casos de Uso </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -954,22 +1008,172 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 | `<<extend>>`   | Registrar checkpoint      | Recuperar último registro válido da sessão | Comportamento _condicional_: só ocorre quando a esteira para de funcionar durante uma sessão e o auditor precisa recuperar a quilometragem com base no último checkpoint conhecido **da sessão atual**. O caso-base não precisa saber que esse fluxo existe — daí o uso de `<<extend>>`.                                   |
 
 <div align = "center">
-  <sub> Quadro 17 - Relacionamentos include e extend </sub><br>
+  <sub> Quadro 19 - Relacionamentos include e extend </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
----
+Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação UML, com o objetivo de representar a estrutura do sistema por meio de suas classes, atributos, relacionamentos e responsabilidades. A modelagem organiza logicamente os elementos do domínio do evento Red Bull 24h, facilitando a compreensão das dependências entre as entidades e da solução proposta pelo grupo.
 
-_Diagrama UML de classes com entidades, atributos, relacionamentos e responsabilidades. Diferencie **associação**, **agregação** (losango vazio), **composição** (losango cheio) e **herança** (triângulo vazio). Multiplicidade explícita em toda associação._
+<div align = "center">
+  <sub>Imagem 10 - Diagrama de Classes de Domínio</sub><br>
+  <img src="./assets/classes_dominio/diagrama_classes_corrigido.png" width="100%" alt="Diagrama de Classes"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
 
 ### 3.2.4. Diagrama de Sequência UML (sprint 3)
 
+A modelagem de software é uma etapa fundamental no desenvolvimento de aplicações, pois permite que equipes de desenvolvimento visualizem, comuniquem e validem o comportamento do sistema antes mesmo de escrever a primeira linha de código. Dentro das ferramentas de modelagem, a UML (Unified Modeling Language, ou Linguagem de Modelagem Unificada) é o padrão mais amplamente adotado na indústria de software. Trata-se de um conjunto de notações gráficas que descrevem diferentes aspectos de um sistema  desde sua estrutura estática até o seu comportamento dinâmico em tempo de execução.
+
+Entre os diversos tipos de diagramas que a UML oferece, os Diagramas de Sequência são especialmente úteis para representar a troca de mensagens entre os componentes de um sistema ao longo do tempo. Em termos simples, eles respondem à pergunta: quem faz o quê, em qual ordem, e como os componentes se comunicam para realizar uma determinada tarefa? Cada participante do sistema, como um controlador, um serviço ou um banco de dados, é representado como uma coluna vertical (chamada de lifeline), e as setas horizontais entre essas colunas representam as chamadas e respostas trocadas durante a execução de um processo.
+
+No contexto deste projeto, os Diagramas de Sequência foram utilizados para modelar os principais fluxos de interação da aplicação, cobrindo funcionalidades como o gerenciamento de turnos, a exibição e sincronização de eventos, o controle de histórico, o cadastro de equipes e o registro de dados com suporte a operação offline. A camada de comunicação segue uma arquitetura em camadas típica de aplicações web modernas: o Controller recebe as requisições do usuário, delega ao Service a lógica de negócio, que por sua vez aciona o Repository para persistir ou recuperar dados no BancoDeDados.
+
+A seguir, cada diagrama é apresentado com uma descrição detalhada de seus fluxos principal e alternativo, contextualizando sua relevância dentro da aplicação.
+
+#### 3.2.4.1. Diagrama de Sequência: Eventos
+
+A gestão de Eventos representa a visão macro da competição, sendo a configuração inicial e o núcleo organizacional do desafio Red Bull 24 Horas. O Diagrama de Sequência de Eventos descreve como a aplicação web orquestra processos fundamentais, como a criação do evento (incluindo a validação de data, local e esteiras), o cálculo de métricas em tempo real, como quilometragem total por equipe, velocidade média e equipes em pista  e a manutenção do placar oficial. Neste contexto, um evento é a unidade central da plataforma que coordena a disputa entre as duas equipes de 16 atletas, gerindo os dados das duas esteiras por equipe para garantir uma apuração precisa que substitua o método manual, permitindo ainda a detecção automática de inconsistências (como gaps de checkpoints) e a exportação de dados consolidados para auditoria pós-evento.
+
+<div align="center">
+  <sub>Imagem 11 - Diagrama de Sequencia: Eventos</sub><br>
+  <img src="./assets/diagrama_sequencia/Events_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div
+
+**Fluxo Principal (Caminho Feliz)**
+
+**1. Criação do Evento:** O administrador envia as configurações gerais (nome, data, local e lista de esteiras) via `POST /eventos`. O EventoService verifica a inexistência de conflitos de data/local e persiste o evento com o status "aguardando".
+
+**2. Métricas em Tempo Real e Placar:** Para alimentar o painel ou "modo TV", requisições periódicas do tipo GET são feitas aos endpoints de métricas e placar. O EventoService busca os turnos ativos, soma a quilometragem acumulada de cada equipe e ordena o placar de forma decrescente, devolvendo esses dados organizados para exibição instantânea.
+
+**3. Auditoria e Exportação:** Ao final ou durante o evento, requisições para `GET /eventos/{id}/` inconsistencias varrem os registros buscando saltos suspeitos ou lacunas de checkpoints. Por fim, a rota `GET /eventos/{id}/exportar` serializa todas as informações consolidadas em um arquivo padronizado (como CSV) para prestação de contas.
+
+**Fluxos Alternativos e Exceções**
+
+**1. Conflito de Agendamento:** Na criação do evento, caso o repositório encontre um evento previamente cadastrado para a mesma data e local, o controlador retorna o código HTTP `409 (Conflict)`, solicitando o ajuste das informações.
+
+**2. Ausência de Dados para Exportação:** Se a exportação for solicitada antes da existência de registros consolidados, o sistema gera um arquivo base contendo apenas as estruturas de cabeçalho ou notifica a interface sobre a ausência de volumetria.
+
 ---
 
-_Ao menos um fluxo prioritário, mostrando a interação entre as camadas Controller → Service → Repository → Banco. Linhas de vida verticais, ativação correta, mensagens síncronas e assíncronas diferenciadas, retornos tracejados._
+#### 3.2.4.2 Diagrama de Sequência: Equipes
+
+O módulo de Equipes é a base de organização dos competidores. O Red Bull 24 Horas possui uma regra estrita: o confronto ocorre exatamente entre duas equipes, sendo cada uma composta por 16 pessoas. Este fluxo mapeia o cadastro e a validação estrutural dos times, a exibição dos perfis e o cálculo de métricas de desempenho coletivo e individual.
+
+<div align="center">
+  <sub>Imagem 12 - Diagrama de Sequência: Equipes</sub>
+    <br><img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.png" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026 </sub>
+  <br><br><br>
+</div>
+
+**Fluxo Principal (Caminho Feliz)**
+
+**1. Cadastro da Equipe:** O usuário envia uma requisição de cadastro contendo o nome da equipe e um vetor (array) contendo exatamente os 16 atletas. O EquipeService valida se o limite de equipes no evento ainda não foi atingido e se a contagem de participantes está perfeitamente alinhada à regra. Em seguida, grava a equipe e itera sobre a lista de atletas para salvar cada corredor vinculado ao identificador da equipe.
+
+**2. Exibição dos Dados:** Ao solicitar a exibição da equipe, o sistema realiza uma busca conjunta (JOIN) no banco de dados, retornando a entidade da equipe e seus respectivos membros de forma consolidada.
+
+**3. Métricas de Desempenho:** Para analisar a performance, o endpoint de métricas aciona o banco para somar a quilometragem total, extrair a média por corredor e identificar os atletas com melhor desempenho (top atletas), retornando esses indicadores agregados para a interface.
+
+**Fluxos Alternativos e Exceções**
+
+**1. Violação do Limite de Equipes:** Se o sistema identificar que já existem 2 equipes cadastradas para o evento em questão, o cadastro é bloqueado e uma mensagem de erro informa que o limite regulamentar foi atingido.
+
+**2. Número Incorreto de Atletas:** Caso a lista enviada contenha menos ou mais de 16 corredores, o EquipeService interrompe o processo antes de salvar qualquer informação no banco, retornando um erro de validação (exigindo exatamente 16 inscrições).
+
+---
+
+#### 3.2.4.3. Diagrama de Sequência: Turnos
+
+O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na esteira. Como a dinâmica do evento exige trocas rápidas de corredores sem interrupção na contagem de quilômetros, este fluxo mapeia desde a entrada do corredor no equipamento, passando pelos registros periódicos de segurança (checkpoints), até a finalização do turno com a leitura final da quilometragem. Turnos, neste contexto, representam os intervalos de atividade atribuídos a cada corredor ao longo de um ciclo na esteira, definindo quando cada atleta entra e sai da atividade.
+
+<div align="center">
+  <sub>Imagem 13 - Diagrama de Sequencia: Turnos</sub><br>
+  <img src="./assets/diagrama_sequencia/Turns_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de turnos"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div
+
+**Fluxo Principal (Caminho Feliz)**
+
+**1. Início do Turno:** O Cliente envia uma requisição `POST /turnos/iniciar` contendo as identificações do corredor e da esteira, além da quilometragem inicial. O TurnoController aciona o TurnoService para validar se o atleta e a esteira estão livres. Confirmada a disponibilidade, o turno é criado com status "em andamento" e o estado da esteira é atualizado para "Ocupada" no banco de dados.
+iodicamente (como a cada 5 minutos através de um alerta na interface ou a cada 30 minutos como backup), o auditor da prova envia a quilometragem atual da esteira via `POST /turnos/{id}/checkpoints`. O sistema valida se o valor atual é maior ou igual ao último registro, gravando a marcação de tempo (timestamp) para garantir um histórico seguro caso ocorram falhas no equipamento.
+
+**2. Checkpoints Obrigatórios e Voluntários:** Periodicamente (como a cada 5 minutos através de um alerta na interface ou a cada 30 minutos como backup), o auditor da prova envia a quilometragem atual da esteira via `POST /turnos/{id}/checkpoints`. O sistema valida se o valor atual é maior ou igual ao último registro, gravando a marcação de tempo (timestamp) para garantir um histórico seguro caso ocorram falhas no equipamento. 
+
+**3. Finalização do Turno:** Quando o atleta encerra sua corrida, envia-se a requisição `POST /turnos/{id}/finalizar` com o valor final lido na esteira. O serviço calcula automaticamente a distância percorrida no turno (diferença entre o km final e o inicial), a duração exata e a velocidade média. O turno é encerrado e a esteira volta ao status de "Livre".
+
+**Fluxos Alternativos e Exceções**
+
+**1. Esteira ou Atleta Ocupados:** Se no início do turno o TurnoService identificar que a esteira solicitada já consta como "Ocupada" ou que o corredor já possui um turno ativo, o sistema bloqueia a ação e retorna um erro de conflito, impedindo sobreposições indevidas.
+
+**2. Inconsistência de Quilometragem nos Checkpoints:** Caso o auditor insira um valor de quilometragem inferior ao do último checkpoint registrado (o que configuraria um erro de digitação ou leitura), o TurnoService rejeita a inserção para proteger a integridade da apuração.
+
+---
+
+#### 3.2.4.4. Diagrama de Sequência: Histórico
+
+A funcionalidade de Histórico fornece total rastreabilidade e transparência ao longo das 24 horas de evento. Ela permite que a organização e os auditores visualizem uma linha do tempo cronológica detalhada de todas as ações que ocorreram nas esteiras, provendo uma ferramenta ágil para sanar dúvidas ou contestar apurações durante a competição.
+
+<div align="center">
+  <sub>Imagem 14 - Diagrama de Sequencia: Historico</sub><br>
+  <img src="./assets/diagrama_sequencia/History_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+**Fluxo Principal (Caminho Feliz)**
+
+**1. Consulta de Linha do Tempo:** O Cliente solicita a listagem cronológica através de um endpoint de histórico (por exemplo, filtrando por equipe ou por esteira específica).
+
+**2. Processamento e Ordenação:** O controlador repassa a requisição ao serviço de histórico, que aciona o banco de dados para resgatar todos os eventos associados (inícios de turno, checkpoints parciais, encerramentos e ajustes retroativos).
+
+**3. Retorno Formatado:** O serviço compila essas informações, ordenando-as pelo timestamp mais recente, e monta um objeto de transferência de dados contendo o autor da marcação, o valor registrado e o tipo de evento. O Cliente recebe os dados e renderiza a linha do tempo organizada na interface web.
+
+**Fluxos Alternativos e Exceções**
+
+**1. Filtros Inexistentes ou Vazios:** Caso a consulta busque o histórico de uma esteira que ainda não foi ativada na competição, o repositório retorna uma lista vazia. O controlador repassa essa informação com sucesso (código HTTP 200), e a interface informa visualmente que não há registros para o período ou equipamento selecionado.
+
+**2. Paginação de Alto Volume:** Devido à longa duração do evento (24 horas), o volume de dados pode se tornar expressivo. O serviço aplica técnicas de paginação (entregando os dados em blocos) para evitar lentidão no carregamento da interface.
+
+---
+
+#### 3.2.4.5. Diagrama de Sequência: Registros e Sincronização (Sync)
+
+Garantir a operação ininterrupta do sistema em um ambiente de evento físico é um grande desafio, pois podem ocorrer instabilidades na conexão de internet. Este diagrama mapeia duas rotinas avançadas de resiliência: a Edição Retroativa (para corrigir erros de digitação passados mantendo uma trilha de auditoria) e a Sincronização Offline (Sync), que permite à interface armazenar dados localmente em caso de queda de rede e enviá-los ao servidor assim que a conexão for restabelecida.
+
+<div align="center">
+  <sub>Imagem 15 - Diagrama de Sequencia: Registros/Sync</sub><br>
+  <img src="./assets/diagrama_sequencia/Logs_SequenceDiagram.png" width="900px" alt="Diagrama de sequencia do processo de registros e sync"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+**Fluxo Principal (Caminho Feliz)**
+
+**1. Edição Retroativa com Auditoria:** Caso um auditor perceba que digitou um valor incorreto, ele aciona uma rota de atualização parcial (PATCH /registros/{id}) fornecendo o novo valor ajustado e o motivo da correção. O serviço valida se o novo número respeita a lógica sequencial (ficando entre o checkpoint anterior e o posterior). Se válido, o banco atualiza o registro e insere automaticamente uma linha na tabela de auditoria, registrando o valor antigo, o valor novo e o autor da mudança.
+
+**2. Sincronização de Dados Offline:** Se o dispositivo Cliente operar sem internet, os registros de quilometragem são salvos na memória local do iPad. Ao detectar que a conexão foi restabelecida, a aplicação dispara um envio em lote através da rota POST /sync. O RegistroService analisa cada item do lote, verifica a inexistência de duplicidades com base no ID e timestamp, e insere os registros atrasados no banco de dados, garantindo que nenhum quilômetro corrido seja perdido.
+
+**Fluxos Alternativos e Exceções**
+
+**1. Valor Retroativo Incompatível:** Na tentativa de edição, se o novo valor informado quebrar a ordem cronológica da esteira (por exemplo, informando um valor menor que o checkpoint anterior), o sistema rejeita o ajuste com o erro HTTP 422 (Unprocessable Entity).
+
+**2. Tratamento de Duplicidades no Sync:** Durante a sincronização do cache offline, se o serviço identificar que um determinado registro já foi gravado anteriormente no banco (evitando reenvios acidentais causados por instabilidade de rede), ele ignora silenciosamente o item duplicado e prossegue salvando apenas os dados inéditos.
+
+---
+
+A modelagem da aplicação web do Red Bull 24 Horas por meio dos Diagramas de Sequência UML demonstra a robustez arquitetural planejada para o sistema. Ao destrinchar visualmente as trocas de mensagens entre as interfaces de operação e as camadas lógicas de backend, o projeto mitiga os principais riscos mapeados na operação atual, como a dependência excessiva de anotações manuais vulneráveis a falhas e distrações.
+
+Cada um dos fluxos detalhados cumpre um papel estratégico: a gestão de Equipes e Eventos assegura o cumprimento do regulamento e a centralização dos dados; o fluxo de Turnos viabiliza o dinamismo extremo do revezamento sem sobrecarregar a equipe operacional; a rotina de Histórico fornece transparência imediata; e os mecanismos de Registros e Sincronização Offline blindam a competição contra quedas de conectividade e falhas de digitação.
+
+Em suma, a aplicação desta metodologia na fase de concepção do software garante que a transição da prancheta física para o ecossistema digital ocorra de maneira fluida, estável e perfeitamente auditável, entregando aos parceiros da Red Bull uma ferramenta de alto nível para o controle de suas experiências esportivas.
+
 
 ### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
 
@@ -991,9 +1195,18 @@ _Documente os design patterns utilizados (Repository, Strategy, Factory, DTO etc
 
 ## 3.3. Wireframes (sprint 2)
 
----
+O wireframe é um rascunho do sistema que mostra como o projeto ira funcionar. Ele é usado para mostrar como as telas vão ser organizadas e como o usuário vai navegar por elas, tudo isso antes de qualquer linha de código ser escrita.
 
-_Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização)_
+Ele serve pra deixar as ideias mais claras, dar direcionamento para o projeto e evitar retrabalho no fim, além de garantir que todos da equipe estão alinhados. Essa é uma etapa essencial para a organização do projeto e do grupo, para ficar claro como o sistema irá funcionar.
+
+A seguir, serão apresentados os wireframes de baixa e média fidelidade que foram desenvolvidos durante a sprint 2.
+
+<div align="center">
+  <sub>Imagem 16 - Wireframe de Baixa Fidelidade</sub><br>
+  <img src="./assets/wireframes/wireframe-baixa-fidelidade.svg" width="900px" alt="Wireframe de baixa fidelidade"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
 
 ## 3.4. Guia de estilos (sprint 3)
 
@@ -1033,15 +1246,173 @@ _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelid
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
----
 
-_Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture)._
 
-### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
+O Modelo Entidade-Relacionamento (MER) é a representação conceitual do banco de dados, na qual se descrevem as entidades do domínio, seus atributos e os relacionamentos que as conectam, abstraindo decisões de implementação física como tipos de dados, índices ou chaves estrangeiras. Para este projeto, o MER traduz em linguagem de dados o domínio do Red Bull 24 Horas modelado nas seções anteriores: o evento operado por um gerente (Manager), suas equipes (Team) e atletas (Athlete), e o registro de cada sessão de corrida (Shift) auditada à beira da esteira (Treadmill), com os checkpoints periódicos e logs que sustentam a apuração oficial da competição. A notação adotada é a de **Peter Chen**, na qual entidades são representadas por retângulos, atributos por elipses (com elipses preenchidas indicando chave primária e atributos compostos derivados do atributo-pai), relacionamentos por losangos e a cardinalidade explicitada nas extremidades de cada relacionamento com a razão (1) e (N). Os nomes de entidades, atributos e relacionamentos foram padronizados em inglês para garantir consistência com a nomenclatura técnica adotada no modelo relacional e no código-fonte da aplicação.
 
----
+<div align="center">
+  <sub>Imagem 17 - Modelo Entidade-Relacionamento</sub><br>
+  <img src="./assets/modelo_entidade_relacionamento/Modelo-ER.png" width="80%" alt="Modelo Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
 
-_Posicione aqui o DER com cardinalidades explícitas em ambos os lados de cada relação e identificação de PK/FK. O DER deve ser coerente com o diagrama de classes (3.2.3)._
+#### Entidades e atributos
+
+As entidades foram derivadas diretamente do domínio descrito no TAPI e dos casos de uso da seção 3.2.2, garantindo coerência entre o modelo conceitual de dados e o modelo comportamental do sistema. Cada entidade representa um conceito do mundo real que precisa ser persistido para sustentar a apuração e a auditoria das 24 horas de competição.
+
+<div align="center">
+  <sub>Quadro 20 - Entidades e atributos do MER</sub>
+</div>
+
+| Entidade       | Descrição                                                                                                                                                                       | Atributos                                                                       | Chave primária |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | -------------- |
+| **Manager**    | Gerente regional do time de Field Marketing da Red Bull, responsável por instanciar e gerir os eventos sob sua regional.                                                        | `ID`, `NAME`                                                                    | `ID`           |
+| **Event**      | Instância de uma etapa do Red Bull 24 Horas (regional ou final nacional), identificada por local e título da edição.                                                            | `ID`, `LOCAL`, `TITLE`                                                          | `ID`           |
+| **Team**       | Uma das duas equipes que competem no evento (tradicionalmente "azul" e "vermelha"), à qual os atletas são vinculados antes do início da competição.                             | `ID`, `NAME`                                                                    | `ID`           |
+| **Athlete**    | Corredor inscrito que reveza com seu time durante as 24 horas, identificado pessoalmente por CPF para fins de auditoria pós-evento.                                             | `ID`, `NAME`, `CPF`, `GENDER`                                                   | `ID`           |
+| **Auditor**    | Operador do sistema (substituindo a operação atual da prancheta) que registra os turnos e seus checkpoints à beira da esteira.                                                  | `ID`, `STATUS`, `NUMBER`                                                        | `ID`           |
+| **Shift**      | Sessão individual de corrida — um único atleta em uma única esteira, do play até o stop, antes da próxima zeragem. É a entidade central do registro operacional do evento.      | `ID`, `STATUS`, `INIT`, `END`, `TIME`, `SPEED`, `KM_INIT`, `KM_END`, `DISTANCE` | `ID`           |
+| **Treadmill**  | Equipamento físico (Technogym) onde os turnos ocorrem. Cada equipe opera duas esteiras simultaneamente durante o evento.                                                        | `ID`, `STATUS`, `NUMBER`                                                        | `ID`           |
+| **Checkpoint** | Marcação periódica de segurança (referência de 5 em 5 minutos) que registra a quilometragem parcial dentro de um turno em andamento, permitindo recuperação em caso de falha técnica da esteira. | `ID`, `TIMESTAMP`, `TYPE` (`MANDATORY` / `VOLUNTARY`), `DISTANCE`               | `ID`           |
+| **Log**        | Registro auditável das ações executadas dentro de um turno (início, checkpoint e fim), garantindo rastreabilidade completa para a auditoria formal pós-evento.                  | `ID`, `TIMESTAMP`, `TYPE` (`INIT` / `CHECKPOINT` / `END`)                       | `ID`           |
+
+<div align="center">
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+#### Relacionamentos e cardinalidades
+
+Os relacionamentos foram modelados a partir das regras de negócio levantadas na seção 3.1 e da dinâmica operacional descrita pelo parceiro: um gerente regional gere múltiplos eventos ao longo da temporada; cada evento conta com exatamente duas equipes; cada equipe escala vários atletas que se revezam continuamente; cada atleta realiza diversos turnos ao longo das 24 horas; e cada turno é monitorado por um auditor e produz uma sequência de checkpoints e um log de ações.
+
+<div align="center">
+  <sub>Quadro 21 - Relacionamentos e cardinalidades do MER</sub>
+</div>
+
+| Relacionamento | Entidade A | Cardinalidade | Entidade B  | Descrição                                                                                                                                                                                                |
+| -------------- | ---------- | ------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Manages**    | Manager    | (1, N)        | Event       | Um gerente regional pode gerir vários eventos (etapas regionais distintas ao longo da temporada), mas cada evento é gerido por exatamente um gerente responsável.                                        |
+| **Has**        | Event      | (1, N)        | Team        | Cada evento possui duas equipes, e cada uma pertence a um único evento. A entidade Team é instanciada por edição, refletindo a natureza efêmera da competição. |
+| **Rosters**    | Team       | (1, N)        | Athlete     | Uma equipe escala vários atletas (tipicamente 16 por equipe, conforme briefing), e cada atleta pertence a uma única equipe dentro de um mesmo evento.                                                    |
+| **Performs**   | Athlete    | (1, N)        | Shift       | Um atleta realiza vários turnos durante as 24 horas (cada entrada na esteira é um turno distinto), e cada turno é realizado por exatamente um atleta refletindo a regra de que a esteira é zerada a cada troca de corredor. |
+| **Audits**     | Auditor    | (1, N)        | Shift       | Um auditor é responsável por auditar diversos turnos ao longo do seu plantão na operação, e cada turno é auditado por exatamente um auditor, garantindo responsabilidade unívoca sobre cada registro.    |
+| **Occurs On**  | Shift      | (N, 1)        | Treadmill   | Vários turnos ocorrem ao longo das 24 horas em uma mesma esteira (que é zerada entre eles), enquanto cada turno acontece em uma única esteira específica.                                                |
+| **Records**    | Shift      | (1, N)        | Checkpoint  | Cada turno guarda múltiplos checkpoints periódicos (a marcação de 5 em 5 minutos descrita pelo parceiro), enquanto cada checkpoint pertence a exatamente um turno, não existe checkpoint isolado fora de uma sessão de corrida ativa. |
+| **Has**        | Shift      | (1, 1)        | Log         | Cada turno guarda exatamente um log de ações associado, que armazena cronologicamente os eventos `INIT`, `CHECKPOINT` e `END` daquela sessão, sustentando a trilha de auditoria pós-evento.              |
+
+<div align="center">
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+#### Decisões de modelagem
+
+Três decisões merecem destaque por traduzirem diretamente as regras de negócio do Red Bull 24 Horas para o modelo de dados:
+
+- **Shift como entidade central:** a quilometragem do evento não é monotônica em relação à esteira nem à equipe, pois a esteira é zerada a cada troca de corredor (dinâmica detalhada no Modelo de Sessão de Corrida da seção 3.2.2). Por isso, o **Shift** foi modelado como entidade de primeira classe, com `KM_INIT`, `KM_END`, `INIT` e `END` próprios, e não como um simples registro derivado da esteira ou da equipe. O total acumulado de uma equipe é, portanto, sempre uma função agregada sobre os turnos finalizados de seus atletas, e não um atributo persistido diretamente.
+
+- **Checkpoint tipado (`MANDATORY` / `VOLUNTARY`):** o atributo `TYPE` do Checkpoint distingue as marcações automáticas obrigatórias (de 5 em 5 minutos, conforme protocolo) das marcações voluntárias feitas pelo auditor (por exemplo, antes de uma troca de velocidade decidida pelo atleta). Essa distinção é essencial para a auditoria pós-evento e para a oportunidade de padronização entre as cinco regionais identificada na matriz de riscos (seção 2.1.5).
+
+- **Log como entidade dedicada à auditoria:** apesar de aparentemente redundante em relação aos timestamps já presentes em Shift e Checkpoint, o **Log** isola a trilha de auditoria do modelo operacional. Ele responde diretamente ao risco "Erro humano na leitura e digitação da quilometragem" (seção 2.1.5), garantindo o histórico de alterações exigido pelo caso de uso "Editar registro" (seção 3.2.2) sem poluir as entidades de negócio com colunas de controle.
+
+**Síntese do Modelo Entidade-Relacionamento**
+
+O MER traduz o domínio do Red Bull 24 Horas em um modelo conceitual de dados rastreável, no qual cada entidade tem propósito claro dentro do fluxo operacional (cadastro pré-evento → registro de turnos → checkpoints periódicos → encerramento → auditoria). A escolha do Shift como entidade central refletindo o conceito de **sessão de corrida**, somada às entidades Checkpoint e Log que sustentam a confiabilidade e a rastreabilidade dos dados, alinha o modelo de dados às prioridades de mitigação de risco da seção 2.1.5 e aos casos de uso da seção 3.2.2. Esse alinhamento garante que o banco de dados forneça base sólida tanto para a operação em tempo real durante as 24h quanto para a auditoria formal pós-evento e para as análises estatísticas inéditas identificadas como oportunidades do projeto.
+
+### 3.6.2. Diagrama Entidade-Relacionamento (DER)
+
+O DER traduz o modelo conceitual do MER para a estrutura relacional do banco de dados (PostgreSQL), adotando a **notação de tabelas relacionais** com tipos de dados, restrições (`NOT NULL`, `UNIQUE`, `CHECK`), chaves primárias (`PK`) e chaves estrangeiras (`FK`).
+
+<div align="center">
+  <sub>Imagem 18 - Diagrama Entidade-Relacionamento</sub><br>
+  <img src="./assets/diagrama_entidade_relacionamento/diagramaEntidadeRelacionamento.jpg" width="90%" alt="Diagrama Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+<div align="center">
+  <sub>Quadro 22 - Tabelas e colunas do DER</sub>
+</div>
+
+| Tabela          | Coluna               | Tipo      | Restrições                                    | Descrição                                                       |
+| --------------- | -------------------- | --------- | --------------------------------------------- | --------------------------------------------------------------- |
+| **Managers**    | `id`                 | SERIAL    | PK                                            | Identificador único do gerente                                  |
+|                 | `cpf`                | VARCHAR   | UNIQUE                                        | CPF do gerente                                                  |
+|                 | `name`               | VARCHAR   | NOT NULL                                      | Nome completo                                                   |
+| **Events**      | `id`                 | SERIAL    | PK                                            | Identificador único do evento                                   |
+|                 | `title`              | VARCHAR   | NOT NULL UNIQUE                               | Título da edição (ex.: "Red Bull 24 Horas SP 2026")             |
+|                 | `local`              | VARCHAR   | NOT NULL UNIQUE                               | Local de realização                                             |
+|                 | `manager_id`         | INT       | FK → Managers(id)                             | Gerente responsável                                             |
+| **Teams**       | `id`                 | SERIAL    | PK                                            | Identificador único da equipe                                   |
+|                 | `name`               | VARCHAR   | NOT NULL UNIQUE                               | Nome da equipe (ex.: "Azul", "Vermelha")                        |
+|                 | `event_id`           | INT       | FK → Events(id)                               | Evento ao qual a equipe pertence                                |
+| **Athletes**    | `id`                 | SERIAL    | PK                                            | Identificador único do atleta                                   |
+|                 | `name`               | VARCHAR   | NOT NULL                                      | Nome completo                                                   |
+|                 | `gender`             | VARCHAR   | NOT NULL                                      | Gênero, utilizado para apuração por categoria                   |
+|                 | `cpf`                | VARCHAR   | UNIQUE                                        | CPF do atleta                                                   |
+|                 | `team_id`            | INT       | FK → Teams(id)                                | Equipe à qual o atleta pertence                                 |
+| **Auditors**    | `id`                 | SERIAL    | PK                                            | Identificador único do auditor                                  |
+|                 | `name`               | VARCHAR   | NOT NULL                                      | Nome do auditor                                                 |
+|                 | `cpf`                | VARCHAR   | UNIQUE                                        | CPF do auditor                                                  |
+|                 | `registration_number`| INT       | NOT NULL UNIQUE                               | Número de registro funcional                                    |
+|                 | `is_active`          | BOOLEAN   | DEFAULT FALSE                                 | Indica se o auditor está ativo no sistema                       |
+| **Treadmills**  | `id`                 | SERIAL    | PK                                            | Identificador único da esteira                                  |
+|                 | `shift_id`           | INT       | FK → Shifts(id)                               | Turno atualmente em execução                                    |
+|                 | `treadmill_number`   | INT       | NOT NULL UNIQUE                               | Número físico da esteira (Technogym)                            |
+| **Shifts**      | `id`                 | SERIAL    | PK                                            | Identificador único do turno                                    |
+|                 | `status`             | VARCHAR   | NOT NULL CHECK ('pending','in progress','completed') | Estado do turno                                          |
+|                 | `athlete_id`         | INT       | FK → Athletes(id)                             | Atleta realizando o turno                                       |
+|                 | `auditor_id`         | INT       | FK → Auditors(id)                             | Auditor responsável pelo registro                               |
+|                 | `start_at`           | TIMESTAMP | —                                             | Início do turno                                                 |
+|                 | `end_at`             | TIMESTAMP | —                                             | Encerramento do turno                                           |
+|                 | `time_total`         | INTERVAL  | —                                             | Duração total (calculada ao finalizar)                          |
+|                 | `speed`              | INT       | NOT NULL                                      | Velocidade configurada (km/h)                                   |
+|                 | `km_start`           | INT       | NOT NULL                                      | Quilometragem inicial no odômetro                               |
+|                 | `km_end`             | INT       | NOT NULL                                      | Quilometragem final no odômetro                                 |
+|                 | `distance`           | INT       | NOT NULL                                      | Distância percorrida (`km_end - km_start`)                      |
+| **Checkpoints** | `id`                 | SERIAL    | PK                                            | Identificador único do checkpoint                               |
+|                 | `shift_id`           | INT       | FK → Shifts(id)                               | Turno ao qual o checkpoint pertence                             |
+|                 | `timestamp`          | TIMESTAMP | —                                             | Data e hora do registro                                         |
+|                 | `distance`           | INT       | NOT NULL                                      | Quilometragem parcial no momento do checkpoint                  |
+|                 | `type`               | VARCHAR   | CHECK ('mandatory', 'voluntary')              | Obrigatório (a cada 5 min) ou voluntário                        |
+| **Logs**        | `id`                 | SERIAL    | PK                                            | Identificador único do log                                      |
+|                 | `shift_id`           | INT       | FK NOT NULL → Shifts(id)                      | Turno ao qual o log está vinculado                              |
+|                 | `timestamp`          | TIMESTAMP | NOT NULL                                      | Data e hora da ação                                             |
+|                 | `type`               | VARCHAR   | CHECK ('created', 'updated', 'finished')      | Tipo da ação auditada                                           |
+
+<div align="center">
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+<div align="center">
+  <sub>Quadro 23 - Relacionamentos e chaves estrangeiras do DER</sub>
+</div>
+
+| Tabela origem   | Coluna FK            | Tabela referenciada | Cardinalidade | Relacionamento                                               |
+| --------------- | -------------------- | ------------------- | ------------- | ------------------------------------------------------------ |
+| **Events**      | `manager_id`         | Managers            | N : 1         | Vários eventos podem ser geridos pelo mesmo gerente          |
+| **Teams**       | `event_id`           | Events              | N : 1         | Várias equipes pertencem a um evento                         |
+| **Athletes**    | `team_id`            | Teams               | N : 1         | Vários atletas compõem uma equipe                            |
+| **Treadmills**  | `shift_id`           | Shifts              | N : 1         | Uma esteira recebe vários turnos ao longo das 24 horas       |
+| **Shifts**      | `athlete_id`         | Athletes            | N : 1         | Um atleta realiza vários turnos durante a competição         |
+| **Shifts**      | `auditor_id`         | Auditors            | N : 1         | Um auditor é responsável por vários turnos no seu plantão    |
+| **Checkpoints** | `shift_id`           | Shifts              | N : 1         | Vários checkpoints são registrados dentro de um turno        |
+| **Logs**        | `shift_id`           | Shifts              | N : 1         | Vários logs são gerados ao longo do ciclo de vida de um turno|
+
+<div align="center">
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+Três decisões traduzem regras de negócio para restrições concretas no banco:
+
+- **`CHECK` nos campos de estado:** `status` em Shifts e `type` em Checkpoints e Logs aceitam apenas valores predefinidos, eliminando inconsistências sem depender exclusivamente da camada de aplicação.
+- **`treadmill_number` como `UNIQUE`:** impede cadastro duplicado de equipamentos, espelhando a unicidade física de cada esteira Technogym.
+- **`shift_id` em Logs como `FK NOT NULL`:** garante que todo log esteja vinculado a um turno, assegurando a trilha de auditoria pós-evento.
+
+A cadeia `Managers → Events → Teams → Athletes → Shifts → Checkpoints / Logs` reflete o fluxo operacional completo do sistema, do cadastro pré-evento à auditoria pós-evento.
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
@@ -1056,7 +1427,8 @@ _Posicione aqui os diagramas de modelos relacionais do banco de dados, apresenta
 _posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$_
 
 _Template de SQL + lógica proposicional_
-#1 | ---
+
+# 1 | ---
 --- | ---
 **Expressão SQL** | SELECT \* FROM suppliers WHERE (state = 'California' AND supplier_id <> 900) OR (supplier_id = 100);
 
@@ -1111,7 +1483,7 @@ _A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida
 | Persona | RF  | RN  | Endpoint | Tela | Teste | Evidência |
 | ------- | --- | --- | -------- | ---- | ----- | --------- |
 
-# <a name="c4"></a>4. Desenvolvimento da Aplicação Web
+# <a id="c4"></a>4. Desenvolvimento da Aplicação Web
 
 ---
 
@@ -1133,7 +1505,7 @@ _Descreva e ilustre aqui o desenvolvimento da segunda versão do sistema web, co
 
 _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas._
 
-# <a name="c5"></a>5. Testes
+# <a id="c5"></a>5. Testes
 
 ---
 
@@ -1164,7 +1536,7 @@ _Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de tes
 
 _Posicione aqui o relatório dos testes SUS realizados._
 
-# <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
+# <a id="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
 
 ---
 
@@ -1235,7 +1607,7 @@ _Apresente os canais digitais utilizados para distribuir e entregar a aplicaçã
 _d) Promoção (até 200 palavras)_
 _Descreva as estratégias digitais planejadas, como SEO, redes sociais, marketing de conteúdo e campanhas pagas._
 
-# <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
+# <a id="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
 ---
 
@@ -1245,34 +1617,42 @@ _Relacione os pontos de melhorias evidenciados nos testes com planos de ações 
 
 _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras_
 
-# <a name="c8"></a>8. Referências
+# <a id="c8"></a>8. Referências
 
 ---
 
-[⁸] BUSINESS RULES GROUP. **Business Rules Manifesto:** the principles of rule independence. Version 2.0. [S. l.]: Business Rules Group, 2003. Disponível em: https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf. Acesso em: 27 abr. 2026.
+⁸ BUSINESS RULES GROUP. **Business Rules Manifesto:** the principles of rule independence. Version 2.0. S. l.: Business Rules Group, 2003. Disponível em: <https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf>. Acesso em: 27 abr. 2026.
 
-[³] ESPM. **Runaholic Club: lifestyle e comunidade de wellness para a Geração Z**. Disponível em: https://www.espm.br/blog/runaholic-club-lifestyle-e-comunidade-de-wellness-para-a-geracao-z/. Acesso em: 28 abr. 2026.
+³ ESPM. **Runaholic Club: lifestyle e comunidade de wellness para a Geração Z**. Disponível em: <https://www.espm.br/blog/runaholic-club-lifestyle-e-comunidade-de-wellness-para-a-geracao-z/>. Acesso em: 28 abr. 2026.
 
-[¹⁰] FIELDING, Roy Thomas. **Architectural Styles and the Design of Network-based Software Architectures**. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: https://ics.uci.edu/~fielding/pubs/dissertation/top.htm. Acesso em: 27 abr. 2026.
+¹⁰ FIELDING, Roy Thomas. **Architectural Styles and the Design of Network-based Software Architectures**. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: <https://ics.uci.edu/~fielding/pubs/dissertation/top.htm>. Acesso em: 27 abr. 2026.
 
-[³] H.PRIME SAÚDE. **A revolução da geração wellness: por que a saúde se tornou o novo símbolo de sucesso**. Disponível em: https://hprimesaude.com.br/blog/a-revolucao-da-geracao-wellness-por-que-a-saude-se-tornou-o-novo-simbolo-de-sucesso/. Acesso em: 28 abr. 2026.
+³ H.PRIME SAÚDE. **A revolução da geração wellness: por que a saúde se tornou o novo símbolo de sucesso**. Disponível em: <https://hprimesaude.com.br/blog/a-revolucao-da-geracao-wellness-por-que-a-saude-se-tornou-o-novo-simbolo-de-sucesso/>. Acesso em: 28 abr. 2026.
 
-[⁹] JACOBSON, Ivar; SPENCE, Ian; BITTNER, Kurt. **Use-Case 3.0 — The Definitive Guide**. [S. l.]: Ivar Jacobson International, 2024.
+⁹ JACOBSON, Ivar; SPENCE, Ian; BITTNER, Kurt. **Use-Case 3.0 — The Definitive Guide**. S. l.: Ivar Jacobson International, 2024.
 
-[¹¹] MONTGOMERY, Cynthia A.; PORTER, Michael E. (org.). **Estratégia:** a busca da vantagem competitiva. Rio de Janeiro: Elsevier, 1998.
+¹¹ MONTGOMERY, Cynthia A.; PORTER, Michael E. (org.). **Estratégia:** a busca da vantagem competitiva. Rio de Janeiro: Elsevier, 1998.
 
-[⁴] MUNDO DO MARKETING. **Baly Brasil ultrapassa Red Bull e assume vice-liderança no mercado de energéticos**. Disponível em: https://mundodomarketing.com.br/baly-brasil-ultrapassa-red-bull-e-assume-vice-lideranca-no-mercado-de-energeticos. Acesso em: 28 abr. 2026.
+⁴ MUNDO DO MARKETING. **Baly Brasil ultrapassa Red Bull e assume vice-liderança no mercado de energéticos**. Disponível em: <https://mundodomarketing.com.br/baly-brasil-ultrapassa-red-bull-e-assume-vice-lideranca-no-mercado-de-energeticos>. Acesso em: 28 abr. 2026.
 
-[⁶] OSTERWALDER, Alexander; PIGNEUR, Yves. **Value Proposition Design:** how to create products and services customers want. Hoboken: Wiley, 2014.
+⁶ OSTERWALDER, Alexander; PIGNEUR, Yves. **Value Proposition Design:** how to create products and services customers want. Hoboken: Wiley, 2014.
 
-[⁵] PORTER, Michael E. **Estratégia competitiva:** técnicas para análise de indústrias e da concorrência. 2. ed. Rio de Janeiro: Elsevier, 2004.
+⁵ PORTER, Michael E. **Estratégia competitiva:** técnicas para análise de indústrias e da concorrência. 2. ed. Rio de Janeiro: Elsevier, 2004.
 
-[⁷] PROJECT MANAGEMENT INSTITUTE. **Um guia do conhecimento em gerenciamento de projetos (Guia PMBOK®)**. 7. ed. Newtown Square: PMI, 2021.
+⁷ PROJECT MANAGEMENT INSTITUTE. **Um guia do conhecimento em gerenciamento de projetos (Guia PMBOK®)**. 7. ed. Newtown Square: PMI, 2021.
 
-[¹][²] TIMES BRASIL. **Red Bull e marcas para a Geração Z**. Disponível em: https://timesbrasil.com.br/empresas-e-negocios/red-bull-marcas-geracao-z/. Acesso em: 28 abr. 2026.
+¹ ² TIMES BRASIL. **Red Bull e marcas para a Geração Z**. Disponível em: <https://timesbrasil.com.br/empresas-e-negocios/red-bull-marcas-geracao-z/>. Acesso em: 28 abr. 2026.
 
-# <a name="c9"></a>Anexos
+# <a id="c9"></a>Anexos
 
 ---
 
 _Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)_
+
+```
+
+```
+
+```
+
+```
