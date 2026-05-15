@@ -1505,7 +1505,7 @@ _Descreva e ilustre aqui o desenvolvimento da segunda versão do sistema web, co
 
 _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas._
 
-# <a id="c5"></a>5. Testes
+# <a name="c5"></a>5. Testes
 
 ---
 
@@ -1536,7 +1536,7 @@ _Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de tes
 
 _Posicione aqui o relatório dos testes SUS realizados._
 
-# <a id="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
+# <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
 
 ---
 
