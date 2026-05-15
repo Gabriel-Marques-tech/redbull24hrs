@@ -1864,6 +1864,11 @@ O Dashboard atua como o principal ponto de visualização em tempo real do event
   <br><br><br>
 </div>
 
+**Fluxo Principal (Caminho Feliz)**
+
+**1. Atualização Automática (Polling):** Em intervalos regulares, o Client dispara uma requisição `GET /dashboard`. O controller repassa a demanda ao serviço, que orquestra três consultas estratégicas junto ao Banco de Dados: Placar Geral (soma dos quilômetros totais), Status das Esteiras (verificação de ocupação atual) e Histórico por Hora (desempenho acumulado em formato de *snapshots*). O servidor então devolve o pacote consolidado para o Cliente redesenhar a tela instantaneamente.
+
+**2. Monitoramento de Saúde do Sistema (Healthcheck):** Paralelamente, o Cliente realiza requisições rápidas para `GET /status`. O servidor executa um "ping" no Banco de Dados para atestar que os sistemas estão comunicando perfeitamente. Confirmando a conexão, o servidor retorna um status "ok" junto com a hora exata da checagem (*timestamp*).
 
 ---
 
