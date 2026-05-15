@@ -762,34 +762,50 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 | RF006 | O sistema deve permitir a seleção do corredor da equipe para iniciar a corrida. | Alta | Planejado |
 | RF007 | O sistema deve registrar o início de um turno somente se o corredor selecionado não possuir turno em aberto, rejeitando a operação caso contrário. | Alta | Planejado |
 | RF008 | O sistema deve registrar o início de um turno somente se a esteira selecionada possuir status "Livre", rejeitando a operação caso contrário. | Alta | Planejado |
-| RF009 | O sistema deve armazenar, no registro de início de turno, o corredor, a esteira e a quilometragem inicial informada (km ≥ 0), rejeitando valores negativos. | Alta | Planejado |
-| RF010 | O sistema deve gerar automaticamente o timestamp de início de turno a partir do relógio do servidor, sem permitir entrada manual desse valor. | Alta | Planejado |
-| RF011 | O sistema deve exibir um modal bloqueante a cada 5 minutos a partir do início do turno, impedindo qualquer interação até que o Auditor insira a quilometragem atual (valor ≥ último checkpoint registrado). | Alta | Planejado |
-| RF012 | O sistema deve permitir que o Auditor finalize o turno de um corredor, disparando o fluxo de encerramento e cálculo de estatísticas. | Alta | Planejado |
-| RF013 | O sistema deve permitir a inserção da quilometragem final, registrando timestamp automático do servidor e rejeitando valores menores que o último checkpoint. | Alta | Planejado |
-| RF014 | O sistema deve calcular automaticamente distância (km_final − km_inicial), duração (timestamp_fim − timestamp_início) e velocidade média (km/h), persistindo os dados vinculados ao turno. | Alta | Planejado |
-| RF015 | O sistema deve calcular automaticamente a quilometragem total acumulada por equipe somando o desempenho individual de todos os corredores. | Alta | Planejado |
-| RF016 | O sistema deve exibir um dashboard com placar e métricas atualizados automaticamente em até 10 segundos, sem recarregamento de página. | Alta | Planejado |
-| RF017 | O sistema deve exibir um histórico (log) de entradas, saídas e checkpoints em ordem decrescente de timestamp. | Alta | Planejado |
-| RF018 | O sistema deve permitir edição retroativa de registros, gerando log automático de auditoria contendo identidade do usuário, campo alterado, valor anterior e valor novo. | Alta | Planejado |
-| RF019 | O sistema deve permitir o registro de checkpoints e turnos sem conexão com a internet, persistindo os dados localmente e sincronizando automaticamente ao restabelecer a conexão, sem duplicidade de registros. | Alta | Planejado |
-| RF020 | O sistema deve exigir autenticação (login e senha) para os perfis de Administrador e Auditor antes de permitir qualquer alteração nos dados. | Alta | Planejado |
-| RF021 | O sistema deve detectar automaticamente inconsistências nos dados inseridos com base no histórico do corredor, equipe e esteira, gerando alertas em tempo real para o Auditor. | Alta | Planejado |
-| RF022 | O sistema deve exibir notificações visuais e/ou sonoras ao identificar inconsistências, bloqueando a confirmação do dado até revisão ou justificativa do Auditor. | Alta | Planejado |
-| RF023 | O sistema deve permitir que o Auditor revise e corrija inconsistências detectadas antes da persistência final dos dados. | Alta | Planejado |
-| RF024 | O sistema deve permitir o registro manual de quilometragem a qualquer momento, gerando timestamp automático do servidor para rastreabilidade. | Média | Planejado |
-| RF025 | O sistema deve permitir iniciar um novo corredor na esteira em até 3 cliques após o término do turno anterior, reutilizando os dados já cadastrados da equipe. | Média | Planejado |
-| RF026 | O sistema deve gerar métricas por corredor incluindo distância total, média por turno e histórico de evolução por hora com snapshots a cada 60 minutos. | Média | Planejado |
-| RF027 | O sistema deve exibir o status de cada esteira (Ocupada/Livre) em tempo real no painel de controle. | Média | Planejado |
-| RF028 | O sistema deve sugerir alternância de esteira quando uma esteira permanecer ocupada por mais de 30 minutos consecutivos, exibindo alerta visual para o Auditor. | Média | Planejado |
-| RF029 | O sistema deve disponibilizar modo TV com fonte ≥ 48px, contraste WCAG AA, resolução 1920×1080, operável sem mouse e sem necessidade de login. | Média | Planejado |
-| RF030 | O sistema deve permitir a filtragem do histórico por equipe, esteira ou corredor. | Média | Planejado |
-| RF031 | O sistema deve identificar e sinalizar inconsistências como: km_final < km_inicial, intervalo entre checkpoints > 10 min e corredor com turnos simultâneos em aberto. | Média | Planejado |
-| RF032 | O sistema deve permitir exportação de dados em CSV contendo todos os turnos e checkpoints registrados. | Média | Planejado |
-| RF033 | O sistema deve disponibilizar uma tela de desempenho final por corredor ao término do evento, contendo métricas de distância total, tempo total e velocidade média. | Média | Planejado |
-| RF034 | O sistema deve permitir o compartilhamento do desempenho final do corredor por meio de um link gerado automaticamente. | Média | Planejado |
-| RF035 | O sistema deve permitir o registro do local/região da etapa. | Baixa | Planejado |
-| RF036 | O sistema deve permitir que o corredor acesse seu histórico completo de desempenho no evento após sua finalização. | Baixa | Planejado |
+| RF009 | O sistema deve armazenar o corredor e a esteira selecionados no registro de início de turno. | Alta | Planejado |
+| RF010 | O sistema deve armazenar a quilometragem inicial informada pelo Auditor no registro de início de turno, rejeitando valores menores que zero. | Alta | Planejado |
+| RF011 | O sistema deve gerar automaticamente o timestamp de início de turno a partir do relógio do servidor, sem permitir entrada manual desse valor. | Alta | Planejado |
+| RF012 | O sistema deve exibir um modal bloqueante a cada 5 minutos a partir do início do turno, impedindo qualquer interação com a interface até que o Auditor insira a quilometragem atual. | Alta | Planejado |
+| RF013 | O sistema deve rejeitar a quilometragem informada no checkpoint caso o valor seja menor que o último checkpoint registrado. | Alta | Planejado |
+| RF014 | O sistema deve permitir que o Auditor finalize o turno de um corredor, disparando o fluxo de encerramento. | Alta | Planejado |
+| RF015 | O sistema deve rejeitar a quilometragem final informada caso o valor seja menor que o último checkpoint registrado. | Alta | Planejado |
+| RF016 | O sistema deve gerar automaticamente o timestamp de encerramento de turno a partir do relógio do servidor, sem permitir entrada manual desse valor. | Alta | Planejado |
+| RF017 | O sistema deve calcular automaticamente a distância percorrida no turno (km_final − km_inicial) e persistir o resultado vinculado ao turno. | Alta | Planejado |
+| RF018 | O sistema deve calcular automaticamente a duração do turno (timestamp_fim − timestamp_início) e persistir o resultado vinculado ao turno. | Alta | Planejado |
+| RF019 | O sistema deve calcular automaticamente a velocidade média do turno (distância / duração em km/h) e persistir o resultado vinculado ao turno. | Alta | Planejado |
+| RF020 | O sistema deve calcular automaticamente a quilometragem total acumulada por equipe somando a distância percorrida em todos os turnos finalizados pelos seus corredores. | Alta | Planejado |
+| RF021 | O sistema deve exibir um dashboard com placar e métricas atualizados automaticamente em até 10 segundos, sem recarregamento de página. | Alta | Planejado |
+| RF022 | O sistema deve exibir um histórico (log) de entradas, saídas e checkpoints em ordem decrescente de timestamp. | Alta | Planejado |
+| RF023 | O sistema deve permitir a edição retroativa de registros por usuário autenticado. | Alta | Planejado |
+| RF024 | O sistema deve registrar automaticamente em log de auditoria toda edição retroativa, contendo identidade do usuário, campo alterado, valor anterior, valor novo e timestamp da alteração. | Alta | Planejado |
+| RF025 | O sistema deve permitir o registro de checkpoints sem conexão com a internet, persistindo os dados localmente até que a conexão seja restabelecida. | Alta | Planejado |
+| RF026 | O sistema deve sincronizar automaticamente os dados registrados offline ao restabelecer a conexão, sem gerar duplicidade de registros. | Alta | Planejado |
+| RF027 | O sistema deve exigir autenticação (login e senha) para os perfis de Administrador e Auditor antes de permitir qualquer alteração nos dados. | Alta | Planejado |
+| RF028 | O sistema deve detectar automaticamente inconsistências nos dados inseridos com base no histórico do corredor, equipe e esteira, gerando alertas em tempo real para o Auditor. | Alta | Planejado |
+| RF029 | O sistema deve exibir notificação visual destacada ao identificar inconsistências, bloqueando a confirmação do dado até revisão ou justificativa do Auditor. | Alta | Planejado |
+| RF030 | O sistema deve emitir sinal sonoro ao identificar inconsistências, quando o som estiver habilitado nas configurações. | Alta | Planejado |
+| RF031 | O sistema deve permitir que o Auditor revise e corrija inconsistências detectadas antes da persistência final dos dados. | Alta | Planejado |
+| RF032 | O sistema deve permitir o registro manual de quilometragem a qualquer momento durante um turno ativo. | Média | Planejado |
+| RF033 | O sistema deve gerar timestamp automático do servidor para todo registro manual de quilometragem. | Média | Planejado |
+| RF034 | O sistema deve permitir iniciar um novo turno para outro corredor na mesma esteira em até 3 cliques a partir da tela de encerramento do turno anterior. | Média | Planejado |
+| RF035 | O sistema deve gerar a métrica de distância total percorrida por corredor ao longo do evento. | Média | Planejado |
+| RF036 | O sistema deve gerar a métrica de média de distância por turno por corredor ao longo do evento. | Média | Planejado |
+| RF037 | O sistema deve gerar snapshots de evolução de quilometragem por corredor a cada 60 minutos de evento decorrido. | Média | Planejado |
+| RF038 | O sistema deve exibir o status de cada esteira (Ocupada/Livre) em tempo real no painel de controle. | Média | Planejado |
+| RF039 | O sistema deve sugerir alternância de esteira quando uma esteira permanecer ocupada por mais de 30 minutos consecutivos, exibindo alerta visual para o Auditor. | Média | Planejado |
+| RF040 | O sistema deve disponibilizar modo TV com fonte ≥ 48px, contraste mínimo de 4,5:1 conforme WCAG AA, resolução 1920×1080, operável sem mouse e sem necessidade de login. | Média | Planejado |
+| RF041 | O sistema deve permitir a filtragem do histórico por equipe. | Média | Planejado |
+| RF042 | O sistema deve permitir a filtragem do histórico por esteira. | Média | Planejado |
+| RF043 | O sistema deve permitir a filtragem do histórico por corredor. | Média | Planejado |
+| RF044 | O sistema deve identificar e sinalizar a inconsistência de quilometragem final menor que a quilometragem inicial no encerramento de um turno. | Média | Planejado |
+| RF045 | O sistema deve identificar e sinalizar a inconsistência de intervalo entre checkpoints consecutivos superior a 10 minutos. | Média | Planejado |
+| RF046 | O sistema deve identificar e sinalizar a inconsistência de corredor com mais de um turno simultâneo em aberto. | Média | Planejado |
+| RF047 | O sistema deve permitir exportação de dados em CSV contendo todos os turnos registrados. | Média | Planejado |
+| RF048 | O sistema deve permitir exportação de dados em CSV contendo todos os checkpoints registrados. | Média | Planejado |
+| RF049 | O sistema deve disponibilizar uma tela de desempenho final por corredor ao término do evento, contendo distância total percorrida, tempo total em pista e velocidade média geral. | Média | Planejado |
+| RF050 | O sistema deve permitir o compartilhamento do desempenho final do corredor por meio de um link gerado automaticamente, acessível sem autenticação. | Média | Planejado |
+| RF051 | O sistema deve permitir o registro do local/região da etapa. | Baixa | Planejado |
+| RF052 | O sistema deve permitir que o corredor acesse seu histórico completo de desempenho no evento após sua finalização. | Baixa | Planejado |
 
 <div align = "center">
   <sub> Quadro 13 - Requisitos Funcionais </sub><br>
