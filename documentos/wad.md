@@ -1607,7 +1607,7 @@ _Apresente os canais digitais utilizados para distribuir e entregar a aplicaçã
 _d) Promoção (até 200 palavras)_
 _Descreva as estratégias digitais planejadas, como SEO, redes sociais, marketing de conteúdo e campanhas pagas._
 
-# <a id="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
+# <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
 ---
 
@@ -1617,7 +1617,7 @@ _Relacione os pontos de melhorias evidenciados nos testes com planos de ações 
 
 _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras_
 
-# <a id="c8"></a>8. Referências
+# <a name="c8"></a>8. Referências
 
 ---
 
