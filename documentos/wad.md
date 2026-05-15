@@ -1778,7 +1778,7 @@ O módulo de Equipes é a base de organização dos competidores. O Red Bull 24 
 O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na esteira. Como a dinâmica do evento exige trocas rápidas de corredores sem interrupção na contagem de quilômetros, este fluxo mapeia desde a entrada do corredor no equipamento, passando pelos registros periódicos de segurança (checkpoints), até a finalização do turno com a leitura final da quilometragem. Turnos, neste contexto, representam os intervalos de atividade atribuídos a cada corredor ao longo de um ciclo na esteira, definindo quando cada atleta entra e sai da atividade.
 
 <div align="center">
-  <sub>Imagem 13 - Diagrama de Sequencia: Turnos</sub><br>
+  <sub>Imagem 13 - Diagrama de Sequência: Turnos</sub><br>
   <img src="./assets/diagrama_sequencia/Turns_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de turnos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1806,7 +1806,7 @@ iodicamente (como a cada 5 minutos através de um alerta na interface ou a cada 
 A funcionalidade de Histórico fornece total rastreabilidade e transparência ao longo das 24 horas de evento. Ela permite que a organização e os auditores visualizem uma linha do tempo cronológica detalhada de todas as ações que ocorreram nas esteiras, provendo uma ferramenta ágil para sanar dúvidas ou contestar apurações durante a competição.
 
 <div align="center">
-  <sub>Imagem 14 - Diagrama de Sequencia: Historico</sub><br>
+  <sub>Imagem 14 - Diagrama de Sequência: Historico</sub><br>
   <img src="./assets/diagrama_sequencia/History_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
