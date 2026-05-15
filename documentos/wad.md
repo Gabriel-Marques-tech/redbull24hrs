@@ -1543,6 +1543,9 @@ Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio 
 
 A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcional às suas Regras de Negócio e ao contrato de comunicação com o servidor, definindo o método HTTP e o endpoint responsável por executar aquela funcionalidade[¹⁰](#8-referências). Essa estrutura permite identificar onde cada RF é implementado na API, quais restrições de negócio governam sua execução e como as requisições são enviadas ao servidor.
 
+<div align = "center">
+  <sub> Quadro 15 - Matriz RF → RN → Endpoint </sub><br>
+  
 | RF    | RN associadas | Endpoint                                                         | Método |
 | ----- | ------------- | ---------------------------------------------------------------- | ------ |
 | RF007 | RN01, RN02    | `/turnos`                                                        | POST   |
@@ -1571,8 +1574,6 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 | RF028 | RN26          | `/eventos/{id}/exportar`                                         | GET    |
 | RF016 | RN27          | `/sync`                                                          | POST   |
 
-<div align = "center">
-  <sub> Quadro 15 - Matriz RF → RN → Endpoint </sub><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
