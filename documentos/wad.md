@@ -774,7 +774,7 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 | RF018 | O sistema deve calcular automaticamente a duração do turno (timestamp_fim − timestamp_início) e persistir o resultado vinculado ao turno. | Alta | Planejado |
 | RF019 | O sistema deve calcular automaticamente a velocidade média do turno (distância / duração em km/h) e persistir o resultado vinculado ao turno. | Alta | Planejado |
 | RF020 | O sistema deve calcular automaticamente a quilometragem total acumulada por equipe somando a distância percorrida em todos os turnos finalizados pelos seus corredores. | Alta | Planejado |
-| RF021 | O sistema deve exibir um dashboard com placar e métricas atualizados automaticamente em até 10 segundos, sem recarregamento de página. | Alta | Planejado |
+| RF021 | O sistema deve exibir um dashboard com placar e métricas atualizados automaticamente em até 10 segundos, sem atualização da página. | Alta | Planejado |
 | RF022 | O sistema deve exibir um histórico (log) de entradas, saídas e checkpoints em ordem decrescente de timestamp. | Alta | Planejado |
 | RF023 | O sistema deve permitir a edição retroativa de registros por usuário autenticado. | Alta | Planejado |
 | RF024 | O sistema deve registrar automaticamente em log de auditoria toda edição retroativa, contendo identidade do usuário, campo alterado, valor anterior, valor novo e timestamp da alteração. | Alta | Planejado |
