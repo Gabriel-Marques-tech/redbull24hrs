@@ -42,7 +42,7 @@
 
 <br>
 
-# <a id="c1"></a>1. Introdução (sprints 1 a 5)
+# <a name="c1"></a>1. Introdução (sprints 1 a 5)
 
 ---
 
@@ -54,7 +54,7 @@ A solução proposta é uma aplicação web voltada aos auditores do evento. Por
 
 A proposta substitui um processo frágil por um sistema rastreável e confiável, reduzindo erros operacionais e garantindo maior integridade nos resultados da competição.
 
-# <a id="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
+# <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
 
 ---
 
