@@ -1924,26 +1924,36 @@ _Documente os design patterns utilizados (Repository, Strategy, Factory, DTO etc
 
 ## 3.3. Wireframes (sprint 2)
 
-O wireframe é um rascunho do sistema que mostra como o projeto irá funcionar. Ele é usado para mostrar como as telas vão ser organizadas e como o usuário vai navegar por elas, tudo isso antes de qualquer linha de código ser escrita.
+---
 
-Ele serve pra deixar as ideias mais claras, dar direcionamento para o projeto e evitar retrabalho no fim, além de garantir que todos da equipe estão alinhados. Essa é uma etapa essencial para a organização do projeto e do grupo, para ficar claro como o sistema irá funcionar.
+O wireframe é uma representação visual estrutural do sistema, elaborada antes do desenvolvimento, com o objetivo de definir a organização das telas, os fluxos de navegação e a hierarquia das informações apresentadas ao usuário. Diferentemente de protótipos de alta fidelidade, os wireframes priorizam a lógica e a estrutura da interface, abstraindo aspectos estéticos como cores e tipografia definitivas.
 
-A seguir, serão apresentados os wireframes de baixa e média fidelidade que foram desenvolvidos durante a sprint 2.
+No contexto deste projeto, a construção dos wireframes teve papel central no alinhamento entre os requisitos funcionais levantados na sprint 1 e as decisões de design da sprint 2.
+
+Ao externalizar visualmente os fluxos de operação, como o registro de turnos, a visualização do placar e o encerramento de corridas, a equipe pôde identificar inconsistências de navegação e antecipar pontos de atrito na interface antes do início da implementação.
+
+A seguir, são apresentados os wireframes de baixa e média fidelidade desenvolvidos durante a sprint 2.
+
+### 3.3.1. Wireframes de Baixa Fidelidade
+
+O wireframe de baixa fidelidade representa a estrutura inicial das telas, com foco na disposição dos elementos e nos fluxos principais de navegação. Nesta etapa, foram mapeadas as telas essenciais do sistema, desde o cadastro pré-evento até o acompanhamento das esteiras em tempo real, sem preocupação com detalhamento visual ou componentes definitivos.
 
 <div align="center">
-  <sub>Imagem 16 - Wireframe de Baixa Fidelidade</sub><br>
+  <sub>Imagem 17 - Wireframe de Baixa Fidelidade</sub><br>
   <img src="./assets/wireframes/wireframe-baixa-fidelidade.svg" width="900px" alt="Wireframe de baixa fidelidade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
-### Wireframes da Média Fidelidade
+### 3.3.2. Wireframes da Média Fidelidade
 
-Nesta seção, são apresentados os wireframes de fidelidade média desenvolvidos a partir da evolução das versões iniciais. Esses wireframes incorporam melhorias visuais e funcionais. Além de aperfeiçoar a classificação visual e o layout das telas, essa etapa buscou aproximar o design final da experiência real do usuário, mantendo a coerência com o Wireframe de baixa fidelidade e as User Stories previamente mapeadas. Também foram realizadas adequações que visam melhorar a navegabilidade, esclarecer as informações e a acessibilidade da interface.
+Os wireframes de média fidelidade foram desenvolvidos a partir da evolução direta da versão de baixa fidelidade, incorporando maior detalhamento visual e funcional. Nesta etapa, foram definidos o layout definitivo de cada tela, a hierarquia dos componentes de interface, os padrões de navegação entre fluxos e os pontos de interação do auditor com o sistema. As adequações realizadas visam garantir que a interface seja operável sob alta pressão, com mínimo de cliques por ação e feedback visual imediato após cada registro, requisitos centrais para um evento de 24 horas ininterruptas.
+
+O conjunto de telas cobre todos os fluxos críticos do sistema: cadastro pré-evento, operação em tempo real (início, checkpoint e encerramento de turno), detecção de inconsistências e visualização de métricas consolidadas.
 
 <div align="center">
-  <sub>Imagem 17 - Wireframe de Média Fidelidade</sub><br>
-  <img src="./assets/wireframes/Wireframe-Média-Fidelidade.svg" width="900px" alt="Wireframe de baixa fidelidade"><br>
+  <sub>Imagem 18 - Wireframe de Média Fidelidade</sub><br>
+  <img src="./assets/wireframes/Wireframe-Média-Fidelidade.svg" width="900px" alt="Wireframe de média fidelidade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1954,51 +1964,124 @@ Nesta seção, são apresentados os wireframes de fidelidade média desenvolvido
 
 #### Tela de Login
 
-A tela de login é padronizada para todos os usuários (auditores e administradores) e permite acesso à aplicação web, alinhando-se ao wireframe de média fidelidade como ponto de entrada obrigatório para qualquer operação no sistema.
+Ponto de entrada obrigatório para qualquer operação no sistema. A tela é padronizada para todos os perfis de usuário, auditores e administradores, exigindo autenticação prévia ao acesso a qualquer funcionalidade.
+
+A decisão de centralizar o acesso em uma única tela de login, sem distinção visual de perfil, reduz a complexidade operacional no contexto do evento, onde múltiplos auditores podem precisar acessar o sistema rapidamente.
+
+> Rastreabilidade: RF027.
+
+---
 
 #### Tela Inicial — Seleção de Ação
 
-Desenvolvida como tela principal de navegação, a tela inicial reúne as duas ações centrais do sistema: adicionar dados e visualizar histórico. Atende às necessidades da US04, US05 e US06, ao organizar o acesso às funcionalidades de registro e consulta consolidada de quilometragem por equipe.
+Tela principal de navegação pós-autenticação. Reúne as duas ações centrais do sistema, adicionar dados e visualizar histórico, em uma interface de seleção direta, minimizando a hierarquia de menus e reduzindo o tempo de acesso às funcionalidades mais utilizadas durante a operação.
+
+A estrutura binária da tela reflete a divisão entre os dois perfis de uso: o auditor operacional, que registra dados em tempo real, e o gestor, que acompanha e valida as informações consolidadas.
+
+> Rastreabilidade: US04, US05, US06.
+
+---
 
 #### Telas de Registro Pré-Evento
 
-Conjunto de telas destinadas ao cadastro do contexto inicial do evento, contemplando o registro de atletas, locais, equipes e auditores, com listagem dos itens já cadastrados em cada formulário. Atendem à US07, ao permitir que os corredores sejam vinculados às suas respectivas equipes antes do início da competição.
+Conjunto de telas destinadas ao cadastro do contexto inicial do evento, contemplando o registro de atletas, locais, equipes e auditores.
+
+Cada formulário exibe a listagem dos itens já cadastrados, permitindo revisão e controle antes do início da competição.
+
+O fluxo de cadastro é sequencial e guiado, reduzindo a possibilidade de omissões que comprometeriam a operação posterior.
+
+> Rastreabilidade: US07, RF001, RF002, RF003.
+---
 
 #### Tela de Seleção de Registro
 
-Tela acessada pelo auditor para escolher qual entidade será registrada: auditor, equipe, atleta ou local, direcionando o fluxo correto de cadastro. Atende à US01 e US07, como etapa preparatória obrigatória para o início da operação.
+Tela intermediária acessada pelo auditor para escolher qual entidade será registrada, auditor, equipe, atleta ou local, direcionando ao formulário de cadastro correspondente.
+
+Funciona como ponto de entrada único para todos os fluxos de cadastro pré-evento, evitando navegação redundante.
+
+> Rastreabilidade: US01, US07.
+
+---
 
 #### Tela de Confirmação de Cadastro
 
-Exibida após o cadastro bem-sucedido de qualquer entidade, a tela de confirmação apresenta a mensagem de sucesso e oferece a opção de retornar ao fluxo anterior, fornecendo feedback visual imediato ao operador e atendendo a todas as user stories relacionadas ao cadastro.
+Exibida após o cadastro bem-sucedido de qualquer entidade, apresenta mensagem de confirmação e oferece retorno ao fluxo anterior.
+
+A tela tem papel funcional direto na redução de erros operacionais: ao fornecer feedback visual imediato e explícito, elimina a incerteza do auditor sobre se a ação foi persistida, dor mapeada nas entrevistas com a equipe de Field Marketing.
+
+> Rastreabilidade: RF001, RF002, RF007.
+
+---
 
 #### Tela de Acompanhamento de Esteiras
 
-Desenvolvida como tela central da operação, exibe as duas esteiras lado a lado com seus respectivos status (ocupada ou livre) e o placar consolidado por equipe atualizado em tempo real. Atende à US04 e US06, permitindo que o auditor acompanhe continuamente a operação e visualize a quilometragem acumulada por cada equipe ao longo das 24 horas.
+Tela central da operação durante o evento. Exibe as duas esteiras lado a lado com seus respectivos status, ocupada ou livre, e o placar consolidado por equipe atualizado em tempo real.
+
+A escolha de exibir ambas as esteiras simultaneamente na mesma tela elimina a necessidade de navegação entre painéis durante as trocas de corredor, que ocorrem em intervalos de até 15 segundos.
+
+> Rastreabilidade: US04, US06, RF004, RF038.
+
+---
 
 #### Tela de Seleção de Corredor e Registro de Início
 
-Permite ao auditor selecionar a equipe, a esteira e o corredor para iniciar um novo turno, acionando o registro estruturado de início de corrida. Atende à US01, substituindo diretamente o processo manual de anotação em prancheta.
+Permite ao auditor selecionar a equipe, a esteira e o corredor para iniciar um novo turno, acionando o registro estruturado de início de corrida com timestamp automático gerado pelo servidor.
+
+O fluxo foi desenhado para ser concluído em até 3 cliques a partir da tela de acompanhamento, substituindo diretamente o processo manual de anotação em prancheta.
+
+> Rastreabilidade: US01, RF004, RF005, RF006, RF007, RF034.
+
+---
 
 #### Modal de Checkpoint Obrigatório
 
-Desenvolvido como modal bloqueante disparado automaticamente a cada 5 minutos durante um turno ativo, impede qualquer outra interação até que o auditor insira a quilometragem atual lida no display da esteira. Atende à US02 e US09, garantindo o registro periódico contínuo e o alerta em caso de inatividade prolongada.
+Modal bloqueante disparado automaticamente a cada 5 minutos durante um turno ativo. Impede qualquer outra interação com o sistema até que o auditor insira a quilometragem atual lida no display da esteira, garantindo que o registro periódico ocorra de forma contínua e sem dependência de iniciativa do operador.
+
+A natureza bloqueante do modal foi uma decisão deliberada para eliminar o risco de checkpoints esquecidos em momentos de alta pressão operacional, como as madrugadas
+
+> Rastreabilidade: US02, US09, RF009, RF010.
+
+---
 
 #### Tela de Detalhes da Corrida em Andamento
 
-Exibida durante um turno ativo, apresenta as informações do atleta, equipe e tempo decorrido, com imagem de referência da esteira para apoiar a leitura correta da quilometragem. Atende à US03 e US07, contextualizando o turno em andamento e apoiando o encerramento correto do ciclo de corrida.
+Exibida durante um turno ativo, apresenta as informações do atleta, equipe e tempo decorrido, acompanhadas de imagem de referência da esteira para apoiar a leitura correta da quilometragem no display físico.
+
+A inclusão da imagem de referência parte de uma necessidade real mapeada com o parceiro: auditores sem familiaridade com o equipamento precisam de suporte visual para localizar o odômetro correto da Technogym
+
+> Rastreabilidade: US03, US07, RF008.
+
+---
 
 #### Tela de Inconsistência Detectada
 
-Desenvolvida para alertar o auditor quando o sistema identifica um valor de quilometragem incompatível com o histórico do turno, a tela exibe o último valor válido registrado e oferece as opções de corrigir ou confirmar o dado. Atende à US11, bloqueando a persistência de dados inconsistentes e orientando a correção rápida sob pressão operacional.
+Exibida quando o sistema identifica um valor de quilometragem incompatível com o histórico do turno em andamento, por exemplo, um checkpoint com valor inferior ao registro anterior ou uma variação implausível para o intervalo decorrido.
+
+A tela exibe o último valor válido registrado e oferece duas saídas ao auditor: corrigir o dado ou confirmá-lo com justificativa. O bloqueio de persistência até que uma das ações seja concluída é intencional e alinhado ao RF031, que prevê o registro de flag de "revisado manualmente" para auditoria pós-evento.
+
+> Rastreabilidade: US11, RF028, RF029, RF031.
+
+---
 
 #### Fluxo de Registro de Fim de Turno
 
-Sequência de telas para encerramento do turno ativo, contemplando a seleção da esteira, a inserção do valor final de quilômetros com imagem de referência e a confirmação do checkpoint final. Ao concluir, a esteira é liberada para o próximo corredor e o total acumulado da equipe é atualizado. Atende à US03.
+Sequência de telas para encerramento do turno ativo, contemplando a seleção da esteira, a inserção do valor final de quilômetros com imagem de referência e a confirmação do checkpoint final.
+
+Ao concluir o fluxo, a esteira é marcada automaticamente como livre e o total acumulado da equipe é recalculado e atualizado no painel.
+
+O design do fluxo prioriza a agilidade da transição entre corredores, reutilizando os dados de equipe e esteira já carregados para minimizar inputs do auditor.
+
+> Rastreabilidade: US03, RF012, RF013, RF034.
+
+---
 
 #### Tela de Desempenho Final
 
-Disponibilizada ao término do evento, a tela de desempenho final exibe a tabela consolidada por equipe com quilômetros totais e tempo de corrida, além do destaque individual do atleta com opção de compartilhamento. Atende à US05, US10 e US12, entregando as métricas finais para auditoria e permitindo que cada atleta visualize e compartilhe seu resultado.
+Disponibilizada ao término do evento, exibe a tabela consolidada por equipe com quilômetros totais e tempo de corrida, além do destaque individual do atleta com opção de compartilhamento via link gerado automaticamente.
+
+A tela atende a dois públicos distintos: a organização do evento, que utiliza os dados consolidados para auditoria formal, e os próprios atletas, que podem acessar e compartilhar seu desempenho individual nas redes sociais, funcionalidade alinhada à estratégia de marketing orgânico do evento identificada na análise de oportunidades.
+
+> Rastreabilidade: US05, US10, US12, RF049, RF050.
 
 ## 3.4. Guia de estilos (sprint 3)
 
