@@ -153,7 +153,7 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 **Time Operacional (responsáveis pela apuração):**
 
 - Registrar o início e fim de cada turno de corrida dos atletas nas duas esteiras por equipe
-- Realizar marcações periódicas (a cada 5 ou 30 minutos) como referência de segurança
+- Realizar marcações periódicas (a cada 5 minutos, no mínimo) como referência de segurança
 - Consolidar os quilômetros corridos por equipe ao longo das 24 horas ininterruptas
 - Garantir a continuidade do registro durante revezamentos rápidos entre atletas
 
