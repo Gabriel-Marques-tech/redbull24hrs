@@ -2479,7 +2479,7 @@ _A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida
 | Persona | RF  | RN  | Endpoint | Tela | Teste | Evidência |
 | ------- | --- | --- | -------- | ---- | ----- | --------- |
 
-# <a name="c4"></a>>4. Desenvolvimento da Aplicação Web
+# <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
 ---
 
