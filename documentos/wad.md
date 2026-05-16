@@ -1749,7 +1749,7 @@ A gestão de Eventos representa a visão macro da competição, sendo a configur
   <img src="./assets/diagrama_sequencia/Events_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
-</div
+</div>
 
 **Fluxo Principal (Caminho Feliz)**
 
@@ -1803,7 +1803,7 @@ O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na estei
   <img src="./assets/diagrama_sequencia/Turns_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de turnos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
-</div
+</div>
 
 **Fluxo Principal (Caminho Feliz)**
 
