@@ -1808,7 +1808,6 @@ O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na estei
 **Fluxo Principal (Caminho Feliz)**
 
 **1. Início do Turno:** O Cliente envia uma requisição `POST /turnos/iniciar` contendo as identificações do corredor e da esteira, além da quilometragem inicial. O TurnoController aciona o TurnoService para validar se o atleta e a esteira estão livres. Confirmada a disponibilidade, o turno é criado com status "em andamento" e o estado da esteira é atualizado para "Ocupada" no banco de dados.
-iodicamente (como a cada 5 minutos através de um alerta na interface ou a cada 30 minutos como backup), o auditor da prova envia a quilometragem atual da esteira via `POST /turnos/{id}/checkpoints`. O sistema valida se o valor atual é maior ou igual ao último registro, gravando a marcação de tempo (timestamp) para garantir um histórico seguro caso ocorram falhas no equipamento.
 
 **2. Checkpoints Obrigatórios e Voluntários:** Periodicamente (como a cada 5 minutos através de um alerta na interface ou a cada 30 minutos como backup), o auditor da prova envia a quilometragem atual da esteira via `POST /turnos/{id}/checkpoints`. O sistema valida se o valor atual é maior ou igual ao último registro, gravando a marcação de tempo (timestamp) para garantir um histórico seguro caso ocorram falhas no equipamento.
 
