@@ -1854,7 +1854,7 @@ Garantir a operação ininterrupta do sistema em um ambiente de evento físico �
 
 <div align="center">
   <sub>Imagem 15 - Diagrama de Sequência: Registros/Sync</sub><br>
-  <img src="./assets/diagrama_sequencia/Logs_SequenceDiagram.png" width="900px" alt="Diagrama de sequencia do processo de registros e sync"><br>
+  <img src="./assets/diagrama_sequencia/Logs_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de registros e sync"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
