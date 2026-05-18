@@ -1,0 +1,130 @@
+%%{init: {
+    "theme": "base",
+    "themeVariables": {
+        "primaryColor": "#0F0069",
+        "primaryTextColor": "#FFFFFF",
+        "primaryBorderColor": "#D2003C",
+        "secondaryColor": "#D2003C",
+        "secondaryTextColor": "#FFFFFF",
+        "secondaryBorderColor": "#D2003C",
+        "tertiaryColor": "#E8E8F5",
+        "tertiaryTextColor": "#0F0069",
+        "tertiaryBorderColor": "#0F0069",
+        "noteBkgColor": "#FFCC00",
+        "noteTextColor": "#0F0069",
+        "noteBorderColor": "#D2003C",
+        "activationBkgColor": "#D2003C",
+        "activationBorderColor": "#0F0069",
+        "sequenceNumberColor": "#FFCC00",
+        "actorBkg": "#0F0069",
+        "actorTextColor": "#FFFFFF",
+        "actorBorderColor": "#D2003C",
+        "actorLineColor": "#000000",
+        "signalColor": "#000000",
+        "signalTextColor": "#000000",
+        "labelBoxBkgColor": "#E8E8F5",
+        "labelBoxBorderColor": "#0F0069",
+        "labelTextColor": "#0F0069",
+        "loopTextColor": "#0F0069",
+        "fontFamily": "Arial, sans-serif",
+        "fontSize": "14px"
+    }
+}}%%
+sequenceDiagram
+    autonumber
+    actor Usuario
+    participant RegistroController
+    participant RegistroService
+    participant RegistroRepository
+    participant BancoDeDados
+
+    Note over Usuario, BancoDeDados: Edição Retroativa de Registro
+    Usuario->>RegistroController: PATCH /registros/{id} (novoValor, auditorId)
+    activate RegistroController
+    RegistroController->>RegistroService: editarRegistro(id, novoValor, auditorId)
+    activate RegistroService
+
+    RegistroService->>RegistroRepository: buscarRegistro(id)
+    activate RegistroRepository
+    RegistroRepository->>BancoDeDados: SELECT registro WHERE id
+    activate BancoDeDados
+    BancoDeDados-->>RegistroRepository: registro (valorAtual, checkpoints)
+    deactivate BancoDeDados
+    RegistroRepository-->>RegistroService: dadosRegistro
+    deactivate RegistroRepository
+
+    RegistroService->>RegistroService: validarIntervaloKm(novoValor, checkpoints)
+
+    RegistroService->>RegistroRepository: atualizarRegistro(id, novoValor)
+    activate RegistroRepository
+    RegistroRepository->>BancoDeDados: UPDATE registro SET km = novoValor
+    activate BancoDeDados
+    BancoDeDados-->>RegistroRepository: sucesso
+    deactivate BancoDeDados
+    RegistroRepository-->>RegistroService: ok
+    deactivate RegistroRepository
+
+    RegistroService->>RegistroRepository: salvarAuditoria(id, valorAnterior, novoValor, auditorId)
+    activate RegistroRepository
+    RegistroRepository->>BancoDeDados: INSERT auditoria (imutável)
+    activate BancoDeDados
+    BancoDeDados-->>RegistroRepository: auditoriaId
+    deactivate BancoDeDados
+    RegistroRepository-->>RegistroService: ok
+    deactivate RegistroRepository
+
+    RegistroService-->>RegistroController: registroAtualizado + auditoriaGerada
+    deactivate RegistroService
+    RegistroController-->>Usuario: 200 OK — Registro editado e auditoria registrada
+    deactivate RegistroController
+
+    alt novoValor < checkpointAnterior ou novoValor > checkpointPosterior
+        Note over RegistroService: [Alternativo] Valor fora do intervalo válido
+        RegistroService-->>RegistroController: erro: quilometragem inválida
+        RegistroController-->>Usuario: 422 — Valor deve estar entre checkpoints
+    end
+
+    Note over Usuario, BancoDeDados: Sync Offline
+
+    Note over Usuario: Dispositivo sem conexão
+    loop Para cada registro offline
+        Usuario->>Usuario: persistirLocalmente(dados)
+    end
+
+    Note over Usuario: Conexão restabelecida
+    Usuario->>RegistroController: POST /sync (registrosLocais[])
+    activate RegistroController
+    RegistroController->>RegistroService: sincronizarRegistros(registrosLocais[])
+    activate RegistroService
+
+    loop Para cada registro na fila
+        RegistroService->>RegistroRepository: verificarDuplicidade(id, timestamp)
+        activate RegistroRepository
+        RegistroRepository->>BancoDeDados: SELECT WHERE id AND timestamp
+        activate BancoDeDados
+        BancoDeDados-->>RegistroRepository: existe (true/false)
+        deactivate BancoDeDados
+        RegistroRepository-->>RegistroService: duplicado (false)
+        deactivate RegistroRepository
+
+        RegistroService->>RegistroRepository: salvarRegistro(dados)
+        activate RegistroRepository
+        RegistroRepository->>BancoDeDados: INSERT registro
+        activate BancoDeDados
+        BancoDeDados-->>RegistroRepository: sucesso
+        deactivate BancoDeDados
+        RegistroRepository-->>RegistroService: ok
+        deactivate RegistroRepository
+    end
+
+    RegistroService-->>RegistroController: sincronizacaoConcluida
+    deactivate RegistroService
+    RegistroController-->>Usuario: 200 OK — Registros sincronizados
+    deactivate RegistroController
+
+    alt registro já existe no banco
+        Note over RegistroService: [Alternativo] Registro duplicado ignorado
+        RegistroService->>RegistroService: ignorarRegistro(id)
+        RegistroService-->>RegistroController: aviso: duplicidades descartadas
+        RegistroController-->>Usuario: 200 OK — Sync parcial
+    end
