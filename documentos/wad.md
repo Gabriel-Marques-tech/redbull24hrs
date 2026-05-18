@@ -2571,7 +2571,7 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
 #### Consulta #1: Verifica se há duplicidade no *Sync Offline*
 <div align="center">
   <sub> Imagem 01 - Consulta SQL #1: </sub><br>
-  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/1.png"><br>
+  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/1.png" width="50%"><br>
   <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
   <br><br><br>
 </div>
@@ -2590,7 +2590,7 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
 #### Consulta #2: Insere o registro sincronizado (*Sync Offline*)
 <div align="center">
   <sub> Imagem 02 - Consulta SQL #2: </sub><br>
-  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/2.png"><br>
+  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/2.png" width="50%"><br>
   <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
   <br><br><br>
 </div>
@@ -2611,7 +2611,7 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
 
 <div align="center">
   <sub> Imagem 03 - Consulta SQL #3: </sub><br>
-  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/3.png"><br>
+  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/3.png" width="50%"><br>
   <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
   <br><br><br>
 </div>
@@ -2632,7 +2632,7 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
 
 <div align="center">
   <sub> Imagem 04 - Consulta SQL #4: </sub><br>
-  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/4.png"><br>
+  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/4.png" width="50%"><br>
   <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
   <br><br><br>
 </div>
@@ -2653,7 +2653,7 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
 
 <div align="center">
   <sub> Imagem 05 - Consulta SQL #5: </sub><br>
-  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/5.png"><br>lta SQL #
+  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/5.png" width="50%"><br>lta SQL #
   <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
   <br><br><br>
 </div>
