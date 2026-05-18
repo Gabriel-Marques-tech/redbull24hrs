@@ -2541,9 +2541,9 @@ A migration 001 entrega o schema completo do sistema em um único arquivo versio
 
 ### 3.6.4. Consultas SQL e lógica proposicional
 
-&nbsp;&nbsp; Os métodos de consulta em um banco de dados servem para buscar, visualizar, organizar e alterar informações armazenadas em tabelas. Essas consultas também permitem criar tabelas novas, seja de forma temporária ou permanente, facilitando a apresentação dos dados de acordo com a necessidade do sistema ou do usuário. Para montar essas consultas, é comum utilizar conceitos da lógica proposicional, um ramo da matemática que trabalha com proposições, ou seja, afirmações que podem ser classificadas apenas como verdadeiras ou falsas. A partir disso, utilizam-se conectivos lógicos para relacionar diferentes condições dentro de uma consulta, permitindo criar filtros e regras mais elaboradas.
+Os métodos de consulta em um banco de dados servem para buscar, visualizar, organizar e alterar informações armazenadas em tabelas. Essas consultas também permitem criar tabelas novas, seja de forma temporária ou permanente, facilitando a apresentação dos dados de acordo com a necessidade do sistema ou do usuário. Para montar essas consultas, é comum utilizar conceitos da lógica proposicional, um ramo da matemática que trabalha com proposições, ou seja, afirmações que podem ser classificadas apenas como verdadeiras ou falsas. A partir disso, utilizam-se conectivos lógicos para relacionar diferentes condições dentro de uma consulta, permitindo criar filtros e regras mais elaboradas.
 
-&nbsp;&nbsp; Entre os principais conectivos lógicos utilizados, temos:
+Entre os principais conectivos lógicos utilizados, temos:
 
 <div align="center">
 <sub> Quadro 01: Conectivos Lógicos </sub>
@@ -2559,9 +2559,9 @@ A migration 001 entrega o schema completo do sistema em um único arquivo versio
 <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
-**Conjunção**: representa uma relação lógica do tipo “e”. O resultado será verdadeiro apenas quando todas as condições envolvidas forem verdadeiras.
-**Disjunção**: representa uma relação lógica do tipo “ou”. Nesse caso, basta que pelo menos uma das condições seja verdadeira para que o resultado também seja verdadeiro.
-**Condicional**: representa uma relação lógica baseada na ideia de “se... então...”, indicando que uma condição depende da outra para que a afirmação seja considerada verdadeira.
+**Conjunção**: representa uma relação lógica do tipo "e". O resultado será verdadeiro apenas quando todas as condições envolvidas forem verdadeiras.
+**Disjunção**: representa uma relação lógica do tipo "ou". Nesse caso, basta que pelo menos uma das condições seja verdadeira para que o resultado também seja verdadeiro.
+**Condicional**: representa uma relação lógica baseada na ideia de "se... então...", indicando que uma condição depende da outra para que a afirmação seja considerada verdadeira.
 **Negação**: representa a inversão de um valor lógico, transformando uma condição verdadeira em falsa, e vice-versa.
 **Bicondicional**: representa uma relação de equivalência entre duas proposições, sendo verdadeira quando ambas possuem o mesmo valor lógico.
 
@@ -2576,7 +2576,7 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
   <br><br><br>
 </div>
 
-<div align = "center">
+<div align="center">
   <sub> Quadro 02 - Lógica Proposicional: 1 </sub><br>
 
 | | |
@@ -2584,6 +2584,7 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
 | **Proposições lógicas** | $A$: O `id` do registro já existe no banco (`id = :id`) <br> $B$: O `timestamp` do registro coincide com o valor local (`timestamp = :timestamp`) |
 | **Expressão lógica proposicional** | $A \land B$ |
 | **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$ (duplicado)</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
@@ -2595,7 +2596,7 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
   <br><br><br>
 </div>
 
-<div align = "center">
+<div align="center">
   <sub> Quadro 03 - Lógica Proposicional: 2 </sub><br>
 
 | | |
@@ -2616,7 +2617,7 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
   <br><br><br>
 </div>
 
-<div align = "center">
+<div align="center">
   <sub> Quadro 04 - Lógica Proposicional: 3 </sub><br>
 
 | | |
@@ -2637,7 +2638,7 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
   <br><br><br>
 </div>
 
-<div align = "center">
+<div align="center">
   <sub> Quadro 05 - Lógica Proposicional: 4 </sub><br>
 
 | | |
@@ -2658,7 +2659,7 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
   <br><br><br>
 </div>
 
-<div align = "center">
+<div align="center">
   <sub> Quadro 06 - Lógica Proposicional: 5 </sub><br>
 
 | | |
@@ -2673,6 +2674,7 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
 &nbsp;&nbsp; Assim, é possível afirmar que o entendimento da lógica proposicional possui papel essencial no desenvolvimento e na administração do banco de dados do nosso sistema.
 &nbsp;&nbsp; A estrutura implementada evidencia a utilização adequada de proposições, conectivos lógicos e operadores booleanos em consultas SQL, possibilitando a criação de comandos eficientes, consistentes e seguros para processos de filtragem, seleção e associação de dados do nosso sistema para o evento.
 &nbsp;&nbsp; Além disso, as tabelas verdade apresentadas ilustram as operações lógicas efetivamente aplicadas no código, contemplando funcionalidades como o início do turno, o cadastro da equipe, a busca pela equipe, a inserção do registro sincronizado e a verificação de duplicidade do *Sync Offline*.
+
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
