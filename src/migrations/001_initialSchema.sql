@@ -3,8 +3,7 @@ CREATE TABLE managers (
 	cpf VARCHAR(11) UNIQUE,
 	name VARCHAR(100) NOT NULL,
 	CONSTRAINT chk_managers_cpf CHECK (cpf IS NULL OR cpf ~ '^[0-9]{11}$')
-);
-
+ 
 CREATE TABLE events (
 	id SERIAL PRIMARY KEY,
 	title VARCHAR(100) UNIQUE NOT NULL,
