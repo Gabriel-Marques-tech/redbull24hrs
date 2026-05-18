@@ -2671,10 +2671,7 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
-&nbsp;&nbsp; Assim, é possível afirmar que o entendimento da lógica proposicional possui papel essencial no desenvolvimento e na administração do banco de dados do nosso sistema.
-&nbsp;&nbsp; A estrutura implementada evidencia a utilização adequada de proposições, conectivos lógicos e operadores booleanos em consultas SQL, possibilitando a criação de comandos eficientes, consistentes e seguros para processos de filtragem, seleção e associação de dados do nosso sistema para o evento.
-&nbsp;&nbsp; Além disso, as tabelas verdade apresentadas ilustram as operações lógicas efetivamente aplicadas no código, contemplando funcionalidades como o início do turno, o cadastro da equipe, a busca pela equipe, a inserção do registro sincronizado e a verificação de duplicidade do *Sync Offline*.
-
+Assim, é possível afirmar que o entendimento da lógica proposicional possui papel essencial no desenvolvimento e na administração do banco de dados do nosso sistema. A estrutura implementada evidencia a utilização adequada de proposições, conectivos lógicos e operadores booleanos em consultas SQL, possibilitando a criação de comandos eficientes, consistentes e seguros para processos de filtragem, seleção e associação de dados do nosso sistema para o evento. Além disso, as tabelas verdade apresentadas ilustram as operações lógicas efetivamente aplicadas no código, contemplando funcionalidades como o início do turno, o cadastro da equipe, a busca pela equipe, a inserção do registro sincronizado e a verificação de duplicidade do *Sync Offline*.
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
