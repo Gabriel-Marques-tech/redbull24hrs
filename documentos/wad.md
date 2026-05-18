@@ -2539,25 +2539,136 @@ CREATE INDEX idx_checkpoints_shift_id   ON checkpoints(shift_id);
 
 A migration 001 entrega o schema completo do sistema em um único arquivo versionado e reproduzível, com integridade referencial e regras de domínio garantidas no próprio banco. As políticas `ON DELETE` diferenciadas (`CASCADE` ao longo das entidades temporárias do evento, `RESTRICT` para entidades de carreira como gerentes, auditores e atletas), os `CHECK` sobre estados e quilometragem, e os índices secundários sobre todas as FKs traduzem as regras operacionais do Red Bull 24 Horas em estrutura física do PostgreSQL, apoiando tanto a operação em tempo real durante o evento quanto a auditoria formal posterior.
 
-### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
+### 3.6.4. Consultas SQL e lógica proposicional
 
----
+&nbsp;&nbsp; Os métodos de consulta em um banco de dados servem para buscar, visualizar, organizar e alterar informações armazenadas em tabelas. Essas consultas também permitem criar tabelas novas, seja de forma temporária ou permanente, facilitando a apresentação dos dados de acordo com a necessidade do sistema ou do usuário. Para montar essas consultas, é comum utilizar conceitos da lógica proposicional, um ramo da matemática que trabalha com proposições, ou seja, afirmações que podem ser classificadas apenas como verdadeiras ou falsas. A partir disso, utilizam-se conectivos lógicos para relacionar diferentes condições dentro de uma consulta, permitindo criar filtros e regras mais elaboradas.
 
-_posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$_
+&nbsp;&nbsp; Entre os principais conectivos lógicos utilizados, temos:
 
-_Template de SQL + lógica proposicional_
+<div align="center">
+<sub> Quadro 01: Conectivos Lógicos </sub>
 
-# 1 | ---
+| Tipos de conectivos lógicos | Representação     |
+| ---------------------------- | ------------------- |
+| **Conjunção**        | $\land$           |
+| **Disjunção**        | $\lor$            |
+| **Condicional**        | $\rightarrow$     |
+| **Negação**          | $\neg$            |
+| **Bicondicional**      | $\Leftrightarrow$ |
 
---- | ---
-**Expressão SQL** | SELECT \* FROM suppliers WHERE (state = 'California' AND supplier_id <> 900) OR (supplier_id = 100);
+<sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
+</div>
 
-**Proposições lógicas** | $A$: O estado é 'California' (state = 'California') <br> $B$: O ID do fornecedor não é 900 (supplier_id ≠ 900) <br> $C$: O ID do fornecedor é 100 (supplier_id = 100)
-**Expressão lógica proposicional** | $(A \land B) \lor C$
-**Tabela Verdade** | <table> <thead> <tr> <th>$A$</th> <th>$B$</th> <th>$C$</th> <th>$(A \land B)$</th> <th>$(A \land B) \lor C$</th> </tr> </thead> <tbody> <tr> <td>F</td> <td>F</td> <td>F</td> <td>F</td> <td>F</td> </tr> <tr> <td>F</td> <td>F</td> <td>V</td> <td>F</td> <td>V</td> </tr> <tr> <td>F</td> <td>V</td> <td>F</td> <td>F</td> <td>F</td> </tr> <tr> <td>F</td> <td>V</td> <td>V</td> <td>F</td> <td>V</td> </tr> <tr> <td>V</td> <td>F</td> <td>F</td> <td>F</td> <td>F</td> </tr> <tr> <td>V</td> <td>F</td> <td>V</td> <td>F</td> <td>V</td> </tr> <tr> <td>V</td> <td>V</td> <td>F</td> <td>V</td> <td>V</td> </tr> <tr> <td>V</td> <td>V</td> <td>V</td> <td>V</td> <td>V</td> </tr> </tbody> </table>
+**Conjunção**: representa uma relação lógica do tipo “e”. O resultado será verdadeiro apenas quando todas as condições envolvidas forem verdadeiras.
+**Disjunção**: representa uma relação lógica do tipo “ou”. Nesse caso, basta que pelo menos uma das condições seja verdadeira para que o resultado também seja verdadeiro.
+**Condicional**: representa uma relação lógica baseada na ideia de “se... então...”, indicando que uma condição depende da outra para que a afirmação seja considerada verdadeira.
+**Negação**: representa a inversão de um valor lógico, transformando uma condição verdadeira em falsa, e vice-versa.
+**Bicondicional**: representa uma relação de equivalência entre duas proposições, sendo verdadeira quando ambas possuem o mesmo valor lógico.
 
-_Dica: edite a tabela verdade fora do markdown, para ter melhor controle_
 
+Dentro do banco de dados foram implementadas as seguintes consultas:
+
+#### Consulta #1: Verifica se há duplicidade no *Sync Offline*
+<div align="center">
+  <sub> Imagem 01 - Consulta SQL #1: </sub><br>
+  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/1.png"><br>
+  <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
+  <br><br><br>
+</div>
+
+<div align = "center">
+  <sub> Quadro 02 - Lógica Proposicional #1 </sub><br>
+
+| | |
+|---|---|
+| **Proposições lógicas** | $A$: O `id` do registro já existe no banco (`id = :id`) <br> $B$: O `timestamp` do registro coincide com o valor local (`timestamp = :timestamp`) |
+| **Expressão lógica proposicional** | $A \land B$ |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$ (duplicado)</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+  <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
+</div>
+
+#### Consulta #2: Insere o registro sincronizado (*Sync Offline*)
+<div align="center">
+  <sub> Imagem 02 - Consulta SQL #2: </sub><br>
+  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/2.png"><br>
+  <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
+  <br><br><br>
+</div>
+
+<div align = "center">
+  <sub> Quadro 03 - Lógica Proposicional #2 </sub><br>
+
+| | |
+|---|---|
+| **Proposições lógicas** | $A$: O `id` do registro já existe no banco (`id = :id`) <br> $B$: O `timestamp` do registro coincide com o existente (`timestamp = :timestamp`) |
+| **Expressão lógica proposicional** | $\lnot(A \land B)$ |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th><th>$\lnot(A \land B)$ (insere)</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>V</td><td>F</td></tr></tbody></table> |
+
+  <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
+</div>
+
+#### Consulta #3: Cadastra a equipe (EquipeRepository)
+
+<div align="center">
+  <sub> Imagem 03 - Consulta SQL #3: </sub><br>
+  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/3.png"><br>
+  <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
+  <br><br><br>
+</div>
+
+<div align = "center">
+  <sub> Quadro 04 - Lógica Proposicional #3 </sub><br>
+
+| | |
+|---|---|
+| **Proposições lógicas** | $A$: O número total de equipes cadastradas no evento é menor que 2 (`COUNT(*) < 2`) |
+| **Expressão lógica proposicional** | $A$ |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>Resultado (insere)</th></tr></thead><tbody><tr><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td></tr></tbody></table> |
+
+  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+</div>
+
+#### Consulta #4: Busca equipe com corredores (Exibição de Equipe)
+
+<div align="center">
+  <sub> Imagem 04 - Consulta SQL #4: </sub><br>
+  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/4.png"><br>
+  <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
+  <br><br><br>
+</div>
+
+<div align = "center">
+  <sub> Quadro 05 - Lógica Proposicional #4 </sub><br>
+
+| | |
+|---|---|
+| **Proposições lógicas** | $A$: A equipe com `id = :equipeId` existe na tabela `equipes` <br> $B$: Existem corredores com `equipe_id = :equipeId` na tabela `corredores` |
+| **Expressão lógica proposicional** | $A \land B$ |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+
+  <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
+</div>
+
+#### Consulta #5: Inicia o turno (TurnoRepository)
+
+<div align="center">
+  <sub> Imagem 05 - Consulta SQL #5: </sub><br>
+  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/5.png"><br>lta SQL #
+  <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
+  <br><br><br>
+</div>
+
+<div align = "center">
+  <sub> Quadro 05 - Lógica Proposicional #5 </sub><br>
+
+| | |
+|---|---|
+| **Proposições lógicas** | $A$: O corredor já possui um turno com `status = 'ativo'` (`EXISTS(...)`) |
+| **Expressão lógica proposicional** | $\lnot A$ (insere somente se não há turno ativo) |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$\lnot A$ (insere)</th></tr></thead><tbody><tr><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td></tr></tbody></table> |
+
+  <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
+</div>
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
 ---
