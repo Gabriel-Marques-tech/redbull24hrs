@@ -2568,16 +2568,16 @@ A migration 001 entrega o schema completo do sistema em um único arquivo versio
 
 Dentro do banco de dados foram implementadas as seguintes consultas:
 
-#### Consulta #1: Verifica se há duplicidade no *Sync Offline*
+#### Consulta 1: Verifica se há duplicidade no *Sync Offline*
 <div align="center">
-  <sub> Imagem 01 - Consulta SQL #1: </sub><br>
-  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/1.png" width="50%"><br>
+  <sub> Imagem 01 - Consulta SQL: 1 </sub><br>
+  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/1.png" width="40%"><br>
   <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
   <br><br><br>
 </div>
 
 <div align = "center">
-  <sub> Quadro 02 - Lógica Proposicional #1 </sub><br>
+  <sub> Quadro 02 - Lógica Proposicional: 1 </sub><br>
 
 | | |
 |---|---|
@@ -2587,16 +2587,16 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
-#### Consulta #2: Insere o registro sincronizado (*Sync Offline*)
+#### Consulta 2: Insere o registro sincronizado (*Sync Offline*)
 <div align="center">
-  <sub> Imagem 02 - Consulta SQL #2: </sub><br>
-  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/2.png" width="50%"><br>
+  <sub> Imagem 02 - Consulta SQL: 2 </sub><br>
+  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/2.png" width="40%"><br>
   <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
   <br><br><br>
 </div>
 
 <div align = "center">
-  <sub> Quadro 03 - Lógica Proposicional #2 </sub><br>
+  <sub> Quadro 03 - Lógica Proposicional: 2 </sub><br>
 
 | | |
 |---|---|
@@ -2607,17 +2607,17 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
-#### Consulta #3: Cadastra a equipe (EquipeRepository)
+#### Consulta 3: Cadastra a equipe (EquipeRepository)
 
 <div align="center">
-  <sub> Imagem 03 - Consulta SQL #3: </sub><br>
-  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/3.png" width="50%"><br>
+  <sub> Imagem 03 - Consulta SQL: 3 </sub><br>
+  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/3.png" width="40%"><br>
   <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
   <br><br><br>
 </div>
 
 <div align = "center">
-  <sub> Quadro 04 - Lógica Proposicional #3 </sub><br>
+  <sub> Quadro 04 - Lógica Proposicional: 3 </sub><br>
 
 | | |
 |---|---|
@@ -2628,17 +2628,17 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
 
-#### Consulta #4: Busca equipe com corredores (Exibição de Equipe)
+#### Consulta 4: Busca equipe com corredores (Exibição de Equipe)
 
 <div align="center">
-  <sub> Imagem 04 - Consulta SQL #4: </sub><br>
-  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/4.png" width="50%"><br>
+  <sub> Imagem 04 - Consulta SQL: 4 </sub><br>
+  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/4.png" width="40%"><br>
   <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
   <br><br><br>
 </div>
 
 <div align = "center">
-  <sub> Quadro 05 - Lógica Proposicional #4 </sub><br>
+  <sub> Quadro 05 - Lógica Proposicional: 4 </sub><br>
 
 | | |
 |---|---|
@@ -2649,17 +2649,17 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
-#### Consulta #5: Inicia o turno (TurnoRepository)
+#### Consulta 5: Inicia o turno (TurnoRepository)
 
 <div align="center">
-  <sub> Imagem 05 - Consulta SQL #5: </sub><br>
-  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/5.png" width="50%"><br>lta SQL #
+  <sub> Imagem 05 - Consulta SQL: 5 </sub><br>
+  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/5.png" width="40%"><br>
   <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
   <br><br><br>
 </div>
 
 <div align = "center">
-  <sub> Quadro 05 - Lógica Proposicional #5 </sub><br>
+  <sub> Quadro 06 - Lógica Proposicional: 5 </sub><br>
 
 | | |
 |---|---|
@@ -2673,12 +2673,6 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
 &nbsp;&nbsp; Assim, é possível afirmar que o entendimento da lógica proposicional possui papel essencial no desenvolvimento e na administração do banco de dados do nosso sistema.
 &nbsp;&nbsp; A estrutura implementada evidencia a utilização adequada de proposições, conectivos lógicos e operadores booleanos em consultas SQL, possibilitando a criação de comandos eficientes, consistentes e seguros para processos de filtragem, seleção e associação de dados do nosso sistema para o evento.
 &nbsp;&nbsp; Além disso, as tabelas verdade apresentadas ilustram as operações lógicas efetivamente aplicadas no código, contemplando funcionalidades como o início do turno, o cadastro da equipe, a busca pela equipe, a inserção do registro sincronizado e a verificação de duplicidade do *Sync Offline*.
-
----
-
-_Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema._
-
-_Cada endpoint deve conter endereço, método (GET, POST, PUT, PATCH, DELETE), header, body, formatos de response e os status codes possíveis (200, 201, 204, 400, 401, 403, 404, 409, 422, 500)._
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
