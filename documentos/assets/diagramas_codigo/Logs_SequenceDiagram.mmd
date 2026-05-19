@@ -32,99 +32,121 @@
 }}%%
 sequenceDiagram
     autonumber
-    actor Usuario
-    participant RegistroController
-    participant RegistroService
-    participant RegistroRepository
-    participant BancoDeDados
+    actor User
+    participant RegistrationController
+    participant RegistrationService
+    participant RegistrationRepository
+    participant Database
 
-    Note over Usuario, BancoDeDados: Edição Retroativa de Registro
-    Usuario->>RegistroController: PATCH /registros/{id} (novoValor, auditorId)
-    activate RegistroController
-    RegistroController->>RegistroService: editarRegistro(id, novoValor, auditorId)
-    activate RegistroService
+    Note over User, Database: Retroactive Record Editing
 
-    RegistroService->>RegistroRepository: buscarRegistro(id)
-    activate RegistroRepository
-    RegistroRepository->>BancoDeDados: SELECT registro WHERE id
-    activate BancoDeDados
-    BancoDeDados-->>RegistroRepository: registro (valorAtual, checkpoints)
-    deactivate BancoDeDados
-    RegistroRepository-->>RegistroService: dadosRegistro
-    deactivate RegistroRepository
+    User->>RegistrationController: PATCH /records/{id} (newValue, auditorId)
+    activate RegistrationController
 
-    RegistroService->>RegistroService: validarIntervaloKm(novoValor, checkpoints)
+    RegistrationController->>RegistrationService: editRecord(id, newValue, auditorId)
+    activate RegistrationService
 
-    RegistroService->>RegistroRepository: atualizarRegistro(id, novoValor)
-    activate RegistroRepository
-    RegistroRepository->>BancoDeDados: UPDATE registro SET km = novoValor
-    activate BancoDeDados
-    BancoDeDados-->>RegistroRepository: sucesso
-    deactivate BancoDeDados
-    RegistroRepository-->>RegistroService: ok
-    deactivate RegistroRepository
+    RegistrationService->>RegistrationRepository: findRecord(id)
+    activate RegistrationRepository
 
-    RegistroService->>RegistroRepository: salvarAuditoria(id, valorAnterior, novoValor, auditorId)
-    activate RegistroRepository
-    RegistroRepository->>BancoDeDados: INSERT auditoria (imutável)
-    activate BancoDeDados
-    BancoDeDados-->>RegistroRepository: auditoriaId
-    deactivate BancoDeDados
-    RegistroRepository-->>RegistroService: ok
-    deactivate RegistroRepository
+    RegistrationRepository->>Database: SELECT record WHERE id
+    activate Database
 
-    RegistroService-->>RegistroController: registroAtualizado + auditoriaGerada
-    deactivate RegistroService
-    RegistroController-->>Usuario: 200 OK — Registro editado e auditoria registrada
-    deactivate RegistroController
+    Database-->>RegistrationRepository: record (currentValue, checkpoints)
+    deactivate Database
 
-    alt novoValor < checkpointAnterior ou novoValor > checkpointPosterior
-        Note over RegistroService: [Alternativo] Valor fora do intervalo válido
-        RegistroService-->>RegistroController: erro: quilometragem inválida
-        RegistroController-->>Usuario: 422 — Valor deve estar entre checkpoints
+    RegistrationRepository-->>RegistrationService: recordData
+    deactivate RegistrationRepository
+
+    RegistrationService->>RegistrationService: validateKmRange(newValue, checkpoints)
+
+    RegistrationService->>RegistrationRepository: updateRecord(id, newValue)
+    activate RegistrationRepository
+
+    RegistrationRepository->>Database: UPDATE record SET km = newValue
+    activate Database
+
+    Database-->>RegistrationRepository: success
+    deactivate Database
+
+    RegistrationRepository-->>RegistrationService: ok
+    deactivate RegistrationRepository
+
+    RegistrationService->>RegistrationRepository: saveAudit(id, previousValue, newValue, auditorId)
+    activate RegistrationRepository
+
+    RegistrationRepository->>Database: INSERT audit (immutable)
+    activate Database
+
+    Database-->>RegistrationRepository: auditId
+    deactivate Database
+
+    RegistrationRepository-->>RegistrationService: ok
+    deactivate RegistrationRepository
+
+    RegistrationService-->>RegistrationController: updatedRecord + generatedAudit
+    deactivate RegistrationService
+
+    RegistrationController-->>User: 200 OK — Record edited and audit logged
+    deactivate RegistrationController
+
+    alt newValue < previousCheckpoint or newValue > nextCheckpoint
+        Note over RegistrationService: [Alternative] Value outside valid range
+        RegistrationService-->>RegistrationController: error: invalid mileage
+        RegistrationController-->>User: 422 — Value must be between checkpoints
     end
 
-    Note over Usuario, BancoDeDados: Sync Offline
+    Note over User, Database: Offline Sync
 
-    Note over Usuario: Dispositivo sem conexão
-    loop Para cada registro offline
-        Usuario->>Usuario: persistirLocalmente(dados)
+    Note over User: Device without connection
+
+    loop For each offline record
+        User->>User: persistLocally(data)
     end
 
-    Note over Usuario: Conexão restabelecida
-    Usuario->>RegistroController: POST /sync (registrosLocais[])
-    activate RegistroController
-    RegistroController->>RegistroService: sincronizarRegistros(registrosLocais[])
-    activate RegistroService
+    Note over User: Connection restored
 
-    loop Para cada registro na fila
-        RegistroService->>RegistroRepository: verificarDuplicidade(id, timestamp)
-        activate RegistroRepository
-        RegistroRepository->>BancoDeDados: SELECT WHERE id AND timestamp
-        activate BancoDeDados
-        BancoDeDados-->>RegistroRepository: existe (true/false)
-        deactivate BancoDeDados
-        RegistroRepository-->>RegistroService: duplicado (false)
-        deactivate RegistroRepository
+    User->>RegistrationController: POST /sync (localRecords[])
+    activate RegistrationController
 
-        RegistroService->>RegistroRepository: salvarRegistro(dados)
-        activate RegistroRepository
-        RegistroRepository->>BancoDeDados: INSERT registro
-        activate BancoDeDados
-        BancoDeDados-->>RegistroRepository: sucesso
-        deactivate BancoDeDados
-        RegistroRepository-->>RegistroService: ok
-        deactivate RegistroRepository
+    RegistrationController->>RegistrationService: syncRecords(localRecords[])
+    activate RegistrationService
+
+    loop For each record in queue
+        RegistrationService->>RegistrationRepository: checkDuplicate(id, timestamp)
+        activate RegistrationRepository
+
+        RegistrationRepository->>Database: SELECT WHERE id AND timestamp
+        activate Database
+
+        Database-->>RegistrationRepository: exists (true/false)
+        deactivate Database
+
+        RegistrationRepository-->>RegistrationService: duplicate (false)
+        deactivate RegistrationRepository
+
+        RegistrationService->>RegistrationRepository: saveRecord(data)
+        activate RegistrationRepository
+
+        RegistrationRepository->>Database: INSERT record
+        activate Database
+
+        Database-->>RegistrationRepository: success
+        deactivate Database
+
+        RegistrationRepository-->>RegistrationService: ok
+        deactivate RegistrationRepository
     end
 
-    RegistroService-->>RegistroController: sincronizacaoConcluida
-    deactivate RegistroService
-    RegistroController-->>Usuario: 200 OK — Registros sincronizados
-    deactivate RegistroController
+    RegistrationService-->>RegistrationController: syncCompleted
+    deactivate RegistrationService
 
-    alt registro já existe no banco
-        Note over RegistroService: [Alternativo] Registro duplicado ignorado
-        RegistroService->>RegistroService: ignorarRegistro(id)
-        RegistroService-->>RegistroController: aviso: duplicidades descartadas
-        RegistroController-->>Usuario: 200 OK — Sync parcial
+    RegistrationController-->>User: 200 OK — Records synchronized
+    deactivate RegistrationController
+
+    alt record already exists in database
+        Note over RegistrationService: [Alternative] Duplicate record ignored
+        RegistrationService->>RegistrationService: ignoreRecord(id)
+        RegistrationService-->>RegistrationController: warning: duplicates discarded
+        RegistrationController-->>User: 200 OK — Partial sync
     end
