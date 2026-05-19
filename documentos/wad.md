@@ -2560,118 +2560,43 @@ Entre os principais conectivos lógicos utilizados, temos:
 </div>
 
 **Conjunção**: representa uma relação lógica do tipo "e". O resultado será verdadeiro apenas quando todas as condições envolvidas forem verdadeiras.
+
 **Disjunção**: representa uma relação lógica do tipo "ou". Nesse caso, basta que pelo menos uma das condições seja verdadeira para que o resultado também seja verdadeiro.
+
 **Condicional**: representa uma relação lógica baseada na ideia de "se... então...", indicando que uma condição depende da outra para que a afirmação seja considerada verdadeira.
+
 **Negação**: representa a inversão de um valor lógico, transformando uma condição verdadeira em falsa, e vice-versa.
+
 **Bicondicional**: representa uma relação de equivalência entre duas proposições, sendo verdadeira quando ambas possuem o mesmo valor lógico.
 
 
 Dentro do banco de dados foram implementadas as seguintes consultas:
 
-#### Consulta 1: Verifica se há duplicidade no *Sync Offline*
+#### Consulta 1: *Sync offline* - inserir ou ignorar por conflito de versão
+Ao tentar sincronizar a inserção dos dados capturados *offline*, o registro só é inserido se não existe no banco. Caso o registro já exista mas o timestamp local for mais recente e o novo km estiver dentro do intervalo entre o checkpoint imediatamente anterior (`MAX(distance)`) e o imediatamente posterior (`MIN(distance)` acima do km atual), o banco é atualizado e, se o banco tiver versão mais recente, o registro é ignorado.
+
 <div align="center">
   <sub> Imagem 01 - Consulta SQL: 1 </sub><br>
-  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/1.png" width="40%"><br>
+  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/consulta_1.png" width="40%"><br>
   <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
   <br><br><br>
 </div>
 
+<br>
+
 <div align="center">
-  <sub> Quadro 02 - Lógica Proposicional: 1 </sub><br>
+  <sub> Quadro xx - Lógica Proposicional: E </sub><br>
 
 | | |
 |---|---|
-| **Proposições lógicas** | $A$: O `id` do registro já existe no banco (`id = :id`) <br> $B$: O `timestamp` do registro coincide com o valor local (`timestamp = :timestamp`) |
-| **Expressão lógica proposicional** | $A \land B$ |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$ (duplicado)</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+| **Proposições lógicas** | $A$: O registro não existe no banco (`NOT EXISTS`) <br> $B$: O registro existe e o timestamp local é mais recente (`registros.timestamp < :timestamp`) <br> $C$: O novo km está dentro do intervalo entre o checkpoint imediatamente anterior e o imediatamente posterior ao km atual (`:km BETWEEN MAX(distance) AND MIN(distance WHERE distance > registros.km)`) |
+| **Expressão lógica proposicional** | $A \lor (B \land C)$ |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$B \land C$</th><th>$A \lor (B \land C)$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
-#### Consulta 2: Insere o registro sincronizado (*Sync Offline*)
-<div align="center">
-  <sub> Imagem 02 - Consulta SQL: 2 </sub><br>
-  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/2.png" width="40%"><br>
-  <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
-  <br><br><br>
-</div>
-
-<div align="center">
-  <sub> Quadro 03 - Lógica Proposicional: 2 </sub><br>
-
-| | |
-|---|---|
-| **Proposições lógicas** | $A$: O `id` do registro já existe no banco (`id = :id`) <br> $B$: O `timestamp` do registro coincide com o existente (`timestamp = :timestamp`) |
-| **Expressão lógica proposicional** | $\lnot(A \land B)$ |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th><th>$\lnot(A \land B)$ (insere)</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>V</td><td>F</td></tr></tbody></table> |
-
-  <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
-</div>
-
-#### Consulta 3: Cadastra a equipe (EquipeRepository)
-
-<div align="center">
-  <sub> Imagem 03 - Consulta SQL: 3 </sub><br>
-  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/3.png" width="40%"><br>
-  <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
-  <br><br><br>
-</div>
-
-<div align="center">
-  <sub> Quadro 04 - Lógica Proposicional: 3 </sub><br>
-
-| | |
-|---|---|
-| **Proposições lógicas** | $A$: O número total de equipes cadastradas no evento é menor que 2 (`COUNT(*) < 2`) |
-| **Expressão lógica proposicional** | $A$ |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>Resultado (insere)</th></tr></thead><tbody><tr><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td></tr></tbody></table> |
-
-  <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
-</div>
-
-#### Consulta 4: Busca equipe com corredores (Exibição de Equipe)
-
-<div align="center">
-  <sub> Imagem 04 - Consulta SQL: 4 </sub><br>
-  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/4.png" width="40%"><br>
-  <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
-  <br><br><br>
-</div>
-
-<div align="center">
-  <sub> Quadro 05 - Lógica Proposicional: 4 </sub><br>
-
-| | |
-|---|---|
-| **Proposições lógicas** | $A$: A equipe com `id = :equipeId` existe na tabela `equipes` <br> $B$: Existem corredores com `equipe_id = :equipeId` na tabela `corredores` |
-| **Expressão lógica proposicional** | $A \land B$ |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
-
-  <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
-</div>
-
-#### Consulta 5: Inicia o turno (TurnoRepository)
-
-<div align="center">
-  <sub> Imagem 05 - Consulta SQL: 5 </sub><br>
-  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/5.png" width="40%"><br>
-  <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
-  <br><br><br>
-</div>
-
-<div align="center">
-  <sub> Quadro 06 - Lógica Proposicional: 5 </sub><br>
-
-| | |
-|---|---|
-| **Proposições lógicas** | $A$: O corredor já possui um turno com `status = 'ativo'` (`EXISTS(...)`) |
-| **Expressão lógica proposicional** | $\lnot A$ (insere somente se não há turno ativo) |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$\lnot A$ (insere)</th></tr></thead><tbody><tr><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td></tr></tbody></table> |
-
-  <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
-</div>
-
-Assim, é possível afirmar que o entendimento da lógica proposicional possui papel essencial no desenvolvimento e na administração do banco de dados do nosso sistema. A estrutura implementada evidencia a utilização adequada de proposições, conectivos lógicos e operadores booleanos em consultas SQL, possibilitando a criação de comandos eficientes, consistentes e seguros para processos de filtragem, seleção e associação de dados do nosso sistema para o evento. Além disso, as tabelas verdade apresentadas ilustram as operações lógicas efetivamente aplicadas no código, contemplando funcionalidades como o início do turno, o cadastro da equipe, a busca pela equipe, a inserção do registro sincronizado e a verificação de duplicidade do *Sync Offline*.
+Assim, é possível afirmar que o entendimento da lógica proposicional possui papel essencial no desenvolvimento e na administração do banco de dados do nosso sistema. A estrutura implementada evidencia a utilização adequada de proposições, conectivos lógicos e operadores booleanos em consultas SQL, possibilitando a criação de comandos eficientes, consistentes e seguros para processos de filtragem, seleção e associação de dados do nosso sistema para o evento. Além disso, as tabelas verdade apresentadas ilustram as operações lógicas efetivamente aplicadas no código, contemplando funcionalidades como inserir ou ignorar o *Sync Offline*.
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
