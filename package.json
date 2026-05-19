@@ -25,7 +25,8 @@
 		"build": "tsc",
 		"start": "node dist/index.js",
 		"test": "jest",
-		"test:watch": "jest --watch"
+		"test:watch": "jest --watch",
+		"migrate": "ts-node src/database/migrate.ts"
 	},
 	"repository": {
 		"type": "git",
