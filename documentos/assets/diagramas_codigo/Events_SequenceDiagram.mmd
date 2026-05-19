@@ -33,81 +33,82 @@
 }}%%
 sequenceDiagram
     participant C as Client
-    participant CT as EventoController
-    participant ES as EventoService
-    participant ER as EventoRepository
-    participant BD as Banco de Dados
+    participant CT as EventController
+    participant ES as EventService
+    participant ER as EventRepository
+    participant BD as Data Base
 
-    Note over C,BD: 1 · Criar evento (RF025 · RN22)
+    Note over C,BD: 1 · Create event (RF025 · RN22)
 
-    C->>+CT: 1. POST /eventos
-    CT->>+ES: 2. criarEvento(dto)
-    ES->>+ER: 3. verificarConflitoDataLocal()
-    ER->>+BD: 4. SELECT Event na mesma data e local
-    BD-->>-ER: 5. resultado
-    alt conflito encontrado
-        ER-->>-ES: Event existente
+    C->>+CT: 1. POST /events
+    CT->>+ES: 2. createEvent(dto)
+    ES->>+ER: 3. checkConflictDataLocal()
+    ER->>+BD: 4. SELECT Event on the same date and location
+    BD-->>-ER: 5. result
+    alt conflict encountered 
+        ER-->>-ES: existing Event 
         ES-->>CT: ConflictException
-        CT-->>C: 409 { já existe Event nessa data e local }
-    else sem conflito
+        CT-->>C: 409 { there is already an Event on that date and location }
+    else no conflict
         ER-->>ES: null
         ES->>+ER: 6. save(Event)
-        ER->>+BD: 7. INSERT Event { title, local, data, status: "aguardando" }
-        BD-->>-ER: 8. Event { id, status: "aguardando" }
-        ER-->>-ES: Event { id, status: "aguardando" }
-        CT-->>-C: 9. 201 { event_id, status: "aguardando" }
+        ER->>+BD: 7. INSERT Event { title, place, date, status: "waiting" }
+        BD-->>-ER: 8. Event { id, status: "waiting" }
+        ER-->>-ES: Event { id, status: "waiting" }
+        CT-->>-C: 9. 201 { event_id, status: "waiting" }
     end
     deactivate ES
 
-    Note over C,BD: 2 · Métricas em tempo real (RF019 · RN10)
+    Note over C,BD: 2 · Real-time metrics (RF019 · RN10)
 
-    C->>+CT: 10. GET /eventos/{id}/metricas
-    CT->>+ES: 11. calcularMetricas(event_id)
-    ES->>+ER: 12. findShiftsAtivos(event_id)
-    ER->>+BD: 13. SELECT Shifts ativos do Event
+    C->>+CT: 10. GET /events/{id}/metrics
+    CT->>+ES: 11. calculateMetrics(event_id)
+    ES->>+ER: 12. findShiftsActive(event_id)
+    ER->>+BD: 13. SELECT Event active Shifts 
     BD-->>-ER: 14. shifts[]
     ER-->>-ES: 15. shifts[]
-    Note right of ES: calcula km total por Team
-    Note right of ES: calcula speed média por Shift
-    Note right of ES: conta Teams em pista
-    CT-->>-C: 16. 200 { km_total, speed_media, teams_em_pista }
+    Note right of ES: calculates total km per Team
+    Note right of ES: calculate average speed by Shift
+    Note right of ES: counts Teams currently on track
+    CT-->>-C: 16. 200 { total_km, average_speed, teams_on_track }
     deactivate ES
 
-    Note over C,BD: 3 · Placar (RF014 · RN14)
+    Note over C,DB: 3 · Scoreboard (RF014 · RN14)
 
-    C->>+CT: 17. GET /eventos/{id}/placar
-    CT->>+ES: 18. obterPlacar(event_id)
-    ES->>+ER: 19. findKmPorTeam(event_id)
-    ER->>+BD: 20. SELECT km acumulado por Team (Shifts finalizados)
-    BD-->>-ER: 21. teams[] com km acumulado
-    ER-->>-ES: 22. teams[] com km acumulado
-    Note right of ES: ordena por km decrescente
-    CT-->>-C: 23. 200 { placar[ { team_id, nome, km_acumulado, posicao } ] }
+    C->>+CT: 17. GET /events/{id}/scoreboard
+    CT->>+ES: 18. getScoreboard(event_id)
+    ES->>+ER: 19. findKmByTeam(event_id)
+    ER->>+DB: 20. SELECT accumulated km by Team (finished Shifts)
+    DB-->>-ER: 21. teams[] with accumulated km
+    ER-->>-ES: 22. teams[] with accumulated km
+
+    Note right of ES: sorts by descending km
+    CT-->>-C: 23. 200 { scoreboard[ { team_id, name, accumulated_km, position } ] }
     deactivate ES
 
-    Note over C,BD: 4 · Inconsistências (RF023 · RN25)
+    Note over C,DB: 4 · Inconsistencies (RF023 · RN25)
 
-    C->>+CT: 24. GET /eventos/{id}/inconsistencias
-    CT->>+ES: 25. verificarInconsistencias(event_id)
-    ES->>+ER: 26. findRegistrosLog(event_id)
-    ER->>+BD: 27. SELECT Log do Event
-    BD-->>-ER: 28. logs[]
+    C->>+CT: 24. GET /events/{id}/inconsistencies
+    CT->>+ES: 25. checkInconsistencies(event_id)
+    ES->>+ER: 26. findLogRecords(event_id)
+    ER->>+DB: 27. SELECT Event logs
+    DB-->>-ER: 28. logs[]
     ER-->>-ES: 29. logs[]
-    Note right of ES: detecta gaps de Checkpoint
-    Note right of ES: detecta km retroativo
-    CT-->>-C: 30. 200 { inconsistencias[ { tipo, shift_id, descricao } ] }
+
+    Note right of ES: detects Checkpoint gaps
+    Note right of ES: detects retroactive km
+    CT-->>-C: 30. 200 { inconsistencies[ { type, shift_id, description } ] }
     deactivate ES
 
-    Note over C,BD: 5 · Exportar dados (RF024 · RN26)
+    Note over C,DB: 5 · Export data (RF024 · RN26)
 
-    C->>+CT: 31. GET /eventos/{id}/exportar
-    CT->>+ES: 32. exportarDados(event_id)
-    ES->>+ER: 33. findDadosCompletos(event_id)
-    ER->>+BD: 34. SELECT Shifts + Checkpoints + Log do Event
-    BD-->>-ER: 35. dadosCompletos{}
-    ER-->>-ES: 36. dadosCompletos{}
-    Note right of ES: serializa Shifts, Checkpoints e métricas
-    CT-->>-C: 37. 200 { arquivo, formato, timestamp_geracao }
+    C->>+CT: 31. GET /events/{id}/export
+    CT->>+ES: 32. exportData(event_id)
+    ES->>+ER: 33. findCompleteData(event_id)
+    ER->>+DB: 34. SELECT Shifts + Checkpoints + Event logs
+    DB-->>-ER: 35. completeData{}
+    ER-->>-ES: 36. completeData{}
+
+    Note right of ES: serializes Shifts, Checkpoints, and metrics
+    CT-->>-C: 37. 200 { file, format, generation_timestamp }
     deactivate ES
-
-
