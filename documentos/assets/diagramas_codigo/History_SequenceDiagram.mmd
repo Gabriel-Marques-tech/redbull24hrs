@@ -33,9 +33,9 @@
 }}%%
 sequenceDiagram
     participant C as Client
-    participant HC as HistoricoController
-    participant HS as HistoricoService
-    participant TR as TurnoRepository
+    participant HC as HistoryLogController
+    participant HS as HistoryLogService
+    participant TR as ShiftRepository
     participant BD as Data Base
 
     Note over C,DB: 1 · Event listing (RF014 · RN13)
@@ -56,7 +56,7 @@ sequenceDiagram
     HC-->>-C: 12. 200 { events[] }
     deactivate HS
 
-    Note over C,DB: 2 · Athlete swap in history (RF020 · RN08)
+    Note over C,DB: 2 · Athlete swap in history log (RF020 · RN08)
 
     C->>+HC: 13. GET /history?treadmill_id=1
     HC->>+HS: 14. listEvents({ treadmill_id })
