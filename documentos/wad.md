@@ -2575,12 +2575,24 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
 #### Consulta 1: *Sync offline* - inserir ou ignorar por conflito de versão
 &nbsp;&nbsp;&nbsp;&nbsp;Ao tentar sincronizar a inserção dos dados capturados *offline*, o registro só é inserido se não existe no banco. Caso o registro já exista mas o timestamp local for mais recente e o novo km estiver dentro do intervalo entre o checkpoint imediatamente anterior (MAX(distance)) e o imediatamente posterior (MIN(distance) acima do km atual), o banco é atualizado e, se o banco tiver versão mais recente, o registro é ignorado.
 
-<div align="center">
-  <sub> Imagem 01 - Consulta SQL: 1 </sub><br>
-  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/C1.png" width="70%"><br>
-  <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
-  <br><br><br>
-</div>
+**Consulta SQL:**
+```sql
+INSERT INTO checkpoints (shift_id, distance, type, timestamp)
+SELECT :shift_id, :distance, :type, :timestamp
+WHERE NOT EXISTS (
+    SELECT 1 FROM checkpoints WHERE id = :id
+)
+ON CONFLICT (id) DO UPDATE
+SET distance  = :distance,
+    type      = :type,
+    timestamp = :timestamp
+WHERE checkpoints.timestamp < :timestamp
+  AND :distance BETWEEN (
+      SELECT MAX(distance) FROM checkpoints WHERE shift_id = checkpoints.shift_id
+  ) AND (
+      SELECT MIN(distance) FROM checkpoints WHERE shift_id = checkpoints.shift_id AND distance > checkpoints.distance
+  );
+```
 
 <br>
 
@@ -2599,13 +2611,23 @@ Dentro do banco de dados foram implementadas as seguintes consultas:
 #### Consulta 2: *Ranking final* — corredores com mais de 25 km corridos ao fim do evento
 &nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar o evento, a consulta recupera o nome de todos os corredores que acumularam mais de 25 km percorridos no total, considerando ambas as equipes. Os corredores são listados em ordem decrescente de distância percorrida — do que mais correu para o que menos correu — sendo exibidos apenas aqueles que ultrapassaram o limite mínimo estabelecido.
 
-<div align="center">
-  <sub> Imagem 02 - Consulta SQL: 2 </sub><br>
-  <img src="documentos/assets/consulta_sql_e_logica_proposicional/C2.png" width="70%"><br>
-  <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
-  <br><br><br>
-</div>
+**Consulta SQL:**
+```sql
+SELECT
+    athletes.name                  AS corredor,
+    teams.name                     AS equipe,
+    SUM(shifts.distance)           AS total_km
+FROM shifts s
+JOIN athletes a ON athletes.id = shifts.athlete_id
+JOIN teams    t ON teams.id = athletes.team_id
+WHERE shifts.end_at IS NOT NULL
+GROUP BY athletes.id, athletes.name, teams.name
+HAVING SUM(shifts.distance) > 25
+ORDER BY total_km DESC;
+```
+
 <br>
+
 <div align="center">
   <sub> Quadro 03 - Lógica Proposicional: 2 </sub><br>
 
