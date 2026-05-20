@@ -2541,7 +2541,10 @@ A migration 001 entrega o schema completo do sistema em um único arquivo versio
 
 ### 3.6.4. Consultas SQL e lógica proposicional
 
-Os métodos de consulta em um banco de dados servem para buscar, visualizar, organizar e alterar informações armazenadas em tabelas. Essas consultas também permitem criar tabelas novas, seja de forma temporária ou permanente, facilitando a apresentação dos dados de acordo com a necessidade do sistema ou do usuário. Para montar essas consultas, é comum utilizar conceitos da lógica proposicional, um ramo da matemática que trabalha com proposições, ou seja, afirmações que podem ser classificadas apenas como verdadeiras ou falsas. A partir disso, utilizam-se conectivos lógicos para relacionar diferentes condições dentro de uma consulta, permitindo criar filtros e regras mais elaboradas.
+&nbsp;&nbsp;&nbsp;&nbsp; Os métodos de consulta em um banco de dados servem para buscar, visualizar, organizar e alterar informações armazenadas em tabelas.
+&nbsp;&nbsp;&nbsp;&nbsp;Essas consultas também permitem criar tabelas novas, seja de forma temporária ou permanente, facilitando a apresentação dos dados de acordo com a necessidade do sistema ou do usuário.
+&nbsp;&nbsp;&nbsp;&nbsp;Para montar essas consultas, é comum utilizar conceitos da lógica proposicional, um ramo da matemática que trabalha com proposições, ou seja, afirmações que podem ser classificadas apenas como verdadeiras ou falsas.
+&nbsp;&nbsp;&nbsp;&nbsp;A partir disso, utilizam-se conectivos lógicos para relacionar diferentes condições dentro de uma consulta, permitindo criar filtros e regras mais elaboradas.
 
 Entre os principais conectivos lógicos utilizados, temos:
 
@@ -2573,11 +2576,11 @@ Entre os principais conectivos lógicos utilizados, temos:
 Dentro do banco de dados foram implementadas as seguintes consultas:
 
 #### Consulta 1: *Sync offline* - inserir ou ignorar por conflito de versão
-Ao tentar sincronizar a inserção dos dados capturados *offline*, o registro só é inserido se não existe no banco. Caso o registro já exista mas o timestamp local for mais recente e o novo km estiver dentro do intervalo entre o checkpoint imediatamente anterior (`MAX(distance)`) e o imediatamente posterior (`MIN(distance)` acima do km atual), o banco é atualizado e, se o banco tiver versão mais recente, o registro é ignorado.
+&nbsp;&nbsp;&nbsp;&nbsp;Ao tentar sincronizar a inserção dos dados capturados *offline*, o registro só é inserido se não existe no banco. Caso o registro já exista mas o timestamp local for mais recente e o novo km estiver dentro do intervalo entre o checkpoint imediatamente anterior (MAX(distance)) e o imediatamente posterior (MIN(distance) acima do km atual), o banco é atualizado e, se o banco tiver versão mais recente, o registro é ignorado.
 
 <div align="center">
   <sub> Imagem 01 - Consulta SQL: 1 </sub><br>
-  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/consulta_1.png" width="40%"><br>
+  <img src= "documentos/assets/consulta_sql_e_logica_proposicional/consulta_1.png" width="70%"><br>
   <sub> Fonte: Desenvolvido pelo próprio grupo, 2026. </sub>
   <br><br><br>
 </div>
@@ -2585,18 +2588,18 @@ Ao tentar sincronizar a inserção dos dados capturados *offline*, o registro s�
 <br>
 
 <div align="center">
-  <sub> Quadro xx - Lógica Proposicional: E </sub><br>
+  <sub> Quadro 02 - Lógica Proposicional: 1 </sub><br>
 
 | | |
 |---|---|
-| **Proposições lógicas** | $A$: O registro não existe no banco (`NOT EXISTS`) <br> $B$: O registro existe e o timestamp local é mais recente (`registros.timestamp < :timestamp`) <br> $C$: O novo km está dentro do intervalo entre o checkpoint imediatamente anterior e o imediatamente posterior ao km atual (`:km BETWEEN MAX(distance) AND MIN(distance WHERE distance > registros.km)`) |
+| **Proposições lógicas** | $A$: O registro não existe no banco (NOT EXISTS) <br> $B$: O registro existe e o timestamp local é mais recente (registros.timestamp < :timestamp) <br> $C$: O novo km está dentro do intervalo entre o checkpoint imediatamente anterior e o imediatamente posterior ao km atual (:km BETWEEN MAX(distance) AND MIN(distance WHERE distance > registros.km)) |
 | **Expressão lógica proposicional** | $A \lor (B \land C)$ |
 | **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$B \land C$</th><th>$A \lor (B \land C)$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
-Assim, é possível afirmar que o entendimento da lógica proposicional possui papel essencial no desenvolvimento e na administração do banco de dados do nosso sistema. A estrutura implementada evidencia a utilização adequada de proposições, conectivos lógicos e operadores booleanos em consultas SQL, possibilitando a criação de comandos eficientes, consistentes e seguros para processos de filtragem, seleção e associação de dados do nosso sistema para o evento. Além disso, as tabelas verdade apresentadas ilustram as operações lógicas efetivamente aplicadas no código, contemplando funcionalidades como inserir ou ignorar o *Sync Offline*.
+&nbsp;&nbsp;&nbsp;&nbsp;Assim, é possível afirmar que o entendimento da lógica proposicional possui papel essencial no desenvolvimento e na administração do banco de dados do nosso sistema. A estrutura implementada evidencia a utilização adequada de proposições, conectivos lógicos e operadores booleanos em consultas SQL, possibilitando a criação de comandos eficientes, consistentes e seguros para processos de filtragem, seleção e associação de dados do nosso sistema para o evento. Além disso, as tabelas verdade apresentadas ilustram as operações lógicas efetivamente aplicadas no código, contemplando funcionalidades como inserir ou ignorar o *Sync Offline*.
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
