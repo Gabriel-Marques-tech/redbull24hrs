@@ -2542,11 +2542,8 @@ A migration 001 entrega o schema completo do sistema em um único arquivo versio
 ### 3.6.4. Consultas SQL e lógica proposicional
 
 &nbsp;&nbsp;&nbsp;&nbsp; Os métodos de consulta em um banco de dados servem para buscar, visualizar, organizar e alterar informações armazenadas em tabelas.
-
 &nbsp;&nbsp;&nbsp;&nbsp;Essas consultas também permitem criar tabelas novas, seja de forma temporária ou permanente, facilitando a apresentação dos dados de acordo com a necessidade do sistema ou do usuário.
-
 &nbsp;&nbsp;&nbsp;&nbsp;Para montar essas consultas, é comum utilizar conceitos da lógica proposicional, um ramo da matemática que trabalha com proposições, ou seja, afirmações que podem ser classificadas apenas como verdadeiras ou falsas.
-
 &nbsp;&nbsp;&nbsp;&nbsp;A partir disso, utilizam-se conectivos lógicos para relacionar diferentes condições dentro de uma consulta, permitindo criar filtros e regras mais elaboradas.
 
 Entre os principais conectivos lógicos utilizados, temos:
