@@ -2617,9 +2617,9 @@ SELECT
     athletes.name                  AS corredor,
     teams.name                     AS equipe,
     SUM(shifts.distance)           AS total_km
-FROM shifts s
-JOIN athletes a ON athletes.id = shifts.athlete_id
-JOIN teams    t ON teams.id = athletes.team_id
+FROM shifts
+JOIN athletes  ON athletes.id = shifts.athlete_id
+JOIN teams     ON teams.id = athletes.team_id
 WHERE shifts.end_at IS NOT NULL
 GROUP BY athletes.id, athletes.name, teams.name
 HAVING SUM(shifts.distance) > 25
