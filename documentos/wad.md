@@ -2601,7 +2601,7 @@ WHERE checkpoints.timestamp < :timestamp
 
 | | |
 |---|---|
-| **Proposições lógicas** | $A$: O registro não existe no banco (NOT EXISTS) <br> $B$: O registro existe e o timestamp local é mais recente (registros.timestamp < :timestamp) <br> $C$: O novo km está dentro do intervalo entre o checkpoint imediatamente anterior e o imediatamente posterior ao km atual (:km BETWEEN MAX(distance) AND MIN(distance WHERE distance > registros.km)) |
+| **Proposições lógicas** | $A$: O registro não existe no banco (NOT EXISTS) <br> $B$: O registro existe e o timestamp local é mais recente (shifts.timestamp < :timestamp) <br> $C$: O novo km está dentro do intervalo entre o checkpoint imediatamente anterior e o imediatamente posterior ao km atual (:km BETWEEN MAX(distance) AND MIN(distance WHERE distance > shifts.distance)) |
 | **Expressão lógica proposicional** | $A \lor (B \land C)$ |
 | **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$B \land C$</th><th>$A \lor (B \land C)$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
 
@@ -2633,7 +2633,7 @@ ORDER BY total_km DESC;
 
 | | |
 |---|---|
-| **Proposições lógicas** | $A$: O turno está encerrado (s.end_at IS NOT NULL) <br> $B$: A soma dos turnos do corredor ultrapassa 25 km (SUM(s.distance) > 25) |
+| **Proposições lógicas** | $A$: O turno está encerrado (shifts.end_at IS NOT NULL) <br> $B$: A soma dos turnos do corredor ultrapassa 25 km (SUM(shifts.distance) > 25) |
 | **Expressão lógica proposicional** | $A \land B$ |
 | **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
 
