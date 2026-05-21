@@ -6,7 +6,11 @@ const registerUser = async (name: string, email: string, password: string) => {
 	else {
 		const saltRounds: number = 10;
 		const hashedPassword: string = await bcrypt.hash(password, saltRounds);
-		const user = UserRepository.registerUser(name, email, hashedPassword);
+		const user = UserRepository.registerAuditor(
+			name,
+			email,
+			hashedPassword,
+		);
 
 		return user;
 	}

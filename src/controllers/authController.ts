@@ -11,4 +11,14 @@ const registerUser = async (req: Request, res: Response): Promise<void> => {
 	}
 };
 
-export default { registerUser };
+const loginUser = async (req: Request, res: Response): Promise<void> => {
+	const { email, password } = req.body;
+	const status = await AuthService.loginUser(email, password);
+	if (!status) {
+		res.status(404).json({ error: "Usuario não encontrado" });
+	} else {
+		res.status(200).json(status);
+	}
+};
+
+export default { registerUser, loginUser };
