@@ -2540,14 +2540,13 @@ CREATE INDEX idx_checkpoints_shift_id   ON checkpoints(shift_id);
 A migration 001 entrega o schema completo do sistema em um único arquivo versionado e reproduzível, com integridade referencial e regras de domínio garantidas no próprio banco. As políticas `ON DELETE` diferenciadas (`CASCADE` ao longo das entidades temporárias do evento, `RESTRICT` para entidades de carreira como gerentes, auditores e atletas), os `CHECK` sobre estados e quilometragem, e os índices secundários sobre todas as FKs traduzem as regras operacionais do Red Bull 24 Horas em estrutura física do PostgreSQL, apoiando tanto a operação em tempo real durante o evento quanto a auditoria formal posterior.
 
 ### 3.6.4. Consultas SQL e lógica proposicional
-
+ 
 &nbsp;&nbsp;&nbsp;&nbsp; Os métodos de consulta em um banco de dados servem para buscar, visualizar, organizar e alterar informações armazenadas em tabelas. Essas consultas também permitem criar tabelas novas, seja de forma temporária ou permanente, facilitando a apresentação dos dados de acordo com a necessidade do sistema ou do usuário. Para montar essas consultas, é comum utilizar conceitos da lógica proposicional, um ramo da matemática que trabalha com proposições, ou seja, afirmações que podem ser classificadas apenas como verdadeiras ou falsas. A partir disso, utilizam-se conectivos lógicos para relacionar diferentes condições dentro de uma consulta, permitindo criar filtros e regras mais elaboradas.
-
+ 
 Entre os principais conectivos lógicos utilizados, temos:
-
+ 
 <div align="center">
 <sub> Quadro 01: Conectivos Lógicos </sub>
-
 | Tipos de conectivos lógicos | Representação     |
 | ---------------------------- | ------------------- |
 | **Conjunção**        | $\land$           |
@@ -2555,62 +2554,63 @@ Entre os principais conectivos lógicos utilizados, temos:
 | **Condicional**        | $\rightarrow$     |
 | **Negação**          | $\neg$            |
 | **Bicondicional**      | $\Leftrightarrow$ |
-
+ 
 <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
-
 **Conjunção**: representa uma relação lógica do tipo "e". O resultado será verdadeiro apenas quando todas as condições envolvidas forem verdadeiras.
-
+ 
 **Disjunção**: representa uma relação lógica do tipo "ou". Nesse caso, basta que pelo menos uma das condições seja verdadeira para que o resultado também seja verdadeiro.
-
+ 
 **Condicional**: representa uma relação lógica baseada na ideia de "se... então...", indicando que uma condição depende da outra para que a afirmação seja considerada verdadeira.
-
+ 
 **Negação**: representa a inversão de um valor lógico, transformando uma condição verdadeira em falsa, e vice-versa.
-
+ 
 **Bicondicional**: representa uma relação de equivalência entre duas proposições, sendo verdadeira quando ambas possuem o mesmo valor lógico.
-
-
+ 
+ 
 Dentro do banco de dados foram implementadas as seguintes consultas:
-
+ 
 #### Consulta 1: *Sync offline* - inserir ou ignorar por conflito de versão
 &nbsp;&nbsp;&nbsp;&nbsp;Ao tentar sincronizar a inserção dos dados capturados *offline*, o registro só é inserido se não existe no banco. Caso o registro já exista mas o timestamp local for mais recente e o novo km estiver dentro do intervalo entre o checkpoint imediatamente anterior (MAX(distance)) e o imediatamente posterior (MIN(distance) acima do km atual), o banco é atualizado e, se o banco tiver versão mais recente, o registro é ignorado.
-
+ 
 **Consulta SQL:**
 ```sql
-INSERT INTO checkpoints (shift_id, distance, type, timestamp)
-SELECT :shift_id, :distance, :type, :timestamp
-WHERE NOT EXISTS (
-    SELECT 1 FROM checkpoints WHERE id = :id
-)
+INSERT INTO checkpoints (id, shift_id, distance, type, timestamp)
+VALUES (:id, :shift_id, :distance, :type, :timestamp)
 ON CONFLICT (id) DO UPDATE
-SET distance  = :distance,
-    type      = :type,
-    timestamp = :timestamp
-WHERE checkpoints.timestamp < :timestamp
-  AND :distance BETWEEN (
-      SELECT MAX(distance) FROM checkpoints WHERE shift_id = checkpoints.shift_id
+SET distance  = EXCLUDED.distance,
+    type      = EXCLUDED.type,
+    timestamp = EXCLUDED.timestamp
+WHERE checkpoints.timestamp < EXCLUDED.timestamp
+  AND EXCLUDED.distance BETWEEN (
+      SELECT COALESCE(MAX(distance), 0)
+      FROM checkpoints
+      WHERE shift_id = EXCLUDED.shift_id
+        AND distance < EXCLUDED.distance
   ) AND (
-      SELECT MIN(distance) FROM checkpoints WHERE shift_id = checkpoints.shift_id AND distance > checkpoints.distance
+      SELECT COALESCE(MIN(distance), EXCLUDED.distance)
+      FROM checkpoints
+      WHERE shift_id = EXCLUDED.shift_id
+        AND distance > EXCLUDED.distance
   );
 ```
-
+ 
 <br>
-
 <div align="center">
   <sub> Quadro 02 - Lógica Proposicional: 1 </sub><br>
-
+  
 | | |
 |---|---|
-| **Proposições lógicas** | $A$: O registro não existe no banco (NOT EXISTS) <br> $B$: O registro existe e o timestamp local é mais recente (shifts.timestamp < :timestamp) <br> $C$: O novo km está dentro do intervalo entre o checkpoint imediatamente anterior e o imediatamente posterior ao km atual (:km BETWEEN MAX(distance) AND MIN(distance WHERE distance > shifts.distance)) |
+| **Proposições lógicas** | $A$: O registro não existe no banco (NOT EXISTS) <br> $B$: O registro existe e o timestamp local é mais recente (checkpoints.timestamp < :timestamp) <br> $C$: O novo valor de distância está dentro do intervalo entre o checkpoint imediatamente anterior e o imediatamente posterior ao valor atual (:distance BETWEEN MAX(distance WHERE distance < :distance) AND MIN(distance WHERE distance > :distance)) |
 | **Expressão lógica proposicional** | $A \lor (B \land C)$ |
 | **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$B \land C$</th><th>$A \lor (B \land C)$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
-
+ 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
 #### Consulta 2: *Ranking final* — corredores com mais de 25 km corridos ao fim do evento
 &nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar o evento, a consulta recupera o nome de todos os corredores que acumularam mais de 25 km percorridos no total, considerando ambas as equipes. Os corredores são listados em ordem decrescente de distância percorrida — do que mais correu para o que menos correu — sendo exibidos apenas aqueles que ultrapassaram o limite mínimo estabelecido.
-
+ 
 **Consulta SQL:**
 ```sql
 SELECT
@@ -2625,9 +2625,8 @@ GROUP BY athletes.id, athletes.name, teams.name
 HAVING SUM(shifts.distance) > 25
 ORDER BY total_km DESC;
 ```
-
+ 
 <br>
-
 <div align="center">
   <sub> Quadro 03 - Lógica Proposicional: 2 </sub><br>
 
@@ -2636,10 +2635,9 @@ ORDER BY total_km DESC;
 | **Proposições lógicas** | $A$: O turno está encerrado (shifts.end_at IS NOT NULL) <br> $B$: A soma dos turnos do corredor ultrapassa 25 km (SUM(shifts.distance) > 25) |
 | **Expressão lógica proposicional** | $A \land B$ |
 | **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
-
+ 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
-
 &nbsp;&nbsp;&nbsp;&nbsp;Assim, é possível afirmar que o entendimento da lógica proposicional possui papel essencial no desenvolvimento e na administração do banco de dados do nosso sistema. A estrutura implementada evidencia a utilização adequada de proposições, conectivos lógicos e operadores booleanos em consultas SQL, possibilitando a criação de comandos eficientes, consistentes e seguros para processos de filtragem, seleção e associação de dados do nosso sistema para o evento. Além disso, as tabelas verdade apresentadas ilustram as operações lógicas efetivamente aplicadas no código, contemplando funcionalidades como inserir ou ignorar o *Sync Offline*.
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
