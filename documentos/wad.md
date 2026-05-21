@@ -2547,6 +2547,7 @@ Entre os principais conectivos lógicos utilizados, temos:
  
 <div align="center">
 <sub> Quadro 01: Conectivos Lógicos </sub>
+
 | Tipos de conectivos lógicos | Representação     |
 | ---------------------------- | ------------------- |
 | **Conjunção**        | $\land$           |
@@ -2598,7 +2599,7 @@ WHERE checkpoints.timestamp < EXCLUDED.timestamp
 <br>
 <div align="center">
   <sub> Quadro 02 - Lógica Proposicional: 1 </sub><br>
-  
+
 | | |
 |---|---|
 | **Proposições lógicas** | $A$: O registro não existe no banco (NOT EXISTS) <br> $B$: O registro existe e o timestamp local é mais recente (checkpoints.timestamp < :timestamp) <br> $C$: O novo valor de distância está dentro do intervalo entre o checkpoint imediatamente anterior e o imediatamente posterior ao valor atual (:distance BETWEEN MAX(distance WHERE distance < :distance) AND MIN(distance WHERE distance > :distance)) |
