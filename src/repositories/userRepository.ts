@@ -1,6 +1,7 @@
 import { pool } from "../database/connection";
 import { Manager } from "../types/user.types";
 
+//Registro de gerente no banco de dados
 const registerManager = async (
   name: string,
   email: string,
@@ -16,6 +17,7 @@ const registerManager = async (
   return result.rows[0];
 };
 
+//Registro de auditor no banco de dados
 const registerAuditor = async (
   name: string,
   email: string,
@@ -31,8 +33,9 @@ const registerAuditor = async (
   return result.rows[0];
 };
 
+//Consulta de login no banco de dados
 const loginUser = async (email: string, password: string) => {
   const user = await pool.query(`SELECT id, password, email FROM managers`);
 };
 
-export default { registerManager };
+export default { registerManager, loginUser };
