@@ -40,3 +40,12 @@ describe("registerManager", () => {
 		expect(result).toHaveProperty("email");
   })
 });
+
+describe("loginUser", () => {
+
+	it("Deve retornar um token JWT ao receber um email e senha", async () => {
+
+	})
+
+
+})
