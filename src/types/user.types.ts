@@ -1,11 +1,54 @@
-//tipo do gerente
+export type UserRole = "manager" | "auditor";
+
 export interface Manager {
   id: string;
   name: string;
   email: string;
 }
 
-//tipo do gerente com senha
 export interface ManagerPassword extends Manager {
-  HashedPassword: string;
+  password: string;
+}
+
+export interface Auditor {
+  id: string;
+  name: string;
+  email: string;
+  registration_number: number;
+  is_active: boolean;
+}
+
+export interface AuditorPassword extends Auditor {
+  password: string;
+}
+
+export interface AuthUser {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+}
+
+export interface JwtPayload {
+  sub: string;
+  email: string;
+  role: UserRole;
+}
+
+export interface AuthTokens {
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface AuthResult {
+  user: AuthUser;
+  tokens: AuthTokens;
+}
+
+declare global {
+  namespace Express {
+    interface Request {
+      user?: AuthUser;
+    }
+  }
 }
