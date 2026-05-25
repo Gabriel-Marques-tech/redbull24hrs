@@ -2047,6 +2047,20 @@ O que é: Divide a aplicação em três partes com funções diferentes. O Model
 
 ---
 
+Além dos padrões de projeto, o grupo também utilizou os princípios SOLID para ajudar na organização da arquitetura do sistema. Esses princípios servem para deixar o código mais limpo, organizado, reutilizável e fácil de manter ao longo do desenvolvimento.
+
+**S (Single Responsibility Principle):** Cada arquivo tem uma função só. O Controller recebe a requisição HTTP, o Service aplica as regras de negócio e o Repository acessa o banco. Nenhum dos três faz o trabalho do outro, o que torna cada mudança mais segura e previsível.
+
+**O (Open/Closed Principle):** O código cresce sem precisar alterar o que já funciona. O Strategy Pattern para os cálculos de turno é o exemplo mais direto: um novo critério de validação pode ser adicionado sem tocar nos que já existem.
+
+**L (Liskov Substitution Principle):** Os repositórios podem ser substituídos por mocks nos testes sem que os Services precisem ser alterados. Isso permitiu executar testes com Jest e supertest sem depender de uma conexão real com o banco de dados em todos os cenários. 
+
+**I (Interface Segregation Principle):** Cada Repository expõe só os métodos que o Service que o usa realmente precisa, sem carregar operações que não serão usadas por quem o consome.
+
+**D (Dependency Inversion Principle):** Os Services não dependem diretamente da implementação concreta do banco. Eles dependem de abstrações, o que garante que a lógica de negócio continua funcionando mesmo se a camada de acesso ao banco for alterada.
+
+
+
 ## 3.3. Wireframes (sprint 2)
 
 ---
