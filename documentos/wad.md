@@ -2660,6 +2660,7 @@ SELECT
 FROM shifts
 JOIN auditors ON auditors.id = shifts.auditor_id
 WHERE shifts.status = 'completed'
+  AND auditors.is_active = TRUE
 GROUP BY auditors.id, auditors.name
 HAVING COUNT(shifts.id) > 1
 ORDER BY total_turnos_auditados DESC;
@@ -2671,9 +2672,10 @@ ORDER BY total_turnos_auditados DESC;
 
 | | |
 |---|---|
-| **Proposições lógicas** | $A$: O turno está encerrado (shifts.status = 'completed') <br> $B$: O auditor supervisionou mais de um turno encerrado (COUNT(shifts.id) > 1) |
-| **Expressão lógica proposicional** | $A \land B$ |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+| **Proposições lógicas** | $A$: O turno está encerrado (`shifts.status = 'completed'`) <br> $B$: O auditor está ativo no sistema (`auditors.is_active = TRUE`) <br> $C$: O auditor supervisionou mais de um turno encerrado (`COUNT(shifts.id) > 1`) |
+| **Expressão lógica proposicional** | $(A \land B) \rightarrow C$ |
+| **Interpretação** | Um auditor só é listado como ativo se o turno estiver encerrado **e** o auditor não tiver sido desativado no sistema; satisfeitas essas condições, ele será exibido apenas se sua contagem ultrapassar um turno |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$A \land B$</th><th>$(A \land B) \rightarrow C$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
