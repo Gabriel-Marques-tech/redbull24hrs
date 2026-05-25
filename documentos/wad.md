@@ -2687,15 +2687,15 @@ ORDER BY total_turnos_auditados DESC;
 **Consulta SQL:**
 ```sql
 SELECT
-    t.number                                              AS esteira,
-    s.id                                                  AS turno_id,
-    a.name                                                AS atleta,
-    EXTRACT(EPOCH FROM s.total_time)::INT / 60            AS total_minutos_uso
-FROM treadmills t
-JOIN shifts     s ON s.id  = t.shift_id
-JOIN athletes   a ON a.id  = s.athlete_id
-WHERE s.status      = 'completed'
-  AND s.total_time IS NOT NULL
+    treadmill.number                                      AS esteira,
+    shift.id                                              AS turno_id,
+    athlete.name                                          AS atleta,
+    EXTRACT(EPOCH FROM shift.total_time)::INT / 60        AS total_minutos_uso
+FROM treadmills     AS treadmill
+JOIN shifts         AS shift   ON shift.id   = treadmill.shift_id
+JOIN athletes       AS athlete ON athlete.id = shift.athlete_id
+WHERE shift.status      = 'completed'
+  AND shift.total_time IS NOT NULL
 ORDER BY total_minutos_uso DESC;
 ```
 
