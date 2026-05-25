@@ -110,6 +110,17 @@ CREATE TABLE IF NOT EXISTS checkpoints (
 	CONSTRAINT chk_checkpoints_type CHECK (type IN ('mandatory', 'voluntary'))
 );
 
+CREATE TABLE IF NOT EXISTS refresh_tokens (
+	id SERIAL PRIMARY KEY,
+	token_hash VARCHAR(255) UNIQUE NOT NULL,
+	user_id INT NOT NULL,
+	user_role VARCHAR(20) NOT NULL,
+	expires_at TIMESTAMP NOT NULL,
+	revoked_at TIMESTAMP,
+	created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT chk_refresh_tokens_role CHECK (user_role IN ('manager', 'auditor'))
+);
+
 CREATE INDEX IF NOT EXISTS idx_events_manager_id      ON events(manager_id);
 CREATE INDEX IF NOT EXISTS idx_teams_event_id         ON teams(event_id);
 CREATE INDEX IF NOT EXISTS idx_athletes_team_id       ON athletes(team_id);
@@ -118,3 +129,4 @@ CREATE INDEX IF NOT EXISTS idx_shifts_auditor_id      ON shifts(auditor_id);
 CREATE INDEX IF NOT EXISTS idx_treadmills_shift_id    ON treadmills(shift_id);
 CREATE INDEX IF NOT EXISTS idx_logs_shift_id          ON logs(shift_id);
 CREATE INDEX IF NOT EXISTS idx_checkpoints_shift_id   ON checkpoints(shift_id);
+CREATE INDEX IF NOT EXISTS idx_refresh_tokens_user    ON refresh_tokens(user_id, user_role);
