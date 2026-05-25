@@ -2680,6 +2680,38 @@ ORDER BY total_turnos_auditados DESC;
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
+#### Consulta 4: Esteiras mais sobrecarregadas — esteiras com maior tempo total de uso no evento
+
+&nbsp;&nbsp;&nbsp;&nbsp;Identifica quais esteiras acumularam maior tempo de uso considerando os turnos encerrados a elas vinculados. Como cada esteira referencia diretamente um turno (`treadmills.shift_id`), a consulta recupera o turno associado a cada esteira, filtra apenas os turnos com status `completed` e duração registrada, e ordena pelo tempo total decrescente. Útil para auditoria operacional pós-evento: permite verificar se alguma esteira foi desproporcionalmente mais utilizada, o que pode indicar desequilíbrio na distribuição entre equipes ou necessidade de manutenção preventiva no equipamento mais exigido.
+
+**Consulta SQL:**
+```sql
+SELECT
+    t.number                                              AS esteira,
+    s.id                                                  AS turno_id,
+    a.name                                                AS atleta,
+    EXTRACT(EPOCH FROM s.total_time)::INT / 60            AS total_minutos_uso
+FROM treadmills t
+JOIN shifts     s ON s.id  = t.shift_id
+JOIN athletes   a ON a.id  = s.athlete_id
+WHERE s.status      = 'completed'
+  AND s.total_time IS NOT NULL
+ORDER BY total_minutos_uso DESC;
+```
+
+<br>
+<div align="center">
+  <sub> Quadro 05 - Lógica Proposicional: 4 </sub><br>
+
+| | |
+| :--- | :--- |
+| **Proposições lógicas** | **$A$**: O turno vinculado à esteira está encerrado (`shifts.status = 'completed'`)<br><br>**$B$**: A duração do turno foi registrada (`shifts.total_time IS NOT NULL`)<br><br>**$C$**: A esteira é contabilizada no ranking de tempo de uso (`t.number` aparece no resultado ordenado por `total_minutos_uso DESC`) |
+| **Expressão lógica proposicional** | $( A \land B ) \rightarrow C$ |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th><th>$(A \land B) \rightarrow C$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+
+  <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
+</div>
+
 &nbsp;&nbsp;&nbsp;&nbsp;Assim, é possível afirmar que o entendimento da lógica proposicional possui papel essencial no desenvolvimento e na administração do banco de dados do nosso sistema. A estrutura implementada evidencia a utilização adequada de proposições, conectivos lógicos e operadores booleanos em consultas SQL, possibilitando a criação de comandos eficientes, consistentes e seguros para processos de filtragem, seleção e associação de dados do nosso sistema para o evento. Além disso, as tabelas verdade apresentadas ilustram as operações lógicas efetivamente aplicadas no código, contemplando funcionalidades como inserir ou ignorar o Sync Offline.
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
