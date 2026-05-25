@@ -2605,8 +2605,8 @@ WHERE checkpoints.timestamp < EXCLUDED.timestamp
   <sub> Quadro 02 - Lógica Proposicional: 1 </sub><br>
 
 | | |
-|---|---|
-| **Proposições lógicas** | $A$: O registro não existe no banco (NOT EXISTS) <br> $B$: O registro existe e o timestamp local é mais recente (checkpoints.timestamp < :timestamp) <br> $C$: O novo valor de distância está dentro do intervalo entre o checkpoint imediatamente anterior e o imediatamente posterior ao valor atual (:distance BETWEEN MAX(distance WHERE distance < :distance) AND MIN(distance WHERE distance > :distance)) |
+| :--- | :--- |
+| **Proposições lógicas** | **$A$**: O registro não existe no banco (NOT EXISTS)<br><br>**$B$**: O registro existe e o timestamp local é mais recente (`checkpoints.timestamp < :timestamp`)<br><br>**$C$**: O novo valor de distância está dentro do intervalo entre a distância do checkpoint cronologicamente anterior e a do cronologicamente posterior no mesmo turno.<br>*(:distance BETWEEN (SELECT distance... WHERE timestamp < :timestamp ORDER BY timestamp DESC LIMIT 1) AND (SELECT distance... WHERE timestamp > :timestamp ORDER BY timestamp ASC LIMIT 1))* |
 | **Expressão lógica proposicional** | $A \lor (B \land C)$ |
 | **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$B \land C$</th><th>$A \lor (B \land C)$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
  
@@ -2615,22 +2615,24 @@ WHERE checkpoints.timestamp < EXCLUDED.timestamp
 
 #### Consulta 2: *Ranking final* — corredores com mais de 25 km corridos ao fim do evento
 
-&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar o evento, a consulta recupera o nome de todos os corredores que acumularam mais de 25 km percorridos no total, considerando ambas as equipes. Os corredores são listados em ordem decrescente de distância percorrida — do que mais correu para o que menos correu — sendo exibidos apenas aqueles que ultrapassaram o limite mínimo estabelecido.
- 
+&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar o evento, a consulta recupera o nome de todos os corredores que acumularam mais de 25 km percorridos no total, considerando ambas as equipes. Os corredores são listados em ordem decrescente de distância percorrida — do que mais correu para o que menos correu — sendo exibidos apenas aqueles que ultrapassaram o limite mínimo estabelecido. 
+
 **Consulta SQL:**
 ```sql
-SELECT
-    athletes.name             AS corredor,
-    teams.name                AS equipe,
+SELECT    
+    athletes.name             AS corredor,    
+    teams.name                AS equipe,    
     SUM(shifts.distance)      AS total_km
 FROM shifts
 JOIN athletes ON athletes.id   = shifts.athlete_id
 JOIN teams    ON teams.id      = athletes.team_id
-WHERE shifts.status = 'completed'
+JOIN events   ON events.id     = teams.event_id
+WHERE shifts.end_at IS NOT NULL  
+  AND events.end_at IS NOT NULL
   AND teams.event_id = :event_id
 GROUP BY athletes.id, athletes.name, teams.name
 HAVING SUM(shifts.distance) > 25
-ORDER BY total_km DESC;
+ORDER BY total_km DESC; 
 ```
  
 <br>
@@ -2639,7 +2641,7 @@ ORDER BY total_km DESC;
 
 | | |
 |---|---|
-| **Proposições lógicas** | $A$: O turno está encerrado (shifts.end_at IS NOT NULL) <br> $B$: A soma dos turnos do corredor ultrapassa 25 km (SUM(shifts.distance) > 25) |
+| **Proposições lógicas** | $A$: O turno está encerrado (`shifts.end_at IS NOT NULL`) <br> $B$: A soma dos turnos do corredor ultrapassa 25 km (`SUM(shifts.distance) > 25`) |
 | **Expressão lógica proposicional** | $A \land B$ |
 | **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
  
