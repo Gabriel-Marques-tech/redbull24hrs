@@ -2666,7 +2666,7 @@ ORDER BY total_turnos_auditados DESC;
 
 | | |
 |---|---|
-| **Proposições lógicas** | $A$: O turno está encerrado ($\text{shifts.status} = \text{'completed'}$) <br> $B$: O auditor supervisionou mais de um turno encerrado ($\text{COUNT(shifts.id)} > 1$) |
+| **Proposições lógicas** | $A$: O turno está encerrado (shifts.status = 'completed') <br> $B$: O auditor supervisionou mais de um turno encerrado (COUNT(shifts.id) > 1) |
 | **Expressão lógica proposicional** | $A \land B$ |
 | **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
 
