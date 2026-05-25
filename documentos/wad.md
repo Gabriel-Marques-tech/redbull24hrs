@@ -2617,16 +2617,17 @@ WHERE checkpoints.timestamp < EXCLUDED.timestamp
 **Consulta SQL:**
 ```sql
 SELECT
-    auditors.name                        AS auditor,
-    COUNT(DISTINCT treadmills.id)        AS esteiras_auditadas,
-    COUNT(shifts.id)                     AS total_turnos
+    athletes.name             AS corredor,
+    teams.name                AS equipe,
+    SUM(shifts.distance)      AS total_km
 FROM shifts
-JOIN auditors   ON auditors.id  = shifts.auditor_id
-JOIN treadmills ON treadmills.shift_id = shifts.id
+JOIN athletes ON athletes.id   = shifts.athlete_id
+JOIN teams    ON teams.id      = athletes.team_id
 WHERE shifts.status = 'completed'
-GROUP BY auditors.id, auditors.name
-HAVING COUNT(DISTINCT treadmills.id) > 1
-ORDER BY esteiras_auditadas DESC;
+  AND teams.event_id = :event_id
+GROUP BY athletes.id, athletes.name, teams.name
+HAVING SUM(shifts.distance) > 25
+ORDER BY total_km DESC;
 ```
  
 <br>
