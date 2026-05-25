@@ -2617,16 +2617,16 @@ WHERE checkpoints.timestamp < EXCLUDED.timestamp
 **Consulta SQL:**
 ```sql
 SELECT
-    athletes.name                  AS corredor,
-    teams.name                     AS equipe,
-    SUM(shifts.distance)           AS total_km
+    auditors.name                        AS auditor,
+    COUNT(DISTINCT treadmills.id)        AS esteiras_auditadas,
+    COUNT(shifts.id)                     AS total_turnos
 FROM shifts
-JOIN athletes  ON athletes.id = shifts.athlete_id
-JOIN teams     ON teams.id = athletes.team_id
-WHERE shifts.end_at IS NOT NULL
-GROUP BY athletes.id, athletes.name, teams.name
-HAVING SUM(shifts.distance) > 25
-ORDER BY total_km DESC;
+JOIN auditors   ON auditors.id  = shifts.auditor_id
+JOIN treadmills ON treadmills.shift_id = shifts.id
+WHERE shifts.status = 'completed'
+GROUP BY auditors.id, auditors.name
+HAVING COUNT(DISTINCT treadmills.id) > 1
+ORDER BY esteiras_auditadas DESC;
 ```
  
 <br>
@@ -2642,33 +2642,32 @@ ORDER BY total_km DESC;
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
-#### Consulta 3: *Esteiras disponíveis* — equipamentos livres ou com turno pendente por evento
+#### Consulta 3: *Auditores mais ativos* — auditores que registraram mais de um turno encerrado durante o evento
 
-&nbsp;&nbsp;&nbsp;&nbsp;Antes de iniciar um novo turno, o auditor precisa saber quais esteiras estão disponíveis. A consulta lista todas as esteiras de um evento específico que não possuem nenhum turno com status `'in progress'` no momento — seja porque estão livres (`shift_id IS NULL`) ou porque o turno vinculado já foi concluído ou ainda não foi iniciado (`'pending'`).
+&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar o evento, a consulta recupera o nome de todos os auditores que supervisionaram mais de um turno concluído durante as 24 horas de competição. Os auditores são listados em ordem decrescente pela quantidade de turnos auditados — do que supervisionou mais para o que supervisionou menos — sendo exibidos apenas aqueles que ultrapassaram o mínimo de um turno encerrado.
 
 **Consulta SQL:**
 ```sql
 SELECT
-    treadmills.id                   AS esteira_id,
-    treadmills.treadmill_number     AS numero_esteira,
-    COALESCE(shifts.status, 'free') AS situacao
-FROM treadmills
-LEFT JOIN shifts ON shifts.id = treadmills.shift_id
-WHERE (shifts.status IS NULL
-       OR shifts.status = 'pending'
-       OR shifts.status = 'completed')
-ORDER BY treadmills.treadmill_number;
+    auditors.name                  AS auditor,
+    COUNT(shifts.id)               AS total_turnos_auditados
+FROM shifts
+JOIN auditors ON auditors.id = shifts.auditor_id
+WHERE shifts.status = 'completed'
+GROUP BY auditors.id, auditors.name
+HAVING COUNT(shifts.id) > 1
+ORDER BY total_turnos_auditados DESC;
 ```
 
 <br>
 <div align="center">
-  <sub> Quadro 04 - Lógica Proposicional: 3 </sub>
+  <sub> Quadro 04 - Lógica Proposicional: 3 </sub><br>
 
 | | |
 |---|---|
-| **Proposições lógicas** | $A$: A esteira não possui nenhum turno vinculado ($\text{shift\_id IS NULL}$) <br> $B$: O turno vinculado está pendente ($\text{status} = \text{'pending'}$) <br> $C$: O turno vinculado está concluído ($\text{status} = \text{'completed'}$) |
-| **Expressão lógica proposicional** | $A \lor B \lor C$ |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$A \lor B \lor C$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+| **Proposições lógicas** | $A$: O turno está encerrado ($\text{shifts.status} = \text{'completed'}$) <br> $B$: O auditor supervisionou mais de um turno encerrado ($\text{COUNT(shifts.id)} > 1$) |
+| **Expressão lógica proposicional** | $A \land B$ |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
