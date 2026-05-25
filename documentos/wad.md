@@ -2558,17 +2558,16 @@ Entre os principais conectivos lógicos utilizados, temos:
  
 <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
+
 **Conjunção**: representa uma relação lógica do tipo "e". O resultado será verdadeiro apenas quando todas as condições envolvidas forem verdadeiras.
- 
+
 **Disjunção**: representa uma relação lógica do tipo "ou". Nesse caso, basta que pelo menos uma das condições seja verdadeira para que o resultado também seja verdadeiro.
- 
+
 **Condicional**: representa uma relação lógica baseada na ideia de "se... então...", indicando que uma condição depende da outra para que a afirmação seja considerada verdadeira.
- 
+
 **Negação**: representa a inversão de um valor lógico, transformando uma condição verdadeira em falsa, e vice-versa.
- 
+
 **Bicondicional**: representa uma relação de equivalência entre duas proposições, sendo verdadeira quando ambas possuem o mesmo valor lógico.
- 
- 
 Dentro do banco de dados foram implementadas as seguintes consultas:
  
 #### Consulta 1: *Sync offline* - inserir ou ignorar por conflito de versão
@@ -2639,7 +2638,7 @@ ORDER BY total_km DESC;
  
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
-&nbsp;&nbsp;&nbsp;&nbsp;Assim, é possível afirmar que o entendimento da lógica proposicional possui papel essencial no desenvolvimento e na administração do banco de dados do nosso sistema. A estrutura implementada evidencia a utilização adequada de proposições, conectivos lógicos e operadores booleanos em consultas SQL, possibilitando a criação de comandos eficientes, consistentes e seguros para processos de filtragem, seleção e associação de dados do nosso sistema para o evento. Além disso, as tabelas verdade apresentadas ilustram as operações lógicas efetivamente aplicadas no código, contemplando funcionalidades como inserir ou ignorar o *Sync Offline*.
+&nbsp;&nbsp;&nbsp;&nbsp;Assim, é possível afirmar que o entendimento da lógica proposicional possui papel essencial no desenvolvimento e na administração do banco de dados do nosso sistema. A estrutura implementada evidencia a utilização adequada de proposições, conectivos lógicos e operadores booleanos em consultas SQL, possibilitando a criação de comandos eficientes, consistentes e seguros para processos de filtragem, seleção e associação de dados do nosso sistema para o evento. Além disso, as tabelas verdade apresentadas ilustram as operações lógicas efetivamente aplicadas no código, contemplando funcionalidades como inserir ou ignorar o Sync Offline.
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
