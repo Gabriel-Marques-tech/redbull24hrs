@@ -1920,7 +1920,21 @@ _Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comun
 
 ---
 
-_Documente os design patterns utilizados (Repository, Strategy, Factory, DTO etc.) e quais princípios SOLID se aplicam. Justifique a adoção de cada padrão com base em uma necessidade real do projeto._
+Padrões de projeto (design patterns) são soluções reutilizáveis e já testadas para problemas comuns no desenvolvimento de software. Eles funcionam como modelos que ajudam a estruturar o código de forma mais organizada, flexível, limpa e fácil de manter. Os padrões apresentados a seguir foram escolhidos não apenas por convenção, mas porque ajudaram a resolver problemas reais encontrados durante o desenvolvimento do projeto. 
+
+#### 3.2.7.1 Backend
+
+---
+
+
+#### 3.2.7.2 Front-end
+
+---
+
+
+#### 3.2.7.3 Princípios SOLID aplicados
+
+---
 
 ## 3.3. Wireframes (sprint 2)
 
