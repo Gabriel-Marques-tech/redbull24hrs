@@ -2572,6 +2572,7 @@ Entre os principais conectivos lógicos utilizados, temos:
 Dentro do banco de dados foram implementadas as seguintes consultas:
  
 #### Consulta 1: *Sync offline* - inserir ou ignorar por conflito de versão
+
 &nbsp;&nbsp;&nbsp;&nbsp;Ao tentar sincronizar a inserção dos dados capturados *offline*, o registro só é inserido se não existe no banco. Caso o registro já exista mas o timestamp local for mais recente e o novo km estiver dentro do intervalo entre o checkpoint imediatamente anterior (MAX(distance)) e o imediatamente posterior (MIN(distance) acima do km atual), o banco é atualizado e, se o banco tiver versão mais recente, o registro é ignorado.
  
 **Consulta SQL:**
@@ -2610,6 +2611,7 @@ WHERE checkpoints.timestamp < EXCLUDED.timestamp
 </div>
 
 #### Consulta 2: *Ranking final* — corredores com mais de 25 km corridos ao fim do evento
+
 &nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar o evento, a consulta recupera o nome de todos os corredores que acumularam mais de 25 km percorridos no total, considerando ambas as equipes. Os corredores são listados em ordem decrescente de distância percorrida — do que mais correu para o que menos correu — sendo exibidos apenas aqueles que ultrapassaram o limite mínimo estabelecido.
  
 **Consulta SQL:**
@@ -2639,6 +2641,38 @@ ORDER BY total_km DESC;
  
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
+
+#### Consulta 3: *Esteiras disponíveis* — equipamentos livres ou com turno pendente por evento
+
+&nbsp;&nbsp;&nbsp;&nbsp;Antes de iniciar um novo turno, o auditor precisa saber quais esteiras estão disponíveis. A consulta lista todas as esteiras de um evento específico que não possuem nenhum turno com status `'in progress'` no momento — seja porque estão livres (`shift_id IS NULL`) ou porque o turno vinculado já foi concluído ou ainda não foi iniciado (`'pending'`).
+
+**Consulta SQL:**
+```sql
+SELECT
+    treadmills.id                   AS esteira_id,
+    treadmills.treadmill_number     AS numero_esteira,
+    COALESCE(shifts.status, 'free') AS situacao
+FROM treadmills
+LEFT JOIN shifts ON shifts.id = treadmills.shift_id
+WHERE (shifts.status IS NULL
+       OR shifts.status = 'pending'
+       OR shifts.status = 'completed')
+ORDER BY treadmills.treadmill_number;
+```
+
+<br>
+<div align="center">
+  <sub> Quadro 04 - Lógica Proposicional: 3 </sub>
+
+| | |
+|---|---|
+| **Proposições lógicas** | $A$: A esteira não possui nenhum turno vinculado ($\text{shift\_id IS NULL}$) <br> $B$: O turno vinculado está pendente ($\text{status} = \text{'pending'}$) <br> $C$: O turno vinculado está concluído ($\text{status} = \text{'completed'}$) |
+| **Expressão lógica proposicional** | $A \lor B \lor C$ |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$A \lor B \lor C$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+
+  <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
+</div>
+
 &nbsp;&nbsp;&nbsp;&nbsp;Assim, é possível afirmar que o entendimento da lógica proposicional possui papel essencial no desenvolvimento e na administração do banco de dados do nosso sistema. A estrutura implementada evidencia a utilização adequada de proposições, conectivos lógicos e operadores booleanos em consultas SQL, possibilitando a criação de comandos eficientes, consistentes e seguros para processos de filtragem, seleção e associação de dados do nosso sistema para o evento. Além disso, as tabelas verdade apresentadas ilustram as operações lógicas efetivamente aplicadas no código, contemplando funcionalidades como inserir ou ignorar o Sync Offline.
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
