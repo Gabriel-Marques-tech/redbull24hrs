@@ -2570,10 +2570,10 @@ Entre os principais conectivos lógicos utilizados, temos:
 **Bicondicional**: representa uma relação de equivalência entre duas proposições, sendo verdadeira quando ambas possuem o mesmo valor lógico.
 
 Dentro do banco de dados foram implementadas as seguintes consultas:
- 
-#### Consulta 1: *Sync offline* - inserir ou ignorar por conflito de versão
 
-&nbsp;&nbsp;&nbsp;&nbsp;Ao tentar sincronizar a inserção dos dados capturados *offline*, o registro só é inserido se não existe no banco. Caso o registro já exista mas o timestamp local for mais recente e o novo km estiver dentro do intervalo entre o checkpoint imediatamente anterior (MAX(distance)) e o imediatamente posterior (MIN(distance) acima do km atual), o banco é atualizado e, se o banco tiver versão mais recente, o registro é ignorado.
+#### Consulta 1: *Sync offline* - inserir ou atualizar por conflito de versão
+
+&nbsp;&nbsp;&nbsp;&nbsp;Ao tentar sincronizar a inserção dos dados capturados *offline*, o registro só é inserido se não existe no banco. Caso o registro já exista mas o timestamp local for mais recente e o novo km estiver dentro do intervalo físico delimitado pelos checkpoints vizinhos na linha do tempo (considerando a ordem cronológica do turno), o banco é atualizado. Se o banco tiver versão mais recente ou o dado violar a cronologia física, o registro é ignorado.
  
 **Consulta SQL:**
 ```sql
@@ -2584,16 +2584,19 @@ SET distance  = EXCLUDED.distance,
     type      = EXCLUDED.type,
     timestamp = EXCLUDED.timestamp
 WHERE checkpoints.timestamp < EXCLUDED.timestamp
-  AND EXCLUDED.distance BETWEEN (
-      SELECT COALESCE(MAX(distance), 0)
-      FROM checkpoints
-      WHERE shift_id = EXCLUDED.shift_id
-        AND distance < EXCLUDED.distance
-  ) AND (
-      SELECT COALESCE(MIN(distance), EXCLUDED.distance)
-      FROM checkpoints
-      WHERE shift_id = EXCLUDED.shift_id
-        AND distance > EXCLUDED.distance
+  -- Garante que a nova distância é MAIOR ou igual à distância do ponto imediatamente anterior no tempo
+  AND EXCLUDED.distance >= COALESCE(
+      (SELECT distance FROM checkpoints 
+       WHERE shift_id = EXCLUDED.shift_id AND timestamp < EXCLUDED.timestamp
+       ORDER BY timestamp DESC LIMIT 1), 
+      0
+  )
+  -- Garante que a nova distância é MENOR ou igual à distância do ponto imediatamente posterior no tempo
+  AND EXCLUDED.distance <= COALESCE(
+      (SELECT distance FROM checkpoints 
+       WHERE shift_id = EXCLUDED.shift_id AND timestamp > EXCLUDED.timestamp
+       ORDER BY timestamp ASC LIMIT 1), 
+      EXCLUDED.distance
   );
 ```
  
