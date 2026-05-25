@@ -2568,6 +2568,7 @@ Entre os principais conectivos lógicos utilizados, temos:
 **Negação**: representa a inversão de um valor lógico, transformando uma condição verdadeira em falsa, e vice-versa.
 
 **Bicondicional**: representa uma relação de equivalência entre duas proposições, sendo verdadeira quando ambas possuem o mesmo valor lógico.
+
 Dentro do banco de dados foram implementadas as seguintes consultas:
  
 #### Consulta 1: *Sync offline* - inserir ou ignorar por conflito de versão
