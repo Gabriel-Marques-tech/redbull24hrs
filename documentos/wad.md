@@ -1930,6 +1930,37 @@ Padrões de projeto (design patterns) são soluções reutilizáveis e já testa
 #### 3.2.7.2 Front-end
 
 ---
+**8. Component Pattern:**
+
+**Categoria:** Estrutural
+
+**O que é:** A interface é construída com componentes independentes e reutilizáveis, cada um com uma responsabilidade só ¹⁹.
+
+**Justificativa:** A interface possui vários elementos reutilizados em diferentes telas, como cartões de status, formulários e indicadores de quilometragem. Sem componentes reutilizáveis, qualquer alteração visual precisaria ser feita manualmente em cada página. Com os componentes isolados, uma mudança feita em um único lugar já reflete em toda a aplicação. Isso foi especialmente importante nas últimas sprints, quando o design passou por ajustes após os testes de usabilidade realizados com os auditores.
+
+**Onde se aplica no projeto:** Nos componentes de cartão de esteira, formulários de cadastro de atletas e equipes, modal de checkpoint e indicadores de placar.
+
+
+**9. Container/Presentational Pattern:**
+
+**Categoria:** Arquitetural / Frontend
+
+**O que é:** Divide os componentes em dois tipos. Os Containers buscam dados e gerenciam o estado. Os Presentational recebem os dados prontos e cuidam só de exibir ¹⁷.
+
+**Justificativa:** O dashboard precisa atualizar os dados automaticamente sempre que novas informações são registradas. Se a lógica de atualização estivesse misturada com os componentes visuais, qualquer mudança na interface também acabaria afetando o funcionamento da busca de dados. Com essa separação, os Containers ficam responsáveis por buscar e gerenciar as informações da aplicação, enquanto os componentes visuais cuidam apenas da exibição na tela.
+
+**Onde se aplica no projeto:** No módulo de dashboard em tempo real, com o container gerenciando a atualização automática e os componentes de placar e status de esteira fazendo a renderização.
+
+
+**10. MVVM (Model-View-ViewModel):**
+
+**Categoria:** Arquitetural / Frontend
+
+**O que é:** Separa a interface (View) da lógica de apresentação (ViewModel) e dos dados brutos (Model). O ViewModel transforma os dados para que a View possa exibi-los sem precisar fazer conversões ¹⁸.
+
+**Justificativa:** Os dados recebidos da API nem sempre chegam prontos para exibição. Horários, por exemplo, precisam ser convertidos para formatos mais legíveis, e alguns status internos precisam ser transformados em informações mais claras para o auditor. O ViewModel fica responsável por preparar esses dados antes da renderização, deixando a View mais simples e focada apenas na apresentação. Isso foi especialmente importante no modo TV, onde as informações precisam ser exibidas de forma rápida e fácil de entender.
+
+**Onde se aplica no projeto:** Nos ViewModels que preparam os dados de turnos, placar por equipe e status de esteiras antes de enviá-los às Views.
 
 
 #### 3.2.7.3 Princípios SOLID aplicados
@@ -2922,11 +2953,15 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ---
 
+¹⁷ ABRAMOV, Dan. **Presentational and Container Components.** Medium, 23 mar. 2015. Disponível em: https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0. Acesso em: 26 mai. 2026.
+
 ⁸ BUSINESS RULES GROUP. **Business Rules Manifesto:** the principles of rule independence. Version 2.0. S. l.: Business Rules Group, 2003. Disponível em: <https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf>. Acesso em: 27 abr. 2026.
 
 ³ ESPM. **Runaholic Club: lifestyle e comunidade de wellness para a Geração Z**. Disponível em: <https://www.espm.br/blog/runaholic-club-lifestyle-e-comunidade-de-wellness-para-a-geracao-z/>. Acesso em: 28 abr. 2026.
 
 ¹⁰ FIELDING, Roy Thomas. **Architectural Styles and the Design of Network-based Software Architectures**. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: <https://ics.uci.edu/~fielding/pubs/dissertation/top.htm>. Acesso em: 27 abr. 2026.
+
+¹⁸ FOWLER, Martin. Presentation Model. martinfowler.com, 19 jul. 2004. Disponível em: https://martinfowler.com/eaaDev/PresentationModel.html. Acesso em: 26 mai. 2026. 
 
 ³ H.PRIME SAÚDE. **A revolução da geração wellness: por que a saúde se tornou o novo símbolo de sucesso**. Disponível em: <https://hprimesaude.com.br/blog/a-revolucao-da-geracao-wellness-por-que-a-saude-se-tornou-o-novo-simbolo-de-sucesso/>. Acesso em: 28 abr. 2026.
 
