@@ -1925,6 +1925,9 @@ Padrões de projeto (design patterns) são soluções reutilizáveis e já testa
 #### 3.2.7.1 Backend
 
 ---
+
+O backend do projeto foi construído com Express 5 e TypeScript, com separação clara entre as camadas de entrada, lógica e persistência. Por concentrar todas as regras de negócio da aplicação, como o controle de turnos, a validação de checkpoints e a autenticação de auditores, foi necessário adotar padrões que garantissem organização, segurança e facilidade de manutenção ao longo das sprints. Os padrões descritos a seguir foram escolhidos para estruturar essa camada de forma que cada parte do sistema tenha uma responsabilidade clara e bem delimitada.
+
 **1. MVC (Model-View-Controller):**
 
 
