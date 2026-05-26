@@ -36,33 +36,33 @@ sequenceDiagram
     participant DC as DashboardController
     participant DS as DashboardService
     participant DR as DashboardRepository
-    participant BD as Banco de Dados
+    participant BD as Data Base
 
-    Note over C,BD: 1 · Polling automático ≤10s (RF013 · RN11)
+    Note over C,BD: 1 · Polling automatic ≤10s (RF013 · RN11)
 
-    loop A cada ≤10s
+    loop Every ≤10s
         C->>+DC: 1. GET /dashboard
-        DC->>+DS: 2. obterDadosDashboard()
-        DS->>+DR: 3. buscarKmTotalPorTeam()
-        DR->>+BD: 4. SELECT km total por Team (Shifts finalizados)
+        DC->>+DS: 2. getDashboardData()
+        DS->>+DR: 3. getTotalTeamKm()
+        DR->>+BD: 4. SELECT total Team km(Finished Shifts)
         BD-->>-DR: 5. [ { team_id, km_total } ]
         DR-->>-DS: 6. [ { team_id, km_total } ]
-        DS->>+DR: 7. buscarStatusTreadmills()
-        DR->>+BD: 8. SELECT Treadmill + Athlete atual
-        BD-->>-DR: 9. [ { treadmill_id, status, athlete_atual } ]
-        DR-->>-DS: 10. [ { treadmill_id, status, athlete_atual } ]
-        DS->>+DR: 11. buscarSnapshotsPorHora()
-        DR->>+BD: 12. SELECT snapshots por hora do Event
-        BD-->>-DR: 13. [ { hora, team_id, km_acumulado } ]
-        DR-->>-DS: 14. [ { hora, team_id, km_acumulado } ]
-        DC-->>-C: 15. 200 { placar, treadmills, snapshots }
+        DS->>+DR: 7. getTreadmillsStatus()
+        DR->>+BD: 8. SELECT Treadmill + current Athlete 
+        BD-->>-DR: 9. [ { treadmill_id, status, current_athlete } ]
+        DR-->>-DS: 10. [ { treadmill_id, status, current_athlete } ]
+        DS->>+DR: 11. getSnapshotsPerHour()
+        DR->>+BD: 12. SELECT snapshots per Event hour
+        BD-->>-DR: 13. [ { hour, team_id, km_accumulated } ]
+        DR-->>-DS: 14. [ { hour, team_id, km_accumulated } ]
+        DC-->>-C: 15. 200 { scoreboard, treadmills, snapshots }
         deactivate DS
     end
 
-    Note over C,BD: 2 · Healthcheck de conexão (RN11)
+    Note over C,BD: 2 · Healthcheck of connection(RN11)
 
     C->>+DC: 16. GET /status
-    DC->>+BD: 17. ping conexão
+    DC->>+BD: 17. ping connection
     BD-->>-DC: 18. ok
     DC-->>-C: 19. 200 { db: "ok", timestamp }
-    Note over C,DC: Se falhar — exibir "dados desatualizados" + timestamp
+    Note over C,DC: If fail — display "outdated data" + timestamp
