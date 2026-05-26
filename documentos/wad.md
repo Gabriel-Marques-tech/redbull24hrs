@@ -2160,7 +2160,7 @@ _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelid
 
 ---
 
-### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
+### 3.6.1. Modelo Entidade-Relacionamento (MER)
 
 O Modelo Entidade-Relacionamento (MER) é a representação conceitual do banco de dados, na qual se descrevem as entidades do domínio, seus atributos e os relacionamentos que as conectam, abstraindo decisões de implementação física como tipos de dados, índices ou chaves estrangeiras. Para este projeto, o MER traduz em linguagem de dados o domínio do Red Bull 24 Horas modelado nas seções anteriores: o evento operado por gerentes (Managers), suas equipes (Teams) e atletas (Athletes), e o registro de cada sessão de corrida (Shift) auditada à beira da esteira (Treadmill), com os checkpoints periódicos e logs que sustentam a apuração oficial da competição. A notação adotada é a de **Peter Chen**, na qual entidades são representadas por retângulos, atributos por elipses (com elipses preenchidas indicando chave primária e atributos compostos derivados do atributo-pai), relacionamentos por losangos e a cardinalidade explicitada nas extremidades de cada relacionamento com a razão (1) e (N). Os nomes de entidades, atributos e relacionamentos foram padronizados em inglês para garantir consistência com a nomenclatura técnica adotada no modelo relacional e no código-fonte da aplicação.
 
