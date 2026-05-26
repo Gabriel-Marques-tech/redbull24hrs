@@ -1927,9 +1927,12 @@ Padrões de projeto (design patterns) são soluções reutilizáveis e já testa
 ---
 
 
-#### 3.2.7.2 Front-end
+#### 3.2.7.2 Frontend
 
 ---
+O desenvolvimento do frontend do projeto demandou atenção especial à organização dos componentes, dado que a aplicação opera em contextos distintos: interface de auditoria em campo, modo TV e tela de configuração do setup, cada um com requisitos de atualização, legibilidade e reuso diferentes. Os padrões a seguir foram adotados para lidar com essa complexidade de forma estruturada.
+
+
 **8. Component Pattern:**
 
 **Categoria:** Estrutural
@@ -1945,22 +1948,23 @@ Padrões de projeto (design patterns) são soluções reutilizáveis e já testa
 
 **Categoria:** Arquitetural / Frontend
 
-**O que é:** Divide os componentes em dois tipos. Os Containers buscam dados e gerenciam o estado. Os Presentational recebem os dados prontos e cuidam só de exibir ¹⁷.
+**O que é:** Padrão de projeto que divide os componentes de interface em duas responsabilidades distintas. Os Container Components são responsáveis pela lógica de negócio: buscam dados, gerenciam estado e coordenam efeitos colaterais. Os Presentational Components, por sua vez, são puramente declarativos — recebem dados via props e se limitam à renderização da interface, sem conhecimento algum da origem ou transformação desses dados ¹⁷.
 
-**Justificativa:** O dashboard precisa atualizar os dados automaticamente sempre que novas informações são registradas. Se a lógica de atualização estivesse misturada com os componentes visuais, qualquer mudança na interface também acabaria afetando o funcionamento da busca de dados. Com essa separação, os Containers ficam responsáveis por buscar e gerenciar as informações da aplicação, enquanto os componentes visuais cuidam apenas da exibição na tela.
+**Justificativa:** O fluxo de configuração da auditoria envolve múltiplas etapas interdependentes — seleção de corrida, equipe e esteira — o que gera um estado complexo e mutável ao longo da navegação. A mistura de lógica de busca e regras de progressão diretamente nos componentes visuais resultaria em alto acoplamento, dificultando testes, manutenção e reuso. A adoção deste padrão isola essas responsabilidades: o componente Container gerencia em qual etapa o usuário se encontra e persiste as escolhas realizadas, enquanto os componentes apresentacionais de cada etapa exibem listas e controles de forma desacoplada e coesa.
 
-**Onde se aplica no projeto:** No módulo de dashboard em tempo real, com o container gerenciando a atualização automática e os componentes de placar e status de esteira fazendo a renderização.
+**Onde se aplica no projeto:** Tela de Setup da Auditoria (Assistente de Etapas), onde o Container controla o progresso e as seleções do usuário; e Tela de Registro de Turnos, onde o Container gerencia a contagem e o fluxo dos dados dinâmicos, delegando exclusivamente a renderização aos componentes visuais.
 
 
 **10. MVVM (Model-View-ViewModel):**
 
 **Categoria:** Arquitetural / Frontend
 
-**O que é:** Separa a interface (View) da lógica de apresentação (ViewModel) e dos dados brutos (Model). O ViewModel transforma os dados para que a View possa exibi-los sem precisar fazer conversões ¹⁸.
+**O que é:** Padrão arquitetural que segrega a interface do usuário (View), a lógica de apresentação (ViewModel) e os dados brutos (Model). O ViewModel atua como camada intermediária: transforma, formata e prepara os dados provenientes do Model para que a View possa exibi-los sem realizar conversões ou processamentos diretamente ¹⁸.
 
-**Justificativa:** Os dados recebidos da API nem sempre chegam prontos para exibição. Horários, por exemplo, precisam ser convertidos para formatos mais legíveis, e alguns status internos precisam ser transformados em informações mais claras para o auditor. O ViewModel fica responsável por preparar esses dados antes da renderização, deixando a View mais simples e focada apenas na apresentação. Isso foi especialmente importante no modo TV, onde as informações precisam ser exibidas de forma rápida e fácil de entender.
+**Justificativa:** Os dados retornados pelo servidor, como identificadores numéricos, carimbos de data/hora em formato UTC e códigos de status, não estão em formato adequado para exibição direta ao usuário final. Delegar essas transformações à View violaria o princípio de responsabilidade única e tornaria os componentes visuais frágeis e difíceis de testar isoladamente. O ViewModel centraliza a formatação de datas de competições passadas, a concatenação de nomes de equipes e a preparação do resumo de configuração exibido antes do início do registro de turnos, mantendo a View coesa e focada exclusivamente na apresentação.
 
-**Onde se aplica no projeto:** Nos ViewModels que preparam os dados de turnos, placar por equipe e status de esteiras antes de enviá-los às Views.
+**Onde se aplica no projeto:** ViewModels responsáveis pelo tratamento dos dados na listagem do Histórico de Competições (Tela Inicial) e na Tela de Confirmação/Resumo do Setup, exibida imediatamente antes do início do registro dos turnos.
+
 
 
 #### 3.2.7.3 Princípios SOLID aplicados
