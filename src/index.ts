@@ -1,12 +1,9 @@
-import express from "express";
-import { pool } from "./database/connection";
 import { config } from "dotenv";
+import { pool } from "./database/connection";
+import app from "./app";
 
 config();
 const port = Number(process.env.SERVER_PORT);
-const app = express();
-
-app.use(express.json());
 
 async function bootstrap() {
 	try {
