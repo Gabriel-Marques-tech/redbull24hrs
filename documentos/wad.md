@@ -2879,16 +2879,17 @@ ORDER BY total_km DESC;
 
 | | |
 |---|---|
-| **Proposições lógicas** | $A$: O turno está encerrado (`shifts.end_at IS NOT NULL`) <br> $B$: A soma dos turnos do corredor ultrapassa 25 km (`SUM(shifts.distance) > 25`) |
-| **Expressão lógica proposicional** | $A \land B$ |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+| **Proposições lógicas** | $A$: O turno está encerrado (`shifts.end_at IS NOT NULL`) <br> $B$: O evento foi encerrado (`events.end_at IS NOT NULL`) <br> $C$: A soma dos turnos do corredor ultrapassa 25 km (`SUM(shifts.distance) > 25`) |
+| **Expressão lógica proposicional** | $A \land B \land C$ |
+| **Interpretação** | Um corredor só é exibido no ranking quando, simultaneamente: o turno está encerrado, o evento foi encerrado **e** a distância total acumulada ultrapassa 25 km |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$A \land B \land C$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
  
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
 #### Consulta 3: *Auditores mais ativos* — auditores que registraram mais de um turno encerrado durante o evento
 
-&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar o evento, a consulta recupera o nome de todos os auditores que supervisionaram mais de um turno concluído durante as 24 horas de competição. Os auditores são listados em ordem decrescente pela quantidade de turnos auditados — do que supervisionou mais para o que supervisionou menos — sendo exibidos apenas aqueles que ultrapassaram o mínimo de um turno encerrado.
+&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar o evento (`events.end_at IS NOT NULL`), a consulta recupera o nome de todos os auditores que supervisionaram mais de um turno concluído durante as 24 horas de competição. Os auditores são listados em ordem decrescente pela quantidade de turnos auditados — do que supervisionou mais para o que supervisionou menos — sendo exibidos apenas aqueles que ultrapassaram o mínimo de um turno encerrado.
 
 **Consulta SQL:**
 ```sql
@@ -2896,9 +2897,11 @@ SELECT
     auditors.name                  AS auditor,
     COUNT(shifts.id)               AS total_turnos_auditados
 FROM shifts
-JOIN auditors ON auditors.id = shifts.auditor_id
-WHERE shifts.status = 'completed'
-  AND auditors.is_active = TRUE
+JOIN auditors  ON auditors.id  = shifts.auditor_id
+JOIN events    ON events.id    = shifts.event_id
+WHERE shifts.status        = 'completed'
+  AND auditors.is_active   = TRUE
+  AND events.end_at        IS NOT NULL
 GROUP BY auditors.id, auditors.name
 HAVING COUNT(shifts.id) > 1
 ORDER BY total_turnos_auditados DESC;
@@ -2910,10 +2913,10 @@ ORDER BY total_turnos_auditados DESC;
 
 | | |
 |---|---|
-| **Proposições lógicas** | $A$: O turno está encerrado (`shifts.status = 'completed'`) <br> $B$: O auditor está ativo no sistema (`auditors.is_active = TRUE`) <br> $C$: O auditor supervisionou mais de um turno encerrado (`COUNT(shifts.id) > 1`) |
-| **Expressão lógica proposicional** | $(A \land B) \rightarrow C$ |
-| **Interpretação** | Um auditor só é listado como ativo se o turno estiver encerrado **e** o auditor não tiver sido desativado no sistema; satisfeitas essas condições, ele será exibido apenas se sua contagem ultrapassar um turno |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$A \land B$</th><th>$(A \land B) \rightarrow C$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+| **Proposições lógicas** | $A$: O turno está encerrado (`shifts.status = 'completed'`) <br> $B$: O auditor está ativo no sistema (`auditors.is_active = TRUE`) <br> $C$: O evento foi encerrado (`events.end_at IS NOT NULL`) <br> $D$: O auditor supervisionou mais de um turno encerrado (`COUNT(shifts.id) > 1`) |
+| **Expressão lógica proposicional** | $A \land B \land C \Leftrightarrow D$ | 
+| **Interpretação** | Um auditor só é listado quando, simultaneamente: o turno está encerrado, o auditor não foi desativado no sistema, o evento foi encerrado **e** sua contagem de turnos ultrapassa um |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$D$</th><th>$A \land B \land C \land D$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
@@ -2943,9 +2946,10 @@ ORDER BY total_minutos_uso DESC;
 
 | | |
 | :--- | :--- |
-| **Proposições lógicas** | **$A$**: O turno vinculado à esteira está encerrado (`shifts.status = 'completed'`)<br><br>**$B$**: A duração do turno foi registrada (`shifts.total_time IS NOT NULL`)<br><br>**$C$**: A esteira é contabilizada no ranking de tempo de uso (`t.number` aparece no resultado ordenado por `total_minutos_uso DESC`) |
-| **Expressão lógica proposicional** | $( A \land B ) \rightarrow C$ |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th><th>$(A \land B) \rightarrow C$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+| **Proposições lógicas** | **$A$**: O turno vinculado à esteira está encerrado (`shifts.status = 'completed'`)<br><br>**$B$**: A duração do turno foi registrada (`shifts.total_time IS NOT NULL`)<br><br>**$C$**: A esteira é contabilizada no ranking de tempo de uso (`treadmill.number` aparece no resultado ordenado por `total_minutos_uso DESC`) |
+| **Expressão lógica proposicional** | $A \land B \Leftrightarrow C$ |
+| **Interpretação** | Uma esteira só é exibida no ranking quando, simultaneamente: o turno vinculado está encerrado, a duração do turno foi registrada **e** a esteira figura no resultado ordenado — as três condições devem ser verdadeiras ao mesmo tempo |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$A \land B \land C$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
