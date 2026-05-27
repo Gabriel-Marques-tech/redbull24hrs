@@ -2003,7 +2003,7 @@ O que é: Divide a aplicação em três partes com funções diferentes. O Model
 **O que é:** Conjunto de funções intermediárias que atuam no fluxo de uma requisição HTTP antes de ela ser processada pelo Controller. Cada função tem uma responsabilidade única e, ao concluí-la, decide se passa o controle adiante ou interrompe o fluxo.
 
 
-**Justificativa:** Em qualquer sistema com rotas protegidas, há verificações que precisam acontecer antes do processamento principal, como confirmar se o usuário está autenticado ou se tem permissão para acessar aquele recurso. Essas verificações não fazem parte de nenhuma regra de negócio específica, mas precisam estar presentes em vários pontos da aplicação. O Middleware Pattern resolve isso ao separar essas responsabilidades em funções independentes, reutilizáveis e encadeáveis. O resultado é que cada Controller fica responsável apenas pelo que é seu, sem carregar verificações que não pertencem a ele.
+**Justificativa:** Em qualquer sistema com rotas protegidas, há verificações que precisam acontecer antes do processamento principal, como confirmar se o usuário está autenticado ou se tem permissão para acessar aquele recurso. Essas verificações não fazem parte de nenhuma regra de negócio específica, mas precisam estar presentes em vários pontos da aplicação. O Middleware Pattern resolve isso ao separar essas responsabilidades em funções independentes, reutilizáveis e encaixáveis. O resultado é que cada Controller fica responsável apenas pelo que é seu, sem carregar verificações que não pertencem a ele.
 
 
 **Onde se aplica no projeto:** Na camada de middlewares do servidor Express, cobrindo autenticação de auditores por meio de token, validação de acesso e tratamento centralizado de erros nas rotas da aplicação.
