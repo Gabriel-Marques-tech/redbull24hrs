@@ -2562,9 +2562,23 @@ _Dica: edite a tabela verdade fora do markdown, para ter melhor controle_
 
 ---
 
-_Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema._
+A documentação completa e navegável dos endpoints está disponível em [`docs/api/index.html`](../docs/api/index.html) e também servida pelo próprio backend em `GET /docs` (acessível sem autenticação).
 
-_Cada endpoint deve conter endereço, método (GET, POST, PUT, PATCH, DELETE), header, body, formatos de response e os status codes possíveis (200, 201, 204, 400, 401, 403, 404, 409, 422, 500)._
+### Resumo dos fluxos implementados
+
+| Fluxo | Branch | Endpoints | RFs cobertos |
+|---|---|---|---|
+| **Autenticação** | `feat/auth` | 6 | RF027 |
+| **Eventos** | `code` | 5 | — |
+| **Esteiras** | `code` | 4 | RF004 |
+| **Equipes** | `code` | 5 | RF001 |
+| **Atletas** | `code` | 5 | RF002, RF006 (parcial) |
+| **Auditoria** | A implementar | — | RF007–RF026 |
+| **Inconsistências** | A implementar | — | RF028–RF031 |
+
+**Total atual: 25 endpoints documentados.** Os fluxos de Auditoria e Inconsistências estão reservados na documentação com placeholders explícitos indicando os endpoints previstos e os RFs correspondentes.
+
+Cada endpoint contém: método HTTP, path completo, headers, body request (com campos obrigatórios e validações), shape da resposta de sucesso, exemplos JSON e tabela de status codes possíveis.
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
