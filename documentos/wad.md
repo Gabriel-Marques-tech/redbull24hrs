@@ -1656,6 +1656,27 @@ Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo
   <br><br><br>
 </div>
 
+<div align="center">
+  <sub>Imagem 10 - Diagrama de Arquitetura - EVENTS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/EVENTS_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Events"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 11 - Diagrama de Arquitetura - HISTORY </sub><br>
+  <img src= "./assets/diagramas_arquitetura/HISTORY_Architecture.png" width="100%" alt="Diagrama de Arquitetura - History"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 12 - Diagrama de Arquitetura - LOGS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/LOGS_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Logs"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
