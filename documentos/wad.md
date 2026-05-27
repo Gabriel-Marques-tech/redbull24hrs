@@ -1645,7 +1645,50 @@ Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo
 
 ---
 
-_Posicione aqui o diagrama de arquitetura da solução, indicando as camadas principais (Controller, Service, Repository, Model) e suas responsabilidades. Atualize sempre que necessário._
+#### 3.2.1.1. Diagrama de Classes Arquiteturais 
+
+---
+
+<div align="center">
+  <sub>Imagem 9 - Diagrama de Arquitetura - DASHBOARD </sub><br>
+  <img src= "./assets/diagramas_arquitetura/DASHBOARD_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Dashboard"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 10 - Diagrama de Arquitetura - EVENTS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/EVENTS_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Events"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 11 - Diagrama de Arquitetura - HISTORY </sub><br>
+  <img src= "./assets/diagramas_arquitetura/HISTORY_Architecture.png" width="100%" alt="Diagrama de Arquitetura - History"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 12 - Diagrama de Arquitetura - LOGS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/LOGS_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Logs"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 13 - Diagrama de Arquitetura - TEAMS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/TEAMS_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Teams"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 14 - Diagrama de Arquitetura - TURNS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/TURNS_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Turns"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
@@ -1654,7 +1697,7 @@ _Posicione aqui o diagrama de arquitetura da solução, indicando as camadas pri
 O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 Horas a partir da prática **Light Use-Case Modeling** descrita em Jacobson et al.[⁹](#8-referências), evoluindo para o nível **System Boundary Established** ao incluir todos os atores e casos de uso planejados para o MVP. A notação adotada segue o guia _Use-Case 3.0 — The Definitive Guide_: atores são representados por bonecos-palito, casos de uso por elipses contidas dentro do retângulo do _System of Interest_, associações por linhas contínuas com setas indicando o iniciador da interação, `<<include>>` por seta tracejada apontando do caso-base para o caso obrigatoriamente incluído, e `<<extend>>` por seta tracejada apontando do caso opcional para o caso-base que ele estende.
 
 <div align="center">
-  <sub>Imagem 9 - Diagrama Casos de Uso</sub><br>
+  <sub>Imagem 15 - Diagrama Casos de Uso</sub><br>
   <img src= "./assets/use_case/use_case.jpeg" width="100%" alt="Casos de uso"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1724,7 +1767,7 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação UML, com o objetivo de representar a estrutura do sistema por meio de suas classes, atributos, relacionamentos e responsabilidades. A modelagem organiza logicamente os elementos do domínio do evento Red Bull 24h, facilitando a compreensão das dependências entre as entidades e da solução proposta pelo grupo.
 
 <div align = "center">
-  <sub>Imagem 10 - Diagrama de Classes de Domínio</sub><br>
+  <sub>Imagem 16 - Diagrama de Classes de Domínio</sub><br>
   <img src="./assets/classes_dominio/diagrama_classes_corrigido.png" width="100%" alt="Diagrama de Classes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1745,7 +1788,7 @@ A seguir, cada diagrama é apresentado com uma descrição detalhada de seus flu
 A gestão de Eventos representa a visão macro da competição, sendo a configuração inicial e o núcleo organizacional do desafio Red Bull 24 Horas. O Diagrama de Sequência de Eventos descreve como a aplicação web orquestra processos fundamentais, como a criação do evento (incluindo a validação de data, local e esteiras), o cálculo de métricas em tempo real, como quilometragem total por equipe, velocidade média e equipes em pista e a manutenção do placar oficial. Neste contexto, um evento é a unidade central da plataforma que coordena a disputa entre as duas equipes de 16 atletas, gerindo os dados das duas esteiras por equipe para garantir uma apuração precisa que substitua o método manual, permitindo ainda a detecção automática de inconsistências (como gaps de checkpoints) e a exportação de dados consolidados para auditoria pós-evento.
 
 <div align="center">
-  <sub>Imagem 11 - Diagrama de Sequencia: Eventos</sub><br>
+  <sub>Imagem 17 - Diagrama de Sequencia: Eventos</sub><br>
   <img src="./assets/diagrama_sequencia/Events_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1772,7 +1815,7 @@ A gestão de Eventos representa a visão macro da competição, sendo a configur
 O módulo de Equipes é a base de organização dos competidores. O Red Bull 24 Horas possui uma regra estrita: o confronto ocorre exatamente entre duas equipes, sendo cada uma composta por 16 pessoas. Este fluxo mapeia o cadastro e a validação estrutural dos times, a exibição dos perfis e o cálculo de métricas de desempenho coletivo e individual.
 
 <div align="center">
-  <sub>Imagem 12 - Diagrama de Sequência: Equipes</sub>
+  <sub>Imagem 18 - Diagrama de Sequência: Equipes</sub>
     <br><img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026 </sub>
   <br><br><br>
@@ -1799,7 +1842,7 @@ O módulo de Equipes é a base de organização dos competidores. O Red Bull 24 
 O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na esteira. Como a dinâmica do evento exige trocas rápidas de corredores sem interrupção na contagem de quilômetros, este fluxo mapeia desde a entrada do corredor no equipamento, passando pelos registros periódicos de segurança (checkpoints), até a finalização do turno com a leitura final da quilometragem. Turnos, neste contexto, representam os intervalos de atividade atribuídos a cada corredor ao longo de um ciclo na esteira, definindo quando cada atleta entra e sai da atividade.
 
 <div align="center">
-  <sub>Imagem 13 - Diagrama de Sequência: Turnos</sub><br>
+  <sub>Imagem 19 - Diagrama de Sequência: Turnos</sub><br>
   <img src="./assets/diagrama_sequencia/Turns_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de turnos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1826,7 +1869,7 @@ O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na estei
 A funcionalidade de Histórico fornece total rastreabilidade e transparência ao longo das 24 horas de evento. Ela permite que a organização e os auditores visualizem uma linha do tempo cronológica detalhada de todas as ações que ocorreram nas esteiras, provendo uma ferramenta ágil para sanar dúvidas ou contestar apurações durante a competição.
 
 <div align="center">
-  <sub>Imagem 14 - Diagrama de Sequência: Historico</sub><br>
+  <sub>Imagem 20 - Diagrama de Sequência: Historico</sub><br>
   <img src="./assets/diagrama_sequencia/History_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1853,7 +1896,7 @@ A funcionalidade de Histórico fornece total rastreabilidade e transparência ao
 Garantir a operação ininterrupta do sistema em um ambiente de evento físico é um grande desafio, pois podem ocorrer instabilidades na conexão de internet. Este diagrama mapeia duas rotinas avançadas de resiliência: a Edição Retroativa (para corrigir erros de digitação passados mantendo uma trilha de auditoria) e a Sincronização Offline (Sync), que permite à interface armazenar dados localmente em caso de queda de rede e enviá-los ao servidor assim que a conexão for restabelecida.
 
 <div align="center">
-  <sub>Imagem 15 - Diagrama de Sequência: Registros/Sync</sub><br>
+  <sub>Imagem 21 - Diagrama de Sequência: Registros/Sync</sub><br>
   <img src="./assets/diagrama_sequencia/Logs_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de registros e sync"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1878,7 +1921,7 @@ Garantir a operação ininterrupta do sistema em um ambiente de evento físico �
 O Dashboard atua como o principal ponto de visualização em tempo real do evento Red Bull 24 Horas. Esta interface (geralmente exibida em telões no local da prova) precisa refletir com exatidão a disputa acirrada entre as duas equipes, mostrando o placar geral, quem está correndo no momento e o ritmo da corrida ao longo do tempo. Para que os dados na tela estejam sempre vivos sem que ninguém precise atualizar a página manualmente, a aplicação utiliza uma técnica chamada Polling (consultas automáticas e contínuas ao servidor) atrelada a um sistema de verificação de integridade da conexão (Healthcheck).
 
 <div align="center">
-  <sub>Imagem 16 - Diagrama de Sequência: Dashboard</sub><br>
+  <sub>Imagem 22 - Diagrama de Sequência: Dashboard</sub><br>
   <img src="assets/diagrama_sequencia/Dashboard_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do painel de controle (dashboard)"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1988,7 +2031,7 @@ A seguir, são apresentados os wireframes de baixa e média fidelidade desenvolv
 O wireframe de baixa fidelidade representa a estrutura inicial das telas, com foco na disposição dos elementos e nos fluxos principais de navegação. Nesta etapa, foram mapeadas as telas essenciais do sistema, desde o cadastro pré-evento até o acompanhamento das esteiras em tempo real, sem preocupação com detalhamento visual ou componentes definitivos.
 
 <div align="center">
-  <sub>Imagem 17 - Wireframe de Baixa Fidelidade</sub><br>
+  <sub>Imagem 23 - Wireframe de Baixa Fidelidade</sub><br>
   <img src="./assets/wireframes/wireframe-baixa-fidelidade.svg" width="900px" alt="Wireframe de baixa fidelidade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2042,7 +2085,7 @@ Os wireframes de média fidelidade foram desenvolvidos a partir da evolução di
 O conjunto de telas cobre todos os fluxos críticos do sistema: cadastro pré-evento, operação em tempo real (início, checkpoint e encerramento de turno), detecção de inconsistências e visualização de métricas consolidadas.
 
 <div align="center">
-  <sub>Imagem 18 - Wireframe de Média Fidelidade</sub><br>
+  <sub>Imagem 24 - Wireframe de Média Fidelidade</sub><br>
   <img src="./assets/wireframes/Wireframe-Média-Fidelidade.svg" width="900px" alt="Wireframe de média fidelidade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2214,7 +2257,7 @@ _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelid
 O Modelo Entidade-Relacionamento (MER) é a representação conceitual do banco de dados, na qual se descrevem as entidades do domínio, seus atributos e os relacionamentos que as conectam, abstraindo decisões de implementação física como tipos de dados, índices ou chaves estrangeiras. Para este projeto, o MER traduz em linguagem de dados o domínio do Red Bull 24 Horas modelado nas seções anteriores: o evento operado por gerentes (Managers), suas equipes (Teams) e atletas (Athletes), e o registro de cada sessão de corrida (Shift) auditada à beira da esteira (Treadmill), com os checkpoints periódicos e logs que sustentam a apuração oficial da competição. A notação adotada é a de **Peter Chen**, na qual entidades são representadas por retângulos, atributos por elipses (com elipses preenchidas indicando chave primária e atributos compostos derivados do atributo-pai), relacionamentos por losangos e a cardinalidade explicitada nas extremidades de cada relacionamento com a razão (1) e (N). Os nomes de entidades, atributos e relacionamentos foram padronizados em inglês para garantir consistência com a nomenclatura técnica adotada no modelo relacional e no código-fonte da aplicação.
 
 <div align="center">
-  <sub>Imagem 17 - Modelo Entidade-Relacionamento</sub><br>
+  <sub>Imagem 25 - Modelo Entidade-Relacionamento</sub><br>
   <img src="./assets/modelo_entidade_relacionamento/MER.png" width="80%" alt="Modelo Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2288,7 +2331,7 @@ O MER traduz o domínio do Red Bull 24 Horas em um modelo conceitual de dados ra
 O DER traduz o modelo conceitual do MER para a estrutura relacional do banco de dados (PostgreSQL), adotando a **notação de tabelas relacionais** com tipos de dados, restrições (`NOT NULL`, `UNIQUE`, `CHECK`), chaves primárias (`PK`) e chaves estrangeiras (`FK`).
 
 <div align="center">
-  <sub>Imagem 18 - Diagrama Entidade-Relacionamento</sub><br>
+  <sub>Imagem 26 - Diagrama Entidade-Relacionamento</sub><br>
   <img src="./assets/diagrama_entidade_relacionamento/DER.png" width="90%" alt="Diagrama Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
