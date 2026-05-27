@@ -1677,6 +1677,18 @@ Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo
   <br><br><br>
 </div>
 
+<div align="center">
+  <sub>Imagem 13 - Diagrama de Arquitetura - TEAMS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/TEAMS_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Teams"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 14 - Diagrama de Arquitetura - TURNS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/TURNS_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Turns"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
