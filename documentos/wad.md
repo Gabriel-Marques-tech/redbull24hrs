@@ -1645,7 +1645,50 @@ Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo
 
 ---
 
-_Posicione aqui o diagrama de arquitetura da solução, indicando as camadas principais (Controller, Service, Repository, Model) e suas responsabilidades. Atualize sempre que necessário._
+#### 3.2.1.1. Diagrama de Classes Arquiteturais 
+
+---
+
+<div align="center">
+  <sub>Imagem 9 - Diagrama de Arquitetura - DASHBOARD </sub><br>
+  <img src= "./assets/diagramas_arquitetura/DASHBOARD_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Dashboard"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 10 - Diagrama de Arquitetura - EVENTS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/EVENTS_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Events"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 11 - Diagrama de Arquitetura - HISTORY </sub><br>
+  <img src= "./assets/diagramas_arquitetura/HISTORY_Architecture.png" width="100%" alt="Diagrama de Arquitetura - History"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 12 - Diagrama de Arquitetura - LOGS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/LOGS_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Logs"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 13 - Diagrama de Arquitetura - TEAMS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/TEAMS_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Teams"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 14 - Diagrama de Arquitetura - TURNS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/TURNS_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Turns"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
@@ -1654,7 +1697,7 @@ _Posicione aqui o diagrama de arquitetura da solução, indicando as camadas pri
 O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 Horas a partir da prática **Light Use-Case Modeling** descrita em Jacobson et al.[⁹](#8-referências), evoluindo para o nível **System Boundary Established** ao incluir todos os atores e casos de uso planejados para o MVP. A notação adotada segue o guia _Use-Case 3.0 — The Definitive Guide_: atores são representados por bonecos-palito, casos de uso por elipses contidas dentro do retângulo do _System of Interest_, associações por linhas contínuas com setas indicando o iniciador da interação, `<<include>>` por seta tracejada apontando do caso-base para o caso obrigatoriamente incluído, e `<<extend>>` por seta tracejada apontando do caso opcional para o caso-base que ele estende.
 
 <div align="center">
-  <sub>Imagem 9 - Diagrama Casos de Uso</sub><br>
+  <sub>Imagem 15 - Diagrama Casos de Uso</sub><br>
   <img src= "./assets/use_case/use_case.jpeg" width="100%" alt="Casos de uso"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1724,7 +1767,7 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação UML, com o objetivo de representar a estrutura do sistema por meio de suas classes, atributos, relacionamentos e responsabilidades. A modelagem organiza logicamente os elementos do domínio do evento Red Bull 24h, facilitando a compreensão das dependências entre as entidades e da solução proposta pelo grupo.
 
 <div align = "center">
-  <sub>Imagem 10 - Diagrama de Classes de Domínio</sub><br>
+  <sub>Imagem 16 - Diagrama de Classes de Domínio</sub><br>
   <img src="./assets/classes_dominio/diagrama_classes_corrigido.png" width="100%" alt="Diagrama de Classes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1745,7 +1788,7 @@ A seguir, cada diagrama é apresentado com uma descrição detalhada de seus flu
 A gestão de Eventos representa a visão macro da competição, sendo a configuração inicial e o núcleo organizacional do desafio Red Bull 24 Horas. O Diagrama de Sequência de Eventos descreve como a aplicação web orquestra processos fundamentais, como a criação do evento (incluindo a validação de data, local e esteiras), o cálculo de métricas em tempo real, como quilometragem total por equipe, velocidade média e equipes em pista e a manutenção do placar oficial. Neste contexto, um evento é a unidade central da plataforma que coordena a disputa entre as duas equipes de 16 atletas, gerindo os dados das duas esteiras por equipe para garantir uma apuração precisa que substitua o método manual, permitindo ainda a detecção automática de inconsistências (como gaps de checkpoints) e a exportação de dados consolidados para auditoria pós-evento.
 
 <div align="center">
-  <sub>Imagem 11 - Diagrama de Sequencia: Eventos</sub><br>
+  <sub>Imagem 17 - Diagrama de Sequencia: Eventos</sub><br>
   <img src="./assets/diagrama_sequencia/Events_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1772,7 +1815,7 @@ A gestão de Eventos representa a visão macro da competição, sendo a configur
 O módulo de Equipes é a base de organização dos competidores. O Red Bull 24 Horas possui uma regra estrita: o confronto ocorre exatamente entre duas equipes, sendo cada uma composta por 16 pessoas. Este fluxo mapeia o cadastro e a validação estrutural dos times, a exibição dos perfis e o cálculo de métricas de desempenho coletivo e individual.
 
 <div align="center">
-  <sub>Imagem 12 - Diagrama de Sequência: Equipes</sub>
+  <sub>Imagem 18 - Diagrama de Sequência: Equipes</sub>
     <br><img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026 </sub>
   <br><br><br>
@@ -1799,7 +1842,7 @@ O módulo de Equipes é a base de organização dos competidores. O Red Bull 24 
 O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na esteira. Como a dinâmica do evento exige trocas rápidas de corredores sem interrupção na contagem de quilômetros, este fluxo mapeia desde a entrada do corredor no equipamento, passando pelos registros periódicos de segurança (checkpoints), até a finalização do turno com a leitura final da quilometragem. Turnos, neste contexto, representam os intervalos de atividade atribuídos a cada corredor ao longo de um ciclo na esteira, definindo quando cada atleta entra e sai da atividade.
 
 <div align="center">
-  <sub>Imagem 13 - Diagrama de Sequência: Turnos</sub><br>
+  <sub>Imagem 19 - Diagrama de Sequência: Turnos</sub><br>
   <img src="./assets/diagrama_sequencia/Turns_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de turnos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1826,7 +1869,7 @@ O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na estei
 A funcionalidade de Histórico fornece total rastreabilidade e transparência ao longo das 24 horas de evento. Ela permite que a organização e os auditores visualizem uma linha do tempo cronológica detalhada de todas as ações que ocorreram nas esteiras, provendo uma ferramenta ágil para sanar dúvidas ou contestar apurações durante a competição.
 
 <div align="center">
-  <sub>Imagem 14 - Diagrama de Sequência: Historico</sub><br>
+  <sub>Imagem 20 - Diagrama de Sequência: Historico</sub><br>
   <img src="./assets/diagrama_sequencia/History_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1853,7 +1896,7 @@ A funcionalidade de Histórico fornece total rastreabilidade e transparência ao
 Garantir a operação ininterrupta do sistema em um ambiente de evento físico é um grande desafio, pois podem ocorrer instabilidades na conexão de internet. Este diagrama mapeia duas rotinas avançadas de resiliência: a Edição Retroativa (para corrigir erros de digitação passados mantendo uma trilha de auditoria) e a Sincronização Offline (Sync), que permite à interface armazenar dados localmente em caso de queda de rede e enviá-los ao servidor assim que a conexão for restabelecida.
 
 <div align="center">
-  <sub>Imagem 15 - Diagrama de Sequência: Registros/Sync</sub><br>
+  <sub>Imagem 21 - Diagrama de Sequência: Registros/Sync</sub><br>
   <img src="./assets/diagrama_sequencia/Logs_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de registros e sync"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1878,7 +1921,7 @@ Garantir a operação ininterrupta do sistema em um ambiente de evento físico �
 O Dashboard atua como o principal ponto de visualização em tempo real do evento Red Bull 24 Horas. Esta interface (geralmente exibida em telões no local da prova) precisa refletir com exatidão a disputa acirrada entre as duas equipes, mostrando o placar geral, quem está correndo no momento e o ritmo da corrida ao longo do tempo. Para que os dados na tela estejam sempre vivos sem que ninguém precise atualizar a página manualmente, a aplicação utiliza uma técnica chamada Polling (consultas automáticas e contínuas ao servidor) atrelada a um sistema de verificação de integridade da conexão (Healthcheck).
 
 <div align="center">
-  <sub>Imagem 16 - Diagrama de Sequência: Dashboard</sub><br>
+  <sub>Imagem 22 - Diagrama de Sequência: Dashboard</sub><br>
   <img src="assets/diagrama_sequencia/Dashboard_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do painel de controle (dashboard)"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1920,7 +1963,184 @@ _Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comun
 
 ---
 
-_Documente os design patterns utilizados (Repository, Strategy, Factory, DTO etc.) e quais princípios SOLID se aplicam. Justifique a adoção de cada padrão com base em uma necessidade real do projeto._
+Padrões de projeto (design patterns) são soluções reutilizáveis e já testadas para problemas comuns no desenvolvimento de software. Eles funcionam como modelos que ajudam a estruturar o código de forma mais organizada, flexível, limpa e fácil de manter. Os padrões apresentados a seguir foram escolhidos não apenas por convenção, mas porque ajudaram a resolver problemas reais encontrados durante o desenvolvimento do projeto. 
+
+#### 3.2.7.1 Backend
+
+---
+
+O backend do projeto foi construído com Express 5 e TypeScript, com separação clara entre as camadas de entrada, lógica e persistência. Por concentrar todas as regras de negócio da aplicação, como o controle de turnos, a validação de checkpoints e a autenticação de auditores, foi necessário adotar padrões que garantissem organização, segurança e facilidade de manutenção ao longo das sprints. Os padrões descritos a seguir foram escolhidos para estruturar essa camada de forma que cada parte do sistema tenha uma responsabilidade clara e bem delimitada.
+
+**1. MVC (Model-View-Controller):**
+
+
+**Categoria:** Arquitetural
+O que é: Divide a aplicação em três partes com funções diferentes. O Model representa os dados e as regras de negócio. A View cuida da apresentação das informações. O Controller recebe as requisições, aciona as camadas corretas e devolve a resposta.
+
+
+**Justificativa:** O projeto utiliza Express 5 com TypeScript e, desde o início, o backend foi separado do frontend. Por isso, foi necessário organizar melhor a estrutura interna do servidor. O MVC ajudou nessa divisão: os Controllers recebem as requisições HTTP e delegam as operações para os Services, enquanto os Models representam as entidades do sistema, como turnos, atletas, equipes e esteiras. Sem essa separação, as regras de negócio acabariam espalhadas pelo sistema, deixando a manutenção muito mais difícil.
+
+
+**Onde se aplica no projeto:** Nas pastas de controllers, services e nas entidades mapeadas a partir das tabelas do banco, seguindo o fluxo Controller → Service → Repository.
+
+
+
+
+**2. TDD (Test-Driven Development):**
+
+
+**Categoria:** Metodológico / Boas Práticas
+
+
+**O que é:** Abordagem em que o teste é escrito antes do código. O ciclo é: escrever um teste que falha, escrever o código para ele passar e, depois, melhorar sem quebrar o que já funciona.
+
+
+**Justificativa:** O próprio banco de dados já aplica algumas restrições diretamente no SQL, como validar valores de status e garantir que a quilometragem final seja maior ou igual à inicial. Mesmo assim, essas validações também precisavam acontecer na camada de aplicação antes da persistência dos dados. Escrever os testes primeiro ajudou a garantir que as validações implementadas nos Services estivessem alinhadas com o comportamento esperado pelo banco, evitando erros silenciosos. Para os testes, o projeto utiliza Jest, ts-jest e supertest.
+
+
+**Onde se aplica no projeto:** Nos testes dos fluxos de criação e encerramento de turnos, validação de checkpoints e autenticação de auditores.
+
+
+
+
+**3. Repository Pattern:**
+
+
+**Categoria:** Estrutural / Arquitetural
+
+
+**O que é:** Cria uma camada entre a lógica de negócio e o banco de dados. As consultas SQL ficam nos Repositories, que expõem métodos com nomes que fazem sentido para o domínio da aplicação.
+
+
+**Justificativa:** O projeto utiliza a biblioteca pg para conectar o sistema ao PostgreSQL hospedado no Supabase. Sem o Repository Pattern, as consultas SQL ficariam espalhadas pelos Services, o que dificultaria bastante futuras alterações no banco. Com os Repositories, cada entidade possui um arquivo próprio responsável pelo acesso aos dados, centralizando as consultas em um único lugar. Isso também facilitou bastante os testes, já que os repositórios podem ser substituídos por mocks sem precisar alterar a lógica principal da aplicação.
+
+
+**Onde se aplica no projeto:** Em repositórios de turnos, atletas, auditores, equipes e checkpoints, correspondendo às tabelas do banco.
+
+
+
+
+**4. Service Layer (Camada de Serviço):**
+
+
+**Categoria:** Arquitetural
+
+
+**O que é:** Camada dedicada às regras de negócio, separada dos Controllers, que tratam do HTTP, e dos Repositories, que acessam o banco.
+
+
+**Justificativa:** Algumas validações já acontecem diretamente no banco de dados, como impedir horários inválidos ou validar formatos específicos. Porém, regras de negócio mais complexas precisam ficar na aplicação, como verificar se um auditor está ativo antes de registrar um turno ou calcular distância e tempo total ao finalizar uma atividade. O Service Layer concentra essas regras em um único lugar, evitando misturar lógica de negócio com tratamento de requisições HTTP ou acesso ao banco.
+
+
+**Onde se aplica no projeto:** Nos services de turnos, auditores, atletas, equipes e checkpoints.
+
+
+
+
+**5. Middleware Pattern:**
+
+
+**Categoria:** Comportamental / Arquitetural
+
+
+**O que é:** Conjunto de funções intermediárias que atuam no fluxo de uma requisição HTTP antes de ela ser processada pelo Controller. Cada função tem uma responsabilidade única e, ao concluí-la, decide se passa o controle adiante ou interrompe o fluxo.
+
+
+**Justificativa:** Em qualquer sistema com rotas protegidas, há verificações que precisam acontecer antes do processamento principal, como confirmar se o usuário está autenticado ou se tem permissão para acessar aquele recurso. Essas verificações não fazem parte de nenhuma regra de negócio específica, mas precisam estar presentes em vários pontos da aplicação. O Middleware Pattern resolve isso ao separar essas responsabilidades em funções independentes, reutilizáveis e encaixáveis. O resultado é que cada Controller fica responsável apenas pelo que é seu, sem carregar verificações que não pertencem a ele.
+
+
+**Onde se aplica no projeto:** Na camada de middlewares do servidor Express, cobrindo autenticação de auditores por meio de token, validação de acesso e tratamento centralizado de erros nas rotas da aplicação.
+
+
+
+
+**6. DTO (Data Transfer Object):**
+
+
+**Categoria:** Estrutural / Arquitetural
+
+
+**O que é:** Objeto simples que define quais dados passam entre as camadas. O Controller extrai da requisição só os campos necessários e os manda adiante já organizados.
+
+
+**Justificativa:** Algumas informações do banco são geradas automaticamente, como identificadores, timestamps e status padrão. Sem os DTOs, um cliente poderia tentar enviar ou sobrescrever esses dados diretamente na requisição, causando inconsistências. O DTO garante que apenas os campos esperados sejam enviados para as camadas internas da aplicação, independentemente do que o usuário mandar na requisição.
+
+
+**Onde se aplica no projeto:** Nos objetos de entrada dos endpoints de criação de turno, registro de checkpoint e finalização de turno, filtrando os campos antes de passar para os Services.
+
+
+**7. Strategy Pattern:**
+
+
+**Categoria:** Comportamental
+
+
+**O que é:** Permite ter diferentes formas de resolver um mesmo problema, onde cada forma fica separada e pode ser trocada sem alterar o restante do código.
+
+
+**Justificativa:** Ao encerrar um turno, o sistema precisa realizar diferentes cálculos, como distância percorrida, tempo total e velocidade média. Além disso, as verificações de inconsistência seguem lógicas diferentes dependendo do tipo de problema identificado, como gaps entre checkpoints ou quilometragem fora de ordem. O Strategy Pattern ajudou a separar cada uma dessas regras, facilitando a manutenção e permitindo adicionar novos critérios futuramente sem alterar os que já existem.
+
+
+**Onde se aplica no projeto:** Nas estratégias de cálculo de métricas ao encerrar um turno e nas verificações de consistência antes de persistir os dados de turnos e checkpoints.
+
+
+#### 3.2.7.2 Frontend
+
+---
+O desenvolvimento do frontend do projeto demandou atenção especial à organização dos componentes, dado que a aplicação opera em contextos distintos: interface de auditoria em campo, modo TV e tela de configuração do setup, cada um com requisitos de atualização, legibilidade e reuso diferentes. Os padrões a seguir foram adotados para lidar com essa complexidade de forma estruturada.
+
+
+**8. Component Pattern:**
+
+**Categoria:** Estrutural
+
+**O que é:** A interface é construída com componentes independentes e reutilizáveis, cada um com uma responsabilidade só ¹⁹.
+
+**Justificativa:** A interface possui vários elementos reutilizados em diferentes telas, como cartões de status, formulários e indicadores de quilometragem. Sem componentes reutilizáveis, qualquer alteração visual precisaria ser feita manualmente em cada página. Com os componentes isolados, uma mudança feita em um único lugar já reflete em toda a aplicação. Isso foi especialmente importante nas últimas sprints, quando o design passou por ajustes após os testes de usabilidade realizados com os auditores.
+
+**Onde se aplica no projeto:** Nos componentes de cartão de esteira, formulários de cadastro de atletas e equipes, modal de checkpoint e indicadores de placar.
+
+
+**9. Container/Presentational Pattern:**
+
+**Categoria:** Arquitetural / Frontend
+
+**O que é:** Padrão de projeto que divide os componentes de interface em duas responsabilidades distintas. Os Container Components são responsáveis pela lógica de negócio: buscam dados, gerenciam estado e coordenam efeitos colaterais. Os Presentational Components, por sua vez, são puramente declarativos — recebem dados via props e se limitam à renderização da interface, sem conhecimento algum da origem ou transformação desses dados ¹⁷.
+
+**Justificativa:** O fluxo de configuração da auditoria envolve múltiplas etapas interdependentes — seleção de corrida, equipe e esteira — o que gera um estado complexo e mutável ao longo da navegação. A mistura de lógica de busca e regras de progressão diretamente nos componentes visuais resultaria em alto acoplamento, dificultando testes, manutenção e reuso. A adoção deste padrão isola essas responsabilidades: o componente Container gerencia em qual etapa o usuário se encontra e persiste as escolhas realizadas, enquanto os componentes apresentacionais de cada etapa exibem listas e controles de forma desacoplada e coesa.
+
+**Onde se aplica no projeto:** Tela de Setup da Auditoria (Assistente de Etapas), onde o Container controla o progresso e as seleções do usuário; e Tela de Registro de Turnos, onde o Container gerencia a contagem e o fluxo dos dados dinâmicos, delegando exclusivamente a renderização aos componentes visuais.
+
+
+**10. MVVM (Model-View-ViewModel):**
+
+**Categoria:** Arquitetural / Frontend
+
+**O que é:** Padrão arquitetural que segrega a interface do usuário (View), a lógica de apresentação (ViewModel) e os dados brutos (Model). O ViewModel atua como camada intermediária: transforma, formata e prepara os dados provenientes do Model para que a View possa exibi-los sem realizar conversões ou processamentos diretamente ¹⁸.
+
+**Justificativa:** Os dados retornados pelo servidor, como identificadores numéricos, carimbos de data/hora em formato UTC e códigos de status, não estão em formato adequado para exibição direta ao usuário final. Delegar essas transformações à View violaria o princípio de responsabilidade única e tornaria os componentes visuais frágeis e difíceis de testar isoladamente. O ViewModel centraliza a formatação de datas de competições passadas, a concatenação de nomes de equipes e a preparação do resumo de configuração exibido antes do início do registro de turnos, mantendo a View coesa e focada exclusivamente na apresentação.
+
+**Onde se aplica no projeto:** ViewModels responsáveis pelo tratamento dos dados na listagem do Histórico de Competições (Tela Inicial) e na Tela de Confirmação/Resumo do Setup, exibida imediatamente antes do início do registro dos turnos.
+
+
+
+#### 3.2.7.3 Princípios SOLID aplicados
+
+---
+
+Além dos padrões de projeto, o grupo também utilizou os princípios SOLID para ajudar na organização da arquitetura do sistema. Esses princípios servem para deixar o código mais limpo, organizado, reutilizável e fácil de manter ao longo do desenvolvimento.
+
+**S (Single Responsibility Principle):** Cada arquivo tem uma função só. O Controller recebe a requisição HTTP, o Service aplica as regras de negócio e o Repository acessa o banco. Nenhum dos três faz o trabalho do outro, o que torna cada mudança mais segura e previsível.
+
+**O (Open/Closed Principle):** O código cresce sem precisar alterar o que já funciona. O Strategy Pattern para os cálculos de turno é o exemplo mais direto: um novo critério de validação pode ser adicionado sem tocar nos que já existem.
+
+**L (Liskov Substitution Principle):** Os repositórios podem ser substituídos por mocks nos testes sem que os Services precisem ser alterados. Isso permitiu executar testes com Jest e supertest sem depender de uma conexão real com o banco de dados em todos os cenários. 
+
+**I (Interface Segregation Principle):** Cada Repository expõe só os métodos que o Service que o usa realmente precisa, sem carregar operações que não serão usadas por quem o consome.
+
+**D (Dependency Inversion Principle):** Os Services não dependem diretamente da implementação concreta do banco. Eles dependem de abstrações, o que garante que a lógica de negócio continua funcionando mesmo se a camada de acesso ao banco for alterada.
+
+
 
 ## 3.3. Wireframes (sprint 2)
 
@@ -1939,7 +2159,7 @@ A seguir, são apresentados os wireframes de baixa e média fidelidade desenvolv
 O wireframe de baixa fidelidade representa a estrutura inicial das telas, com foco na disposição dos elementos e nos fluxos principais de navegação. Nesta etapa, foram mapeadas as telas essenciais do sistema, desde o cadastro pré-evento até o acompanhamento das esteiras em tempo real, sem preocupação com detalhamento visual ou componentes definitivos.
 
 <div align="center">
-  <sub>Imagem 17 - Wireframe de Baixa Fidelidade</sub><br>
+  <sub>Imagem 23 - Wireframe de Baixa Fidelidade</sub><br>
   <img src="./assets/wireframes/wireframe-baixa-fidelidade.svg" width="900px" alt="Wireframe de baixa fidelidade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1993,7 +2213,7 @@ Os wireframes de média fidelidade foram desenvolvidos a partir da evolução di
 O conjunto de telas cobre todos os fluxos críticos do sistema: cadastro pré-evento, operação em tempo real (início, checkpoint e encerramento de turno), detecção de inconsistências e visualização de métricas consolidadas.
 
 <div align="center">
-  <sub>Imagem 18 - Wireframe de Média Fidelidade</sub><br>
+  <sub>Imagem 24 - Wireframe de Média Fidelidade</sub><br>
   <img src="./assets/wireframes/Wireframe-Média-Fidelidade.svg" width="900px" alt="Wireframe de média fidelidade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2160,13 +2380,13 @@ _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelid
 
 ---
 
-### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
+### 3.6.1. Modelo Entidade-Relacionamento (MER)
 
-O Modelo Entidade-Relacionamento (MER) é a representação conceitual do banco de dados, na qual se descrevem as entidades do domínio, seus atributos e os relacionamentos que as conectam, abstraindo decisões de implementação física como tipos de dados, índices ou chaves estrangeiras. Para este projeto, o MER traduz em linguagem de dados o domínio do Red Bull 24 Horas modelado nas seções anteriores: o evento operado por um gerente (Manager), suas equipes (Team) e atletas (Athlete), e o registro de cada sessão de corrida (Shift) auditada à beira da esteira (Treadmill), com os checkpoints periódicos e logs que sustentam a apuração oficial da competição. A notação adotada é a de **Peter Chen**, na qual entidades são representadas por retângulos, atributos por elipses (com elipses preenchidas indicando chave primária e atributos compostos derivados do atributo-pai), relacionamentos por losangos e a cardinalidade explicitada nas extremidades de cada relacionamento com a razão (1) e (N). Os nomes de entidades, atributos e relacionamentos foram padronizados em inglês para garantir consistência com a nomenclatura técnica adotada no modelo relacional e no código-fonte da aplicação.
+O Modelo Entidade-Relacionamento (MER) é a representação conceitual do banco de dados, na qual se descrevem as entidades do domínio, seus atributos e os relacionamentos que as conectam, abstraindo decisões de implementação física como tipos de dados, índices ou chaves estrangeiras. Para este projeto, o MER traduz em linguagem de dados o domínio do Red Bull 24 Horas modelado nas seções anteriores: o evento operado por gerentes (Managers), suas equipes (Teams) e atletas (Athletes), e o registro de cada sessão de corrida (Shift) auditada à beira da esteira (Treadmill), com os checkpoints periódicos e logs que sustentam a apuração oficial da competição. A notação adotada é a de **Peter Chen**, na qual entidades são representadas por retângulos, atributos por elipses (com elipses preenchidas indicando chave primária e atributos compostos derivados do atributo-pai), relacionamentos por losangos e a cardinalidade explicitada nas extremidades de cada relacionamento com a razão (1) e (N). Os nomes de entidades, atributos e relacionamentos foram padronizados em inglês para garantir consistência com a nomenclatura técnica adotada no modelo relacional e no código-fonte da aplicação.
 
 <div align="center">
-  <sub>Imagem 17 - Modelo Entidade-Relacionamento</sub><br>
-  <img src="./assets/modelo_entidade_relacionamento/Modelo-ER.png" width="80%" alt="Modelo Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
+  <sub>Imagem 25 - Modelo Entidade-Relacionamento</sub><br>
+  <img src="./assets/modelo_entidade_relacionamento/MER.png" width="80%" alt="Modelo Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -2179,17 +2399,17 @@ As entidades foram derivadas diretamente do domínio descrito no TAPI e dos caso
   <sub>Quadro 20 - Entidades e atributos do MER</sub>
 </div>
 
-| Entidade       | Descrição                                                                                                                                                                                        | Atributos                                                                       | Chave primária |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- | -------------- |
-| **Manager**    | Gerente regional do time de Field Marketing da Red Bull, responsável por instanciar e gerir os eventos sob sua regional.                                                                         | `ID`, `NAME`                                                                    | `ID`           |
-| **Event**      | Instância de uma etapa do Red Bull 24 Horas (regional ou final nacional), identificada por local e título da edição.                                                                             | `ID`, `LOCAL`, `TITLE`                                                          | `ID`           |
-| **Team**       | Uma das duas equipes que competem no evento (tradicionalmente "azul" e "vermelha"), à qual os atletas são vinculados antes do início da competição.                                              | `ID`, `NAME`                                                                    | `ID`           |
-| **Athlete**    | Corredor inscrito que reveza com seu time durante as 24 horas, identificado pessoalmente por CPF para fins de auditoria pós-evento.                                                              | `ID`, `NAME`, `CPF`, `GENDER`                                                   | `ID`           |
-| **Auditor**    | Operador do sistema (substituindo a operação atual da prancheta) que registra os turnos e seus checkpoints à beira da esteira.                                                                   | `ID`, `STATUS`, `NUMBER`                                                        | `ID`           |
-| **Shift**      | Sessão individual de corrida — um único atleta em uma única esteira, do play até o stop, antes da próxima zeragem. É a entidade central do registro operacional do evento.                       | `ID`, `STATUS`, `INIT`, `END`, `TIME`, `SPEED`, `KM_INIT`, `KM_END`, `DISTANCE` | `ID`           |
-| **Treadmill**  | Equipamento físico (Technogym) onde os turnos ocorrem. Cada equipe opera duas esteiras simultaneamente durante o evento.                                                                         | `ID`, `STATUS`, `NUMBER`                                                        | `ID`           |
-| **Checkpoint** | Marcação periódica de segurança (referência de 5 em 5 minutos) que registra a quilometragem parcial dentro de um turno em andamento, permitindo recuperação em caso de falha técnica da esteira. | `ID`, `TIMESTAMP`, `TYPE` (`MANDATORY` / `VOLUNTARY`), `DISTANCE`               | `ID`           |
-| **Log**        | Registro auditável das ações executadas dentro de um turno (início, checkpoint e fim), garantindo rastreabilidade completa para a auditoria formal pós-evento.                                   | `ID`, `TIMESTAMP`, `TYPE` (`INIT` / `CHECKPOINT` / `END`)                       | `ID`           |
+| Entidade       | Descrição                                                                                                                                                                                        | Atributos                                                                                          | Chave primária |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- | -------------- |
+| **Manager**    | Gerente regional do time de Field Marketing da Red Bull, responsável por instanciar e gerir os eventos sob sua regional.                                                                         | `ID`, `NAME`, `CPF`, `EMAIL`, `PASSWORD`                                                           | `ID`           |
+| **Event**      | Instância de uma etapa do Red Bull 24 Horas (regional ou final nacional), identificada por local, título da edição e data de realização.                                                         | `ID`, `LOCAL`, `TITLE`, `DATE`, `DELETED_AT`                                                       | `ID`           |
+| **Team**       | Uma das duas equipes que competem no evento (tradicionalmente "azul" e "vermelha"), à qual os atletas são vinculados antes do início da competição.                                              | `ID`, `NAME`                                                                                       | `ID`           |
+| **Athlete**    | Corredor inscrito que reveza com seu time durante as 24 horas, identificado pessoalmente por CPF para fins de auditoria pós-evento.                                                              | `ID`, `NAME`, `CPF`, `GENDER`                                                                      | `ID`           |
+| **Auditor**    | Operador do sistema (substituindo a operação atual da prancheta) que registra os turnos e seus checkpoints à beira da esteira.                                                                   | `ID`, `NAME`, `CPF`, `REGISTRATION_NUMBER`, `IS_ACTIVE`, `EMAIL`, `PASSWORD`                       | `ID`           |
+| **Shift**      | Sessão individual de corrida — um único atleta em uma única esteira, do play até o stop, antes da próxima zeragem. É a entidade central do registro operacional do evento.                       | `ID`, `STATUS`, `START_AT`, `END_AT`, `TOTAL_TIME`, `SPEED`, `KM_START`, `KM_END`, `DISTANCE`      | `ID`           |
+| **Treadmill**  | Equipamento físico (Technogym) onde os turnos ocorrem. Cada equipe opera duas esteiras simultaneamente durante o evento.                                                                         | `ID`, `NUMBER`                                                                                     | `ID`           |
+| **Checkpoint** | Marcação periódica de segurança (referência de 5 em 5 minutos) que registra a quilometragem parcial dentro de um turno em andamento, permitindo recuperação em caso de falha técnica da esteira. | `ID`, `TIMESTAMP`, `TYPE` (`MANDATORY` / `VOLUNTARY`), `DISTANCE`                                  | `ID`           |
+| **Log**        | Registro auditável das ações executadas dentro de um turno (início, checkpoint e fim), garantindo rastreabilidade completa para a auditoria formal pós-evento.                                   | `ID`, `TIMESTAMP`, `TYPE` (`INIT` / `CHECKPOINT` / `END`)                                          | `ID`           |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -2198,7 +2418,7 @@ As entidades foram derivadas diretamente do domínio descrito no TAPI e dos caso
 
 #### Relacionamentos e cardinalidades
 
-Os relacionamentos foram modelados a partir das regras de negócio levantadas na seção 3.1 e da dinâmica operacional descrita pelo parceiro: um gerente regional gere múltiplos eventos ao longo da temporada; cada evento conta com exatamente duas equipes; cada equipe escala vários atletas que se revezam continuamente; cada atleta realiza diversos turnos ao longo das 24 horas; e cada turno é monitorado por um auditor e produz uma sequência de checkpoints e um log de ações.
+Os relacionamentos foram modelados a partir das regras de negócio levantadas na seção 3.1 e da dinâmica operacional descrita pelo parceiro: gerentes regionais gerem múltiplos eventos ao longo da temporada e um mesmo evento pode ser co-gerenciado por mais de um gerente; cada evento conta com exatamente duas equipes; cada equipe escala vários atletas que se revezam continuamente; cada atleta realiza diversos turnos ao longo das 24 horas; e cada turno é monitorado por um auditor e produz uma sequência de checkpoints e múltiplos logs de ações.
 
 <div align="center">
   <sub>Quadro 21 - Relacionamentos e cardinalidades do MER</sub>
@@ -2206,14 +2426,14 @@ Os relacionamentos foram modelados a partir das regras de negócio levantadas na
 
 | Relacionamento | Entidade A | Cardinalidade | Entidade B | Descrição                                                                                                                                                                                                                             |
 | -------------- | ---------- | ------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Manages**    | Manager    | (1, N)        | Event      | Um gerente regional pode gerir vários eventos (etapas regionais distintas ao longo da temporada), mas cada evento é gerido por exatamente um gerente responsável.                                                                     |
+| **Menages**    | Manager    | (N, N)        | Event      | Um gerente regional pode gerir vários eventos (etapas regionais distintas ao longo da temporada) e um mesmo evento pode ser co-gerenciado por mais de um gerente, tornando a relação muitos-para-muitos.                              |
 | **Has**        | Event      | (1, N)        | Team       | Cada evento possui duas equipes, e cada uma pertence a um único evento. A entidade Team é instanciada por edição, refletindo a natureza efêmera da competição.                                                                        |
 | **Rosters**    | Team       | (1, N)        | Athlete    | Uma equipe escala vários atletas (tipicamente 16 por equipe, conforme briefing), e cada atleta pertence a uma única equipe dentro de um mesmo evento.                                                                                 |
-| **Performs**   | Athlete    | (1, N)        | Shift      | Um atleta realiza vários turnos durante as 24 horas (cada entrada na esteira é um turno distinto), e cada turno é realizado por exatamente um atleta refletindo a regra de que a esteira é zerada a cada troca de corredor.           |
+| **Performs**   | Athlete    | (1, N)        | Shift      | Um atleta realiza vários turnos durante as 24 horas (cada entrada na esteira é um turno distinto), e cada turno é realizado por exatamente um atleta, refletindo a regra de que a esteira é zerada a cada troca de corredor.          |
 | **Audits**     | Auditor    | (1, N)        | Shift      | Um auditor é responsável por auditar diversos turnos ao longo do seu plantão na operação, e cada turno é auditado por exatamente um auditor, garantindo responsabilidade unívoca sobre cada registro.                                 |
 | **Occurs On**  | Shift      | (N, 1)        | Treadmill  | Vários turnos ocorrem ao longo das 24 horas em uma mesma esteira (que é zerada entre eles), enquanto cada turno acontece em uma única esteira específica.                                                                             |
 | **Records**    | Shift      | (1, N)        | Checkpoint | Cada turno guarda múltiplos checkpoints periódicos (a marcação de 5 em 5 minutos descrita pelo parceiro), enquanto cada checkpoint pertence a exatamente um turno, não existe checkpoint isolado fora de uma sessão de corrida ativa. |
-| **Has**        | Shift      | (1, 1)        | Log        | Cada turno guarda exatamente um log de ações associado, que armazena cronologicamente os eventos `INIT`, `CHECKPOINT` e `END` daquela sessão, sustentando a trilha de auditoria pós-evento.                                           |
+| **Has**        | Shift      | (1, N)        | Log        | Cada turno pode gerar múltiplos logs de ações, que armazenam cronologicamente os eventos `INIT`, `CHECKPOINT` e `END` daquela sessão, sustentando a trilha de auditoria pós-evento.                                                   |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -2224,23 +2444,23 @@ Os relacionamentos foram modelados a partir das regras de negócio levantadas na
 
 Três decisões merecem destaque por traduzirem diretamente as regras de negócio do Red Bull 24 Horas para o modelo de dados:
 
-- **Shift como entidade central:** a quilometragem do evento não é monotônica em relação à esteira nem à equipe, pois a esteira é zerada a cada troca de corredor (dinâmica detalhada no Modelo de Sessão de Corrida da seção 3.2.2). Por isso, o **Shift** foi modelado como entidade de primeira classe, com `KM_INIT`, `KM_END`, `INIT` e `END` próprios, e não como um simples registro derivado da esteira ou da equipe. O total acumulado de uma equipe é, portanto, sempre uma função agregada sobre os turnos finalizados de seus atletas, e não um atributo persistido diretamente.
+- **Shift como entidade central:** a quilometragem do evento não é monotônica em relação à esteira nem à equipe, pois a esteira é zerada a cada troca de corredor (dinâmica detalhada no Modelo de Sessão de Corrida da seção 3.2.2). Por isso, o **Shift** foi modelado como entidade de primeira classe, com `KM_START`, `KM_END`, `START_AT` e `END_AT` próprios, e não como um simples registro derivado da esteira ou da equipe. O total acumulado de uma equipe é, portanto, sempre uma função agregada sobre os turnos finalizados de seus atletas, e não um atributo persistido diretamente.
 
 - **Checkpoint tipado (`MANDATORY` / `VOLUNTARY`):** o atributo `TYPE` do Checkpoint distingue as marcações automáticas obrigatórias (de 5 em 5 minutos, conforme protocolo) das marcações voluntárias feitas pelo auditor (por exemplo, antes de uma troca de velocidade decidida pelo atleta). Essa distinção é essencial para a auditoria pós-evento e para a oportunidade de padronização entre as cinco regionais identificada na matriz de riscos (seção 2.1.5).
 
-- **Log como entidade dedicada à auditoria:** apesar de aparentemente redundante em relação aos timestamps já presentes em Shift e Checkpoint, o **Log** isola a trilha de auditoria do modelo operacional. Ele responde diretamente ao risco "Erro humano na leitura e digitação da quilometragem" (seção 2.1.5), garantindo o histórico de alterações exigido pelo caso de uso "Editar registro" (seção 3.2.2) sem poluir as entidades de negócio com colunas de controle.
+- **Log como entidade dedicada à auditoria:** apesar de aparentemente redundante em relação aos timestamps já presentes em Shift e Checkpoint, o **Log** isola a trilha de auditoria do modelo operacional. Ele responde diretamente ao risco "Erro humano na leitura e digitação da quilometragem" (seção 2.1.5), garantindo o histórico de alterações exigido pelo caso de uso "Editar registro" (seção 3.2.2) sem poluir as entidades de negócio com colunas de controle. A cardinalidade (1, N) entre Shift e Log permite que múltiplos eventos auditáveis sejam registrados ao longo do ciclo de vida de um único turno.
 
 **Síntese do Modelo Entidade-Relacionamento**
 
-O MER traduz o domínio do Red Bull 24 Horas em um modelo conceitual de dados rastreável, no qual cada entidade tem propósito claro dentro do fluxo operacional (cadastro pré-evento → registro de turnos → checkpoints periódicos → encerramento → auditoria). A escolha do Shift como entidade central refletindo o conceito de **sessão de corrida**, somada às entidades Checkpoint e Log que sustentam a confiabilidade e a rastreabilidade dos dados, alinha o modelo de dados às prioridades de mitigação de risco da seção 2.1.5 e aos casos de uso da seção 3.2.2. Esse alinhamento garante que o banco de dados forneça base sólida tanto para a operação em tempo real durante as 24h quanto para a auditoria formal pós-evento e para as análises estatísticas inéditas identificadas como oportunidades do projeto.
+O MER traduz o domínio do Red Bull 24 Horas em um modelo conceitual de dados rastreável, no qual cada entidade tem propósito claro dentro do fluxo operacional (cadastro pré-evento → registro de turnos → checkpoints periódicos → encerramento → auditoria). A escolha do Shift como entidade central refletindo o conceito de **sessão de corrida**, somada às entidades Checkpoint e Log que sustentam a confiabilidade e a rastreabilidade dos dados, alinha o modelo de dados às prioridades de mitigação de risco da seção 2.1.5 e aos casos de uso da seção 3.2.2. A relação N:N entre Manager e Event, resolvida pela entidade associativa Manager_events no DER, reflete a flexibilidade operacional da gestão regional da Red Bull. Esse alinhamento garante que o banco de dados forneça base sólida tanto para a operação em tempo real durante as 24h quanto para a auditoria formal pós-evento e para as análises estatísticas inéditas identificadas como oportunidades do projeto.
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER)
 
 O DER traduz o modelo conceitual do MER para a estrutura relacional do banco de dados (PostgreSQL), adotando a **notação de tabelas relacionais** com tipos de dados, restrições (`NOT NULL`, `UNIQUE`, `CHECK`), chaves primárias (`PK`) e chaves estrangeiras (`FK`).
 
 <div align="center">
-  <sub>Imagem 18 - Diagrama Entidade-Relacionamento</sub><br>
-  <img src="./assets/diagrama_entidade_relacionamento/diagramaEntidadeRelacionamento.jpg" width="90%" alt="Diagrama Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
+  <sub>Imagem 26 - Diagrama Entidade-Relacionamento</sub><br>
+  <img src="./assets/diagrama_entidade_relacionamento/DER.png" width="90%" alt="Diagrama Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -2249,51 +2469,68 @@ O DER traduz o modelo conceitual do MER para a estrutura relacional do banco de 
   <sub>Quadro 22 - Tabelas e colunas do DER</sub>
 </div>
 
-| Tabela          | Coluna                | Tipo      | Restrições                                           | Descrição                                           |
-| --------------- | --------------------- | --------- | ---------------------------------------------------- | --------------------------------------------------- |
-| **Managers**    | `id`                  | SERIAL    | PK                                                   | Identificador único do gerente                      |
-|                 | `cpf`                 | VARCHAR   | UNIQUE                                               | CPF do gerente                                      |
-|                 | `name`                | VARCHAR   | NOT NULL                                             | Nome completo                                       |
-| **Events**      | `id`                  | SERIAL    | PK                                                   | Identificador único do evento                       |
-|                 | `title`               | VARCHAR   | NOT NULL UNIQUE                                      | Título da edição (ex.: "Red Bull 24 Horas SP 2026") |
-|                 | `local`               | VARCHAR   | NOT NULL UNIQUE                                      | Local de realização                                 |
-|                 | `manager_id`          | INT       | FK → Managers(id)                                    | Gerente responsável                                 |
-| **Teams**       | `id`                  | SERIAL    | PK                                                   | Identificador único da equipe                       |
-|                 | `name`                | VARCHAR   | NOT NULL UNIQUE                                      | Nome da equipe (ex.: "Azul", "Vermelha")            |
-|                 | `event_id`            | INT       | FK → Events(id)                                      | Evento ao qual a equipe pertence                    |
-| **Athletes**    | `id`                  | SERIAL    | PK                                                   | Identificador único do atleta                       |
-|                 | `name`                | VARCHAR   | NOT NULL                                             | Nome completo                                       |
-|                 | `gender`              | VARCHAR   | NOT NULL                                             | Gênero, utilizado para apuração por categoria       |
-|                 | `cpf`                 | VARCHAR   | UNIQUE                                               | CPF do atleta                                       |
-|                 | `team_id`             | INT       | FK → Teams(id)                                       | Equipe à qual o atleta pertence                     |
-| **Auditors**    | `id`                  | SERIAL    | PK                                                   | Identificador único do auditor                      |
-|                 | `name`                | VARCHAR   | NOT NULL                                             | Nome do auditor                                     |
-|                 | `cpf`                 | VARCHAR   | UNIQUE                                               | CPF do auditor                                      |
-|                 | `registration_number` | INT       | NOT NULL UNIQUE                                      | Número de registro funcional                        |
-|                 | `is_active`           | BOOLEAN   | DEFAULT FALSE                                        | Indica se o auditor está ativo no sistema           |
-| **Treadmills**  | `id`                  | SERIAL    | PK                                                   | Identificador único da esteira                      |
-|                 | `shift_id`            | INT       | FK → Shifts(id)                                      | Turno atualmente em execução                        |
-|                 | `treadmill_number`    | INT       | NOT NULL UNIQUE                                      | Número físico da esteira (Technogym)                |
-| **Shifts**      | `id`                  | SERIAL    | PK                                                   | Identificador único do turno                        |
-|                 | `status`              | VARCHAR   | NOT NULL CHECK ('pending','in progress','completed') | Estado do turno                                     |
-|                 | `athlete_id`          | INT       | FK → Athletes(id)                                    | Atleta realizando o turno                           |
-|                 | `auditor_id`          | INT       | FK → Auditors(id)                                    | Auditor responsável pelo registro                   |
-|                 | `start_at`            | TIMESTAMP | —                                                    | Início do turno                                     |
-|                 | `end_at`              | TIMESTAMP | —                                                    | Encerramento do turno                               |
-|                 | `time_total`          | INTERVAL  | —                                                    | Duração total (calculada ao finalizar)              |
-|                 | `speed`               | INT       | NOT NULL                                             | Velocidade configurada (km/h)                       |
-|                 | `km_start`            | INT       | NOT NULL                                             | Quilometragem inicial no odômetro                   |
-|                 | `km_end`              | INT       | NOT NULL                                             | Quilometragem final no odômetro                     |
-|                 | `distance`            | INT       | NOT NULL                                             | Distância percorrida (`km_end - km_start`)          |
-| **Checkpoints** | `id`                  | SERIAL    | PK                                                   | Identificador único do checkpoint                   |
-|                 | `shift_id`            | INT       | FK → Shifts(id)                                      | Turno ao qual o checkpoint pertence                 |
-|                 | `timestamp`           | TIMESTAMP | —                                                    | Data e hora do registro                             |
-|                 | `distance`            | INT       | NOT NULL                                             | Quilometragem parcial no momento do checkpoint      |
-|                 | `type`                | VARCHAR   | CHECK ('mandatory', 'voluntary')                     | Obrigatório (a cada 5 min) ou voluntário            |
-| **Logs**        | `id`                  | SERIAL    | PK                                                   | Identificador único do log                          |
-|                 | `shift_id`            | INT       | FK NOT NULL → Shifts(id)                             | Turno ao qual o log está vinculado                  |
-|                 | `timestamp`           | TIMESTAMP | NOT NULL                                             | Data e hora da ação                                 |
-|                 | `type`                | VARCHAR   | CHECK ('created', 'updated', 'finished')             | Tipo da ação auditada                               |
+| Tabela             | Coluna                | Tipo           | Restrições                                           | Descrição                                           |
+| ------------------ | --------------------- | -------------- | ---------------------------------------------------- | --------------------------------------------------- |
+| **Managers**       | `id`                  | SERIAL         | PK                                                   | Identificador único do gerente                      |
+|                    | `cpf`                 | VARCHAR        | UNIQUE                                               | CPF do gerente                                      |
+|                    | `name`                | VARCHAR        | NOT NULL                                             | Nome completo                                       |
+|                    | `email`               | VARCHAR(100)   | UNIQUE                                               | E-mail do gerente                                   |
+|                    | `password`            | VARCHAR(100)   | —                                                    | Senha do gerente                                    |
+| **Manager_events** | `id`                  | SERIAL         | PK                                                   | Identificador único do vínculo                      |
+|                    | `manager_id`          | INT            | NOT NULL, FK → Managers(id)                          | Gerente vinculado ao evento                         |
+|                    | `event_id`            | INT            | NOT NULL, FK → Events(id)                            | Evento vinculado ao gerente                         |
+| **Events**         | `id`                  | SERIAL         | PK                                                   | Identificador único do evento                       |
+|                    | `title`               | VARCHAR        | NOT NULL UNIQUE                                      | Título da edição (ex.: "Red Bull 24 Horas SP 2026") |
+|                    | `local`               | VARCHAR        | NOT NULL UNIQUE                                      | Local de realização                                 |
+|                    | `date`                | DATE           | NOT NULL                                             | Data do evento                                      |
+|                    | `deleted_at`          | TIMESTAMP      | —                                                    | Data de exclusão lógica                             |
+| **Teams**          | `id`                  | SERIAL         | PK                                                   | Identificador único da equipe                       |
+|                    | `name`                | VARCHAR        | NOT NULL UNIQUE                                      | Nome da equipe (ex.: "Azul", "Vermelha")            |
+|                    | `deleted_at`          | TIMESTAMP      | —                                                    | Data de exclusão lógica                             |
+|                    | `event_id`            | INT            | FK → Events(id)                                      | Evento ao qual a equipe pertence                    |
+| **Athletes**       | `id`                  | SERIAL         | PK                                                   | Identificador único do atleta                       |
+|                    | `name`                | VARCHAR        | NOT NULL                                             | Nome completo                                       |
+|                    | `gender`              | VARCHAR        | NOT NULL                                             | Gênero, utilizado para apuração por categoria       |
+|                    | `cpf`                 | VARCHAR        | UNIQUE                                               | CPF do atleta                                       |
+|                    | `deleted_at`          | TIMESTAMP      | —                                                    | Data de exclusão lógica                             |
+|                    | `team_id`             | INT            | FK → Teams(id)                                       | Equipe à qual o atleta pertence                     |
+| **Auditors**       | `id`                  | SERIAL         | PK                                                   | Identificador único do auditor                      |
+|                    | `name`                | VARCHAR        | NOT NULL                                             | Nome do auditor                                     |
+|                    | `cpf`                 | VARCHAR        | UNIQUE                                               | CPF do auditor                                      |
+|                    | `registration_number` | INT            | NOT NULL UNIQUE                                      | Número de registro funcional                        |
+|                    | `is_active`           | BOOLEAN        | —                                                    | Indica se o auditor está ativo no sistema           |
+|                    | `email`               | VARCHAR(100)   | UNIQUE                                               | E-mail do auditor                                   |
+|                    | `password`            | VARCHAR(100)   | —                                                    | Senha do auditor                                    |
+| **Treadmills**     | `id`                  | SERIAL         | PK                                                   | Identificador único da esteira                      |
+|                    | `shift_id`            | INT            | FK → Shifts(id)                                      | Turno atualmente em execução                        |
+|                    | `number`              | INT            | NOT NULL UNIQUE                                      | Número físico da esteira (Technogym)                |
+| **Shifts**         | `id`                  | SERIAL         | PK                                                   | Identificador único do turno                        |
+|                    | `status`              | VARCHAR        | NOT NULL CHECK ('pending','in progress','completed') | Estado do turno                                     |
+|                    | `athlete_id`          | INT            | FK → Athletes(id)                                    | Atleta realizando o turno                           |
+|                    | `auditor_id`          | INT            | FK → Auditors(id)                                    | Auditor responsável pelo registro                   |
+|                    | `start_at`            | TIMESTAMP      | —                                                    | Início do turno                                     |
+|                    | `total_time`          | INTERVAL       | —                                                    | Duração total (calculada ao finalizar)              |
+|                    | `end_at`              | TIMESTAMP      | —                                                    | Encerramento do turno                               |
+|                    | `speed`               | INT            | NOT NULL                                             | Velocidade configurada (km/h)                       |
+|                    | `km_start`            | INT            | NOT NULL                                             | Quilometragem inicial no odômetro                   |
+|                    | `km_end`              | INT            | NOT NULL                                             | Quilometragem final no odômetro                     |
+|                    | `distance`            | INT            | NOT NULL                                             | Distância percorrida (`km_end - km_start`)          |
+| **Checkpoints**    | `id`                  | SERIAL         | PK                                                   | Identificador único do checkpoint                   |
+|                    | `shift_id`            | INT            | FK → Shifts(id)                                      | Turno ao qual o checkpoint pertence                 |
+|                    | `timestamp`           | TIMESTAMP      | —                                                    | Data e hora do registro                             |
+|                    | `distance`            | INT            | NOT NULL                                             | Quilometragem parcial no momento do checkpoint      |
+|                    | `type`                | VARCHAR        | CHECK ('mandatory', 'voluntary')                     | Obrigatório (a cada 5 min) ou voluntário            |
+| **Logs**           | `id`                  | SERIAL         | PK                                                   | Identificador único do log                          |
+|                    | `shift_id`            | INT            | FK NOT NULL → Shifts(id)                             | Turno ao qual o log está vinculado                  |
+|                    | `timestamp`           | TIMESTAMP      | NOT NULL                                             | Data e hora da ação                                 |
+|                    | `type`                | VARCHAR        | CHECK ('created', 'updated', 'finished')             | Tipo da ação auditada                               |
+| **Refresh_tokens** | `id`                  | SERIAL         | PK                                                   | Identificador único do token                        |
+|                    | `token_hash`          | VARCHAR(255)   | UNIQUE NOT NULL                                      | Hash do refresh token                               |
+|                    | `user_id`             | INT            | NOT NULL                                             | Identificador do usuário dono do token              |
+|                    | `user_role`           | VARCHAR(20)    | NOT NULL                                             | Papel do usuário (ex.: manager, auditor)            |
+|                    | `expires_at`          | TIMESTAMP      | NOT NULL                                             | Data de expiração do token                          |
+|                    | `revoked_at`          | TIMESTAMP      | —                                                    | Data de revogação do token                          |
+|                    | `created_at`          | TIMESTAMP      | NOT NULL DEFAULT CURRENT_TIMESTAMP                   | Data de criação do token                            |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -2304,29 +2541,31 @@ O DER traduz o modelo conceitual do MER para a estrutura relacional do banco de 
   <sub>Quadro 23 - Relacionamentos e chaves estrangeiras do DER</sub>
 </div>
 
-| Tabela origem   | Coluna FK    | Tabela referenciada | Cardinalidade | Relacionamento                                                |
-| --------------- | ------------ | ------------------- | ------------- | ------------------------------------------------------------- |
-| **Events**      | `manager_id` | Managers            | N : 1         | Vários eventos podem ser geridos pelo mesmo gerente           |
-| **Teams**       | `event_id`   | Events              | N : 1         | Várias equipes pertencem a um evento                          |
-| **Athletes**    | `team_id`    | Teams               | N : 1         | Vários atletas compõem uma equipe                             |
-| **Treadmills**  | `shift_id`   | Shifts              | N : 1         | Uma esteira recebe vários turnos ao longo das 24 horas        |
-| **Shifts**      | `athlete_id` | Athletes            | N : 1         | Um atleta realiza vários turnos durante a competição          |
-| **Shifts**      | `auditor_id` | Auditors            | N : 1         | Um auditor é responsável por vários turnos no seu plantão     |
-| **Checkpoints** | `shift_id`   | Shifts              | N : 1         | Vários checkpoints são registrados dentro de um turno         |
-| **Logs**        | `shift_id`   | Shifts              | N : 1         | Vários logs são gerados ao longo do ciclo de vida de um turno |
+| Tabela origem      | Coluna FK    | Tabela referenciada | Cardinalidade | Relacionamento                                                |
+| ------------------ | ------------ | ------------------- | ------------- | ------------------------------------------------------------- |
+| **Manager_events** | `manager_id` | Managers            | N : 1         | Vários eventos podem ser geridos pelo mesmo gerente           |
+| **Manager_events** | `event_id`   | Events              | N : 1         | Vários gerentes podem estar vinculados ao mesmo evento        |
+| **Teams**          | `event_id`   | Events              | N : 1         | Várias equipes pertencem a um evento                          |
+| **Athletes**       | `team_id`    | Teams               | N : 1         | Vários atletas compõem uma equipe                             |
+| **Treadmills**     | `shift_id`   | Shifts              | N : 1         | Uma esteira recebe vários turnos ao longo das 24 horas        |
+| **Shifts**         | `athlete_id` | Athletes            | N : 1         | Um atleta realiza vários turnos durante a competição          |
+| **Shifts**         | `auditor_id` | Auditors            | N : 1         | Um auditor é responsável por vários turnos no seu plantão     |
+| **Checkpoints**    | `shift_id`   | Shifts              | N : 1         | Vários checkpoints são registrados dentro de um turno         |
+| **Logs**           | `shift_id`   | Shifts              | N : 1         | Vários logs são gerados ao longo do ciclo de vida de um turno |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
-Três decisões traduzem regras de negócio para restrições concretas no banco:
+Quatro decisões traduzem regras de negócio para restrições concretas no banco:
 
 - **`CHECK` nos campos de estado:** `status` em Shifts e `type` em Checkpoints e Logs aceitam apenas valores predefinidos, eliminando inconsistências sem depender exclusivamente da camada de aplicação.
-- **`treadmill_number` como `UNIQUE`:** impede cadastro duplicado de equipamentos, espelhando a unicidade física de cada esteira Technogym.
+- **`number` como `UNIQUE` em Treadmills:** impede cadastro duplicado de equipamentos, espelhando a unicidade física de cada esteira Technogym.
 - **`shift_id` em Logs como `FK NOT NULL`:** garante que todo log esteja vinculado a um turno, assegurando a trilha de auditoria pós-evento.
+- **`deleted_at` como exclusão lógica:** Events, Teams e Athletes adotam soft delete, preservando o histórico de dados mesmo após remoção da interface.
 
-A cadeia `Managers → Events → Teams → Athletes → Shifts → Checkpoints / Logs` reflete o fluxo operacional completo do sistema, do cadastro pré-evento à auditoria pós-evento.
+A cadeia `Managers → Manager_events → Events → Teams → Athletes → Shifts → Checkpoints / Logs` reflete o fluxo operacional completo do sistema, do cadastro pré-evento à auditoria pós-evento. A tabela `Refresh_tokens` sustenta a camada de autenticação, armazenando tokens de sessão para Managers e Auditors de forma independente das demais entidades.
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
@@ -2893,11 +3132,15 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ---
 
+¹⁷ ABRAMOV, Dan. **Presentational and Container Components.** Medium, 23 mar. 2015. Disponível em: https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0. Acesso em: 26 mai. 2026.
+
 ⁸ BUSINESS RULES GROUP. **Business Rules Manifesto:** the principles of rule independence. Version 2.0. S. l.: Business Rules Group, 2003. Disponível em: <https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf>. Acesso em: 27 abr. 2026.
 
 ³ ESPM. **Runaholic Club: lifestyle e comunidade de wellness para a Geração Z**. Disponível em: <https://www.espm.br/blog/runaholic-club-lifestyle-e-comunidade-de-wellness-para-a-geracao-z/>. Acesso em: 28 abr. 2026.
 
 ¹⁰ FIELDING, Roy Thomas. **Architectural Styles and the Design of Network-based Software Architectures**. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: <https://ics.uci.edu/~fielding/pubs/dissertation/top.htm>. Acesso em: 27 abr. 2026.
+
+¹⁸ FOWLER, Martin. Presentation Model. martinfowler.com, 19 jul. 2004. Disponível em: https://martinfowler.com/eaaDev/PresentationModel.html. Acesso em: 26 mai. 2026. 
 
 ³ H.PRIME SAÚDE. **A revolução da geração wellness: por que a saúde se tornou o novo símbolo de sucesso**. Disponível em: <https://hprimesaude.com.br/blog/a-revolucao-da-geracao-wellness-por-que-a-saude-se-tornou-o-novo-simbolo-de-sucesso/>. Acesso em: 28 abr. 2026.
 
