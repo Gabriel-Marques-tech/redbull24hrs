@@ -1647,8 +1647,6 @@ Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo
 
 #### 3.2.1.1. Diagrama de Classes Arquiteturais 
 
----
-
 <div align="center">
   <sub>Imagem 9 - Diagrama de Arquitetura - DASHBOARD </sub><br>
   <img src= "./assets/diagramas_arquitetura/DASHBOARD_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Dashboard"><br>
@@ -1689,6 +1687,7 @@ Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo
   <img src= "./assets/diagramas_arquitetura/TURNS_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Turns"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
+</div>
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
