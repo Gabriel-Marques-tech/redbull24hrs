@@ -1,0 +1,50 @@
+graph LR
+    %% Configurações Globais de Temas para Alto Contraste
+    classDef client fill:#FFFFFF,stroke:#1A237E,stroke-width:2.5px,color:#000000;
+    classDef controller fill:#C5CAE9,stroke:#3F51B5,stroke-width:2.5px,color:#000000;
+    classDef service fill:#C8E6C9,stroke:#2E7D32,stroke-width:2.5px,color:#000000;
+    classDef repository fill:#FFE082,stroke:#EF6C00,stroke-width:2.5px,color:#000000;
+    classDef model fill:#E1BEE7,stroke:#6A1B9A,stroke-width:2.5px,color:#000000;
+    classDef db fill:#CFD8DC,stroke:#37474F,stroke-width:2.5px,color:#000000;
+
+    subgraph CLIENTES [CLIENTES]
+        C3[Dispositivo Mobile <br> Coletor Offline]:::client
+    end
+
+    subgraph CONTROLLER_LAYER [CONTROLLER LAYER - RegistrationController]
+        A7[Recebe POST /sync <br> ou PATCH /records]:::controller --> A8[Define Códigos: <br> 200 / 422]:::controller
+    end
+
+    subgraph SERVICE_LAYER [SERVICE LAYER - RegistrationService]
+        B7[Laço de Sincronismo]:::service --> B8[Regra: Valida KM <br> entre Checkpoints]:::service
+        B7 --> B9[Regra: Evita Duplicados]:::service
+    end
+
+    subgraph REPOSITORY_LAYER [REPOSITORY LAYER - RegistrationRepository]
+        D7[SELECT WHERE <br> id AND timestamp]:::repository
+        D8[UPDATE record <br> SET km = value]:::repository
+        D9[INSERT audit <br> Log Imutável]:::repository
+    end
+
+    subgraph MODEL_LAYER [MODEL LAYER]
+        E6[Entidade: <br> RegistrationRecord]:::model
+        E7[Entidade: <br> AuditLog]:::model
+    end
+
+    subgraph BANCO_DE_DADOS [BANCO DE DADOS]
+        DB3[(Base de Dados Relacional)]:::db
+    end
+
+    %% Fluxo Linear
+    C3 -->|Ao conectar: /sync| A7
+    A8 --> B7
+    B8 --> D8
+    B9 --> D7
+    B7 -.-> D9
+
+    D7 --> DB3
+    D8 --> DB3
+    D9 --> DB3
+
+    D8 -.->|Mapeia| E6
+    D9 -.->|Mapeia| E7

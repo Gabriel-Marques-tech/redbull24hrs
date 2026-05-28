@@ -1,0 +1,83 @@
+body{
+    background: linear-gradient(rgba(15, 0, 105, 0.5), rgba(210, 0, 60, 0.5)),
+  url("../assets/Login/img1.avif");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.login{
+  background-color: var(--branco);
+  width: 600px;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 28px;
+}
+.titulo{
+  text-align: center;
+   transform: translateY(-50px);
+}
+.titulo h1{
+  font-size: 35px;
+}
+.titulo p{
+  font-size: 18px;
+}
+img{
+  width: 120px;
+  transform: translateY(-50px);
+}
+
+/*-------------------FORM-------------------------*/
+
+.form{
+  margin-bottom: 40px;
+  transform: translateY(-20px);
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+.l1{
+  margin-top: 20px;
+}
+label{
+    margin-left: 5px;
+}
+input{
+  width: 400px;
+  height: 50px;
+  border: solid black 1px;
+  border-radius: 15px;
+  padding-left: 15px;
+  font-size: 15px;
+  padding-right: 15px;
+}
+input:focus{
+  border: 2px solid var(--amarelo);
+  outline: none;
+}
+button{
+  width: 200px;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--vermelho);
+  align-self: center;
+  color: var(--branco);
+  font-size: 25px;
+}
+button:hover{
+  background-color: var(--amarelo);
+  cursor: pointer;
+}
+a{
+  text-decoration: none;
+  color: inherit;
+}
