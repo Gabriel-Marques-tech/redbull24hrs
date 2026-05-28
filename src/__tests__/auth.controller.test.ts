@@ -45,6 +45,34 @@ describe("registerManager", () => {
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith(manager);
   });
+
+  it("Retorna 409 quando o email já está cadastrado (UNIQUE violation)", async () => {
+    mockService.registerManager.mockRejectedValue(
+      Object.assign(new Error("duplicate key"), { code: "23505" }),
+    );
+    const req = {
+      body: { name: "M", email: "m@a.com", password: "pwd" },
+    } as Request;
+    const res = buildRes();
+
+    await AuthController.registerManager(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(409);
+    expect(res.json).toHaveBeenCalledWith({ error: "Email já cadastrado" });
+  });
+
+  it("Retorna 500 quando o service lança erro genérico", async () => {
+    mockService.registerManager.mockRejectedValue(new Error("db down"));
+    const req = {
+      body: { name: "M", email: "m@a.com", password: "pwd" },
+    } as Request;
+    const res = buildRes();
+
+    await AuthController.registerManager(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({ error: "Erro ao cadastrar gerente" });
+  });
 });
 
 describe("registerAuditor", () => {
@@ -87,6 +115,46 @@ describe("registerAuditor", () => {
     );
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith(auditor);
+  });
+
+  it("Retorna 409 em UNIQUE violation (email ou matrícula duplicados)", async () => {
+    mockService.registerAuditor.mockRejectedValue(
+      Object.assign(new Error("duplicate key"), { code: "23505" }),
+    );
+    const req = {
+      body: {
+        name: "A",
+        email: "a@a.com",
+        password: "pwd",
+        registration_number: 99,
+      },
+    } as Request;
+    const res = buildRes();
+
+    await AuthController.registerAuditor(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(409);
+    expect(res.json).toHaveBeenCalledWith({
+      error: "Email ou matrícula já cadastrados",
+    });
+  });
+
+  it("Retorna 500 quando o service lança erro genérico", async () => {
+    mockService.registerAuditor.mockRejectedValue(new Error("db down"));
+    const req = {
+      body: {
+        name: "A",
+        email: "a@a.com",
+        password: "pwd",
+        registration_number: 99,
+      },
+    } as Request;
+    const res = buildRes();
+
+    await AuthController.registerAuditor(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({ error: "Erro ao cadastrar auditor" });
   });
 });
 
@@ -136,6 +204,19 @@ describe("loginUser", () => {
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith(result);
   });
+
+  it("Retorna 500 quando o service lança erro inesperado", async () => {
+    mockService.loginUser.mockRejectedValue(new Error("db down"));
+    const req = {
+      body: { email: "m@a.com", password: "pwd", role: "manager" },
+    } as Request;
+    const res = buildRes();
+
+    await AuthController.loginUser(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({ error: "Erro ao autenticar usuário" });
+  });
 });
 
 describe("refreshToken", () => {
@@ -161,6 +242,17 @@ describe("refreshToken", () => {
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith(tokens);
   });
+
+  it("Retorna 500 quando o service lança erro inesperado", async () => {
+    mockService.refresh.mockRejectedValue(new Error("db down"));
+    const req = { body: { refreshToken: "tok" } } as Request;
+    const res = buildRes();
+
+    await AuthController.refreshToken(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({ error: "Erro ao renovar token" });
+  });
 });
 
 describe("logout", () => {
@@ -174,5 +266,16 @@ describe("logout", () => {
     expect(mockService.logout).toHaveBeenCalledWith("tok");
     expect(res.status).toHaveBeenCalledWith(204);
     expect(res.send).toHaveBeenCalled();
+  });
+
+  it("Retorna 500 quando o service lança erro inesperado", async () => {
+    mockService.logout.mockRejectedValue(new Error("db down"));
+    const req = { body: { refreshToken: "tok" } } as Request;
+    const res = buildRes();
+
+    await AuthController.logout(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({ error: "Erro ao encerrar sessão" });
   });
 });
