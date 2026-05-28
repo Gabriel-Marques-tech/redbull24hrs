@@ -1683,7 +1683,7 @@ O diagrama de arquitetura de Eventos e Histórico apresenta a organização do m
 
 <div align="center">
   <sub>Imagem 10 - Diagrama de Arquitetura - EVENTS E HISTÓRICO </sub><br>
-  <img src= "documentos/assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de Arquitetura - Events"><br>
+  <img src= "./assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de Arquitetura - Events"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1708,6 +1708,7 @@ O diagrama de arquitetura de Turns apresenta a organização do módulo respons�
   <img src= "./assets/diagramas_arquitetura/turnos.svg" width="100%" alt="Diagrama de Arquitetura - Turns"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
+</div>
 
 #### 3.2.1.1. Diagrama de Classes Arquiteturais 
 
