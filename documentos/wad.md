@@ -1656,6 +1656,8 @@ Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo
 ---
 Os diagramas de arquitetura representam a estrutura organizacional do sistema, demonstrando como os componentes, camadas e módulos da aplicação se relacionam entre si. Eles auxiliam na visualização do fluxo de dados, das responsabilidades de cada camada e da comunicação entre os elementos da arquitetura, facilitando o entendimento, manutenção e evolução do software.
 
+DASHBOARD 
+
 O diagrama de arquitetura de Dashboard apresenta a organização do módulo responsável pelo painel de monitoramento em tempo real. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados a métricas consolidadas e checagem de conexão.
 
 <div align="center">
@@ -1665,18 +1667,18 @@ O diagrama de arquitetura de Dashboard apresenta a organização do módulo resp
   <br><br><br>
 </div>
 
-O diagrama de arquitetura de Events e Histórico apresenta a organização do módulo responsável pelo gerenciamento e monitoramento de eventos. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados aos eventos e métricas do sistema.
+EVENTOS E HISTÓRICO 
+
+O diagrama de arquitetura de Eventos e Histórico apresenta a organização do módulo responsável pelo gerenciamento e monitoramento de eventos. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados aos eventos e métricas do sistema.
 
 <div align="center">
-  <sub>Imagem 10 - Diagrama de Arquitetura - EVENTS </sub><br>
+  <sub>Imagem 10 - Diagrama de Arquitetura - EVENTS E HISTÓRICO </sub><br>
   <img src= "documentos/assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de Arquitetura - Events"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
-HISTORY 
-
-O diagrama de arquitetura de History descreve a estrutura utilizada para armazenar e consultar o histórico de operações realizadas na aplicação. Ele demonstra como os registros históricos são processados, validados e recuperados através das diferentes camadas da arquitetura, garantindo rastreabilidade e organização das informações.
+REGISTROS, LOGS E EQUIPES
 
 O diagrama de arquitetura de Registros, Logs e Equipes apresenta a organização do módulo responsável pela edição retroativa de dados e pelo sincronismo offline. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados aos ajustes manuais de quilometragem e auditoria.
 
@@ -1687,19 +1689,12 @@ O diagrama de arquitetura de Registros, Logs e Equipes apresenta a organização
   <br><br><br>
 </div>
 
-O diagrama de arquitetura de Teams apresenta a organização do módulo responsável pelo gerenciamento de equipes e histórico de desempenho do sistema. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados ao cadastro, pontuação acumulada e auditoria das equipes esportivas.
-
-<div align="center">
-  <sub>Imagem 12 - Diagrama de Arquitetura - TEAMS </sub><br>
-  <img src= "./assets/diagramas_arquitetura/equipes.svg" width="100%" alt="Diagrama de Arquitetura - Teams"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
+TURNOS
 
 O diagrama de arquitetura de Turns apresenta a organização do módulo responsável pelo controle de atletas e uso das esteiras. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados ao início, marcos intermediários e finalização dos turnos.
 
 <div align="center">
-  <sub>Imagem 14 - Diagrama de Arquitetura - TURNS </sub><br>
+  <sub>Imagem 12 - Diagrama de Arquitetura - TURNS </sub><br>
   <img src= "./assets/diagramas_arquitetura/turnos.svg" width="100%" alt="Diagrama de Arquitetura - Turns"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
