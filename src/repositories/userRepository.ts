@@ -86,7 +86,14 @@ const findActiveRefreshToken = async (
        AND expires_at > NOW()`,
     [tokenHash],
   );
-  return result.rows[0] ?? null;
+  const row = result.rows[0];
+  if (!row) return null;
+  return {
+    id: String(row.id),
+    user_id: String(row.user_id),
+    user_role: row.user_role,
+    expires_at: row.expires_at,
+  };
 };
 
 const revokeRefreshToken = async (tokenHash: string): Promise<void> => {
