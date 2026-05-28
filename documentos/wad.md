@@ -2384,9 +2384,14 @@ _Apresente aqui a paleta de cores, com seus códigos de aplicação e suas respe
 
 ### 3.4.2 Tipografia
 
----
+<div align="center">
+  <sub>Imagem xx - Tipografia da Aplicação</sub><br>
+  <img src="./assets/guia-de-estilos/tipografia.png" width="900px" alt="Tipografia de Cores"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
 
-_Apresente aqui a tipografia da solução, com famílias de fontes e suas respectivas funções_
+---
 
 ### 3.4.3 Iconografia e imagens
 
