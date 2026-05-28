@@ -16,7 +16,7 @@ const requireAuth = (req: Request, res: Response, next: NextFunction): void => {
       id: payload.sub,
       email: payload.email,
       role: payload.role,
-      name: "",
+      name: payload.name,
     };
     next();
   } catch {

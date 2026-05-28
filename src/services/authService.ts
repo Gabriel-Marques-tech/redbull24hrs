@@ -19,7 +19,12 @@ import {
 const SALT_ROUNDS = 10;
 
 const issueTokens = async (user: AuthUser): Promise<AuthTokens> => {
-  const payload: JwtPayload = { sub: user.id, email: user.email, role: user.role };
+  const payload: JwtPayload = {
+    sub: user.id,
+    email: user.email,
+    name: user.name,
+    role: user.role,
+  };
   const accessToken = signAccessToken(payload);
   const { token: refreshToken, expiresAt } = signRefreshToken(payload);
 
@@ -113,7 +118,7 @@ const refresh = async (refreshToken: string): Promise<AuthTokens | null> => {
 
   const user: AuthUser = {
     id: payload.sub,
-    name: "",
+    name: payload.name,
     email: payload.email,
     role: payload.role,
   };
