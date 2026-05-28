@@ -1,0 +1,50 @@
+graph LR
+    %% Configurações Globais de Temas para Alto Contraste
+    classDef client fill:#FFFFFF,stroke:#1A237E,stroke-width:2.5px,color:#000000;
+    classDef controller fill:#C5CAE9,stroke:#3F51B5,stroke-width:2.5px,color:#000000;
+    classDef service fill:#C8E6C9,stroke:#2E7D32,stroke-width:2.5px,color:#000000;
+    classDef repository fill:#FFE082,stroke:#EF6C00,stroke-width:2.5px,color:#000000;
+    classDef model fill:#E1BEE7,stroke:#6A1B9A,stroke-width:2.5px,color:#000000;
+    classDef db fill:#CFD8DC,stroke:#37474F,stroke-width:2.5px,color:#000000;
+
+    subgraph CLIENTES [CLIENTES]
+        C2[Web Admin / API Client]:::client
+    end
+
+    subgraph CONTROLLER_LAYER [CONTROLLER LAYER - EventController]
+        A4[Recebe Requisições <br> POST /events e GET]:::controller --> A5[Trata Exceções <br> ConflictException 409]:::controller
+    end
+
+    subgraph SERVICE_LAYER [SERVICE LAYER - EventService]
+        B4[Valida Conflitos]:::service --> B5[Regra: Ordenar Placar KM]:::service
+        B4 --> B6[Regra: Calcular Médias]:::service
+    end
+
+    subgraph REPOSITORY_LAYER [REPOSITORY LAYER - EventRepository]
+        D4[SELECT Event <br> same date]:::repository
+        D5[SELECT active <br> Shifts]:::repository
+        D6[SELECT Event logs <br> Auditoria]:::repository
+    end
+
+    subgraph MODEL_LAYER [MODEL LAYER]
+        E4[Entidade: Event]:::model
+        E5[Value Object: Scoreboard]:::model
+    end
+
+    subgraph BANCO_DE_DADOS [BANCO DE DADOS]
+        DB2[(Base de Dados Relacional)]:::db
+    end
+
+    %% Fluxo Linear
+    C2 --> A4
+    A5 --> B4
+    B5 --> D5
+    B6 --> D6
+    B4 -.-> D4
+
+    D4 --> DB2
+    D5 --> DB2
+    D6 --> DB2
+
+    D4 -.->|Mapeia| E4
+    D5 -.->|Mapeia| E5
