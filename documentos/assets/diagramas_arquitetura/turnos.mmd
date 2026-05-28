@@ -1,0 +1,52 @@
+graph LR
+    %% Configurações Globais de Temas para Alto Contraste
+    classDef client fill:#FFFFFF,stroke:#1A237E,stroke-width:2.5px,color:#000000;
+    classDef controller fill:#C5CAE9,stroke:#3F51B5,stroke-width:2.5px,color:#000000;
+    classDef service fill:#C8E6C9,stroke:#2E7D32,stroke-width:2.5px,color:#000000;
+    classDef repository fill:#FFE082,stroke:#EF6C00,stroke-width:2.5px,color:#000000;
+    classDef model fill:#E1BEE7,stroke:#6A1B9A,stroke-width:2.5px,color:#000000;
+    classDef db fill:#CFD8DC,stroke:#37474F,stroke-width:2.5px,color:#000000;
+
+    subgraph CLIENTES [CLIENTES]
+        C4[Terminal Auditor <br> na Esteira]:::client
+    end
+
+    subgraph CONTROLLER_LAYER [CONTROLLER LAYER - ShiftController]
+        A10[Endpoints: /start, <br> /checkpoints, /finish]:::controller --> A11[Bloqueia se Atleta <br> Ocupado]:::controller
+    end
+
+    subgraph SERVICE_LAYER [SERVICE LAYER - ShiftService]
+        B10[Gerencia Estado: <br> Occupied / Available]:::service --> B11[Regra: Distância <br> >= Último Checkpoint]:::service
+        B10 --> B12[Regra: Calcula Distância, <br> Tempo e Velocidade]:::service
+    end
+
+    subgraph REPOSITORY_LAYER [REPOSITORY LAYER - ShiftRepository]
+        D10[INSERT Shift <br> status='in_progress']:::repository
+        D11[INSERT Checkpoint]:::repository
+        D12[UPDATE Treadmill <br> SET status]:::repository
+    end
+
+    subgraph MODEL_LAYER [MODEL LAYER]
+        E8[Entidade: Shift]:::model
+        E9[Entidade: Checkpoint]:::model
+        E10[Entidade: Treadmill]:::model
+    end
+
+    subgraph BANCO_DE_DADOS [BANCO DE DADOS]
+        DB4[(Base de Dados Relacional)]:::db
+    end
+
+    %% Fluxo Linear
+    C4 --> A10
+    A11 --> B10
+    B11 --> D11
+    B12 --> D10
+    B10 -.-> D12
+
+    D10 --> DB4
+    D11 --> DB4
+    D12 --> DB4
+
+    D10 -.->|Mapeia| E8
+    D11 -.->|Mapeia| E9
+    D12 -.->|Mapeia| E10
