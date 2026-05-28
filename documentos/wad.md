@@ -1654,71 +1654,48 @@ Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo
 ### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
 
 ---
-
 Os diagramas de arquitetura representam a estrutura organizacional do sistema, demonstrando como os componentes, camadas e módulos da aplicação se relacionam entre si. Eles auxiliam na visualização do fluxo de dados, das responsabilidades de cada camada e da comunicação entre os elementos da arquitetura, facilitando o entendimento, manutenção e evolução do software.
 
-DASHBOARD
+DASHBOARD 
 
-O diagrama de arquitetura do Dashboard representa a estrutura responsável pela visualização consolidada de indicadores e métricas do sistema. Ele demonstra a separação em camadas (Controller, Service, Repository e Model), permitindo que os dados sejam processados, filtrados e retornados de forma organizada para exibição no painel principal da aplicação.
+O diagrama de arquitetura de Dashboard apresenta a organização do módulo responsável pelo painel de monitoramento em tempo real. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados a métricas consolidadas e checagem de conexão.
 
 <div align="center">
   <sub>Imagem 9 - Diagrama de Arquitetura - DASHBOARD </sub><br>
-  <img src= "./assets/diagramas_arquitetura/DASHBOARD_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Dashboard"><br>
+  <img src= "./assets/diagramas_arquitetura/dashboard.svg" width="100%" alt="Diagrama de Arquitetura - Dashboard"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
-EVENTS
+EVENTOS E HISTÓRICO 
 
-O diagrama de arquitetura de Events apresenta a organização do módulo responsável pelo gerenciamento e monitoramento de eventos. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados aos eventos e métricas do sistema.
+O diagrama de arquitetura de Eventos e Histórico apresenta a organização do módulo responsável pelo gerenciamento e monitoramento de eventos. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados aos eventos e métricas do sistema.
 
 <div align="center">
-  <sub>Imagem 10 - Diagrama de Arquitetura - EVENTS </sub><br>
-  <img src= "./assets/diagramas_arquitetura/EVENTS_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Events"><br>
+  <sub>Imagem 10 - Diagrama de Arquitetura - EVENTS E HISTÓRICO </sub><br>
+  <img src= "documentos/assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de Arquitetura - Events"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
-HISTORY 
+REGISTROS, LOGS E EQUIPES
 
-O diagrama de arquitetura de History descreve a estrutura utilizada para armazenar e consultar o histórico de operações realizadas na aplicação. Ele demonstra como os registros históricos são processados, validados e recuperados através das diferentes camadas da arquitetura, garantindo rastreabilidade e organização das informações.
+O diagrama de arquitetura de Registros, Logs e Equipes apresenta a organização do módulo responsável pela edição retroativa de dados e pelo sincronismo offline. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados aos ajustes manuais de quilometragem e auditoria.
 
 <div align="center">
-  <sub>Imagem 11 - Diagrama de Arquitetura - HISTORY </sub><br>
-  <img src= "./assets/diagramas_arquitetura/HISTORY_Architecture.png" width="100%" alt="Diagrama de Arquitetura - History"><br>
+  <sub>Imagem 11 - Diagrama de Arquitetura - LOGS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/logs.svg" width="100%" alt="Diagrama de Arquitetura - Logs"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
-LOGS
+TURNOS
 
-O diagrama de arquitetura de Logs representa o módulo responsável pelo controle e registro de atividades do sistema. A divisão em camadas permite capturar, processar e armazenar logs operacionais, facilitando auditorias, monitoramento e identificação de falhas durante a execução da aplicação.
-
-<div align="center">
-  <sub>Imagem 12 - Diagrama de Arquitetura - LOGS </sub><br>
-  <img src= "./assets/diagramas_arquitetura/LOGS_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Logs"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-TEAMS
-
-O diagrama de arquitetura de Teams apresenta a organização do gerenciamento de equipes e atletas no sistema. Ele demonstra como as operações de criação, consulta e atualização das equipes são distribuídas entre as camadas da aplicação, garantindo modularidade e facilidade de manutenção.
+O diagrama de arquitetura de Turns apresenta a organização do módulo responsável pelo controle de atletas e uso das esteiras. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados ao início, marcos intermediários e finalização dos turnos.
 
 <div align="center">
-  <sub>Imagem 13 - Diagrama de Arquitetura - TEAMS </sub><br>
-  <img src= "./assets/diagramas_arquitetura/TEAMS_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Teams"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-TURNS
-
-O diagrama de arquitetura de Turns representa o controle de turnos e checkpoints do sistema. A arquitetura evidencia o fluxo de validação, processamento e armazenamento das informações relacionadas aos turnos, permitindo um gerenciamento estruturado e eficiente das operações realizadas pelos usuários.
-
-<div align="center">
-  <sub>Imagem 14 - Diagrama de Arquitetura - TURNS </sub><br>
-  <img src= "./assets/diagramas_arquitetura/TURNS_Architecture.png" width="100%" alt="Diagrama de Arquitetura - Turns"><br>
+  <sub>Imagem 12 - Diagrama de Arquitetura - TURNS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/turnos.svg" width="100%" alt="Diagrama de Arquitetura - Turns"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1726,74 +1703,6 @@ O diagrama de arquitetura de Turns representa o controle de turnos e checkpoints
 #### 3.2.1.1. Diagrama de Classes Arquiteturais 
 
 ---
-
-A seção de Diagramas de Classes Arquiteturais apresenta a modelagem estrutural dos principais módulos do sistema, evidenciando as classes, responsabilidades e relacionamentos existentes entre os componentes da aplicação. Esses diagramas auxiliam na compreensão da organização interna do software, demonstrando como entidades, serviços, controladores e repositórios interagem para garantir o funcionamento adequado das funcionalidades implementadas.
-
-DASHBOARD
-
-O diagrama de classes do Dashboard representa a organização das classes responsáveis pela exibição e gerenciamento das informações do painel principal do sistema. Ele demonstra os relacionamentos entre entidades, serviços e componentes utilizados para consolidar métricas e indicadores apresentados aos usuários.
-
-<div align="center">
-  <sub>Imagem 15 - Diagrama de Classes Arquiteturais - DASHBOARD </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - Dashboard"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-EVENTS
-
-O diagrama de classes de Events descreve a estrutura das classes relacionadas ao gerenciamento de eventos da aplicação. Ele evidencia como as entidades, serviços e repositórios interagem para realizar operações de cadastro, consulta e processamento dos eventos do sistema.
-
-<div align="center">
-  <sub>Imagem 16 - Diagrama de Classes Arquiteturais - EVENTS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/EVENTS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - Events"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-HISTORY
-
-O diagrama de classes de History apresenta as classes responsáveis pelo armazenamento e gerenciamento do histórico de operações realizadas na aplicação. O modelo demonstra os relacionamentos entre os componentes que garantem rastreabilidade e controle das informações históricas.
-
-<div align="center">
-  <sub>Imagem 17 - Diagrama de Arquitetura - HISTORY </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/HISTORY_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - History"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-LOGS
-
-O diagrama de classes de Logs representa a estrutura utilizada para registrar e organizar os logs do sistema. Ele demonstra como as classes se relacionam para capturar, armazenar e consultar informações importantes para monitoramento e auditoria da aplicação.
-
-<div align="center">
-  <sub>Imagem 18 - Diagrama de Classes Arquiteturais - LOGS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/LOGS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - Logs"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-TEAMS
-
-O diagrama de classes de Teams descreve a modelagem das classes relacionadas ao gerenciamento de equipes e atletas. Ele apresenta os relacionamentos entre entidades e componentes responsáveis pelas operações de cadastro, atualização e consulta das equipes no sistema.
-
-<div align="center">
-  <sub>Imagem 19 - Diagrama de Classes Arquiteturais - TEAMS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/TEAMS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - Teams"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-TURNS
-
-O diagrama de classes de Turns representa a estrutura das classes responsáveis pelo controle de turnos e checkpoints da aplicação. O diagrama evidencia como os componentes interagem para processar, validar e armazenar as informações relacionadas aos turnos dos usuários.
-
-<div align="center">
-  <sub>Imagem 20 - Diagrama de Classes Arquiteturais - TURNS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/TURNS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - Turns"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
@@ -2233,19 +2142,17 @@ O desenvolvimento do frontend do projeto demandou atenção especial à organiza
 
 ---
 
-Além dos padrões de projeto, o grupo também utilizou os princípios SOLID para ajudar na organização da arquitetura do sistema. Esses princípios servem para deixar o código mais limpo, organizado, reutilizável e fácil de manter ao longo do desenvolvimento.
+Os princípios SOLID são cinco diretrizes de design de software definidas por Robert C. Martin que orientam como estruturar o código para torná-lo mais organizado, fácil de manter e preparado para crescer sem quebrar o que já funciona ¹⁵. Junto com os padrões de projeto, o grupo usou esses princípios como guia nas decisões de arquitetura ao longo das sprints.
 
-**S (Single Responsibility Principle):** Cada arquivo tem uma função só. O Controller recebe a requisição HTTP, o Service aplica as regras de negócio e o Repository acessa o banco. Nenhum dos três faz o trabalho do outro, o que torna cada mudança mais segura e previsível.
+**S — Single Responsibility Principle (Princípio da Responsabilidade Única):** Define que cada classe ou módulo deve ter apenas uma razão para mudar, ou seja, deve ser responsável por uma única parte do comportamento do sistema ¹⁵. No projeto, isso se traduz na divisão clara entre Controller, Service e Repository. O Controller recebe a requisição HTTP, o Service aplica as regras de negócio e o Repository acessa o banco. Nenhum dos três faz o trabalho do outro, o que torna cada mudança mais segura e previsível.
 
-**O (Open/Closed Principle):** O código cresce sem precisar alterar o que já funciona. O Strategy Pattern para os cálculos de turno é o exemplo mais direto: um novo critério de validação pode ser adicionado sem tocar nos que já existem.
+**O — Open/Closed Principle (Princípio do Aberto/Fechado):** Define que um módulo deve estar aberto para extensão, mas fechado para modificação, ou seja, deve ser possível adicionar novos comportamentos sem alterar o código existente ¹⁵. No projeto, o Strategy Pattern para os cálculos de turno aplica esse princípio diretamente: um novo critério de validação pode ser adicionado como uma nova estratégia sem tocar nas que já existem.
 
-**L (Liskov Substitution Principle):** Os repositórios podem ser substituídos por mocks nos testes sem que os Services precisem ser alterados. Isso permitiu executar testes com Jest e supertest sem depender de uma conexão real com o banco de dados em todos os cenários. 
+**L — Liskov Substitution Principle (Princípio da Substituição de Liskov):** Define que implementações de uma mesma abstração devem ser intercambiáveis sem que o código que as utiliza precise ser alterado ¹⁵. No projeto, isso ficou evidente nos testes: os repositórios reais puderam ser substituídos por mocks sem que os Services precisassem mudar, o que viabilizou os testes com Jest e supertest sem depender de uma conexão real com o banco.
 
-**I (Interface Segregation Principle):** Cada Repository expõe só os métodos que o Service que o usa realmente precisa, sem carregar operações que não serão usadas por quem o consome.
+**I — Interface Segregation Principle (Princípio da Segregação de Interfaces):** Define que um módulo não deve ser forçado a depender de métodos que não usa, ou seja, as interfaces devem ser específicas e enxutas ¹⁵. No projeto, cada Repository expõe só os métodos que o Service que o consome realmente precisa, sem acumular operações desnecessárias que aumentariam o acoplamento entre as camadas.
 
-**D (Dependency Inversion Principle):** Os Services não dependem diretamente da implementação concreta do banco. Eles dependem de abstrações, o que garante que a lógica de negócio continua funcionando mesmo se a camada de acesso ao banco for alterada.
-
-
+**D — Dependency Inversion Principle (Princípio da Inversão de Dependência):** Define que módulos de alto nível não devem depender de implementações concretas de módulos de baixo nível, mas sim de abstrações ¹⁵, ¹⁶. No projeto, os Services não dependem diretamente da implementação concreta do banco de dados. Eles dependem de abstrações, o que garante que a lógica de negócio continua funcionando mesmo se a camada de acesso ao banco for alterada no futuro.
 
 ## 3.3. Wireframes (sprint 2)
 
@@ -3245,11 +3152,18 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ¹⁰ FIELDING, Roy Thomas. **Architectural Styles and the Design of Network-based Software Architectures**. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: <https://ics.uci.edu/~fielding/pubs/dissertation/top.htm>. Acesso em: 27 abr. 2026.
 
+¹⁴ FOWLER, Martin. **Patterns of Enterprise Application Architecture.** Boston: Addison-Wesley, 2002. Disponível em: https://martinfowler.com/books/eaa.html. Acesso em: 25 mai. 2026.
+
+¹³ GAMMA, Erich; HELM, Richard; JOHNSON, Ralph; VLISSIDES, John. **Design Patterns: Elements of Reusable Object-Oriented Software.** Reading: Addison-Wesley, 1994. 
 ¹⁸ FOWLER, Martin. Presentation Model. martinfowler.com, 19 jul. 2004. Disponível em: https://martinfowler.com/eaaDev/PresentationModel.html. Acesso em: 26 mai. 2026. 
 
 ³ H.PRIME SAÚDE. **A revolução da geração wellness: por que a saúde se tornou o novo símbolo de sucesso**. Disponível em: <https://hprimesaude.com.br/blog/a-revolucao-da-geracao-wellness-por-que-a-saude-se-tornou-o-novo-simbolo-de-sucesso/>. Acesso em: 28 abr. 2026.
 
 ⁹ JACOBSON, Ivar; SPENCE, Ian; BITTNER, Kurt. **Use-Case 3.0 — The Definitive Guide**. S. l.: Ivar Jacobson International, 2024.
+
+¹⁵ MARTIN, Robert C. **Agile Software Development, Principles, Patterns, and Practices.** Upper Saddle River: Prentice Hall, 2002. Disponível em: https://www.pearson.com/en-us/subject-catalog/p/agile-software-development-principles-patterns-and-practices/P200000009487. Acesso em: 25 mai. 2026.
+
+¹⁶ MARTIN, Robert C. **Clean Architecture: A Craftsman's Guide to Software Structure and Design.** Upper Saddle River: Prentice Hall, 2017. Disponível em: https://www.pearson.com/en-us/subject-catalog/p/clean-architecture-a-craftsmans-guide-to-software-structure-and-design/P200000009528. Acesso em: 25 mai. 2026.
 
 ¹¹ MONTGOMERY, Cynthia A.; PORTER, Michael E. (org.). **Estratégia:** a busca da vantagem competitiva. Rio de Janeiro: Elsevier, 1998.
 
