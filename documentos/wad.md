@@ -3081,7 +3081,227 @@ _A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida
 
 ---
 
-_Descreva e ilustre aqui o desenvolvimento da primeira versão do sistema web. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos._
+Nessa sprint, entregamos a primeira versão funcional da aplicação com backend integrado e rodando. Foi uma etapa bastante intensa, com muita coisa sendo desenvolvida em paralelo, e o resultado foi um sistema já operacional de ponta a ponta. Abaixo, detalhamos tudo o que foi feito.
+
+### a) O que foi implementado
+
+O foco dessa sprint foi a implementação do backend da aplicação. Todos os fluxos descritos abaixo tiveram suas rotas, regras de negócio e persistência de dados desenvolvidos e integrados, formando a base funcional do sistema. Cada fluxo também foi documentado com seus respectivos diagramas, com exceção da autenticação, explicada mais adiante.
+
+**Fluxo de Eventos**
+
+Implementamos a camada responsável pelo gerenciamento dos eventos da competição. Por ele, é possível criar um evento, validar data, local e esteiras, acompanhar métricas como quilometragem total por equipe e velocidade média, além de exportar os dados coletados durante o evento ao fim da competição. Abaixo temos os diagramas realizados durante a sprint 3, que são os diagramas de arquitetura e classe arquitetural. 
+
+<div align="center">
+  <sub>Imagem X – Diagrama de arquitetura do fluxo de Eventos e Histórico</sub><br>
+  <img src="./assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de arquitetura - Eventos e Histórico"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+
+<div align="center">
+  <sub>Imagem X – Diagrama de classes arquiteturais do fluxo de Eventos</sub><br>
+  <img src="./assets/diagramas_arquiteturais/EVENTS_ClassDiagram.png" width="100%" alt="Diagrama de arquitetura - Eventos e Histórico"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+**Fluxo de Equipes**
+
+Implementamos o módulo de cadastro e gerenciamento das equipes e seus corredores. Esse fluxo garante que a competição ocorra sempre entre exatamente duas equipes, cada uma com seus atletas devidamente cadastrados. Abaixo temos o diagrama de classes arquiteturais realizado durante a sprint 3.
+
+
+
+<div align="center">
+  <sub>Imagem X – Diagrama de classes arquiteturais do fluxo de Equipes</sub><br>
+  <img src="./assets/diagramas_arquiteturais/TEAMS_ClassDiagram.png" width="100%" alt="Diagrama de classes - Teams"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+**Fluxo de Turnos e Checkpoints**
+
+Essa é a parte central do sistema. O auditor consegue registrar o início e o fim de cada turno de corrida, informando a esteira, o corredor e a quilometragem mostrada no display. Os checkpoints obrigatórios a cada 5 minutos e os voluntários também estão funcionando, com o horário registrado automaticamente pelo banco de dados. Abaixo temos os diagramas realizados durante a sprint 3, que são os diagramas de arquitetura e classe arquitetural. 
+
+<div align="center">
+  <sub>Imagem X – Diagrama de arquitetura do fluxo de Turnos</sub><br>
+  <img src="./assets/diagramas_arquitetura/turnos.svg" width="100%" alt="Diagrama de arquitetura - Turnos"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem X – Diagrama de classes arquiteturais do fluxo de Turnos</sub><br>
+  <img src="./assets/diagramas_arquiteturais/TURNS_ClassDiagram.png" width="100%" alt="Diagrama de classes - Turns"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+**Fluxo de Histórico**
+
+Implementamos também o fluxo de histórico com todos os lançamentos realizados durante o evento em ordem cronológica. Com isso, o auditor consegue consultar qualquer registro feito ao longo das 24 horas com rastreabilidade completa. Abaixo temos o diagrama de classes arquiteturais realizado durante a sprint 3.
+
+
+<div align="center">
+  <sub>Imagem X – Diagrama de classes arquiteturais do fluxo de Histórico</sub><br>
+  <img src="./assets/diagramas_arquiteturais/HISTORY_ClassDiagram.png" width="100%" alt="Diagrama de classes - History"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+**Fluxo de Logs e Sincronização Offline**
+
+Implementamos o módulo de logs de auditoria e a lógica de sincronização offline. Em caso de queda de rede durante o evento, o sistema armazena os dados localmente e os envia ao servidor assim que a conexão é restabelecida, garantindo que nenhum registro seja perdido. Abaixo temos os diagramas realizados durante a sprint 3, que são os diagramas de arquitetura e classe arquitetural. 
+
+<div align="center">
+  <sub>Imagem X – Diagrama de arquitetura do fluxo de Logs</sub><br>
+  <img src="./assets/diagramas_arquitetura/logs.svg" width="100%" alt="Diagrama de arquitetura - Logs"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem X – Diagrama de classes arquiteturais do fluxo de Logs</sub><br>
+  <img src="./assets/diagramas_arquiteturais/LOGS_ClassDiagram.png" width="100%" alt="Diagrama de classes - Logs"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+**Dashboard**
+
+Desenvolvemos o módulo de acompanhamento em tempo real que mostra a quilometragem acumulada por cada equipe e os principais indicadores da competição. Qualquer pessoa da organização consegue acompanhar o andamento da disputa sem precisar intervir manualmente nos registros. Esse fluxo conta com diagrama de arquitetura, diagrama de classes arquiteturais e diagrama de sequência UML completos.
+
+<div align="center">
+  <sub>Imagem X – Diagrama de arquitetura do Dashboard</sub><br>
+  <img src="./assets/diagramas_arquitetura/dashboard.svg" width="100%" alt="Diagrama de arquitetura - Dashboard"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem X – Diagrama de classes arquiteturais do Dashboard</sub><br>
+  <img src="./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de classes - Dashboard"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+**Autenticação**
+
+O sistema de login foi implementado e está funcionando. Só auditores com acesso liberado conseguem entrar na aplicação e registrar dados do evento. Por ser uma decisão tomada durante a própria sprint, quando identificamos que a autenticação seria necessária, não houve tempo para produzir os artefatos de documentação correspondentes, ou seja, o diagrama de sequência UML, o diagrama de arquitetura e o diagrama de classes arquiteturais desse fluxo ainda não foram feitos. Todos eles estão previstos para a Sprint 4.
+
+**Consultas SQL e lógica proposicional**
+
+As quatro consultas SQL principais do sistema foram implementadas e documentadas, cada uma acompanhada da sua tabela verdade em lógica proposicional, conforme detalhado na seção 3.6.4. A seguir, apresentamos como exemplo a Consulta 2, que gera o ranking final dos corredores com mais de 25 km percorridos ao fim do evento.
+
+Ao encerrar o evento, a consulta recupera o nome de todos os corredores que acumularam mais de 25 km no total, considerando ambas as equipes. Os corredores são listados em ordem decrescente de distância percorrida, sendo exibidos apenas os que ultrapassaram o limite mínimo estabelecido.
+
+```sql
+SELECT    
+    athletes.name             AS corredor,    
+    teams.name                AS equipe,    
+    SUM(shifts.distance)      AS total_km
+FROM shifts
+JOIN athletes ON athletes.id   = shifts.athlete_id
+JOIN teams    ON teams.id      = athletes.team_id
+JOIN events   ON events.id     = teams.event_id
+WHERE shifts.end_at IS NOT NULL  
+  AND events.end_at IS NOT NULL
+  AND teams.event_id = :event_id
+GROUP BY athletes.id, athletes.name, teams.name
+HAVING SUM(shifts.distance) > 25
+ORDER BY total_km DESC; 
+```
+
+<div align="center">
+<sub>Quadro X - Lógica Proposicional: Consulta 2</sub>
+
+| | |
+|---|---|
+| **Proposições lógicas** | $A$: O turno está encerrado (`shifts.end_at IS NOT NULL`) <br> $B$: O evento foi encerrado (`events.end_at IS NOT NULL`) <br> $C$: A soma dos turnos do corredor ultrapassa 25 km (`SUM(shifts.distance) > 25`) |
+| **Expressão lógica proposicional** | $A \land B \land C$ |
+| **Interpretação** | Um corredor só é exibido no ranking quando, simultaneamente: o turno está encerrado, o evento foi encerrado e a distância total acumulada ultrapassa 25 km |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$A \land B \land C$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+
+<sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
+</div>
+
+**Revisão dos requisitos**
+
+Revisamos e atualizamos os Requisitos Funcionais (RF), Requisitos Não Funcionais (RNF) e Regras de Negócio (RN) com dados implementados nessa sprint. 
+
+**Matriz de Rastreabilidade (RTM)**
+ 
+Desenvolvemos a Matriz de Rastreabilidade do projeto, consolidando os vínculos entre personas, requisitos funcionais, regras de negócio, endpoints, telas e testes. A RTM garante que cada requisito do sistema tenha rastreabilidade completa ao longo da cadeia de desenvolvimento, facilitando a identificação de lacunas e a validação das entregas.
+
+**Protótipo de alta fidelidade**
+
+Finalizamos 20 telas do protótipo de alta fidelidade, com guia completo de tipografia, iconografia e imagens, definindo a identidade visual da aplicação. A seguir, destacamos telas que cobrem o evento, principalmente por onde auditores e gerentes passam ao longo das 24 horas.
+
+<div align="center">
+  <sub>Imagem X – Tela de login</sub><br>
+  <img src="./assets/relatorio_desenvolvimento/prototipo_login.png" width="100%" alt="Protótipo - Login"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+
+<div align="center">
+  <sub>Imagem X – Tela de histórico de auditoria (dashboard)</sub><br>
+  <img src="./assets/relatorio_desenvolvimento/prototipo_historico_auditoria.png" width="100%" alt="Protótipo - Histórico auditoria"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem X – Tela de histórico de equipes (dashboard)</sub><br>
+  <img src="./assets/relatorio_desenvolvimento/prototipo_historico_equipes.png" width="100%" alt="Protótipo - Histórico equipes"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem X – Tela de histórico geral (dashboard)</sub><br>
+  <img src="./assets/relatorio_desenvolvimento/prototipo_historico_geral.png" width="100%" alt="Protótipo - Histórico geral"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem X – Tela de inconsistência</sub><br>
+  <img src="./assets/relatorio_desenvolvimento/prototipo_inconsistencia.png" width="100%" alt="Protótipo - inconsistencia"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem X – Tela de registro de checkpoints</sub><br>
+  <img src="./assets/relatorio_desenvolvimento/prototipo_checkpoints.png" width="100%" alt="Protótipo - checkpoints"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+---
+
+### b) O que não foi concluído
+
+O que ficou faltando nessa sprint foram os artefatos de documentação do fluxo de autenticação, o diagrama de sequência UML, de arquitetura e o diagrama de classes arquiteturais. O fluxo em si está implementado e funcionando normalmente no sistema, só não tem documentação pronta. Isso aconteceu porque a decisão de implementar a autenticação surgiu durante a própria sprint, quando identificamos que ela seria necessária, e não sobrou tempo para produzir os diagramas correspondentes. Todos estão previstos para a Sprint 4.
+
+Além disso, o frontend também foi iniciado nessa sprint, ainda que seu desenvolvimento esteja originalmente previsto para a Sprint 4. As telas foram parcialmente construídas como adiantamento, mas ainda precisam de refinamentos e ajustes antes de estarem prontas para integração com o backend e WebAPI.
+
+---
+
+### c) Dificuldades técnicas enfrentadas e próximos passos
+
+**Dificuldades**
+
+A maior dificuldade técnica da sprint foi garantir que o registro de turnos e checkpoints funcionasse de forma consistente mesmo em situações de instabilidade de rede, algo esperado no ambiente físico do evento. A lógica de sincronização offline precisou ser cuidadosa: ao tentar salvar um checkpoint, o sistema precisa verificar se o dado não quebra a cronologia dos registros já existentes antes de aceitar ou ignorar a inserção. Implementar essa validação diretamente no banco de dados exigiu bastante atenção da equipe.
+
+**Próximos passos**
+
+- Criar os diagramas de sequência UML, arquitetura e classes arquiteturais do fluxo de autenticação
+- Implementar o frontend de todas as telas do sistema
+- Implementar os testes automatizados dos endpoints com Jest e Supertest
+- Ajustar as telas com base nos feedbacks do parceiro
+- Evoluir para a segunda versão da aplicação com todos os fluxos consolidados
 
 ## 4.2. Segunda versão da aplicação web (sprint 4)
 
