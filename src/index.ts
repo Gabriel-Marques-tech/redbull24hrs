@@ -1,14 +1,9 @@
-import express from "express";
-import { pool } from "./database/connection";
 import { config } from "dotenv";
-import AuthRoutes from "./routes/auth";
+import { pool } from "./database/connection";
+import app from "./app";
 
 config();
 const port = Number(process.env.SERVER_PORT);
-const app = express();
-
-app.use(express.json());
-app.use("/auth", AuthRoutes);
 
 async function bootstrap() {
 	try {
