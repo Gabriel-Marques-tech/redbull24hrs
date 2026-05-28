@@ -1542,6 +1542,10 @@ Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio 
 | RN35 | Um turno só pode assumir os status pending, in_progress ou completed. Qualquer tentativa de persistir um turno com status fora desse conjunto deve ser rejeitada. | RF007, RF014 |
 | RN36 | O link de compartilhamento do desempenho final de um atleta deve ser único, gerado automaticamente pelo sistema ao término do evento, e acessível publicamente sem autenticação. O link deve expor apenas os dados de desempenho do corredor em questão, sem acesso a outras funcionalidades do sistema. | RF050 |
 | RN37 | Um evento excluído logicamente não pode ter novos turnos iniciados nem receber alterações operacionais. Equipes e atletas vinculados a um evento com exclusão lógica devem ser tratados como inativos para fins de operação. | RF051 |
+| RN38 | Toda senha de usuário (Administrador ou Auditor) deve ser persistida no banco como hash bcrypt com fator de custo mínimo igual a 10. O sistema deve rejeitar qualquer fluxo que armazene ou transmita senhas em texto plano, inclusive em logs e respostas de API.                                          | RF027        |
+| RN39 | O access token JWT deve ter tempo de expiração de 15 minutos a partir da emissão. Qualquer requisição autenticada que apresente token expirado, malformado ou com assinatura inválida deve ser rejeitada com HTTP 401, sem revelar a causa específica da falha ao cliente.                                  | RF027        |
+| RN40 | O refresh token é de uso único: a cada chamada bem-sucedida a `/auth/refresh`, o token apresentado deve ser imediatamente revogado (rotação) e um novo par (access + refresh) deve ser emitido. Tentativas de reutilização de refresh token já revogado devem ser rejeitadas com HTTP 401.                  | RF027        |
+| RN41 | Auditores com `is_active = false` não podem autenticar, mesmo apresentando credenciais corretas. A validação de status deve ocorrer antes da verificação de senha para evitar enumeração de contas inativas. A operação `/auth/logout` deve revogar o refresh token apresentado, encerrando a sessão ativa. | RF027        |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -1583,6 +1587,12 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 | RF027 | RN25          | `/eventos/{id}/inconsistencias`                                  | GET    |
 | RF028 | RN26          | `/eventos/{id}/exportar`                                         | GET    |
 | RF016 | RN27          | `/sync`                                                          | POST   |
+| RF027 | RN28          | `/auth/register/manager`                                         | POST   |
+| RF027 | RN28, RN31    | `/auth/register/auditor`                                         | POST   |
+| RF027 | RN28, RN29, RN31 | `/auth/login`                                                 | POST   |
+| RF027 | RN29, RN30    | `/auth/refresh`                                                  | POST   |
+| RF027 | RN30, RN31    | `/auth/logout`                                                   | POST   |
+| RF027 | RN29          | `/auth/me`                                                       | GET    |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -2967,6 +2977,23 @@ ORDER BY total_minutos_uso DESC;
 </div>
 
 &nbsp;&nbsp;&nbsp;&nbsp;Assim, é possível afirmar que o entendimento da lógica proposicional possui papel essencial no desenvolvimento e na administração do banco de dados do nosso sistema. A estrutura implementada evidencia a utilização adequada de proposições, conectivos lógicos e operadores booleanos em consultas SQL, possibilitando a criação de comandos eficientes, consistentes e seguros para processos de filtragem, seleção e associação de dados do nosso sistema para o evento. Além disso, as tabelas verdade apresentadas ilustram as operações lógicas efetivamente aplicadas no código, contemplando funcionalidades como inserir ou ignorar o Sync Offline.
+A documentação completa e navegável dos endpoints está disponível em [`docs/api/index.html`](../docs/api/index.html) e também servida pelo próprio backend em `GET /docs` (acessível sem autenticação).
+
+### Resumo dos fluxos implementados
+
+| Fluxo | Branch | Endpoints | RFs cobertos |
+|---|---|---|---|
+| **Autenticação** | `feat/auth` | 6 | RF027 |
+| **Eventos** | `code` | 5 | — |
+| **Esteiras** | `code` | 4 | RF004 |
+| **Equipes** | `code` | 5 | RF001 |
+| **Atletas** | `code` | 5 | RF002, RF006 (parcial) |
+| **Auditoria** | A implementar | — | RF007–RF026 |
+| **Inconsistências** | A implementar | — | RF028–RF031 |
+
+**Total atual: 25 endpoints documentados.** Os fluxos de Auditoria e Inconsistências estão reservados na documentação com placeholders explícitos indicando os endpoints previstos e os RFs correspondentes.
+
+Cada endpoint contém: método HTTP, path completo, headers, body request (com campos obrigatórios e validações), shape da resposta de sucesso, exemplos JSON e tabela de status codes possíveis.
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
