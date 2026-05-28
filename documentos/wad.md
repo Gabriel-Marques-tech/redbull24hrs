@@ -2233,19 +2233,17 @@ O desenvolvimento do frontend do projeto demandou atenção especial à organiza
 
 ---
 
-Além dos padrões de projeto, o grupo também utilizou os princípios SOLID para ajudar na organização da arquitetura do sistema. Esses princípios servem para deixar o código mais limpo, organizado, reutilizável e fácil de manter ao longo do desenvolvimento.
+Os princípios SOLID são cinco diretrizes de design de software definidas por Robert C. Martin que orientam como estruturar o código para torná-lo mais organizado, fácil de manter e preparado para crescer sem quebrar o que já funciona ¹⁵. Junto com os padrões de projeto, o grupo usou esses princípios como guia nas decisões de arquitetura ao longo das sprints.
 
-**S (Single Responsibility Principle):** Cada arquivo tem uma função só. O Controller recebe a requisição HTTP, o Service aplica as regras de negócio e o Repository acessa o banco. Nenhum dos três faz o trabalho do outro, o que torna cada mudança mais segura e previsível.
+**S — Single Responsibility Principle (Princípio da Responsabilidade Única):** Define que cada classe ou módulo deve ter apenas uma razão para mudar, ou seja, deve ser responsável por uma única parte do comportamento do sistema ¹⁵. No projeto, isso se traduz na divisão clara entre Controller, Service e Repository. O Controller recebe a requisição HTTP, o Service aplica as regras de negócio e o Repository acessa o banco. Nenhum dos três faz o trabalho do outro, o que torna cada mudança mais segura e previsível.
 
-**O (Open/Closed Principle):** O código cresce sem precisar alterar o que já funciona. O Strategy Pattern para os cálculos de turno é o exemplo mais direto: um novo critério de validação pode ser adicionado sem tocar nos que já existem.
+**O — Open/Closed Principle (Princípio do Aberto/Fechado):** Define que um módulo deve estar aberto para extensão, mas fechado para modificação, ou seja, deve ser possível adicionar novos comportamentos sem alterar o código existente ¹⁵. No projeto, o Strategy Pattern para os cálculos de turno aplica esse princípio diretamente: um novo critério de validação pode ser adicionado como uma nova estratégia sem tocar nas que já existem.
 
-**L (Liskov Substitution Principle):** Os repositórios podem ser substituídos por mocks nos testes sem que os Services precisem ser alterados. Isso permitiu executar testes com Jest e supertest sem depender de uma conexão real com o banco de dados em todos os cenários. 
+**L — Liskov Substitution Principle (Princípio da Substituição de Liskov):** Define que implementações de uma mesma abstração devem ser intercambiáveis sem que o código que as utiliza precise ser alterado ¹⁵. No projeto, isso ficou evidente nos testes: os repositórios reais puderam ser substituídos por mocks sem que os Services precisassem mudar, o que viabilizou os testes com Jest e supertest sem depender de uma conexão real com o banco.
 
-**I (Interface Segregation Principle):** Cada Repository expõe só os métodos que o Service que o usa realmente precisa, sem carregar operações que não serão usadas por quem o consome.
+**I — Interface Segregation Principle (Princípio da Segregação de Interfaces):** Define que um módulo não deve ser forçado a depender de métodos que não usa, ou seja, as interfaces devem ser específicas e enxutas ¹⁵. No projeto, cada Repository expõe só os métodos que o Service que o consome realmente precisa, sem acumular operações desnecessárias que aumentariam o acoplamento entre as camadas.
 
-**D (Dependency Inversion Principle):** Os Services não dependem diretamente da implementação concreta do banco. Eles dependem de abstrações, o que garante que a lógica de negócio continua funcionando mesmo se a camada de acesso ao banco for alterada.
-
-
+**D — Dependency Inversion Principle (Princípio da Inversão de Dependência):** Define que módulos de alto nível não devem depender de implementações concretas de módulos de baixo nível, mas sim de abstrações ¹⁵, ¹⁶. No projeto, os Services não dependem diretamente da implementação concreta do banco de dados. Eles dependem de abstrações, o que garante que a lógica de negócio continua funcionando mesmo se a camada de acesso ao banco for alterada no futuro.
 
 ## 3.3. Wireframes (sprint 2)
 
@@ -3245,11 +3243,18 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ¹⁰ FIELDING, Roy Thomas. **Architectural Styles and the Design of Network-based Software Architectures**. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: <https://ics.uci.edu/~fielding/pubs/dissertation/top.htm>. Acesso em: 27 abr. 2026.
 
+¹⁴ FOWLER, Martin. **Patterns of Enterprise Application Architecture.** Boston: Addison-Wesley, 2002. Disponível em: https://martinfowler.com/books/eaa.html. Acesso em: 25 mai. 2026.
+
+¹³ GAMMA, Erich; HELM, Richard; JOHNSON, Ralph; VLISSIDES, John. **Design Patterns: Elements of Reusable Object-Oriented Software.** Reading: Addison-Wesley, 1994. 
 ¹⁸ FOWLER, Martin. Presentation Model. martinfowler.com, 19 jul. 2004. Disponível em: https://martinfowler.com/eaaDev/PresentationModel.html. Acesso em: 26 mai. 2026. 
 
 ³ H.PRIME SAÚDE. **A revolução da geração wellness: por que a saúde se tornou o novo símbolo de sucesso**. Disponível em: <https://hprimesaude.com.br/blog/a-revolucao-da-geracao-wellness-por-que-a-saude-se-tornou-o-novo-simbolo-de-sucesso/>. Acesso em: 28 abr. 2026.
 
 ⁹ JACOBSON, Ivar; SPENCE, Ian; BITTNER, Kurt. **Use-Case 3.0 — The Definitive Guide**. S. l.: Ivar Jacobson International, 2024.
+
+¹⁵ MARTIN, Robert C. **Agile Software Development, Principles, Patterns, and Practices.** Upper Saddle River: Prentice Hall, 2002. Disponível em: https://www.pearson.com/en-us/subject-catalog/p/agile-software-development-principles-patterns-and-practices/P200000009487. Acesso em: 25 mai. 2026.
+
+¹⁶ MARTIN, Robert C. **Clean Architecture: A Craftsman's Guide to Software Structure and Design.** Upper Saddle River: Prentice Hall, 2017. Disponível em: https://www.pearson.com/en-us/subject-catalog/p/clean-architecture-a-craftsmans-guide-to-software-structure-and-design/P200000009528. Acesso em: 25 mai. 2026.
 
 ¹¹ MONTGOMERY, Cynthia A.; PORTER, Michael E. (org.). **Estratégia:** a busca da vantagem competitiva. Rio de Janeiro: Elsevier, 1998.
 
