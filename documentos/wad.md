@@ -2375,6 +2375,9 @@ As cores neutras complementam o sistema cromático com a função de sustentar l
   <br><br><br>
 </div>
 
+Em conjunto, a paleta equilibra impacto e funcionalidade. As cores primárias asseguram que a aplicação seja imediatamente reconhecível como parte do ecossistema Red Bull, enquanto os neutros garantem que a leitura dos dados, atividade central da plataforma durante a competição, ocorra sem ruído visual. Essa combinação resulta em uma interface que é ao mesmo tempo expressiva na identidade e eficiente no uso.
+
+
 ---
 
 _Apresente aqui a paleta de cores, com seus códigos de aplicação e suas respectivas funções_
