@@ -1547,7 +1547,7 @@ Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio 
   <br><br>
 </div>
 
-### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
+### 3.1.4. Matriz RF → RN → Endpoint
 
 ---
 
