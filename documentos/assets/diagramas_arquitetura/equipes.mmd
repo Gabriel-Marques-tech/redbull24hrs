@@ -1,0 +1,51 @@
+graph LR
+    %% Configurações Globais de Temas para Alto Contraste (Texto Preto #000000)
+    classDef client fill:#FFFFFF,stroke:#1A237E,stroke-width:2.5px,color:#000000;
+    classDef controller fill:#C5CAE9,stroke:#3F51B5,stroke-width:2.5px,color:#000000;
+    classDef service fill:#C8E6C9,stroke:#2E7D32,stroke-width:2.5px,color:#000000;
+    classDef repository fill:#FFE082,stroke:#EF6C00,stroke-width:2.5px,color:#000000;
+    classDef model fill:#E1BEE7,stroke:#6A1B9A,stroke-width:2.5px,color:#000000;
+    classDef db fill:#CFD8DC,stroke:#37474F,stroke-width:2.5px,color:#000000;
+
+    subgraph CLIENTES [CLIENTES]
+        C5[Auditor / App Mobile]:::client
+    end
+
+    subgraph CONTROLLER_LAYER [CONTROLLER LAYER - RegistrationController]
+        A12[PATCH /records/:id <br> Nova KM e ID do Auditor]:::controller --> A13[Retorna 200 OK <br> ou 422 Intervalo Inválido]:::controller
+    end
+
+    subgraph SERVICE_LAYER [SERVICE LAYER - RegistrationService]
+        B13[Busca Registro Existente]:::service --> B14[Regra: Valida KM entre <br> Checkpoint Anterior/Próximo]:::service
+        B13 --> B15[Orquestra Geração <br> de Log de Auditoria]:::service
+    end
+
+    subgraph REPOSITORY_LAYER [REPOSITORY LAYER - RegistrationRepository]
+        D13[SELECT record <br> WHERE id]:::repository
+        D14[UPDATE record <br> SET km = newValue]:::repository
+        D15[INSERT audit <br> Log Imutável]:::repository
+    end
+
+    subgraph MODEL_LAYER [MODEL LAYER - Domínio]
+        E11[Entidade: TeamRecord]:::model
+        E12[Entidade: AuditLog]:::model
+    end
+
+    subgraph BANCO_DE_DADOS [BANCO DE DADOS]
+        DB5[(Base de Dados Relacional)]:::db
+    end
+
+    %% Fluxo de Relacionamentos Lineares (Esquerda para Direita)
+    C5 --> A12
+    A13 --> B13
+    B14 --> D14
+    B15 --> D15
+    B13 -.-> D13
+
+    %% Conexões com o Banco e Modelos
+    D13 --> DB5
+    D14 --> DB5
+    D15 --> DB5
+    
+    D14 -.->|Mapeia| E11
+    D15 -.->|Mapeia| E12
