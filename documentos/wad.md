@@ -2395,6 +2395,8 @@ Para a aplicação Red Bull 24 Horas, foi adotada exclusivamente a fonte Inter, 
   <br><br><br>
 </div>
 
+A definição de uma escala tipográfica estruturada, com papéis claros para títulos, subtítulos, corpo de texto, labels e dados numéricos, garante que qualquer tela da aplicação possa ser lida de forma hierárquica e sem ambiguidade. O dado de quilometragem, por exemplo, sempre aparece em peso máximo e tamanho ampliado, destacando-se imediatamente do restante da interface. Esse rigor na aplicação da tipografia é o que transforma uma fonte simples em um sistema visual funcional e consistente.
+
 ---
 
 ### 3.4.3 Iconografia e imagens
