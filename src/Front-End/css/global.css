@@ -98,3 +98,25 @@ body{
     justify-content: center;
     font-weight: bold;
 }
+.selects-equipe{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.select-equipe{
+    width: 650px;
+    height: 60px;
+    padding: 0 20px;
+    font-size: 16px;
+    border: 1px solid #999;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.select-equipe.ativo{
+    background-color: var(--vermelho);
+    color: white;
+    border: none;
+    font-weight: 700;
+}
