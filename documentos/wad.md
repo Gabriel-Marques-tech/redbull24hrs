@@ -2467,7 +2467,9 @@ A definição de uma escala tipográfica estruturada, com papéis claros para t�
 
 Ícones são elementos de comunicação visual que substituem ou reforçam rótulos textuais, acelerando o reconhecimento de funções e reduzindo a carga de leitura na interface. Quando bem escolhidos e aplicados de forma consistente, tornam a navegação mais intuitiva e contribuem para uma experiência mais fluida, especialmente em contextos de uso rápido, onde o usuário precisa identificar ações e informações em frações de segundo.
 
-A nossa aplicação para a Red Bull 24 Horas utiliza ícones do Iconify, biblioteca open source que reúne coleções de diferentes famílias visuais sob uma única API de integração. Os ícones foram selecionados de coleções com traço sólido e geometria bem definida — como Material Symbols, MDI e Fluent, priorizando alta legibilidade em tamanhos reduzidos e coerência visual entre si. Cada ícone desempenha um papel funcional específico, seja representando métricas no dashboard, identificando campos nos formulários de registro ou sinalizando ações de navegação. Além dos ícones, a interface incorpora dois outros ativos visuais: o logotipo oficial da competição e imagens fotográficas do evento. O logotipo é utilizado em momentos pontuais da interface, como a tela de login, sempre sobre fundo claro, em sua versão única sem adaptações. As fotografias da competição são aplicadas como imagem de fundo em seções específicas, com o degradê da marca (#0F0069 → #D2003C) sobreposto, garantindo legibilidade do conteúdo posicionado à frente e mantendo coesão com a identidade visual do projeto.
+A nossa aplicação para a Red Bull 24 Horas utiliza ícones do Iconify, biblioteca open source (pública) que reúne coleções de diferentes famílias visuais sob única integração. Os ícones foram selecionados de coleções com traço sólido e geometria bem definida, priorizando alta legibilidade em tamanhos reduzidos e coerência visual entre si.
+
+Cada ícone desempenha um papel funcional específico, seja representando métricas no dashboard, identificando campos nos formulários de registro ou sinalizando ações de navegação. Além dos ícones, a interface incorpora dois outros ativos visuais: o logotipo oficial da competição e imagens fotográficas do evento. O logotipo é utilizado em momentos pontuais da interface, como a tela de login, em sua versão única sem adaptações. As fotografias da competição são aplicadas como imagem de fundo em seções específicas, com o degradê da marca (#0F0069 → #D2003C) sobreposto, garantindo legibilidade do conteúdo posicionado à frente e mantendo coesão com a identidade visual do projeto.
 
 <div align="center">
   <sub>Imagem xx - Iconografia da Aplicação</sub><br>
@@ -2477,10 +2479,6 @@ A nossa aplicação para a Red Bull 24 Horas utiliza ícones do Iconify, bibliot
 </div>
 
 ---
-
-_(esta subseção é opcional, caso não existam ícones e imagens, apague esta subseção)_
-
-_posicione aqui imagens e textos contendo exemplos padronizados de ícones e imagens, com seus respectivos atributos de aplicação, utilizadas na solução_
 
 ## 3.5 Protótipo de alta fidelidade (sprint 3)
 
