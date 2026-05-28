@@ -2364,6 +2364,10 @@ _Descreva aqui orientações gerais para o leitor sobre como utilizar os compone
 
 ### 3.4.1 Cores
 
+A paleta cromática foi construída a partir das cores oficiais da Red Bull, o vermelho e o azul escuro, que constituem as cores primárias da aplicação. O vermelho (#D2003C) é utilizado em elementos de destaque, como botões de ação e indicadores visuais, reforçando a identidade da marca e guiando o olhar do usuário para as interações principais. O azul (#0F0069) aparece em elementos mais específicos da interface e é a base do degradê característico, que mescla o azul ao vermelho para compor fundos, banners e recursos estilísticos de maior impacto visual.
+
+As cores neutras, branco, preto e dois tons de cinza, complementam a paleta garantindo legibilidade e hierarquia. O branco (#FFFFFF) é o fundo padrão da aplicação; o preto (#0D0D0D) é reservado ao texto principal; o cinza médio (#6B6B6B) atende textos secundários e rótulos de menor relevância; e o cinza claro (#D4D4D4) demarca bordas e divisores, organizando os espaços sem poluir visualmente a interface.
+
 <div align="center">
   <sub>Imagem xx - Paleta de Cores da Aplicação</sub><br>
   <img src="./assets/guia-de-estilos/paleta-de-cores.png" width="900px" alt="Paleta de Cores"><br>
