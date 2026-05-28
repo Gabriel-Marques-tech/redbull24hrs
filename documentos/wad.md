@@ -2384,6 +2384,10 @@ _Apresente aqui a paleta de cores, com seus códigos de aplicação e suas respe
 
 ### 3.4.2 Tipografia
 
+A tipografia de uma interface vai além da escolha de uma fonte: ela estrutura a leitura, comunica hierarquia e determina o quanto o usuário consegue absorver informação com eficiência. Fontes bem aplicadas conduzem o olhar de forma natural, do dado mais crítico ao detalhe de apoio, reduzindo o esforço cognitivo especialmente em ambientes de alta pressão e velocidade de uso, como é o caso de uma competição.
+
+Para a aplicação Red Bull 24 Horas, foi adotada exclusivamente a fonte Inter, aplicada em diferentes pesos e tamanhos para construir toda a hierarquia visual da interface. A Inter é uma família tipográfica de código aberto projetada especificamente para telas, com alta legibilidade em tamanhos reduzidos e excelente desempenho em displays de diferentes densidades. Sua geometria neutra e suas proporções equilibradas fazem dela uma escolha sólida para interfaces que precisam exibir dados numéricos com precisão, como registros de quilometragem e tempos de etapa, sem que a fonte concorra com o conteúdo. Os pesos utilizados variam do Regular (400) ao Black (900), cada um com uma função definida na escala tipográfica do projeto.
+
 <div align="center">
   <sub>Imagem xx - Tipografia da Aplicação</sub><br>
   <img src="./assets/guia-de-estilos/tipografia.png" width="900px" alt="Tipografia de Cores"><br>
