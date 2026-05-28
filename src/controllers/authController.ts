@@ -1,0 +1,102 @@
+import { Request, Response } from "express";
+import AuthService from "../services/authService";
+import { UserRole } from "../types/user.types";
+
+const PG_UNIQUE_VIOLATION = "23505";
+
+const registerManager = async (req: Request, res: Response): Promise<void> => {
+  const { name, email, password } = req.body;
+  try {
+    const manager = await AuthService.registerManager(name, email, password);
+    if (!manager) {
+      res.status(400).json({ error: "Dados inválidos para cadastro de gerente" });
+      return;
+    }
+    res.status(201).json(manager);
+  } catch (error: any) {
+    if (error?.code === PG_UNIQUE_VIOLATION) {
+      res.status(409).json({ error: "Email já cadastrado" });
+      return;
+    }
+    res.status(500).json({ error: "Erro ao cadastrar gerente" });
+  }
+};
+
+const registerAuditor = async (req: Request, res: Response): Promise<void> => {
+  const { name, email, password, registration_number } = req.body;
+  try {
+    const auditor = await AuthService.registerAuditor(
+      name,
+      email,
+      password,
+      registration_number,
+    );
+    if (!auditor) {
+      res.status(400).json({ error: "Dados inválidos para cadastro de auditor" });
+      return;
+    }
+    res.status(201).json(auditor);
+  } catch (error: any) {
+    if (error?.code === PG_UNIQUE_VIOLATION) {
+      res.status(409).json({ error: "Email ou matrícula já cadastrados" });
+      return;
+    }
+    res.status(500).json({ error: "Erro ao cadastrar auditor" });
+  }
+};
+
+const loginUser = async (req: Request, res: Response): Promise<void> => {
+  const { email, password, role } = req.body as {
+    email: string;
+    password: string;
+    role: UserRole;
+  };
+
+  if (role !== "manager" && role !== "auditor") {
+    res.status(400).json({ error: "Perfil inválido. Use 'manager' ou 'auditor'" });
+    return;
+  }
+
+  try {
+    const result = await AuthService.loginUser(email, password, role);
+    if (!result) {
+      res.status(401).json({ error: "Credenciais inválidas" });
+      return;
+    }
+    res.status(200).json(result);
+  } catch {
+    res.status(500).json({ error: "Erro ao autenticar usuário" });
+  }
+};
+
+const refreshToken = async (req: Request, res: Response): Promise<void> => {
+  const { refreshToken } = req.body;
+  try {
+    const tokens = await AuthService.refresh(refreshToken);
+    if (!tokens) {
+      res.status(401).json({ error: "Refresh token inválido ou expirado" });
+      return;
+    }
+    res.status(200).json(tokens);
+  } catch {
+    res.status(500).json({ error: "Erro ao renovar token" });
+  }
+};
+
+const logout = async (req: Request, res: Response): Promise<void> => {
+  const { refreshToken } = req.body;
+  try {
+    await AuthService.logout(refreshToken);
+    res.status(204).send();
+  } catch {
+    res.status(500).json({ error: "Erro ao encerrar sessão" });
+  }
+};
+
+export default {
+  registerManager,
+  registerAuditor,
+  loginUser,
+  refreshToken,
+  logout,
+};
