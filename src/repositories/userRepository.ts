@@ -103,18 +103,6 @@ const revokeRefreshToken = async (tokenHash: string): Promise<void> => {
   );
 };
 
-const revokeAllUserTokens = async (
-  userId: string,
-  role: UserRole,
-): Promise<void> => {
-  await pool.query(
-    `UPDATE refresh_tokens
-     SET revoked_at = NOW()
-     WHERE user_id = $1 AND user_role = $2 AND revoked_at IS NULL`,
-    [userId, role],
-  );
-};
-
 export default {
   registerManager,
   registerAuditor,
@@ -123,5 +111,4 @@ export default {
   saveRefreshToken,
   findActiveRefreshToken,
   revokeRefreshToken,
-  revokeAllUserTokens,
 };
