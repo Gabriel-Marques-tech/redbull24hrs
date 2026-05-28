@@ -2444,10 +2444,7 @@ As cores neutras complementam o sistema cromático com a função de sustentar l
 
 Em conjunto, a paleta equilibra impacto e funcionalidade. As cores primárias asseguram que a aplicação seja imediatamente reconhecível como parte do ecossistema Red Bull, enquanto os neutros garantem que a leitura dos dados, atividade central da plataforma durante a competição, ocorra sem ruído visual. Essa combinação resulta em uma interface que é ao mesmo tempo expressiva na identidade e eficiente no uso.
 
-
 ---
-
-_Apresente aqui a paleta de cores, com seus códigos de aplicação e suas respectivas funções_
 
 ### 3.4.2 Tipografia
 
@@ -2457,7 +2454,7 @@ Para a aplicação Red Bull 24 Horas, foi adotada exclusivamente a fonte Inter, 
 
 <div align="center">
   <sub>Imagem xx - Tipografia da Aplicação</sub><br>
-  <img src="./assets/guia-de-estilos/tipografia.png" width="900px" alt="Tipografia de Cores"><br>
+  <img src="./assets/guia-de-estilos/tipografia.png" width="900px" alt="Tipografia"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -2467,6 +2464,13 @@ A definição de uma escala tipográfica estruturada, com papéis claros para t�
 ---
 
 ### 3.4.3 Iconografia e imagens
+
+<div align="center">
+  <sub>Imagem xx - Iconografia da Aplicação</sub><br>
+  <img src="./assets/guia-de-estilos/iconografia.png" width="900px" alt="Iconografia da Cores"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
 
 ---
 
