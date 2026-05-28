@@ -1493,7 +1493,7 @@ Então o sistema deve exibir apenas os dados de desempenho do corredor, sem aces
 A estrutura de requisitos apresentada acima foi desenhada para transformar a dinâmica complexa do evento Red Bull 24 Horas em um fluxo digital ágil e seguro.
 Com esta base sólida, o projeto segue para a fase de implementação, onde cada ID listado servirá como critério de aceitação para garantir que a apuração final dos quilômetros seja 100% confiável, rastreável e transparente para ambas as equipes.
 
-### 3.1.3. Regras de Negócio (sprint 1, refinar até sprint 5)
+### 3.1.3. Regras de Negócio
 
 ---
 
@@ -1532,6 +1532,16 @@ Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio 
 | RN25 | O sistema deve marcar como inconsistente qualquer turno onde: (a) km_final < km_inicial; (b) gap entre checkpoints superior a 10 minutos sem justificativa registrada; (c) corredor com dois turnos simultâneos. Inconsistências devem ser sinalizadas no dashboard sem bloquear a operação em andamento.  | RF023        |
 | RN26 | O CSV exportado deve conter duas seções: (1) turnos — corredor, equipe, esteira, km*inicial, km_final, duracao_min, timestamp_inicio, timestamp_fim; (2) checkpoints — turno_id, km, timestamp, tipo. O nome do arquivo deve seguir o padrão evento*{local}\_{data-ISO}.csv.                               | RF024        |
 | RN27 | Em caso de ausência de conexão, os registros devem ser persistidos localmente com o timestamp original do momento do registro. Ao restabelecer conexão, a sincronização deve ocorrer automaticamente sem duplicar registros, preservando a ordem cronológica original.                                     | RF016        |
+| RN28 | O evento deve ter exatamente duas equipes cadastradas antes do início do primeiro turno. A tentativa de iniciar qualquer turno sem que ambas as equipes estejam presentes deve ser bloqueada. | RF001, RF003 |
+| RN29 | O título e o local de um evento devem ser únicos no sistema. Não é permitido cadastrar dois eventos com o mesmo título ou com o mesmo local simultaneamente. | RF051 |
+| RN30 | O CPF de gerentes, auditores e atletas, quando informado, deve conter exatamente 11 dígitos numéricos. Valores em formato diferente devem ser rejeitados antes da persistência. | RF027 |
+| RN31 | Um auditor com status inativo (is_active = FALSE) não pode registrar novos turnos nem checkpoints. O bloqueio deve ser verificado a cada tentativa de operação, não apenas no momento do login. | RF027 |
+| RN32 | A velocidade registrada em um turno deve ser maior ou igual a zero. O valor km_end deve ser maior ou igual a km_start. A distância calculada deve ser maior ou igual a zero. Qualquer violação deve ser rejeitada antes da persistência. | RF010, RF017 |
+| RN33 | O timestamp de encerramento de um turno deve ser posterior ou igual ao timestamp de início. Turnos com encerramento anterior ao início devem ser rejeitados antes da persistência. | RF016, RF018 |
+| RN34 | O tipo de um checkpoint deve ser obrigatoriamente mandatory (disparado automaticamente a cada 5 minutos) ou voluntary (registrado manualmente pelo auditor). Nenhum outro valor é aceito pelo sistema. | RF008, RF032 |
+| RN35 | Um turno só pode assumir os status pending, in_progress ou completed. Qualquer tentativa de persistir um turno com status fora desse conjunto deve ser rejeitada. | RF007, RF014 |
+| RN36 | O link de compartilhamento do desempenho final de um atleta deve ser único, gerado automaticamente pelo sistema ao término do evento, e acessível publicamente sem autenticação. O link deve expor apenas os dados de desempenho do corredor em questão, sem acesso a outras funcionalidades do sistema. | RF050 |
+| RN37 | Um evento excluído logicamente não pode ter novos turnos iniciados nem receber alterações operacionais. Equipes e atletas vinculados a um evento com exclusão lógica devem ser tratados como inativos para fins de operação. | RF051 |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -1664,6 +1674,10 @@ O diagrama de arquitetura de Events e Histórico apresenta a organização do m�
   <br><br><br>
 </div>
 
+HISTORY 
+
+O diagrama de arquitetura de History descreve a estrutura utilizada para armazenar e consultar o histórico de operações realizadas na aplicação. Ele demonstra como os registros históricos são processados, validados e recuperados através das diferentes camadas da arquitetura, garantindo rastreabilidade e organização das informações.
+
 O diagrama de arquitetura de Registros, Logs e Equipes apresenta a organização do módulo responsável pela edição retroativa de dados e pelo sincronismo offline. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados aos ajustes manuais de quilometragem e auditoria.
 
 <div align="center">
@@ -1701,7 +1715,7 @@ O diagrama de arquitetura de Turns apresenta a organização do módulo respons�
 O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 Horas a partir da prática **Light Use-Case Modeling** descrita em Jacobson et al.[⁹](#8-referências), evoluindo para o nível **System Boundary Established** ao incluir todos os atores e casos de uso planejados para o MVP. A notação adotada segue o guia _Use-Case 3.0 — The Definitive Guide_: atores são representados por bonecos-palito, casos de uso por elipses contidas dentro do retângulo do _System of Interest_, associações por linhas contínuas com setas indicando o iniciador da interação, `<<include>>` por seta tracejada apontando do caso-base para o caso obrigatoriamente incluído, e `<<extend>>` por seta tracejada apontando do caso opcional para o caso-base que ele estende.
 
 <div align="center">
-  <sub>Imagem 15 - Diagrama Casos de Uso</sub><br>
+  <sub>Imagem 21 - Diagrama Casos de Uso</sub><br>
   <img src= "./assets/use_case/use_case.jpeg" width="100%" alt="Casos de uso"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1771,7 +1785,7 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação UML, com o objetivo de representar a estrutura do sistema por meio de suas classes, atributos, relacionamentos e responsabilidades. A modelagem organiza logicamente os elementos do domínio do evento Red Bull 24h, facilitando a compreensão das dependências entre as entidades e da solução proposta pelo grupo.
 
 <div align = "center">
-  <sub>Imagem 16 - Diagrama de Classes de Domínio</sub><br>
+  <sub>Imagem 22 - Diagrama de Classes de Domínio</sub><br>
   <img src="./assets/classes_dominio/diagrama_classes_corrigido.png" width="100%" alt="Diagrama de Classes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1792,7 +1806,7 @@ A seguir, cada diagrama é apresentado com uma descrição detalhada de seus flu
 A gestão de Eventos representa a visão macro da competição, sendo a configuração inicial e o núcleo organizacional do desafio Red Bull 24 Horas. O Diagrama de Sequência de Eventos descreve como a aplicação web orquestra processos fundamentais, como a criação do evento (incluindo a validação de data, local e esteiras), o cálculo de métricas em tempo real, como quilometragem total por equipe, velocidade média e equipes em pista e a manutenção do placar oficial. Neste contexto, um evento é a unidade central da plataforma que coordena a disputa entre as duas equipes de 16 atletas, gerindo os dados das duas esteiras por equipe para garantir uma apuração precisa que substitua o método manual, permitindo ainda a detecção automática de inconsistências (como gaps de checkpoints) e a exportação de dados consolidados para auditoria pós-evento.
 
 <div align="center">
-  <sub>Imagem 17 - Diagrama de Sequencia: Eventos</sub><br>
+  <sub>Imagem 23 - Diagrama de Sequencia: Eventos</sub><br>
   <img src="./assets/diagrama_sequencia/Events_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1819,7 +1833,7 @@ A gestão de Eventos representa a visão macro da competição, sendo a configur
 O módulo de Equipes é a base de organização dos competidores. O Red Bull 24 Horas possui uma regra estrita: o confronto ocorre exatamente entre duas equipes, sendo cada uma composta por 16 pessoas. Este fluxo mapeia o cadastro e a validação estrutural dos times, a exibição dos perfis e o cálculo de métricas de desempenho coletivo e individual.
 
 <div align="center">
-  <sub>Imagem 18 - Diagrama de Sequência: Equipes</sub>
+  <sub>Imagem 24 - Diagrama de Sequência: Equipes</sub>
     <br><img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026 </sub>
   <br><br><br>
@@ -1846,7 +1860,7 @@ O módulo de Equipes é a base de organização dos competidores. O Red Bull 24 
 O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na esteira. Como a dinâmica do evento exige trocas rápidas de corredores sem interrupção na contagem de quilômetros, este fluxo mapeia desde a entrada do corredor no equipamento, passando pelos registros periódicos de segurança (checkpoints), até a finalização do turno com a leitura final da quilometragem. Turnos, neste contexto, representam os intervalos de atividade atribuídos a cada corredor ao longo de um ciclo na esteira, definindo quando cada atleta entra e sai da atividade.
 
 <div align="center">
-  <sub>Imagem 19 - Diagrama de Sequência: Turnos</sub><br>
+  <sub>Imagem 25 - Diagrama de Sequência: Turnos</sub><br>
   <img src="./assets/diagrama_sequencia/Turns_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de turnos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1873,7 +1887,7 @@ O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na estei
 A funcionalidade de Histórico fornece total rastreabilidade e transparência ao longo das 24 horas de evento. Ela permite que a organização e os auditores visualizem uma linha do tempo cronológica detalhada de todas as ações que ocorreram nas esteiras, provendo uma ferramenta ágil para sanar dúvidas ou contestar apurações durante a competição.
 
 <div align="center">
-  <sub>Imagem 20 - Diagrama de Sequência: Historico</sub><br>
+  <sub>Imagem 26 - Diagrama de Sequência: Historico</sub><br>
   <img src="./assets/diagrama_sequencia/History_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1900,7 +1914,7 @@ A funcionalidade de Histórico fornece total rastreabilidade e transparência ao
 Garantir a operação ininterrupta do sistema em um ambiente de evento físico é um grande desafio, pois podem ocorrer instabilidades na conexão de internet. Este diagrama mapeia duas rotinas avançadas de resiliência: a Edição Retroativa (para corrigir erros de digitação passados mantendo uma trilha de auditoria) e a Sincronização Offline (Sync), que permite à interface armazenar dados localmente em caso de queda de rede e enviá-los ao servidor assim que a conexão for restabelecida.
 
 <div align="center">
-  <sub>Imagem 21 - Diagrama de Sequência: Registros/Sync</sub><br>
+  <sub>Imagem 27 - Diagrama de Sequência: Registros/Sync</sub><br>
   <img src="./assets/diagrama_sequencia/Logs_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de registros e sync"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1925,7 +1939,7 @@ Garantir a operação ininterrupta do sistema em um ambiente de evento físico �
 O Dashboard atua como o principal ponto de visualização em tempo real do evento Red Bull 24 Horas. Esta interface (geralmente exibida em telões no local da prova) precisa refletir com exatidão a disputa acirrada entre as duas equipes, mostrando o placar geral, quem está correndo no momento e o ritmo da corrida ao longo do tempo. Para que os dados na tela estejam sempre vivos sem que ninguém precise atualizar a página manualmente, a aplicação utiliza uma técnica chamada Polling (consultas automáticas e contínuas ao servidor) atrelada a um sistema de verificação de integridade da conexão (Healthcheck).
 
 <div align="center">
-  <sub>Imagem 22 - Diagrama de Sequência: Dashboard</sub><br>
+  <sub>Imagem 28 - Diagrama de Sequência: Dashboard</sub><br>
   <img src="assets/diagrama_sequencia/Dashboard_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do painel de controle (dashboard)"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1973,6 +1987,120 @@ Padrões de projeto (design patterns) são soluções reutilizáveis e já testa
 
 ---
 
+O backend do projeto foi construído com Express 5 e TypeScript, com separação clara entre as camadas de entrada, lógica e persistência. Por concentrar todas as regras de negócio da aplicação, como o controle de turnos, a validação de checkpoints e a autenticação de auditores, foi necessário adotar padrões que garantissem organização, segurança e facilidade de manutenção ao longo das sprints. Os padrões descritos a seguir foram escolhidos para estruturar essa camada de forma que cada parte do sistema tenha uma responsabilidade clara e bem delimitada.
+
+**1. MVC (Model-View-Controller):**
+
+
+**Categoria:** Arquitetural
+O que é: Divide a aplicação em três partes com funções diferentes. O Model representa os dados e as regras de negócio. A View cuida da apresentação das informações. O Controller recebe as requisições, aciona as camadas corretas e devolve a resposta.
+
+
+**Justificativa:** O projeto utiliza Express 5 com TypeScript e, desde o início, o backend foi separado do frontend. Por isso, foi necessário organizar melhor a estrutura interna do servidor. O MVC ajudou nessa divisão: os Controllers recebem as requisições HTTP e delegam as operações para os Services, enquanto os Models representam as entidades do sistema, como turnos, atletas, equipes e esteiras. Sem essa separação, as regras de negócio acabariam espalhadas pelo sistema, deixando a manutenção muito mais difícil.
+
+
+**Onde se aplica no projeto:** Nas pastas de controllers, services e nas entidades mapeadas a partir das tabelas do banco, seguindo o fluxo Controller → Service → Repository.
+
+
+
+
+**2. TDD (Test-Driven Development):**
+
+
+**Categoria:** Metodológico / Boas Práticas
+
+
+**O que é:** Abordagem em que o teste é escrito antes do código. O ciclo é: escrever um teste que falha, escrever o código para ele passar e, depois, melhorar sem quebrar o que já funciona.
+
+
+**Justificativa:** O próprio banco de dados já aplica algumas restrições diretamente no SQL, como validar valores de status e garantir que a quilometragem final seja maior ou igual à inicial. Mesmo assim, essas validações também precisavam acontecer na camada de aplicação antes da persistência dos dados. Escrever os testes primeiro ajudou a garantir que as validações implementadas nos Services estivessem alinhadas com o comportamento esperado pelo banco, evitando erros silenciosos. Para os testes, o projeto utiliza Jest, ts-jest e supertest.
+
+
+**Onde se aplica no projeto:** Nos testes dos fluxos de criação e encerramento de turnos, validação de checkpoints e autenticação de auditores.
+
+
+
+
+**3. Repository Pattern:**
+
+
+**Categoria:** Estrutural / Arquitetural
+
+
+**O que é:** Cria uma camada entre a lógica de negócio e o banco de dados. As consultas SQL ficam nos Repositories, que expõem métodos com nomes que fazem sentido para o domínio da aplicação.
+
+
+**Justificativa:** O projeto utiliza a biblioteca pg para conectar o sistema ao PostgreSQL hospedado no Supabase. Sem o Repository Pattern, as consultas SQL ficariam espalhadas pelos Services, o que dificultaria bastante futuras alterações no banco. Com os Repositories, cada entidade possui um arquivo próprio responsável pelo acesso aos dados, centralizando as consultas em um único lugar. Isso também facilitou bastante os testes, já que os repositórios podem ser substituídos por mocks sem precisar alterar a lógica principal da aplicação.
+
+
+**Onde se aplica no projeto:** Em repositórios de turnos, atletas, auditores, equipes e checkpoints, correspondendo às tabelas do banco.
+
+
+
+
+**4. Service Layer (Camada de Serviço):**
+
+
+**Categoria:** Arquitetural
+
+
+**O que é:** Camada dedicada às regras de negócio, separada dos Controllers, que tratam do HTTP, e dos Repositories, que acessam o banco.
+
+
+**Justificativa:** Algumas validações já acontecem diretamente no banco de dados, como impedir horários inválidos ou validar formatos específicos. Porém, regras de negócio mais complexas precisam ficar na aplicação, como verificar se um auditor está ativo antes de registrar um turno ou calcular distância e tempo total ao finalizar uma atividade. O Service Layer concentra essas regras em um único lugar, evitando misturar lógica de negócio com tratamento de requisições HTTP ou acesso ao banco.
+
+
+**Onde se aplica no projeto:** Nos services de turnos, auditores, atletas, equipes e checkpoints.
+
+
+
+
+**5. Middleware Pattern:**
+
+
+**Categoria:** Comportamental / Arquitetural
+
+
+**O que é:** Conjunto de funções intermediárias que atuam no fluxo de uma requisição HTTP antes de ela ser processada pelo Controller. Cada função tem uma responsabilidade única e, ao concluí-la, decide se passa o controle adiante ou interrompe o fluxo.
+
+
+**Justificativa:** Em qualquer sistema com rotas protegidas, há verificações que precisam acontecer antes do processamento principal, como confirmar se o usuário está autenticado ou se tem permissão para acessar aquele recurso. Essas verificações não fazem parte de nenhuma regra de negócio específica, mas precisam estar presentes em vários pontos da aplicação. O Middleware Pattern resolve isso ao separar essas responsabilidades em funções independentes, reutilizáveis e encaixáveis. O resultado é que cada Controller fica responsável apenas pelo que é seu, sem carregar verificações que não pertencem a ele.
+
+
+**Onde se aplica no projeto:** Na camada de middlewares do servidor Express, cobrindo autenticação de auditores por meio de token, validação de acesso e tratamento centralizado de erros nas rotas da aplicação.
+
+
+
+
+**6. DTO (Data Transfer Object):**
+
+
+**Categoria:** Estrutural / Arquitetural
+
+
+**O que é:** Objeto simples que define quais dados passam entre as camadas. O Controller extrai da requisição só os campos necessários e os manda adiante já organizados.
+
+
+**Justificativa:** Algumas informações do banco são geradas automaticamente, como identificadores, timestamps e status padrão. Sem os DTOs, um cliente poderia tentar enviar ou sobrescrever esses dados diretamente na requisição, causando inconsistências. O DTO garante que apenas os campos esperados sejam enviados para as camadas internas da aplicação, independentemente do que o usuário mandar na requisição.
+
+
+**Onde se aplica no projeto:** Nos objetos de entrada dos endpoints de criação de turno, registro de checkpoint e finalização de turno, filtrando os campos antes de passar para os Services.
+
+
+**7. Strategy Pattern:**
+
+
+**Categoria:** Comportamental
+
+
+**O que é:** Permite ter diferentes formas de resolver um mesmo problema, onde cada forma fica separada e pode ser trocada sem alterar o restante do código.
+
+
+**Justificativa:** Ao encerrar um turno, o sistema precisa realizar diferentes cálculos, como distância percorrida, tempo total e velocidade média. Além disso, as verificações de inconsistência seguem lógicas diferentes dependendo do tipo de problema identificado, como gaps entre checkpoints ou quilometragem fora de ordem. O Strategy Pattern ajudou a separar cada uma dessas regras, facilitando a manutenção e permitindo adicionar novos critérios futuramente sem alterar os que já existem.
+
+
+**Onde se aplica no projeto:** Nas estratégias de cálculo de métricas ao encerrar um turno e nas verificações de consistência antes de persistir os dados de turnos e checkpoints.
+
 
 #### 3.2.7.2 Frontend
 
@@ -2018,6 +2146,20 @@ O desenvolvimento do frontend do projeto demandou atenção especial à organiza
 
 ---
 
+Além dos padrões de projeto, o grupo também utilizou os princípios SOLID para ajudar na organização da arquitetura do sistema. Esses princípios servem para deixar o código mais limpo, organizado, reutilizável e fácil de manter ao longo do desenvolvimento.
+
+**S (Single Responsibility Principle):** Cada arquivo tem uma função só. O Controller recebe a requisição HTTP, o Service aplica as regras de negócio e o Repository acessa o banco. Nenhum dos três faz o trabalho do outro, o que torna cada mudança mais segura e previsível.
+
+**O (Open/Closed Principle):** O código cresce sem precisar alterar o que já funciona. O Strategy Pattern para os cálculos de turno é o exemplo mais direto: um novo critério de validação pode ser adicionado sem tocar nos que já existem.
+
+**L (Liskov Substitution Principle):** Os repositórios podem ser substituídos por mocks nos testes sem que os Services precisem ser alterados. Isso permitiu executar testes com Jest e supertest sem depender de uma conexão real com o banco de dados em todos os cenários. 
+
+**I (Interface Segregation Principle):** Cada Repository expõe só os métodos que o Service que o usa realmente precisa, sem carregar operações que não serão usadas por quem o consome.
+
+**D (Dependency Inversion Principle):** Os Services não dependem diretamente da implementação concreta do banco. Eles dependem de abstrações, o que garante que a lógica de negócio continua funcionando mesmo se a camada de acesso ao banco for alterada.
+
+
+
 ## 3.3. Wireframes (sprint 2)
 
 ---
@@ -2035,7 +2177,7 @@ A seguir, são apresentados os wireframes de baixa e média fidelidade desenvolv
 O wireframe de baixa fidelidade representa a estrutura inicial das telas, com foco na disposição dos elementos e nos fluxos principais de navegação. Nesta etapa, foram mapeadas as telas essenciais do sistema, desde o cadastro pré-evento até o acompanhamento das esteiras em tempo real, sem preocupação com detalhamento visual ou componentes definitivos.
 
 <div align="center">
-  <sub>Imagem 23 - Wireframe de Baixa Fidelidade</sub><br>
+  <sub>Imagem 29 - Wireframe de Baixa Fidelidade</sub><br>
   <img src="./assets/wireframes/wireframe-baixa-fidelidade.svg" width="900px" alt="Wireframe de baixa fidelidade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2089,7 +2231,7 @@ Os wireframes de média fidelidade foram desenvolvidos a partir da evolução di
 O conjunto de telas cobre todos os fluxos críticos do sistema: cadastro pré-evento, operação em tempo real (início, checkpoint e encerramento de turno), detecção de inconsistências e visualização de métricas consolidadas.
 
 <div align="center">
-  <sub>Imagem 24 - Wireframe de Média Fidelidade</sub><br>
+  <sub>Imagem 30 - Wireframe de Média Fidelidade</sub><br>
   <img src="./assets/wireframes/Wireframe-Média-Fidelidade.svg" width="900px" alt="Wireframe de média fidelidade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2261,7 +2403,7 @@ _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelid
 O Modelo Entidade-Relacionamento (MER) é a representação conceitual do banco de dados, na qual se descrevem as entidades do domínio, seus atributos e os relacionamentos que as conectam, abstraindo decisões de implementação física como tipos de dados, índices ou chaves estrangeiras. Para este projeto, o MER traduz em linguagem de dados o domínio do Red Bull 24 Horas modelado nas seções anteriores: o evento operado por gerentes (Managers), suas equipes (Teams) e atletas (Athletes), e o registro de cada sessão de corrida (Shift) auditada à beira da esteira (Treadmill), com os checkpoints periódicos e logs que sustentam a apuração oficial da competição. A notação adotada é a de **Peter Chen**, na qual entidades são representadas por retângulos, atributos por elipses (com elipses preenchidas indicando chave primária e atributos compostos derivados do atributo-pai), relacionamentos por losangos e a cardinalidade explicitada nas extremidades de cada relacionamento com a razão (1) e (N). Os nomes de entidades, atributos e relacionamentos foram padronizados em inglês para garantir consistência com a nomenclatura técnica adotada no modelo relacional e no código-fonte da aplicação.
 
 <div align="center">
-  <sub>Imagem 25 - Modelo Entidade-Relacionamento</sub><br>
+  <sub>Imagem 31 - Modelo Entidade-Relacionamento</sub><br>
   <img src="./assets/modelo_entidade_relacionamento/MER.png" width="80%" alt="Modelo Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2335,7 +2477,7 @@ O MER traduz o domínio do Red Bull 24 Horas em um modelo conceitual de dados ra
 O DER traduz o modelo conceitual do MER para a estrutura relacional do banco de dados (PostgreSQL), adotando a **notação de tabelas relacionais** com tipos de dados, restrições (`NOT NULL`, `UNIQUE`, `CHECK`), chaves primárias (`PK`) e chaves estrangeiras (`FK`).
 
 <div align="center">
-  <sub>Imagem 26 - Diagrama Entidade-Relacionamento</sub><br>
+  <sub>Imagem 32 - Diagrama Entidade-Relacionamento</sub><br>
   <img src="./assets/diagrama_entidade_relacionamento/DER.png" width="90%" alt="Diagrama Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -2756,16 +2898,17 @@ ORDER BY total_km DESC;
 
 | | |
 |---|---|
-| **Proposições lógicas** | $A$: O turno está encerrado (`shifts.end_at IS NOT NULL`) <br> $B$: A soma dos turnos do corredor ultrapassa 25 km (`SUM(shifts.distance) > 25`) |
-| **Expressão lógica proposicional** | $A \land B$ |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+| **Proposições lógicas** | $A$: O turno está encerrado (`shifts.end_at IS NOT NULL`) <br> $B$: O evento foi encerrado (`events.end_at IS NOT NULL`) <br> $C$: A soma dos turnos do corredor ultrapassa 25 km (`SUM(shifts.distance) > 25`) |
+| **Expressão lógica proposicional** | $A \land B \land C$ |
+| **Interpretação** | Um corredor só é exibido no ranking quando, simultaneamente: o turno está encerrado, o evento foi encerrado **e** a distância total acumulada ultrapassa 25 km |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$A \land B \land C$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
  
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
 #### Consulta 3: *Auditores mais ativos* — auditores que registraram mais de um turno encerrado durante o evento
 
-&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar o evento, a consulta recupera o nome de todos os auditores que supervisionaram mais de um turno concluído durante as 24 horas de competição. Os auditores são listados em ordem decrescente pela quantidade de turnos auditados — do que supervisionou mais para o que supervisionou menos — sendo exibidos apenas aqueles que ultrapassaram o mínimo de um turno encerrado.
+&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar o evento (`events.end_at IS NOT NULL`), a consulta recupera o nome de todos os auditores que supervisionaram mais de um turno concluído durante as 24 horas de competição. Os auditores são listados em ordem decrescente pela quantidade de turnos auditados — do que supervisionou mais para o que supervisionou menos — sendo exibidos apenas aqueles que ultrapassaram o mínimo de um turno encerrado.
 
 **Consulta SQL:**
 ```sql
@@ -2773,9 +2916,11 @@ SELECT
     auditors.name                  AS auditor,
     COUNT(shifts.id)               AS total_turnos_auditados
 FROM shifts
-JOIN auditors ON auditors.id = shifts.auditor_id
-WHERE shifts.status = 'completed'
-  AND auditors.is_active = TRUE
+JOIN auditors  ON auditors.id  = shifts.auditor_id
+JOIN events    ON events.id    = shifts.event_id
+WHERE shifts.status        = 'completed'
+  AND auditors.is_active   = TRUE
+  AND events.end_at        IS NOT NULL
 GROUP BY auditors.id, auditors.name
 HAVING COUNT(shifts.id) > 1
 ORDER BY total_turnos_auditados DESC;
@@ -2787,10 +2932,10 @@ ORDER BY total_turnos_auditados DESC;
 
 | | |
 |---|---|
-| **Proposições lógicas** | $A$: O turno está encerrado (`shifts.status = 'completed'`) <br> $B$: O auditor está ativo no sistema (`auditors.is_active = TRUE`) <br> $C$: O auditor supervisionou mais de um turno encerrado (`COUNT(shifts.id) > 1`) |
-| **Expressão lógica proposicional** | $(A \land B) \rightarrow C$ |
-| **Interpretação** | Um auditor só é listado como ativo se o turno estiver encerrado **e** o auditor não tiver sido desativado no sistema; satisfeitas essas condições, ele será exibido apenas se sua contagem ultrapassar um turno |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$A \land B$</th><th>$(A \land B) \rightarrow C$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+| **Proposições lógicas** | $A$: O turno está encerrado (`shifts.status = 'completed'`) <br> $B$: O auditor está ativo no sistema (`auditors.is_active = TRUE`) <br> $C$: O evento foi encerrado (`events.end_at IS NOT NULL`) <br> $D$: O auditor supervisionou mais de um turno encerrado (`COUNT(shifts.id) > 1`) |
+| **Expressão lógica proposicional** | $A \land B \land C \Leftrightarrow D$ | 
+| **Interpretação** | Um auditor só é listado quando, simultaneamente: o turno está encerrado, o auditor não foi desativado no sistema, o evento foi encerrado **e** sua contagem de turnos ultrapassa um |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$D$</th><th>$A \land B \land C \land D$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
@@ -2820,9 +2965,10 @@ ORDER BY total_minutos_uso DESC;
 
 | | |
 | :--- | :--- |
-| **Proposições lógicas** | **$A$**: O turno vinculado à esteira está encerrado (`shifts.status = 'completed'`)<br><br>**$B$**: A duração do turno foi registrada (`shifts.total_time IS NOT NULL`)<br><br>**$C$**: A esteira é contabilizada no ranking de tempo de uso (`t.number` aparece no resultado ordenado por `total_minutos_uso DESC`) |
-| **Expressão lógica proposicional** | $( A \land B ) \rightarrow C$ |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th><th>$(A \land B) \rightarrow C$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+| **Proposições lógicas** | **$A$**: O turno vinculado à esteira está encerrado (`shifts.status = 'completed'`)<br><br>**$B$**: A duração do turno foi registrada (`shifts.total_time IS NOT NULL`)<br><br>**$C$**: A esteira é contabilizada no ranking de tempo de uso (`treadmill.number` aparece no resultado ordenado por `total_minutos_uso DESC`) |
+| **Expressão lógica proposicional** | $A \land B \Leftrightarrow C$ |
+| **Interpretação** | Uma esteira só é exibida no ranking quando, simultaneamente: o turno vinculado está encerrado, a duração do turno foi registrada **e** a esteira figura no resultado ordenado — as três condições devem ser verdadeiras ao mesmo tempo |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$A \land B \land C$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
