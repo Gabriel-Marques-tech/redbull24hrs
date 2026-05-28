@@ -1,0 +1,152 @@
+%%{init: {
+    "theme": "base",
+    "themeVariables": {
+        "primaryColor": "#0F0069",
+        "primaryTextColor": "#FFFFFF",
+        "primaryBorderColor": "#D2003C",
+        "secondaryColor": "#D2003C",
+        "secondaryTextColor": "#FFFFFF",
+        "secondaryBorderColor": "#D2003C",
+        "tertiaryColor": "#E8E8F5",
+        "tertiaryTextColor": "#0F0069",
+        "tertiaryBorderColor": "#0F0069",
+        "noteBkgColor": "#FFCC00",
+        "noteTextColor": "#0F0069",
+        "noteBorderColor": "#D2003C",
+        "activationBkgColor": "#D2003C",
+        "activationBorderColor": "#0F0069",
+        "sequenceNumberColor": "#FFCC00",
+        "actorBkg": "#0F0069",
+        "actorTextColor": "#FFFFFF",
+        "actorBorderColor": "#D2003C",
+        "actorLineColor": "#000000",
+        "signalColor": "#000000",
+        "signalTextColor": "#000000",
+        "labelBoxBkgColor": "#E8E8F5",
+        "labelBoxBorderColor": "#0F0069",
+        "labelTextColor": "#0F0069",
+        "loopTextColor": "#0F0069",
+        "fontFamily": "Arial, sans-serif",
+        "fontSize": "14px"
+    }
+}}%%
+sequenceDiagram
+    autonumber
+    actor User
+    participant RegistrationController
+    participant RegistrationService
+    participant RegistrationRepository
+    participant Database
+
+    Note over User, Database: Retroactive Record Editing
+
+    User->>RegistrationController: PATCH /records/{id} (newValue, auditorId)
+    activate RegistrationController
+
+    RegistrationController->>RegistrationService: editRecord(id, newValue, auditorId)
+    activate RegistrationService
+
+    RegistrationService->>RegistrationRepository: findRecord(id)
+    activate RegistrationRepository
+
+    RegistrationRepository->>Database: SELECT record WHERE id
+    activate Database
+
+    Database-->>RegistrationRepository: record (currentValue, checkpoints)
+    deactivate Database
+
+    RegistrationRepository-->>RegistrationService: recordData
+    deactivate RegistrationRepository
+
+    RegistrationService->>RegistrationService: validateKmRange(newValue, checkpoints)
+
+    RegistrationService->>RegistrationRepository: updateRecord(id, newValue)
+    activate RegistrationRepository
+
+    RegistrationRepository->>Database: UPDATE record SET km = newValue
+    activate Database
+
+    Database-->>RegistrationRepository: success
+    deactivate Database
+
+    RegistrationRepository-->>RegistrationService: ok
+    deactivate RegistrationRepository
+
+    RegistrationService->>RegistrationRepository: saveAudit(id, previousValue, newValue, auditorId)
+    activate RegistrationRepository
+
+    RegistrationRepository->>Database: INSERT audit (immutable)
+    activate Database
+
+    Database-->>RegistrationRepository: auditId
+    deactivate Database
+
+    RegistrationRepository-->>RegistrationService: ok
+    deactivate RegistrationRepository
+
+    RegistrationService-->>RegistrationController: updatedRecord + generatedAudit
+    deactivate RegistrationService
+
+    RegistrationController-->>User: 200 OK — Record edited and audit logged
+    deactivate RegistrationController
+
+    alt newValue < previousCheckpoint or newValue > nextCheckpoint
+        Note over RegistrationService: [Alternative] Value outside valid range
+        RegistrationService-->>RegistrationController: error: invalid mileage
+        RegistrationController-->>User: 422 — Value must be between checkpoints
+    end
+
+    Note over User, Database: Offline Sync
+
+    Note over User: Device without connection
+
+    loop For each offline record
+        User->>User: persistLocally(data)
+    end
+
+    Note over User: Connection restored
+
+    User->>RegistrationController: POST /sync (localRecords[])
+    activate RegistrationController
+
+    RegistrationController->>RegistrationService: syncRecords(localRecords[])
+    activate RegistrationService
+
+    loop For each record in queue
+        RegistrationService->>RegistrationRepository: checkDuplicate(id, timestamp)
+        activate RegistrationRepository
+
+        RegistrationRepository->>Database: SELECT WHERE id AND timestamp
+        activate Database
+
+        Database-->>RegistrationRepository: exists (true/false)
+        deactivate Database
+
+        RegistrationRepository-->>RegistrationService: duplicate (false)
+        deactivate RegistrationRepository
+
+        RegistrationService->>RegistrationRepository: saveRecord(data)
+        activate RegistrationRepository
+
+        RegistrationRepository->>Database: INSERT record
+        activate Database
+
+        Database-->>RegistrationRepository: success
+        deactivate Database
+
+        RegistrationRepository-->>RegistrationService: ok
+        deactivate RegistrationRepository
+    end
+
+    RegistrationService-->>RegistrationController: syncCompleted
+    deactivate RegistrationService
+
+    RegistrationController-->>User: 200 OK — Records synchronized
+    deactivate RegistrationController
+
+    alt record already exists in database
+        Note over RegistrationService: [Alternative] Duplicate record ignored
+        RegistrationService->>RegistrationService: ignoreRecord(id)
+        RegistrationService-->>RegistrationController: warning: duplicates discarded
+        RegistrationController-->>User: 200 OK — Partial sync
+    end
