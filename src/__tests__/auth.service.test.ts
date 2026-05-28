@@ -211,6 +211,7 @@ describe("refresh", () => {
     mockJwt.verifyRefreshToken.mockReturnValue({
       sub: "1",
       email: "a@a.com",
+      name: "M",
       role: "manager",
     });
     mockRepo.findActiveRefreshToken.mockResolvedValue(null);
@@ -223,6 +224,7 @@ describe("refresh", () => {
     mockJwt.verifyRefreshToken.mockReturnValue({
       sub: "1",
       email: "a@a.com",
+      name: "M",
       role: "manager",
     });
     mockRepo.findActiveRefreshToken.mockResolvedValue({
