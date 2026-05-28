@@ -57,6 +57,7 @@ describe("requireAuth", () => {
     mockJwt.verifyAccessToken.mockReturnValue({
       sub: "42",
       email: "a@a.com",
+      name: "Auditor 42",
       role: "auditor",
     });
     const req = { headers: { authorization: "Bearer good-token" } } as Request;
@@ -70,7 +71,7 @@ describe("requireAuth", () => {
       id: "42",
       email: "a@a.com",
       role: "auditor",
-      name: "",
+      name: "Auditor 42",
     });
     expect(next).toHaveBeenCalled();
     expect(res.status).not.toHaveBeenCalled();
