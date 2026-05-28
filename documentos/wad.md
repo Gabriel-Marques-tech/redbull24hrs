@@ -2478,23 +2478,7 @@ Cada ícone desempenha um papel funcional específico, seja representando métri
   <br><br><br>
 </div>
 
-Além dos ícones, a interface incorpora dois outros ativos visuais: o logotipo oficial da competição e imagens fotográficas do evento. O logotipo é utilizado em momentos pontuais da interface, como a tela de login, em sua versão única sem adaptações. As fotografias da competição são aplicadas como imagem de fundo em seções específicas, com o degradê da marca (#0F0069 → #D2003C) sobreposto, garantindo legibilidade do conteúdo posicionado à frente e mantendo coesão com a identidade visual do projeto.
-
-<div align="center">
-  <sub>Imagem xx - Logo da Competição Red Bull 24 Horas</sub><br>
-  <img src="./assets/guia-de-estilos/logo-redbull-24horas.png" width="200px" alt="Logo da Competição"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-<div align="center">
-  <sub>Imagem xx - Imagem de Background com Degradê Aplicado</sub><br>
-  <img src="./assets/guia-de-estilos/imagem-background.png" width="900px" alt="Iconografia da Cores"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-A padronização desses ativos garante que todos os elementos visuais falem a mesma linguagem: o logotipo nunca aparece distorcido ou fora de contexto, as imagens mantêm proporção e foco independentemente do tamanho da tela, e os ícones seguem uma escala consistente de 16 a 32 px conforme seu papel na hierarquia da interface. Esse conjunto de diretrizes reduz decisões arbitrárias durante o desenvolvimento e preserva a identidade visual da Red Bull 24 Horas em cada detalhe da aplicação.
+A padronização desses ativos garante que todos os elementos visuais falem a mesma linguagem: os ícones seguem uma escala consistente de 16 a 32 px conforme seu papel na hierarquia da interface. Esse conjunto de diretrizes reduz decisões arbitrárias durante o desenvolvimento e preserva a identidade visual da Red Bull 24 Horas em cada detalhe da aplicação.
 
 ---
 
