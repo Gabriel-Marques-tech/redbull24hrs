@@ -1698,6 +1698,7 @@ O diagrama de arquitetura de Turns apresenta a organização do módulo respons�
   <img src= "./assets/diagramas_arquitetura/turnos.svg" width="100%" alt="Diagrama de Arquitetura - Turns"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
+</div>
 
 #### 3.2.1.1. Diagrama de Classes Arquiteturais 
 
