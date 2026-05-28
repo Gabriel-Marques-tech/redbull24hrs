@@ -1650,6 +1650,7 @@ Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo
 ## 3.2. Arquitetura (sprints 1 a 5)
 
 ---
+A seção de Arquitetura apresenta a estrutura organizacional e a modelagem dos principais componentes do sistema desenvolvidos ao longo das sprints 1 a 5. Por meio dos diagramas arquiteturais, diagramas de classes e diagramas de casos de uso, é possível compreender como os módulos da aplicação se relacionam, quais são as responsabilidades de cada camada e como ocorre o fluxo de dados entre os componentes. Esses artefatos auxiliam na documentação técnica do projeto, facilitando o entendimento da solução, a manutenção do software e a evolução contínua da arquitetura proposta.
 
 ### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
 
@@ -1703,12 +1704,22 @@ O diagrama de arquitetura de Turns apresenta a organização do módulo respons�
 #### 3.2.1.1. Diagrama de Classes Arquiteturais 
 
 ---
+A seção de Diagramas de Classes Arquiteturais apresenta a modelagem estrutural dos principais módulos do sistema, evidenciando as classes, responsabilidades e relacionamentos existentes entre os componentes da aplicação. Esses diagramas auxiliam na compreensão da organização interna do software, demonstrando como entidades, serviços, controladores e repositórios interagem para garantir o funcionamento adequado das funcionalidades implementadas.
+
+DASHBOARD
+
+O diagrama de classes do Dashboard representa a organização das classes responsáveis pela exibição e gerenciamento das informações do painel principal do sistema. Ele demonstra os relacionamentos entre entidades, serviços e componentes utilizados para consolidar métricas e indicadores apresentados aos usuários.
+
 <div align="center">
   <sub>Imagem 13 - Diagrama de Classes Arquiteturais - DASHBOARD </sub><br>
   <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
+
+EVENTS
+
+O diagrama de classes de Events descreve a estrutura das classes relacionadas ao gerenciamento de eventos da aplicação. Ele evidencia como as entidades, serviços e repositórios interagem para realizar operações de cadastro, consulta e processamento dos eventos do sistema.
 
 <div align="center">
   <sub>Imagem 14 - Diagrama de Classes Arquiteturais - EVENTS </sub><br>
@@ -1717,12 +1728,20 @@ O diagrama de arquitetura de Turns apresenta a organização do módulo respons�
   <br><br><br>
 </div>
 
+HISTORY
+
+O diagrama de classes de History apresenta as classes responsáveis pelo armazenamento e gerenciamento do histórico de operações realizadas na aplicação. O modelo demonstra os relacionamentos entre os componentes que garantem rastreabilidade e controle das informações históricas.
+
 <div align="center">
   <sub>Imagem 15 - Diagrama de Classes Arquiteturais - HISTORY </sub><br>
   <img src= "./assets/diagramas_arquiteturais/HISTORY_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
+
+LOGS
+
+O diagrama de classes de Logs representa a estrutura utilizada para registrar e organizar os logs do sistema. Ele demonstra como as classes se relacionam para capturar, armazenar e consultar informações importantes para monitoramento e auditoria da aplicação.
 
 <div align="center">
   <sub>Imagem 16 - Diagrama de Classes Arquiteturais - LOGS </sub><br>
@@ -1731,12 +1750,20 @@ O diagrama de arquitetura de Turns apresenta a organização do módulo respons�
   <br><br><br>
 </div>
 
+TEAMS
+
+O diagrama de classes de Teams descreve a modelagem das classes relacionadas ao gerenciamento de equipes e atletas. Ele apresenta os relacionamentos entre entidades e componentes responsáveis pelas operações de cadastro, atualização e consulta das equipes no sistema.
+
 <div align="center">
   <sub>Imagem 17 - Diagrama de Classes Arquiteturais - TEAMS </sub><br>
   <img src= "./assets/diagramas_arquiteturais/TEAMS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
+
+TURNS
+
+O diagrama de classes de Turns representa a estrutura das classes responsáveis pelo controle de turnos e checkpoints da aplicação. O diagrama evidencia como os componentes interagem para processar, validar e armazenar as informações relacionadas aos turnos dos usuários.
 
 <div align="center">
   <sub>Imagem 18 - Diagrama de Classes Arquiteturais - TURNS </sub><br>
@@ -1758,9 +1785,9 @@ O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 H
   <br><br><br>
 </div>
 
----
 
 #### Atores
+---
 
 <div align = "center">
   <sub> Quadro 17 - Atores de Casos de Uso </sub><br>
