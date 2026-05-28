@@ -1,0 +1,151 @@
+%%{init: {
+    "theme": "base",
+    "themeVariables": {
+        "primaryColor": "#0F0069",
+        "primaryTextColor": "#FFFFFF",
+        "primaryBorderColor": "#D2003C",
+        "secondaryColor": "#D2003C",
+        "secondaryTextColor": "#FFFFFF",
+        "secondaryBorderColor": "#D2003C",
+        "tertiaryColor": "#E8E8F5",
+        "tertiaryTextColor": "#0F0069",
+        "tertiaryBorderColor": "#0F0069",
+        "noteBkgColor": "#FFCC00",
+        "noteTextColor": "#0F0069",
+        "noteBorderColor": "#D2003C",
+        "activationBkgColor": "#D2003C",
+        "activationBorderColor": "#0F0069",
+        "sequenceNumberColor": "#FFCC00",
+        "actorBkg": "#0F0069",
+        "actorTextColor": "#FFFFFF",
+        "actorBorderColor": "#D2003C",
+        "actorLineColor": "#000000",
+        "signalColor": "#000000",
+        "signalTextColor": "#000000",
+        "labelBoxBkgColor": "#E8E8F5",
+        "labelBoxBorderColor": "#0F0069",
+        "labelTextColor": "#0F0069",
+        "loopTextColor": "#0F0069",
+        "fontFamily": "Arial, sans-serif",
+        "fontSize": "14px"
+    }
+}}%%
+
+sequenceDiagram
+    autonumber
+    actor User
+    participant TeamController
+    participant TeamService
+    participant TeamRepository
+    participant Database
+
+    Note over User, Database: Team Registration with 16 Athletes
+
+    User->>TeamController: registerTeam(name, athletes[16])
+    activate TeamController
+
+    TeamController->>TeamService: registerTeam(name, athletes[16])
+    activate TeamService
+
+    TeamService->>TeamRepository: countEventTeams()
+    activate TeamRepository
+
+    TeamRepository-->>TeamService: total (e.g. 1)
+    deactivate TeamRepository
+
+    TeamService->>TeamRepository: saveTeam(name)
+    activate TeamRepository
+
+    TeamRepository->>Database: INSERT team
+    activate Database
+
+    Database-->>TeamRepository: teamId
+    deactivate Database
+
+    TeamRepository-->>TeamService: teamId
+    deactivate TeamRepository
+
+    loop For each of the 16 athletes
+        TeamService->>TeamRepository: saveAthlete(data, teamId)
+        activate TeamRepository
+
+        TeamRepository->>Database: INSERT athlete
+        activate Database
+
+        Database-->>TeamRepository: success
+        deactivate Database
+
+        TeamRepository-->>TeamService: ok
+        deactivate TeamRepository
+    end
+
+    TeamService-->>TeamController: complete team created
+    deactivate TeamService
+
+    TeamController-->>User: Team successfully registered with 16 athletes!
+    deactivate TeamController
+
+    alt total >= 2
+        Note over TeamService: [Alternative] Limit of 2 teams reached
+        TeamService-->>TeamController: error: team limit reached
+        TeamController-->>User: It is not possible to register more teams
+
+    else athletes != 16
+        Note over TeamService: [Alternative] Invalid number of athletes
+        TeamService-->>TeamController: error: exactly 16 athletes required
+        TeamController-->>User: The team must have exactly 16 athletes
+    end
+
+    Note over User, Database: Team Display
+
+    User->>TeamController: getTeam(teamId)
+    activate TeamController
+
+    TeamController->>TeamService: getTeam(teamId)
+    activate TeamService
+
+    TeamService->>TeamRepository: findTeamWithAthletes(teamId)
+    activate TeamRepository
+
+    TeamRepository->>Database: SELECT + JOIN athletes
+    activate Database
+
+    Database-->>TeamRepository: team + athletes
+    deactivate Database
+
+    TeamRepository-->>TeamService: complete data
+    deactivate TeamRepository
+
+    TeamService-->>TeamController: TeamDTO
+    deactivate TeamService
+
+    TeamController-->>User: Displays team and athletes
+    deactivate TeamController
+
+    Note over User, Database: Team KM Metrics
+
+    User->>TeamController: getMetrics(teamId)
+    activate TeamController
+
+    TeamController->>TeamService: calculateMetrics(teamId)
+    activate TeamService
+
+    TeamService->>TeamRepository: findAthleteKm(teamId)
+    activate TeamRepository
+
+    TeamRepository->>Database: SELECT SUM, AVG km
+    activate Database
+
+    Database-->>TeamRepository: raw data
+    deactivate Database
+
+    TeamRepository-->>TeamService: km per athlete
+    deactivate TeamRepository
+
+    Note right of TeamService: calculates total, average, and top athlete
+
+    TeamService-->>TeamController: MetricsDTO
+    deactivate TeamService
+
+    TeamController-->>User: Total KM, average, top athlete
+    deactivate TeamController
