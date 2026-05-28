@@ -1,0 +1,125 @@
+
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "primaryColor": "#0F0069",
+    "primaryTextColor": "#FFFFFF",
+    "primaryBorderColor": "#D2003C",
+    "secondaryColor": "#D2003C",
+    "secondaryTextColor": "#FFFFFF",
+    "secondaryBorderColor": "#D2003C",
+    "tertiaryColor": "#E8E8F5",
+    "tertiaryTextColor": "#0F0069",
+    "tertiaryBorderColor": "#0F0069",
+    "noteBkgColor": "#FFCC00",
+    "noteTextColor": "#0F0069",
+    "noteBorderColor": "#D2003C",
+    "activationBkgColor": "#D2003C",
+    "activationBorderColor": "#0F0069",
+    "actorBkg": "#0F0069",
+    "actorTextColor": "#FFFFFF",
+    "actorBorderColor": "#D2003C",
+    "actorLineColor": "#000000",
+    "signalColor": "#000000",
+    "signalTextColor": "#000000",
+    "labelBoxBkgColor": "#E8E8F5",
+    "labelBoxBorderColor": "#0F0069",
+    "labelTextColor": "#0F0069",
+    "loopTextColor": "#0F0069",
+    "fontFamily": "Arial, sans-serif",
+    "fontSize": "14px",
+    "background": "#FFFFFF"
+  }
+}}%%
+sequenceDiagram
+    participant C as Client
+    participant CT as ShiftController
+    participant TS as ShiftService
+    participant TR as ShiftRepository
+    participant DB as Data Base
+
+    Note over C,DB: 1 · Start shift
+
+    C->>+CT: 1. POST /shifts/start
+    CT->>+TS: 2. validateAvailability()
+
+    TS->>+TR: 3. findActiveShift(athlete_id)
+    TR->>+DB: 4. SELECT ongoing Shift for Athlete
+    DB-->>-TR: 5. null
+    TR-->>-TS: 6. null (athlete available)
+
+    TS->>+TR: 7. findTreadmillStatus(treadmill_id)
+    TR->>+DB: 8. SELECT Treadmill status
+    DB-->>-TR: 9. "Available"
+    TR-->>-TS: 10. "Available"
+
+    TS->>+TR: 11. createShift()
+    TR->>+DB: 12. INSERT Shift { athlete_id, treadmill_id, km_init, time_init }
+    DB-->>-TR: 13. Shift { id, status: "in_progress" }
+    TR-->>-TS: 14. Shift { id, status: "in_progress" }
+
+    TS->>+TR: 15. updateTreadmillStatus("Occupied")
+    TR->>+DB: 16. UPDATE Treadmill SET status = "Occupied"
+    DB-->>-TR: 17. ok
+    TR-->>-TS: 18. ok
+
+    CT-->>-C: 19. 201 { shift_id, time_init }
+    deactivate TS
+
+    Note over C,DB: 2 · Mandatory checkpoint — blocking modal every 5 min
+
+    loop Every 300s since time_init
+        C->>+CT: 20. POST /shifts/{id}/checkpoints
+        CT->>+TS: 21. registerCheckpoint(distance, type: "mandatory")
+
+        Note right of TS: validates distance >= last Checkpoint
+
+        TS->>+TR: 22. saveCheckpoint()
+        TR->>+DB: 23. INSERT Checkpoint { shift_id, distance, timestamp, type: "mandatory" }
+        DB-->>-TR: 24. Checkpoint { id, timestamp }
+        TR-->>-TS: 25. Checkpoint { id, timestamp }
+
+        CT-->>-C: 26. 201 { checkpoint_id }
+        deactivate TS
+    end
+
+    Note over C,DB: 3 · Voluntary checkpoint — auditor registers at any time
+
+    C->>+CT: 27. POST /shifts/{id}/checkpoints
+    CT->>+TS: 28. registerCheckpoint(distance, type: "voluntary")
+
+    Note right of TS: validates distance >= last Checkpoint
+
+    TS->>+TR: 29. saveCheckpoint()
+    TR->>+DB: 30. INSERT Checkpoint { shift_id, distance, timestamp, type: "voluntary" }
+    DB-->>-TR: 31. Checkpoint { id, timestamp }
+    TR-->>-TS: 32. Checkpoint { id, timestamp }
+
+    CT-->>-C: 33. 201 { checkpoint_id }
+    deactivate TS
+
+    Note over C,DB: 4 · End shift — auditor informs final km read from treadmill
+
+    C->>+CT: 34. POST /shifts/{id}/finish
+    CT->>+TS: 35. finishShift(km_end)
+
+    TS->>+TR: 36. findShift(shift_id)
+    TR->>+DB: 37. SELECT Shift with Checkpoints
+    DB-->>-TR: 38. Shift { km_init, checkpoints[] }
+    TR-->>-TS: 39. Shift { km_init, checkpoints[] }
+
+    Note right of TS: validates km_end >= last Checkpoint
+    Note right of TS: calculates distance, time, and speed
+
+    TS->>+TR: 40. updateShift(finished + metrics)
+    TR->>+DB: 41. UPDATE Shift SET status, km_end, distance, time, speed
+    DB-->>-TR: 42. Updated Shift
+    TR-->>-TS: 43. Updated Shift
+
+    TS->>+TR: 44. updateTreadmillStatus("Available")
+    TR->>+DB: 45. UPDATE Treadmill SET status = "Available"
+    DB-->>-TR: 46. ok
+    TR-->>-TS: 47. ok
+
+    CT-->>-C: 48. 200 { distance, time, speed }
+    deactivate TS
