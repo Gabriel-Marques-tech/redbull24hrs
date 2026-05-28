@@ -2494,6 +2494,7 @@ Além dos ícones, a interface incorpora dois outros ativos visuais: o logotipo 
   <br><br><br>
 </div>
 
+A padronização desses ativos garante que todos os elementos visuais falem a mesma linguagem: o logotipo nunca aparece distorcido ou fora de contexto, as imagens mantêm proporção e foco independentemente do tamanho da tela, e os ícones seguem uma escala consistente de 16 a 32 px conforme seu papel na hierarquia da interface. Esse conjunto de diretrizes reduz decisões arbitrárias durante o desenvolvimento e preserva a identidade visual da Red Bull 24 Horas em cada detalhe da aplicação.
 
 ---
 
