@@ -818,10 +818,10 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 | RF047 | O sistema deve permitir exportação de dados em CSV contendo todos os turnos registrados.                                                                                                  | Média      | Planejado |
 | RF048 | O sistema deve permitir exportação de dados em CSV contendo todos os checkpoints registrados.                                                                                             | Média      | Planejado |
 | RF049 | O sistema deve disponibilizar uma tela de desempenho final por corredor ao término do evento, contendo distância total percorrida, tempo total em pista e velocidade média geral.         | Média      | Planejado |
-| RF050 | O sistema deve permitir o compartilhamento do desempenho final do corredor por meio de um link gerado automaticamente, acessível sem autenticação.                                        | Média      | Planejado |
+| RF050 | Compartilhamento de desempenho por link público. O sistema deve gerar automaticamente um link com URL única e pública que permita o compartilhamento externo das métricas finais de desempenho do corredor sem exigir autenticação. | Média | Planejado |
 | RF051 | O sistema deve permitir o registro do local/região da etapa.                                                                                                                              | Baixa      | Planejado |
 | RF052 | O sistema deve permitir que o corredor acesse seu histórico completo de desempenho no evento após sua finalização.                                                                        | Baixa      | Planejado |
-
+| RF053 | Alerta de inatividade de esteira. O sistema deve identificar automaticamente e sinalizar ao auditor, por meio de alerta visual na interface, caso uma esteira fique mais de 5 minutos sem receber novos registros de checkpoint. | Média | RN31, RN32 |
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -1495,8 +1495,6 @@ Com esta base sólida, o projeto segue para a fase de implementação, onde cada
 
 ### 3.1.3. Regras de Negócio
 
----
-
 Regras de negócio são declarações que definem ou restringem aspectos do funcionamento de um sistema, refletindo políticas, condições e obrigações do domínio de negócio. Devem ser implementáveis e testáveis, servindo como referencial técnico para o desenvolvimento e validação da aplicação.
 Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio são "restrições explícitas sobre comportamento e/ou fornecem suporte ao comportamento" de um sistema ou organização.
 
@@ -1547,9 +1545,7 @@ Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio 
   <br><br>
 </div>
 
-### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
-
----
+### 3.1.4. Matriz RF → RN → Endpoint
 
 A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcional às suas Regras de Negócio e ao contrato de comunicação com o servidor, definindo o método HTTP e o endpoint responsável por executar aquela funcionalidade[¹⁰](#8-referências). Essa estrutura permite identificar onde cada RF é implementado na API, quais restrições de negócio governam sua execução e como as requisições são enviadas ao servidor.
 
@@ -1583,6 +1579,9 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 | RF027 | RN25          | `/eventos/{id}/inconsistencias`                                  | GET    |
 | RF028 | RN26          | `/eventos/{id}/exportar`                                         | GET    |
 | RF016 | RN27          | `/sync`                                                          | POST   |
+| RF047 | RN31, RN32    | N/A                                                              | N/A    |
+| RF048 | RN34          | `/eventos/{id}/exportar?tipo=checkpoints`                        | GET    |
+| RF050 | RN36          | `/corredores/{id}/compartilhar`                                  | GET    |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -1650,6 +1649,7 @@ Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo
 ## 3.2. Arquitetura (sprints 1 a 5)
 
 ---
+A seção de Arquitetura apresenta a estrutura organizacional e a modelagem dos principais componentes do sistema desenvolvidos ao longo das sprints 1 a 5. Por meio dos diagramas arquiteturais, diagramas de classes e diagramas de casos de uso, é possível compreender como os módulos da aplicação se relacionam, quais são as responsabilidades de cada camada e como ocorre o fluxo de dados entre os componentes. Esses artefatos auxiliam na documentação técnica do projeto, facilitando o entendimento da solução, a manutenção do software e a evolução contínua da arquitetura proposta.
 
 ### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
 
@@ -1703,6 +1703,73 @@ O diagrama de arquitetura de Turns apresenta a organização do módulo respons�
 #### 3.2.1.1. Diagrama de Classes Arquiteturais 
 
 ---
+A seção de Diagramas de Classes Arquiteturais apresenta a modelagem estrutural dos principais módulos do sistema, evidenciando as classes, responsabilidades e relacionamentos existentes entre os componentes da aplicação. Esses diagramas auxiliam na compreensão da organização interna do software, demonstrando como entidades, serviços, controladores e repositórios interagem para garantir o funcionamento adequado das funcionalidades implementadas.
+
+DASHBOARD
+
+O diagrama de classes do Dashboard representa a organização das classes responsáveis pela exibição e gerenciamento das informações do painel principal do sistema. Ele demonstra os relacionamentos entre entidades, serviços e componentes utilizados para consolidar métricas e indicadores apresentados aos usuários.
+
+<div align="center">
+  <sub>Imagem 13 - Diagrama de Classes Arquiteturais - DASHBOARD </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+EVENTS
+
+O diagrama de classes de Events descreve a estrutura das classes relacionadas ao gerenciamento de eventos da aplicação. Ele evidencia como as entidades, serviços e repositórios interagem para realizar operações de cadastro, consulta e processamento dos eventos do sistema.
+
+<div align="center">
+  <sub>Imagem 14 - Diagrama de Classes Arquiteturais - EVENTS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/EVENTS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+HISTORY
+
+O diagrama de classes de History apresenta as classes responsáveis pelo armazenamento e gerenciamento do histórico de operações realizadas na aplicação. O modelo demonstra os relacionamentos entre os componentes que garantem rastreabilidade e controle das informações históricas.
+
+<div align="center">
+  <sub>Imagem 15 - Diagrama de Classes Arquiteturais - HISTORY </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/HISTORY_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+LOGS
+
+O diagrama de classes de Logs representa a estrutura utilizada para registrar e organizar os logs do sistema. Ele demonstra como as classes se relacionam para capturar, armazenar e consultar informações importantes para monitoramento e auditoria da aplicação.
+
+<div align="center">
+  <sub>Imagem 16 - Diagrama de Classes Arquiteturais - LOGS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/LOGS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+TEAMS
+
+O diagrama de classes de Teams descreve a modelagem das classes relacionadas ao gerenciamento de equipes e atletas. Ele apresenta os relacionamentos entre entidades e componentes responsáveis pelas operações de cadastro, atualização e consulta das equipes no sistema.
+
+<div align="center">
+  <sub>Imagem 17 - Diagrama de Classes Arquiteturais - TEAMS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/TEAMS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+TURNS
+
+O diagrama de classes de Turns representa a estrutura das classes responsáveis pelo controle de turnos e checkpoints da aplicação. O diagrama evidencia como os componentes interagem para processar, validar e armazenar as informações relacionadas aos turnos dos usuários.
+
+<div align="center">
+  <sub>Imagem 18 - Diagrama de Classes Arquiteturais - TURNS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/TURNS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
@@ -1711,15 +1778,15 @@ O diagrama de arquitetura de Turns apresenta a organização do módulo respons�
 O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 Horas a partir da prática **Light Use-Case Modeling** descrita em Jacobson et al.[⁹](#8-referências), evoluindo para o nível **System Boundary Established** ao incluir todos os atores e casos de uso planejados para o MVP. A notação adotada segue o guia _Use-Case 3.0 — The Definitive Guide_: atores são representados por bonecos-palito, casos de uso por elipses contidas dentro do retângulo do _System of Interest_, associações por linhas contínuas com setas indicando o iniciador da interação, `<<include>>` por seta tracejada apontando do caso-base para o caso obrigatoriamente incluído, e `<<extend>>` por seta tracejada apontando do caso opcional para o caso-base que ele estende.
 
 <div align="center">
-  <sub>Imagem 21 - Diagrama Casos de Uso</sub><br>
+  <sub>Imagem 19 - Diagrama Casos de Uso</sub><br>
   <img src= "./assets/use_case/use_case.jpeg" width="100%" alt="Casos de uso"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
----
 
 #### Atores
+---
 
 <div align = "center">
   <sub> Quadro 17 - Atores de Casos de Uso </sub><br>
@@ -1781,7 +1848,7 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação UML, com o objetivo de representar a estrutura do sistema por meio de suas classes, atributos, relacionamentos e responsabilidades. A modelagem organiza logicamente os elementos do domínio do evento Red Bull 24h, facilitando a compreensão das dependências entre as entidades e da solução proposta pelo grupo.
 
 <div align = "center">
-  <sub>Imagem 22 - Diagrama de Classes de Domínio</sub><br>
+  <sub>Imagem 20 - Diagrama de Classes de Domínio</sub><br>
   <img src="./assets/classes_dominio/diagrama_classes_corrigido.png" width="100%" alt="Diagrama de Classes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1802,7 +1869,7 @@ A seguir, cada diagrama é apresentado com uma descrição detalhada de seus flu
 A gestão de Eventos representa a visão macro da competição, sendo a configuração inicial e o núcleo organizacional do desafio Red Bull 24 Horas. O Diagrama de Sequência de Eventos descreve como a aplicação web orquestra processos fundamentais, como a criação do evento (incluindo a validação de data, local e esteiras), o cálculo de métricas em tempo real, como quilometragem total por equipe, velocidade média e equipes em pista e a manutenção do placar oficial. Neste contexto, um evento é a unidade central da plataforma que coordena a disputa entre as duas equipes de 16 atletas, gerindo os dados das duas esteiras por equipe para garantir uma apuração precisa que substitua o método manual, permitindo ainda a detecção automática de inconsistências (como gaps de checkpoints) e a exportação de dados consolidados para auditoria pós-evento.
 
 <div align="center">
-  <sub>Imagem 23 - Diagrama de Sequencia: Eventos</sub><br>
+  <sub>Imagem 21 - Diagrama de Sequencia: Eventos</sub><br>
   <img src="./assets/diagrama_sequencia/Events_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1829,7 +1896,7 @@ A gestão de Eventos representa a visão macro da competição, sendo a configur
 O módulo de Equipes é a base de organização dos competidores. O Red Bull 24 Horas possui uma regra estrita: o confronto ocorre exatamente entre duas equipes, sendo cada uma composta por 16 pessoas. Este fluxo mapeia o cadastro e a validação estrutural dos times, a exibição dos perfis e o cálculo de métricas de desempenho coletivo e individual.
 
 <div align="center">
-  <sub>Imagem 24 - Diagrama de Sequência: Equipes</sub>
+  <sub>Imagem 22 - Diagrama de Sequência: Equipes</sub>
     <br><img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026 </sub>
   <br><br><br>
@@ -1856,7 +1923,7 @@ O módulo de Equipes é a base de organização dos competidores. O Red Bull 24 
 O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na esteira. Como a dinâmica do evento exige trocas rápidas de corredores sem interrupção na contagem de quilômetros, este fluxo mapeia desde a entrada do corredor no equipamento, passando pelos registros periódicos de segurança (checkpoints), até a finalização do turno com a leitura final da quilometragem. Turnos, neste contexto, representam os intervalos de atividade atribuídos a cada corredor ao longo de um ciclo na esteira, definindo quando cada atleta entra e sai da atividade.
 
 <div align="center">
-  <sub>Imagem 25 - Diagrama de Sequência: Turnos</sub><br>
+  <sub>Imagem 23 - Diagrama de Sequência: Turnos</sub><br>
   <img src="./assets/diagrama_sequencia/Turns_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de turnos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1883,7 +1950,7 @@ O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na estei
 A funcionalidade de Histórico fornece total rastreabilidade e transparência ao longo das 24 horas de evento. Ela permite que a organização e os auditores visualizem uma linha do tempo cronológica detalhada de todas as ações que ocorreram nas esteiras, provendo uma ferramenta ágil para sanar dúvidas ou contestar apurações durante a competição.
 
 <div align="center">
-  <sub>Imagem 26 - Diagrama de Sequência: Historico</sub><br>
+  <sub>Imagem 24 - Diagrama de Sequência: Historico</sub><br>
   <img src="./assets/diagrama_sequencia/History_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1910,7 +1977,7 @@ A funcionalidade de Histórico fornece total rastreabilidade e transparência ao
 Garantir a operação ininterrupta do sistema em um ambiente de evento físico é um grande desafio, pois podem ocorrer instabilidades na conexão de internet. Este diagrama mapeia duas rotinas avançadas de resiliência: a Edição Retroativa (para corrigir erros de digitação passados mantendo uma trilha de auditoria) e a Sincronização Offline (Sync), que permite à interface armazenar dados localmente em caso de queda de rede e enviá-los ao servidor assim que a conexão for restabelecida.
 
 <div align="center">
-  <sub>Imagem 27 - Diagrama de Sequência: Registros/Sync</sub><br>
+  <sub>Imagem 25 - Diagrama de Sequência: Registros/Sync</sub><br>
   <img src="./assets/diagrama_sequencia/Logs_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de registros e sync"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1935,7 +2002,7 @@ Garantir a operação ininterrupta do sistema em um ambiente de evento físico �
 O Dashboard atua como o principal ponto de visualização em tempo real do evento Red Bull 24 Horas. Esta interface (geralmente exibida em telões no local da prova) precisa refletir com exatidão a disputa acirrada entre as duas equipes, mostrando o placar geral, quem está correndo no momento e o ritmo da corrida ao longo do tempo. Para que os dados na tela estejam sempre vivos sem que ninguém precise atualizar a página manualmente, a aplicação utiliza uma técnica chamada Polling (consultas automáticas e contínuas ao servidor) atrelada a um sistema de verificação de integridade da conexão (Healthcheck).
 
 <div align="center">
-  <sub>Imagem 28 - Diagrama de Sequência: Dashboard</sub><br>
+  <sub>Imagem 26 - Diagrama de Sequência: Dashboard</sub><br>
   <img src="assets/diagrama_sequencia/Dashboard_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do painel de controle (dashboard)"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2171,7 +2238,7 @@ A seguir, são apresentados os wireframes de baixa e média fidelidade desenvolv
 O wireframe de baixa fidelidade representa a estrutura inicial das telas, com foco na disposição dos elementos e nos fluxos principais de navegação. Nesta etapa, foram mapeadas as telas essenciais do sistema, desde o cadastro pré-evento até o acompanhamento das esteiras em tempo real, sem preocupação com detalhamento visual ou componentes definitivos.
 
 <div align="center">
-  <sub>Imagem 29 - Wireframe de Baixa Fidelidade</sub><br>
+  <sub>Imagem 27 - Wireframe de Baixa Fidelidade</sub><br>
   <img src="./assets/wireframes/wireframe-baixa-fidelidade.svg" width="900px" alt="Wireframe de baixa fidelidade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2225,7 +2292,7 @@ Os wireframes de média fidelidade foram desenvolvidos a partir da evolução di
 O conjunto de telas cobre todos os fluxos críticos do sistema: cadastro pré-evento, operação em tempo real (início, checkpoint e encerramento de turno), detecção de inconsistências e visualização de métricas consolidadas.
 
 <div align="center">
-  <sub>Imagem 30 - Wireframe de Média Fidelidade</sub><br>
+  <sub>Imagem 28 - Wireframe de Média Fidelidade</sub><br>
   <img src="./assets/wireframes/Wireframe-Média-Fidelidade.svg" width="900px" alt="Wireframe de média fidelidade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2377,11 +2444,6 @@ As cores neutras complementam o sistema cromático com a função de sustentar l
 
 Em conjunto, a paleta equilibra impacto e funcionalidade. As cores primárias asseguram que a aplicação seja imediatamente reconhecível como parte do ecossistema Red Bull, enquanto os neutros garantem que a leitura dos dados, atividade central da plataforma durante a competição, ocorra sem ruído visual. Essa combinação resulta em uma interface que é ao mesmo tempo expressiva na identidade e eficiente no uso.
 
-
----
-
-_Apresente aqui a paleta de cores, com seus códigos de aplicação e suas respectivas funções_
-
 ### 3.4.2 Tipografia
 
 ---
@@ -2411,7 +2473,7 @@ _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelid
 O Modelo Entidade-Relacionamento (MER) é a representação conceitual do banco de dados, na qual se descrevem as entidades do domínio, seus atributos e os relacionamentos que as conectam, abstraindo decisões de implementação física como tipos de dados, índices ou chaves estrangeiras. Para este projeto, o MER traduz em linguagem de dados o domínio do Red Bull 24 Horas modelado nas seções anteriores: o evento operado por gerentes (Managers), suas equipes (Teams) e atletas (Athletes), e o registro de cada sessão de corrida (Shift) auditada à beira da esteira (Treadmill), com os checkpoints periódicos e logs que sustentam a apuração oficial da competição. A notação adotada é a de **Peter Chen**, na qual entidades são representadas por retângulos, atributos por elipses (com elipses preenchidas indicando chave primária e atributos compostos derivados do atributo-pai), relacionamentos por losangos e a cardinalidade explicitada nas extremidades de cada relacionamento com a razão (1) e (N). Os nomes de entidades, atributos e relacionamentos foram padronizados em inglês para garantir consistência com a nomenclatura técnica adotada no modelo relacional e no código-fonte da aplicação.
 
 <div align="center">
-  <sub>Imagem 31 - Modelo Entidade-Relacionamento</sub><br>
+  <sub>Imagem 29 - Modelo Entidade-Relacionamento</sub><br>
   <img src="./assets/modelo_entidade_relacionamento/MER.png" width="80%" alt="Modelo Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2485,7 +2547,7 @@ O MER traduz o domínio do Red Bull 24 Horas em um modelo conceitual de dados ra
 O DER traduz o modelo conceitual do MER para a estrutura relacional do banco de dados (PostgreSQL), adotando a **notação de tabelas relacionais** com tipos de dados, restrições (`NOT NULL`, `UNIQUE`, `CHECK`), chaves primárias (`PK`) e chaves estrangeiras (`FK`).
 
 <div align="center">
-  <sub>Imagem 32 - Diagrama Entidade-Relacionamento</sub><br>
+  <sub>Imagem 30 - Diagrama Entidade-Relacionamento</sub><br>
   <img src="./assets/diagrama_entidade_relacionamento/DER.png" width="90%" alt="Diagrama Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -3011,14 +3073,72 @@ _Descreva as regras de autorização por rota e por operação, baseadas no perf
 
 _Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.)._
 
-## 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
+## 3.9. Matriz de Rastreabilidade (RTM)
 
----
+A Matriz de Rastreabilidade de Requisitos (RTM — *Requirements Traceability Matrix*) é o instrumento que garante a cobertura completa do sistema, conectando cada necessidade identificada nas personas às regras de negócio que a governam, ao contrato de API que a implementa, à tela que a expõe e aos casos de teste que a validam. Qualquer elo quebrado nessa cadeia representa um requisito sem implementação verificável ou um teste sem origem rastreável — ambos comprometem a confiabilidade da apuração final do evento.
 
-_A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida toda a cadeia — mantenha-a atualizada a cada sprint. A partir da sprint 3 não deve haver lacunas nos fluxos centrais._
+No contexto do Red Bull 24 Horas, onde inconsistências nos dados podem invalidar o resultado de uma competição inteira, a rastreabilidade deixa de ser uma formalidade documental e passa a ser uma garantia operacional.
 
-| Persona | RF  | RN  | Endpoint | Tela | Teste | Evidência |
-| ------- | --- | --- | -------- | ---- | ----- | --------- |
+> **Legenda de personas:**
+> - **NR** — Nicole Rauen (atleta / influenciadora)
+> - **BG** — Bruno Gardesani (gerente de field marketing)
+> - **LA** — Lucas Andrade (operador de evento / auditor)
+
+| Persona | RF | RN | Endpoint | Tela | Teste |
+|---------|----|----|----------|------|-------|
+| LA | RF001 | RN15, RN28 | `POST /equipes` | Tela de Registro Pré-Evento → Cadastro de Equipe | CT-001: Cadastrar equipe com nome único → sucesso; CT-002: Cadastrar terceira equipe → bloqueio com mensagem de erro; CT-003: Cadastrar equipe com nome duplicado → rejeição |
+| LA | RF002 | RN16 | `POST /corredores` | Tela de Registro Pré-Evento → Cadastro de Atleta | CT-004: Cadastrar corredor vinculado a equipe existente → aparece na listagem da equipe; CT-005: Cadastrar corredor sem equipe selecionada → erro de validação |
+| LA, BG | RF003 | RN17 | `GET /equipes/{id}/validacao` | Tela de Registro Pré-Evento → Cadastro de Equipe (listagem) | CT-006: Tentar iniciar evento com equipe com menos de 16 corredores → bloqueio com mensagem indicando o número faltante; CT-007: Ambas as equipes com 16 corredores → início permitido |
+| LA | RF004 | RN19 | `GET /esteiras` | Tela de Acompanhamento de Esteiras / Tela de Início de Turno | CT-008: Abrir seletor de esteira → exibe todas com status Livre/Ocupada; CT-009: Selecionar esteira com status Ocupada → mensagem "Esteira indisponível" e bloqueio |
+| LA | RF005 | RN20 | `GET /equipes` | Tela de Seleção de Corredor e Registro de Início | CT-010: Selecionar esteira Livre e equipe → lista apenas corredores da equipe selecionada |
+| LA | RF006 | RN21 | `GET /corredores?disponivel=true` | Tela de Seleção de Corredor e Registro de Início | CT-011: Selecionar corredor com turno em aberto → alerta "Corredor já em turno ativo" e bloqueio; CT-012: Selecionar corredor disponível → botão de início habilitado |
+| LA | RF007 | RN01, RN02 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-013: Corredor com turno em aberto → rejeição com mensagem "Corredor com turno em aberto"; CT-014: Corredor sem turno ativo + esteira Livre → turno criado com sucesso |
+| LA | RF008 | RN03 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-015: Esteira Ocupada → rejeição com "Esteira indisponível"; CT-016: Esteira Livre → operação prossegue |
+| LA | RF009 | RN05 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-017: Confirmar início com corredor e esteira válidos → registro persiste corredor e esteira vinculados ao turno; CT-018: Consultar turno após criação → corredor e esteira correspondem aos selecionados |
+| LA | RF010 | RN06, RN32 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-019: Informar quilometragem inicial negativa → erro "Quilometragem deve ser ≥ 0"; CT-020: Informar km inicial válido (≥ 0) → persiste km_inicial no turno |
+| LA | RF011 | RN07 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-021: Confirmar início de turno → timestamp_início gerado pelo servidor sem campo editável na interface |
+| LA | RF012 | RN03 | `POST /turnos/{id}/checkpoints` | Modal de Checkpoint Obrigatório | CT-022: Turno em andamento há 5 minutos → modal bloqueante exibido, nenhuma ação possível até preenchimento; CT-023: Modal ativo → qualquer clique fora do modal não fecha nem permite interação com a tela |
+| LA | RF013 | RN04 | `POST /turnos/{id}/checkpoints` | Modal de Checkpoint Obrigatório | CT-024: Informar km menor que último checkpoint → mensagem de erro e modal mantido aberto; CT-025: Informar km válido (≥ último checkpoint) → modal fechado, turno continua |
+| LA | RF014 | RN05 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-026: Acionar "Finalizar turno" com turno ativo → sistema solicita km final e abre fluxo de encerramento; CT-027: Acionar sem turno ativo selecionado → mensagem "Nenhum turno ativo encontrado" |
+| LA | RF015 | RN06, RN32 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-028: Informar km_final menor que último checkpoint → rejeição com mensagem de erro; CT-029: Informar km_final válido → sistema prossegue para geração de timestamp de encerramento |
+| LA | RF016 | RN33 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-030: Confirmar encerramento com km_final válido → timestamp_fim gerado pelo servidor; CT-031: Verificar interface → não há campo editável de hora de encerramento |
+| LA, BG | RF017 | RN07 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-032: Finalizar turno com km_inicial=10 e km_final=15 → distância=5 km persistida; CT-033: km_inicial = km_final → distância=0 persistida |
+| LA, BG | RF018 | RN07, RN33 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-034: Finalizar turno com início 08:00 e fim 08:30 → duração=30 min persistida |
+| LA, BG | RF019 | RN07 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-035: distância=5 km, duração=30 min → velocidade_média=10,0 km/h; CT-036: duração=0 → velocidade_média=0,0 km/h sem erro de divisão |
+| BG | RF020 | RN09 | `GET /equipes/{id}/quilometragem` | Tela de Acompanhamento de Esteiras (placar) | CT-037: Três turnos finalizados com 5, 7 e 8 km → total da equipe=20 km; CT-038: Nenhum turno finalizado → total=0 km |
+| LA, BG | RF021 | RN11 | `GET /eventos/{id}/dashboard` | Tela de Acompanhamento de Esteiras | CT-039: Turno finalizado no servidor → métricas aparecem no dashboard em até 10 s sem recarregar a página; CT-040: Sem novos dados → valores estáveis sem recarregamento desnecessário |
+| LA, BG | RF022 | RN13 | `GET /eventos/{id}/historico` | Tela de Acompanhamento (aba Histórico) | CT-041: Acessar histórico → registros em ordem decrescente de timestamp; CT-042: Novo registro adicionado → aparece no topo da lista |
+| BG | RF023 | RN23, RN24 | `PATCH /registros/{id}` | Tela de Acompanhamento (edição retroativa) | CT-043: Auditor autenticado edita campo → novo valor persistido; CT-044: Usuário não autenticado tenta editar → redirecionamento para login |
+| BG | RF024 | RN23 | `PATCH /registros/{id}` | Tela de Acompanhamento (log de auditoria) | CT-045: Auditor edita quilometragem de checkpoint → log registra usuário, campo, valor anterior, valor novo e timestamp; CT-046: Admin consulta log → todas as edições do registro em ordem cronológica |
+| LA | RF025 | RN27 | `POST /sync` | Modal de Checkpoint Obrigatório / Tela de Início de Turno | CT-047: Dispositivo offline → checkpoint registrado localmente com indicador visual de modo offline; CT-048: Segundo checkpoint offline → persiste localmente sem erro |
+| LA | RF026 | RN27 | `POST /sync` | Tela de Acompanhamento de Esteiras (indicador de sync) | CT-049: Conexão restabelecida → sincronização automática de todos os registros pendentes; CT-050: Dados sincronizados consultados no servidor → cada registro aparece exatamente uma vez |
+| LA, BG | RF027 | RN31 | `POST /auth/login` | Tela de Login | CT-051: Usuário não autenticado acessa tela de registro → redirecionamento para login; CT-052: Credenciais inválidas → "Credenciais inválidas" e acesso negado |
+| LA | RF028 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-053: Quilometragem incompatível com histórico → alerta em tempo real antes da confirmação; CT-054: Valor compatível → nenhum alerta, dado persistido normalmente |
+| LA | RF029 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-055: Inconsistência detectada → notificação visual destacada exibida; CT-056: Botão de confirmação bloqueado até revisão ou justificativa |
+| LA | RF030 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-057: Inconsistência + som habilitado → sinal sonoro emitido junto à notificação; CT-058: Som desabilitado → nenhum sinal sonoro, apenas notificação visual |
+| LA | RF031 | RN25 | `PATCH /registros/{id}` | Tela de Inconsistência Detectada | CT-059: Auditor corrige valor para dado consistente → confirmação desbloqueada e dado marcado como revisado; CT-060: Auditor mantém valor original com justificativa → persistido com flag "revisado manualmente" e justificativa associada |
+| LA | RF032 | RN04 | `POST /turnos/{id}/checkpoints` | Tela de Detalhes da Corrida em Andamento | CT-061: Auditor aciona registro manual com valor válido → aceito e vinculado ao turno; CT-062: Valor menor que último checkpoint → mensagem de erro e não persistência |
+| LA | RF033 | RN34 | `POST /turnos/{id}/checkpoints` | Tela de Detalhes da Corrida em Andamento | CT-063: Confirmar registro manual com valor válido → timestamp gerado exclusivamente pelo servidor; CT-064: Verificar interface → sem campo editável de horário |
+| LA | RF034 | RN08 | `POST /turnos` | Fluxo de Registro de Fim de Turno → Tela de Início de Turno | CT-065: Novo turno iniciado após encerramento na mesma esteira → concluído em no máximo 3 cliques; CT-066: Dados de equipe e esteira reutilizados → sem necessidade de nova seleção manual |
+| NR, BG | RF035 | RN09 | `GET /eventos/{id}/metricas` | Tela de Desempenho Final | CT-067: Corredor com 3 turnos de 4, 6 e 5 km → distância total=15 km |
+| NR, BG | RF036 | RN09 | `GET /eventos/{id}/metricas` | Tela de Desempenho Final | CT-068: Corredor com 3 turnos de 4, 6 e 5 km → média por turno=5,0 km |
+| BG | RF037 | RN10 | `GET /eventos/{id}/metricas` | Tela de Desempenho Final | CT-069: Evento em andamento há 120 min → ao menos dois snapshots (60 min e 120 min); CT-070: Corredor sem turno até 60 min → snapshot registra 0 km naquele intervalo |
+| LA, BG | RF038 | RN12 | `GET /esteiras/{id}/status` | Tela de Acompanhamento de Esteiras | CT-071: Status de esteira muda de Livre para Ocupada → painel reflete mudança em até 10 s; CT-072: Turno encerrado → status muda automaticamente para Livre |
+| LA | RF039 | RN12 | `GET /esteiras/{id}/status` | Tela de Acompanhamento de Esteiras | CT-073: Esteira Ocupada por 30 min consecutivos → alerta visual de sugestão de alternância; CT-074: Sem esteira adjacente disponível → alerta indica indisponibilidade de alternância |
+| BG | RF040 | RN14 | `GET /eventos/{id}/placar` | Tela de Acompanhamento (Modo TV) | CT-075: Modo TV ativo em 1920×1080 → fonte ≥ 48px e contraste ≥ 4,5:1; CT-076: Navegação apenas por teclado → todas as funcionalidades de visualização acessíveis sem mouse e sem login |
+| LA, BG | RF041 | RN22 | `GET /eventos/{id}/historico?equipe={id}` | Tela de Acompanhamento (aba Histórico) | CT-077: Filtro por Equipe A → apenas registros da Equipe A exibidos; CT-078: Filtro removido → todos os registros exibidos |
+| LA, BG | RF042 | RN22 | `GET /eventos/{id}/historico?esteira={id}` | Tela de Acompanhamento (aba Histórico) | CT-079: Filtro por esteira 2 → apenas registros da esteira 2 exibidos |
+| LA, BG | RF043 | RN22 | `GET /eventos/{id}/historico?corredor={id}` | Tela de Acompanhamento (aba Histórico) | CT-080: Filtro por corredor João → apenas registros do corredor João exibidos |
+| LA | RF044 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-081: km_final < km_inicial no encerramento → inconsistência "Quilometragem final menor que inicial" sinalizada e confirmação bloqueada |
+| LA | RF045 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-082: Intervalo entre checkpoints > 10 min → alerta "Intervalo de checkpoint excedido" gerado para o auditor |
+| LA, BG | RF046 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-083: Mesmo corredor em dois turnos simultâneos → alerta "Corredor com turnos simultâneos detectado" |
+| BG | RF047 | RN26 | `GET /eventos/{id}/exportar` | Tela de Desempenho Final (exportação) | CT-084: Admin aciona download de turnos → arquivo .csv gerado com todas as colunas (corredor, equipe, esteira, km_inicial, km_final, timestamp_início, timestamp_fim, duração, velocidade_média); CT-085: Sem turnos registrados → .csv gerado apenas com cabeçalho |
+| BG | RF048 | RN26 | `GET /eventos/{id}/exportar?tipo=checkpoints` | Tela de Desempenho Final (exportação) | CT-086: Admin aciona download de checkpoints → .csv com colunas corredor, esteira, quilometragem, timestamp; CT-087: Sem checkpoints → .csv apenas com cabeçalho |
+| NR, BG | RF049 | RN09 | `GET /eventos/{id}/metricas` | Tela de Desempenho Final | CT-088: Evento encerrado → perfil exibe distância total, tempo total em pista e velocidade média geral; CT-089: Corredor sem nenhum turno → valores zerados exibidos sem erro |
+| NR | RF050 | RN36 | `GET /corredores/{id}/compartilhar` | Tela de Desempenho Final | CT-090: Acionar "Compartilhar" → URL única e pública gerada; CT-091: Link acessado por usuário não cadastrado → exibe apenas dados de desempenho do corredor sem acesso a outras funcionalidades |
+| BG | RF051 | RN18, RN29, RN37 | `POST /eventos` | Tela de Registro Pré-Evento → Cadastro de Local/Evento | CT-092: Cadastrar local/região antes do início → operação permitida; CT-093: Tentar alterar local após início do evento → operação rejeitada |
+| NR | RF052 | RN36 | `GET /corredores/{id}/historico` | Tela de Desempenho Final | CT-094: Corredor acessa histórico completo após término do evento → todos os turnos e métricas individuais exibidos |
+| LA | RF053 | RN31, RN32 | `GET /esteiras/{id}/status` | Tela de Acompanhamento de Esteiras | CT-095: Esteira sem novo checkpoint por mais de 5 min → alerta visual de inatividade exibido para o auditor |
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
