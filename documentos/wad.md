@@ -818,10 +818,10 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 | RF047 | O sistema deve permitir exportação de dados em CSV contendo todos os turnos registrados.                                                                                                  | Média      | Planejado |
 | RF048 | O sistema deve permitir exportação de dados em CSV contendo todos os checkpoints registrados.                                                                                             | Média      | Planejado |
 | RF049 | O sistema deve disponibilizar uma tela de desempenho final por corredor ao término do evento, contendo distância total percorrida, tempo total em pista e velocidade média geral.         | Média      | Planejado |
-| RF050 | O sistema deve permitir o compartilhamento do desempenho final do corredor por meio de um link gerado automaticamente, acessível sem autenticação.                                        | Média      | Planejado |
+| RF050 | Compartilhamento de desempenho por link público. O sistema deve gerar automaticamente um link com URL única e pública que permita o compartilhamento externo das métricas finais de desempenho do corredor sem exigir autenticação. | Média | Planejado |
 | RF051 | O sistema deve permitir o registro do local/região da etapa.                                                                                                                              | Baixa      | Planejado |
 | RF052 | O sistema deve permitir que o corredor acesse seu histórico completo de desempenho no evento após sua finalização.                                                                        | Baixa      | Planejado |
-
+| RF053 | Alerta de inatividade de esteira. O sistema deve identificar automaticamente e sinalizar ao auditor, por meio de alerta visual na interface, caso uma esteira fique mais de 5 minutos sem receber novos registros de checkpoint. | Média | RN31, RN32 |
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -1495,8 +1495,6 @@ Com esta base sólida, o projeto segue para a fase de implementação, onde cada
 
 ### 3.1.3. Regras de Negócio
 
----
-
 Regras de negócio são declarações que definem ou restringem aspectos do funcionamento de um sistema, refletindo políticas, condições e obrigações do domínio de negócio. Devem ser implementáveis e testáveis, servindo como referencial técnico para o desenvolvimento e validação da aplicação.
 Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio são "restrições explícitas sobre comportamento e/ou fornecem suporte ao comportamento" de um sistema ou organização.
 
@@ -1551,9 +1549,7 @@ Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio 
   <br><br>
 </div>
 
-### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
-
----
+### 3.1.4. Matriz RF → RN → Endpoint
 
 A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcional às suas Regras de Negócio e ao contrato de comunicação com o servidor, definindo o método HTTP e o endpoint responsável por executar aquela funcionalidade[¹⁰](#8-referências). Essa estrutura permite identificar onde cada RF é implementado na API, quais restrições de negócio governam sua execução e como as requisições são enviadas ao servidor.
 
@@ -1593,6 +1589,9 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 | RF027 | RN29, RN30    | `/auth/refresh`                                                  | POST   |
 | RF027 | RN30, RN31    | `/auth/logout`                                                   | POST   |
 | RF027 | RN29          | `/auth/me`                                                       | GET    |
+| RF047 | RN31, RN32    | N/A                                                              | N/A    |
+| RF048 | RN34          | `/eventos/{id}/exportar?tipo=checkpoints`                        | GET    |
+| RF050 | RN36          | `/corredores/{id}/compartilhar`                                  | GET    |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -1660,6 +1659,7 @@ Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo
 ## 3.2. Arquitetura (sprints 1 a 5)
 
 ---
+A seção de Arquitetura apresenta a estrutura organizacional e a modelagem dos principais componentes do sistema desenvolvidos ao longo das sprints 1 a 5. Por meio dos diagramas arquiteturais, diagramas de classes e diagramas de casos de uso, é possível compreender como os módulos da aplicação se relacionam, quais são as responsabilidades de cada camada e como ocorre o fluxo de dados entre os componentes. Esses artefatos auxiliam na documentação técnica do projeto, facilitando o entendimento da solução, a manutenção do software e a evolução contínua da arquitetura proposta.
 
 ### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
 
@@ -1713,6 +1713,73 @@ O diagrama de arquitetura de Turns apresenta a organização do módulo respons�
 #### 3.2.1.1. Diagrama de Classes Arquiteturais 
 
 ---
+A seção de Diagramas de Classes Arquiteturais apresenta a modelagem estrutural dos principais módulos do sistema, evidenciando as classes, responsabilidades e relacionamentos existentes entre os componentes da aplicação. Esses diagramas auxiliam na compreensão da organização interna do software, demonstrando como entidades, serviços, controladores e repositórios interagem para garantir o funcionamento adequado das funcionalidades implementadas.
+
+DASHBOARD
+
+O diagrama de classes do Dashboard representa a organização das classes responsáveis pela exibição e gerenciamento das informações do painel principal do sistema. Ele demonstra os relacionamentos entre entidades, serviços e componentes utilizados para consolidar métricas e indicadores apresentados aos usuários.
+
+<div align="center">
+  <sub>Imagem 13 - Diagrama de Classes Arquiteturais - DASHBOARD </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+EVENTS
+
+O diagrama de classes de Events descreve a estrutura das classes relacionadas ao gerenciamento de eventos da aplicação. Ele evidencia como as entidades, serviços e repositórios interagem para realizar operações de cadastro, consulta e processamento dos eventos do sistema.
+
+<div align="center">
+  <sub>Imagem 14 - Diagrama de Classes Arquiteturais - EVENTS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/EVENTS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+HISTORY
+
+O diagrama de classes de History apresenta as classes responsáveis pelo armazenamento e gerenciamento do histórico de operações realizadas na aplicação. O modelo demonstra os relacionamentos entre os componentes que garantem rastreabilidade e controle das informações históricas.
+
+<div align="center">
+  <sub>Imagem 15 - Diagrama de Classes Arquiteturais - HISTORY </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/HISTORY_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+LOGS
+
+O diagrama de classes de Logs representa a estrutura utilizada para registrar e organizar os logs do sistema. Ele demonstra como as classes se relacionam para capturar, armazenar e consultar informações importantes para monitoramento e auditoria da aplicação.
+
+<div align="center">
+  <sub>Imagem 16 - Diagrama de Classes Arquiteturais - LOGS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/LOGS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+TEAMS
+
+O diagrama de classes de Teams descreve a modelagem das classes relacionadas ao gerenciamento de equipes e atletas. Ele apresenta os relacionamentos entre entidades e componentes responsáveis pelas operações de cadastro, atualização e consulta das equipes no sistema.
+
+<div align="center">
+  <sub>Imagem 17 - Diagrama de Classes Arquiteturais - TEAMS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/TEAMS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+TURNS
+
+O diagrama de classes de Turns representa a estrutura das classes responsáveis pelo controle de turnos e checkpoints da aplicação. O diagrama evidencia como os componentes interagem para processar, validar e armazenar as informações relacionadas aos turnos dos usuários.
+
+<div align="center">
+  <sub>Imagem 18 - Diagrama de Classes Arquiteturais - TURNS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/TURNS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
@@ -1721,15 +1788,15 @@ O diagrama de arquitetura de Turns apresenta a organização do módulo respons�
 O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 Horas a partir da prática **Light Use-Case Modeling** descrita em Jacobson et al.[⁹](#8-referências), evoluindo para o nível **System Boundary Established** ao incluir todos os atores e casos de uso planejados para o MVP. A notação adotada segue o guia _Use-Case 3.0 — The Definitive Guide_: atores são representados por bonecos-palito, casos de uso por elipses contidas dentro do retângulo do _System of Interest_, associações por linhas contínuas com setas indicando o iniciador da interação, `<<include>>` por seta tracejada apontando do caso-base para o caso obrigatoriamente incluído, e `<<extend>>` por seta tracejada apontando do caso opcional para o caso-base que ele estende.
 
 <div align="center">
-  <sub>Imagem 21 - Diagrama Casos de Uso</sub><br>
+  <sub>Imagem 19 - Diagrama Casos de Uso</sub><br>
   <img src= "./assets/use_case/use_case.jpeg" width="100%" alt="Casos de uso"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
----
 
 #### Atores
+---
 
 <div align = "center">
   <sub> Quadro 17 - Atores de Casos de Uso </sub><br>
@@ -1791,7 +1858,7 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação UML, com o objetivo de representar a estrutura do sistema por meio de suas classes, atributos, relacionamentos e responsabilidades. A modelagem organiza logicamente os elementos do domínio do evento Red Bull 24h, facilitando a compreensão das dependências entre as entidades e da solução proposta pelo grupo.
 
 <div align = "center">
-  <sub>Imagem 22 - Diagrama de Classes de Domínio</sub><br>
+  <sub>Imagem 20 - Diagrama de Classes de Domínio</sub><br>
   <img src="./assets/classes_dominio/diagrama_classes_corrigido.png" width="100%" alt="Diagrama de Classes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1812,7 +1879,7 @@ A seguir, cada diagrama é apresentado com uma descrição detalhada de seus flu
 A gestão de Eventos representa a visão macro da competição, sendo a configuração inicial e o núcleo organizacional do desafio Red Bull 24 Horas. O Diagrama de Sequência de Eventos descreve como a aplicação web orquestra processos fundamentais, como a criação do evento (incluindo a validação de data, local e esteiras), o cálculo de métricas em tempo real, como quilometragem total por equipe, velocidade média e equipes em pista e a manutenção do placar oficial. Neste contexto, um evento é a unidade central da plataforma que coordena a disputa entre as duas equipes de 16 atletas, gerindo os dados das duas esteiras por equipe para garantir uma apuração precisa que substitua o método manual, permitindo ainda a detecção automática de inconsistências (como gaps de checkpoints) e a exportação de dados consolidados para auditoria pós-evento.
 
 <div align="center">
-  <sub>Imagem 23 - Diagrama de Sequencia: Eventos</sub><br>
+  <sub>Imagem 21 - Diagrama de Sequencia: Eventos</sub><br>
   <img src="./assets/diagrama_sequencia/Events_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1839,7 +1906,7 @@ A gestão de Eventos representa a visão macro da competição, sendo a configur
 O módulo de Equipes é a base de organização dos competidores. O Red Bull 24 Horas possui uma regra estrita: o confronto ocorre exatamente entre duas equipes, sendo cada uma composta por 16 pessoas. Este fluxo mapeia o cadastro e a validação estrutural dos times, a exibição dos perfis e o cálculo de métricas de desempenho coletivo e individual.
 
 <div align="center">
-  <sub>Imagem 24 - Diagrama de Sequência: Equipes</sub>
+  <sub>Imagem 22 - Diagrama de Sequência: Equipes</sub>
     <br><img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026 </sub>
   <br><br><br>
@@ -1866,7 +1933,7 @@ O módulo de Equipes é a base de organização dos competidores. O Red Bull 24 
 O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na esteira. Como a dinâmica do evento exige trocas rápidas de corredores sem interrupção na contagem de quilômetros, este fluxo mapeia desde a entrada do corredor no equipamento, passando pelos registros periódicos de segurança (checkpoints), até a finalização do turno com a leitura final da quilometragem. Turnos, neste contexto, representam os intervalos de atividade atribuídos a cada corredor ao longo de um ciclo na esteira, definindo quando cada atleta entra e sai da atividade.
 
 <div align="center">
-  <sub>Imagem 25 - Diagrama de Sequência: Turnos</sub><br>
+  <sub>Imagem 23 - Diagrama de Sequência: Turnos</sub><br>
   <img src="./assets/diagrama_sequencia/Turns_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de turnos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1893,7 +1960,7 @@ O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na estei
 A funcionalidade de Histórico fornece total rastreabilidade e transparência ao longo das 24 horas de evento. Ela permite que a organização e os auditores visualizem uma linha do tempo cronológica detalhada de todas as ações que ocorreram nas esteiras, provendo uma ferramenta ágil para sanar dúvidas ou contestar apurações durante a competição.
 
 <div align="center">
-  <sub>Imagem 26 - Diagrama de Sequência: Historico</sub><br>
+  <sub>Imagem 24 - Diagrama de Sequência: Historico</sub><br>
   <img src="./assets/diagrama_sequencia/History_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1920,7 +1987,7 @@ A funcionalidade de Histórico fornece total rastreabilidade e transparência ao
 Garantir a operação ininterrupta do sistema em um ambiente de evento físico é um grande desafio, pois podem ocorrer instabilidades na conexão de internet. Este diagrama mapeia duas rotinas avançadas de resiliência: a Edição Retroativa (para corrigir erros de digitação passados mantendo uma trilha de auditoria) e a Sincronização Offline (Sync), que permite à interface armazenar dados localmente em caso de queda de rede e enviá-los ao servidor assim que a conexão for restabelecida.
 
 <div align="center">
-  <sub>Imagem 27 - Diagrama de Sequência: Registros/Sync</sub><br>
+  <sub>Imagem 25 - Diagrama de Sequência: Registros/Sync</sub><br>
   <img src="./assets/diagrama_sequencia/Logs_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de registros e sync"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1945,7 +2012,7 @@ Garantir a operação ininterrupta do sistema em um ambiente de evento físico �
 O Dashboard atua como o principal ponto de visualização em tempo real do evento Red Bull 24 Horas. Esta interface (geralmente exibida em telões no local da prova) precisa refletir com exatidão a disputa acirrada entre as duas equipes, mostrando o placar geral, quem está correndo no momento e o ritmo da corrida ao longo do tempo. Para que os dados na tela estejam sempre vivos sem que ninguém precise atualizar a página manualmente, a aplicação utiliza uma técnica chamada Polling (consultas automáticas e contínuas ao servidor) atrelada a um sistema de verificação de integridade da conexão (Healthcheck).
 
 <div align="center">
-  <sub>Imagem 28 - Diagrama de Sequência: Dashboard</sub><br>
+  <sub>Imagem 26 - Diagrama de Sequência: Dashboard</sub><br>
   <img src="assets/diagrama_sequencia/Dashboard_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do painel de controle (dashboard)"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2181,7 +2248,7 @@ A seguir, são apresentados os wireframes de baixa e média fidelidade desenvolv
 O wireframe de baixa fidelidade representa a estrutura inicial das telas, com foco na disposição dos elementos e nos fluxos principais de navegação. Nesta etapa, foram mapeadas as telas essenciais do sistema, desde o cadastro pré-evento até o acompanhamento das esteiras em tempo real, sem preocupação com detalhamento visual ou componentes definitivos.
 
 <div align="center">
-  <sub>Imagem 29 - Wireframe de Baixa Fidelidade</sub><br>
+  <sub>Imagem 27 - Wireframe de Baixa Fidelidade</sub><br>
   <img src="./assets/wireframes/wireframe-baixa-fidelidade.svg" width="900px" alt="Wireframe de baixa fidelidade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2235,7 +2302,7 @@ Os wireframes de média fidelidade foram desenvolvidos a partir da evolução di
 O conjunto de telas cobre todos os fluxos críticos do sistema: cadastro pré-evento, operação em tempo real (início, checkpoint e encerramento de turno), detecção de inconsistências e visualização de métricas consolidadas.
 
 <div align="center">
-  <sub>Imagem 30 - Wireframe de Média Fidelidade</sub><br>
+  <sub>Imagem 28 - Wireframe de Média Fidelidade</sub><br>
   <img src="./assets/wireframes/Wireframe-Média-Fidelidade.svg" width="900px" alt="Wireframe de média fidelidade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2366,37 +2433,324 @@ A tela atende a dois públicos distintos: a organização do evento, que utiliza
 
 > Rastreabilidade: US05, US10, US12, RF049, RF050.
 
-## 3.4. Guia de estilos (sprint 3)
+## 3.4. Guia de estilos
 
----
+O Guia de Estilos é o conjunto de diretrizes visuais que define a identidade da interface de uma aplicação. Ele padroniza elementos como paleta de cores, tipografia, espaçamentos e componentes, assegurando que todas as telas e interações compartilhem uma linguagem visual coesa. Mais do que uma referência estética, o guia funciona como um contrato entre design e desenvolvimento: ao seguir suas orientações, a equipe garante que a experiência do usuário seja consistente independentemente de quem implementou cada parte do sistema.
 
-_Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução_
+No contexto da aplicação de registro de quilometragem da Red Bull 24 Horas, o guia de estilos foi construído em torno de dois pilares: fidelidade à identidade visual da marca Red Bull e adequação ao ambiente de uso. A competição exige uma interface ágil, legível e confiável, características que orientaram cada decisão visual, desde a escolha das cores até a hierarquia dos componentes. O resultado é um sistema visual que comunica velocidade e precisão sem abrir mão da clareza funcional.
 
 ### 3.4.1 Cores
 
----
+A paleta cromática da aplicação foi derivada diretamente das cores institucionais da Red Bull, traduzindo a identidade da marca para o contexto de uma interface digital funcional. As cores primárias são o vermelho #D2003C e o azul #0F0069. O vermelho concentra toda a carga de ação da interface: é aplicado em botões, chamadas para ação e destaques que demandam atenção imediata do usuário, funcionando como o principal sinalizador de interatividade. O azul, por sua vez, opera em elementos mais estruturais e específicos, como cabeçalhos e componentes de navegação; sua maior expressão, no entanto, está no degradê característico do projeto, uma transição do azul ao vermelho (#0F0069 → #D2003C) que aparece em fundos, banners e superfícies de impacto visual, conferindo profundidade e dinâmica às telas.
 
-_Apresente aqui a paleta de cores, com seus códigos de aplicação e suas respectivas funções_
+As cores neutras complementam o sistema cromático com a função de sustentar legibilidade e organização hierárquica. O branco (#FFFFFF) é o fundo padrão de toda a aplicação, garantindo amplitude visual e contraste adequado com os demais elementos. O preto (#0D0D0D) é reservado ao texto de maior peso, como títulos e dados críticos de quilometragem. O cinza médio (#6B6B6B) atende textos secundários, rótulos e informações de suporte, reduzindo a densidade visual sem eliminar o conteúdo. Já o cinza claro (#D4D4D4) é empregado em bordas, linhas divisórias e planos de fundo de campos, delimitando espaços e organizando os blocos de informação de forma discreta.
+
+<div align="center">
+  <sub>Imagem xx - Paleta de Cores da Aplicação</sub><br>
+  <img src="./assets/guia-de-estilos/paleta-de-cores.png" width="900px" alt="Paleta de Cores"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+Em conjunto, a paleta equilibra impacto e funcionalidade. As cores primárias asseguram que a aplicação seja imediatamente reconhecível como parte do ecossistema Red Bull, enquanto os neutros garantem que a leitura dos dados, atividade central da plataforma durante a competição, ocorra sem ruído visual. Essa combinação resulta em uma interface que é ao mesmo tempo expressiva na identidade e eficiente no uso.
 
 ### 3.4.2 Tipografia
 
----
+A tipografia de uma interface vai além da escolha de uma fonte: ela estrutura a leitura, comunica hierarquia e determina o quanto o usuário consegue absorver informação com eficiência. Fontes bem aplicadas conduzem o olhar de forma natural, do dado mais crítico ao detalhe de apoio, reduzindo o esforço cognitivo especialmente em ambientes de alta pressão e velocidade de uso, como é o caso de uma competição.
 
-_Apresente aqui a tipografia da solução, com famílias de fontes e suas respectivas funções_
+Para a aplicação Red Bull 24 Horas, foi adotada exclusivamente a fonte Inter, aplicada em diferentes pesos e tamanhos para construir toda a hierarquia visual da interface. A Inter é uma família tipográfica de código aberto projetada especificamente para telas, com alta legibilidade em tamanhos reduzidos e excelente desempenho em displays de diferentes densidades. Sua geometria neutra e suas proporções equilibradas fazem dela uma escolha sólida para interfaces que precisam exibir dados numéricos com precisão, como registros de quilometragem e tempos de etapa, sem que a fonte concorra com o conteúdo. Os pesos utilizados variam do Regular (400) ao Black (900), cada um com uma função definida na escala tipográfica do projeto.
+
+<div align="center">
+  <sub>Imagem xx - Tipografia da Aplicação</sub><br>
+  <img src="./assets/guia-de-estilos/tipografia.png" width="900px" alt="Tipografia"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+A definição de uma escala tipográfica estruturada, com papéis claros para títulos, subtítulos, corpo de texto, labels e dados numéricos, garante que qualquer tela da aplicação possa ser lida de forma hierárquica e sem ambiguidade. O dado de quilometragem, por exemplo, sempre aparece em peso máximo e tamanho ampliado, destacando-se imediatamente do restante da interface. Esse rigor na aplicação da tipografia é o que transforma uma fonte simples em um sistema visual funcional e consistente.
 
 ### 3.4.3 Iconografia e imagens
 
----
+Ícones são elementos de comunicação visual que substituem ou reforçam rótulos textuais, acelerando o reconhecimento de funções e reduzindo a carga de leitura na interface. Quando bem escolhidos e aplicados de forma consistente, tornam a navegação mais intuitiva e contribuem para uma experiência mais fluida, especialmente em contextos de uso rápido, onde o usuário precisa identificar ações e informações em frações de segundo.
 
-_(esta subseção é opcional, caso não existam ícones e imagens, apague esta subseção)_
+A nossa aplicação para a Red Bull 24 Horas utiliza ícones do Iconify, biblioteca open source (pública) que reúne coleções de diferentes famílias visuais sob única integração. Os ícones foram selecionados de coleções com traço sólido e geometria bem definida, priorizando alta legibilidade em tamanhos reduzidos e coerência visual entre si.
 
-_posicione aqui imagens e textos contendo exemplos padronizados de ícones e imagens, com seus respectivos atributos de aplicação, utilizadas na solução_
+Cada ícone desempenha um papel funcional específico, seja representando métricas no dashboard, identificando campos nos formulários de registro ou sinalizando ações de navegação. 
+
+<div align="center">
+  <sub>Imagem xx - Iconografia da Aplicação</sub><br>
+  <img src="./assets/guia-de-estilos/iconografia.png" width="900px" alt="Iconografia da Cores"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+A padronização desses ativos garante que todos os elementos visuais falem a mesma linguagem: os ícones seguem uma escala consistente de 16 a 32 px conforme seu papel na hierarquia da interface. Esse conjunto de diretrizes reduz decisões arbitrárias durante o desenvolvimento e preserva a identidade visual da Red Bull 24 Horas em cada detalhe da aplicação.
 
 ## 3.5 Protótipo de alta fidelidade (sprint 3)
 
----
+O protótipo de alta fidelidade consiste em uma representação visual detalhada da solução proposta, buscando reproduzir de forma próxima a experiência que o usuário terá ao utilizar o sistema final. Diferentemente dos wireframes de baixa e média fidelidade, essa etapa incorpora elementos visuais mais refinados, como identidade visual, tipografia, cores, componentes interativos e fluxos de navegação, permitindo uma avaliação mais precisa da usabilidade e do funcionamento da solução.
 
-_posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização)_
+O protótipo de alta fidelidade deste projeto foi desenvolvido a partir das definições estabelecidas nos wireframes de baixa e média fidelidade construídos nas etapas anteriores. Durante esse processo, os fluxos de navegação, a organização das informações e a disposição dos elementos da interface foram refinados com base nas validações realizadas junto ao parceiro e nas necessidades identificadas para os usuários da solução. Dessa forma, o protótipo apresenta uma representação mais próxima do produto final, permitindo visualizar como gerentes e auditores irão interagir com o sistema durante os eventos.
+
+As telas apresentadas a seguir representam os principais fluxos da solução desenvolvida, contemplando desde o acesso ao sistema até o registro, acompanhamento e consulta das informações das corridas. Cada interface foi projetada para atender às necessidades dos usuários durante os eventos, priorizando clareza das informações, agilidade nas operações e redução de possíveis erros de registro.
+
+### Tela de Login
+
+A tela de login representa o ponto de entrada da plataforma, permitindo a autenticação dos usuários por meio de suas credenciais. Embora gerentes e auditores utilizem a mesma interface de acesso, o sistema identifica automaticamente o perfil associado ao usuário informado e o direciona para o ambiente correspondente às suas responsabilidades. Dessa forma, cada usuário acessa apenas as funcionalidades necessárias para a execução de suas atividades.
+
+<div align="center">
+  <sub>Imagem 29 - Login</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/tela-login.svg" width="900px" alt="Login"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+### Fluxo do Gerente
+
+Após a autenticação, os usuários com perfil de gerente são direcionados para o ambiente de gerenciamento da plataforma. Nesse fluxo, o gerente pode visualizar as competições cadastradas, criar novos eventos, configurar informações gerais da competição, definir data e horário, cadastrar equipes e vincular atletas participantes. Essas telas apoiam a organização das competições e a rastreabilidade dos atletas, relacionando-se principalmente à User Story US07 no momento de vinculação dos participantes. As etapas apresentadas a seguir representam o processo percorrido pelo gerente para preparar uma competição antes que ela fique disponível para acompanhamento pelos auditores.
+
+#### Tela Inicial do Gerente
+
+Após realizar o login, o gerente é direcionado para a tela inicial da plataforma. Nessa interface, é possível visualizar as competições cadastradas e acessar rapidamente as principais funcionalidades do sistema. A partir dos cards das competições, o gerente pode selecionar um evento para acessar o [Histórico da Competição](#histórico-da-competição), onde são exibidos os registros realizados durante a corrida. Essa funcionalidade está relacionada às User Stories US04, US05 e US06, pois permite acompanhar os dados consolidados, consultar o histórico completo e visualizar os quilômetros acumulados por equipe. Além disso, o botão principal permite iniciar o processo de cadastro de uma nova competição.
+
+<div align="center">
+  <sub>Imagem 30 - Tela Inicial do Gerente</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/tela-inicial-gerente.svg" width="900px" alt="Tela Inicial do Gerente"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+#### Cadastro de Competição: Informações Gerais
+
+A primeira etapa do cadastro permite ao gerente informar a localização da competição, selecionando o estado e a cidade em que o evento será realizado. Essas informações ajudam a identificar e organizar a competição dentro da plataforma, garantindo que o evento seja cadastrado com dados básicos suficientes para seu acompanhamento posterior.
+
+<div align="center">
+  <sub>Imagem 31 - Informações Gerais</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/configurar-competicao/tela-criar-competicao-1.svg" width="900px" alt="Informações Gerais"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+
+#### Cadastro de Competição: Data e Horário
+
+Nesta etapa, o gerente informa a data e o horário de realização da competição. Esses dados são utilizados pelo sistema para identificar o momento em que o evento ocorrerá, auxiliando na organização das atividades de auditoria e no gerenciamento dos participantes. Além disso, as informações definidas nessa etapa servem como referência para os registros e estatísticas gerados ao longo da competição.
+
+<div align="center">
+  <sub>Imagem 32 - Data e Horário da Competição</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/configurar-competicao/tela-criar-competicao-2.svg" width="900px" alt="Data e Horário da Competição"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+#### Cadastro de Competição: Equipes Participantes
+
+Nesta etapa, o gerente seleciona ou cadastra as equipes participantes da competição, garantindo que todos os grupos estejam devidamente vinculados ao evento antes de seu início. Essa definição permite que os registros realizados posteriormente sejam organizados por equipe, apoiando a visualização consolidada prevista nas User Stories US04 e US06.
+
+<div align="center">
+  <sub>Imagem 33 - Equipes Participantes</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/configurar-competicao/tela-criar-competicao-3.svg" width="900px" alt="Equipes Participantes"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+#### Cadastro de Competição: Atletas Participantes
+
+Nesta etapa, o gerente vincula os atletas às equipes participantes da competição. Essa configuração contribui para a rastreabilidade individual dos participantes, permitindo que os registros da corrida sejam associados aos atletas corretos, conforme previsto na User Story US07. Após o preenchimento das informações necessárias, o usuário pode concluir o processo de criação do evento. Ao finalizar o cadastro, o sistema retorna automaticamente para a [tela inicial do gerente](#tela-inicial-do-gerente), onde a competição recém-criada passa a ser exibida em um card com suas principais informações.
+
+<div align="center">
+  <sub>Imagem 34 - Atletas Participantes</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/configurar-competicao/tela-criar-competicao-4.svg" width="900px" alt="Atletas Participantes"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+### Fluxo do Auditor
+
+Após a criação da competição pelo gerente, o evento passa a ficar disponível para os auditores na plataforma. A partir desse momento, os usuários responsáveis pela auditoria podem selecionar a competição, definir a equipe e a esteira acompanhadas e iniciar o registro dos turnos realizados pelos atletas durante a prova. Esse fluxo está relacionado principalmente às User Stories US01, US02, US03, US07, US09 e US11, pois contempla o início da corrida, o registro dos turnos, a rastreabilidade dos atletas, o acompanhamento em tempo real e os alertas de apoio à operação.
+
+Em algumas etapas do fluxo, são apresentadas duas imagens consecutivas da mesma interface. A primeira representa o estado padrão da tela, enquanto a segunda apresenta o estado após a interação do usuário, com o item selecionado ou em destaque visual. Essa organização permite demonstrar o comportamento interativo do protótipo, especialmente nos momentos de escolha da competição, equipe e esteira.
+
+#### Tela Inicial do Auditor
+
+Após realizar o [login](#tela-de-login-2), o auditor é direcionado para sua tela inicial. Nessa interface, são exibidas as competições disponíveis para acompanhamento, permitindo que o usuário identifique rapidamente os eventos em andamento ou aqueles que aguardam o início da auditoria. Ao clicar no botão de início da auditoria, o sistema direciona o usuário para o fluxo de configuração do acompanhamento, no qual serão selecionadas a competição, a equipe e a esteira. A partir dessa tela, o auditor também pode acessar ações relacionadas a cada competição, como consultar o [Histórico da Competição](#histórico-da-competição). A tela funciona como ponto central de acesso às atividades operacionais do auditor, facilitando a navegação para as competições sob sua responsabilidade.
+
+<div align="center">
+  <sub>Imagem 35 - Tela Inicial do Auditor</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/tela-inicial-auditor.svg" width="900px" alt="Tela Inicial do Auditor"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+#### Seleção da Competição
+
+Após iniciar a auditoria, o sistema apresenta as competições disponíveis para acompanhamento. Nessa etapa, o auditor seleciona o evento que deseja monitorar, garantindo que os registros realizados sejam vinculados à competição correta. As imagens demonstram o estado padrão da interface e o estado após a seleção de uma competição.
+
+<div align="center">
+  <sub>Imagem 36 - Seleção da Competição: estado padrão</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-competicao-agendada-1.svg" width="900px" alt="Seleção da Competição em estado padrão"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 37 - Seleção da Competição: item selecionado</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-competicao-agendada-2.svg" width="900px" alt="Seleção da Competição com item selecionado"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+#### Seleção da Equipe
+
+Após selecionar a competição, o auditor define qual equipe participará do acompanhamento na esteira auditada. A tela apresenta campos de seleção que permitem associar a equipe ao processo de auditoria antes do início da corrida, atendendo ao critério de seleção de equipe previsto na US01. As imagens demonstram o estado padrão da interface e o estado após a seleção da equipe.
+
+<div align="center">
+  <sub>Imagem 38 - Seleção da Equipe: estado padrão</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-equipe-1.svg" width="900px" alt="Seleção da Equipe em estado padrão"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 39 - Seleção da Equipe: item selecionado</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-equipe-2.svg" width="900px" alt="Seleção da Equipe com item selecionado"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+
+#### Seleção da Esteira
+
+Nesta etapa, o auditor seleciona a esteira que será utilizada durante a competição. Essa definição permite que os registros realizados posteriormente sejam vinculados ao equipamento correto, atendendo ao critério de seleção de esteira previsto na US01 e facilitando a organização dos dados coletados durante o evento. As imagens demonstram o estado padrão da interface e o estado após a seleção da esteira.
+
+<div align="center">
+  <sub>Imagem 40 - Seleção da Esteira: estado padrão</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-esteira-1.svg" width="900px" alt="Seleção da Esteira em estado padrão"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 41 - Seleção da Esteira: item selecionado</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-esteira-2.svg" width="900px" alt="Seleção da Esteira com item selecionado"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+#### Visão Geral da Auditoria
+
+Após a conclusão das etapas de seleção da competição, equipe e esteira, o sistema apresenta uma visão geral contendo todas as informações configuradas para a auditoria. Nessa tela, o auditor pode revisar os dados selecionados e verificar se estão corretos antes de iniciar a competição. O objetivo dessa etapa é reduzir erros de configuração e garantir que todos os registros realizados durante a prova sejam associados corretamente aos participantes e ao evento correspondente.
+
+<div align="center">
+  <sub>Imagem 42 - Visão Geral da Auditoria</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/visao-geral-competicao.svg" width="900px" alt="Visão Geral da Auditoria"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+#### Início da Competição
+
+Concluídas as etapas de configuração, o sistema apresenta uma tela com o cronômetro zerado e um botão para iniciar a corrida. Essa interface representa o início formal do acompanhamento da competição, relacionado à US01, pois permite registrar o começo da corrida após a definição da equipe e da esteira correspondente.
+
+
+<div align="center">
+  <sub>Imagem 43 - Início da Competição</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/tela-auditoria-inicial.svg" width="900px" alt="Início da Competição"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+#### Registro de Turno
+
+Durante a competição, o auditor pode registrar os turnos realizados pelos corredores. Para isso, a tela disponibiliza campos para seleção do atleta, horários de início e término do turno e quilometragem percorrida. Essa etapa está relacionada às User Stories US02, US03 e US07, pois permite registrar informações da corrida, encerrar ciclos de participação e manter a rastreabilidade individual dos atletas.
+
+<div align="center">
+  <sub>Imagem 44 - Registro de Turno</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/tela-auditoria-registro-corrida.svg" width="900px" alt="Registro de Turno"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+#### Competição em Andamento
+
+Após o início da corrida, o cronômetro passa a contabilizar o tempo decorrido da competição. A tela exibe os últimos registros realizados, informações sobre os próximos corredores e o botão para finalização do evento, permitindo que o auditor acompanhe a operação em tempo real. Essa tela apoia o acompanhamento contínuo previsto nas US02 e US03.
+
+<div align="center">
+  <sub>Imagem 45 - Competição em Andamento</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/tela-auditoria-corrida-iniciada.svg" width="900px" alt="Competição em Andamento"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+
+#### Alerta de Checkpoint Não Registrado
+
+Quando o sistema identifica que não houve registro de checkpoints por um período superior ao esperado, uma mensagem de alerta é exibida ao auditor. A tela informa a pendência e disponibiliza uma ação para realizar imediatamente o registro do checkpoint. Essa interface está relacionada à US09, pois auxilia o auditor a identificar possíveis falhas técnicas ou atrasos na troca de corredor.
+
+<div align="center">
+  <sub>Imagem 46 - Alerta de Checkpoint Não Registrado</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/aviso-de-checkpoint-não-registrado-auditor.svg" width="900px" alt="Alerta de Checkpoint Não Registrado"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+#### Alerta de Inconsistência de Dados
+
+Caso a quilometragem informada apresente divergências em relação aos registros anteriores, o sistema exibe uma mensagem de inconsistência. A tela apresenta os valores registrados e permite que o auditor cancele ou corrija a informação antes de confirmar o registro. Essa interface está relacionada à US11, pois contribui para evitar erros humanos e falhas na inserção dos dados durante a operação.
+
+<div align="center">
+  <sub>Imagem 47 - Alerta de Inconsistência de Dados</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/aviso-de-Inconsistencia-de-dados-auditor.svg" width="900px" alt="Alerta de Inconsistência de Dados"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+### Histórico da Competição
+
+O histórico da competição pode ser acessado a partir dos cards de evento exibidos na [Tela Inicial do Gerente](#tela-inicial-do-gerente) e na [Tela Inicial do Auditor](#tela-inicial-do-auditor). Essa funcionalidade é compartilhada entre os dois perfis e permite que os usuários autorizados visualizem os registros realizados durante o evento.
+
+A tela de histórico está relacionada principalmente às User Stories US04, US05 e US06, pois apresenta os registros organizados da corrida, permite a consulta das informações consolidadas, apoia a visualização dos quilômetros acumulados por equipe e disponibiliza a exportação dos dados em formato estruturado. Além disso, essa funcionalidade também contribui para as User Stories US02, US03 e US07, uma vez que permite conferir os checkpoints, os encerramentos de turno e a rastreabilidade dos atletas registrados.
+
+
+#### Visão Geral da Competição
+
+A visão geral da competição apresenta um resumo dos principais dados do evento, permitindo que gerente e auditor acompanhem informações consolidadas sobre a corrida. Essa tela funciona como ponto de entrada para a análise dos registros, reunindo dados essenciais para conferência e acompanhamento da competição.
+
+<div align="center">
+  <sub>Imagem 48 - Visão Geral da Competição</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/estatisticas-competicao/card-evento-geral.svg" width="900px" alt="Visão Geral da Competição"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+#### Histórico da Auditoria
+
+A tela de histórico da auditoria reúne os registros operacionais realizados durante a competição, apresentando as informações coletadas ao longo do acompanhamento do evento. Essa visualização permite conferir os dados lançados durante a corrida, apoiando a validação dos registros e a identificação de possíveis inconsistências.
+
+Além disso, a interface apresenta a opção de compartilhar os dados como planilha, funcionalidade relacionada à User Story US05. Essa ação representa a exportação dos registros em formato estruturado, como CSV, permitindo que o gerente realize auditorias pós-evento e reduza a dependência de conferências manuais.
+
+<div align="center">
+  <sub>Imagem 49 - Histórico da Auditoria</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/estatisticas-competicao/card-evento-auditoria.svg" width="900px" alt="Histórico da Auditoria"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+#### Histórico por Equipes
+
+A tela de histórico por equipes apresenta os dados da competição organizados de acordo com as equipes participantes. Essa organização permite comparar o desempenho entre os grupos, acompanhar a quilometragem acumulada e verificar os registros vinculados a cada equipe, contribuindo diretamente para a visualização consolidada prevista nas User Stories US04, US05 e US06.
+
+<div align="center">
+  <sub>Imagem 50 - Histórico por Equipes</sub><br>
+  <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/estatisticas-competicao/card-evento-equipes.png" width="900px" alt="Histórico por Equipes"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+Além da organização dos fluxos de navegação, o protótipo aplica o Guia de Estilos definido para o projeto, mantendo consistência visual entre cores, tipografia, botões, cards, campos de formulário e componentes de interação. As telas também seguem uma estrutura organizada de posicionamento dos elementos, com alinhamentos e espaçamentos padronizados, favorecendo a leitura das informações e a previsibilidade da navegação.
+
+O protótipo completo pode ser acessado no Figma por meio do seguinte link: [Protótipo de alta fidelidade](https://www.figma.com/design/yf3pdWLwWF26GFlfaqid1O/Prot%C3%B3tipo?node-id=174-693&t=RxclnTyFX2daABXi-1).
+
 
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
@@ -2407,7 +2761,7 @@ _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelid
 O Modelo Entidade-Relacionamento (MER) é a representação conceitual do banco de dados, na qual se descrevem as entidades do domínio, seus atributos e os relacionamentos que as conectam, abstraindo decisões de implementação física como tipos de dados, índices ou chaves estrangeiras. Para este projeto, o MER traduz em linguagem de dados o domínio do Red Bull 24 Horas modelado nas seções anteriores: o evento operado por gerentes (Managers), suas equipes (Teams) e atletas (Athletes), e o registro de cada sessão de corrida (Shift) auditada à beira da esteira (Treadmill), com os checkpoints periódicos e logs que sustentam a apuração oficial da competição. A notação adotada é a de **Peter Chen**, na qual entidades são representadas por retângulos, atributos por elipses (com elipses preenchidas indicando chave primária e atributos compostos derivados do atributo-pai), relacionamentos por losangos e a cardinalidade explicitada nas extremidades de cada relacionamento com a razão (1) e (N). Os nomes de entidades, atributos e relacionamentos foram padronizados em inglês para garantir consistência com a nomenclatura técnica adotada no modelo relacional e no código-fonte da aplicação.
 
 <div align="center">
-  <sub>Imagem 31 - Modelo Entidade-Relacionamento</sub><br>
+  <sub>Imagem 29 - Modelo Entidade-Relacionamento</sub><br>
   <img src="./assets/modelo_entidade_relacionamento/MER.png" width="80%" alt="Modelo Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2481,7 +2835,7 @@ O MER traduz o domínio do Red Bull 24 Horas em um modelo conceitual de dados ra
 O DER traduz o modelo conceitual do MER para a estrutura relacional do banco de dados (PostgreSQL), adotando a **notação de tabelas relacionais** com tipos de dados, restrições (`NOT NULL`, `UNIQUE`, `CHECK`), chaves primárias (`PK`) e chaves estrangeiras (`FK`).
 
 <div align="center">
-  <sub>Imagem 32 - Diagrama Entidade-Relacionamento</sub><br>
+  <sub>Imagem 30 - Diagrama Entidade-Relacionamento</sub><br>
   <img src="./assets/diagrama_entidade_relacionamento/DER.png" width="90%" alt="Diagrama Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -3024,14 +3378,72 @@ _Descreva as regras de autorização por rota e por operação, baseadas no perf
 
 _Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.)._
 
-## 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
+## 3.9. Matriz de Rastreabilidade (RTM)
 
----
+A Matriz de Rastreabilidade de Requisitos (RTM — *Requirements Traceability Matrix*) é o instrumento que garante a cobertura completa do sistema, conectando cada necessidade identificada nas personas às regras de negócio que a governam, ao contrato de API que a implementa, à tela que a expõe e aos casos de teste que a validam. Qualquer elo quebrado nessa cadeia representa um requisito sem implementação verificável ou um teste sem origem rastreável — ambos comprometem a confiabilidade da apuração final do evento.
 
-_A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida toda a cadeia — mantenha-a atualizada a cada sprint. A partir da sprint 3 não deve haver lacunas nos fluxos centrais._
+No contexto do Red Bull 24 Horas, onde inconsistências nos dados podem invalidar o resultado de uma competição inteira, a rastreabilidade deixa de ser uma formalidade documental e passa a ser uma garantia operacional.
 
-| Persona | RF  | RN  | Endpoint | Tela | Teste | Evidência |
-| ------- | --- | --- | -------- | ---- | ----- | --------- |
+> **Legenda de personas:**
+> - **NR** — Nicole Rauen (atleta / influenciadora)
+> - **BG** — Bruno Gardesani (gerente de field marketing)
+> - **LA** — Lucas Andrade (operador de evento / auditor)
+
+| Persona | RF | RN | Endpoint | Tela | Teste |
+|---------|----|----|----------|------|-------|
+| LA | RF001 | RN15, RN28 | `POST /equipes` | Tela de Registro Pré-Evento → Cadastro de Equipe | CT-001: Cadastrar equipe com nome único → sucesso; CT-002: Cadastrar terceira equipe → bloqueio com mensagem de erro; CT-003: Cadastrar equipe com nome duplicado → rejeição |
+| LA | RF002 | RN16 | `POST /corredores` | Tela de Registro Pré-Evento → Cadastro de Atleta | CT-004: Cadastrar corredor vinculado a equipe existente → aparece na listagem da equipe; CT-005: Cadastrar corredor sem equipe selecionada → erro de validação |
+| LA, BG | RF003 | RN17 | `GET /equipes/{id}/validacao` | Tela de Registro Pré-Evento → Cadastro de Equipe (listagem) | CT-006: Tentar iniciar evento com equipe com menos de 16 corredores → bloqueio com mensagem indicando o número faltante; CT-007: Ambas as equipes com 16 corredores → início permitido |
+| LA | RF004 | RN19 | `GET /esteiras` | Tela de Acompanhamento de Esteiras / Tela de Início de Turno | CT-008: Abrir seletor de esteira → exibe todas com status Livre/Ocupada; CT-009: Selecionar esteira com status Ocupada → mensagem "Esteira indisponível" e bloqueio |
+| LA | RF005 | RN20 | `GET /equipes` | Tela de Seleção de Corredor e Registro de Início | CT-010: Selecionar esteira Livre e equipe → lista apenas corredores da equipe selecionada |
+| LA | RF006 | RN21 | `GET /corredores?disponivel=true` | Tela de Seleção de Corredor e Registro de Início | CT-011: Selecionar corredor com turno em aberto → alerta "Corredor já em turno ativo" e bloqueio; CT-012: Selecionar corredor disponível → botão de início habilitado |
+| LA | RF007 | RN01, RN02 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-013: Corredor com turno em aberto → rejeição com mensagem "Corredor com turno em aberto"; CT-014: Corredor sem turno ativo + esteira Livre → turno criado com sucesso |
+| LA | RF008 | RN03 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-015: Esteira Ocupada → rejeição com "Esteira indisponível"; CT-016: Esteira Livre → operação prossegue |
+| LA | RF009 | RN05 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-017: Confirmar início com corredor e esteira válidos → registro persiste corredor e esteira vinculados ao turno; CT-018: Consultar turno após criação → corredor e esteira correspondem aos selecionados |
+| LA | RF010 | RN06, RN32 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-019: Informar quilometragem inicial negativa → erro "Quilometragem deve ser ≥ 0"; CT-020: Informar km inicial válido (≥ 0) → persiste km_inicial no turno |
+| LA | RF011 | RN07 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-021: Confirmar início de turno → timestamp_início gerado pelo servidor sem campo editável na interface |
+| LA | RF012 | RN03 | `POST /turnos/{id}/checkpoints` | Modal de Checkpoint Obrigatório | CT-022: Turno em andamento há 5 minutos → modal bloqueante exibido, nenhuma ação possível até preenchimento; CT-023: Modal ativo → qualquer clique fora do modal não fecha nem permite interação com a tela |
+| LA | RF013 | RN04 | `POST /turnos/{id}/checkpoints` | Modal de Checkpoint Obrigatório | CT-024: Informar km menor que último checkpoint → mensagem de erro e modal mantido aberto; CT-025: Informar km válido (≥ último checkpoint) → modal fechado, turno continua |
+| LA | RF014 | RN05 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-026: Acionar "Finalizar turno" com turno ativo → sistema solicita km final e abre fluxo de encerramento; CT-027: Acionar sem turno ativo selecionado → mensagem "Nenhum turno ativo encontrado" |
+| LA | RF015 | RN06, RN32 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-028: Informar km_final menor que último checkpoint → rejeição com mensagem de erro; CT-029: Informar km_final válido → sistema prossegue para geração de timestamp de encerramento |
+| LA | RF016 | RN33 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-030: Confirmar encerramento com km_final válido → timestamp_fim gerado pelo servidor; CT-031: Verificar interface → não há campo editável de hora de encerramento |
+| LA, BG | RF017 | RN07 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-032: Finalizar turno com km_inicial=10 e km_final=15 → distância=5 km persistida; CT-033: km_inicial = km_final → distância=0 persistida |
+| LA, BG | RF018 | RN07, RN33 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-034: Finalizar turno com início 08:00 e fim 08:30 → duração=30 min persistida |
+| LA, BG | RF019 | RN07 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-035: distância=5 km, duração=30 min → velocidade_média=10,0 km/h; CT-036: duração=0 → velocidade_média=0,0 km/h sem erro de divisão |
+| BG | RF020 | RN09 | `GET /equipes/{id}/quilometragem` | Tela de Acompanhamento de Esteiras (placar) | CT-037: Três turnos finalizados com 5, 7 e 8 km → total da equipe=20 km; CT-038: Nenhum turno finalizado → total=0 km |
+| LA, BG | RF021 | RN11 | `GET /eventos/{id}/dashboard` | Tela de Acompanhamento de Esteiras | CT-039: Turno finalizado no servidor → métricas aparecem no dashboard em até 10 s sem recarregar a página; CT-040: Sem novos dados → valores estáveis sem recarregamento desnecessário |
+| LA, BG | RF022 | RN13 | `GET /eventos/{id}/historico` | Tela de Acompanhamento (aba Histórico) | CT-041: Acessar histórico → registros em ordem decrescente de timestamp; CT-042: Novo registro adicionado → aparece no topo da lista |
+| BG | RF023 | RN23, RN24 | `PATCH /registros/{id}` | Tela de Acompanhamento (edição retroativa) | CT-043: Auditor autenticado edita campo → novo valor persistido; CT-044: Usuário não autenticado tenta editar → redirecionamento para login |
+| BG | RF024 | RN23 | `PATCH /registros/{id}` | Tela de Acompanhamento (log de auditoria) | CT-045: Auditor edita quilometragem de checkpoint → log registra usuário, campo, valor anterior, valor novo e timestamp; CT-046: Admin consulta log → todas as edições do registro em ordem cronológica |
+| LA | RF025 | RN27 | `POST /sync` | Modal de Checkpoint Obrigatório / Tela de Início de Turno | CT-047: Dispositivo offline → checkpoint registrado localmente com indicador visual de modo offline; CT-048: Segundo checkpoint offline → persiste localmente sem erro |
+| LA | RF026 | RN27 | `POST /sync` | Tela de Acompanhamento de Esteiras (indicador de sync) | CT-049: Conexão restabelecida → sincronização automática de todos os registros pendentes; CT-050: Dados sincronizados consultados no servidor → cada registro aparece exatamente uma vez |
+| LA, BG | RF027 | RN31 | `POST /auth/login` | Tela de Login | CT-051: Usuário não autenticado acessa tela de registro → redirecionamento para login; CT-052: Credenciais inválidas → "Credenciais inválidas" e acesso negado |
+| LA | RF028 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-053: Quilometragem incompatível com histórico → alerta em tempo real antes da confirmação; CT-054: Valor compatível → nenhum alerta, dado persistido normalmente |
+| LA | RF029 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-055: Inconsistência detectada → notificação visual destacada exibida; CT-056: Botão de confirmação bloqueado até revisão ou justificativa |
+| LA | RF030 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-057: Inconsistência + som habilitado → sinal sonoro emitido junto à notificação; CT-058: Som desabilitado → nenhum sinal sonoro, apenas notificação visual |
+| LA | RF031 | RN25 | `PATCH /registros/{id}` | Tela de Inconsistência Detectada | CT-059: Auditor corrige valor para dado consistente → confirmação desbloqueada e dado marcado como revisado; CT-060: Auditor mantém valor original com justificativa → persistido com flag "revisado manualmente" e justificativa associada |
+| LA | RF032 | RN04 | `POST /turnos/{id}/checkpoints` | Tela de Detalhes da Corrida em Andamento | CT-061: Auditor aciona registro manual com valor válido → aceito e vinculado ao turno; CT-062: Valor menor que último checkpoint → mensagem de erro e não persistência |
+| LA | RF033 | RN34 | `POST /turnos/{id}/checkpoints` | Tela de Detalhes da Corrida em Andamento | CT-063: Confirmar registro manual com valor válido → timestamp gerado exclusivamente pelo servidor; CT-064: Verificar interface → sem campo editável de horário |
+| LA | RF034 | RN08 | `POST /turnos` | Fluxo de Registro de Fim de Turno → Tela de Início de Turno | CT-065: Novo turno iniciado após encerramento na mesma esteira → concluído em no máximo 3 cliques; CT-066: Dados de equipe e esteira reutilizados → sem necessidade de nova seleção manual |
+| NR, BG | RF035 | RN09 | `GET /eventos/{id}/metricas` | Tela de Desempenho Final | CT-067: Corredor com 3 turnos de 4, 6 e 5 km → distância total=15 km |
+| NR, BG | RF036 | RN09 | `GET /eventos/{id}/metricas` | Tela de Desempenho Final | CT-068: Corredor com 3 turnos de 4, 6 e 5 km → média por turno=5,0 km |
+| BG | RF037 | RN10 | `GET /eventos/{id}/metricas` | Tela de Desempenho Final | CT-069: Evento em andamento há 120 min → ao menos dois snapshots (60 min e 120 min); CT-070: Corredor sem turno até 60 min → snapshot registra 0 km naquele intervalo |
+| LA, BG | RF038 | RN12 | `GET /esteiras/{id}/status` | Tela de Acompanhamento de Esteiras | CT-071: Status de esteira muda de Livre para Ocupada → painel reflete mudança em até 10 s; CT-072: Turno encerrado → status muda automaticamente para Livre |
+| LA | RF039 | RN12 | `GET /esteiras/{id}/status` | Tela de Acompanhamento de Esteiras | CT-073: Esteira Ocupada por 30 min consecutivos → alerta visual de sugestão de alternância; CT-074: Sem esteira adjacente disponível → alerta indica indisponibilidade de alternância |
+| BG | RF040 | RN14 | `GET /eventos/{id}/placar` | Tela de Acompanhamento (Modo TV) | CT-075: Modo TV ativo em 1920×1080 → fonte ≥ 48px e contraste ≥ 4,5:1; CT-076: Navegação apenas por teclado → todas as funcionalidades de visualização acessíveis sem mouse e sem login |
+| LA, BG | RF041 | RN22 | `GET /eventos/{id}/historico?equipe={id}` | Tela de Acompanhamento (aba Histórico) | CT-077: Filtro por Equipe A → apenas registros da Equipe A exibidos; CT-078: Filtro removido → todos os registros exibidos |
+| LA, BG | RF042 | RN22 | `GET /eventos/{id}/historico?esteira={id}` | Tela de Acompanhamento (aba Histórico) | CT-079: Filtro por esteira 2 → apenas registros da esteira 2 exibidos |
+| LA, BG | RF043 | RN22 | `GET /eventos/{id}/historico?corredor={id}` | Tela de Acompanhamento (aba Histórico) | CT-080: Filtro por corredor João → apenas registros do corredor João exibidos |
+| LA | RF044 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-081: km_final < km_inicial no encerramento → inconsistência "Quilometragem final menor que inicial" sinalizada e confirmação bloqueada |
+| LA | RF045 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-082: Intervalo entre checkpoints > 10 min → alerta "Intervalo de checkpoint excedido" gerado para o auditor |
+| LA, BG | RF046 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-083: Mesmo corredor em dois turnos simultâneos → alerta "Corredor com turnos simultâneos detectado" |
+| BG | RF047 | RN26 | `GET /eventos/{id}/exportar` | Tela de Desempenho Final (exportação) | CT-084: Admin aciona download de turnos → arquivo .csv gerado com todas as colunas (corredor, equipe, esteira, km_inicial, km_final, timestamp_início, timestamp_fim, duração, velocidade_média); CT-085: Sem turnos registrados → .csv gerado apenas com cabeçalho |
+| BG | RF048 | RN26 | `GET /eventos/{id}/exportar?tipo=checkpoints` | Tela de Desempenho Final (exportação) | CT-086: Admin aciona download de checkpoints → .csv com colunas corredor, esteira, quilometragem, timestamp; CT-087: Sem checkpoints → .csv apenas com cabeçalho |
+| NR, BG | RF049 | RN09 | `GET /eventos/{id}/metricas` | Tela de Desempenho Final | CT-088: Evento encerrado → perfil exibe distância total, tempo total em pista e velocidade média geral; CT-089: Corredor sem nenhum turno → valores zerados exibidos sem erro |
+| NR | RF050 | RN36 | `GET /corredores/{id}/compartilhar` | Tela de Desempenho Final | CT-090: Acionar "Compartilhar" → URL única e pública gerada; CT-091: Link acessado por usuário não cadastrado → exibe apenas dados de desempenho do corredor sem acesso a outras funcionalidades |
+| BG | RF051 | RN18, RN29, RN37 | `POST /eventos` | Tela de Registro Pré-Evento → Cadastro de Local/Evento | CT-092: Cadastrar local/região antes do início → operação permitida; CT-093: Tentar alterar local após início do evento → operação rejeitada |
+| NR | RF052 | RN36 | `GET /corredores/{id}/historico` | Tela de Desempenho Final | CT-094: Corredor acessa histórico completo após término do evento → todos os turnos e métricas individuais exibidos |
+| LA | RF053 | RN31, RN32 | `GET /esteiras/{id}/status` | Tela de Acompanhamento de Esteiras | CT-095: Esteira sem novo checkpoint por mais de 5 min → alerta visual de inatividade exibido para o auditor |
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
