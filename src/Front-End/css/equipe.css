@@ -1,0 +1,149 @@
+/* ---------------- MAIN ---------------- */
+
+main{
+      display: flex;
+    gap: 80px;
+    margin-top: 50px;
+    align-items: stretch;
+    height: calc(100vh - 145px);
+}
+
+/* ---------------- ETAPA ATIVA ---------------- */
+
+.etapa.ativa span{
+    background-color: var(--vermelho);
+    color: var(--branco);
+}
+
+/* ---------------- CONTEUDO ---------------- */
+
+.conteudo{
+    width: 700px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.conteudo h2{
+    font-size: 35px;
+    margin-bottom: 30px;
+}
+
+/* ---------------- seleção ---------------- */
+
+.opcoes-equipe{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1; 
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.seleção-equipe{
+    width: 700px;
+}
+
+.seleção-topo{
+    width: 100%;
+    height: 60px;
+    background-color: white;
+    border: 1px solid #BDBDBD;
+    border-radius: 4px;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.seleção-topo span{
+    font-size: 22px;
+}
+
+.seleção-topo img{
+    width: 14px;
+}
+
+.seleção-equipe.selecionado .seleção-topo{
+    background-color: var(--vermelho);
+    color: white;
+    border: none;
+}
+
+.seleção-lista{
+    display: none;
+
+    border: 1px solid #BDBDBD;
+    border-top: none;
+
+    padding: 20px;
+}
+
+.seleção-equipe.aberto .seleção-lista{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.seleção-lista p{
+    font-size: 20px;
+}
+/* ---------------- MEMBROS ---------------- */
+
+.membro{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.membro span{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #D9D9D9;
+}
+
+.membro p{
+    font-size: 20px;
+}
+
+/* ---------------- BOTÕES ---------------- */
+
+.botoes{
+     display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+
+    padding-bottom: 40px;
+    flex-shrink: 0;
+}
+
+.botoes button{
+    width: 180px;
+    height: 60px;
+    border-radius: 6px;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.btn-voltar{
+    background-color: var(--branco);
+    border: 1px solid black;
+    color: black;
+}
+
+.btn-proximo{
+    background-color: #C8C8C8;
+    border: none;
+    color: var(--branco);
+}
+
+.btn-voltar:hover{
+    border: 2px solid var(--vermelho);
+    color: var(--vermelho);
+}
+
+.btn-proximo:hover{
+    background-color: var(--vermelho);
+}
