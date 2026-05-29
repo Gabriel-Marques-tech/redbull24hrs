@@ -2452,7 +2452,7 @@ Para a aplicação Red Bull 24 Horas, foi adotada exclusivamente a fonte Inter, 
 
 <div align="center">
   <sub>Imagem xx - Tipografia da Aplicação</sub><br>
-  <img src="./assets/guia-de-estilos/tipografia.png" width="900px" alt="Tipografia de Cores"><br>
+  <img src="./assets/guia-de-estilos/tipografia.png" width="900px" alt="Tipografia"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -2461,11 +2461,20 @@ A definição de uma escala tipográfica estruturada, com papéis claros para t�
 
 ### 3.4.3 Iconografia e imagens
 
----
+Ícones são elementos de comunicação visual que substituem ou reforçam rótulos textuais, acelerando o reconhecimento de funções e reduzindo a carga de leitura na interface. Quando bem escolhidos e aplicados de forma consistente, tornam a navegação mais intuitiva e contribuem para uma experiência mais fluida, especialmente em contextos de uso rápido, onde o usuário precisa identificar ações e informações em frações de segundo.
 
-_(esta subseção é opcional, caso não existam ícones e imagens, apague esta subseção)_
+A nossa aplicação para a Red Bull 24 Horas utiliza ícones do Iconify, biblioteca open source (pública) que reúne coleções de diferentes famílias visuais sob única integração. Os ícones foram selecionados de coleções com traço sólido e geometria bem definida, priorizando alta legibilidade em tamanhos reduzidos e coerência visual entre si.
 
-_posicione aqui imagens e textos contendo exemplos padronizados de ícones e imagens, com seus respectivos atributos de aplicação, utilizadas na solução_
+Cada ícone desempenha um papel funcional específico, seja representando métricas no dashboard, identificando campos nos formulários de registro ou sinalizando ações de navegação. 
+
+<div align="center">
+  <sub>Imagem xx - Iconografia da Aplicação</sub><br>
+  <img src="./assets/guia-de-estilos/iconografia.png" width="900px" alt="Iconografia da Cores"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+A padronização desses ativos garante que todos os elementos visuais falem a mesma linguagem: os ícones seguem uma escala consistente de 16 a 32 px conforme seu papel na hierarquia da interface. Esse conjunto de diretrizes reduz decisões arbitrárias durante o desenvolvimento e preserva a identidade visual da Red Bull 24 Horas em cada detalhe da aplicação.
 
 ## 3.5 Protótipo de alta fidelidade (sprint 3)
 
