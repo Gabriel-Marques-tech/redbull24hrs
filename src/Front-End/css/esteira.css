@@ -1,0 +1,96 @@
+/* ---------------- MAIN ---------------- */
+
+main{
+    display: flex;
+    gap: 80px;
+    margin-top: 50px;
+}
+
+/* ---------------- ETAPA ATIVA ---------------- */
+
+.etapa.ativa span{
+    background-color: var(--vermelho);
+    color: var(--branco);
+}
+
+/* ---------------- CONTEUDO ---------------- */
+
+.conteudo{
+    width: 700px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.conteudo h2{
+    font-size: 35px;
+    margin-bottom: 40px;
+}
+
+/* ---------------- ESTEIRAS ---------------- */
+
+.lista-esteiras{
+    display: flex;
+    gap: 40px;
+}
+
+.esteira{
+    width: 260px;
+    height: 230px;
+    border: 1px solid #BDBDBD;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.esteira img{
+    width: 130px;
+    margin-bottom: 15px;
+}
+
+.esteira:hover,
+.esteira.selecionada{
+    background-color: var(--vermelho);
+    color: var(--branco);
+}
+/* ---------------- BOTÕES ---------------- */
+
+.botoes{
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+
+    margin-top: 70px;
+}
+
+.botoes button{
+    width: 180px;
+    height: 60px;
+
+    border-radius: 6px;
+
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.btn-voltar{
+    background-color: var(--branco);
+    border: 1px solid black;
+}
+
+.btn-proximo{
+    background-color: #C8C8C8;
+    border: none;
+    color: var(--branco);
+}
+.btn-voltar:hover{
+    border: 2px solid var(--vermelho);
+    color: var(--vermelho);
+}
+
+.btn-proximo:hover{
+    background-color: var(--vermelho);
+}
