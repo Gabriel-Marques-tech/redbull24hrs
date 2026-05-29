@@ -2,7 +2,9 @@
 
 # WAD - Web Application Document - Módulo 2 - Inteli
 
-## Nome do Grupo
+## Nome do grupo: RedRunners
+
+## Nome da solução: RedRun
 
 ## Nome dos integrantes do grupo
 
@@ -821,7 +823,7 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 | RF050 | Compartilhamento de desempenho por link público. O sistema deve gerar automaticamente um link com URL única e pública que permita o compartilhamento externo das métricas finais de desempenho do corredor sem exigir autenticação. | Média | Planejado |
 | RF051 | O sistema deve permitir o registro do local/região da etapa.                                                                                                                              | Baixa      | Planejado |
 | RF052 | O sistema deve permitir que o corredor acesse seu histórico completo de desempenho no evento após sua finalização.                                                                        | Baixa      | Planejado |
-| RF053 | Alerta de inatividade de esteira. O sistema deve identificar automaticamente e sinalizar ao auditor, por meio de alerta visual na interface, caso uma esteira fique mais de 5 minutos sem receber novos registros de checkpoint. | Média | RN31, RN32 |
+| RF053 | Alerta de inatividade de esteira. O sistema deve identificar automaticamente e sinalizar ao auditor, por meio de alerta visual na interface, caso uma esteira fique mais de 5 minutos sem receber novos registros de checkpoint. | Média | Planejado |
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -1552,36 +1554,61 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 <div align = "center">
   <sub> Quadro 15 - Matriz RF → RN → Endpoint </sub><br>
 
-| RF    | RN associadas | Endpoint                                                         | Método |
-| ----- | ------------- | ---------------------------------------------------------------- | ------ |
-| RF007 | RN01, RN02    | `/turnos`                                                        | POST   |
-| RF008 | RN03          | `/turnos/{id}/checkpoints`                                       | POST   |
-| RF021 | RN04          | `/turnos/{id}/checkpoints`                                       | POST   |
-| RF009 | RN05          | `/turnos/{id}/finalizar`                                         | PATCH  |
-| RF010 | RN06          | `/turnos/{id}/finalizar`                                         | PATCH  |
-| RF011 | RN07          | `/turnos/{id}/finalizar`                                         | PATCH  |
-| RF022 | RN08          | `/turnos/{id}/hot-swap`                                          | POST   |
-| RF012 | RN09          | `/equipes/{id}/quilometragem`                                    | GET    |
-| RF023 | RN10          | `/eventos/{id}/metricas`                                         | GET    |
-| RF013 | RN11          | `/eventos/{id}/dashboard`                                        | GET    |
-| RF024 | RN12          | `/esteiras/{id}/status`                                          | GET    |
-| RF014 | RN13          | `/eventos/{id}/historico`                                        | GET    |
-| RF025 | RN14          | `/eventos/{id}/placar`                                           | GET    |
-| RF001 | RN15          | `/equipes`                                                       | POST   |
-| RF002 | RN16          | `/corredores`                                                    | POST   |
-| RF003 | RN17          | `/equipes/{id}/validacao`                                        | GET    |
-| RF031 | RN18          | `/eventos`                                                       | POST   |
-| RF004 | RN19          | `/esteiras`                                                      | GET    |
-| RF005 | RN20          | `/equipes`                                                       | GET    |
-| RF006 | RN21          | `/corredores?disponivel=true`                                    | GET    |
-| RF026 | RN22          | `/eventos/{id}/historico?equipe={id}&esteira={id}&corredor={id}` | GET    |
-| RF015 | RN23, RN24    | `/registros/{id}`                                                | PATCH  |
-| RF027 | RN25          | `/eventos/{id}/inconsistencias`                                  | GET    |
-| RF028 | RN26          | `/eventos/{id}/exportar`                                         | GET    |
-| RF016 | RN27          | `/sync`                                                          | POST   |
-| RF047 | RN31, RN32    | N/A                                                              | N/A    |
-| RF048 | RN34          | `/eventos/{id}/exportar?tipo=checkpoints`                        | GET    |
-| RF050 | RN36          | `/corredores/{id}/compartilhar`                                  | GET    |
+| RF    | RN associadas                        | Endpoint                                                                                                                                                              | Método                            |
+| ----- | ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| RF001 | RN15, RN28                           | `POST /teams`, `GET /teams`, `GET /teams/:id`, `PATCH /teams/:id`                                                                                                    | POST / GET / GET / PATCH          |
+| RF002 | RN16                                 | `POST /teams/:teamId/athletes`, `GET /teams/:teamId/athletes`, `GET /teams/:teamId/athletes/:id`, `PATCH /teams/:teamId/athletes/:id`                                 | POST / GET / GET / PATCH          |
+| RF003 | RN17, RN28                           | — (não implementado)                                                                                                                                                  | —                                 |
+| RF004 | RN19                                 | `GET /events/treadmills`, `POST /events/treadmills`                                                                                                                   | GET / POST                        |
+| RF005 | RN20                                 | `POST /audit/shifts/start`                                                                                                                                            | POST                              |
+| RF006 | RN21                                 | `GET /teams/:teamId/athletes`, `POST /audit/shifts/start`                                                                                                             | GET / POST                        |
+| RF007 | RN01, RN35                           | `POST /audit/shifts/start`                                                                                                                                            | POST                              |
+| RF008 | RN02                                 | `POST /audit/shifts/start`                                                                                                                                            | POST                              |
+| RF009 | —                                    | `POST /audit/shifts/start`                                                                                                                                            | POST                              |
+| RF010 | RN32                                 | `POST /audit/shifts/start`                                                                                                                                            | POST                              |
+| RF011 | —                                    | `POST /audit/shifts/start`                                                                                                                                            | POST                              |
+| RF012 | RN03, RN34                           | `POST /audit/shifts/:id/checkpoints`                                                                                                                                  | POST                              |
+| RF013 | RN04                                 | `POST /audit/shifts/:id/checkpoints`                                                                                                                                  | POST                              |
+| RF014 | RN05, RN35                           | `PATCH /audit/shifts/:id/finish`                                                                                                                                      | PATCH                             |
+| RF015 | RN06                                 | `PATCH /audit/shifts/:id/finish`                                                                                                                                      | PATCH                             |
+| RF016 | RN33                                 | `PATCH /audit/shifts/:id/finish`                                                                                                                                      | PATCH                             |
+| RF017 | RN07, RN32                           | `PATCH /audit/shifts/:id/finish`                                                                                                                                      | PATCH                             |
+| RF018 | RN07, RN33                           | `PATCH /audit/shifts/:id/finish`                                                                                                                                      | PATCH                             |
+| RF019 | RN07                                 | `PATCH /audit/shifts/:id/finish`                                                                                                                                      | PATCH                             |
+| RF020 | RN09                                 | `GET /metrics/events/:id/teams`, `GET /metrics/events/:id/dashboard`                                                                                                  | GET                               |
+| RF021 | RN11                                 | `GET /metrics/events/:id/dashboard`                                                                                                                                   | GET                               |
+| RF022 | RN13                                 | `GET /audit/history`                                                                                                                                                  | GET                               |
+| RF023 | RN24                                 | `PATCH /teams/:teamId/athletes/:id`                                                                                                                                   | PATCH                             |
+| RF024 | RN23                                 | — (não implementado)                                                                                                                                                  | —                                 |
+| RF025 | RN27                                 | `POST /audit/shifts/:id/checkpoints`                                                                                                                                  | POST                              |
+| RF026 | RN27                                 | — (não implementado)                                                                                                                                                  | —                                 |
+| RF027 | RN30, RN31, RN38, RN39, RN40, RN41  | `POST /auth/register/manager`, `POST /auth/register/auditor`, `POST /auth/login`, `POST /auth/refresh`, `POST /auth/logout`, `GET /auth/me`                          | POST / POST / POST / POST / POST / GET |
+| RF028 | RN25                                 | `GET /audit/alerts`                                                                                                                                                   | GET                               |
+| RF029 | —                                    | `GET /audit/alerts`                                                                                                                                                   | GET                               |
+| RF030 | —                                    | — (não implementado; frontend)                                                                                                                                        | —                                 |
+| RF031 | —                                    | — (não implementado)                                                                                                                                                  | —                                 |
+| RF032 | RN34                                 | `POST /audit/shifts/:id/checkpoints`                                                                                                                                  | POST                              |
+| RF033 | —                                    | `POST /audit/shifts/:id/checkpoints`                                                                                                                                  | POST                              |
+| RF034 | RN08                                 | — (não implementado; fluxo de UI)                                                                                                                                     | —                                 |
+| RF035 | —                                    | `GET /metrics/events/:id/athletes`                                                                                                                                    | GET                               |
+| RF036 | —                                    | `GET /metrics/athletes/:id/shifts`                                                                                                                                    | GET                               |
+| RF037 | RN10                                 | `GET /metrics/athletes/:id/snapshots`                                                                                                                                 | GET                               |
+| RF038 | RN12                                 | `GET /metrics/events/:id/dashboard`                                                                                                                                   | GET                               |
+| RF039 | RN12                                 | `GET /audit/alerts`                                                                                                                                                   | GET                               |
+| RF040 | RN14                                 | — (não implementado; frontend)                                                                                                                                        | —                                 |
+| RF041 | RN22                                 | `GET /audit/history?team_id=`                                                                                                                                         | GET                               |
+| RF042 | RN22                                 | `GET /audit/history?treadmill_id=`                                                                                                                                    | GET                               |
+| RF043 | RN22                                 | `GET /audit/history?athlete_id=`                                                                                                                                      | GET                               |
+| RF044 | RN25                                 | `PATCH /audit/shifts/:id/finish`                                                                                                                                      | PATCH                             |
+| RF045 | RN25                                 | `POST /audit/shifts/:id/checkpoints`                                                                                                                                  | POST                              |
+| RF046 | RN25                                 | `POST /audit/shifts/start`                                                                                                                                            | POST                              |
+| RF047 | RN26                                 | `GET /export/events/:id/shifts`                                                                                                                                       | GET                               |
+| RF048 | RN26                                 | `GET /export/events/:id/checkpoints`                                                                                                                                  | GET                               |
+| RF049 | —                                    | `GET /metrics/athletes/:id/performance`                                                                                                                               | GET                               |
+| RF050 | RN36                                 | — (não implementado)                                                                                                                                                  | —                                 |
+| RF051 | RN18, RN29, RN37                     | `POST /events`, `PATCH /events/:id`                                                                                                                                   | POST / PATCH                      |
+| RF052 | —                                    | `GET /metrics/athletes/:id/performance`                                                                                                                               | GET                               |
+| RF053 | —                                    | `GET /audit/alerts`                                                                                                                                                   | GET                               |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -1622,7 +1649,7 @@ Essas restrições podem atuar de forma transversal no sistema, impactando sua o
 | **RNF004** | USAB — Usabilidade    | RF007, RF008, RF022                      | O sistema deve minimizar a quantidade de cliques e telas necessárias para que o Auditor execute ações operacionais urgentes durante o uso da esteira. | Nenhuma ação operacional crítica (início/checkpoint/troca) deve exigir mais de **3 cliques/toques**.                                                          |
 | **RNF005** | CONF — Confiabilidade | RF016                                    | O sistema deve possuir tolerância a falhas de rede, permitindo a operação contínua do evento.                                                         | **100%** dos dados registrados offline devem ser sincronizados em até **30 segundos** após a reconexão, sem duplicidade.                                      |
 | **RNF006** | CONF — Confiabilidade | Global                                   | O sistema deve garantir a integridade transacional, impedindo dados que firam as regras de negócio.                                                   | **100%** das tentativas de persistência de dados inválidos (ex: duplicatas) devem ser bloqueadas no servidor.                                                 |
-| **RNF007** | CONF — Confiabilidade | RF018, RF027                             | O sistema deve ser resiliente na detecção de falhas operacionais e inconsistências lógicas.                                                           | **100%** das inconsistências definidas no RF027 devem gerar alertas sonoros/visuais automáticos.                                                              |
+| **RNF007** | CONF — Confiabilidade | RF018, RF028 | O sistema deve ser resiliente na detecção de falhas operacionais e inconsistências lógicas. | **100%** das inconsistências definidas no RF028 devem gerar alertas sonoros/visuais automáticos. |
 | **RNF008** | DES — Desempenho      | RF007, RF008, RF009, RF010, RF021        | O sistema deve processar os registros operacionais de turnos e checkpoints com baixa latência.                                                        | O tempo de resposta da API para registros operacionais (P95) deve ser inferior a **200ms**.                                                                   |
 | **RNF009** | DES — Desempenho      | Global                                   | O sistema deve fornecer feedback visual imediato após ações do usuário na interface.                                                                  | Alertas de inconsistência e validações de campo devem ser exibidos em até **100ms**.                                                                          |
 | **RNF010** | DES — Desempenho      | RF013, RF025                             | O dashboard e o modo TV devem apresentar dados atualizados de forma contínua para o público.                                                          | A atualização automática de métricas e placares deve ocorrer em no máximo **10 segundos** sem recarregamento manual.                                          |
@@ -3339,7 +3366,7 @@ ORDER BY total_minutos_uso DESC;
 
 ---
 
-_Descreva o fluxo de autenticação implementado: persistência de senha com hash bcrypt/argon2 (parâmetros de custo explícitos e justificados), validação de credenciais e criação de sessão. Senhas em texto plano no banco não são aceitas._
+Esta seção será elaborada na sprint 4, contemplando a descrição completa do fluxo de autenticação implementado no sistema. Serão apresentados os mecanismos de persistência segura de senhas utilizando algoritmos de hash criptográfico, como bcrypt ou argon2, incluindo os parâmetros de custo adotados e suas respectivas justificativas técnicas. Além disso, a seção abordará o processo de validação de credenciais, criação e gerenciamento de sessão de usuário, garantindo conformidade com boas práticas de segurança e assegurando que nenhuma senha seja armazenada em texto plano no banco de dados.
 
 ### 3.8.2. Controle de sessão
 
