@@ -1,0 +1,68 @@
+
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "primaryColor": "#0F0069",
+    "primaryTextColor": "#FFFFFF",
+    "primaryBorderColor": "#D2003C",
+    "secondaryColor": "#D2003C",
+    "secondaryTextColor": "#FFFFFF",
+    "secondaryBorderColor": "#D2003C",
+    "tertiaryColor": "#E8E8F5",
+    "tertiaryTextColor": "#0F0069",
+    "tertiaryBorderColor": "#0F0069",
+    "noteBkgColor": "#FFCC00",
+    "noteTextColor": "#0F0069",
+    "noteBorderColor": "#D2003C",
+    "activationBkgColor": "#D2003C",
+    "activationBorderColor": "#0F0069",
+    "actorBkg": "#0F0069",
+    "actorTextColor": "#FFFFFF",
+    "actorBorderColor": "#D2003C",
+    "actorLineColor": "#000000",
+    "signalColor": "#000000",
+    "signalTextColor": "#000000",
+    "labelBoxBkgColor": "#E8E8F5",
+    "labelBoxBorderColor": "#0F0069",
+    "labelTextColor": "#0F0069",
+    "loopTextColor": "#0F0069",
+    "fontFamily": "Arial, sans-serif",
+    "fontSize": "14px",
+    "background": "#FFFFFF"
+  }
+}}%%
+sequenceDiagram
+    participant C as Client
+    participant DC as DashboardController
+    participant DS as DashboardService
+    participant DR as DashboardRepository
+    participant DB as Data Base
+
+    Note over C,DB: 1 · Polling automatic ≤10s (RF013 · RN11)
+
+    loop Every ≤10s
+        C->>+DC: 1. GET /dashboard
+        DC->>+DS: 2. getDashboardData()
+        DS->>+DR: 3. getTotalTeamKm()
+        DR->>+DB: 4. SELECT total Team km(Finished Shifts)
+        DB-->>-DR: 5. [ { team_id, km_total } ]
+        DR-->>-DS: 6. [ { team_id, km_total } ]
+        DS->>+DR: 7. getTreadmillsStatus()
+        DR->>+DB: 8. SELECT Treadmill + current Athlete 
+        DB-->>-DR: 9. [ { treadmill_id, status, current_athlete } ]
+        DR-->>-DS: 10. [ { treadmill_id, status, current_athlete } ]
+        DS->>+DR: 11. getSnapshotsPerHour()
+        DR->>+DB: 12. SELECT snapshots per Event hour
+        DB-->>-DR: 13. [ { hour, team_id, km_accumulated } ]
+        DR-->>-DS: 14. [ { hour, team_id, km_accumulated } ]
+        DC-->>-C: 15. 200 { scoreboard, treadmills, snapshots }
+        deactivate DS
+    end
+
+    Note over C,DB: 2 · Healthcheck of connection(RN11)
+
+    C->>+DC: 16. GET /status
+    DC->>+DB: 17. ping connection
+    DB-->>-DC: 18. ok
+    DC-->>-C: 19. 200 { db: "ok", timestamp }
+    Note over C,DC: If fail — display "outdated data" + timestamp

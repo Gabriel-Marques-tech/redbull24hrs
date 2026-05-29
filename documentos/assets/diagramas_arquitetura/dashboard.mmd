@@ -1,0 +1,53 @@
+graph LR
+    %% Configurações Globais de Temas para Alto Contraste
+    %% Força o texto de todos os nós a ser preto (#000000) e aumenta as bordas
+    classDef client fill:#FFFFFF,stroke:#1A237E,stroke-width:2.5px,color:#000000;
+    classDef controller fill:#C5CAE9,stroke:#3F51B5,stroke-width:2.5px,color:#000000;
+    classDef service fill:#C8E6C9,stroke:#2E7D32,stroke-width:2.5px,color:#000000;
+    classDef repository fill:#FFE082,stroke:#EF6C00,stroke-width:2.5px,color:#000000;
+    classDef model fill:#E1BEE7,stroke:#6A1B9A,stroke-width:2.5px,color:#000000;
+    classDef db fill:#CFD8DC,stroke:#37474F,stroke-width:2.5px,color:#000000;
+
+    subgraph CLIENTES [CLIENTES]
+        C1[Web / Mobile App]:::client
+    end
+
+    subgraph CONTROLLER_LAYER [CONTROLLER LAYER - DashboardController]
+        A1[Valida Requisição Polling <br> GET /dashboard]:::controller --> A2[Chama DashboardService]:::controller
+        A1 --> A3[Define Status de Resposta <br> 200 OK ou Falha]:::controller
+    end
+
+    subgraph SERVICE_LAYER [SERVICE LAYER - DashboardService]
+        B1[Orquestra Busca Geral]:::service --> B2[Aplica Regra: Consolida Dados]:::service
+        B1 --> B3[Coordena Chamadas Repositório]:::service
+    end
+
+    subgraph REPOSITORY_LAYER [REPOSITORY LAYER - DashboardRepository]
+        D1[Query: KM das Equipes]:::repository
+        D2[Query: Status Esteiras]:::repository
+        D3[Query: Histórico por Hora]:::repository
+    end
+
+    subgraph MODEL_LAYER [MODEL LAYER - Domínio]
+        E1[DashboardSnapshot]:::model
+        E2[TeamKilometrage]:::model
+        E3[TreadmillStatus]:::model
+    end
+
+    subgraph BANCO_DE_DADOS [BANCO DE DADOS]
+        DB1[(Base de Dados Relacional)]:::db
+    end
+
+    %% Fluxo de Relacionamentos Lineares (Esquerda para Direita)
+    C1 -->|GET /dashboard| A1
+    A2 --> B1
+    B3 --> D1 & D2 & D3
+    
+    %% Conexões limpas com o Banco e Modelos
+    D1 --> DB1
+    D2 --> DB1
+    D3 --> DB1
+    
+    D1 -.->|Mapeia| E2
+    D2 -.->|Mapeia| E3
+    D3 -.->|Mapeia| E1
