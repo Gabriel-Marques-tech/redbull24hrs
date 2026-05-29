@@ -11,6 +11,7 @@ jest.mock("../repositories/shiftRepository", () => ({
 		findOpenByTreadmill: jest.fn(),
 		start: jest.fn(),
 		lastCheckpointKm: jest.fn(),
+		lastCheckpointTimestamp: jest.fn(),
 		addCheckpoint: jest.fn(),
 		finish: jest.fn(),
 	},
@@ -98,6 +99,7 @@ describe("POST /audit/shifts/:id/checkpoints", () => {
 	it("201 – registra checkpoint válido", async () => {
 		(shiftRepository.findById as jest.Mock).mockResolvedValue(openShift);
 		(shiftRepository.lastCheckpointKm as jest.Mock).mockResolvedValue(120);
+		(shiftRepository.lastCheckpointTimestamp as jest.Mock).mockResolvedValue(new Date());
 		(shiftRepository.addCheckpoint as jest.Mock).mockResolvedValue({ id: 1, shift_id: 10, distance: 130, type: "mandatory" });
 		const res = await request(app).post("/audit/shifts/10/checkpoints").send({ distance: 130, type: "mandatory" });
 		expect(res.status).toBe(201);
@@ -107,6 +109,7 @@ describe("POST /audit/shifts/:id/checkpoints", () => {
 	it("201 – usa tipo 'voluntary' por padrão", async () => {
 		(shiftRepository.findById as jest.Mock).mockResolvedValue(openShift);
 		(shiftRepository.lastCheckpointKm as jest.Mock).mockResolvedValue(null);
+		(shiftRepository.lastCheckpointTimestamp as jest.Mock).mockResolvedValue(new Date());
 		(shiftRepository.addCheckpoint as jest.Mock).mockResolvedValue({ id: 1, shift_id: 10, distance: 110, type: "voluntary" });
 		const res = await request(app).post("/audit/shifts/10/checkpoints").send({ distance: 110 });
 		expect(res.status).toBe(201);
@@ -140,6 +143,40 @@ describe("POST /audit/shifts/:id/checkpoints", () => {
 		(shiftRepository.lastCheckpointKm as jest.Mock).mockResolvedValue(120);
 		const res = await request(app).post("/audit/shifts/10/checkpoints").send({ distance: 110 });
 		expect(res.status).toBe(400);
+	});
+});
+
+// ─── RF045: intervalo entre checkpoints ──────────────────────────────────────
+
+describe("POST /audit/shifts/:id/checkpoints – RF045 intervalo", () => {
+	it("400 – rejeita checkpoint com intervalo > 10 min desde o último", async () => {
+		const oldTs = new Date(Date.now() - 11 * 60 * 1000); // 11 minutos atrás
+		(shiftRepository.findById as jest.Mock).mockResolvedValue(openShift);
+		(shiftRepository.lastCheckpointKm as jest.Mock).mockResolvedValue(120);
+		(shiftRepository.lastCheckpointTimestamp as jest.Mock).mockResolvedValue(oldTs);
+		const res = await request(app).post("/audit/shifts/10/checkpoints").send({ distance: 130 });
+		expect(res.status).toBe(400);
+		expect(res.body.error).toMatch(/intervalo/i);
+	});
+
+	it("400 – rejeita checkpoint com intervalo > 10 min desde o início do turno (sem checkpoints)", async () => {
+		const oldStart = { ...openShift, start_at: new Date(Date.now() - 15 * 60 * 1000) };
+		(shiftRepository.findById as jest.Mock).mockResolvedValue(oldStart);
+		(shiftRepository.lastCheckpointKm as jest.Mock).mockResolvedValue(null);
+		(shiftRepository.lastCheckpointTimestamp as jest.Mock).mockResolvedValue(null);
+		const res = await request(app).post("/audit/shifts/10/checkpoints").send({ distance: 110 });
+		expect(res.status).toBe(400);
+		expect(res.body.error).toMatch(/intervalo/i);
+	});
+
+	it("201 – aceita checkpoint com intervalo exatamente no limite (< 10 min)", async () => {
+		const recentTs = new Date(Date.now() - 9 * 60 * 1000); // 9 minutos atrás
+		(shiftRepository.findById as jest.Mock).mockResolvedValue(openShift);
+		(shiftRepository.lastCheckpointKm as jest.Mock).mockResolvedValue(120);
+		(shiftRepository.lastCheckpointTimestamp as jest.Mock).mockResolvedValue(recentTs);
+		(shiftRepository.addCheckpoint as jest.Mock).mockResolvedValue({ id: 5, shift_id: 10, distance: 130, type: "voluntary" });
+		const res = await request(app).post("/audit/shifts/10/checkpoints").send({ distance: 130 });
+		expect(res.status).toBe(201);
 	});
 });
 
