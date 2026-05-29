@@ -3350,6 +3350,13 @@ A documentação completa e navegável dos endpoints está disponível em [`docs
 
 Cada endpoint contém: método HTTP, path completo, headers, body request (com campos obrigatórios e validações), shape da resposta de sucesso, exemplos JSON e tabela de status codes possíveis.
 
+## 3.7. WebAPI e endpoints (sprints 3 e 4)
+
+---
+
+A documentação técnica completa da WebAPI está disponível de forma navegável no arquivo [`docs/api/index.html`](../docs/api/index.html), presente no repositório do projeto, e também pode ser acessada publicamente pelo link [https://g02-73a453.pages.git.inteli.edu.br/api/](https://g02-73a453.pages.git.inteli.edu.br/api/). A documentação reúne 38 endpoints organizados em dez fluxos: **Autenticação** (6 endpoints para registro de gerentes e auditores, login, renovação e revogação de token JWT e consulta do usuário autenticado), **Eventos** (5 endpoints de CRUD completo de eventos da competição), **Esteiras** (4 endpoints de CRUD de esteiras vinculadas a eventos), **Equipes** (5 endpoints de CRUD de equipes), **Atletas** (5 endpoints de CRUD de atletas vinculados a equipes), **Turnos** (3 endpoints para iniciar turno, registrar checkpoints e encerrar turno de auditoria), **Histórico** (1 endpoint com filtros por equipe, esteira e atleta), **Alertas** (1 endpoint de inconsistências detectadas em tempo real), **Métricas** (6 endpoints de desempenho individual e agregado por evento) e **Exportação** (2 endpoints para geração de arquivos CSV de turnos e checkpoints). A documentação inclui ainda um Anexo de Mapeamento RF↔Endpoint com rastreabilidade completa dos RF001–RF053 definidos no WAD, indicando explicitamente os requisitos ainda não implementados. Cada endpoint está descrito com método HTTP, path completo, headers obrigatórios, body de requisição com campos e validações, shape da resposta de sucesso com exemplos em JSON e tabela de status codes possíveis (200, 201, 204, 400, 401, 403, 404, 409, 422 e 500).
+
+
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
 ---
