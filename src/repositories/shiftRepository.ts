@@ -56,6 +56,15 @@ export const shiftRepository = {
 		return max === null || max === undefined ? null : Number(max);
 	},
 
+	async lastCheckpointTimestamp(shift_id: number): Promise<Date | null> {
+		const result = await pool.query(
+			`SELECT MAX(timestamp) AS last_ts FROM checkpoints WHERE shift_id = $1`,
+			[shift_id]
+		);
+		const ts = result.rows[0]?.last_ts;
+		return ts ?? null;
+	},
+
 	async addCheckpoint(shift_id: number, distance: number, type: string) {
 		const result = await pool.query(
 			`INSERT INTO checkpoints (shift_id, distance, type) VALUES ($1, $2, $3) RETURNING *`,

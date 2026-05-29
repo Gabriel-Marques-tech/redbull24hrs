@@ -44,6 +44,12 @@ export const shiftService = {
 		if (distance < floor)
 			throw new Error("km do checkpoint inválido: menor que o último km registrado");
 
+		const lastTs = await shiftRepository.lastCheckpointTimestamp(shift_id);
+		const reference = lastTs ?? shift.start_at;
+		const gapMinutes = (Date.now() - new Date(reference).getTime()) / 60000;
+		if (gapMinutes > 10)
+			throw new Error("Checkpoint inválido: intervalo desde o último registro excede 10 minutos");
+
 		return shiftRepository.addCheckpoint(shift_id, distance, checkpointType);
 	},
 
