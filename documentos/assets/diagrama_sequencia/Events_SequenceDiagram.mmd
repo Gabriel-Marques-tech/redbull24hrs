@@ -1,0 +1,114 @@
+
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "primaryColor": "#0F0069",
+    "primaryTextColor": "#FFFFFF",
+    "primaryBorderColor": "#D2003C",
+    "secondaryColor": "#D2003C",
+    "secondaryTextColor": "#FFFFFF",
+    "secondaryBorderColor": "#D2003C",
+    "tertiaryColor": "#E8E8F5",
+    "tertiaryTextColor": "#0F0069",
+    "tertiaryBorderColor": "#0F0069",
+    "noteBkgColor": "#FFCC00",
+    "noteTextColor": "#0F0069",
+    "noteBorderColor": "#D2003C",
+    "activationBkgColor": "#D2003C",
+    "activationBorderColor": "#0F0069",
+    "actorBkg": "#0F0069",
+    "actorTextColor": "#FFFFFF",
+    "actorBorderColor": "#D2003C",
+    "actorLineColor": "#000000",
+    "signalColor": "#000000",
+    "signalTextColor": "#000000",
+    "labelBoxBkgColor": "#E8E8F5",
+    "labelBoxBorderColor": "#0F0069",
+    "labelTextColor": "#0F0069",
+    "loopTextColor": "#0F0069",
+    "fontFamily": "Arial, sans-serif",
+    "fontSize": "14px",
+    "background": "#FFFFFF"
+  }
+}}%%
+sequenceDiagram
+    participant C as Client
+    participant CT as EventController
+    participant ES as EventService
+    participant ER as EventRepository
+    participant DB as Data Base
+
+    Note over C,DB: 1 · Create event (RF025 · RN22)
+
+    C->>+CT: 1. POST /events
+    CT->>+ES: 2. createEvent(dto)
+    ES->>+ER: 3. checkConflictDataLocal()
+    ER->>+DB: 4. SELECT Event on the same date and location
+    DB-->>-ER: 5. result
+    alt conflict encountered 
+        ER-->>-ES: existing Event 
+        ES-->>CT: ConflictException
+        CT-->>C: 409 { there is already an Event on that date and location }
+    else no conflict
+        ER-->>ES: null
+        ES->>+ER: 6. save(Event)
+        ER->>+DB: 7. INSERT Event { title, place, date, status: "waiting" }
+        DB-->>-ER: 8. Event { id, status: "waiting" }
+        ER-->>-ES: Event { id, status: "waiting" }
+        CT-->>-C: 9. 201 { event_id, status: "waiting" }
+    end
+    deactivate ES
+
+    Note over C,DB: 2 · Real-time metrics (RF019 · RN10)
+
+    C->>+CT: 10. GET /events/{id}/metrics
+    CT->>+ES: 11. calculateMetrics(event_id)
+    ES->>+ER: 12. findShiftsActive(event_id)
+    ER->>+DB: 13. SELECT Event active Shifts 
+    DB-->>-ER: 14. shifts[]
+    ER-->>-ES: 15. shifts[]
+    Note right of ES: calculates total km per Team
+    Note right of ES: calculate average speed by Shift
+    Note right of ES: counts Teams currently on track
+    CT-->>-C: 16. 200 { total_km, average_speed, teams_on_track }
+    deactivate ES
+
+    Note over C,DB: 3 · Scoreboard (RF014 · RN14)
+
+    C->>+CT: 17. GET /events/{id}/scoreboard
+    CT->>+ES: 18. getScoreboard(event_id)
+    ES->>+ER: 19. findKmByTeam(event_id)
+    ER->>+DB: 20. SELECT accumulated km by Team (finished Shifts)
+    DB-->>-ER: 21. teams[] with accumulated km
+    ER-->>-ES: 22. teams[] with accumulated km
+
+    Note right of ES: sorts by descending km
+    CT-->>-C: 23. 200 { scoreboard[ { team_id, name, accumulated_km, position } ] }
+    deactivate ES
+
+    Note over C,DB: 4 · Inconsistencies (RF023 · RN25)
+
+    C->>+CT: 24. GET /events/{id}/inconsistencies
+    CT->>+ES: 25. checkInconsistencies(event_id)
+    ES->>+ER: 26. findLogRecords(event_id)
+    ER->>+DB: 27. SELECT Event logs
+    DB-->>-ER: 28. logs[]
+    ER-->>-ES: 29. logs[]
+
+    Note right of ES: detects Checkpoint gaps
+    Note right of ES: detects retroactive km
+    CT-->>-C: 30. 200 { inconsistencies[ { type, shift_id, description } ] }
+    deactivate ES
+
+    Note over C,DB: 5 · Export data (RF024 · RN26)
+
+    C->>+CT: 31. GET /events/{id}/export
+    CT->>+ES: 32. exportData(event_id)
+    ES->>+ER: 33. findCompleteData(event_id)
+    ER->>+DB: 34. SELECT Shifts + Checkpoints + Event logs
+    DB-->>-ER: 35. completeData{}
+    ER-->>-ES: 36. completeData{}
+
+    Note right of ES: serializes Shifts, Checkpoints, and metrics
+    CT-->>-C: 37. 200 { file, format, generation_timestamp }
+    deactivate ES
