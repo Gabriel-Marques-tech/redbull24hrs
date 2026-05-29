@@ -1,0 +1,12 @@
+pages:
+  stage: deploy
+  script:
+    - mkdir -p public/api
+    - cp docs/api/index.html public/api/index.html
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
+    - develop
+    - code
