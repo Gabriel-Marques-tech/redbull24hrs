@@ -2431,9 +2431,12 @@ _Descreva aqui orientações gerais para o leitor sobre como utilizar os compone
 
 ### 3.4.1 Cores
 
----
-
-_Apresente aqui a paleta de cores, com seus códigos de aplicação e suas respectivas funções_
+<div align="center">
+  <sub>Imagem xx - Paleta de Cores da Aplicação</sub><br>
+  <img src="./assets/guia-de-estilos/paleta-de-cores.png" width="900px" alt="Paleta de Cores"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
 
 ### 3.4.2 Tipografia
 
