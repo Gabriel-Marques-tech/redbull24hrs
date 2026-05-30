@@ -1682,6 +1682,20 @@ Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo
 ---
 A seção de Arquitetura apresenta a estrutura organizacional e a modelagem dos principais componentes do sistema desenvolvidos ao longo das sprints 1 a 5. Por meio dos diagramas arquiteturais, diagramas de classes e diagramas de casos de uso, é possível compreender como os módulos da aplicação se relacionam, quais são as responsabilidades de cada camada e como ocorre o fluxo de dados entre os componentes. Esses artefatos auxiliam na documentação técnica do projeto, facilitando o entendimento da solução, a manutenção do software e a evolução contínua da arquitetura proposta.
 
+> **Cobertura atual dos diagramas e plano de evolução (sprint 4).**
+>
+> Os diagramas de arquitetura (3.2.1), de classes arquiteturais (3.2.1.1) e de sequência (3.2.4)
+> cobrem, nesta sprint, os fluxos de **Eventos, Equipes, Atletas, Turnos, Histórico, Métricas
+> (Dashboard) e Registros/Logs (sincronização)**.
+>
+> Os fluxos de **Autenticação, Esteiras, Alertas (inconsistências) e Exportação** já estão
+> **implementados e operantes no código** (ver seção 3.7 e a RTM em 3.9), mas seus diagramas
+> ainda **não foram modelados** — estão **planejados para a sprint 4**. A decisão de implementar
+> a autenticação, por exemplo, surgiu durante esta sprint (ver relatório de desenvolvimento, seção
+> 4.1), e a modelagem visual desses fluxos será incorporada nas próximas atualizações desta seção,
+> mantendo a documentação alinhada ao código já entregue. Trata-se de um débito de documentação
+> registrado de forma explícita, não de funcionalidade ausente.
+
 ### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
 
 ---
@@ -2983,9 +2997,12 @@ O modelo físico implementa o DER da seção 3.6.2 como **migrations DDL version
   <sub>Quadro 24 - Migrations registradas</sub>
 </div>
 
-| Arquivo                                                                     | Sprint | Descrição                                                                                                                                                                                                                                                  |
-| --------------------------------------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`001_initialSchema.sql`](../src/database/migrations/001_initialSchema.sql) | 2      | Cria as nove tabelas do domínio (`managers`, `events`, `teams`, `athletes`, `auditors`, `shifts`, `treadmills`, `logs`, `checkpoints`), suas constraints (`PK`, `FK`, `UNIQUE`, `NOT NULL`, `CHECK`) e os índices auxiliares sobre as chaves estrangeiras. |
+| Arquivo                                                                               | Sprint | Descrição                                                                                                                                                                                                                                                                                              |
+| ------------------------------------------------------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [`001_initialSchema.sql`](../src/database/migrations/001_initialSchema.sql)           | 2      | Cria as dez tabelas do domínio (`managers`, `events`, `teams`, `athletes`, `auditors`, `shifts`, `treadmills`, `logs`, `checkpoints`, `refresh_tokens`), suas constraints (`PK`, `FK`, `UNIQUE`, `NOT NULL`, `CHECK`) e os nove índices auxiliares sobre as chaves estrangeiras. A tabela `refresh_tokens` e os campos de autenticação (`password`, `email`) foram incorporados a esta migration durante a sprint 3. |
+| [`002_managerEventRelation.sql`](../src/database/migrations/002_managerEventRelation.sql) | 3      | Transforma a relação `managers` ↔ `events` de 1:N para N:N: remove a coluna `manager_id` de `events` e cria a tabela associativa `manager_events` (PK composta `manager_id` + `event_id`, FKs `ON DELETE CASCADE`) com índices sobre ambas as chaves estrangeiras.                                          |
+| [`003_softDelete.sql`](../src/database/migrations/003_softDelete.sql)                   | 3      | Introduz exclusão lógica (*soft delete*): adiciona a coluna `deleted_at TIMESTAMP DEFAULT NULL` às tabelas `events`, `teams` e `athletes`, permitindo desativar registros sem removê-los fisicamente (suporte às RN37).                                                                                    |
+| [`004_shiftTreadmill.sql`](../src/database/migrations/004_shiftTreadmill.sql)           | 3      | Adiciona a coluna `treadmill_id` à tabela `shifts` (FK → `treadmills(id)`, `ON UPDATE CASCADE ON DELETE RESTRICT`), permitindo que cada turno referencie diretamente a esteira em que ocorre.                                                                                                              |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -2998,45 +3015,50 @@ A migration `001_initialSchema.sql` reúne em um único script o schema operacio
 
 ##### Tabela `managers`
 
-Primeira tabela criada por estar no topo da hierarquia operacional (não depende de outra tabela). Identifica o gerente regional responsável por instanciar eventos. O `cpf` é opcional (`NULL` permitido), mas, quando preenchido, é `UNIQUE` e validado pelo `CHECK` `chk_managers_cpf`, que exige exatamente 11 dígitos numéricos via expressão regular. Essa é uma garantia de formato aplicada no próprio banco, independentemente da camada de aplicação.
+Primeira tabela criada por estar no topo da hierarquia operacional (não depende de outra tabela). Identifica o gerente regional responsável por instanciar eventos. O `cpf` é opcional (`NULL` permitido), mas, quando preenchido, é `UNIQUE` e validado pelo `CHECK` `chk_managers_cpf`, que exige exatamente 11 dígitos numéricos via expressão regular. Os campos `email` (`NOT NULL UNIQUE`) e `password` (`NOT NULL`) suportam a autenticação do gerente: o `email` é o identificador de login e o `password` armazena o hash bcrypt da senha — nunca a senha em texto plano (RN38). Essas garantias de formato e integridade são aplicadas no próprio banco, independentemente da camada de aplicação.
 
 ```sql
 CREATE TABLE managers (
 	id SERIAL PRIMARY KEY,
 	cpf VARCHAR(11) UNIQUE,
 	name VARCHAR(100) NOT NULL,
+	password VARCHAR(100) NOT NULL,
+	email VARCHAR(100) UNIQUE NOT NULL,
 	CONSTRAINT chk_managers_cpf CHECK (cpf IS NULL OR cpf ~ '^[0-9]{11}$')
 );
 ```
 
 ##### Tabela `events`
 
-Representa uma edição (regional ou final) do Red Bull 24 Horas. Tanto `title` quanto `local` são `NOT NULL UNIQUE`, ou seja, não existem duas edições com o mesmo título nem dois eventos simultâneos no mesmo local. A `FOREIGN KEY` para `managers` usa `ON DELETE RESTRICT`: um gerente com eventos vinculados não pode ser removido, o que protege a integridade histórica da operação. Já o `ON UPDATE CASCADE` permite que a chave-pai mude (caso o `SERIAL` seja realocado em uma migração futura) sem quebrar referências.
+Representa uma edição (regional ou final) do Red Bull 24 Horas. O `title` é `NOT NULL UNIQUE` (não existem duas edições com o mesmo título), enquanto a unicidade do local é garantida pela constraint composta `uq_events_date_local` (`UNIQUE (date, local)`), que impede dois eventos no mesmo local **na mesma data** — diferentes datas podem reutilizar o mesmo local. O campo `date` (`DATE NOT NULL`) registra o dia da edição. A `FOREIGN KEY` `manager_id` para `managers` usa `ON DELETE RESTRICT` (um gerente com eventos vinculados não pode ser removido) e `ON UPDATE CASCADE`. **Observação:** esta coluna `manager_id` é substituída pela tabela associativa `manager_events` na migration `002` (ver adiante), que converte a relação para N:N.
 
 ```sql
 CREATE TABLE events (
 	id SERIAL PRIMARY KEY,
 	title VARCHAR(100) UNIQUE NOT NULL,
-	local VARCHAR(100) UNIQUE NOT NULL,
+	local VARCHAR(100) NOT NULL,
+	date DATE NOT NULL,
 	manager_id INT NOT NULL,
 	CONSTRAINT fk_events_manager
 		FOREIGN KEY (manager_id) REFERENCES managers(id)
-		ON UPDATE CASCADE ON DELETE RESTRICT
+		ON UPDATE CASCADE ON DELETE RESTRICT,
+	CONSTRAINT uq_events_date_local UNIQUE (date, local)
 );
 ```
 
 ##### Tabela `teams`
 
-Cada equipe pertence a um único evento e tem `name` único. Diferente da relação `events → managers`, aqui a política é `ON DELETE CASCADE`: ao excluir um evento, suas duas equipes são removidas junto, já que a equipe só faz sentido no contexto de uma edição específica do Red Bull 24 Horas e não tem existência própria fora dele.
+Cada equipe pertence a um único evento. O nome da equipe é único **dentro do evento** (constraint composta `uq_teams_event_name`, `UNIQUE (event_id, name)`), e não globalmente — duas edições diferentes podem ter equipes homônimas. Diferente da relação `events → managers`, aqui a política é `ON DELETE CASCADE`: ao excluir um evento, suas equipes são removidas junto, já que a equipe só faz sentido no contexto de uma edição específica do Red Bull 24 Horas e não tem existência própria fora dele.
 
 ```sql
 CREATE TABLE teams (
 	id SERIAL PRIMARY KEY,
-	name VARCHAR(100) UNIQUE NOT NULL,
+	name VARCHAR(100) NOT NULL,
 	event_id INT NOT NULL,
 	CONSTRAINT fk_teams_event
 		FOREIGN KEY (event_id) REFERENCES events(id)
-		ON UPDATE CASCADE ON DELETE CASCADE
+		ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT uq_teams_event_name UNIQUE (event_id, name)
 );
 ```
 
@@ -3060,7 +3082,7 @@ CREATE TABLE athletes (
 
 ##### Tabela `auditors`
 
-Operadores do sistema. Como o auditor é uma pessoa de carreira (não vinculada a uma edição específica), `auditors` é uma entidade independente, sem `FK` para event ou team. O `registration_number` é `NOT NULL UNIQUE`, o que garante identificação funcional única do auditor na operação. O campo `is_active` (default `TRUE`) permite desativar auditores sem removê-los do banco, preservando o vínculo histórico com os turnos que já auditaram.
+Operadores do sistema. Como o auditor é uma pessoa de carreira (não vinculada a uma edição específica), `auditors` é uma entidade independente, sem `FK` para event ou team. O `registration_number` é `NOT NULL UNIQUE`, o que garante identificação funcional única do auditor na operação. O campo `is_active` (default `TRUE`) permite desativar auditores sem removê-los do banco, preservando o vínculo histórico com os turnos que já auditaram (RN31/RN41). Assim como `managers`, possui `email` (`NOT NULL UNIQUE`) como identificador de login e `password` (`NOT NULL`) armazenando o hash bcrypt da senha (RN38).
 
 ```sql
 CREATE TABLE auditors (
@@ -3069,6 +3091,8 @@ CREATE TABLE auditors (
 	cpf VARCHAR(11) UNIQUE,
 	registration_number INT UNIQUE NOT NULL,
 	is_active BOOLEAN NOT NULL DEFAULT TRUE,
+	password VARCHAR(100) NOT NULL,
+	email VARCHAR(100) UNIQUE NOT NULL,
 	CONSTRAINT chk_auditors_cpf CHECK (cpf IS NULL OR cpf ~ '^[0-9]{11}$')
 );
 ```
@@ -3160,9 +3184,40 @@ CREATE TABLE checkpoints (
 );
 ```
 
+##### Tabela `refresh_tokens`
+
+Sustenta o mecanismo de sessão e rotação de tokens da autenticação (RN39, RN40, RN41). Cada linha representa um *refresh token* emitido para um usuário (gerente ou auditor). O `token_hash` é `NOT NULL UNIQUE` — armazena o hash do token, nunca o valor bruto. Os campos `expires_at` e `revoked_at` controlam, respectivamente, a expiração e a revogação (rotação de uso único): ao usar um token, ele é marcado como revogado e um novo par é emitido. O `CHECK` `chk_refresh_tokens_role` restringe `user_role` a `manager` ou `auditor`. Como o usuário dono do token pode estar em uma de duas tabelas distintas (`managers` ou `auditors`), o vínculo foi modelado de forma polimórfica pelo par (`user_id`, `user_role`), sem uma `FOREIGN KEY` direta.
+
+```sql
+CREATE TABLE refresh_tokens (
+	id SERIAL PRIMARY KEY,
+	token_hash VARCHAR(255) UNIQUE NOT NULL,
+	user_id INT NOT NULL,
+	user_role VARCHAR(20) NOT NULL,
+	expires_at TIMESTAMP NOT NULL,
+	revoked_at TIMESTAMP,
+	created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT chk_refresh_tokens_role CHECK (user_role IN ('manager', 'auditor'))
+);
+```
+
+> ⚠️ **Limitação conhecida e plano de correção — `refresh_tokens` sem integridade referencial.**
+>
+> **Problema mapeado.** A tabela `refresh_tokens` **não possui `FOREIGN KEY`** para `managers` nem para `auditors`. A coluna `user_id` referencia, de forma lógica, uma de duas tabelas distintas conforme o valor de `user_role`, mas o banco não consegue impor uma `FK` apontando para duas tabelas ao mesmo tempo. Na prática, isso significa que: (a) o banco **não garante** que o `user_id` armazenado realmente exista na tabela de usuário correspondente, permitindo *tokens órfãos*; e (b) ao remover um gerente ou auditor, os tokens associados **não são removidos em cascata** automaticamente — a limpeza depende exclusivamente da camada de aplicação. Hoje, a coerência do vínculo token↔usuário é sustentada apenas pelo `CHECK chk_refresh_tokens_role` (que valida o papel, não a existência do usuário) e pela lógica do backend.
+>
+> **Por que não foi corrigido nesta sprint.** A correção definitiva exige alterar a modelagem física e, por consequência, atualizar os diagramas MER (3.6.1) e DER (3.6.2), o que não foi possível dentro da janela desta sprint. O erro foi **identificado, registrado e priorizado** para correção, evitando que ele se propague para as próximas entregas.
+>
+> **Plano de implementação (sprint 4):**
+> 1. **Unificar a identidade de usuário.** Criar uma tabela-pai `users` (com `id`, `email`, `password`, `role`) e tornar `managers` e `auditors` especializações que referenciam `users(id)`, eliminando a ambiguidade do vínculo polimórfico.
+> 2. **Adicionar a `FOREIGN KEY`.** Com a identidade unificada, substituir o par `(user_id, user_role)` por uma única `FK` `refresh_tokens.user_id → users(id) ON DELETE CASCADE`, garantindo remoção automática dos tokens quando o usuário é excluído e impedindo tokens órfãos.
+> 3. **Migration dedicada.** Implementar a mudança em uma nova migration versionada (`005_*`), preservando a ordem de dependências, e *backfillar* os dados existentes antes de aplicar a constraint.
+> 4. **Atualizar diagramas e rastreabilidade.** Refletir a nova estrutura no MER, no DER e no Diagrama de Classes do Domínio, mantendo a coerência entre modelagem, código e documentação.
+>
+> Essa mitigação assume o débito técnico de forma explícita e estabelece o caminho de correção, em vez de mascarar a inconsistência.
+
 ##### Índices secundários
 
-O PostgreSQL cria índices automaticamente apenas sobre `PRIMARY KEY` e `UNIQUE`, mas **não** sobre colunas de `FOREIGN KEY`. Como praticamente toda consulta operacional do sistema usa essas colunas (listar turnos de um atleta, checkpoints de um turno, logs de uma sessão, equipes de um evento), os oito `CREATE INDEX` abaixo são criados explicitamente após todas as tabelas. Isso garante que essas consultas sejam atendidas por busca indexada em vez de _sequential scan_, diferença importante de desempenho à medida que a base cresce ao longo das edições.
+O PostgreSQL cria índices automaticamente apenas sobre `PRIMARY KEY` e `UNIQUE`, mas **não** sobre colunas de `FOREIGN KEY`. Como praticamente toda consulta operacional do sistema usa essas colunas (listar turnos de um atleta, checkpoints de um turno, logs de uma sessão, equipes de um evento, tokens de um usuário), os nove `CREATE INDEX` abaixo são criados explicitamente após todas as tabelas. Isso garante que essas consultas sejam atendidas por busca indexada em vez de _sequential scan_, diferença importante de desempenho à medida que a base cresce ao longo das edições.
 
 ```sql
 CREATE INDEX idx_events_manager_id      ON events(manager_id);
@@ -3173,6 +3228,7 @@ CREATE INDEX idx_shifts_auditor_id      ON shifts(auditor_id);
 CREATE INDEX idx_treadmills_shift_id    ON treadmills(shift_id);
 CREATE INDEX idx_logs_shift_id          ON logs(shift_id);
 CREATE INDEX idx_checkpoints_shift_id   ON checkpoints(shift_id);
+CREATE INDEX idx_refresh_tokens_user    ON refresh_tokens(user_id, user_role);
 ```
 
 <div align="center">
@@ -3180,9 +3236,48 @@ CREATE INDEX idx_checkpoints_shift_id   ON checkpoints(shift_id);
   <br><br>
 </div>
 
+#### Migration 002: Relação N:N entre gerentes e eventos
+
+A migration `002_managerEventRelation.sql` revisa a modelagem inicial ao perceber que um mesmo gerente pode ser responsável por mais de um evento e que um evento pode ter mais de um gerente — uma relação **muitos-para-muitos** que a coluna `manager_id` em `events` (1:N) não comportava. A migration remove essa coluna e introduz a tabela associativa `manager_events`, cuja chave primária composta (`manager_id`, `event_id`) impede vínculos duplicados. Ambas as `FOREIGN KEY` usam `ON DELETE CASCADE`, de modo que remover um gerente ou um evento elimina automaticamente apenas os vínculos correspondentes, sem afetar as entidades remanescentes. Os dois índices criados aceleram as consultas nos dois sentidos da relação (eventos de um gerente e gerentes de um evento).
+
+```sql
+ALTER TABLE events DROP COLUMN manager_id;
+
+CREATE TABLE IF NOT EXISTS manager_events (
+	manager_id INT NOT NULL,
+	event_id   INT NOT NULL,
+	PRIMARY KEY (manager_id, event_id),
+	CONSTRAINT fk_me_manager FOREIGN KEY (manager_id) REFERENCES managers(id) ON DELETE CASCADE,
+	CONSTRAINT fk_me_event   FOREIGN KEY (event_id)   REFERENCES events(id)   ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_manager_events_manager_id ON manager_events(manager_id);
+CREATE INDEX IF NOT EXISTS idx_manager_events_event_id   ON manager_events(event_id);
+```
+
+> **Nota de coerência:** após esta migration, a coluna `manager_id` e o índice `idx_events_manager_id`, descritos na migration 001, deixam de existir; o vínculo gerente↔evento passa a ser feito exclusivamente pela tabela `manager_events`.
+
+#### Migration 003: Exclusão lógica (*soft delete*)
+
+A migration `003_softDelete.sql` adiciona a coluna `deleted_at` (`TIMESTAMP DEFAULT NULL`) às tabelas `events`, `teams` e `athletes`. A estratégia de *soft delete* permite que um registro seja marcado como excluído (preenchendo `deleted_at` com o instante da exclusão) sem ser removido fisicamente do banco, preservando o histórico operacional e a rastreabilidade exigida pela auditoria pós-evento. Registros com `deleted_at IS NOT NULL` são tratados como inativos pela camada de aplicação (RN37), enquanto `deleted_at IS NULL` indica um registro ativo.
+
+```sql
+ALTER TABLE events   ADD COLUMN deleted_at TIMESTAMP DEFAULT NULL;
+ALTER TABLE teams    ADD COLUMN deleted_at TIMESTAMP DEFAULT NULL;
+ALTER TABLE athletes ADD COLUMN deleted_at TIMESTAMP DEFAULT NULL;
+```
+
+#### Migration 004: Vínculo direto turno → esteira
+
+A migration `004_shiftTreadmill.sql` adiciona a coluna `treadmill_id` à tabela `shifts`, criando uma `FOREIGN KEY` direta de cada turno para a esteira em que ele ocorre. Embora a migration 001 já vinculasse esteira e turno por meio de `treadmills.shift_id`, a referência inversa em `shifts.treadmill_id` simplifica as consultas que partem do turno (fluxo predominante da operação: ao registrar início, checkpoint ou encerramento, o sistema parte sempre do turno) e dá suporte ao fluxo de turnos implementado na sprint 3. A política `ON DELETE RESTRICT` protege a integridade histórica: uma esteira referenciada por algum turno não pode ser removida.
+
+```sql
+ALTER TABLE shifts ADD COLUMN treadmill_id INT REFERENCES treadmills(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+```
+
 **Síntese do modelo físico**
 
-A migration 001 entrega o schema completo do sistema em um único arquivo versionado e reproduzível, com integridade referencial e regras de domínio garantidas no próprio banco. As políticas `ON DELETE` diferenciadas (`CASCADE` ao longo das entidades temporárias do evento, `RESTRICT` para entidades de carreira como gerentes, auditores e atletas), os `CHECK` sobre estados e quilometragem, e os índices secundários sobre todas as FKs traduzem as regras operacionais do Red Bull 24 Horas em estrutura física do PostgreSQL, apoiando tanto a operação em tempo real durante o evento quanto a auditoria formal posterior.
+O modelo físico é entregue em **quatro migrations versionadas e reproduzíveis**, aplicadas em ordem sequencial. A migration 001 estabelece o schema-base com integridade referencial e regras de domínio garantidas no próprio banco; as migrations 002, 003 e 004 evoluem esse schema conforme o desenvolvimento avançou na sprint 3 — N:N entre gerentes e eventos, exclusão lógica e vínculo direto turno→esteira. As políticas `ON DELETE` diferenciadas (`CASCADE` ao longo das entidades temporárias do evento, `RESTRICT` para entidades de carreira como gerentes, auditores e atletas), os `CHECK` sobre estados e quilometragem, e os índices secundários sobre todas as FKs traduzem as regras operacionais do Red Bull 24 Horas em estrutura física do PostgreSQL, apoiando tanto a operação em tempo real durante o evento quanto a auditoria formal posterior.
 
 ### 3.6.4. Consultas SQL e lógica proposicional
  
@@ -3365,17 +3460,20 @@ A documentação completa e navegável dos endpoints está disponível em [`docs
 
 ### Resumo dos fluxos implementados
 
-| Fluxo | Branch | Endpoints | RFs cobertos |
-|---|---|---|---|
-| **Autenticação** | `feat/auth` | 6 | RF027 |
-| **Eventos** | `code` | 5 | — |
-| **Esteiras** | `code` | 4 | RF004 |
-| **Equipes** | `code` | 5 | RF001 |
-| **Atletas** | `code` | 5 | RF002, RF006 (parcial) |
-| **Auditoria** | A implementar | — | RF007–RF026 |
-| **Inconsistências** | A implementar | — | RF028–RF031 |
+| Fluxo | Endpoints | RFs cobertos (principais) |
+|---|---|---|
+| **Autenticação** | 6 | RF027 |
+| **Eventos** | 5 | RF051 |
+| **Esteiras** | 4 | RF004 |
+| **Equipes** | 5 | RF001, RF005 |
+| **Atletas** | 5 | RF002, RF006, RF023 |
+| **Turnos** | 3 | RF007–RF019, RF025, RF032–RF034, RF044–RF046 |
+| **Histórico** | 1 | RF022, RF041–RF043 |
+| **Alertas** | 1 | RF028–RF030, RF039, RF053 |
+| **Métricas** | 6 | RF020, RF021, RF035–RF038, RF040, RF049, RF052 |
+| **Exportação** | 2 | RF047, RF048 |
 
-**Total atual: 25 endpoints documentados.** Os fluxos de Auditoria e Inconsistências estão reservados na documentação com placeholders explícitos indicando os endpoints previstos e os RFs correspondentes.
+**Total atual: 38 endpoints implementados e documentados**, organizados em dez fluxos. Além dos fluxos de Autenticação, Eventos, Esteiras, Equipes e Atletas, foram implementados nesta sprint os fluxos de Turnos (auditoria operacional de início, checkpoints e encerramento), Histórico, Alertas (detecção de inconsistências), Métricas e Exportação. Os poucos endpoints ainda não implementados — validação pré-evento (RF003), log de auditoria (RF024), sincronização offline (RF026), correção de checkpoint (RF031) e compartilhamento público (RF050) — estão planejados para a sprint 4, com contrato já definido no Quadro 26 da seção 3.9.
 
 Cada endpoint contém: método HTTP, path completo, headers, body request (com campos obrigatórios e validações), shape da resposta de sucesso, exemplos JSON e tabela de status codes possíveis.
 
@@ -3428,63 +3526,82 @@ No contexto do Red Bull 24 Horas, onde inconsistências nos dados podem invalida
 > - **LA** — Lucas Andrade (operador de evento / auditor)
 
 <div align = "center">
-  <sub> Quadro 25 - US01 </sub><br>
+  <sub> Quadro 25 - Matriz de Rastreabilidade (RTM) </sub><br>
 
 | Persona | RF | RN | Endpoint | Tela | Teste |
 |---------|----|----|----------|------|-------|
-| LA | RF001 | RN15, RN28 | `POST /equipes` | Tela de Registro Pré-Evento → Cadastro de Equipe | CT-001: Cadastrar equipe com nome único → sucesso; CT-002: Cadastrar terceira equipe → bloqueio com mensagem de erro; CT-003: Cadastrar equipe com nome duplicado → rejeição |
-| LA | RF002 | RN16 | `POST /corredores` | Tela de Registro Pré-Evento → Cadastro de Atleta | CT-004: Cadastrar corredor vinculado a equipe existente → aparece na listagem da equipe; CT-005: Cadastrar corredor sem equipe selecionada → erro de validação |
-| LA, BG | RF003 | RN17 | `GET /equipes/{id}/validacao` | Tela de Registro Pré-Evento → Cadastro de Equipe (listagem) | CT-006: Tentar iniciar evento com equipe com menos de 16 corredores → bloqueio com mensagem indicando o número faltante; CT-007: Ambas as equipes com 16 corredores → início permitido |
-| LA | RF004 | RN19 | `GET /esteiras` | Tela de Acompanhamento de Esteiras / Tela de Início de Turno | CT-008: Abrir seletor de esteira → exibe todas com status Livre/Ocupada; CT-009: Selecionar esteira com status Ocupada → mensagem "Esteira indisponível" e bloqueio |
-| LA | RF005 | RN20 | `GET /equipes` | Tela de Seleção de Corredor e Registro de Início | CT-010: Selecionar esteira Livre e equipe → lista apenas corredores da equipe selecionada |
-| LA | RF006 | RN21 | `GET /corredores?disponivel=true` | Tela de Seleção de Corredor e Registro de Início | CT-011: Selecionar corredor com turno em aberto → alerta "Corredor já em turno ativo" e bloqueio; CT-012: Selecionar corredor disponível → botão de início habilitado |
-| LA | RF007 | RN01, RN02 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-013: Corredor com turno em aberto → rejeição com mensagem "Corredor com turno em aberto"; CT-014: Corredor sem turno ativo + esteira Livre → turno criado com sucesso |
-| LA | RF008 | RN03 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-015: Esteira Ocupada → rejeição com "Esteira indisponível"; CT-016: Esteira Livre → operação prossegue |
-| LA | RF009 | RN05 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-017: Confirmar início com corredor e esteira válidos → registro persiste corredor e esteira vinculados ao turno; CT-018: Consultar turno após criação → corredor e esteira correspondem aos selecionados |
-| LA | RF010 | RN06, RN32 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-019: Informar quilometragem inicial negativa → erro "Quilometragem deve ser ≥ 0"; CT-020: Informar km inicial válido (≥ 0) → persiste km_inicial no turno |
-| LA | RF011 | RN07 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-021: Confirmar início de turno → timestamp_início gerado pelo servidor sem campo editável na interface |
-| LA | RF012 | RN03 | `POST /turnos/{id}/checkpoints` | Modal de Checkpoint Obrigatório | CT-022: Turno em andamento há 5 minutos → modal bloqueante exibido, nenhuma ação possível até preenchimento; CT-023: Modal ativo → qualquer clique fora do modal não fecha nem permite interação com a tela |
-| LA | RF013 | RN04 | `POST /turnos/{id}/checkpoints` | Modal de Checkpoint Obrigatório | CT-024: Informar km menor que último checkpoint → mensagem de erro e modal mantido aberto; CT-025: Informar km válido (≥ último checkpoint) → modal fechado, turno continua |
-| LA | RF014 | RN05 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-026: Acionar "Finalizar turno" com turno ativo → sistema solicita km final e abre fluxo de encerramento; CT-027: Acionar sem turno ativo selecionado → mensagem "Nenhum turno ativo encontrado" |
-| LA | RF015 | RN06, RN32 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-028: Informar km_final menor que último checkpoint → rejeição com mensagem de erro; CT-029: Informar km_final válido → sistema prossegue para geração de timestamp de encerramento |
-| LA | RF016 | RN33 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-030: Confirmar encerramento com km_final válido → timestamp_fim gerado pelo servidor; CT-031: Verificar interface → não há campo editável de hora de encerramento |
-| LA, BG | RF017 | RN07 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-032: Finalizar turno com km_inicial=10 e km_final=15 → distância=5 km persistida; CT-033: km_inicial = km_final → distância=0 persistida |
-| LA, BG | RF018 | RN07, RN33 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-034: Finalizar turno com início 08:00 e fim 08:30 → duração=30 min persistida |
-| LA, BG | RF019 | RN07 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-035: distância=5 km, duração=30 min → velocidade_média=10,0 km/h; CT-036: duração=0 → velocidade_média=0,0 km/h sem erro de divisão |
-| BG | RF020 | RN09 | `GET /equipes/{id}/quilometragem` | Tela de Acompanhamento de Esteiras (placar) | CT-037: Três turnos finalizados com 5, 7 e 8 km → total da equipe=20 km; CT-038: Nenhum turno finalizado → total=0 km |
-| LA, BG | RF021 | RN11 | `GET /eventos/{id}/dashboard` | Tela de Acompanhamento de Esteiras | CT-039: Turno finalizado no servidor → métricas aparecem no dashboard em até 10 s sem recarregar a página; CT-040: Sem novos dados → valores estáveis sem recarregamento desnecessário |
-| LA, BG | RF022 | RN13 | `GET /eventos/{id}/historico` | Tela de Acompanhamento (aba Histórico) | CT-041: Acessar histórico → registros em ordem decrescente de timestamp; CT-042: Novo registro adicionado → aparece no topo da lista |
-| BG | RF023 | RN23, RN24 | `PATCH /registros/{id}` | Tela de Acompanhamento (edição retroativa) | CT-043: Auditor autenticado edita campo → novo valor persistido; CT-044: Usuário não autenticado tenta editar → redirecionamento para login |
-| BG | RF024 | RN23 | `PATCH /registros/{id}` | Tela de Acompanhamento (log de auditoria) | CT-045: Auditor edita quilometragem de checkpoint → log registra usuário, campo, valor anterior, valor novo e timestamp; CT-046: Admin consulta log → todas as edições do registro em ordem cronológica |
-| LA | RF025 | RN27 | `POST /sync` | Modal de Checkpoint Obrigatório / Tela de Início de Turno | CT-047: Dispositivo offline → checkpoint registrado localmente com indicador visual de modo offline; CT-048: Segundo checkpoint offline → persiste localmente sem erro |
-| LA | RF026 | RN27 | `POST /sync` | Tela de Acompanhamento de Esteiras (indicador de sync) | CT-049: Conexão restabelecida → sincronização automática de todos os registros pendentes; CT-050: Dados sincronizados consultados no servidor → cada registro aparece exatamente uma vez |
+| LA | RF001 | RN15, RN28 | `POST /teams` | Tela de Registro Pré-Evento → Cadastro de Equipe | CT-001: Cadastrar equipe com nome único → sucesso; CT-002: Cadastrar terceira equipe → bloqueio com mensagem de erro; CT-003: Cadastrar equipe com nome duplicado → rejeição |
+| LA | RF002 | RN16 | `POST /teams/:teamId/athletes` | Tela de Registro Pré-Evento → Cadastro de Atleta | CT-004: Cadastrar corredor vinculado a equipe existente → aparece na listagem da equipe; CT-005: Cadastrar corredor sem equipe selecionada → erro de validação |
+| LA, BG | RF003 | RN17 | `GET /teams/:teamId/validation` | Tela de Registro Pré-Evento → Cadastro de Equipe (listagem) | CT-006: Tentar iniciar evento com equipe com menos de 16 corredores → bloqueio com mensagem indicando o número faltante; CT-007: Ambas as equipes com 16 corredores → início permitido |
+| LA | RF004 | RN19 | `GET /events/treadmills` | Tela de Acompanhamento de Esteiras / Tela de Início de Turno | CT-008: Abrir seletor de esteira → exibe todas com status Livre/Ocupada; CT-009: Selecionar esteira com status Ocupada → mensagem "Esteira indisponível" e bloqueio |
+| LA | RF005 | RN20 | `GET /teams` | Tela de Seleção de Corredor e Registro de Início | CT-010: Selecionar esteira Livre e equipe → lista apenas corredores da equipe selecionada |
+| LA | RF006 | RN21 | `GET /teams/:teamId/athletes` | Tela de Seleção de Corredor e Registro de Início | CT-011: Selecionar corredor com turno em aberto → alerta "Corredor já em turno ativo" e bloqueio; CT-012: Selecionar corredor disponível → botão de início habilitado |
+| LA | RF007 | RN01, RN02 | `POST /audit/shifts/start` | Tela de Seleção de Corredor e Registro de Início | CT-013: Corredor com turno em aberto → rejeição com mensagem "Corredor com turno em aberto"; CT-014: Corredor sem turno ativo + esteira Livre → turno criado com sucesso |
+| LA | RF008 | RN03 | `POST /audit/shifts/start` | Tela de Seleção de Corredor e Registro de Início | CT-015: Esteira Ocupada → rejeição com "Esteira indisponível"; CT-016: Esteira Livre → operação prossegue |
+| LA | RF009 | RN05 | `POST /audit/shifts/start` | Tela de Seleção de Corredor e Registro de Início | CT-017: Confirmar início com corredor e esteira válidos → registro persiste corredor e esteira vinculados ao turno; CT-018: Consultar turno após criação → corredor e esteira correspondem aos selecionados |
+| LA | RF010 | RN06, RN32 | `POST /audit/shifts/start` | Tela de Seleção de Corredor e Registro de Início | CT-019: Informar quilometragem inicial negativa → erro "Quilometragem deve ser ≥ 0"; CT-020: Informar km inicial válido (≥ 0) → persiste km_inicial no turno |
+| LA | RF011 | RN07 | `POST /audit/shifts/start` | Tela de Seleção de Corredor e Registro de Início | CT-021: Confirmar início de turno → timestamp_início gerado pelo servidor sem campo editável na interface |
+| LA | RF012 | RN03 | `POST /audit/shifts/:id/checkpoints` | Modal de Checkpoint Obrigatório | CT-022: Turno em andamento há 5 minutos → modal bloqueante exibido, nenhuma ação possível até preenchimento; CT-023: Modal ativo → qualquer clique fora do modal não fecha nem permite interação com a tela |
+| LA | RF013 | RN04 | `POST /audit/shifts/:id/checkpoints` | Modal de Checkpoint Obrigatório | CT-024: Informar km menor que último checkpoint → mensagem de erro e modal mantido aberto; CT-025: Informar km válido (≥ último checkpoint) → modal fechado, turno continua |
+| LA | RF014 | RN05 | `PATCH /audit/shifts/:id/finish` | Fluxo de Registro de Fim de Turno | CT-026: Acionar "Finalizar turno" com turno ativo → sistema solicita km final e abre fluxo de encerramento; CT-027: Acionar sem turno ativo selecionado → mensagem "Nenhum turno ativo encontrado" |
+| LA | RF015 | RN06, RN32 | `PATCH /audit/shifts/:id/finish` | Fluxo de Registro de Fim de Turno | CT-028: Informar km_final menor que último checkpoint → rejeição com mensagem de erro; CT-029: Informar km_final válido → sistema prossegue para geração de timestamp de encerramento |
+| LA | RF016 | RN33 | `PATCH /audit/shifts/:id/finish` | Fluxo de Registro de Fim de Turno | CT-030: Confirmar encerramento com km_final válido → timestamp_fim gerado pelo servidor; CT-031: Verificar interface → não há campo editável de hora de encerramento |
+| LA, BG | RF017 | RN07 | `PATCH /audit/shifts/:id/finish` | Fluxo de Registro de Fim de Turno | CT-032: Finalizar turno com km_inicial=10 e km_final=15 → distância=5 km persistida; CT-033: km_inicial = km_final → distância=0 persistida |
+| LA, BG | RF018 | RN07, RN33 | `PATCH /audit/shifts/:id/finish` | Fluxo de Registro de Fim de Turno | CT-034: Finalizar turno com início 08:00 e fim 08:30 → duração=30 min persistida |
+| LA, BG | RF019 | RN07 | `PATCH /audit/shifts/:id/finish` | Fluxo de Registro de Fim de Turno | CT-035: distância=5 km, duração=30 min → velocidade_média=10,0 km/h; CT-036: duração=0 → velocidade_média=0,0 km/h sem erro de divisão |
+| BG | RF020 | RN09 | `GET /metrics/events/:id/teams` | Tela de Acompanhamento de Esteiras (placar) | CT-037: Três turnos finalizados com 5, 7 e 8 km → total da equipe=20 km; CT-038: Nenhum turno finalizado → total=0 km |
+| LA, BG | RF021 | RN11 | `GET /metrics/events/:id/dashboard` | Tela de Acompanhamento de Esteiras | CT-039: Turno finalizado no servidor → métricas aparecem no dashboard em até 10 s sem recarregar a página; CT-040: Sem novos dados → valores estáveis sem recarregamento desnecessário |
+| LA, BG | RF022 | RN13 | `GET /audit/history` | Tela de Acompanhamento (aba Histórico) | CT-041: Acessar histórico → registros em ordem decrescente de timestamp; CT-042: Novo registro adicionado → aparece no topo da lista |
+| BG | RF023 | RN23, RN24 | `PATCH /teams/:teamId/athletes/:id` | Tela de Acompanhamento (edição retroativa) | CT-043: Auditor autenticado edita campo → novo valor persistido; CT-044: Usuário não autenticado tenta editar → redirecionamento para login |
+| BG | RF024 | RN23 | `GET /audit/logs` | Tela de Acompanhamento (log de auditoria) | CT-045: Auditor edita quilometragem de checkpoint → log registra usuário, campo, valor anterior, valor novo e timestamp; CT-046: Admin consulta log → todas as edições do registro em ordem cronológica |
+| LA | RF025 | RN27 | `POST /audit/shifts/:id/checkpoints` | Modal de Checkpoint Obrigatório / Tela de Início de Turno | CT-047: Dispositivo offline → checkpoint registrado localmente com indicador visual de modo offline; CT-048: Segundo checkpoint offline → persiste localmente sem erro |
+| LA | RF026 | RN27 | `POST /audit/sync` | Tela de Acompanhamento de Esteiras (indicador de sync) | CT-049: Conexão restabelecida → sincronização automática de todos os registros pendentes; CT-050: Dados sincronizados consultados no servidor → cada registro aparece exatamente uma vez |
 | LA, BG | RF027 | RN31 | `POST /auth/login` | Tela de Login | CT-051: Usuário não autenticado acessa tela de registro → redirecionamento para login; CT-052: Credenciais inválidas → "Credenciais inválidas" e acesso negado |
-| LA | RF028 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-053: Quilometragem incompatível com histórico → alerta em tempo real antes da confirmação; CT-054: Valor compatível → nenhum alerta, dado persistido normalmente |
-| LA | RF029 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-055: Inconsistência detectada → notificação visual destacada exibida; CT-056: Botão de confirmação bloqueado até revisão ou justificativa |
-| LA | RF030 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-057: Inconsistência + som habilitado → sinal sonoro emitido junto à notificação; CT-058: Som desabilitado → nenhum sinal sonoro, apenas notificação visual |
-| LA | RF031 | RN25 | `PATCH /registros/{id}` | Tela de Inconsistência Detectada | CT-059: Auditor corrige valor para dado consistente → confirmação desbloqueada e dado marcado como revisado; CT-060: Auditor mantém valor original com justificativa → persistido com flag "revisado manualmente" e justificativa associada |
-| LA | RF032 | RN04 | `POST /turnos/{id}/checkpoints` | Tela de Detalhes da Corrida em Andamento | CT-061: Auditor aciona registro manual com valor válido → aceito e vinculado ao turno; CT-062: Valor menor que último checkpoint → mensagem de erro e não persistência |
-| LA | RF033 | RN34 | `POST /turnos/{id}/checkpoints` | Tela de Detalhes da Corrida em Andamento | CT-063: Confirmar registro manual com valor válido → timestamp gerado exclusivamente pelo servidor; CT-064: Verificar interface → sem campo editável de horário |
-| LA | RF034 | RN08 | `POST /turnos` | Fluxo de Registro de Fim de Turno → Tela de Início de Turno | CT-065: Novo turno iniciado após encerramento na mesma esteira → concluído em no máximo 3 cliques; CT-066: Dados de equipe e esteira reutilizados → sem necessidade de nova seleção manual |
-| NR, BG | RF035 | RN09 | `GET /eventos/{id}/metricas` | Tela de Desempenho Final | CT-067: Corredor com 3 turnos de 4, 6 e 5 km → distância total=15 km |
-| NR, BG | RF036 | RN09 | `GET /eventos/{id}/metricas` | Tela de Desempenho Final | CT-068: Corredor com 3 turnos de 4, 6 e 5 km → média por turno=5,0 km |
-| BG | RF037 | RN10 | `GET /eventos/{id}/metricas` | Tela de Desempenho Final | CT-069: Evento em andamento há 120 min → ao menos dois snapshots (60 min e 120 min); CT-070: Corredor sem turno até 60 min → snapshot registra 0 km naquele intervalo |
-| LA, BG | RF038 | RN12 | `GET /esteiras/{id}/status` | Tela de Acompanhamento de Esteiras | CT-071: Status de esteira muda de Livre para Ocupada → painel reflete mudança em até 10 s; CT-072: Turno encerrado → status muda automaticamente para Livre |
-| LA | RF039 | RN12 | `GET /esteiras/{id}/status` | Tela de Acompanhamento de Esteiras | CT-073: Esteira Ocupada por 30 min consecutivos → alerta visual de sugestão de alternância; CT-074: Sem esteira adjacente disponível → alerta indica indisponibilidade de alternância |
-| BG | RF040 | RN14 | `GET /eventos/{id}/placar` | Tela de Acompanhamento (Modo TV) | CT-075: Modo TV ativo em 1920×1080 → fonte ≥ 48px e contraste ≥ 4,5:1; CT-076: Navegação apenas por teclado → todas as funcionalidades de visualização acessíveis sem mouse e sem login |
-| LA, BG | RF041 | RN22 | `GET /eventos/{id}/historico?equipe={id}` | Tela de Acompanhamento (aba Histórico) | CT-077: Filtro por Equipe A → apenas registros da Equipe A exibidos; CT-078: Filtro removido → todos os registros exibidos |
-| LA, BG | RF042 | RN22 | `GET /eventos/{id}/historico?esteira={id}` | Tela de Acompanhamento (aba Histórico) | CT-079: Filtro por esteira 2 → apenas registros da esteira 2 exibidos |
-| LA, BG | RF043 | RN22 | `GET /eventos/{id}/historico?corredor={id}` | Tela de Acompanhamento (aba Histórico) | CT-080: Filtro por corredor João → apenas registros do corredor João exibidos |
-| LA | RF044 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-081: km_final < km_inicial no encerramento → inconsistência "Quilometragem final menor que inicial" sinalizada e confirmação bloqueada |
-| LA | RF045 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-082: Intervalo entre checkpoints > 10 min → alerta "Intervalo de checkpoint excedido" gerado para o auditor |
-| LA, BG | RF046 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-083: Mesmo corredor em dois turnos simultâneos → alerta "Corredor com turnos simultâneos detectado" |
-| BG | RF047 | RN26 | `GET /eventos/{id}/exportar` | Tela de Desempenho Final (exportação) | CT-084: Admin aciona download de turnos → arquivo .csv gerado com todas as colunas (corredor, equipe, esteira, km_inicial, km_final, timestamp_início, timestamp_fim, duração, velocidade_média); CT-085: Sem turnos registrados → .csv gerado apenas com cabeçalho |
-| BG | RF048 | RN26 | `GET /eventos/{id}/exportar?tipo=checkpoints` | Tela de Desempenho Final (exportação) | CT-086: Admin aciona download de checkpoints → .csv com colunas corredor, esteira, quilometragem, timestamp; CT-087: Sem checkpoints → .csv apenas com cabeçalho |
-| NR, BG | RF049 | RN09 | `GET /eventos/{id}/metricas` | Tela de Desempenho Final | CT-088: Evento encerrado → perfil exibe distância total, tempo total em pista e velocidade média geral; CT-089: Corredor sem nenhum turno → valores zerados exibidos sem erro |
-| NR | RF050 | RN36 | `GET /corredores/{id}/compartilhar` | Tela de Desempenho Final | CT-090: Acionar "Compartilhar" → URL única e pública gerada; CT-091: Link acessado por usuário não cadastrado → exibe apenas dados de desempenho do corredor sem acesso a outras funcionalidades |
-| BG | RF051 | RN18, RN29, RN37 | `POST /eventos` | Tela de Registro Pré-Evento → Cadastro de Local/Evento | CT-092: Cadastrar local/região antes do início → operação permitida; CT-093: Tentar alterar local após início do evento → operação rejeitada |
-| NR | RF052 | RN36 | `GET /corredores/{id}/historico` | Tela de Desempenho Final | CT-094: Corredor acessa histórico completo após término do evento → todos os turnos e métricas individuais exibidos |
-| LA | RF053 | RN31, RN32 | `GET /esteiras/{id}/status` | Tela de Acompanhamento de Esteiras | CT-095: Esteira sem novo checkpoint por mais de 5 min → alerta visual de inatividade exibido para o auditor |
+| LA | RF028 | RN25 | `GET /audit/alerts` | Tela de Inconsistência Detectada | CT-053: Quilometragem incompatível com histórico → alerta em tempo real antes da confirmação; CT-054: Valor compatível → nenhum alerta, dado persistido normalmente |
+| LA | RF029 | RN25 | `GET /audit/alerts` | Tela de Inconsistência Detectada | CT-055: Inconsistência detectada → notificação visual destacada exibida; CT-056: Botão de confirmação bloqueado até revisão ou justificativa |
+| LA | RF030 | RN25 | `GET /audit/alerts` | Tela de Inconsistência Detectada | CT-057: Inconsistência + som habilitado → sinal sonoro emitido junto à notificação; CT-058: Som desabilitado → nenhum sinal sonoro, apenas notificação visual |
+| LA | RF031 | RN25 | `PATCH /audit/checkpoints/:id` | Tela de Inconsistência Detectada | CT-059: Auditor corrige valor para dado consistente → confirmação desbloqueada e dado marcado como revisado; CT-060: Auditor mantém valor original com justificativa → persistido com flag "revisado manualmente" e justificativa associada |
+| LA | RF032 | RN04 | `POST /audit/shifts/:id/checkpoints` | Tela de Detalhes da Corrida em Andamento | CT-061: Auditor aciona registro manual com valor válido → aceito e vinculado ao turno; CT-062: Valor menor que último checkpoint → mensagem de erro e não persistência |
+| LA | RF033 | RN34 | `POST /audit/shifts/:id/checkpoints` | Tela de Detalhes da Corrida em Andamento | CT-063: Confirmar registro manual com valor válido → timestamp gerado exclusivamente pelo servidor; CT-064: Verificar interface → sem campo editável de horário |
+| LA | RF034 | RN08 | `POST /audit/shifts/start` | Fluxo de Registro de Fim de Turno → Tela de Início de Turno | CT-065: Novo turno iniciado após encerramento na mesma esteira → concluído em no máximo 3 cliques; CT-066: Dados de equipe e esteira reutilizados → sem necessidade de nova seleção manual |
+| NR, BG | RF035 | RN09 | `GET /metrics/events/:id/athletes` | Tela de Desempenho Final | CT-067: Corredor com 3 turnos de 4, 6 e 5 km → distância total=15 km |
+| NR, BG | RF036 | RN09 | `GET /metrics/athletes/:id/shifts` | Tela de Desempenho Final | CT-068: Corredor com 3 turnos de 4, 6 e 5 km → média por turno=5,0 km |
+| BG | RF037 | RN10 | `GET /metrics/athletes/:id/snapshots` | Tela de Desempenho Final | CT-069: Evento em andamento há 120 min → ao menos dois snapshots (60 min e 120 min); CT-070: Corredor sem turno até 60 min → snapshot registra 0 km naquele intervalo |
+| LA, BG | RF038 | RN12 | `GET /metrics/events/:id/dashboard` | Tela de Acompanhamento de Esteiras | CT-071: Status de esteira muda de Livre para Ocupada → painel reflete mudança em até 10 s; CT-072: Turno encerrado → status muda automaticamente para Livre |
+| LA | RF039 | RN12 | `GET /audit/alerts` | Tela de Acompanhamento de Esteiras | CT-073: Esteira Ocupada por 30 min consecutivos → alerta visual de sugestão de alternância; CT-074: Sem esteira adjacente disponível → alerta indica indisponibilidade de alternância |
+| BG | RF040 | RN14 | `GET /metrics/events/:id/dashboard` | Tela de Acompanhamento (Modo TV) | CT-075: Modo TV ativo em 1920×1080 → fonte ≥ 48px e contraste ≥ 4,5:1; CT-076: Navegação apenas por teclado → todas as funcionalidades de visualização acessíveis sem mouse e sem login |
+| LA, BG | RF041 | RN22 | `GET /audit/history?team_id=` | Tela de Acompanhamento (aba Histórico) | CT-077: Filtro por Equipe A → apenas registros da Equipe A exibidos; CT-078: Filtro removido → todos os registros exibidos |
+| LA, BG | RF042 | RN22 | `GET /audit/history?treadmill_id=` | Tela de Acompanhamento (aba Histórico) | CT-079: Filtro por esteira 2 → apenas registros da esteira 2 exibidos |
+| LA, BG | RF043 | RN22 | `GET /audit/history?athlete_id=` | Tela de Acompanhamento (aba Histórico) | CT-080: Filtro por corredor João → apenas registros do corredor João exibidos |
+| LA | RF044 | RN25 | `PATCH /audit/shifts/:id/finish` | Tela de Inconsistência Detectada | CT-081: km_final < km_inicial no encerramento → inconsistência "Quilometragem final menor que inicial" sinalizada e confirmação bloqueada |
+| LA | RF045 | RN25 | `POST /audit/shifts/:id/checkpoints` | Tela de Inconsistência Detectada | CT-082: Intervalo entre checkpoints > 10 min → alerta "Intervalo de checkpoint excedido" gerado para o auditor |
+| LA, BG | RF046 | RN25 | `POST /audit/shifts/start` | Tela de Inconsistência Detectada | CT-083: Mesmo corredor em dois turnos simultâneos → alerta "Corredor com turnos simultâneos detectado" |
+| BG | RF047 | RN26 | `GET /export/events/:id/shifts` | Tela de Desempenho Final (exportação) | CT-084: Admin aciona download de turnos → arquivo .csv gerado com todas as colunas (corredor, equipe, esteira, km_inicial, km_final, timestamp_início, timestamp_fim, duração, velocidade_média); CT-085: Sem turnos registrados → .csv gerado apenas com cabeçalho |
+| BG | RF048 | RN26 | `GET /export/events/:id/checkpoints` | Tela de Desempenho Final (exportação) | CT-086: Admin aciona download de checkpoints → .csv com colunas corredor, esteira, quilometragem, timestamp; CT-087: Sem checkpoints → .csv apenas com cabeçalho |
+| NR, BG | RF049 | RN09 | `GET /metrics/athletes/:id/performance` | Tela de Desempenho Final | CT-088: Evento encerrado → perfil exibe distância total, tempo total em pista e velocidade média geral; CT-089: Corredor sem nenhum turno → valores zerados exibidos sem erro |
+| NR | RF050 | RN36 | `GET /metrics/athletes/:id/share` | Tela de Desempenho Final | CT-090: Acionar "Compartilhar" → URL única e pública gerada; CT-091: Link acessado por usuário não cadastrado → exibe apenas dados de desempenho do corredor sem acesso a outras funcionalidades |
+| BG | RF051 | RN18, RN29, RN37 | `POST /events` | Tela de Registro Pré-Evento → Cadastro de Local/Evento | CT-092: Cadastrar local/região antes do início → operação permitida; CT-093: Tentar alterar local após início do evento → operação rejeitada |
+| NR | RF052 | RN36 | `GET /metrics/athletes/:id/performance` | Tela de Desempenho Final | CT-094: Corredor acessa histórico completo após término do evento → todos os turnos e métricas individuais exibidos |
+| LA | RF053 | RN31, RN32 | `GET /audit/alerts` | Tela de Acompanhamento de Esteiras | CT-095: Esteira sem novo checkpoint por mais de 5 min → alerta visual de inatividade exibido para o auditor |
+
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+#### Plano de implementação de endpoints (sprint 4)
+
+A maior parte dos endpoints da RTM já está implementada e operante na WebAPI (ver seção 3.7). Os endpoints listados abaixo estão **planejados para a sprint 4**, completando a cobertura dos RF de validação pré-evento, auditoria retroativa, sincronização offline e compartilhamento público. O contrato (método, path e RN governante) já está definido para que a implementação seja uma evolução incremental, sem alterar os endpoints existentes.
+
+<div align = "center">
+  <sub> Quadro 26 - Endpoints planejados para a sprint 4 </sub><br>
+
+| RF | Endpoint planejado | RN | Descrição e plano de implementação |
+|----|--------------------|----|------------------------------------|
+| RF003 | `GET /teams/:teamId/validation` | RN17, RN28 | Validar se a equipe possui exatamente 16 corredores ativos antes de liberar o início de turnos. **Plano:** novo método no `teamService` que conta atletas ativos por equipe e retorna o status de aptidão (apto/quantidade faltante); rota somente leitura consumida pela tela de cadastro. |
+| RF024 | `GET /audit/logs` | RN23 | Consultar a trilha de auditoria imutável das edições retroativas. **Plano:** expor a tabela `logs` (já existente) via novo `logsRepository`/`logsService` com filtro por `shift_id`, retornando usuário, valor anterior, valor novo e timestamp em ordem cronológica. |
+| RF026 | `POST /audit/sync` | RN27 | Sincronizar em lote os registros capturados offline ao reestabelecer conexão, sem duplicidade. **Plano:** endpoint que recebe um array de checkpoints/turnos e aplica a lógica de *upsert* idempotente já descrita na Consulta SQL 1 (seção 3.6.4), preservando a ordem cronológica. |
+| RF031 | `PATCH /audit/checkpoints/:id` | RN25 | Corrigir o valor de um checkpoint inconsistente, desbloqueando a confirmação após revisão. **Plano:** novo método no `shiftService` que valida o novo valor contra os checkpoints vizinhos (RN24), grava log de auditoria (RN23) e marca o registro como revisado. |
+| RF050 | `GET /metrics/athletes/:id/share` | RN36 | Gerar/retornar o link público e único de desempenho do atleta ao fim do evento. **Plano:** endpoint público (sem autenticação) que expõe apenas as métricas consolidadas do atleta, reutilizando o `metricsService`. |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
