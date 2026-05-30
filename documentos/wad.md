@@ -1614,7 +1614,6 @@ A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcio
 | RF052 | —                                    | `GET /metrics/athletes/:id/performance`                                                                                                                               | GET                               |
 | RF053 | —                                    | `GET /audit/alerts`                                                                                                                                                   | GET                               |
 
-<div>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
