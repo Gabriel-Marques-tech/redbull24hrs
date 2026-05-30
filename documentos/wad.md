@@ -1690,7 +1690,7 @@ Na sprint 1, os RNFs foram definidos em nível conceitual, com critérios mensur
 | **RNF002** | USAB | Dados do modo TV expostos por endpoint somente leitura; a aplicação visual do contraste/fonte (WCAG AA) é responsabilidade do frontend, em desenvolvimento. | `GET /metrics/events/:id/dashboard` |
 | **RNF003** | USAB | Mensagens de erro de validação padronizadas e acionáveis retornadas pela API (ex.: "km final inválido: menor que o km inicial"). | `shiftService.ts` (mensagens dos `throw`) |
 | **RNF004** | USAB | Cada operação crítica (início, checkpoint, encerramento) resolvida em um único endpoint, minimizando idas ao servidor; contagem de cliques validada no frontend. | `shiftRoutes.ts` |
-| **RNF005** | CONF | Estratégia de *upsert* idempotente (`ON CONFLICT ... DO UPDATE` com checagem cronológica) definida (seção 3.6.4) e unicidade garantida por PK; exposição em lote via `POST /audit/sync` prevista para a sprint 4 (Quadro 26). | Consulta 1 (3.6.4); PK em `checkpoints` |
+| **RNF005** | CONF | Estratégia de *upsert* idempotente (`ON CONFLICT ... DO UPDATE` com checagem cronológica) definida (seção 3.6.4) e unicidade garantida por PK; exposição em lote via `POST /audit/sync` prevista para a sprint 4 (Quadro 31). | Consulta 1 (3.6.4); PK em `checkpoints` |
 | **RNF006** | CONF | Integridade transacional garantida em duas camadas: `CHECK`/`FK`/`UNIQUE` no banco e validações no Service antes da persistência. | `001_initialSchema.sql`; `shiftService.ts` |
 | **RNF007** | CONF | Detecção de inconsistências operacionais implementada: rotação de esteira (30 min), inatividade de checkpoint (5 min) e rejeição de intervalo > 10 min e de km fora de ordem. | `alertsRepository.ts`, `alertsService.ts`, `shiftService.ts` |
 | **RNF008** | DES | Consultas operacionais atendidas por índices sobre todas as FKs e *pool* de conexões; aferição formal de p95 prevista para a sprint 4. | índices em `001_initialSchema.sql`; `connection.ts` |
@@ -2254,7 +2254,7 @@ O desenvolvimento do frontend do projeto demandou atenção especial à organiza
 
 **Categoria:** Estrutural
 
-**O que é:** A interface é construída com componentes independentes e reutilizáveis, cada um com uma responsabilidade só ¹⁹.
+**O que é:** A interface é construída com componentes independentes e reutilizáveis, cada um com uma responsabilidade só ¹⁷.
 
 **Justificativa:** A interface possui vários elementos reutilizados em diferentes telas, como cartões de status, formulários e indicadores de quilometragem. Sem componentes reutilizáveis, qualquer alteração visual precisaria ser feita manualmente em cada página. Com os componentes isolados, uma mudança feita em um único lugar já reflete em toda a aplicação. Isso foi especialmente importante nas últimas sprints, quando o design passou por ajustes após os testes de usabilidade realizados com os auditores.
 
@@ -3321,7 +3321,7 @@ O modelo físico é entregue em **quatro migrations versionadas e reproduzíveis
 Entre os principais conectivos lógicos utilizados, temos:
  
 <div align="center">
-  <sub> Quadro 20 - Conectivos Lógicos </sub><br>
+  <sub> Quadro 25 - Conectivos Lógicos </sub><br>
 
 | Tipos de conectivos lógicos | Representação     |
 | ---------------------------- | ------------------- |
@@ -3376,7 +3376,7 @@ WHERE checkpoints.timestamp < EXCLUDED.timestamp
  
 <br>
 <div align="center">
-  <sub> Quadro 21 - Lógica Proposicional: 1 </sub><br>
+  <sub> Quadro 26 - Lógica Proposicional: 1 </sub><br>
 
 | | |
 | :--- | :--- |
@@ -3411,7 +3411,7 @@ ORDER BY total_km DESC;
  
 <br>
 <div align="center">
-  <sub> Quadro 22 - Lógica Proposicional: 2 </sub><br>
+  <sub> Quadro 27 - Lógica Proposicional: 2 </sub><br>
 
 | | |
 |---|---|
@@ -3445,47 +3445,50 @@ ORDER BY total_turnos_auditados DESC;
 
 <br>
 <div align="center">
-  <sub> Quadro 23 - Lógica Proposicional: 3 </sub><br>
+  <sub> Quadro 28 - Lógica Proposicional: 3 </sub><br>
 
 | | |
 |---|---|
 | **Proposições lógicas** | $A$: O turno está encerrado (`shifts.status = 'completed'`) <br> $B$: O auditor está ativo no sistema (`auditors.is_active = TRUE`) <br> $C$: O evento foi encerrado (`events.end_at IS NOT NULL`) <br> $D$: O auditor supervisionou mais de um turno encerrado (`COUNT(shifts.id) > 1`) |
-| **Expressão lógica proposicional** | $A \land B \land C \Leftrightarrow D$ | 
+| **Expressão lógica proposicional** | $A \land B \land C \land D$ |
 | **Interpretação** | Um auditor só é listado quando, simultaneamente: o turno está encerrado, o auditor não foi desativado no sistema, o evento foi encerrado **e** sua contagem de turnos ultrapassa um |
 | **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$D$</th><th>$A \land B \land C \land D$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
-#### Consulta 4: Esteiras mais sobrecarregadas — esteiras com maior tempo total de uso no evento
+#### Consulta 4: *Encerramento de turno* — finalizar apenas turnos em andamento
 
-&nbsp;&nbsp;&nbsp;&nbsp;Identifica quais esteiras acumularam maior tempo de uso considerando os turnos encerrados a elas vinculados. Como cada esteira referencia diretamente um turno (`treadmills.shift_id`), a consulta recupera o turno associado a cada esteira, filtra apenas os turnos com status `completed` e duração registrada, e ordena pelo tempo total decrescente. Útil para auditoria operacional pós-evento: permite verificar se alguma esteira foi desproporcionalmente mais utilizada, o que pode indicar desequilíbrio na distribuição entre equipes ou necessidade de manutenção preventiva no equipamento mais exigido.
+&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar um turno, o sistema atualiza o registro para `completed`, gravando o horário de fim (`end_at`), a quilometragem final, e calculando automaticamente a distância, a duração total e a velocidade média. A atualização só é aplicada quando o `id` informado corresponde a um turno **e** esse turno ainda está `in_progress` — o que impede reencerrar um turno já finalizado ou alterar um turno inexistente (nenhuma linha é afetada nesses casos). É uma consulta de escrita do tipo `UPDATE`, em contraste com as anteriores, demonstrando uma combinação distinta de condições.
 
 **Consulta SQL:**
 ```sql
-SELECT
-    treadmill.number                                      AS esteira,
-    shift.id                                              AS turno_id,
-    athlete.name                                          AS atleta,
-    EXTRACT(EPOCH FROM shift.total_time)::INT / 60        AS total_minutos_uso
-FROM treadmills     AS treadmill
-JOIN shifts         AS shift   ON shift.id   = treadmill.shift_id
-JOIN athletes       AS athlete ON athlete.id = shift.athlete_id
-WHERE shift.status      = 'completed'
-  AND shift.total_time IS NOT NULL
-ORDER BY total_minutos_uso DESC;
+UPDATE shifts
+SET status     = 'completed',
+    end_at     = NOW(),
+    km_end     = :km_end,
+    distance   = :km_end - km_start,
+    total_time = NOW() - start_at,
+    speed      = CASE
+                   WHEN EXTRACT(EPOCH FROM (NOW() - start_at)) > 0
+                   THEN ROUND((:km_end - km_start) / (EXTRACT(EPOCH FROM (NOW() - start_at)) / 3600.0))
+                   ELSE 0
+                 END
+WHERE id = :id
+  AND status = 'in_progress'
+RETURNING *;
 ```
 
 <br>
 <div align="center">
-  <sub> Quadro 24 - Lógica Proposicional: 4 </sub><br>
+  <sub> Quadro 29 - Lógica Proposicional: 4 </sub><br>
 
 | | |
 | :--- | :--- |
-| **Proposições lógicas** | **$A$**: O turno vinculado à esteira está encerrado (`shifts.status = 'completed'`)<br><br>**$B$**: A duração do turno foi registrada (`shifts.total_time IS NOT NULL`)<br><br>**$C$**: A esteira é contabilizada no ranking de tempo de uso (`treadmill.number` aparece no resultado ordenado por `total_minutos_uso DESC`) |
-| **Expressão lógica proposicional** | $A \land B \Leftrightarrow C$ |
-| **Interpretação** | Uma esteira só é exibida no ranking quando, simultaneamente: o turno vinculado está encerrado, a duração do turno foi registrada **e** a esteira figura no resultado ordenado — as três condições devem ser verdadeiras ao mesmo tempo |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$A \land B \land C$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+| **Proposições lógicas** | **$A$**: Existe um turno com o identificador informado (`id = :id`)<br><br>**$B$**: O turno está em andamento (`status = 'in_progress'`) |
+| **Expressão lógica proposicional** | $A \land B$ |
+| **Interpretação** | O `UPDATE` só efetiva o encerramento quando ambas as condições são verdadeiras: o `id` corresponde a um turno existente **e** esse turno está em andamento. Turnos já encerrados (`completed`) ou inexistentes não satisfazem a cláusula `WHERE` e, portanto, não são alterados. |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
@@ -3508,7 +3511,7 @@ A documentação completa e navegável dos endpoints está disponível em [`docs
 | **Métricas** | 6 | RF020, RF021, RF035–RF038, RF040, RF049, RF052 |
 | **Exportação** | 2 | RF047, RF048 |
 
-**Total atual: 38 endpoints implementados e documentados**, organizados em dez fluxos. Além dos fluxos de Autenticação, Eventos, Esteiras, Equipes e Atletas, foram implementados nesta sprint os fluxos de Turnos (auditoria operacional de início, checkpoints e encerramento), Histórico, Alertas (detecção de inconsistências), Métricas e Exportação. Os poucos endpoints ainda não implementados — validação pré-evento (RF003), log de auditoria (RF024), sincronização offline (RF026), correção de checkpoint (RF031) e compartilhamento público (RF050) — estão planejados para a sprint 4, com contrato já definido no Quadro 26 da seção 3.9.
+**Total atual: 38 endpoints implementados e documentados**, organizados em dez fluxos. Além dos fluxos de Autenticação, Eventos, Esteiras, Equipes e Atletas, foram implementados nesta sprint os fluxos de Turnos (auditoria operacional de início, checkpoints e encerramento), Histórico, Alertas (detecção de inconsistências), Métricas e Exportação. Os poucos endpoints ainda não implementados — validação pré-evento (RF003), log de auditoria (RF024), sincronização offline (RF026), correção de checkpoint (RF031) e compartilhamento público (RF050) — estão planejados para a sprint 4, com contrato já definido no Quadro 31 da seção 3.9.
 
 Cada endpoint contém: método HTTP, path completo, headers, body request (com campos obrigatórios e validações), shape da resposta de sucesso, exemplos JSON e tabela de status codes possíveis.
 
@@ -3561,7 +3564,7 @@ No contexto do Red Bull 24 Horas, onde inconsistências nos dados podem invalida
 > - **LA** — Lucas Andrade (operador de evento / auditor)
 
 <div align = "center">
-  <sub> Quadro 25 - Matriz de Rastreabilidade (RTM) </sub><br>
+  <sub> Quadro 30 - Matriz de Rastreabilidade (RTM) </sub><br>
 
 | Persona | RF | RN | Endpoint | Tela | Teste |
 |---------|----|----|----------|------|-------|
@@ -3628,7 +3631,7 @@ No contexto do Red Bull 24 Horas, onde inconsistências nos dados podem invalida
 A maior parte dos endpoints da RTM já está implementada e operante na WebAPI (ver seção 3.7). Os endpoints listados abaixo estão **planejados para a sprint 4**, completando a cobertura dos RF de validação pré-evento, auditoria retroativa, sincronização offline e compartilhamento público. O contrato (método, path e RN governante) já está definido para que a implementação seja uma evolução incremental, sem alterar os endpoints existentes.
 
 <div align = "center">
-  <sub> Quadro 26 - Endpoints planejados para a sprint 4 </sub><br>
+  <sub> Quadro 31 - Endpoints planejados para a sprint 4 </sub><br>
 
 | RF | Endpoint planejado | RN | Descrição e plano de implementação |
 |----|--------------------|----|------------------------------------|
@@ -3782,7 +3785,7 @@ ORDER BY total_km DESC;
 ```
 
 <div align="center">
-<sub>Quadro X - Lógica Proposicional: Consulta 2</sub>
+<sub>Lógica Proposicional da Consulta 2 (exemplo — detalhamento completo no Quadro 27, seção 3.6.4)</sub>
 
 | | |
 |---|---|
@@ -4004,7 +4007,7 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ⁸ BUSINESS RULES GROUP. **Business Rules Manifesto:** the principles of rule independence. Version 2.0. S. l.: Business Rules Group, 2003. Disponível em: <https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf>. Acesso em: 27 abr. 2026.
 
-³ ESPM. **Runaholic Club: lifestyle e comunidade de wellness para a Geração Z**. Disponível em: <https://www.espm.br/blog/runaholic-club-lifestyle-e-comunidade-de-wellness-para-a-geracao-z/>. Acesso em: 28 abr. 2026.
+¹ ESPM. **Runaholic Club: lifestyle e comunidade de wellness para a Geração Z**. Disponível em: <https://www.espm.br/blog/runaholic-club-lifestyle-e-comunidade-de-wellness-para-a-geracao-z/>. Acesso em: 28 abr. 2026.
 
 ¹⁰ FIELDING, Roy Thomas. **Architectural Styles and the Design of Network-based Software Architectures**. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: <https://ics.uci.edu/~fielding/pubs/dissertation/top.htm>. Acesso em: 27 abr. 2026.
 
@@ -4031,7 +4034,7 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ⁷ PROJECT MANAGEMENT INSTITUTE. **Um guia do conhecimento em gerenciamento de projetos (Guia PMBOK®)**. 7. ed. Newtown Square: PMI, 2021.
 
-¹² TIMES BRASIL. **Red Bull e marcas para a Geração Z**. Disponível em: <https://timesbrasil.com.br/empresas-e-negocios/red-bull-marcas-geracao-z/>. Acesso em: 28 abr. 2026.
+² TIMES BRASIL. **Red Bull e marcas para a Geração Z**. Disponível em: <https://timesbrasil.com.br/empresas-e-negocios/red-bull-marcas-geracao-z/>. Acesso em: 28 abr. 2026.
 
 # <a name="c9"></a>Anexos
 
