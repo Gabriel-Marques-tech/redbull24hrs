@@ -1,8 +1,15 @@
+# Claude Code / config local (não commitar)
+CLAUDE.md
+.claude/
+.gitmessage
+
 #Arquivos de documentação
 documentos/outros/regras_de_negocio.md
 documentos/outros/requisitos_funcionais.md
 documentos/outros/requisitos_nao_funcionais.md
 documentos/outros/user_stories.md
+documentos/outros/baremas.md
+documentos/outros/plano_de_correcoes.md
 # Logs
 logs
 *.log
@@ -109,3 +116,8 @@ dist
 .tern-port
 
 .prettierrc
+# Added by code-review-graph
+.code-review-graph/
+
+# AI tools (configs locais de assistentes de IA — não commitar)
+.mcp.json
