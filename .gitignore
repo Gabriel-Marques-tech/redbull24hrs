@@ -116,3 +116,8 @@ dist
 .tern-port
 
 .prettierrc
+# Added by code-review-graph
+.code-review-graph/
+
+# AI tools (configs locais de assistentes de IA — não commitar)
+.mcp.json
