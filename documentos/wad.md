@@ -983,7 +983,7 @@ E não deve existir campo editável de hora de início na interface do Auditor
 ```gherkin
 Dado que um turno está em andamento há exatamente 5 minutos
 Quando o temporizador do sistema atinge o intervalo
-Então um modal bloqueante deve ser exibido impedindo qualquer interação com a interface até o preenchimento da quilometragem
+Então um modal opcional deve ser exibido solicitando um novo registro de quilometragem da corrida atual
 ```
 
 ---
