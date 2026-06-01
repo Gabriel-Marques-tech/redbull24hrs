@@ -8,7 +8,7 @@
 
 ## Nome dos integrantes do grupo
 
-#### Fernanda Helena Leitão Bezerra
+#### Fernanda Helena Bezerra
 
 #### Gabriel Simões Marques
 
