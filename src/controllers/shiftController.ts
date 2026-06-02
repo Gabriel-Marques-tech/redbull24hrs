@@ -46,38 +46,6 @@ export const shiftController = {
 		}
 	},
 
-	async correctCheckpoint(req: Request, res: Response) {
-		const checkpoint_id = Number(req.params.id);
-		const { distance, justification } = req.body;
-
-		if (distance == null) {
-			res.status(400).json({ error: "Campos obrigatórios: distance" });
-			return;
-		}
-		if (!req.user) {
-			res.status(401).json({ error: "Não autenticado" });
-			return;
-		}
-
-		try {
-			const updated = await shiftService.correctCheckpoint(
-				checkpoint_id,
-				Number(distance),
-				Number(req.user.id),
-				req.user.role,
-				justification
-			);
-			res.status(200).json(updated);
-		} catch (error: any) {
-			const status = error.message.includes("não encontrad")
-				? 404
-				: error.message.includes("inválid")
-				? 422
-				: 500;
-			res.status(status).json({ error: error.message });
-		}
-	},
-
 	async finishShift(req: Request, res: Response) {
 		const shift_id = Number(req.params.id);
 		const { km_end } = req.body;
