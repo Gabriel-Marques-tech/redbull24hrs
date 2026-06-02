@@ -3957,9 +3957,9 @@ _a) Segmentação de Mercado:_
 
 O RedRun atende a um segmento específico: as equipes operacionais do Red Bull 24 Horas no Brasil, evento realizado em múltiplas regiões do país que, a cada edição, depende de pessoas na linha de frente para garantir que a competição funcione do início ao fim sem interrupções.
 
-Dentro desse segmento, dois grupos se destacam. O primeiro é composto por profissionais contratados pela organização do evento, com experiência em produção e gestão operacional de competições esportivas. O segundo é formado por voluntários que assumem funções de apoio durante as 24 horas da competição. Segundo Bavaresco (2012), a motivação desse perfil de voluntário costuma estar ligada ao amor pelo esporte, ao senso de comunidade e à identificação com os valores da marca organizadora ¹⁸.
+Dentro desse segmento, dois grupos se destacam. O primeiro é composto pelo gerente do evento, responsável pela configuração e coordenação geral da operação. O segundo é formado pelos auditores, membros da equipe de Field Marketing da Red Bull que atuam diretamente no registro dos percursos ao longo das 24 horas da competição. Segundo a ABRAPE (2025), o setor de eventos registrou 179.133 empregos formais em 2024, refletindo a crescente profissionalização das equipes operacionais que sustentam eventos dessa escala ¹⁸.
 
-O que conecta esses dois grupos é uma necessidade em comum: um sistema simples, estável e confiável, capaz de operar sem falhas durante um evento ininterrupto de alta demanda operacional. Cada edição regional conta com sua própria equipe, o que reforça a importância de uma solução que possa ser aplicada de forma consistente em diferentes contextos, sem exigir adaptações complexas a cada nova etapa.
+O que conecta esses dois grupos é a necessidade de um sistema simples, estável e confiável, capaz de operar sem falhas durante um evento ininterrupto de alta demanda operacional. Cada edição regional conta com sua própria equipe, o que reforça a importância de uma solução que possa ser aplicada de forma consistente em diferentes contextos, sem exigir adaptações complexas a cada nova etapa.
 
 Caso o RedRun prove seu valor nesta primeira edição, o caminho natural é a expansão para as demais edições regionais do Red Bull 24 Horas no Brasil, sempre dentro do mesmo segmento e com o mesmo propósito: substituir um processo manual e frágil por um fluxo digital confiável.
 
@@ -4008,7 +4008,7 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ¹⁷ ABRAMOV, Dan. **Presentational and Container Components.** Medium, 23 mar. 2015. Disponível em: https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0. Acesso em: 26 mai. 2026.
 
-¹⁸ BAVARESCO, Gustavo. **A motivação de voluntários em eventos esportivos no Brasil**. Dissertação (Mestrado) — Universidade do Porto, 2012. Disponível em: https://repositorio-aberto.up.pt/bitstream/10216/116356/2/294764.pdf. Acesso em: 02 jun. 2026.
+¹⁸ ABRAPE. Setor de eventos segue em crescimento e registra, em 2024, nível de emprego 60,8% superior ao período pré-pandemia. Associação Brasileira dos Promotores de Eventos, 26 fev. 2025. Disponível em: https://www.abrape.com.br/setor-de-eventos-segue-em-crescimento-e-registra-em-2024-nivel-de-emprego-608-superior-ao-periodo-pre-pandemia/. Acesso em: 02 jun. 2026. 
 
 ⁸ BUSINESS RULES GROUP. **Business Rules Manifesto:** the principles of rule independence. Version 2.0. S. l.: Business Rules Group, 2003. Disponível em: <https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf>. Acesso em: 27 abr. 2026.
 
