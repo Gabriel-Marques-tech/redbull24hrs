@@ -53,44 +53,6 @@ export const shiftService = {
 		return shiftRepository.addCheckpoint(shift_id, distance, checkpointType);
 	},
 
-	async correctCheckpoint(
-		checkpoint_id: number,
-		new_distance: number,
-		author_id: number,
-		author_role: string,
-		justification?: string
-	) {
-		const checkpoint = await shiftRepository.findCheckpointById(checkpoint_id);
-		if (!checkpoint) throw new Error("Checkpoint não encontrado");
-
-		const shift = await shiftRepository.findById(checkpoint.shift_id);
-		if (!shift) throw new Error("Turno não encontrado");
-
-		if (new_distance < 0)
-			throw new Error("distância inválida: deve ser maior ou igual a zero");
-
-		const { prev, next } = await shiftRepository.findNeighborCheckpoints(
-			checkpoint_id,
-			checkpoint.shift_id
-		);
-
-		const floor = prev ?? shift.km_start;
-		if (new_distance < floor)
-			throw new Error("distância inválida: valor menor que o checkpoint anterior");
-
-		if (next !== null && new_distance > next)
-			throw new Error("distância inválida: valor maior que o checkpoint posterior");
-
-		return shiftRepository.correctCheckpoint(
-			checkpoint_id,
-			new_distance,
-			checkpoint.distance,
-			author_id,
-			author_role,
-			justification
-		);
-	},
-
 	async finishShift(shift_id: number, km_end: number) {
 		if (km_end < 0) throw new Error("km final inválido: deve ser maior ou igual a zero");
 

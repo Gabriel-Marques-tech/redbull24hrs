@@ -1,12 +1,10 @@
 import express, { Router } from "express";
 import { shiftController } from "../controllers/shiftController";
-import authMiddleware from "../middlewares/authMiddleware";
 
 const router: Router = express.Router();
 
 router.post("/shifts/start", shiftController.startShift);
 router.post("/shifts/:id/checkpoints", shiftController.registerCheckpoint);
 router.patch("/shifts/:id/finish", shiftController.finishShift);
-router.patch("/checkpoints/:id", authMiddleware.requireAuth, shiftController.correctCheckpoint);
 
 export default router;

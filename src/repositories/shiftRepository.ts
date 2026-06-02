@@ -73,69 +73,6 @@ export const shiftRepository = {
 		return result.rows[0];
 	},
 
-	async findCheckpointById(checkpoint_id: number) {
-		const result = await pool.query(`SELECT * FROM checkpoints WHERE id = $1`, [checkpoint_id]);
-		return result.rows[0] ?? null;
-	},
-
-	async findNeighborCheckpoints(checkpoint_id: number, shift_id: number) {
-		const prev = await pool.query(
-			`SELECT distance FROM checkpoints
-			 WHERE shift_id = $1 AND id < $2
-			 ORDER BY id DESC LIMIT 1`,
-			[shift_id, checkpoint_id]
-		);
-		const next = await pool.query(
-			`SELECT distance FROM checkpoints
-			 WHERE shift_id = $1 AND id > $2
-			 ORDER BY id ASC LIMIT 1`,
-			[shift_id, checkpoint_id]
-		);
-		return {
-			prev: prev.rows[0]?.distance ?? null,
-			next: next.rows[0]?.distance ?? null,
-		};
-	},
-
-	async correctCheckpoint(
-		checkpoint_id: number,
-		new_distance: number,
-		old_distance: number,
-		author_id: number,
-		author_role: string,
-		justification?: string
-	) {
-		const cp = await pool.query(
-			`UPDATE checkpoints
-			 SET distance          = $1,
-			     reviewed          = TRUE,
-			     old_distance      = $2,
-			     reviewed_at       = NOW(),
-			     reviewed_by_id    = $3,
-			     reviewed_by_role  = $4,
-			     justification     = $5
-			 WHERE id = $6
-			 RETURNING *`,
-			[new_distance, old_distance, author_id, author_role, justification ?? null, checkpoint_id]
-		);
-
-		await pool.query(
-			`INSERT INTO logs (shift_id, checkpoint_id, type, old_value, new_value, author_id, author_role, justification)
-			 VALUES ($1, $2, 'updated', $3, $4, $5, $6, $7)`,
-			[
-				cp.rows[0].shift_id,
-				checkpoint_id,
-				old_distance,
-				new_distance,
-				author_id,
-				author_role,
-				justification ?? null,
-			]
-		);
-
-		return cp.rows[0];
-	},
-
 	async finish(id: number, km_end: number) {
 		const result = await pool.query(
 			`UPDATE shifts
