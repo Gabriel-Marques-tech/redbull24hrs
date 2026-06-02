@@ -3956,8 +3956,12 @@ _Descreva os diferenciais da sua aplicação em relação aos concorrentes, sem 
 _a) Segmentação de Mercado (até 250 palavras)_
 Descreva os principais segmentos de mercado a serem atendidos pela aplicação. Utilize bases de dados e fontes confiáveis.\*
 
-_b) Perfil do Público-Alvo (até 250 palavras)_
-_Caracterize o público-alvo com dados demográficos, psicográficos e comportamentais, incluindo necessidades específicas. Utilize fontes obrigatórias._
+_b) Perfil do Público-Alvo:_
+O RedRun possui dois perfis de usuário com papéis distintos dentro da aplicação: o gerente e o auditor.
+
+O gerente é o responsável por configurar o sistema antes do evento começar. Esse perfil atua em um setor que, segundo a Associação Brasileira dos Promotores de Eventos (ABRAPE), registrou 179.133 empregos formais em 2024, representando um crescimento de 60,8% em relação ao período pré-pandemia ¹⁸. Esse crescimento reflete a profissionalização crescente do setor e o aumento da demanda por profissionais capacitados para gerir operações de eventos com mais eficiência. O gerente já possui familiaridade com ferramentas digitais e está acostumado a tomar decisões rápidas em situações de pressão. Sua principal necessidade é um sistema centralizado que permita organizar locais, equipes, corredores e auditores com antecedência, reduzindo imprevistos e garantindo que o evento inicie com todas as informações já estruturadas.
+
+O auditor é o usuário que opera o sistema durante as 24 horas da competição e faz parte da equipe de Field Marketing da Red Bull. Em geral, trata-se de um adulto jovem com afinidade por tecnologia e identificação com o universo esportivo da marca. Durante o evento, sua atenção está dividida e o ritmo de trabalho é intenso. Sua principal dificuldade é o registro manual contínuo que, ao longo das horas, gera cansaço, distração e aumenta a chance de erros nos dados. O que esse usuário precisa é de uma interface intuitiva e estável, que funcione sem interrupções e que possa ser utilizada com facilidade mesmo nas condições mais exigentes de uma competição ao vivo.
 
 ## 6.5 Posicionamento
 
