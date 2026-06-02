@@ -8,7 +8,7 @@
 
 ## Nome dos integrantes do grupo
 
-#### Fernanda Helena Leitão Bezerra
+#### Fernanda Helena Bezerra
 
 #### Gabriel Simões Marques
 
@@ -540,17 +540,15 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 <div align = "center">
   <sub> Quadro 2 - US02 </sub><br>
 
-  | Identificação            | [US02](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/31)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-  | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | **Persona**              | Lucas Andrade                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-  | **User Story**           | "Como operador de evento, quero registrar checkpoints de quilômetros durante a corrida em andamento, para garantir o acompanhamento contínuo dos dados, reduzir a perda de informações em caso de falhas e substituir as marcações manuais realizadas a cada intervalo."                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-  | **Critério de aceite 1** | CR1: deve ser possível registrar checkpoint apenas quando houver corrida ativa na esteira, com inserção manual do valor de quilômetros.<br>**Validação:** verificar se o campo de km é habilitado somente com corrida ativa.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-  | **Teste de aceitação 1** | Com corrida ativa, inserir valor de km e registrar checkpoint; verificar data/horário automáticos e persistência após recarregamento.<br>**Esperado:** checkpoint registrado, vinculado corretamente e persistido.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-  | **Critério de aceite 2** | CR2: o sistema deve apresentar mensagem de erro caso não exista corrida ativa na esteira.<br>**Validação:** tentar registrar checkpoint sem corrida ativa e verificar mensagem de erro.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-  | **Teste de aceitação 2** | Tentar registrar checkpoint sem corrida ativa na esteira.<br>**Esperado:** sistema exibe mensagem de erro.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-  | **Critério de aceite 3** | CR3: deve ser possível registrar múltiplos checkpoints, exibidos em ordem cronológica no histórico.<br>**Validação:** registrar múltiplos checkpoints e verificar ordenação no histórico.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-  | **Teste de aceitação 3** | Registrar múltiplos checkpoints na mesma corrida e verificar ordenação cronológica no histórico.<br>**Esperado:** todos os checkpoints listados em ordem cronológica.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-  | **Critérios INVEST**     | **Independente:** pode ser implementada de forma isolada, considerando apenas a existência de uma corrida ativa.<br>**Negociável:** a forma de inserção dos quilômetros e o fluxo de interação podem ser ajustados sem comprometer o objetivo.<br>**Valiosa:** garante rastreabilidade contínua dos dados, reduzindo riscos de perda de informação durante o evento.<br>**Estimável:** possui escopo claro (entrada de km + registro automático + persistência), permitindo estimativa precisa.<br>**Pequena:** funcionalidade específica, com complexidade controlada e adequada para entrega incremental.<br>**Testável:** pode ser validada por meio do registro de múltiplos checkpoints e verificação da persistência e ordenação. |
+ | Identificação | [US02](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/31) |
+| :--- | :--- |
+| **Persona** | Lucas Andrade |
+| **User Story** | "Como operador de evento, quero iniciar o turno de uma esteira selecionando a equipe e o nome do atleta a partir de uma listagem predefinida, para associar o tempo de pista imediatamente ao competidor correto sem precisar digitar dados textuais sob pressão." |
+| **Critério de aceite 1** | CR1: O formulário de início de turno deve exibir campos de seleção (*dropdown*) restritos às equipes e aos 16 atletas cadastrados no pré-evento.<br>**Validação:** Confirmar que não há nenhum campo de texto livre para digitação de nomes de atletas ou equipes na interface de início de turno. |
+| **Teste de aceitação 1** | Abrir a tela de início de turno da Esteira 1, clicar no campo "Atleta" e verificar as opções exibidas.<br>**Esperado:** O sistema exibe apenas a lista dos atletas previamente vinculados àquela equipe pelo gerente, permitindo a seleção rápida com um clique. |
+| **Critério de aceite 2** | CR2: O sistema deve registrar o horário exato de início (*timestamp*) automaticamente a partir do servidor no momento em que o operador confirmar a ação.<br>**Validação:** Verificar no banco de dados se o horário de início foi gerado automaticamente pelo sistema e não inserido pelo usuário. |
+| **Teste de aceitação 2** | Selecionar o atleta na lista e clicar no botão "Iniciar Turno".<br>**Esperado:** A esteira muda o status visual para "Em Andamento" no protótipo e o cronômetro local é disparado. |
+| **Critérios INVEST** | **Independente:** Pode ser desenvolvida após a criação da configuração do pré-evento.<br>**Negociável:** A ordem de exibição dos atletas no dropdown pode ser alfabética ou por número.<br>**Valiosa:** Reduz drasticamente o tempo de troca de atletas na pista e elimina erros de digitação.<br>**Estimável:** Escopo bem delimitado em torno de um formulário simples de seleção.<br>**Pequena:** Envolve apenas leitura de banco e criação de um registro de turno.<br>**Testável:** Pode ser facilmente validada testando o fluxo de seleção na interface. |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -559,17 +557,15 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 <div align = "center">
   <sub> Quadro 3 - US03</sub><br>
 
-  | Identificação            | [US03](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/32)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-  | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | **Persona**              | Lucas Andrade                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-  | **User Story**           | "Como operador de evento, quero registrar o fim de um ciclo em andamento, informando o valor final de quilômetros, baseando-se em uma imagem de referência, para encerrar corretamente o turno do corredor, consolidar os dados do ciclo e evitar inconsistências no controle manual realizado anteriormente."                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-  | **Critério de aceite 1** | CR1: deve ser possível finalizar corrida apenas quando houver corrida ativa, com inserção manual do valor final de km, baseando na imagem de referência.<br>**Validação:** verificar se o campo de finalização está disponível somente com corrida ativa.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-  | **Teste de aceitação 1** | Com corrida ativa, inserir valor final de km igual ao valor da imagem de referência e finalizar; verificar data/horário automáticos e persistência.<br>**Esperado:** corrida finalizada e dados persistidos corretamente.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-  | **Critério de aceite 2** | CR2: após a finalização, a esteira deve ser marcada como disponível para nova corrida.<br>**Validação:** verificar liberação da esteira após encerramento da corrida.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-  | **Teste de aceitação 2** | Finalizar corrida e tentar iniciar em outra esteira.<br>**Esperado:** esteira disponível e nova corrida pode ser iniciada normalmente.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-  | **Critério de aceite 3** | CR3: o sistema deve apresentar mensagem de erro caso não exista corrida ativa na esteira.<br>**Validação:** tentar finalizar sem corrida ativa e verificar mensagem de erro.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-  | **Teste de aceitação 3** | Tentar finalizar corrida sem corrida ativa na esteira.<br>**Esperado:** sistema exibe mensagem de erro.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-  | **Critérios INVEST**     | **Independente:** pode ser implementada de forma isolada, considerando a existência de uma corrida ativa.<br>**Negociável:** a forma de inserção do valor final e o fluxo de finalização podem ser ajustados sem comprometer o objetivo.<br>**Valiosa:** permite o encerramento correto da corrida, garantindo a integridade dos dados e substituindo o controle manual sujeito a falhas.<br>**Estimável:** possui escopo claro (entrada de km final + registro automático + atualização de estado), permitindo estimativa precisa.<br>**Pequena:** funcionalidade específica e bem delimitada, adequada para entrega incremental.<br>**Testável:** pode ser validada por meio da finalização de corridas e verificação da persistência, associação e liberação da esteira. |
+ | Identificação | [US03](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/32) |
+| :--- | :--- |
+| **Persona** | Lucas Andrade |
+| **User Story** | "Como operador de evento, quero encerrar o turno de uma corrida digitando manualmente a quilometragem final indicada no display da esteira, para consolidar os dados acumulados do atleta e manter o fluxo contínuo de registros sem depender de captura de imagens." |
+| **Critério de aceite 1** | CR1: O sistema deve disponibilizar um campo numérico para digitação manual da quilometragem final da esteira no encerramento do turno ativo.<br>**Validação:** Verificar se o campo de input aceita apenas caracteres numéricos e decimais de forma manual. |
+| **Teste de aceitação 1** | Acessar a tela de encerramento do turno ativo, digitar o valor final exibido na esteira e clicar em confirmar.<br>**Esperado:** O valor é computado manualmente, salvando o encerramento do turno com sucesso no banco de dados. |
+| **Critério de aceite 2** | CR2: O sistema não deve exigir, em nenhuma etapa do encerramento, o upload, captura de foto ou validação por imagem de referência.<br>**Validação:** Garantir a ausência de componentes de câmera ou inputs de arquivo na interface do protótipo de alta fidelidade. |
+| **Teste de aceitação 2** | Realizar o fluxo completo de encerramento e monitorar se o sistema conclui a operação unicamente com os dados inseridos via teclado.<br>**Esperado:** Turno finalizado de forma limpa e imediata após o input manual, alterando o status da esteira para "Livre". |
+| **Critérios INVEST** | **Independente:** Pode ser desenvolvida após a criação do turno ativo.<br>**Negociável:** A disposição do teclado numérico na tela ou uso do teclado nativo do dispositivo pode ser ajustada.<br>**Valiosa:** Garante agilidade operacional em revezamentos rápidos sem fricção de hardware de imagem.<br>**Estimável:** Escopo claro focado em um formulário de inserção simples.<br>**Pequena:** Trata-se de uma atualização de estado com um campo de entrada de dados.<br>**Testável:** Verificável comparando o dado inserido na interface com o gravado no banco. |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -578,17 +574,15 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 <div align = "center">
   <sub> Quadro 4 - US04 </sub><br>
 
-  | Identificação            | [US04](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/33)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-  | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-  | **Persona**              | Bruno Gardesani                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-  | **User Story**           | "Como gerente de evento, quero visualizar os registros de corridas organizados por equipe e esteira, para acompanhar a operação de forma consolidada, validar a consistência dos dados e reduzir a necessidade de conferência manual realizada anteriormente."                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-  | **Critério de aceite 1** | CR1: deve ser possível visualizar os registros agrupados por equipe (A e B) e por esteira, em ordem cronológica, com o valor de km de cada evento.<br>**Validação:** verificar agrupamento, ordenação e exibição dos valores de km.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-  | **Teste de aceitação 1** | Acessar a tela de visualização e verificar registros agrupados por equipe e esteira em ordem cronológica.<br>**Esperado:** dados exibidos corretamente agrupados e ordenados.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-  | **Critério de aceite 2** | CR2: deve ser possível diferenciar corridas em andamento e finalizadas.<br>**Validação:** confirmar distinção visual entre os status das corridas.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-  | **Teste de aceitação 2** | Verificar se corridas em andamento e finalizadas são diferenciadas visualmente na tela.<br>**Esperado:** status de cada corrida identificado claramente.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-  | **Critério de aceite 3** | CR3: a visualização deve ser atualizada automaticamente após novos registros.<br>**Validação:** registrar novo dado e medir tempo de atualização da tela.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-  | **Teste de aceitação 3** | Registrar novo dado e verificar atualização da tela.<br>**Esperado:** visualização atualizada automaticamente.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-  | **Critérios INVEST**     | **Independente:** pode ser implementada de forma isolada, utilizando dados já registrados no sistema.<br>**Negociável:** o layout da visualização e a forma de agrupamento podem ser ajustados sem comprometer o objetivo da funcionalidade.<br>**Valiosa:** permite acompanhamento consolidado da operação, reduzindo a necessidade de conferência manual e aumentando a confiabilidade dos dados.<br>**Estimável:** possui escopo claro (listagem + agrupamento + atualização), permitindo estimativa precisa.<br>**Pequena:** funcionalidade focada em visualização, com complexidade controlada.<br>**Testável:** pode ser validada por meio da comparação entre os dados exibidos e os registros armazenados. |
+  | Identificação | [US04](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/33) |
+| :--- | :--- |
+| **Persona** | Lucas Andrade |
+| **User Story** | "Como operador de evento, quero receber um alerta visual (modal) a cada 5 minutos de uma corrida ativa para sugerir o registro de uma quilometragem parcial, tendo a opção de fechar ou ignorar o aviso caso eu decida não realizar a auditoria naquele momento." |
+| **Critério de aceite 1** | CR1: O sistema deve exibir uma notificação na tela a cada janela de 5 minutos de corrida, oferecendo uma ação de "Inserir Parcial" e uma ação clara de "Dispensar/Fechar".<br>**Validação:** Verificar no protótipo de alta fidelidade a presença de um botão de fechamento (como um "X" ou botão "Cancelar") que não obrigue o preenchimento. |
+| **Teste de aceitação 1** | Permanecer na tela de monitoramento com uma esteira ativa por 5 minutos até o disparo do modal. Clicar no botão "Dispensar/Fechar".<br>**Esperado:** O modal fecha imediatamente, a tela principal de monitoramento permanece acessível e o fluxo da corrida não é bloqueado ou interrompido. |
+| **Critério de aceite 2** | CR2: Caso o operador decida auditar e inserir a parcial manualmente, o valor inserido deve ser validado para garantir que é maior do que o último registro salvo.<br>**Validação:** Tentar digitar um valor menor ou igual à quilometragem inicial/parcial anterior e verificar se o sistema impede o envio. |
+| **Teste de aceitação 2** | Abrir o modal de checkpoint, digitar um valor de quilometragem válido e clicar em "Salvar Parcial".<br>**Esperado:** Os dados são salvos no histórico de parciais daquela esteira e o modal se fecha, atualizando os gráficos em segundo plano. |
+| **Critérios INVEST** | **Independente:** A exibição do modal depende apenas do cronômetro interno do turno ativo.<br>**Negociável:** O tempo do intervalo (5 minutos) ou o layout do aviso visual podem ser customizados.<br>**Valiosa:** Fornece um lembrete útil de auditoria sem engessar a operação do auditor em momentos críticos de pista.<br>**Estimável:** Baseado em um temporizador de frontend simples e um modal dispensável.<br>**Pequena:** Envolve manipulação de estado em tela e um input opcional com validação numérica.<br>**Testável:** Validado aguardando o tempo do trigger e interagindo com os botões de salvar e fechar. |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -597,17 +591,13 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 <div align = "center">
   <sub> Quadro 5 - US05 </sub><br>
 
-  | Identificação            | [US05](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/34)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-  | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | **Persona**              | Bruno Gardesani                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-  | **User Story**           | "Como gerente de evento, quero consultar o histórico completo dos registros e exportar os dados da operação, para validar a consistência das informações, realizar auditorias pós-evento e eliminar a dependência de conferências manuais em prancheta."                                                                                                                                                                                                                                                                                                                                                          |
-  | **Critério de aceite 1** | CR1: deve ser possível visualizar todos os registros (início, checkpoints e finalizações) em ordem cronológica, com data, horário e valor de km.<br>**Validação:** verificar exibição completa e ordenação cronológica.                                                                                                                                                                                                                                                                                                                                                                                           |
-  | **Teste de aceitação 1** | Acessar o histórico completo e verificar todos os registros com data, horário e km em ordem cronológica.<br>**Esperado:** todos os registros exibidos corretamente.                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-  | **Critério de aceite 2** | CR2: deve ser possível filtrar os dados por equipe e por esteira.<br>**Validação:** aplicar filtros e confirmar que apenas os dados solicitados são exibidos.                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-  | **Teste de aceitação 2** | Aplicar filtros por equipe e por esteira e verificar os resultados exibidos.<br>**Esperado:** apenas os dados filtrados são exibidos.                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-  | **Critério de aceite 3** | CR3: deve ser possível exportar os dados em CSV; o arquivo deve conter todos os registros sem perda.<br>**Validação:** exportar e conferir integridade e completude do arquivo gerado.                                                                                                                                                                                                                                                                                                                                                                                                                            |
-  | **Teste de aceitação 3** | Exportar os dados e abrir o CSV para verificar integridade e completude.<br>**Esperado:** arquivo gerado com todos os registros sem perda de informação.                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-  | **Critérios INVEST**     | **Independente:** pode ser implementada de forma isolada, utilizando os dados já registrados no sistema.<br>**Negociável:** o formato de exportação e os filtros podem ser ajustados conforme necessidade.<br>**Valiosa:** permite auditoria e validação dos dados, garantindo transparência e confiabilidade da operação.<br>**Estimável:** possui escopo claro (consulta + filtro + exportação), permitindo estimativa precisa.<br>**Pequena:** funcionalidade delimitada, com complexidade moderada e bem definida.<br>**Testável:** pode ser validada por meio da exportação e conferência dos dados gerados. |
+| Identificação | [US05](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/34) |
+| :--- | :--- |
+| **Persona** | Bruno Gardesani / Público Geral |
+| **User Story** | "Como gerente de evento, quero visualizar um dashboard centralizado atualizado em tempo real com base nos inputs manuais dos operadores, exibindo a distância total acumulada por equipe, velocidade média e ritmo (*pace*), para acompanhar a evolução da competição sem planilhas paralelas." |
+| **Critério de aceite 1** | CR1: O painel deve recalcular as métricas de performance (distância total e classificação) imediatamente após qualquer inserção manual realizada e salva nas telas de pista (parciais ou encerramentos).<br>**Validação:** Garantir que o painel de controle utilize as fórmulas de agregação de dados vinculadas aos logs manuais do banco de dados. |
+| **Teste de aceitação 1** | Simular o encerramento de um turno na Esteira 1 adicionando 5 km ao histórico da Equipe A. Em seguida, abrir a tela do Dashboard.<br>**Esperado:** O painel reflete o acréscimo de 5 km na distância total da Equipe A e atualiza a velocidade média instantaneamente. |
+| **Critérios INVEST** | **Independente:** Consome dados já existentes gerados pelas histórias de inserção da pista.<br>**Negociável:** A disposição visual dos gráficos e cards pode mudar conforme o feedback de design do protótipo.<br>**Valiosa:** Dá visibilidade em tempo real do status da competição para gerentes e espectadores com base nas inserções manuais estruturadas.<br>**Estimável:** Complexidade média focada em queries de agregação e fórmulas matemáticas no banco de dados.<br>**Pequena:** Focada exclusivamente em exibição, leitura e cálculo de dados agregados no frontend.<br>**Testável:** Validado injetando dados manuais de teste e conferindo se os totais batem perfeitamente no painel. |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -633,15 +623,15 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 <div align = "center">
   <sub> Quadro 7 - US07 </sub><br>
 
-  | Identificação            | [US07](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/39)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-  | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | **Persona**              | Lucas Andrade                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-  | **User Story**           | "Como operador de evento, quero registrar o nome do atleta no início da corrida, para permitir rastreabilidade individual e apoiar a premiação de quem percorreu a maior distância."                                                                                                                                                                                                                                                                                                                                                                                   |
-  | **Critério de aceite 1** | CR1: deve haver campo opcional para inserção do nome ou ID do corredor no início da corrida; se não preenchido, o registro deve ser identificado como "não identificado".<br>**Validação:** registrar início com e sem preenchimento do campo e verificar identificação exibida.                                                                                                                                                                                                                                                                                       |
-  | **Teste de aceitação 1** | Registrar início de corrida sem preencher o nome do atleta.<br>**Esperado:** registro identificado como "não identificado".                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-  | **Critério de aceite 2** | CR2: o nome do atleta deve ser persistido, vinculado aos checkpoints do turno e exibido na tela de acompanhamento; o vínculo deve ser preservado mesmo em turnos com zero quilômetros registrados.<br>**Validação:** verificar vinculação e exibição na tela de acompanhamento.                                                                                                                                                                                                                                                                                        |
-  | **Teste de aceitação 2** | Registrar início com nome do atleta, realizar checkpoints e acessar a tela de acompanhamento.<br>**Esperado:** nome exibido na tela e vinculado a todos os checkpoints do turno, inclusive em sessões com zero km.                                                                                                                                                                                                                                                                                                                                                     |
-  | **Critérios INVEST**     | **Independente:** pode ser implementada de forma isolada como extensão do registro de início.<br>**Negociável:** o campo pode ser ajustado (nome, ID ou apelido) sem comprometer o objetivo da funcionalidade.<br>**Valiosa:** permite rastreabilidade individual e apoia a premiação dos atletas.<br>**Estimável:** adição simples ao fluxo de registro de início, com escopo bem delimitado.<br>**Pequena:** escopo limitado ao campo de identificação e sua persistência.<br>**Testável:** pode ser validada verificando vinculação do nome aos registros do turno. |
+ | Identificação | [US07](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/41) |
+| :--- | :--- |
+| **Persona** | Bruno Gardesani |
+| **User Story** | "Como gerente de evento, quero cadastrar e listar previamente as equipes e seus respectivos 16 atletas na etapa de configuração, para que os operadores possam apenas selecionar os competidores corretos no início das corridas, evitando atrasos e digitações incorretas na pista." |
+| **Critério de aceite 1** | CR1: O sistema deve permitir o cadastro nominal de todos os atletas exclusivamente na etapa de configuração pré-evento, associando cada um à sua respectiva equipe.<br>**Validação:** Verificar se a tela de registro pré-evento aceita a inserção e armazena os nomes dos atletas vinculados às equipes. |
+| **Teste de aceitação 1** | Acessar o módulo de configuração pré-evento, cadastrar uma lista de atletas para a "Equipe A" e salvar antes da largada.<br>**Esperado:** Atletas persistidos com sucesso e vinculados corretamente à listagem da equipe. |
+| **Critério de aceite 2** | CR2: A tela de início de turno operada pelo auditor deve conter apenas um campo de seleção (*select/dropdown*) com a lista pré-carregada de atletas cadastrados.<br>**Validação:** Garantir que o operador não consiga digitar ou alterar o nome do atleta no momento de iniciar uma corrida. |
+| **Teste de aceitação 2** | Iniciar um novo turno na esteira e abrir o campo de seleção do atleta.<br>**Esperado:** O sistema exibe em formato de lista os nomes previamente cadastrados pelo gerente, sem campo de texto livre para digitação. |
+| **Critérios INVEST** | **Independente:** Isola o escopo de gestão cadastral das regras de cronometragem da pista.<br>**Negociável:** A interface de listagem pode usar ordenação alfabética ou por número de inscrição.<br>**Valiosa:** Mitiga erros de grafia no calor do evento e blinda as regras de negócio de 16 atletas por equipe.<br>**Estimável:** Baseia-se em formulários CRUD tradicionais de banco de dados.<br>**Pequena:** Focada estritamente na carga de dados estruturais iniciais.<br>**Testável:** Validada checando se os nomes salvos na configuração aparecem perfeitamente nas telas de pista. |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -726,10 +716,10 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
   | **Critério de aceite 1** | CR1: o sistema deve disponibilizar uma tela ou painel de "Resultados" exibindo as métricas finais da atleta após o encerramento do evento.<br>**Validação:** verificar a renderização correta dos dados consolidados da atleta.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
   | **Teste de aceitação 1** | Acessar o ambiente da atleta após a finalização do evento. <br>**Esperado:** sistema exibe os dados finais corretos (ex: Nome, Equipe, Quilômetros totais percorridos e Tempo de corrida).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
   | **Critério de aceite 2** | CR2: deve haver um botão de "Compartilhar" gerando um link direto/imagem. <br>**Validação:** clicar no botão de compartilhamento e verificar a abertura do menu do sistema operacional para copiar link.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-  | **Teste de aceitação 2** | Na tela de resultado final, clicar em "Compartilhar". <br>**Esperado:**o painel nativo do dispositivo abre com a opção de copiar link e/ou baixar imagem.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+  | **Teste de aceitação 2** | Na tela de resultado final, clicar em "Compartilhar". <br>**Esperado:** o painel nativo do dispositivo abre com a opção de copiar link e/ou baixar imagem.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
   | **Critério de aceite 3** | CR3: o conteúdo a ser compartilhado deve trazer um texto formatado dinamicamente com os dados da conquista e menção ao evento. <br>**Validação:** verificar se os dados injetados na mensagem compartilhada batem com a tela de resultado.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
   | **Teste de aceitação 3** | Finalizar a cópia do link ou concluir o download da imagem. <br> **Esperado:** o texto colado/baixado reflete os dados corretos (ex: "Acabei de correr 10km pela Equipe A no Evento X!").                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-  | **Critérios INVEST**     | **Independente:**a leitura e compartilhamento ocorrem após o fluxo de operação do evento ser finalizado. <br>**Negociável:** o formato do compartilhamento (ser apenas texto, link ou imagem estática) pode ser negociado conforme o tempo técnico. <br>**Valiosa:** melhora a experiência da atleta (gamificação/reconhecimento) e promove marketing orgânico do evento e da marca. <br>**Estimável:** consumo simples de dados e uso de APIs nativas de compartilhamento padrão de mercado. <br>**Pequena:** foca exclusivamente na interface de leitura do usuário final e no gatilho de share. <br>**Testável:** pode ser validada visualizando a tela final e testando o disparo da ação de compartilhamento em dispositivos mobile. |
+  | **Critérios INVEST**     | **Independente:** a leitura e compartilhamento ocorrem após o fluxo de operação do evento ser finalizado. <br>**Negociável:** o formato do compartilhamento (ser apenas texto, link ou imagem estática) pode ser negociado conforme o tempo técnico. <br>**Valiosa:** melhora a experiência da atleta (gamificação/reconhecimento) e promove marketing orgânico do evento e da marca. <br>**Estimável:** consumo simples de dados e uso de APIs nativas de compartilhamento padrão de mercado. <br>**Pequena:** foca exclusivamente na interface de leitura do usuário final e no gatilho de share. <br>**Testável:** pode ser validada visualizando a tela final e testando o disparo da ação de compartilhamento em dispositivos mobile. |
 
   <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
@@ -1505,47 +1495,47 @@ Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio 
 
 | ID   | Descrição                                                                                                                                                                                                                                                                                                  | RF associado |
 | ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
-| RN01 | Um corredor só pode iniciar um turno se não possuir outro turno com status "em andamento" em nenhuma das esteiras do evento.                                                                                                                                                                               | RF007        |
-| RN02 | A esteira selecionada deve estar com status "Livre" para que um novo turno possa ser iniciado. Esteiras "Ocupadas" não podem receber novo turno.                                                                                                                                                           | RF007        |
-| RN03 | O modal de checkpoint obrigatório deve ser disparado exatamente a cada 300 segundos (5 minutos) a partir do timestamp de início do turno. Nenhuma outra ação pode ser executada até que o auditor confirme o valor informado.                                                                              | RF008        |
-| RN04 | A quilometragem informada em um checkpoint voluntário deve ser maior ou igual à quilometragem do checkpoint imediatamente anterior registrado no mesmo turno (ou à km_inicial, se for o primeiro checkpoint).                                                                                              | RF017        |
-| RN05 | Um turno só pode ser finalizado se possuir ao menos um checkpoint registrado (obrigatório ou voluntário) após o início. Turnos sem nenhum checkpoint não podem ser encerrados.                                                                                                                             | RF009        |
-| RN06 | A quilometragem final informada deve ser maior ou igual à quilometragem do último checkpoint registrado no turno. Valores menores devem ser rejeitados antes de qualquer persistência.                                                                                                                     | RF010        |
-| RN07 | Ao finalizar um turno, o sistema deve calcular automaticamente: distância = km_final − km_inicial; duração = timestamp_fim − timestamp_início (em minutos); velocidade_média = distância / (duração / 60). Os três valores devem ser persistidos vinculados ao turno antes de retornar sucesso ao cliente. | RF011        |
-| RN08 | O hot swap só pode ser acionado imediatamente após a finalização de um turno na esteira adjacente. O próximo corredor deve pertencer à mesma equipe já configurada. Não é permitido hot swap(Troca de competidores em tempo real) sem turno anterior finalizado, ou com esteira em status ocupado.         | RF018        |
-| RN09 | A quilometragem total de uma equipe é a soma dos valores de distância (km_final − km_inicial) de todos os turnos com status "finalizado". Turnos em andamento, cancelados ou inconsistentes não entram no cálculo.                                                                                         | RF012        |
-| RN10 | Snapshots de distância acumulada por hora devem ser gerados automaticamente ao completar cada hora cheia desde o início do evento (t+60min, t+120min, etc.). Snapshots já gerados são imutáveis e não podem ser recalculados retroativamente.                                                              | RF019        |
-| RN11 | O dashboard deve ser atualizado em intervalos máximos de 10 segundos. Em caso de falha de conexão, o painel deve exibir indicador visual de "dados desatualizados" com timestamp da última atualização bem-sucedida — nunca exibir dados em branco.                                                        | RF013        |
-| RN12 | Uma esteira é "Ocupada" enquanto houver turno com status "em andamento" vinculado a ela, e passa para "Livre" imediatamente após o encerramento. O sistema deve sugerir revezamento quando uma esteira acumular 45 minutos contínuos de uso no mesmo turno.                                                | RF020        |
-| RN13 | O histórico deve listar todos os eventos em ordem decrescente de timestamp. Eventos com o mesmo timestamp devem obedecer a seguinte prioridade de exibição: encerramento > checkpoint > início.                                                                                                            | RF014        |
-| RN14 | No modo TV nenhuma ação de escrita pode ser executada — a interface é estritamente somente leitura. O acesso ao modo TV não requer autenticação. Qualquer tentativa de POST/PUT/DELETE originada do modo TV deve ser bloqueada no servidor.                                                                | RF021        |
-| RN15 | O sistema permite o cadastro de exatamente 2 equipes por evento. A tentativa de cadastrar uma terceira equipe deve ser bloqueada com mensagem de erro. Nomes de equipes devem ser únicos dentro do evento.                                                                                                 | RF001        |
-| RN16 | Um corredor só pode ser vinculado a uma única equipe por evento. Após o início do primeiro turno do evento, não é permitido adicionar, remover ou transferir corredores entre equipes.                                                                                                                     | RF002        |
-| RN17 | O sistema deve bloquear o início de qualquer turno enquanto qualquer uma das duas equipes não possuir exatamente 16 corredores com status "ativo". O bloqueio deve ser verificado a cada tentativa de início de turno, não apenas no cadastro.                                                             | RF003        |
-| RN18 | O campo local/região é obrigatório e deve ser preenchido antes do início do primeiro turno. Após o início do evento, o local não pode ser alterado — qualquer tentativa deve ser rejeitada.                                                                                                                | RF025        |
-| RN19 | Apenas esteiras com status "Livre" podem ser selecionadas para iniciar um novo turno. Esteiras "Ocupadas" devem aparecer visualmente desabilitadas na interface e não aceitar seleção.                                                                                                                     | RF004        |
-| RN20 | A equipe selecionada para uma esteira fica associada durante todo o turno em andamento. Não é permitido trocar a equipe de uma esteira enquanto houver turno em andamento nela.                                                                                                                            | RF005        |
-| RN21 | Apenas corredores com status "ativo" e sem turno em andamento podem ser selecionados. Corredores já em execução em qualquer esteira devem aparecer indisponíveis (desabilitados) na lista de seleção.                                                                                                      | RF006        |
-| RN22 | Os filtros de equipe, esteira e corredor podem ser combinados (operação AND). A aplicação de filtros não altera os dados persistidos — apenas restringe a visibilidade dos registros exibidos. Remover filtros deve restaurar a visão completa.                                                            | RF022        |
-| RN23 | Toda edição retroativa deve gerar um registro de auditoria imutável com: id do registro alterado, valor anterior, valor novo, timestamp da alteração e id do auditor. O registro de auditoria não pode ser excluído nem modificado por nenhum perfil.                                                      | RF015        |
-| RN24 | A edição de quilometragem em um checkpoint só é válida se o novo valor for maior ou igual ao checkpoint imediatamente anterior e menor ou igual ao checkpoint imediatamente posterior do mesmo turno.                                                                                                      | RF015        |
-| RN25 | O sistema deve marcar como inconsistente qualquer turno onde: (a) km_final < km_inicial; (b) gap entre checkpoints superior a 10 minutos sem justificativa registrada; (c) corredor com dois turnos simultâneos. Inconsistências devem ser sinalizadas no dashboard sem bloquear a operação em andamento.  | RF023        |
-| RN26 | O CSV exportado deve conter duas seções: (1) turnos — corredor, equipe, esteira, km*inicial, km_final, duracao_min, timestamp_inicio, timestamp_fim; (2) checkpoints — turno_id, km, timestamp, tipo. O nome do arquivo deve seguir o padrão evento*{local}\_{data-ISO}.csv.                               | RF024        |
-| RN27 | Em caso de ausência de conexão, os registros devem ser persistidos localmente com o timestamp original do momento do registro. Ao restabelecer conexão, a sincronização deve ocorrer automaticamente sem duplicar registros, preservando a ordem cronológica original.                                     | RF016        |
+| RN01 | Um corredor só pode iniciar um turno se não possuir outro turno com status "em andamento" em nenhuma das esteiras do evento.                                                                                                                                                                               | RF007 |
+| RN02 | A esteira selecionada deve estar com status "Livre" para que um novo turno possa ser iniciado. Esteiras "Ocupadas" não podem receber novo turno.                                                                                                                                                           | RF008 |
+| RN03 | O modal de checkpoint obrigatório deve ser disparado exatamente a cada 300 segundos (5 minutos) a partir do timestamp de início do turno. Nenhuma outra ação pode ser executada até que o auditor confirme o valor informado.                                                                              | RF012 |
+| RN04 | A quilometragem informada em um checkpoint voluntário deve ser maior ou igual à quilometragem do checkpoint imediatamente anterior registrado no mesmo turno (ou à km_inicial, se for o primeiro checkpoint).                                                                                              | RF013 |
+| RN05 | Um turno só pode ser finalizado se possuir ao menos um checkpoint registrado (obrigatório ou voluntário) após o início. Turnos sem nenhum checkpoint não podem ser encerrados.                                                                                                                             | RF014 |
+| RN06 | A quilometragem final informada deve ser maior ou igual à quilometragem do último checkpoint registrado no turno. Valores menores devem ser rejeitados antes de qualquer persistência.                                                                                                                     | RF015 |
+| RN07 | Ao finalizar um turno, o sistema deve calcular automaticamente: distância = km_final − km_inicial; duração = timestamp_fim − timestamp_início (em minutos); velocidade_média = distância / (duração / 60). Os três valores devem ser persistidos vinculados ao turno antes de retornar sucesso ao cliente. | RF017, RF018, RF019 |
+| RN08 | O hot swap só pode ser acionado imediatamente após a finalização de um turno na esteira adjacente. O próximo corredor deve pertencer à mesma equipe já configurada. Não é permitido hot swap(Troca de competidores em tempo real) sem turno anterior finalizado, ou com esteira em status ocupado.         | RF034 |
+| RN09 | A quilometragem total de uma equipe é a soma dos valores de distância (km_final − km_inicial) de todos os turnos com status "finalizado". Turnos em andamento, cancelados ou inconsistentes não entram no cálculo.                                                                                         | RF020 |
+| RN10 | Snapshots de distância acumulada por hora devem ser gerados automaticamente ao completar cada hora cheia desde o início do evento (t+60min, t+120min, etc.). Snapshots já gerados são imutáveis e não podem ser recalculados retroativamente.                                                              | RF037 |
+| RN11 | O dashboard deve ser atualizado em intervalos máximos de 10 segundos. Em caso de falha de conexão, o painel deve exibir indicador visual de "dados desatualizados" com timestamp da última atualização bem-sucedida — nunca exibir dados em branco.                                                        | RF021 |
+| RN12 | Uma esteira é "Ocupada" enquanto houver turno com status "em andamento" vinculado a ela, e passa para "Livre" imediatamente após o encerramento. O sistema deve sugerir revezamento quando uma esteira acumular 45 minutos contínuos de uso no mesmo turno.                                                | RF038, RF039 |
+| RN13 | O histórico deve listar todos os eventos em ordem decrescente de timestamp. Eventos com o mesmo timestamp devem obedecer a seguinte prioridade de exibição: encerramento > checkpoint > início.                                                                                                            | RF022 |
+| RN14 | No modo TV nenhuma ação de escrita pode ser executada — a interface é estritamente somente leitura. O acesso ao modo TV não requer autenticação. Qualquer tentativa de POST/PUT/DELETE originada do modo TV deve ser bloqueada no servidor.                                                                | RF040 |
+| RN15 | O sistema permite o cadastro de exatamente 2 equipes por evento. A tentativa de cadastrar uma terceira equipe deve ser bloqueada com mensagem de erro. Nomes de equipes devem ser únicos dentro do evento.                                                                                                 | RF001 |
+| RN16 | Um corredor só pode ser vinculado a uma única equipe por evento. Após o início do primeiro turno do evento, não é permitido adicionar, remover ou transferir corredores entre equipes.                                                                                                                     | RF002 |
+| RN17 | O sistema deve bloquear o início de qualquer turno enquanto qualquer uma das duas equipes não possuir exatamente 16 corredores com status "ativo". O bloqueio deve ser verificado a cada tentativa de início de turno, não apenas no cadastro.                                                             | RF003 |
+| RN18 | O campo local/região é obrigatório e deve ser preenchido antes do início do primeiro turno. Após o início do evento, o local não pode ser alterado — qualquer tentativa deve ser rejeitada.                                                                                                                | RF051 |
+| RN19 | Apenas esteiras com status "Livre" podem ser selecionadas para iniciar um novo turno. Esteiras "Ocupadas" devem aparecer visualmente desabilitadas na interface e não aceitar seleção.                                                                                                                     | RF004 |
+| RN20 | A equipe selecionada para uma esteira fica associada durante todo o turno em andamento. Não é permitido trocar a equipe de uma esteira enquanto houver turno em andamento nela.                                                                                                                            | RF005 |
+| RN21 | Apenas corredores com status "ativo" e sem turno em andamento podem ser selecionados. Corredores já em execução em qualquer esteira devem aparecer indisponíveis (desabilitados) na lista de seleção.                                                                                                      | RF006 |
+| RN22 | Os filtros de equipe, esteira e corredor podem ser combinados (operação AND). A aplicação de filtros não altera os dados persistidos — apenas restringe a visibilidade dos registros exibidos. Remover filtros deve restaurar a visão completa.                                                            | RF041, RF042, RF043 |
+| RN23 | Toda edição retroativa deve gerar um registro de auditoria imutável com: id do registro alterado, valor anterior, valor novo, timestamp da alteração e id do auditor. O registro de auditoria não pode ser excluído nem modificado por nenhum perfil.                                                      | RF024 |
+| RN24 | A edição de quilometragem em um checkpoint só é válida se o novo valor for maior ou igual ao checkpoint imediatamente anterior e menor ou igual ao checkpoint imediatamente posterior do mesmo turno.                                                                                                      | RF023 |
+| RN25 | O sistema deve marcar como inconsistente qualquer turno onde: (a) km_final < km_inicial; (b) gap entre checkpoints superior a 10 minutos sem justificativa registrada; (c) corredor com dois turnos simultâneos. Inconsistências devem ser sinalizadas no dashboard sem bloquear a operação em andamento.  | RF028, RF044, RF045, RF046 |
+| RN26 | O CSV exportado deve conter duas seções: (1) turnos — corredor, equipe, esteira, km*inicial, km_final, duracao_min, timestamp_inicio, timestamp_fim; (2) checkpoints — turno_id, km, timestamp, tipo. O nome do arquivo deve seguir o padrão evento*{local}\_{data-ISO}.csv.                               | RF047, RF048 |
+| RN27 | Em caso de ausência de conexão, os registros devem ser persistidos localmente com o timestamp original do momento do registro. Ao restabelecer conexão, a sincronização deve ocorrer automaticamente sem duplicar registros, preservando a ordem cronológica original.                                     | RF025, RF026 |
 | RN28 | O evento deve ter exatamente duas equipes cadastradas antes do início do primeiro turno. A tentativa de iniciar qualquer turno sem que ambas as equipes estejam presentes deve ser bloqueada. | RF001, RF003 |
 | RN29 | O título e o local de um evento devem ser únicos no sistema. Não é permitido cadastrar dois eventos com o mesmo título ou com o mesmo local simultaneamente. | RF051 |
 | RN30 | O CPF de gerentes, auditores e atletas, quando informado, deve conter exatamente 11 dígitos numéricos. Valores em formato diferente devem ser rejeitados antes da persistência. | RF027 |
 | RN31 | Um auditor com status inativo (is_active = FALSE) não pode registrar novos turnos nem checkpoints. O bloqueio deve ser verificado a cada tentativa de operação, não apenas no momento do login. | RF027 |
 | RN32 | A velocidade registrada em um turno deve ser maior ou igual a zero. O valor km_end deve ser maior ou igual a km_start. A distância calculada deve ser maior ou igual a zero. Qualquer violação deve ser rejeitada antes da persistência. | RF010, RF017 |
 | RN33 | O timestamp de encerramento de um turno deve ser posterior ou igual ao timestamp de início. Turnos com encerramento anterior ao início devem ser rejeitados antes da persistência. | RF016, RF018 |
-| RN34 | O tipo de um checkpoint deve ser obrigatoriamente mandatory (disparado automaticamente a cada 5 minutos) ou voluntary (registrado manualmente pelo auditor). Nenhum outro valor é aceito pelo sistema. | RF008, RF032 |
+| RN34 | O tipo de um checkpoint deve ser obrigatoriamente mandatory (disparado automaticamente a cada 5 minutos) ou voluntary (registrado manualmente pelo auditor). Nenhum outro valor é aceito pelo sistema. | RF012, RF032 |
 | RN35 | Um turno só pode assumir os status pending, in_progress ou completed. Qualquer tentativa de persistir um turno com status fora desse conjunto deve ser rejeitada. | RF007, RF014 |
 | RN36 | O link de compartilhamento do desempenho final de um atleta deve ser único, gerado automaticamente pelo sistema ao término do evento, e acessível publicamente sem autenticação. O link deve expor apenas os dados de desempenho do corredor em questão, sem acesso a outras funcionalidades do sistema. | RF050 |
 | RN37 | Um evento excluído logicamente não pode ter novos turnos iniciados nem receber alterações operacionais. Equipes e atletas vinculados a um evento com exclusão lógica devem ser tratados como inativos para fins de operação. | RF051 |
-| RN38 | Toda senha de usuário (Administrador ou Auditor) deve ser persistida no banco como hash bcrypt com fator de custo mínimo igual a 10. O sistema deve rejeitar qualquer fluxo que armazene ou transmita senhas em texto plano, inclusive em logs e respostas de API.                                          | RF027        |
-| RN39 | O access token JWT deve ter tempo de expiração de 15 minutos a partir da emissão. Qualquer requisição autenticada que apresente token expirado, malformado ou com assinatura inválida deve ser rejeitada com HTTP 401, sem revelar a causa específica da falha ao cliente.                                  | RF027        |
-| RN40 | O refresh token é de uso único: a cada chamada bem-sucedida a `/auth/refresh`, o token apresentado deve ser imediatamente revogado (rotação) e um novo par (access + refresh) deve ser emitido. Tentativas de reutilização de refresh token já revogado devem ser rejeitadas com HTTP 401.                  | RF027        |
-| RN41 | Auditores com `is_active = false` não podem autenticar, mesmo apresentando credenciais corretas. A validação de status deve ocorrer antes da verificação de senha para evitar enumeração de contas inativas. A operação `/auth/logout` deve revogar o refresh token apresentado, encerrando a sessão ativa. | RF027        |
+| RN38 | Toda senha de usuário (Administrador ou Auditor) deve ser persistida no banco como hash bcrypt com fator de custo mínimo igual a 10. O sistema deve rejeitar qualquer fluxo que armazene ou transmita senhas em texto plano, inclusive em logs e respostas de API.                                          | RF027 |
+| RN39 | O access token JWT deve ter tempo de expiração de 15 minutos a partir da emissão. Qualquer requisição autenticada que apresente token expirado, malformado ou com assinatura inválida deve ser rejeitada com HTTP 401, sem revelar a causa específica da falha ao cliente.                                  | RF027 |
+| RN40 | O refresh token é de uso único: a cada chamada bem-sucedida a `/auth/refresh`, o token apresentado deve ser imediatamente revogado (rotação) e um novo par (access + refresh) deve ser emitido. Tentativas de reutilização de refresh token já revogado devem ser rejeitadas com HTTP 401.                  | RF027 |
+| RN41 | Auditores com `is_active = false` não podem autenticar, mesmo apresentando credenciais corretas. A validação de status deve ocorrer antes da verificação de senha para evitar enumeração de contas inativas. A operação `/auth/logout` deve revogar o refresh token apresentado, encerrando a sessão ativa. | RF027 |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -1677,10 +1667,59 @@ A definição desses Requisitos Não Funcionais assegura que a aplicação não 
 
 Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo que a operação foque na gestão do evento enquanto o software garante a precisão, a segurança e a estabilidade de todo o processamento de dados ao longo do período de competição.
 
+#### Evolução dos RNFs: do conceito à decisão técnica (sprint 3)
+
+Na sprint 1, os RNFs foram definidos em nível conceitual, com critérios mensuráveis (SMART). Nesta sprint, com a implementação do backend, cada eixo da ISO/IEC 25010 evoluiu para **decisões técnicas concretas e verificáveis no código**. O quadro a seguir registra, por RNF, a decisão de implementação adotada e a evidência correspondente no repositório. Os RNFs ligados predominantemente ao frontend ou a processos organizacionais têm sua evolução estrutural indicada e a verificação final prevista para as próximas sprints, mantendo a rastreabilidade.
+
+<div align = "center">
+  <sub> Quadro 16.1 - Evolução dos RNFs para decisões técnicas </sub><br>
+
+| RNF | Eixo | Decisão técnica concreta nesta sprint | Evidência no código |
+| :-- | :--- | :------------------------------------ | :------------------ |
+| **RNF001** | USAB | Início e troca de turno reduzidos a uma única requisição (sem etapas intermediárias no servidor); medição dos 3 min via teste de usabilidade prevista para a sprint 5. | `POST /audit/shifts/start` (`shiftController`/`shiftService`) |
+| **RNF002** | USAB | Dados do modo TV expostos por endpoint somente leitura; a aplicação visual do contraste/fonte (WCAG AA) é responsabilidade do frontend, em desenvolvimento. | `GET /metrics/events/:id/dashboard` |
+| **RNF003** | USAB | Mensagens de erro de validação padronizadas e acionáveis retornadas pela API (ex.: "km final inválido: menor que o km inicial"). | `shiftService.ts` (mensagens dos `throw`) |
+| **RNF004** | USAB | Cada operação crítica (início, checkpoint, encerramento) resolvida em um único endpoint, minimizando idas ao servidor; contagem de cliques validada no frontend. | `shiftRoutes.ts` |
+| **RNF005** | CONF | Estratégia de *upsert* idempotente (`ON CONFLICT ... DO UPDATE` com checagem cronológica) definida (seção 3.6.4) e unicidade garantida por PK; exposição em lote via `POST /audit/sync` prevista para a sprint 4 (Quadro 31). | Consulta 1 (3.6.4); PK em `checkpoints` |
+| **RNF006** | CONF | Integridade transacional garantida em duas camadas: `CHECK`/`FK`/`UNIQUE` no banco e validações no Service antes da persistência. | `001_initialSchema.sql`; `shiftService.ts` |
+| **RNF007** | CONF | Detecção de inconsistências operacionais implementada: rotação de esteira (30 min), inatividade de checkpoint (5 min) e rejeição de intervalo > 10 min e de km fora de ordem. | `alertsRepository.ts`, `alertsService.ts`, `shiftService.ts` |
+| **RNF008** | DES | Consultas operacionais atendidas por índices sobre todas as FKs e *pool* de conexões; aferição formal de p95 prevista para a sprint 4. | índices em `001_initialSchema.sql`; `connection.ts` |
+| **RNF009** | DES | Feedback imediato de validação suportado por respostas de erro síncronas e específicas da API; renderização em 100 ms é responsabilidade do frontend. | `shiftService.ts` / controllers |
+| **RNF010** | DES | Métricas e placar disponibilizados por endpoint de dashboard consultável; o ciclo de atualização ≤ 10 s é feito por *polling* no frontend. | `GET /metrics/events/:id/dashboard` |
+| **RNF011** | DES | Estatísticas consolidadas calculadas via consultas SQL agregadas sobre colunas indexadas; aferição de tempo prevista para a sprint 4. | `metricsRepository.ts` |
+| **RNF012** | SEG | Camada de autenticação implementada: senha com hash **bcrypt (custo 10)**, **JWT** de acesso (15 min) e *refresh token* rotativo armazenado como hash SHA-256, com *middleware* de autenticação (401) e de autorização por perfil (403). | `authService.ts`, `middlewares/authMiddleware.ts`, `utils/jwt.ts` |
+| **RNF013** | SEG | Esquema de trilha de auditoria em vigor (tabela `logs` com `type` ∈ {created, updated, finished} e `timestamp` do servidor); endpoint de consulta do log (RF024) previsto para a sprint 4. | tabela `logs` (`001_initialSchema.sql`) |
+| **RNF014** | SUP | Arquitetura em camadas Controller–Service–Repository com **100% das regras de negócio concentradas no Service**; Controllers só tratam HTTP e Repositories só acessam o banco. | `src/services/`, `src/controllers/`, `src/repositories/` |
+| **RNF015** | SUP | Suíte de testes automatizados (Jest + Supertest) com **cobertura de 95,95% na camada Service** (global 78,7%), acima do mínimo de 75%. | `src/__tests__/`; `npm test -- --coverage` |
+| **RNF016** | CAP | Acesso concorrente suportado por *pool* de conexões PostgreSQL (`max: 15`, `idleTimeout 30s`, `connectionTimeout 5s`); teste de carga (50 usuários) previsto para a sprint 4. | `connection.ts` |
+| **RNF017** | CAP | Consultas de histórico e exportação aceleradas por índices secundários sobre as FKs; aferição com 10 mil registros prevista para a sprint 4. | índices em `001_initialSchema.sql` |
+| **RNF018** | REST | Restrição de cliente (Tablets Android 10+, Chrome/Safari) tratada na camada de frontend/implantação; sem impacto no contrato da API. | — (frontend/deploy) |
+| **RNF019** | REST | Autonomia operacional garantida: o backend não depende de nenhuma API/SDK externo — apenas `express`, `pg`, `bcrypt`, `jsonwebtoken`, `dotenv` e `natural-compare`. | `package.json` |
+| **RNF020** | ORG | Identidade visual aplicada no Guia de Estilos (seção 3.4) e consumida pelo frontend; conformidade dos componentes validada no desenvolvimento da interface. | seção 3.4 (Guia de Estilos) |
+| **RNF021** | ORG | Congelamento da versão com antecedência é uma diretriz de processo a ser cumprida na sprint 5 (entrega final). | — (processo, sprint 5) |
+
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
 ## 3.2. Arquitetura (sprints 1 a 5)
 
 ---
 A seção de Arquitetura apresenta a estrutura organizacional e a modelagem dos principais componentes do sistema desenvolvidos ao longo das sprints 1 a 5. Por meio dos diagramas arquiteturais, diagramas de classes e diagramas de casos de uso, é possível compreender como os módulos da aplicação se relacionam, quais são as responsabilidades de cada camada e como ocorre o fluxo de dados entre os componentes. Esses artefatos auxiliam na documentação técnica do projeto, facilitando o entendimento da solução, a manutenção do software e a evolução contínua da arquitetura proposta.
+
+> **Cobertura atual dos diagramas e plano de evolução (sprint 4).**
+>
+> Os diagramas de arquitetura (3.2.1), de classes arquiteturais (3.2.1.1) e de sequência (3.2.4)
+> cobrem, nesta sprint, os fluxos de **Eventos, Equipes, Atletas, Turnos, Histórico, Métricas
+> (Dashboard) e Registros/Logs (sincronização)**.
+>
+> Os fluxos de **Autenticação, Esteiras, Alertas (inconsistências) e Exportação** já estão
+> **implementados e operantes no código** (ver seção 3.7 e a RTM em 3.9), mas seus diagramas
+> ainda **não foram modelados** — estão **planejados para a sprint 4**. A decisão de implementar
+> a autenticação, por exemplo, surgiu durante esta sprint (ver relatório de desenvolvimento, seção
+> 4.1), e a modelagem visual desses fluxos será incorporada nas próximas atualizações desta seção,
+> mantendo a documentação alinhada ao código já entregue. Trata-se de um débito de documentação
+> registrado de forma explícita, não de funcionalidade ausente.
 
 ### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
 
@@ -2205,7 +2244,7 @@ O desenvolvimento do frontend do projeto demandou atenção especial à organiza
 
 **Categoria:** Estrutural
 
-**O que é:** A interface é construída com componentes independentes e reutilizáveis, cada um com uma responsabilidade só ¹⁹.
+**O que é:** A interface é construída com componentes independentes e reutilizáveis, cada um com uma responsabilidade só ¹⁷.
 
 **Justificativa:** A interface possui vários elementos reutilizados em diferentes telas, como cartões de status, formulários e indicadores de quilometragem. Sem componentes reutilizáveis, qualquer alteração visual precisaria ser feita manualmente em cada página. Com os componentes isolados, uma mudança feita em um único lugar já reflete em toda a aplicação. Isso foi especialmente importante nas últimas sprints, quando o design passou por ajustes após os testes de usabilidade realizados com os auditores.
 
@@ -2983,9 +3022,12 @@ O modelo físico implementa o DER da seção 3.6.2 como **migrations DDL version
   <sub>Quadro 24 - Migrations registradas</sub>
 </div>
 
-| Arquivo                                                                     | Sprint | Descrição                                                                                                                                                                                                                                                  |
-| --------------------------------------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`001_initialSchema.sql`](../src/database/migrations/001_initialSchema.sql) | 2      | Cria as nove tabelas do domínio (`managers`, `events`, `teams`, `athletes`, `auditors`, `shifts`, `treadmills`, `logs`, `checkpoints`), suas constraints (`PK`, `FK`, `UNIQUE`, `NOT NULL`, `CHECK`) e os índices auxiliares sobre as chaves estrangeiras. |
+| Arquivo                                                                               | Sprint | Descrição                                                                                                                                                                                                                                                                                              |
+| ------------------------------------------------------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [`001_initialSchema.sql`](../src/database/migrations/001_initialSchema.sql)           | 2      | Cria as dez tabelas do domínio (`managers`, `events`, `teams`, `athletes`, `auditors`, `shifts`, `treadmills`, `logs`, `checkpoints`, `refresh_tokens`), suas constraints (`PK`, `FK`, `UNIQUE`, `NOT NULL`, `CHECK`) e os nove índices auxiliares sobre as chaves estrangeiras. A tabela `refresh_tokens` e os campos de autenticação (`password`, `email`) foram incorporados a esta migration durante a sprint 3. |
+| [`002_managerEventRelation.sql`](../src/database/migrations/002_managerEventRelation.sql) | 3      | Transforma a relação `managers` ↔ `events` de 1:N para N:N: remove a coluna `manager_id` de `events` e cria a tabela associativa `manager_events` (PK composta `manager_id` + `event_id`, FKs `ON DELETE CASCADE`) com índices sobre ambas as chaves estrangeiras.                                          |
+| [`003_softDelete.sql`](../src/database/migrations/003_softDelete.sql)                   | 3      | Introduz exclusão lógica (*soft delete*): adiciona a coluna `deleted_at TIMESTAMP DEFAULT NULL` às tabelas `events`, `teams` e `athletes`, permitindo desativar registros sem removê-los fisicamente (suporte às RN37).                                                                                    |
+| [`004_shiftTreadmill.sql`](../src/database/migrations/004_shiftTreadmill.sql)           | 3      | Adiciona a coluna `treadmill_id` à tabela `shifts` (FK → `treadmills(id)`, `ON UPDATE CASCADE ON DELETE RESTRICT`), permitindo que cada turno referencie diretamente a esteira em que ocorre.                                                                                                              |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -2998,45 +3040,50 @@ A migration `001_initialSchema.sql` reúne em um único script o schema operacio
 
 ##### Tabela `managers`
 
-Primeira tabela criada por estar no topo da hierarquia operacional (não depende de outra tabela). Identifica o gerente regional responsável por instanciar eventos. O `cpf` é opcional (`NULL` permitido), mas, quando preenchido, é `UNIQUE` e validado pelo `CHECK` `chk_managers_cpf`, que exige exatamente 11 dígitos numéricos via expressão regular. Essa é uma garantia de formato aplicada no próprio banco, independentemente da camada de aplicação.
+Primeira tabela criada por estar no topo da hierarquia operacional (não depende de outra tabela). Identifica o gerente regional responsável por instanciar eventos. O `cpf` é opcional (`NULL` permitido), mas, quando preenchido, é `UNIQUE` e validado pelo `CHECK` `chk_managers_cpf`, que exige exatamente 11 dígitos numéricos via expressão regular. Os campos `email` (`NOT NULL UNIQUE`) e `password` (`NOT NULL`) suportam a autenticação do gerente: o `email` é o identificador de login e o `password` armazena o hash bcrypt da senha — nunca a senha em texto plano (RN38). Essas garantias de formato e integridade são aplicadas no próprio banco, independentemente da camada de aplicação.
 
 ```sql
 CREATE TABLE managers (
 	id SERIAL PRIMARY KEY,
 	cpf VARCHAR(11) UNIQUE,
 	name VARCHAR(100) NOT NULL,
+	password VARCHAR(100) NOT NULL,
+	email VARCHAR(100) UNIQUE NOT NULL,
 	CONSTRAINT chk_managers_cpf CHECK (cpf IS NULL OR cpf ~ '^[0-9]{11}$')
 );
 ```
 
 ##### Tabela `events`
 
-Representa uma edição (regional ou final) do Red Bull 24 Horas. Tanto `title` quanto `local` são `NOT NULL UNIQUE`, ou seja, não existem duas edições com o mesmo título nem dois eventos simultâneos no mesmo local. A `FOREIGN KEY` para `managers` usa `ON DELETE RESTRICT`: um gerente com eventos vinculados não pode ser removido, o que protege a integridade histórica da operação. Já o `ON UPDATE CASCADE` permite que a chave-pai mude (caso o `SERIAL` seja realocado em uma migração futura) sem quebrar referências.
+Representa uma edição (regional ou final) do Red Bull 24 Horas. O `title` é `NOT NULL UNIQUE` (não existem duas edições com o mesmo título), enquanto a unicidade do local é garantida pela constraint composta `uq_events_date_local` (`UNIQUE (date, local)`), que impede dois eventos no mesmo local **na mesma data** — diferentes datas podem reutilizar o mesmo local. O campo `date` (`DATE NOT NULL`) registra o dia da edição. A `FOREIGN KEY` `manager_id` para `managers` usa `ON DELETE RESTRICT` (um gerente com eventos vinculados não pode ser removido) e `ON UPDATE CASCADE`. **Observação:** esta coluna `manager_id` é substituída pela tabela associativa `manager_events` na migration `002` (ver adiante), que converte a relação para N:N.
 
 ```sql
 CREATE TABLE events (
 	id SERIAL PRIMARY KEY,
 	title VARCHAR(100) UNIQUE NOT NULL,
-	local VARCHAR(100) UNIQUE NOT NULL,
+	local VARCHAR(100) NOT NULL,
+	date DATE NOT NULL,
 	manager_id INT NOT NULL,
 	CONSTRAINT fk_events_manager
 		FOREIGN KEY (manager_id) REFERENCES managers(id)
-		ON UPDATE CASCADE ON DELETE RESTRICT
+		ON UPDATE CASCADE ON DELETE RESTRICT,
+	CONSTRAINT uq_events_date_local UNIQUE (date, local)
 );
 ```
 
 ##### Tabela `teams`
 
-Cada equipe pertence a um único evento e tem `name` único. Diferente da relação `events → managers`, aqui a política é `ON DELETE CASCADE`: ao excluir um evento, suas duas equipes são removidas junto, já que a equipe só faz sentido no contexto de uma edição específica do Red Bull 24 Horas e não tem existência própria fora dele.
+Cada equipe pertence a um único evento. O nome da equipe é único **dentro do evento** (constraint composta `uq_teams_event_name`, `UNIQUE (event_id, name)`), e não globalmente — duas edições diferentes podem ter equipes homônimas. Diferente da relação `events → managers`, aqui a política é `ON DELETE CASCADE`: ao excluir um evento, suas equipes são removidas junto, já que a equipe só faz sentido no contexto de uma edição específica do Red Bull 24 Horas e não tem existência própria fora dele.
 
 ```sql
 CREATE TABLE teams (
 	id SERIAL PRIMARY KEY,
-	name VARCHAR(100) UNIQUE NOT NULL,
+	name VARCHAR(100) NOT NULL,
 	event_id INT NOT NULL,
 	CONSTRAINT fk_teams_event
 		FOREIGN KEY (event_id) REFERENCES events(id)
-		ON UPDATE CASCADE ON DELETE CASCADE
+		ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT uq_teams_event_name UNIQUE (event_id, name)
 );
 ```
 
@@ -3060,7 +3107,7 @@ CREATE TABLE athletes (
 
 ##### Tabela `auditors`
 
-Operadores do sistema. Como o auditor é uma pessoa de carreira (não vinculada a uma edição específica), `auditors` é uma entidade independente, sem `FK` para event ou team. O `registration_number` é `NOT NULL UNIQUE`, o que garante identificação funcional única do auditor na operação. O campo `is_active` (default `TRUE`) permite desativar auditores sem removê-los do banco, preservando o vínculo histórico com os turnos que já auditaram.
+Operadores do sistema. Como o auditor é uma pessoa de carreira (não vinculada a uma edição específica), `auditors` é uma entidade independente, sem `FK` para event ou team. O `registration_number` é `NOT NULL UNIQUE`, o que garante identificação funcional única do auditor na operação. O campo `is_active` (default `TRUE`) permite desativar auditores sem removê-los do banco, preservando o vínculo histórico com os turnos que já auditaram (RN31/RN41). Assim como `managers`, possui `email` (`NOT NULL UNIQUE`) como identificador de login e `password` (`NOT NULL`) armazenando o hash bcrypt da senha (RN38).
 
 ```sql
 CREATE TABLE auditors (
@@ -3069,6 +3116,8 @@ CREATE TABLE auditors (
 	cpf VARCHAR(11) UNIQUE,
 	registration_number INT UNIQUE NOT NULL,
 	is_active BOOLEAN NOT NULL DEFAULT TRUE,
+	password VARCHAR(100) NOT NULL,
+	email VARCHAR(100) UNIQUE NOT NULL,
 	CONSTRAINT chk_auditors_cpf CHECK (cpf IS NULL OR cpf ~ '^[0-9]{11}$')
 );
 ```
@@ -3160,9 +3209,40 @@ CREATE TABLE checkpoints (
 );
 ```
 
+##### Tabela `refresh_tokens`
+
+Sustenta o mecanismo de sessão e rotação de tokens da autenticação (RN39, RN40, RN41). Cada linha representa um *refresh token* emitido para um usuário (gerente ou auditor). O `token_hash` é `NOT NULL UNIQUE` — armazena o hash do token, nunca o valor bruto. Os campos `expires_at` e `revoked_at` controlam, respectivamente, a expiração e a revogação (rotação de uso único): ao usar um token, ele é marcado como revogado e um novo par é emitido. O `CHECK` `chk_refresh_tokens_role` restringe `user_role` a `manager` ou `auditor`. Como o usuário dono do token pode estar em uma de duas tabelas distintas (`managers` ou `auditors`), o vínculo foi modelado de forma polimórfica pelo par (`user_id`, `user_role`), sem uma `FOREIGN KEY` direta.
+
+```sql
+CREATE TABLE refresh_tokens (
+	id SERIAL PRIMARY KEY,
+	token_hash VARCHAR(255) UNIQUE NOT NULL,
+	user_id INT NOT NULL,
+	user_role VARCHAR(20) NOT NULL,
+	expires_at TIMESTAMP NOT NULL,
+	revoked_at TIMESTAMP,
+	created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT chk_refresh_tokens_role CHECK (user_role IN ('manager', 'auditor'))
+);
+```
+
+> ⚠️ **Limitação conhecida e plano de correção — `refresh_tokens` sem integridade referencial.**
+>
+> **Problema mapeado.** A tabela `refresh_tokens` **não possui `FOREIGN KEY`** para `managers` nem para `auditors`. A coluna `user_id` referencia, de forma lógica, uma de duas tabelas distintas conforme o valor de `user_role`, mas o banco não consegue impor uma `FK` apontando para duas tabelas ao mesmo tempo. Na prática, isso significa que: (a) o banco **não garante** que o `user_id` armazenado realmente exista na tabela de usuário correspondente, permitindo *tokens órfãos*; e (b) ao remover um gerente ou auditor, os tokens associados **não são removidos em cascata** automaticamente — a limpeza depende exclusivamente da camada de aplicação. Hoje, a coerência do vínculo token↔usuário é sustentada apenas pelo `CHECK chk_refresh_tokens_role` (que valida o papel, não a existência do usuário) e pela lógica do backend.
+>
+> **Por que não foi corrigido nesta sprint.** A correção definitiva exige alterar a modelagem física e, por consequência, atualizar os diagramas MER (3.6.1) e DER (3.6.2), o que não foi possível dentro da janela desta sprint. O erro foi **identificado, registrado e priorizado** para correção, evitando que ele se propague para as próximas entregas.
+>
+> **Plano de implementação (sprint 4):**
+> 1. **Unificar a identidade de usuário.** Criar uma tabela-pai `users` (com `id`, `email`, `password`, `role`) e tornar `managers` e `auditors` especializações que referenciam `users(id)`, eliminando a ambiguidade do vínculo polimórfico.
+> 2. **Adicionar a `FOREIGN KEY`.** Com a identidade unificada, substituir o par `(user_id, user_role)` por uma única `FK` `refresh_tokens.user_id → users(id) ON DELETE CASCADE`, garantindo remoção automática dos tokens quando o usuário é excluído e impedindo tokens órfãos.
+> 3. **Migration dedicada.** Implementar a mudança em uma nova migration versionada (`005_*`), preservando a ordem de dependências, e *backfillar* os dados existentes antes de aplicar a constraint.
+> 4. **Atualizar diagramas e rastreabilidade.** Refletir a nova estrutura no MER, no DER e no Diagrama de Classes do Domínio, mantendo a coerência entre modelagem, código e documentação.
+>
+> Essa mitigação assume o débito técnico de forma explícita e estabelece o caminho de correção, em vez de mascarar a inconsistência.
+
 ##### Índices secundários
 
-O PostgreSQL cria índices automaticamente apenas sobre `PRIMARY KEY` e `UNIQUE`, mas **não** sobre colunas de `FOREIGN KEY`. Como praticamente toda consulta operacional do sistema usa essas colunas (listar turnos de um atleta, checkpoints de um turno, logs de uma sessão, equipes de um evento), os oito `CREATE INDEX` abaixo são criados explicitamente após todas as tabelas. Isso garante que essas consultas sejam atendidas por busca indexada em vez de _sequential scan_, diferença importante de desempenho à medida que a base cresce ao longo das edições.
+O PostgreSQL cria índices automaticamente apenas sobre `PRIMARY KEY` e `UNIQUE`, mas **não** sobre colunas de `FOREIGN KEY`. Como praticamente toda consulta operacional do sistema usa essas colunas (listar turnos de um atleta, checkpoints de um turno, logs de uma sessão, equipes de um evento, tokens de um usuário), os nove `CREATE INDEX` abaixo são criados explicitamente após todas as tabelas. Isso garante que essas consultas sejam atendidas por busca indexada em vez de _sequential scan_, diferença importante de desempenho à medida que a base cresce ao longo das edições.
 
 ```sql
 CREATE INDEX idx_events_manager_id      ON events(manager_id);
@@ -3173,6 +3253,7 @@ CREATE INDEX idx_shifts_auditor_id      ON shifts(auditor_id);
 CREATE INDEX idx_treadmills_shift_id    ON treadmills(shift_id);
 CREATE INDEX idx_logs_shift_id          ON logs(shift_id);
 CREATE INDEX idx_checkpoints_shift_id   ON checkpoints(shift_id);
+CREATE INDEX idx_refresh_tokens_user    ON refresh_tokens(user_id, user_role);
 ```
 
 <div align="center">
@@ -3180,9 +3261,48 @@ CREATE INDEX idx_checkpoints_shift_id   ON checkpoints(shift_id);
   <br><br>
 </div>
 
+#### Migration 002: Relação N:N entre gerentes e eventos
+
+A migration `002_managerEventRelation.sql` revisa a modelagem inicial ao perceber que um mesmo gerente pode ser responsável por mais de um evento e que um evento pode ter mais de um gerente — uma relação **muitos-para-muitos** que a coluna `manager_id` em `events` (1:N) não comportava. A migration remove essa coluna e introduz a tabela associativa `manager_events`, cuja chave primária composta (`manager_id`, `event_id`) impede vínculos duplicados. Ambas as `FOREIGN KEY` usam `ON DELETE CASCADE`, de modo que remover um gerente ou um evento elimina automaticamente apenas os vínculos correspondentes, sem afetar as entidades remanescentes. Os dois índices criados aceleram as consultas nos dois sentidos da relação (eventos de um gerente e gerentes de um evento).
+
+```sql
+ALTER TABLE events DROP COLUMN manager_id;
+
+CREATE TABLE IF NOT EXISTS manager_events (
+	manager_id INT NOT NULL,
+	event_id   INT NOT NULL,
+	PRIMARY KEY (manager_id, event_id),
+	CONSTRAINT fk_me_manager FOREIGN KEY (manager_id) REFERENCES managers(id) ON DELETE CASCADE,
+	CONSTRAINT fk_me_event   FOREIGN KEY (event_id)   REFERENCES events(id)   ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_manager_events_manager_id ON manager_events(manager_id);
+CREATE INDEX IF NOT EXISTS idx_manager_events_event_id   ON manager_events(event_id);
+```
+
+> **Nota de coerência:** após esta migration, a coluna `manager_id` e o índice `idx_events_manager_id`, descritos na migration 001, deixam de existir; o vínculo gerente↔evento passa a ser feito exclusivamente pela tabela `manager_events`.
+
+#### Migration 003: Exclusão lógica (*soft delete*)
+
+A migration `003_softDelete.sql` adiciona a coluna `deleted_at` (`TIMESTAMP DEFAULT NULL`) às tabelas `events`, `teams` e `athletes`. A estratégia de *soft delete* permite que um registro seja marcado como excluído (preenchendo `deleted_at` com o instante da exclusão) sem ser removido fisicamente do banco, preservando o histórico operacional e a rastreabilidade exigida pela auditoria pós-evento. Registros com `deleted_at IS NOT NULL` são tratados como inativos pela camada de aplicação (RN37), enquanto `deleted_at IS NULL` indica um registro ativo.
+
+```sql
+ALTER TABLE events   ADD COLUMN deleted_at TIMESTAMP DEFAULT NULL;
+ALTER TABLE teams    ADD COLUMN deleted_at TIMESTAMP DEFAULT NULL;
+ALTER TABLE athletes ADD COLUMN deleted_at TIMESTAMP DEFAULT NULL;
+```
+
+#### Migration 004: Vínculo direto turno → esteira
+
+A migration `004_shiftTreadmill.sql` adiciona a coluna `treadmill_id` à tabela `shifts`, criando uma `FOREIGN KEY` direta de cada turno para a esteira em que ele ocorre. Embora a migration 001 já vinculasse esteira e turno por meio de `treadmills.shift_id`, a referência inversa em `shifts.treadmill_id` simplifica as consultas que partem do turno (fluxo predominante da operação: ao registrar início, checkpoint ou encerramento, o sistema parte sempre do turno) e dá suporte ao fluxo de turnos implementado na sprint 3. A política `ON DELETE RESTRICT` protege a integridade histórica: uma esteira referenciada por algum turno não pode ser removida.
+
+```sql
+ALTER TABLE shifts ADD COLUMN treadmill_id INT REFERENCES treadmills(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+```
+
 **Síntese do modelo físico**
 
-A migration 001 entrega o schema completo do sistema em um único arquivo versionado e reproduzível, com integridade referencial e regras de domínio garantidas no próprio banco. As políticas `ON DELETE` diferenciadas (`CASCADE` ao longo das entidades temporárias do evento, `RESTRICT` para entidades de carreira como gerentes, auditores e atletas), os `CHECK` sobre estados e quilometragem, e os índices secundários sobre todas as FKs traduzem as regras operacionais do Red Bull 24 Horas em estrutura física do PostgreSQL, apoiando tanto a operação em tempo real durante o evento quanto a auditoria formal posterior.
+O modelo físico é entregue em **quatro migrations versionadas e reproduzíveis**, aplicadas em ordem sequencial. A migration 001 estabelece o schema-base com integridade referencial e regras de domínio garantidas no próprio banco; as migrations 002, 003 e 004 evoluem esse schema conforme o desenvolvimento avançou na sprint 3 — N:N entre gerentes e eventos, exclusão lógica e vínculo direto turno→esteira. As políticas `ON DELETE` diferenciadas (`CASCADE` ao longo das entidades temporárias do evento, `RESTRICT` para entidades de carreira como gerentes, auditores e atletas), os `CHECK` sobre estados e quilometragem, e os índices secundários sobre todas as FKs traduzem as regras operacionais do Red Bull 24 Horas em estrutura física do PostgreSQL, apoiando tanto a operação em tempo real durante o evento quanto a auditoria formal posterior.
 
 ### 3.6.4. Consultas SQL e lógica proposicional
  
@@ -3191,7 +3311,7 @@ A migration 001 entrega o schema completo do sistema em um único arquivo versio
 Entre os principais conectivos lógicos utilizados, temos:
  
 <div align="center">
-  <sub> Quadro 20 - Conectivos Lógicos </sub><br>
+  <sub> Quadro 25 - Conectivos Lógicos </sub><br>
 
 | Tipos de conectivos lógicos | Representação     |
 | ---------------------------- | ------------------- |
@@ -3246,7 +3366,7 @@ WHERE checkpoints.timestamp < EXCLUDED.timestamp
  
 <br>
 <div align="center">
-  <sub> Quadro 21 - Lógica Proposicional: 1 </sub><br>
+  <sub> Quadro 26 - Lógica Proposicional: 1 </sub><br>
 
 | | |
 | :--- | :--- |
@@ -3281,7 +3401,7 @@ ORDER BY total_km DESC;
  
 <br>
 <div align="center">
-  <sub> Quadro 22 - Lógica Proposicional: 2 </sub><br>
+  <sub> Quadro 27 - Lógica Proposicional: 2 </sub><br>
 
 | | |
 |---|---|
@@ -3315,47 +3435,50 @@ ORDER BY total_turnos_auditados DESC;
 
 <br>
 <div align="center">
-  <sub> Quadro 23 - Lógica Proposicional: 3 </sub><br>
+  <sub> Quadro 28 - Lógica Proposicional: 3 </sub><br>
 
 | | |
 |---|---|
 | **Proposições lógicas** | $A$: O turno está encerrado (`shifts.status = 'completed'`) <br> $B$: O auditor está ativo no sistema (`auditors.is_active = TRUE`) <br> $C$: O evento foi encerrado (`events.end_at IS NOT NULL`) <br> $D$: O auditor supervisionou mais de um turno encerrado (`COUNT(shifts.id) > 1`) |
-| **Expressão lógica proposicional** | $A \land B \land C \Leftrightarrow D$ | 
+| **Expressão lógica proposicional** | $A \land B \land C \land D$ |
 | **Interpretação** | Um auditor só é listado quando, simultaneamente: o turno está encerrado, o auditor não foi desativado no sistema, o evento foi encerrado **e** sua contagem de turnos ultrapassa um |
 | **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$D$</th><th>$A \land B \land C \land D$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
-#### Consulta 4: Esteiras mais sobrecarregadas — esteiras com maior tempo total de uso no evento
+#### Consulta 4: *Encerramento de turno* — finalizar apenas turnos em andamento
 
-&nbsp;&nbsp;&nbsp;&nbsp;Identifica quais esteiras acumularam maior tempo de uso considerando os turnos encerrados a elas vinculados. Como cada esteira referencia diretamente um turno (`treadmills.shift_id`), a consulta recupera o turno associado a cada esteira, filtra apenas os turnos com status `completed` e duração registrada, e ordena pelo tempo total decrescente. Útil para auditoria operacional pós-evento: permite verificar se alguma esteira foi desproporcionalmente mais utilizada, o que pode indicar desequilíbrio na distribuição entre equipes ou necessidade de manutenção preventiva no equipamento mais exigido.
+&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar um turno, o sistema atualiza o registro para `completed`, gravando o horário de fim (`end_at`), a quilometragem final, e calculando automaticamente a distância, a duração total e a velocidade média. A atualização só é aplicada quando o `id` informado corresponde a um turno **e** esse turno ainda está `in_progress` — o que impede reencerrar um turno já finalizado ou alterar um turno inexistente (nenhuma linha é afetada nesses casos). É uma consulta de escrita do tipo `UPDATE`, em contraste com as anteriores, demonstrando uma combinação distinta de condições.
 
 **Consulta SQL:**
 ```sql
-SELECT
-    treadmill.number                                      AS esteira,
-    shift.id                                              AS turno_id,
-    athlete.name                                          AS atleta,
-    EXTRACT(EPOCH FROM shift.total_time)::INT / 60        AS total_minutos_uso
-FROM treadmills     AS treadmill
-JOIN shifts         AS shift   ON shift.id   = treadmill.shift_id
-JOIN athletes       AS athlete ON athlete.id = shift.athlete_id
-WHERE shift.status      = 'completed'
-  AND shift.total_time IS NOT NULL
-ORDER BY total_minutos_uso DESC;
+UPDATE shifts
+SET status     = 'completed',
+    end_at     = NOW(),
+    km_end     = :km_end,
+    distance   = :km_end - km_start,
+    total_time = NOW() - start_at,
+    speed      = CASE
+                   WHEN EXTRACT(EPOCH FROM (NOW() - start_at)) > 0
+                   THEN ROUND((:km_end - km_start) / (EXTRACT(EPOCH FROM (NOW() - start_at)) / 3600.0))
+                   ELSE 0
+                 END
+WHERE id = :id
+  AND status = 'in_progress'
+RETURNING *;
 ```
 
 <br>
 <div align="center">
-  <sub> Quadro 24 - Lógica Proposicional: 4 </sub><br>
+  <sub> Quadro 29 - Lógica Proposicional: 4 </sub><br>
 
 | | |
 | :--- | :--- |
-| **Proposições lógicas** | **$A$**: O turno vinculado à esteira está encerrado (`shifts.status = 'completed'`)<br><br>**$B$**: A duração do turno foi registrada (`shifts.total_time IS NOT NULL`)<br><br>**$C$**: A esteira é contabilizada no ranking de tempo de uso (`treadmill.number` aparece no resultado ordenado por `total_minutos_uso DESC`) |
-| **Expressão lógica proposicional** | $A \land B \Leftrightarrow C$ |
-| **Interpretação** | Uma esteira só é exibida no ranking quando, simultaneamente: o turno vinculado está encerrado, a duração do turno foi registrada **e** a esteira figura no resultado ordenado — as três condições devem ser verdadeiras ao mesmo tempo |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$A \land B \land C$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+| **Proposições lógicas** | **$A$**: Existe um turno com o identificador informado (`id = :id`)<br><br>**$B$**: O turno está em andamento (`status = 'in_progress'`) |
+| **Expressão lógica proposicional** | $A \land B$ |
+| **Interpretação** | O `UPDATE` só efetiva o encerramento quando ambas as condições são verdadeiras: o `id` corresponde a um turno existente **e** esse turno está em andamento. Turnos já encerrados (`completed`) ou inexistentes não satisfazem a cláusula `WHERE` e, portanto, não são alterados. |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
@@ -3365,17 +3488,20 @@ A documentação completa e navegável dos endpoints está disponível em [`docs
 
 ### Resumo dos fluxos implementados
 
-| Fluxo | Branch | Endpoints | RFs cobertos |
-|---|---|---|---|
-| **Autenticação** | `feat/auth` | 6 | RF027 |
-| **Eventos** | `code` | 5 | — |
-| **Esteiras** | `code` | 4 | RF004 |
-| **Equipes** | `code` | 5 | RF001 |
-| **Atletas** | `code` | 5 | RF002, RF006 (parcial) |
-| **Auditoria** | A implementar | — | RF007–RF026 |
-| **Inconsistências** | A implementar | — | RF028–RF031 |
+| Fluxo | Endpoints | RFs cobertos (principais) |
+|---|---|---|
+| **Autenticação** | 6 | RF027 |
+| **Eventos** | 5 | RF051 |
+| **Esteiras** | 4 | RF004 |
+| **Equipes** | 5 | RF001, RF005 |
+| **Atletas** | 5 | RF002, RF006, RF023 |
+| **Turnos** | 3 | RF007–RF019, RF025, RF032–RF034, RF044–RF046 |
+| **Histórico** | 1 | RF022, RF041–RF043 |
+| **Alertas** | 1 | RF028–RF030, RF039, RF053 |
+| **Métricas** | 6 | RF020, RF021, RF035–RF038, RF040, RF049, RF052 |
+| **Exportação** | 2 | RF047, RF048 |
 
-**Total atual: 25 endpoints documentados.** Os fluxos de Auditoria e Inconsistências estão reservados na documentação com placeholders explícitos indicando os endpoints previstos e os RFs correspondentes.
+**Total atual: 38 endpoints implementados e documentados**, organizados em dez fluxos. Além dos fluxos de Autenticação, Eventos, Esteiras, Equipes e Atletas, foram implementados nesta sprint os fluxos de Turnos (auditoria operacional de início, checkpoints e encerramento), Histórico, Alertas (detecção de inconsistências), Métricas e Exportação. Os poucos endpoints ainda não implementados — validação pré-evento (RF003), log de auditoria (RF024), sincronização offline (RF026), correção de checkpoint (RF031) e compartilhamento público (RF050) — estão planejados para a sprint 4, com contrato já definido no Quadro 31 da seção 3.9.
 
 Cada endpoint contém: método HTTP, path completo, headers, body request (com campos obrigatórios e validações), shape da resposta de sucesso, exemplos JSON e tabela de status codes possíveis.
 
@@ -3428,63 +3554,82 @@ No contexto do Red Bull 24 Horas, onde inconsistências nos dados podem invalida
 > - **LA** — Lucas Andrade (operador de evento / auditor)
 
 <div align = "center">
-  <sub> Quadro 25 - US01 </sub><br>
+  <sub> Quadro 30 - Matriz de Rastreabilidade (RTM) </sub><br>
 
 | Persona | RF | RN | Endpoint | Tela | Teste |
 |---------|----|----|----------|------|-------|
-| LA | RF001 | RN15, RN28 | `POST /equipes` | Tela de Registro Pré-Evento → Cadastro de Equipe | CT-001: Cadastrar equipe com nome único → sucesso; CT-002: Cadastrar terceira equipe → bloqueio com mensagem de erro; CT-003: Cadastrar equipe com nome duplicado → rejeição |
-| LA | RF002 | RN16 | `POST /corredores` | Tela de Registro Pré-Evento → Cadastro de Atleta | CT-004: Cadastrar corredor vinculado a equipe existente → aparece na listagem da equipe; CT-005: Cadastrar corredor sem equipe selecionada → erro de validação |
-| LA, BG | RF003 | RN17 | `GET /equipes/{id}/validacao` | Tela de Registro Pré-Evento → Cadastro de Equipe (listagem) | CT-006: Tentar iniciar evento com equipe com menos de 16 corredores → bloqueio com mensagem indicando o número faltante; CT-007: Ambas as equipes com 16 corredores → início permitido |
-| LA | RF004 | RN19 | `GET /esteiras` | Tela de Acompanhamento de Esteiras / Tela de Início de Turno | CT-008: Abrir seletor de esteira → exibe todas com status Livre/Ocupada; CT-009: Selecionar esteira com status Ocupada → mensagem "Esteira indisponível" e bloqueio |
-| LA | RF005 | RN20 | `GET /equipes` | Tela de Seleção de Corredor e Registro de Início | CT-010: Selecionar esteira Livre e equipe → lista apenas corredores da equipe selecionada |
-| LA | RF006 | RN21 | `GET /corredores?disponivel=true` | Tela de Seleção de Corredor e Registro de Início | CT-011: Selecionar corredor com turno em aberto → alerta "Corredor já em turno ativo" e bloqueio; CT-012: Selecionar corredor disponível → botão de início habilitado |
-| LA | RF007 | RN01, RN02 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-013: Corredor com turno em aberto → rejeição com mensagem "Corredor com turno em aberto"; CT-014: Corredor sem turno ativo + esteira Livre → turno criado com sucesso |
-| LA | RF008 | RN03 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-015: Esteira Ocupada → rejeição com "Esteira indisponível"; CT-016: Esteira Livre → operação prossegue |
-| LA | RF009 | RN05 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-017: Confirmar início com corredor e esteira válidos → registro persiste corredor e esteira vinculados ao turno; CT-018: Consultar turno após criação → corredor e esteira correspondem aos selecionados |
-| LA | RF010 | RN06, RN32 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-019: Informar quilometragem inicial negativa → erro "Quilometragem deve ser ≥ 0"; CT-020: Informar km inicial válido (≥ 0) → persiste km_inicial no turno |
-| LA | RF011 | RN07 | `POST /turnos` | Tela de Seleção de Corredor e Registro de Início | CT-021: Confirmar início de turno → timestamp_início gerado pelo servidor sem campo editável na interface |
-| LA | RF012 | RN03 | `POST /turnos/{id}/checkpoints` | Modal de Checkpoint Obrigatório | CT-022: Turno em andamento há 5 minutos → modal bloqueante exibido, nenhuma ação possível até preenchimento; CT-023: Modal ativo → qualquer clique fora do modal não fecha nem permite interação com a tela |
-| LA | RF013 | RN04 | `POST /turnos/{id}/checkpoints` | Modal de Checkpoint Obrigatório | CT-024: Informar km menor que último checkpoint → mensagem de erro e modal mantido aberto; CT-025: Informar km válido (≥ último checkpoint) → modal fechado, turno continua |
-| LA | RF014 | RN05 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-026: Acionar "Finalizar turno" com turno ativo → sistema solicita km final e abre fluxo de encerramento; CT-027: Acionar sem turno ativo selecionado → mensagem "Nenhum turno ativo encontrado" |
-| LA | RF015 | RN06, RN32 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-028: Informar km_final menor que último checkpoint → rejeição com mensagem de erro; CT-029: Informar km_final válido → sistema prossegue para geração de timestamp de encerramento |
-| LA | RF016 | RN33 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-030: Confirmar encerramento com km_final válido → timestamp_fim gerado pelo servidor; CT-031: Verificar interface → não há campo editável de hora de encerramento |
-| LA, BG | RF017 | RN07 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-032: Finalizar turno com km_inicial=10 e km_final=15 → distância=5 km persistida; CT-033: km_inicial = km_final → distância=0 persistida |
-| LA, BG | RF018 | RN07, RN33 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-034: Finalizar turno com início 08:00 e fim 08:30 → duração=30 min persistida |
-| LA, BG | RF019 | RN07 | `PATCH /turnos/{id}/finalizar` | Fluxo de Registro de Fim de Turno | CT-035: distância=5 km, duração=30 min → velocidade_média=10,0 km/h; CT-036: duração=0 → velocidade_média=0,0 km/h sem erro de divisão |
-| BG | RF020 | RN09 | `GET /equipes/{id}/quilometragem` | Tela de Acompanhamento de Esteiras (placar) | CT-037: Três turnos finalizados com 5, 7 e 8 km → total da equipe=20 km; CT-038: Nenhum turno finalizado → total=0 km |
-| LA, BG | RF021 | RN11 | `GET /eventos/{id}/dashboard` | Tela de Acompanhamento de Esteiras | CT-039: Turno finalizado no servidor → métricas aparecem no dashboard em até 10 s sem recarregar a página; CT-040: Sem novos dados → valores estáveis sem recarregamento desnecessário |
-| LA, BG | RF022 | RN13 | `GET /eventos/{id}/historico` | Tela de Acompanhamento (aba Histórico) | CT-041: Acessar histórico → registros em ordem decrescente de timestamp; CT-042: Novo registro adicionado → aparece no topo da lista |
-| BG | RF023 | RN23, RN24 | `PATCH /registros/{id}` | Tela de Acompanhamento (edição retroativa) | CT-043: Auditor autenticado edita campo → novo valor persistido; CT-044: Usuário não autenticado tenta editar → redirecionamento para login |
-| BG | RF024 | RN23 | `PATCH /registros/{id}` | Tela de Acompanhamento (log de auditoria) | CT-045: Auditor edita quilometragem de checkpoint → log registra usuário, campo, valor anterior, valor novo e timestamp; CT-046: Admin consulta log → todas as edições do registro em ordem cronológica |
-| LA | RF025 | RN27 | `POST /sync` | Modal de Checkpoint Obrigatório / Tela de Início de Turno | CT-047: Dispositivo offline → checkpoint registrado localmente com indicador visual de modo offline; CT-048: Segundo checkpoint offline → persiste localmente sem erro |
-| LA | RF026 | RN27 | `POST /sync` | Tela de Acompanhamento de Esteiras (indicador de sync) | CT-049: Conexão restabelecida → sincronização automática de todos os registros pendentes; CT-050: Dados sincronizados consultados no servidor → cada registro aparece exatamente uma vez |
-| LA, BG | RF027 | RN31 | `POST /auth/login` | Tela de Login | CT-051: Usuário não autenticado acessa tela de registro → redirecionamento para login; CT-052: Credenciais inválidas → "Credenciais inválidas" e acesso negado |
-| LA | RF028 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-053: Quilometragem incompatível com histórico → alerta em tempo real antes da confirmação; CT-054: Valor compatível → nenhum alerta, dado persistido normalmente |
-| LA | RF029 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-055: Inconsistência detectada → notificação visual destacada exibida; CT-056: Botão de confirmação bloqueado até revisão ou justificativa |
-| LA | RF030 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-057: Inconsistência + som habilitado → sinal sonoro emitido junto à notificação; CT-058: Som desabilitado → nenhum sinal sonoro, apenas notificação visual |
-| LA | RF031 | RN25 | `PATCH /registros/{id}` | Tela de Inconsistência Detectada | CT-059: Auditor corrige valor para dado consistente → confirmação desbloqueada e dado marcado como revisado; CT-060: Auditor mantém valor original com justificativa → persistido com flag "revisado manualmente" e justificativa associada |
-| LA | RF032 | RN04 | `POST /turnos/{id}/checkpoints` | Tela de Detalhes da Corrida em Andamento | CT-061: Auditor aciona registro manual com valor válido → aceito e vinculado ao turno; CT-062: Valor menor que último checkpoint → mensagem de erro e não persistência |
-| LA | RF033 | RN34 | `POST /turnos/{id}/checkpoints` | Tela de Detalhes da Corrida em Andamento | CT-063: Confirmar registro manual com valor válido → timestamp gerado exclusivamente pelo servidor; CT-064: Verificar interface → sem campo editável de horário |
-| LA | RF034 | RN08 | `POST /turnos` | Fluxo de Registro de Fim de Turno → Tela de Início de Turno | CT-065: Novo turno iniciado após encerramento na mesma esteira → concluído em no máximo 3 cliques; CT-066: Dados de equipe e esteira reutilizados → sem necessidade de nova seleção manual |
-| NR, BG | RF035 | RN09 | `GET /eventos/{id}/metricas` | Tela de Desempenho Final | CT-067: Corredor com 3 turnos de 4, 6 e 5 km → distância total=15 km |
-| NR, BG | RF036 | RN09 | `GET /eventos/{id}/metricas` | Tela de Desempenho Final | CT-068: Corredor com 3 turnos de 4, 6 e 5 km → média por turno=5,0 km |
-| BG | RF037 | RN10 | `GET /eventos/{id}/metricas` | Tela de Desempenho Final | CT-069: Evento em andamento há 120 min → ao menos dois snapshots (60 min e 120 min); CT-070: Corredor sem turno até 60 min → snapshot registra 0 km naquele intervalo |
-| LA, BG | RF038 | RN12 | `GET /esteiras/{id}/status` | Tela de Acompanhamento de Esteiras | CT-071: Status de esteira muda de Livre para Ocupada → painel reflete mudança em até 10 s; CT-072: Turno encerrado → status muda automaticamente para Livre |
-| LA | RF039 | RN12 | `GET /esteiras/{id}/status` | Tela de Acompanhamento de Esteiras | CT-073: Esteira Ocupada por 30 min consecutivos → alerta visual de sugestão de alternância; CT-074: Sem esteira adjacente disponível → alerta indica indisponibilidade de alternância |
-| BG | RF040 | RN14 | `GET /eventos/{id}/placar` | Tela de Acompanhamento (Modo TV) | CT-075: Modo TV ativo em 1920×1080 → fonte ≥ 48px e contraste ≥ 4,5:1; CT-076: Navegação apenas por teclado → todas as funcionalidades de visualização acessíveis sem mouse e sem login |
-| LA, BG | RF041 | RN22 | `GET /eventos/{id}/historico?equipe={id}` | Tela de Acompanhamento (aba Histórico) | CT-077: Filtro por Equipe A → apenas registros da Equipe A exibidos; CT-078: Filtro removido → todos os registros exibidos |
-| LA, BG | RF042 | RN22 | `GET /eventos/{id}/historico?esteira={id}` | Tela de Acompanhamento (aba Histórico) | CT-079: Filtro por esteira 2 → apenas registros da esteira 2 exibidos |
-| LA, BG | RF043 | RN22 | `GET /eventos/{id}/historico?corredor={id}` | Tela de Acompanhamento (aba Histórico) | CT-080: Filtro por corredor João → apenas registros do corredor João exibidos |
-| LA | RF044 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-081: km_final < km_inicial no encerramento → inconsistência "Quilometragem final menor que inicial" sinalizada e confirmação bloqueada |
-| LA | RF045 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-082: Intervalo entre checkpoints > 10 min → alerta "Intervalo de checkpoint excedido" gerado para o auditor |
-| LA, BG | RF046 | RN25 | `GET /eventos/{id}/inconsistencias` | Tela de Inconsistência Detectada | CT-083: Mesmo corredor em dois turnos simultâneos → alerta "Corredor com turnos simultâneos detectado" |
-| BG | RF047 | RN26 | `GET /eventos/{id}/exportar` | Tela de Desempenho Final (exportação) | CT-084: Admin aciona download de turnos → arquivo .csv gerado com todas as colunas (corredor, equipe, esteira, km_inicial, km_final, timestamp_início, timestamp_fim, duração, velocidade_média); CT-085: Sem turnos registrados → .csv gerado apenas com cabeçalho |
-| BG | RF048 | RN26 | `GET /eventos/{id}/exportar?tipo=checkpoints` | Tela de Desempenho Final (exportação) | CT-086: Admin aciona download de checkpoints → .csv com colunas corredor, esteira, quilometragem, timestamp; CT-087: Sem checkpoints → .csv apenas com cabeçalho |
-| NR, BG | RF049 | RN09 | `GET /eventos/{id}/metricas` | Tela de Desempenho Final | CT-088: Evento encerrado → perfil exibe distância total, tempo total em pista e velocidade média geral; CT-089: Corredor sem nenhum turno → valores zerados exibidos sem erro |
-| NR | RF050 | RN36 | `GET /corredores/{id}/compartilhar` | Tela de Desempenho Final | CT-090: Acionar "Compartilhar" → URL única e pública gerada; CT-091: Link acessado por usuário não cadastrado → exibe apenas dados de desempenho do corredor sem acesso a outras funcionalidades |
-| BG | RF051 | RN18, RN29, RN37 | `POST /eventos` | Tela de Registro Pré-Evento → Cadastro de Local/Evento | CT-092: Cadastrar local/região antes do início → operação permitida; CT-093: Tentar alterar local após início do evento → operação rejeitada |
-| NR | RF052 | RN36 | `GET /corredores/{id}/historico` | Tela de Desempenho Final | CT-094: Corredor acessa histórico completo após término do evento → todos os turnos e métricas individuais exibidos |
-| LA | RF053 | RN31, RN32 | `GET /esteiras/{id}/status` | Tela de Acompanhamento de Esteiras | CT-095: Esteira sem novo checkpoint por mais de 5 min → alerta visual de inatividade exibido para o auditor |
+| LA | RF001 | RN15, RN28 | `POST /teams` | Tela de Registro Pré-Evento → Cadastro de Equipe | CT-001: Cadastrar equipe com nome único → sucesso; CT-002: Cadastrar terceira equipe → bloqueio com mensagem de erro; CT-003: Cadastrar equipe com nome duplicado → rejeição |
+| LA | RF002 | RN16 | `POST /teams/:teamId/athletes` | Tela de Registro Pré-Evento → Cadastro de Atleta | CT-004: Cadastrar corredor vinculado a equipe existente → aparece na listagem da equipe; CT-005: Cadastrar corredor sem equipe selecionada → erro de validação |
+| LA, BG | RF003 | RN17, RN28 | `GET /teams/:teamId/validation` | Tela de Registro Pré-Evento → Cadastro de Equipe (listagem) | CT-006: Tentar iniciar evento com equipe com menos de 16 corredores → bloqueio com mensagem indicando o número faltante; CT-007: Ambas as equipes com 16 corredores → início permitido |
+| LA | RF004 | RN19 | `GET /events/treadmills` | Tela de Acompanhamento de Esteiras / Tela de Início de Turno | CT-008: Abrir seletor de esteira → exibe todas com status Livre/Ocupada; CT-009: Selecionar esteira com status Ocupada → mensagem "Esteira indisponível" e bloqueio |
+| LA | RF005 | RN20 | `GET /teams` | Tela de Seleção de Corredor e Registro de Início | CT-010: Selecionar esteira Livre e equipe → lista apenas corredores da equipe selecionada |
+| LA | RF006 | RN21 | `GET /teams/:teamId/athletes` | Tela de Seleção de Corredor e Registro de Início | CT-011: Selecionar corredor com turno em aberto → alerta "Corredor já em turno ativo" e bloqueio; CT-012: Selecionar corredor disponível → botão de início habilitado |
+| LA | RF007 | RN01, RN35 | `POST /audit/shifts/start` | Tela de Seleção de Corredor e Registro de Início | CT-013: Corredor com turno em aberto → rejeição com mensagem "Corredor com turno em aberto"; CT-014: Corredor sem turno ativo + esteira Livre → turno criado com sucesso |
+| LA | RF008 | RN02 | `POST /audit/shifts/start` | Tela de Seleção de Corredor e Registro de Início | CT-015: Esteira Ocupada → rejeição com "Esteira indisponível"; CT-016: Esteira Livre → operação prossegue |
+| LA | RF009 | — | `POST /audit/shifts/start` | Tela de Seleção de Corredor e Registro de Início | CT-017: Confirmar início com corredor e esteira válidos → registro persiste corredor e esteira vinculados ao turno; CT-018: Consultar turno após criação → corredor e esteira correspondem aos selecionados |
+| LA | RF010 | RN32 | `POST /audit/shifts/start` | Tela de Seleção de Corredor e Registro de Início | CT-019: Informar quilometragem inicial negativa → erro "Quilometragem deve ser ≥ 0"; CT-020: Informar km inicial válido (≥ 0) → persiste km_inicial no turno |
+| LA | RF011 | — | `POST /audit/shifts/start` | Tela de Seleção de Corredor e Registro de Início | CT-021: Confirmar início de turno → timestamp_início gerado pelo servidor sem campo editável na interface |
+| LA | RF012 | RN03, RN34 | `POST /audit/shifts/:id/checkpoints` | Modal de Checkpoint Obrigatório | CT-022: Turno em andamento há 5 minutos → modal bloqueante exibido, nenhuma ação possível até preenchimento; CT-023: Modal ativo → qualquer clique fora do modal não fecha nem permite interação com a tela |
+| LA | RF013 | RN04 | `POST /audit/shifts/:id/checkpoints` | Modal de Checkpoint Obrigatório | CT-024: Informar km menor que último checkpoint → mensagem de erro e modal mantido aberto; CT-025: Informar km válido (≥ último checkpoint) → modal fechado, turno continua |
+| LA | RF014 | RN05, RN35 | `PATCH /audit/shifts/:id/finish` | Fluxo de Registro de Fim de Turno | CT-026: Acionar "Finalizar turno" com turno ativo → sistema solicita km final e abre fluxo de encerramento; CT-027: Acionar sem turno ativo selecionado → mensagem "Nenhum turno ativo encontrado" |
+| LA | RF015 | RN06 | `PATCH /audit/shifts/:id/finish` | Fluxo de Registro de Fim de Turno | CT-028: Informar km_final menor que último checkpoint → rejeição com mensagem de erro; CT-029: Informar km_final válido → sistema prossegue para geração de timestamp de encerramento |
+| LA | RF016 | RN33 | `PATCH /audit/shifts/:id/finish` | Fluxo de Registro de Fim de Turno | CT-030: Confirmar encerramento com km_final válido → timestamp_fim gerado pelo servidor; CT-031: Verificar interface → não há campo editável de hora de encerramento |
+| LA, BG | RF017 | RN07, RN32 | `PATCH /audit/shifts/:id/finish` | Fluxo de Registro de Fim de Turno | CT-032: Finalizar turno com km_inicial=10 e km_final=15 → distância=5 km persistida; CT-033: km_inicial = km_final → distância=0 persistida |
+| LA, BG | RF018 | RN07, RN33 | `PATCH /audit/shifts/:id/finish` | Fluxo de Registro de Fim de Turno | CT-034: Finalizar turno com início 08:00 e fim 08:30 → duração=30 min persistida |
+| LA, BG | RF019 | RN07 | `PATCH /audit/shifts/:id/finish` | Fluxo de Registro de Fim de Turno | CT-035: distância=5 km, duração=30 min → velocidade_média=10,0 km/h; CT-036: duração=0 → velocidade_média=0,0 km/h sem erro de divisão |
+| BG | RF020 | RN09 | `GET /metrics/events/:id/teams` | Tela de Acompanhamento de Esteiras (placar) | CT-037: Três turnos finalizados com 5, 7 e 8 km → total da equipe=20 km; CT-038: Nenhum turno finalizado → total=0 km |
+| LA, BG | RF021 | RN11 | `GET /metrics/events/:id/dashboard` | Tela de Acompanhamento de Esteiras | CT-039: Turno finalizado no servidor → métricas aparecem no dashboard em até 10 s sem recarregar a página; CT-040: Sem novos dados → valores estáveis sem recarregamento desnecessário |
+| LA, BG | RF022 | RN13 | `GET /audit/history` | Tela de Acompanhamento (aba Histórico) | CT-041: Acessar histórico → registros em ordem decrescente de timestamp; CT-042: Novo registro adicionado → aparece no topo da lista |
+| BG | RF023 | RN24 | `PATCH /teams/:teamId/athletes/:id` | Tela de Acompanhamento (edição retroativa) | CT-043: Auditor autenticado edita campo → novo valor persistido; CT-044: Usuário não autenticado tenta editar → redirecionamento para login |
+| BG | RF024 | RN23 | `GET /audit/logs` | Tela de Acompanhamento (log de auditoria) | CT-045: Auditor edita quilometragem de checkpoint → log registra usuário, campo, valor anterior, valor novo e timestamp; CT-046: Admin consulta log → todas as edições do registro em ordem cronológica |
+| LA | RF025 | RN27 | `POST /audit/shifts/:id/checkpoints` | Modal de Checkpoint Obrigatório / Tela de Início de Turno | CT-047: Dispositivo offline → checkpoint registrado localmente com indicador visual de modo offline; CT-048: Segundo checkpoint offline → persiste localmente sem erro |
+| LA | RF026 | RN27 | `POST /audit/sync` | Tela de Acompanhamento de Esteiras (indicador de sync) | CT-049: Conexão restabelecida → sincronização automática de todos os registros pendentes; CT-050: Dados sincronizados consultados no servidor → cada registro aparece exatamente uma vez |
+| LA, BG | RF027 | RN30, RN31, RN38, RN39, RN40, RN41 | `POST /auth/login` | Tela de Login | CT-051: Usuário não autenticado acessa tela de registro → redirecionamento para login; CT-052: Credenciais inválidas → "Credenciais inválidas" e acesso negado |
+| LA | RF028 | RN25 | `GET /audit/alerts` | Tela de Inconsistência Detectada | CT-053: Quilometragem incompatível com histórico → alerta em tempo real antes da confirmação; CT-054: Valor compatível → nenhum alerta, dado persistido normalmente |
+| LA | RF029 | — | `GET /audit/alerts` | Tela de Inconsistência Detectada | CT-055: Inconsistência detectada → notificação visual destacada exibida; CT-056: Botão de confirmação bloqueado até revisão ou justificativa |
+| LA | RF030 | — | `GET /audit/alerts` | Tela de Inconsistência Detectada | CT-057: Inconsistência + som habilitado → sinal sonoro emitido junto à notificação; CT-058: Som desabilitado → nenhum sinal sonoro, apenas notificação visual |
+| LA | RF031 | — | `PATCH /audit/checkpoints/:id` | Tela de Inconsistência Detectada | CT-059: Auditor corrige valor para dado consistente → confirmação desbloqueada e dado marcado como revisado; CT-060: Auditor mantém valor original com justificativa → persistido com flag "revisado manualmente" e justificativa associada |
+| LA | RF032 | RN34 | `POST /audit/shifts/:id/checkpoints` | Tela de Detalhes da Corrida em Andamento | CT-061: Auditor aciona registro manual com valor válido → aceito e vinculado ao turno; CT-062: Valor menor que último checkpoint → mensagem de erro e não persistência |
+| LA | RF033 | — | `POST /audit/shifts/:id/checkpoints` | Tela de Detalhes da Corrida em Andamento | CT-063: Confirmar registro manual com valor válido → timestamp gerado exclusivamente pelo servidor; CT-064: Verificar interface → sem campo editável de horário |
+| LA | RF034 | RN08 | `POST /audit/shifts/start` | Fluxo de Registro de Fim de Turno → Tela de Início de Turno | CT-065: Novo turno iniciado após encerramento na mesma esteira → concluído em no máximo 3 cliques; CT-066: Dados de equipe e esteira reutilizados → sem necessidade de nova seleção manual |
+| NR, BG | RF035 | — | `GET /metrics/events/:id/athletes` | Tela de Desempenho Final | CT-067: Corredor com 3 turnos de 4, 6 e 5 km → distância total=15 km |
+| NR, BG | RF036 | — | `GET /metrics/athletes/:id/shifts` | Tela de Desempenho Final | CT-068: Corredor com 3 turnos de 4, 6 e 5 km → média por turno=5,0 km |
+| BG | RF037 | RN10 | `GET /metrics/athletes/:id/snapshots` | Tela de Desempenho Final | CT-069: Evento em andamento há 120 min → ao menos dois snapshots (60 min e 120 min); CT-070: Corredor sem turno até 60 min → snapshot registra 0 km naquele intervalo |
+| LA, BG | RF038 | RN12 | `GET /metrics/events/:id/dashboard` | Tela de Acompanhamento de Esteiras | CT-071: Status de esteira muda de Livre para Ocupada → painel reflete mudança em até 10 s; CT-072: Turno encerrado → status muda automaticamente para Livre |
+| LA | RF039 | RN12 | `GET /audit/alerts` | Tela de Acompanhamento de Esteiras | CT-073: Esteira Ocupada por 30 min consecutivos → alerta visual de sugestão de alternância; CT-074: Sem esteira adjacente disponível → alerta indica indisponibilidade de alternância |
+| BG | RF040 | RN14 | `GET /metrics/events/:id/dashboard` | Tela de Acompanhamento (Modo TV) | CT-075: Modo TV ativo em 1920×1080 → fonte ≥ 48px e contraste ≥ 4,5:1; CT-076: Navegação apenas por teclado → todas as funcionalidades de visualização acessíveis sem mouse e sem login |
+| LA, BG | RF041 | RN22 | `GET /audit/history?team_id=` | Tela de Acompanhamento (aba Histórico) | CT-077: Filtro por Equipe A → apenas registros da Equipe A exibidos; CT-078: Filtro removido → todos os registros exibidos |
+| LA, BG | RF042 | RN22 | `GET /audit/history?treadmill_id=` | Tela de Acompanhamento (aba Histórico) | CT-079: Filtro por esteira 2 → apenas registros da esteira 2 exibidos |
+| LA, BG | RF043 | RN22 | `GET /audit/history?athlete_id=` | Tela de Acompanhamento (aba Histórico) | CT-080: Filtro por corredor João → apenas registros do corredor João exibidos |
+| LA | RF044 | RN25 | `PATCH /audit/shifts/:id/finish` | Tela de Inconsistência Detectada | CT-081: km_final < km_inicial no encerramento → inconsistência "Quilometragem final menor que inicial" sinalizada e confirmação bloqueada |
+| LA | RF045 | RN25 | `POST /audit/shifts/:id/checkpoints` | Tela de Inconsistência Detectada | CT-082: Intervalo entre checkpoints > 10 min → alerta "Intervalo de checkpoint excedido" gerado para o auditor |
+| LA, BG | RF046 | RN25 | `POST /audit/shifts/start` | Tela de Inconsistência Detectada | CT-083: Mesmo corredor em dois turnos simultâneos → alerta "Corredor com turnos simultâneos detectado" |
+| BG | RF047 | RN26 | `GET /export/events/:id/shifts` | Tela de Desempenho Final (exportação) | CT-084: Admin aciona download de turnos → arquivo .csv gerado com todas as colunas (corredor, equipe, esteira, km_inicial, km_final, timestamp_início, timestamp_fim, duração, velocidade_média); CT-085: Sem turnos registrados → .csv gerado apenas com cabeçalho |
+| BG | RF048 | RN26 | `GET /export/events/:id/checkpoints` | Tela de Desempenho Final (exportação) | CT-086: Admin aciona download de checkpoints → .csv com colunas corredor, esteira, quilometragem, timestamp; CT-087: Sem checkpoints → .csv apenas com cabeçalho |
+| NR, BG | RF049 | — | `GET /metrics/athletes/:id/performance` | Tela de Desempenho Final | CT-088: Evento encerrado → perfil exibe distância total, tempo total em pista e velocidade média geral; CT-089: Corredor sem nenhum turno → valores zerados exibidos sem erro |
+| NR | RF050 | RN36 | `GET /metrics/athletes/:id/share` | Tela de Desempenho Final | CT-090: Acionar "Compartilhar" → URL única e pública gerada; CT-091: Link acessado por usuário não cadastrado → exibe apenas dados de desempenho do corredor sem acesso a outras funcionalidades |
+| BG | RF051 | RN18, RN29, RN37 | `POST /events` | Tela de Registro Pré-Evento → Cadastro de Local/Evento | CT-092: Cadastrar local/região antes do início → operação permitida; CT-093: Tentar alterar local após início do evento → operação rejeitada |
+| NR | RF052 | — | `GET /metrics/athletes/:id/performance` | Tela de Desempenho Final | CT-094: Corredor acessa histórico completo após término do evento → todos os turnos e métricas individuais exibidos |
+| LA | RF053 | — | `GET /audit/alerts` | Tela de Acompanhamento de Esteiras | CT-095: Esteira sem novo checkpoint por mais de 5 min → alerta visual de inatividade exibido para o auditor |
+
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+#### Plano de implementação de endpoints (sprint 4)
+
+A maior parte dos endpoints da RTM já está implementada e operante na WebAPI (ver seção 3.7). Os endpoints listados abaixo estão **planejados para a sprint 4**, completando a cobertura dos RF de validação pré-evento, auditoria retroativa, sincronização offline e compartilhamento público. O contrato (método, path e RN governante) já está definido para que a implementação seja uma evolução incremental, sem alterar os endpoints existentes.
+
+<div align = "center">
+  <sub> Quadro 31 - Endpoints planejados para a sprint 4 </sub><br>
+
+| RF | Endpoint planejado | RN | Descrição e plano de implementação |
+|----|--------------------|----|------------------------------------|
+| RF003 | `GET /teams/:teamId/validation` | RN17, RN28 | Validar se a equipe possui exatamente 16 corredores ativos antes de liberar o início de turnos. **Plano:** novo método no `teamService` que conta atletas ativos por equipe e retorna o status de aptidão (apto/quantidade faltante); rota somente leitura consumida pela tela de cadastro. |
+| RF024 | `GET /audit/logs` | RN23 | Consultar a trilha de auditoria imutável das edições retroativas. **Plano:** expor a tabela `logs` (já existente) via novo `logsRepository`/`logsService` com filtro por `shift_id`, retornando usuário, valor anterior, valor novo e timestamp em ordem cronológica. |
+| RF026 | `POST /audit/sync` | RN27 | Sincronizar em lote os registros capturados offline ao reestabelecer conexão, sem duplicidade. **Plano:** endpoint que recebe um array de checkpoints/turnos e aplica a lógica de *upsert* idempotente já descrita na Consulta SQL 1 (seção 3.6.4), preservando a ordem cronológica. |
+| RF031 | `PATCH /audit/checkpoints/:id` | RN25 | Corrigir o valor de um checkpoint inconsistente, desbloqueando a confirmação após revisão. **Plano:** novo método no `shiftService` que valida o novo valor contra os checkpoints vizinhos (RN24), grava log de auditoria (RN23) e marca o registro como revisado. |
+| RF050 | `GET /metrics/athletes/:id/share` | RN36 | Gerar/retornar o link público e único de desempenho do atleta ao fim do evento. **Plano:** endpoint público (sem autenticação) que expõe apenas as métricas consolidadas do atleta, reutilizando o `metricsService`. |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -3630,7 +3775,7 @@ ORDER BY total_km DESC;
 ```
 
 <div align="center">
-<sub>Quadro X - Lógica Proposicional: Consulta 2</sub>
+<sub>Lógica Proposicional da Consulta 2 (exemplo — detalhamento completo no Quadro 27, seção 3.6.4)</sub>
 
 | | |
 |---|---|
@@ -3852,7 +3997,7 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ⁸ BUSINESS RULES GROUP. **Business Rules Manifesto:** the principles of rule independence. Version 2.0. S. l.: Business Rules Group, 2003. Disponível em: <https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf>. Acesso em: 27 abr. 2026.
 
-³ ESPM. **Runaholic Club: lifestyle e comunidade de wellness para a Geração Z**. Disponível em: <https://www.espm.br/blog/runaholic-club-lifestyle-e-comunidade-de-wellness-para-a-geracao-z/>. Acesso em: 28 abr. 2026.
+¹ ESPM. **Runaholic Club: lifestyle e comunidade de wellness para a Geração Z**. Disponível em: <https://www.espm.br/blog/runaholic-club-lifestyle-e-comunidade-de-wellness-para-a-geracao-z/>. Acesso em: 28 abr. 2026.
 
 ¹⁰ FIELDING, Roy Thomas. **Architectural Styles and the Design of Network-based Software Architectures**. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: <https://ics.uci.edu/~fielding/pubs/dissertation/top.htm>. Acesso em: 27 abr. 2026.
 
@@ -3879,7 +4024,7 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ⁷ PROJECT MANAGEMENT INSTITUTE. **Um guia do conhecimento em gerenciamento de projetos (Guia PMBOK®)**. 7. ed. Newtown Square: PMI, 2021.
 
-¹² TIMES BRASIL. **Red Bull e marcas para a Geração Z**. Disponível em: <https://timesbrasil.com.br/empresas-e-negocios/red-bull-marcas-geracao-z/>. Acesso em: 28 abr. 2026.
+² TIMES BRASIL. **Red Bull e marcas para a Geração Z**. Disponível em: <https://timesbrasil.com.br/empresas-e-negocios/red-bull-marcas-geracao-z/>. Acesso em: 28 abr. 2026.
 
 # <a name="c9"></a>Anexos
 
