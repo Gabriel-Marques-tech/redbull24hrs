@@ -14,7 +14,14 @@ jest.mock("../repositories/shiftRepository", () => ({
 		lastCheckpointTimestamp: jest.fn(),
 		addCheckpoint: jest.fn(),
 		finish: jest.fn(),
+		findCheckpointById: jest.fn(),
+		findNeighborCheckpoints: jest.fn(),
+		correctCheckpoint: jest.fn(),
 	},
+}));
+
+jest.mock("../utils/jwt", () => ({
+	verifyAccessToken: jest.fn(() => ({ sub: 3, email: "auditor@test.com", role: "auditor", name: "Auditor" })),
 }));
 
 import { shiftRepository } from "../repositories/shiftRepository";
@@ -220,5 +227,107 @@ describe("PATCH /audit/shifts/:id/finish", () => {
 		(shiftRepository.lastCheckpointKm as jest.Mock).mockResolvedValue(160);
 		const res = await request(app).patch("/audit/shifts/10/finish").send({ km_end: 150 });
 		expect(res.status).toBe(400);
+	});
+});
+
+// ─── PATCH /audit/checkpoints/:id (RF031) ─────────────────────────────────────
+
+const existingCheckpoint = { id: 5, shift_id: 10, distance: 130, type: "voluntary", reviewed: false };
+const authHeader = { Authorization: "Bearer valid.token.here" };
+
+describe("PATCH /audit/checkpoints/:id – RF031 correção retroativa", () => {
+	it("200 – corrige checkpoint com valor válido entre vizinhos", async () => {
+		(shiftRepository.findCheckpointById as jest.Mock).mockResolvedValue(existingCheckpoint);
+		(shiftRepository.findById as jest.Mock).mockResolvedValue(openShift);
+		(shiftRepository.findNeighborCheckpoints as jest.Mock).mockResolvedValue({ prev: 110, next: 150 });
+		(shiftRepository.correctCheckpoint as jest.Mock).mockResolvedValue({ ...existingCheckpoint, distance: 125, reviewed: true });
+
+		const res = await request(app)
+			.patch("/audit/checkpoints/5")
+			.set(authHeader)
+			.send({ distance: 125 });
+
+		expect(res.status).toBe(200);
+		expect(res.body).toMatchObject({ distance: 125, reviewed: true });
+	});
+
+	it("200 – corrige com justificativa quando mantém valor original diferente", async () => {
+		(shiftRepository.findCheckpointById as jest.Mock).mockResolvedValue(existingCheckpoint);
+		(shiftRepository.findById as jest.Mock).mockResolvedValue(openShift);
+		(shiftRepository.findNeighborCheckpoints as jest.Mock).mockResolvedValue({ prev: 110, next: 150 });
+		(shiftRepository.correctCheckpoint as jest.Mock).mockResolvedValue({ ...existingCheckpoint, reviewed: true, justification: "erro de digitação" });
+
+		const res = await request(app)
+			.patch("/audit/checkpoints/5")
+			.set(authHeader)
+			.send({ distance: 130, justification: "erro de digitação" });
+
+		expect(res.status).toBe(200);
+		expect(res.body.justification).toBe("erro de digitação");
+	});
+
+	it("400 – distance ausente no body", async () => {
+		const res = await request(app)
+			.patch("/audit/checkpoints/5")
+			.set(authHeader)
+			.send({});
+		expect(res.status).toBe(400);
+	});
+
+	it("401 – sem token de autenticação", async () => {
+		const res = await request(app)
+			.patch("/audit/checkpoints/5")
+			.send({ distance: 125 });
+		expect(res.status).toBe(401);
+	});
+
+	it("404 – checkpoint não encontrado", async () => {
+		(shiftRepository.findCheckpointById as jest.Mock).mockResolvedValue(null);
+		const res = await request(app)
+			.patch("/audit/checkpoints/999")
+			.set(authHeader)
+			.send({ distance: 125 });
+		expect(res.status).toBe(404);
+	});
+
+	it("422 – novo valor menor que checkpoint anterior", async () => {
+		(shiftRepository.findCheckpointById as jest.Mock).mockResolvedValue(existingCheckpoint);
+		(shiftRepository.findById as jest.Mock).mockResolvedValue(openShift);
+		(shiftRepository.findNeighborCheckpoints as jest.Mock).mockResolvedValue({ prev: 120, next: 150 });
+
+		const res = await request(app)
+			.patch("/audit/checkpoints/5")
+			.set(authHeader)
+			.send({ distance: 115 });
+
+		expect(res.status).toBe(422);
+		expect(res.body.error).toMatch(/anterior/i);
+	});
+
+	it("422 – novo valor maior que checkpoint posterior", async () => {
+		(shiftRepository.findCheckpointById as jest.Mock).mockResolvedValue(existingCheckpoint);
+		(shiftRepository.findById as jest.Mock).mockResolvedValue(openShift);
+		(shiftRepository.findNeighborCheckpoints as jest.Mock).mockResolvedValue({ prev: 110, next: 140 });
+
+		const res = await request(app)
+			.patch("/audit/checkpoints/5")
+			.set(authHeader)
+			.send({ distance: 145 });
+
+		expect(res.status).toBe(422);
+		expect(res.body.error).toMatch(/posterior/i);
+	});
+
+	it("422 – valor negativo", async () => {
+		(shiftRepository.findCheckpointById as jest.Mock).mockResolvedValue(existingCheckpoint);
+		(shiftRepository.findById as jest.Mock).mockResolvedValue(openShift);
+		(shiftRepository.findNeighborCheckpoints as jest.Mock).mockResolvedValue({ prev: null, next: null });
+
+		const res = await request(app)
+			.patch("/audit/checkpoints/5")
+			.set(authHeader)
+			.send({ distance: -5 });
+
+		expect(res.status).toBe(422);
 	});
 });
