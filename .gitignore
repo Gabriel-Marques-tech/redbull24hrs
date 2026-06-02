@@ -1,3 +1,11 @@
+# Claude Code / config local (não commitar)
+CLAUDE.md
+.claude/
+.gitmessage
+.mcp.json
+graphify-out/
+.rtk/
+
 #Arquivos de documentação
 documentos/outros/regras_de_negocio.md
 documentos/outros/requisitos_funcionais.md
