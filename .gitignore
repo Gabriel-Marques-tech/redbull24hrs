@@ -2,6 +2,9 @@
 CLAUDE.md
 .claude/
 .gitmessage
+.mcp.json
+graphify-out/
+.rtk/
 
 #Arquivos de documentação
 documentos/outros/regras_de_negocio.md
