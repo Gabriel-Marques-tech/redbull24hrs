@@ -1,5 +1,6 @@
 %%{init: {
     "theme": "base",
+    "background": "#ffffff",
     "themeVariables": {
         "primaryColor": "#0F0069",
         "primaryTextColor": "#FFFFFF",
@@ -27,7 +28,8 @@
         "labelTextColor": "#0F0069",
         "loopTextColor": "#0F0069",
         "fontFamily": "Arial, sans-serif",
-        "fontSize": "14px"
+        "fontSize": "14px",
+        "background": "#FFFFFF"
     }
 }}%%
 
@@ -37,115 +39,159 @@ sequenceDiagram
     participant TeamController
     participant TeamService
     participant TeamRepository
+    participant MetricsController
+    participant MetricsService
+    participant MetricsRepository
     participant Database
 
-    Note over User, Database: Team Registration with 16 Athletes
+    Note over User, Database: Cadastro de Equipe
 
-    User->>TeamController: registerTeam(name, athletes[16])
+    User->>TeamController: POST /teams { event_id, name }
     activate TeamController
 
-    TeamController->>TeamService: registerTeam(name, athletes[16])
+    TeamController->>TeamService: registerTeam(event_id, name)
     activate TeamService
 
-    TeamService->>TeamRepository: countEventTeams()
+    TeamService->>TeamRepository: findById(event_id)
     activate TeamRepository
 
-    TeamRepository-->>TeamService: total (e.g. 1)
-    deactivate TeamRepository
-
-    TeamService->>TeamRepository: saveTeam(name)
-    activate TeamRepository
-
-    TeamRepository->>Database: INSERT team
+    TeamRepository->>Database: SELECT event WHERE id
     activate Database
 
-    Database-->>TeamRepository: teamId
+    Database-->>TeamRepository: event
     deactivate Database
 
-    TeamRepository-->>TeamService: teamId
+    TeamRepository-->>TeamService: event
     deactivate TeamRepository
 
-    loop For each of the 16 athletes
-        TeamService->>TeamRepository: saveAthlete(data, teamId)
-        activate TeamRepository
+    TeamService->>TeamRepository: create(name, event_id)
+    activate TeamRepository
 
-        TeamRepository->>Database: INSERT athlete
-        activate Database
+    TeamRepository->>Database: INSERT team (name, event_id)
+    activate Database
 
-        Database-->>TeamRepository: success
-        deactivate Database
+    Database-->>TeamRepository: team { id, name, event_id }
+    deactivate Database
 
-        TeamRepository-->>TeamService: ok
-        deactivate TeamRepository
-    end
+    TeamRepository-->>TeamService: team
+    deactivate TeamRepository
 
-    TeamService-->>TeamController: complete team created
+    TeamService-->>TeamController: team
     deactivate TeamService
 
-    TeamController-->>User: Team successfully registered with 16 athletes!
+    TeamController-->>User: 201 { id, name, event_id }
     deactivate TeamController
 
-    alt total >= 2
-        Note over TeamService: [Alternative] Limit of 2 teams reached
-        TeamService-->>TeamController: error: team limit reached
-        TeamController-->>User: It is not possible to register more teams
+    Note over User, Database: Cadastro de Atleta (chamada independente por atleta)
 
-    else athletes != 16
-        Note over TeamService: [Alternative] Invalid number of athletes
-        TeamService-->>TeamController: error: exactly 16 athletes required
-        TeamController-->>User: The team must have exactly 16 athletes
-    end
-
-    Note over User, Database: Team Display
-
-    User->>TeamController: getTeam(teamId)
+    User->>TeamController: POST /teams/{teamId}/athletes { name, gender, cpf? }
     activate TeamController
 
-    TeamController->>TeamService: getTeam(teamId)
+    TeamController->>TeamService: registerAthlete(team_id, name, gender, cpf)
     activate TeamService
 
-    TeamService->>TeamRepository: findTeamWithAthletes(teamId)
+    TeamService->>TeamRepository: findById(team_id)
     activate TeamRepository
 
-    TeamRepository->>Database: SELECT + JOIN athletes
+    TeamRepository->>Database: SELECT team WHERE id
     activate Database
 
-    Database-->>TeamRepository: team + athletes
+    Database-->>TeamRepository: team
     deactivate Database
 
-    TeamRepository-->>TeamService: complete data
+    TeamRepository-->>TeamService: team
     deactivate TeamRepository
 
-    TeamService-->>TeamController: TeamDTO
+    TeamService->>TeamRepository: create(name, gender, cpf, team_id)
+    activate TeamRepository
+
+    TeamRepository->>Database: INSERT athlete
+    activate Database
+
+    Database-->>TeamRepository: athlete { id, name, gender, team_id }
+    deactivate Database
+
+    TeamRepository-->>TeamService: athlete
+    deactivate TeamRepository
+
+    TeamService-->>TeamController: athlete
     deactivate TeamService
 
-    TeamController-->>User: Displays team and athletes
+    TeamController-->>User: 201 { id, name, gender, team_id }
     deactivate TeamController
 
-    Note over User, Database: Team KM Metrics
+    Note over User, Database: Consulta de Equipe com Atletas
 
-    User->>TeamController: getMetrics(teamId)
+    User->>TeamController: GET /teams/{id}
     activate TeamController
 
-    TeamController->>TeamService: calculateMetrics(teamId)
+    TeamController->>TeamService: getTeam(id)
     activate TeamService
 
-    TeamService->>TeamRepository: findAthleteKm(teamId)
+    TeamService->>TeamRepository: findById(id)
     activate TeamRepository
 
-    TeamRepository->>Database: SELECT SUM, AVG km
+    TeamRepository->>Database: SELECT team WHERE id
     activate Database
 
-    Database-->>TeamRepository: raw data
+    Database-->>TeamRepository: team
     deactivate Database
 
-    TeamRepository-->>TeamService: km per athlete
+    TeamRepository-->>TeamService: team
     deactivate TeamRepository
 
-    Note right of TeamService: calculates total, average, and top athlete
-
-    TeamService-->>TeamController: MetricsDTO
+    TeamService-->>TeamController: team
     deactivate TeamService
 
-    TeamController-->>User: Total KM, average, top athlete
+    TeamController-->>User: 200 { id, name, event_id, ... }
     deactivate TeamController
+
+    User->>TeamController: GET /teams/{teamId}/athletes
+    activate TeamController
+
+    TeamController->>TeamService: listAthletes(team_id)
+    activate TeamService
+
+    TeamService->>TeamRepository: findByTeamId(team_id)
+    activate TeamRepository
+
+    TeamRepository->>Database: SELECT athletes WHERE team_id
+    activate Database
+
+    Database-->>TeamRepository: athletes[]
+    deactivate Database
+
+    TeamRepository-->>TeamService: athletes[]
+    deactivate TeamRepository
+
+    TeamService-->>TeamController: athletes[]
+    deactivate TeamService
+
+    TeamController-->>User: 200 athletes[]
+    deactivate TeamController
+
+    Note over User, Database: KM acumulado por equipe
+
+    User->>MetricsController: GET /metrics/events/{eventId}/teams
+    activate MetricsController
+
+    MetricsController->>MetricsService: getTeamKm(event_id)
+    activate MetricsService
+
+    MetricsService->>MetricsRepository: teamKmByEvent(event_id)
+    activate MetricsRepository
+
+    MetricsRepository->>Database: SELECT SUM(distance) by Team (completed Shifts)
+    activate Database
+
+    Database-->>MetricsRepository: [ { id, name, total_km } ]
+    deactivate Database
+
+    MetricsRepository-->>MetricsService: [ { id, name, total_km } ]
+    deactivate MetricsRepository
+
+    MetricsService-->>MetricsController: [ { id, name, total_km } ]
+    deactivate MetricsService
+
+    MetricsController-->>User: 200 [ { id, name, total_km } ]
+    deactivate MetricsController
