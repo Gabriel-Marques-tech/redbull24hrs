@@ -3986,8 +3986,17 @@ _Explique o modelo de precificação adotado e justifique com base nas análises
 _c) Praça (Distribuição) (até 200 palavras)_
 _Apresente os canais digitais utilizados para distribuir e entregar a aplicação ao público._
 
-_d) Promoção (até 200 palavras)_
-_Descreva as estratégias digitais planejadas, como SEO, redes sociais, marketing de conteúdo e campanhas pagas._
+### 6.6.4 Promoção
+
+A estratégia de promoção da RedRun deve ser compreendida como promoção da solução, e não como divulgação do Red Bull 24 Horas Brasil. A comunicação pública do evento, incluindo campanhas, redes sociais, mídia paga, influenciadores, conteúdo promocional e aquisição de participantes, permanece sob responsabilidade da Red Bull e de sua equipe de Field Marketing. No contexto deste projeto, a promoção da RedRun está relacionada à apresentação, adoção e validação da aplicação junto aos usuários e stakeholders envolvidos na operação.
+
+Por se tratar de uma aplicação desenvolvida exclusivamente para uso operacional, canais tradicionais como SEO, campanhas pagas e redes sociais abertas não são prioritários. Esses canais seriam adequados para produtos digitais vendidos ao público ou para divulgação do evento, mas não para uma ferramenta interna de auditoria e controle. Para a RedRun, os canais promocionais mais relevantes são demonstrações funcionais, treinamentos operacionais, materiais de apoio, validações com usuários e apresentações de resultado para o parceiro.
+
+A principal estratégia de promoção da solução é a demonstração funcional. Antes do evento, a RedRun deve ser apresentada em simulações práticas do fluxo operacional, demonstrando como substitui a prancheta física, registra turnos, consolida métricas, identifica inconsistências e permite consulta posterior dos dados. No contexto do PBL do Inteli, essa demonstração também se concretiza no pitch final da Sprint 5, em que a equipe apresenta a solução desenvolvida, seus resultados, decisões técnicas e potencial de uso para o parceiro. Além disso, o WAD funciona como material de apoio à promoção e transferência da solução, pois documenta desde a arquitetura de backend e API até as telas, funcionalidades, regras de negócio e orientações de uso. Essa combinação entre demonstração prática e documentação técnica permite que auditores, coordenadores e responsáveis pela operação compreendam o valor da aplicação a partir do funcionamento real, e não apenas por uma descrição conceitual.
+
+Outro eixo relevante é o treinamento dos usuários. A interface da RedRun foi pensada para ser intuitiva, reduzir dúvidas durante a operação e facilitar o uso em um ambiente de alta pressão, no qual os registros precisam ser feitos com rapidez e precisão. Ainda assim, auditores e coordenadores devem compreender como utilizar os fluxos principais e por que a padronização dos registros, checkpoints e validação das informações melhora a confiabilidade da apuração. Guias rápidos, sessões de onboarding e testes simulados funcionam como instrumentos de promoção interna, pois reduzem resistência à adoção e aumentam a segurança dos usuários durante a operação.
+
+Após o uso, a promoção da RedRun deve se apoiar na comprovação de valor. Dashboards, histórico de registros, dados exportados e evidências de redução de retrabalho podem demonstrar para o parceiro o impacto da solução na confiabilidade operacional. Caso a aplicação seja validada com sucesso em uma edição, como uma etapa em São Paulo, os resultados obtidos podem sustentar sua expansão para outras cidades brasileiras e, futuramente, para edições internacionais do Red Bull 24 Horas. Assim, a promoção da RedRun está centrada em adoção interna, relacionamento com o parceiro e demonstração objetiva de valor, sem se confundir com o marketing público do evento.
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
