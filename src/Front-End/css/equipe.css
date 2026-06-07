@@ -8,13 +8,6 @@ main{
     height: calc(100vh - 145px);
 }
 
-/* ---------------- ETAPA ATIVA ---------------- */
-
-.etapa.ativa span{
-    background-color: var(--vermelho);
-    color: var(--branco);
-}
-
 /* ---------------- CONTEUDO ---------------- */
 
 .conteudo{
