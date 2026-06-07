@@ -6,13 +6,6 @@ main{
     margin-top: 50px;
 }
 
-/* ---------------- ETAPA ATIVA ---------------- */
-
-.etapa.ativa span{
-    background-color: var(--vermelho);
-    color: var(--branco);
-}
-
 /* ---------------- CONTEUDO ---------------- */
 
 .conteudo{
