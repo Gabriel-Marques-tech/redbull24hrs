@@ -1,8 +1,18 @@
+# Claude Code / config local (não commitar)
+CLAUDE.md
+.claude/
+.gitmessage
+.mcp.json
+graphify-out/
+.rtk/
+
 #Arquivos de documentação
 documentos/outros/regras_de_negocio.md
 documentos/outros/requisitos_funcionais.md
 documentos/outros/requisitos_nao_funcionais.md
 documentos/outros/user_stories.md
+documentos/outros/baremas.md
+documentos/outros/plano_de_correcoes.md
 # Logs
 logs
 *.log
@@ -107,3 +117,14 @@ dist
 
 # TernJS port file
 .tern-port
+
+.prettierrc
+
+# Added by code-review-graph
+.code-review-graph/
+
+# Graphify
+graphify-out/
+
+# AI tools (configs locais de assistentes de IA — não commitar)
+.mcp.json
