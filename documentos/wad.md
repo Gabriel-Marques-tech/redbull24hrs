@@ -4011,8 +4011,17 @@ O principal benefício da RedRun é reduzir a fragilidade da apuração manual. 
 
 Seu diferencial está na aderência ao contexto específico do Red Bull 24 Horas Brasil. A aplicação não foi pensada como uma ferramenta genérica de eventos, mas como uma solução direcionada ao problema operacional do evento: registrar desempenho contínuo, validar turnos, acompanhar métricas e auditar dados durante uma competição de 24 horas. A RedRun se diferencia justamente por atuar nesse ponto crítico, oferecendo uma solução simples para o auditor em campo, mas robusta para a organização que precisa de precisão, rastreabilidade e segurança na consolidação dos dados.
 
-_b) Preço (até 200 palavras)_
-_Explique o modelo de precificação adotado e justifique com base nas análises anteriores._
+### 6.2 Preço
+
+Como a RedRun foi desenvolvida exclusivamente para o Red Bull 24 Horas Brasil, o modelo de precificação mais adequado é o de desenvolvimento sob encomenda, com entrega da aplicação web e da API ao cliente ao final do projeto. Nesse formato, o valor não está associado a uma assinatura mensal ou a um licenciamento recorrente, mas à construção de uma solução personalizada para resolver uma necessidade operacional específica do evento: substituir o processo manual de registro por pranchetas por um sistema digital, rastreável e auditável.
+
+Como referência de mercado, projetos de software sob medida no Brasil podem variar de aproximadamente **R\$ 40.000** em soluções simples a mais de **R\$ 500.000** em sistemas de maior complexidade empresarial [²⁶](#8-referências). No caso da RedRun, não há definição pública de valor comercial específico, pois o projeto é desenvolvido no contexto de parceria institucional. Ainda assim, seu escopo técnico indica que a precificação deveria considerar fatores como aplicação web, API, autenticação, dashboard, registros operacionais, histórico, exportação, sincronização de dados, testes, documentação e implantação.
+
+A justificativa para esse modelo está no grau de personalização da solução. A RedRun supera o escopo de uma aplicação institucional simples, ao exigir backend estruturado, modelagem de dados, controle de usuários, regras de negócio, persistência, visualização de métricas e mecanismos de rastreabilidade. Ao mesmo tempo, não possui a complexidade de um sistema enterprise de grande escala, com múltiplas integrações externas, módulos financeiros ou operação contínua para milhares de usuários.
+
+O modelo de preço deve contemplar as etapas de levantamento de requisitos, prototipação, desenvolvimento, testes, implantação e documentação da solução. Após a entrega, a aplicação passa a ser de responsabilidade do cliente, incluindo hospedagem, operação, suporte técnico e eventuais manutenções futuras. Caso sejam solicitadas melhorias, adaptações para novas edições ou correções evolutivas após a entrega, essas demandas podem ser tratadas como novos contratos ou pacotes adicionais de serviço.
+
+Esse modelo é mais adequado ao contexto da RedRun porque o projeto não busca vender uma plataforma aberta ao mercado, mas entregar uma solução específica e funcional para uma operação já definida. Assim, o preço é justificado pelo desenvolvimento personalizado, pela transferência da aplicação ao cliente e pelo valor operacional gerado na redução de erros manuais, aumento da confiabilidade dos registros e melhoria da auditoria dos dados do evento.
 
 _c) Praça (Distribuição) (até 200 palavras)_
 _Apresente os canais digitais utilizados para distribuir e entregar a aplicação ao público._
@@ -4076,11 +4085,13 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ²¹ BRASIL. **Lei Geral de Proteção de Dados Pessoais (LGPD)**. Gov.br, 2026. Disponível em: <https://www.gov.br/pt-br/lgpd/lei-geral-de-protecao-de-dados-lgpd>. Acesso em: 1 jun. 2026.
 
+²⁶ AEGIS AI. **Quanto custa desenvolver software sob medida em 2026? Preços reais + guia**. Aegis AI, 2026. Disponível em: <https://www.aegisai.com.br/blog/preco-desenvolvimento-software-sob-medida-2026>. Acesso em: 6 jun. 2026.
+
 ²² ABEOC BRASIL; SEBRAE; FIEC. **III Dimensionamento Econômico do Setor de Eventos no Brasil 2024/2025**. 2026. Disponível em: <https://abeoc.org.br/wp-content/uploads/2026/05/III-Dimensionamento-setor-eventos-digital.pdf>. Acesso em: 6 jun. 2026.
 
 ²³ GLOBAL MARKET INSIGHTS. **Event Management Software Market Share, Size and Forecast 2024-2032**. Global Market Insights, 2024. Disponível em: <https://www.gminsights.com/industry-analysis/event-management-software-market>. Acesso em: 6 jun. 2026.
 
-²⁴ GRAND VIEW RESEARCH. **Latin America Event Management Software Market Size & Outlook, 2030**. Grand View Research, 2024. Disponível em: <https://www.grandviewresearch.com/horizon/outlook/event-management-software-market/latin-america>. Acesso em: 6 jun. 2026.
+# <a name="c9"></a>Anexos
 
 ---
 
