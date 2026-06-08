@@ -1,0 +1,102 @@
+/* ---------------- MAIN ---------------- */
+
+main {
+    display: flex;
+    gap: 80px;
+    margin-top: 50px;
+}
+
+/* ---------------- ETAPA ATIVA ---------------- */
+
+.etapa.ativa span {
+    background-color: var(--vermelho);
+    color: var(--branco);
+}
+
+/* ---------------- CONTEÚDO ---------------- */
+
+.conteudo {
+    width: 700px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.conteudo h2 {
+    font-size: 35px;
+    margin-bottom: 40px;
+}
+
+/* ---------------- RESUMO ---------------- */
+
+.card-resumo {
+    width: 600px;
+    background-color: var(--vermelho);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.linha-resumo {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 34px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    color: var(--branco);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.linha-resumo:last-child {
+    border-bottom: none;
+}
+
+.icone {
+    width: 28px;
+    display: flex;
+    justify-content: center;
+}
+
+.icone img {
+    width: 25px;
+}
+
+/* ---------------- BOTÕES ---------------- */
+
+.botoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 60px;
+}
+
+.botoes button {
+    width: 180px;
+    height: 60px;
+    border-radius: 6px;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.btn-voltar {
+    background-color: var(--branco);
+    border: 1px solid black;
+    color: #000000;
+}
+
+.btn-iniciar {
+    background-color: var(--vermelho);
+    border: none;
+    color: var(--branco);
+    font-weight: 700;
+}
+
+.btn-voltar:hover {
+    border: 2px solid var(--vermelho);
+    color: var(--vermelho);
+}
+
+.btn-iniciar:hover {
+    background-color: var(--vermelho);
+}
