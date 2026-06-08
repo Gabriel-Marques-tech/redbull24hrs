@@ -3884,7 +3884,122 @@ _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com 
 ## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
 
 ---
+## 5.1.1 Estratégia de Testes
 
+A estratégia de testes automatizados da WebAPI foi organizada considerando a separação por camadas da aplicação e o vínculo entre Requisitos Funcionais (RF), Regras de Negócio (RN), endpoints e casos de teste (CT).
+
+A camada de **Service** foi tratada como foco dos testes unitários white-box, pois concentra regras de negócio, validações e decisões internas do sistema. Já a camada de **Controller/Endpoint** foi validada por testes de integração black-box, utilizando Jest e Supertest para simular requisições HTTP e verificar as respostas da API.
+
+A camada **Repository** é considerada complementar e deve ser testada diretamente apenas quando houver lógica própria de consulta, filtro, ordenação ou persistência que não esteja coberta pelos testes de Service ou integração.
+
+Os testes seguem o padrão **AAA**:
+
+| Etapa   | Aplicação no projeto                                                                   |
+| ------- | -------------------------------------------------------------------------------------- |
+| Arrange | Preparação dos dados, mocks, payloads e estado inicial do teste                        |
+| Act     | Execução da função de Service ou chamada HTTP ao endpoint                              |
+| Assert  | Validação do resultado esperado, status HTTP, retorno da API ou chamada ao repositório |
+
+A suíte também busca garantir determinismo, evitando dependência de ordem de execução, rede externa, dados residuais, relógio do sistema ou banco persistente não controlado. Para isso, são utilizados mocks, limpeza de estado entre testes e dados específicos para cada cenário.
+
+---
+
+## 5.1.2 Testes Unitários de Service (White-Box)
+
+Os testes unitários de Service validam diretamente as regras internas do sistema. A prioridade foi dada às regras de autenticação, cadastro, início de turno, registro de checkpoint e finalização de turno, pois esses fluxos concentram as principais validações operacionais da aplicação.
+
+A cobertura mínima esperada para a camada Service é de **80%**, evidenciada pelo relatório gerado com:
+
+```bash
+npm test -- --coverage
+```
+
+### Casos prioritários de Service
+
+| CT   | RN coberta          | RF associado            | Camada  | Objetivo |
+| ---- | ------------------- | ----------------------- | ------- | -------- |
+| CT01 | RN01                | RF007                   | Service | Bloquear início de turno se o corredor já possuir turno em andamento                 |
+| CT02 | RN02/RN19           | RF008/RF004             | Service | Bloquear início de turno em esteira ocupada              |
+| CT03 | RN04/RN34           | RF013/RF032             | Service | Validar checkpoint com quilometragem correta e tipo permitido                 |
+| CT04 | RN06/RN07/RN32/RN33 | RF015/RF017/RF018/RF019 | Service | Validar finalização do turno e cálculo de distância, duração e velocidade média       |
+| CT05 | RN38/RN39/RN41      | RF027                   | Service | Validar autenticação segura, senha com hash, JWT e bloqueio de auditor inativo      |
+
+### CT01 – Bloqueio de corredor com turno em andamento
+
+**RN coberta:** RN01
+**RF associado:** RF007
+
+**Arrange:** prepara um corredor que já possui turno com status `in_progress`.
+
+**Act:** executa a tentativa de iniciar um novo turno para o mesmo corredor.
+
+**Assert:** o sistema deve rejeitar a operação e não persistir novo turno.
+
+**Determinismo:** o teste usa dados controlados e não depende da ordem de execução.
+
+**Caminho de falha:** corredor já em execução não pode iniciar outro turno.
+
+### CT02 – Bloqueio de esteira ocupada
+
+**RNs cobertas:** RN02 e RN19
+**RFs associados:** RF008 e RF004
+
+**Arrange:** prepara uma esteira com status ocupado ou vinculada a um turno em andamento.
+
+**Act:** executa a tentativa de iniciar novo turno nessa esteira.
+
+**Assert:** o sistema deve retornar erro e impedir a criação do turno.
+
+**Determinismo:** o status da esteira é definido dentro do próprio teste.
+
+**Caminho de falha:** esteiras ocupadas não podem receber novo turno.
+
+### CT03 – Validação de checkpoint
+
+**RNs cobertas:** RN04 e RN34
+**RFs associados:** RF013 e RF032
+
+**Arrange:** prepara um turno em andamento com quilometragem inicial ou checkpoint anterior.
+
+**Act:** registra um checkpoint voluntário ou obrigatório.
+
+**Assert:** o sistema aceita apenas quilometragem maior ou igual à anterior e tipo `mandatory` ou `voluntary`.
+
+**Determinismo:** o teste utiliza valores fixos de quilometragem e tipo.
+
+**Caminho de falha:** quilometragem menor ou tipo inválido deve ser rejeitado.
+
+### CT04 – Finalização de turno e cálculo automático
+
+**RNs cobertas:** RN06, RN07, RN32 e RN33
+**RFs associados:** RF015, RF017, RF018 e RF019
+
+**Arrange:** prepara um turno iniciado, com checkpoint registrado e valores válidos de km e timestamp.
+
+**Act:** executa a finalização do turno.
+
+**Assert:** o sistema calcula e persiste distância, duração e velocidade média.
+
+**Determinismo:** os valores de entrada são fixos e independentes do relógio real.
+
+**Caminho de falha:** km final menor, velocidade negativa ou timestamp final anterior ao inicial devem ser rejeitados.
+
+### CT05 – Autenticação segura
+
+**RNs cobertas:** RN38, RN39 e RN41
+**RF associado:** RF027
+
+**Arrange:** prepara usuário com senha criptografada, token válido ou auditor inativo.
+
+**Act:** executa login ou validação de autenticação.
+
+**Assert:** senha deve ser verificada por hash, tokens inválidos devem retornar 401 e auditor inativo não deve autenticar.
+
+**Determinismo:** bcrypt, JWT e repositórios podem ser mockados.
+
+**Caminho de falha:** senha incorreta, token inválido ou usuário inativo bloqueiam o acesso.
+
+---
 
 ## 5.2. Testes de usabilidade (sprint 5)
 
