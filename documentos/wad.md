@@ -1935,7 +1935,7 @@ A seguir, cada diagrama é apresentado com uma descrição detalhada de seus flu
 
 #### 3.2.4.1. Diagrama de Sequência: Eventos
 
-A gestão de Eventos representa a visão macro da competição, sendo a configuração inicial e o núcleo organizacional do desafio Red Bull 24 Horas. O Diagrama de Sequência de Eventos descreve como a aplicação web orquestra processos fundamentais, como a criação do evento (incluindo a validação de data, local e esteiras), o cálculo de métricas em tempo real, como quilometragem total por equipe, velocidade média e equipes em pista e a manutenção do placar oficial. Neste contexto, um evento é a unidade central da plataforma que coordena a disputa entre as duas equipes de 16 atletas, gerindo os dados das duas esteiras por equipe para garantir uma apuração precisa que substitua o método manual, permitindo ainda a detecção automática de inconsistências (como gaps de checkpoints) e a exportação de dados consolidados para auditoria pós-evento.
+O Diagrama de Sequência de Eventos cobre três fluxos integrados: a criação do evento, a consulta de métricas e placar, e a exportação de dados para auditoria.
 
 <div align="center">
   <sub>Imagem 21 - Diagrama de Sequencia: Eventos</sub><br>
@@ -1946,23 +1946,21 @@ A gestão de Eventos representa a visão macro da competição, sendo a configur
 
 **Fluxo Principal (Caminho Feliz)**
 
-**1. Criação do Evento:** O administrador envia as configurações gerais (nome, data, local e lista de esteiras) via `POST /eventos`. O EventoService verifica a inexistência de conflitos de data/local e persiste o evento com o status "aguardando".
+**1. Criação do Evento:** O cliente envia `POST /events { manager_id, title, local, date }`. O EventController repassa ao EventService, que aciona o EventRepository para persistir o registro via `INSERT INTO events`. O banco retorna o evento criado e a resposta ao cliente é `201 { id, title, local, date, status }`.
 
-**2. Métricas em Tempo Real e Placar:** Para alimentar o painel ou "modo TV", requisições periódicas do tipo GET são feitas aos endpoints de métricas e placar. O EventoService busca os turnos ativos, soma a quilometragem acumulada de cada equipe e ordena o placar de forma decrescente, devolvendo esses dados organizados para exibição instantânea.
+**2. Métricas e Placar:** Para consultar o estado geral do evento, o cliente realiza `GET /metrics/events/{id}/dashboard`. O MetricsController aciona o MetricsService, que delega ao MetricsRepository a execução de três consultas paralelas (placar, estatísticas e atletas em pista), retornando `200 { scoreboard, active_shifts, completed_shifts, total_km, athletes_on_track }`. Adicionalmente, `GET /metrics/events/{id}/teams` retorna a quilometragem acumulada por equipe em `200 [ { id, name, total_km } ]`.
 
-**3. Auditoria e Exportação:** Ao final ou durante o evento, requisições para `GET /eventos/{id}/` inconsistencias varrem os registros buscando saltos suspeitos ou lacunas de checkpoints. Por fim, a rota `GET /eventos/{id}/exportar` serializa todas as informações consolidadas em um arquivo padronizado (como CSV) para prestação de contas.
+**3. Exportação:** O cliente aciona `GET /export/events/{id}/shifts` e `GET /export/events/{id}/checkpoints`. O ExportController delega ao ExportService, que consulta o banco e serializa os dados em CSV, retornando `Content-Type: text/csv` com os arquivos `shifts-{id}.csv` e `checkpoints-{id}.csv`.
 
 **Fluxos Alternativos e Exceções**
 
-**1. Conflito de Agendamento:** Na criação do evento, caso o repositório encontre um evento previamente cadastrado para a mesma data e local, o controlador retorna o código HTTP `409 (Conflict)`, solicitando o ajuste das informações.
-
-**2. Ausência de Dados para Exportação:** Se a exportação for solicitada antes da existência de registros consolidados, o sistema gera um arquivo base contendo apenas as estruturas de cabeçalho ou notifica a interface sobre a ausência de volumetria.
+Não há fluxos alternativos explícitos neste diagrama. Falhas de validação nos campos obrigatórios da criação do evento resultam em respostas de erro padrão da camada de controller.
 
 ---
 
 #### 3.2.4.2 Diagrama de Sequência: Equipes
 
-O módulo de Equipes é a base de organização dos competidores. O Red Bull 24 Horas possui uma regra estrita: o confronto ocorre exatamente entre duas equipes, sendo cada uma composta por 16 pessoas. Este fluxo mapeia o cadastro e a validação estrutural dos times, a exibição dos perfis e o cálculo de métricas de desempenho coletivo e individual.
+O Diagrama de Sequência de Equipes cobre quatro fluxos: cadastro de equipe, cadastro individual de atletas, consulta de equipe com seus atletas e consulta de quilometragem acumulada por equipe.
 
 <div align="center">
   <sub>Imagem 22 - Diagrama de Sequência: Equipes</sub>
@@ -1973,23 +1971,23 @@ O módulo de Equipes é a base de organização dos competidores. O Red Bull 24 
 
 **Fluxo Principal (Caminho Feliz)**
 
-**1. Cadastro da Equipe:** O usuário envia uma requisição de cadastro contendo o nome da equipe e um vetor (array) contendo exatamente os 16 atletas. O EquipeService valida se o limite de equipes no evento ainda não foi atingido e se a contagem de participantes está perfeitamente alinhada à regra. Em seguida, grava a equipe e itera sobre a lista de atletas para salvar cada corredor vinculado ao identificador da equipe.
+**1. Cadastro da Equipe:** O cliente envia `POST /teams { event_id, name }`. O TeamController aciona TeamService.registerTeam, que verifica a existência do evento (findById) antes de chamar TeamRepository.create, executando `INSERT team (name, event_id)` → resposta `201 { id, name, event_id }`.
 
-**2. Exibição dos Dados:** Ao solicitar a exibição da equipe, o sistema realiza uma busca conjunta (JOIN) no banco de dados, retornando a entidade da equipe e seus respectivos membros de forma consolidada.
+**2. Cadastro de Atleta:** Cada atleta é registrado individualmente via `POST /teams/{teamId}/athletes { name, gender, cpf? }`. TeamService.registerAthlete verifica a existência da equipe (findById) e persiste o atleta via `INSERT athlete` → `201 { id, name, gender, team_id }`.
 
-**3. Métricas de Desempenho:** Para analisar a performance, o endpoint de métricas aciona o banco para somar a quilometragem total, extrair a média por corredor e identificar os atletas com melhor desempenho (top atletas), retornando esses indicadores agregados para a interface.
+**3. Consulta de Equipe com Atletas:** `GET /teams/{id}` retorna `200 { id, name, event_id, ... }`. `GET /teams/{teamId}/athletes` retorna `200 athletes[]`, com chamadas independentes para equipe e lista de atletas.
+
+**4. KM Acumulado por Equipe:** `GET /metrics/events/{eventId}/teams` aciona MetricsService.getTeamKm, que executa `SELECT SUM(distance) by Team (completed Shifts)` ordenado por total_km → `200 [ { id, name, total_km } ]`.
 
 **Fluxos Alternativos e Exceções**
 
-**1. Violação do Limite de Equipes:** Se o sistema identificar que já existem 2 equipes cadastradas para o evento em questão, o cadastro é bloqueado e uma mensagem de erro informa que o limite regulamentar foi atingido.
-
-**2. Número Incorreto de Atletas:** Caso a lista enviada contenha menos ou mais de 16 corredores, o EquipeService interrompe o processo antes de salvar qualquer informação no banco, retornando um erro de validação (exigindo exatamente 16 inscrições).
+Não há fluxos alternativos explícitos neste diagrama. Erros de validação, como evento ou equipe inexistente, resultam em respostas de erro retornadas pela camada de service.
 
 ---
 
 #### 3.2.4.3. Diagrama de Sequência: Turnos
 
-O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na esteira. Como a dinâmica do evento exige trocas rápidas de corredores sem interrupção na contagem de quilômetros, este fluxo mapeia desde a entrada do corredor no equipamento, passando pelos registros periódicos de segurança (checkpoints), até a finalização do turno com a leitura final da quilometragem. Turnos, neste contexto, representam os intervalos de atividade atribuídos a cada corredor ao longo de um ciclo na esteira, definindo quando cada atleta entra e sai da atividade.
+O Diagrama de Sequência de Turnos mapeia quatro fluxos: inicialização do turno com verificação de disponibilidade, registro de checkpoints obrigatórios, registro de checkpoints voluntários e encerramento do turno com cálculo automático de métricas.
 
 <div align="center">
   <sub>Imagem 23 - Diagrama de Sequência: Turnos</sub><br>
@@ -2000,23 +1998,25 @@ O processo de turnos gerencia o ciclo de vida da corrida de cada atleta na estei
 
 **Fluxo Principal (Caminho Feliz)**
 
-**1. Início do Turno:** O Cliente envia uma requisição `POST /turnos/iniciar` contendo as identificações do corredor e da esteira, além da quilometragem inicial. O TurnoController aciona o TurnoService para validar se o atleta e a esteira estão livres. Confirmada a disponibilidade, o turno é criado com status "em andamento" e o estado da esteira é atualizado para "Ocupada" no banco de dados.
+**1. Início do Turno:** O cliente envia `POST /audit/shifts/start { athlete_id, auditor_id, treadmill_id, km_start }`. O ShiftService verifica disponibilidade do atleta (findOpenByAthlete → null) e da esteira (findOpenByTreadmill → null) e, confirmada a disponibilidade, persiste o turno via `INSERT Shift { status: "in_progress" }` → `201 { id, status: "in_progress", km_start, start_at }`.
 
-**2. Checkpoints Obrigatórios e Voluntários:** Periodicamente (como a cada 5 minutos através de um alerta na interface ou a cada 30 minutos como backup), o auditor da prova envia a quilometragem atual da esteira via `POST /turnos/{id}/checkpoints`. O sistema valida se o valor atual é maior ou igual ao último registro, gravando a marcação de tempo (timestamp) para garantir um histórico seguro caso ocorram falhas no equipamento.
+**2. Checkpoint Obrigatório:** A cada ≤10 minutos, o auditor envia `POST /audit/shifts/{id}/checkpoints { distance, type: "mandatory" }`. O ShiftService valida que `distance >= último checkpoint` e que o intervalo desde o último registro é `≤10 min`, e persiste via `INSERT Checkpoint { type: "mandatory" }` → `201 { id, timestamp }`.
 
-**3. Finalização do Turno:** Quando o atleta encerra sua corrida, envia-se a requisição `POST /turnos/{id}/finalizar` com o valor final lido na esteira. O serviço calcula automaticamente a distância percorrida no turno (diferença entre o km final e o inicial), a duração exata e a velocidade média. O turno é encerrado e a esteira volta ao status de "Livre".
+**3. Checkpoint Voluntário:** A qualquer momento, o auditor pode enviar `POST /audit/shifts/{id}/checkpoints { distance, type: "voluntary" }`. O fluxo de validação e persistência é idêntico ao do checkpoint obrigatório → `201 { id, timestamp }`.
+
+**4. Encerramento do Turno:** O cliente envia `PATCH /audit/shifts/{id}/finish { km_end }`. O ShiftService recupera o turno (findById), valida `km_end >= km_start` e `km_end >= último checkpoint`, calcula `distance`, `speed` e `total_time`, e atualiza o banco com `UPDATE Shift SET status="completed"` → `200 { id, status: "completed", distance, speed, total_time }`.
 
 **Fluxos Alternativos e Exceções**
 
-**1. Esteira ou Atleta Ocupados:** Se no início do turno o TurnoService identificar que a esteira solicitada já consta como "Ocupada" ou que o corredor já possui um turno ativo, o sistema bloqueia a ação e retorna um erro de conflito, impedindo sobreposições indevidas.
+**1. Atleta ou Esteira com Turno em Aberto:** Se findOpenByAthlete ou findOpenByTreadmill retornar um turno ativo, o ShiftService interrompe a criação e retorna erro de conflito.
 
-**2. Inconsistência de Quilometragem nos Checkpoints:** Caso o auditor insira um valor de quilometragem inferior ao do último checkpoint registrado (o que configuraria um erro de digitação ou leitura), o TurnoService rejeita a inserção para proteger a integridade da apuração.
+**2. Quilometragem Inválida no Checkpoint:** Caso `distance < último checkpoint` registrado, o ShiftService rejeita a inserção para preservar a integridade sequencial dos registros.
 
 ---
 
 #### 3.2.4.4. Diagrama de Sequência: Histórico
 
-A funcionalidade de Histórico fornece total rastreabilidade e transparência ao longo das 24 horas de evento. Ela permite que a organização e os auditores visualizem uma linha do tempo cronológica detalhada de todas as ações que ocorreram nas esteiras, provendo uma ferramenta ágil para sanar dúvidas ou contestar apurações durante a competição.
+O Diagrama de Sequência de Histórico cobre dois fluxos: a listagem de registros históricos de um evento com filtros opcionais e a correção retroativa de um checkpoint com geração de trilha de auditoria imutável.
 
 <div align="center">
   <sub>Imagem 24 - Diagrama de Sequência: Historico</sub><br>
@@ -2027,23 +2027,19 @@ A funcionalidade de Histórico fornece total rastreabilidade e transparência ao
 
 **Fluxo Principal (Caminho Feliz)**
 
-**1. Consulta de Linha do Tempo:** O Cliente solicita a listagem cronológica através de um endpoint de histórico (por exemplo, filtrando por equipe ou por esteira específica).
+**1. Listagem de Histórico:** O cliente envia `GET /audit/history?event_id={id}&team_id=&treadmill_id=&athlete_id=`, sendo `event_id` obrigatório. O HistoryController repassa ao HistoryService.getHistory, que aciona HistoryRepository.findByEvent para executar `SELECT Shift + Athlete + Treadmill + Team + Checkpoints WHERE event_id` com os filtros opcionais aplicados → `200 entries[]`.
 
-**2. Processamento e Ordenação:** O controlador repassa a requisição ao serviço de histórico, que aciona o banco de dados para resgatar todos os eventos associados (inícios de turno, checkpoints parciais, encerramentos e ajustes retroativos).
-
-**3. Retorno Formatado:** O serviço compila essas informações, ordenando-as pelo timestamp mais recente, e monta um objeto de transferência de dados contendo o autor da marcação, o valor registrado e o tipo de evento. O Cliente recebe os dados e renderiza a linha do tempo organizada na interface web.
+**2. Correção Retroativa de Checkpoint:** O cliente envia `PATCH /audit/checkpoints/{id} { distance, justification? }`, operação que requer autenticação JWT. O ShiftController aciona ShiftService.correctCheckpoint, que: (a) busca o checkpoint (findCheckpointById), (b) busca o turno associado (findById), (c) busca os checkpoints vizinhos (findNeighborCheckpoints). Após validar que `prev <= new_distance <= next` (RN24), executa `UPDATE Checkpoint SET distance` e `INSERT checkpoint_corrections` (registro imutável, RN23) → `200 { id, shift_id, distance, timestamp, type, correction_id }`.
 
 **Fluxos Alternativos e Exceções**
 
-**1. Filtros Inexistentes ou Vazios:** Caso a consulta busque o histórico de uma esteira que ainda não foi ativada na competição, o repositório retorna uma lista vazia. O controlador repassa essa informação com sucesso (código HTTP 200), e a interface informa visualmente que não há registros para o período ou equipamento selecionado.
-
-**2. Paginação de Alto Volume:** Devido à longa duração do evento (24 horas), o volume de dados pode se tornar expressivo. O serviço aplica técnicas de paginação (entregando os dados em blocos) para evitar lentidão no carregamento da interface.
+**1. Valor Fora do Intervalo Válido:** Na correção retroativa, se `new_distance < prev` ou `new_distance > next`, o ShiftService rejeita a operação → `422 — Value must be between checkpoints`.
 
 ---
 
 #### 3.2.4.5. Diagrama de Sequência: Registros e Sincronização (Sync)
 
-Garantir a operação ininterrupta do sistema em um ambiente de evento físico é um grande desafio, pois podem ocorrer instabilidades na conexão de internet. Este diagrama mapeia duas rotinas avançadas de resiliência: a Edição Retroativa (para corrigir erros de digitação passados mantendo uma trilha de auditoria) e a Sincronização Offline (Sync), que permite à interface armazenar dados localmente em caso de queda de rede e enviá-los ao servidor assim que a conexão for restabelecida.
+O Diagrama de Registros e Sincronização cobre dois fluxos: a correção retroativa de checkpoints com trilha de auditoria imutável e a sincronização offline de registros acumulados localmente (planejado, não implementado).
 
 <div align="center">
   <sub>Imagem 25 - Diagrama de Sequência: Registros/Sync</sub><br>
@@ -2054,21 +2050,21 @@ Garantir a operação ininterrupta do sistema em um ambiente de evento físico �
 
 **Fluxo Principal (Caminho Feliz)**
 
-**1. Edição Retroativa com Auditoria:** Caso um auditor perceba que digitou um valor incorreto, ele aciona uma rota de atualização parcial (PATCH /registros/{id}) fornecendo o novo valor ajustado e o motivo da correção. O serviço valida se o novo número respeita a lógica sequencial (ficando entre o checkpoint anterior e o posterior). Se válido, o banco atualiza o registro e insere automaticamente uma linha na tabela de auditoria, registrando o valor antigo, o valor novo e o autor da mudança.
+**1. Correção Retroativa de Checkpoint:** O cliente envia `PATCH /audit/checkpoints/{id} { distance, justification? }` com autenticação JWT. O ShiftService recupera o checkpoint, o turno e os checkpoints vizinhos. A validação `validateKmRange(new_distance, prev, next)` garante que o novo valor esteja no intervalo `[prev, next]`. Em caso de sucesso, grava via `UPDATE Checkpoint SET distance` e registra a correção de forma imutável via `INSERT checkpoint_corrections` → `200 { id, shift_id, distance, timestamp, type, correction_id }`.
 
-**2. Sincronização de Dados Offline:** Se o dispositivo Cliente operar sem internet, os registros de quilometragem são salvos na memória local do iPad. Ao detectar que a conexão foi restabelecida, a aplicação dispara um envio em lote através da rota POST /sync. O RegistroService analisa cada item do lote, verifica a inexistência de duplicidades com base no ID e timestamp, e insere os registros atrasados no banco de dados, garantindo que nenhum quilômetro corrido seja perdido.
+**2. Sincronização Offline (planejado, não implementado):** Quando o dispositivo opera sem conexão, os registros são persistidos localmente. Ao restaurar a conexão, o cliente envia `POST /sync (localRecords[])`. O ShiftService itera a fila, verifica duplicidade de cada entrada via `checkDuplicate(id, timestamp)` e, para registros inéditos, executa `saveRecord(data)` → `200 OK — Records synchronized`.
 
 **Fluxos Alternativos e Exceções**
 
-**1. Valor Retroativo Incompatível:** Na tentativa de edição, se o novo valor informado quebrar a ordem cronológica da esteira (por exemplo, informando um valor menor que o checkpoint anterior), o sistema rejeita o ajuste com o erro HTTP 422 (Unprocessable Entity).
+**1. Valor Retroativo Incompatível:** `new_distance` fora do intervalo `[prev, next]` → `422 — Value must be between checkpoints`.
 
-**2. Tratamento de Duplicidades no Sync:** Durante a sincronização do cache offline, se o serviço identificar que um determinado registro já foi gravado anteriormente no banco (evitando reenvios acidentais causados por instabilidade de rede), ele ignora silenciosamente o item duplicado e prossegue salvando apenas os dados inéditos.
+**2. Registro Duplicado no Sync:** O ShiftService ignora silenciosamente o item e prossegue a fila → `200 OK — Partial sync (duplicates discarded)`.
 
 ---
 
 #### 3.2.4.6. Diagrama de Sequência: Dashboard
 
-O Dashboard atua como o principal ponto de visualização em tempo real do evento Red Bull 24 Horas. Esta interface (geralmente exibida em telões no local da prova) precisa refletir com exatidão a disputa acirrada entre as duas equipes, mostrando o placar geral, quem está correndo no momento e o ritmo da corrida ao longo do tempo. Para que os dados na tela estejam sempre vivos sem que ninguém precise atualizar a página manualmente, a aplicação utiliza uma técnica chamada Polling (consultas automáticas e contínuas ao servidor) atrelada a um sistema de verificação de integridade da conexão (Healthcheck).
+O Diagrama de Sequência do Dashboard cobre dois fluxos: o polling automático de métricas para atualização contínua da tela e o healthcheck de conectividade com o banco de dados (planejado, não implementado).
 
 <div align="center">
   <sub>Imagem 26 - Diagrama de Sequência: Dashboard</sub><br>
@@ -2079,23 +2075,21 @@ O Dashboard atua como o principal ponto de visualização em tempo real do event
 
 **Fluxo Principal (Caminho Feliz)**
 
-**1. Atualização Automática (Polling):** Em intervalos regulares, o Client dispara uma requisição `GET /dashboard`. O controller repassa a demanda ao serviço, que orquestra três consultas estratégicas junto ao Banco de Dados: Placar Geral (soma dos quilômetros totais), Status das Esteiras (verificação de ocupação atual) e Histórico por Hora (desempenho acumulado em formato de *snapshots*). O servidor então devolve o pacote consolidado para o Cliente redesenhar a tela instantaneamente.
+**1. Polling Automático (a cada ≤10 s):** O cliente dispara `GET /metrics/events/{event_id}/dashboard` em loop com intervalo de no máximo 10 segundos (RF013, RN11). O MetricsController aciona MetricsService.getDashboard, que delega ao MetricsRepository.dashboardByEvent a execução de três consultas paralelas (placar, estatísticas gerais e atletas em pista) → `200 { scoreboard, active_shifts, completed_shifts, total_km, athletes_on_track }`.
 
-**2. Monitoramento de Saúde do Sistema (Healthcheck):** Paralelamente, o Cliente realiza requisições rápidas para `GET /status`. O servidor executa um "ping" no Banco de Dados para atestar que os sistemas estão comunicando perfeitamente. Confirmando a conexão, o servidor retorna um status "ok" junto com a hora exata da checagem (*timestamp*).
+**2. Healthcheck (planejado, não implementado):** O cliente aciona `GET /status`. O MetricsController faz um ping direto no banco de dados → `200 { db: "ok", timestamp }`.
 
 **Fluxos Alternativos e Exceções**
 
-**1. Falha de Conexão ou Instabilidade:** Se o teste de Healthcheck falhar, a interface congela as informações no último estado válido e exibe um alerta indicando "dados desatualizados", acompanhado do *timestamp* da última comunicação bem-sucedida, garantindo transparência para a organização e público.
-
-**2. Ausência de Dados nas Esteiras:** Durante o momento exato de transição de um corredor, o retorno da consulta pode indicar que a esteira está livre. A interface mapeia esse cenário e exibe o *status* como "Aguardando próximo corredor", até que no próximo ciclo de *polling* de 10 segundos o novo atleta seja exibido correndo.
+**1. Falha no Healthcheck:** Se o ping ao banco falhar, a interface congela as informações no último estado válido e exibe alerta de "dados desatualizados" acompanhado do timestamp da última verificação bem-sucedida.
 
 ---
 
-A modelagem da aplicação web do Red Bull 24 Horas por meio dos Diagramas de Sequência UML demonstra a robustez arquitetural planejada para o sistema. Ao destrinchar visualmente as trocas de mensagens entre as interfaces de operação e as camadas lógicas de backend, o projeto mitiga os principais riscos mapeados na operação atual, como a dependência excessiva de anotações manuais vulneráveis a falhas e distrações.
+A modelagem da aplicação web do Red Bull 24 Horas por meio dos Diagramas de Sequência UML evidencia a arquitetura em camadas adotada no sistema, onde cada requisição percorre Controller, Service e Repository antes de alcançar o banco de dados. Os fluxos modelados refletem o estado atual da implementação e indicam explicitamente as funcionalidades planejadas que ainda não foram implementadas, como o healthcheck e a sincronização offline.
 
-Cada um dos fluxos detalhados cumpre um papel estratégico: a gestão de Equipes e Eventos assegura o cumprimento do regulamento e a centralização dos dados; o fluxo de Turnos viabiliza o dinamismo extremo do revezamento sem sobrecarregar a equipe operacional; a rotina de Histórico fornece transparência imediata; e os mecanismos de Registros e Sincronização Offline blindam a competição contra quedas de conectividade e falhas de digitação.
+Cada diagrama cumpre um papel específico: a gestão de Eventos centraliza criação, métricas e exportação; o fluxo de Equipes organiza o cadastro incremental de atletas e o acompanhamento de quilometragem por time; o ciclo de Turnos controla início, checkpoints obrigatórios e voluntários e encerramento com cálculo automático de métricas; o Histórico oferece rastreabilidade completa com filtros e correção retroativa auditável; o diagrama de Registros e Sincronização detalha a edição retroativa e a resiliência offline; e o Dashboard expõe o placar em tempo real via polling contínuo.
 
-Em suma, a aplicação desta metodologia na fase de concepção do software garante que a transição da prancheta física para o ecossistema digital ocorra de maneira fluida, estável e perfeitamente auditável, entregando aos parceiros da Red Bull uma ferramenta de alto nível para o controle de suas experiências esportivas.
+Em conjunto, esses fluxos garantem que a transição da apuração manual para o sistema digital ocorra de forma rastreável, íntegra e auditável, entregando aos parceiros da Red Bull uma ferramenta confiável para o controle do evento esportivo.
 
 ### 3.2.5. Diagrama de Atividades ou Estados (sprint 4 ou sprint 5)
 
@@ -2219,47 +2213,47 @@ O que é: Divide a aplicação em três partes com funções diferentes. O Model
 **Onde se aplica no projeto:** Nos objetos de entrada dos endpoints de criação de turno, registro de checkpoint e finalização de turno, filtrando os campos antes de passar para os Services.
 
 
-**7. Strategy Pattern:**
+**7. Guard Clause (Cláusula de Guarda):**
 
 
-**Categoria:** Comportamental
+**Categoria:** Comportamental / Boas Práticas
 
 
-**O que é:** Permite ter diferentes formas de resolver um mesmo problema, onde cada forma fica separada e pode ser trocada sem alterar o restante do código.
+**O que é:** Cada pré-condição de um método é verificada no início da função, antes de qualquer lógica principal. Se a condição não for atendida, o método interrompe a execução imediatamente com um erro claro, sem processar o restante do fluxo.
 
 
-**Justificativa:** Ao encerrar um turno, o sistema precisa realizar diferentes cálculos, como distância percorrida, tempo total e velocidade média. Além disso, as verificações de inconsistência seguem lógicas diferentes dependendo do tipo de problema identificado, como gaps entre checkpoints ou quilometragem fora de ordem. O Strategy Pattern ajudou a separar cada uma dessas regras, facilitando a manutenção e permitindo adicionar novos critérios futuramente sem alterar os que já existem.
+**Justificativa:** Os Services concentram múltiplas regras de negócio que precisam ser validadas antes de qualquer acesso ao banco. Posicionar essas verificações no início de cada método, de forma sequencial e isolada, garante que o código principal só execute quando todas as pré-condições estão satisfeitas, evitando estados inconsistentes. O padrão também torna o fluxo de controle mais legível: ao ler um método de service, é imediato identificar quais condições inviabilizam a operação. Em `registerCheckpoint`, por exemplo, são verificados em sequência o tipo de checkpoint, a positividade da distância, o status do turno, a ordenação crescente de quilometragem e o intervalo máximo desde o último registro. Cada guarda tem responsabilidade única e pode ser alterada ou removida sem afetar as demais.
 
 
-**Onde se aplica no projeto:** Nas estratégias de cálculo de métricas ao encerrar um turno e nas verificações de consistência antes de persistir os dados de turnos e checkpoints.
+**Onde se aplica no projeto:** Nos métodos `startShift`, `registerCheckpoint` e `finishShift` do `shiftService`, onde cada guard clause corresponde a uma regra de negócio independente, verificada antes da persistência dos dados.
 
 
 #### 3.2.7.2 Frontend
 
 ---
-O desenvolvimento do frontend do projeto demandou atenção especial à organização dos componentes, dado que a aplicação opera em contextos distintos: interface de auditoria em campo, modo TV e tela de configuração do setup, cada um com requisitos de atualização, legibilidade e reuso diferentes. Os padrões a seguir foram adotados para lidar com essa complexidade de forma estruturada.
+O desenvolvimento do frontend seguiu uma abordagem progressiva, compatível com o estágio atual do projeto. As páginas de interface estão implementadas em HTML e CSS estáticos, sem dependência de frameworks ou bundlers, o que permitiu iteração rápida sobre o layout e a estrutura visual nas primeiras sprints. Os padrões descritos a seguir refletem as decisões tomadas para organizar essa camada, considerando tanto o que já está implementado quanto a arquitetura planejada para a adição da camada JavaScript nas próximas sprints.
 
 
 **8. Component Pattern:**
 
 **Categoria:** Estrutural
 
-**O que é:** A interface é construída com componentes independentes e reutilizáveis, cada um com uma responsabilidade só ¹⁷.
+**O que é:** A interface é construída com elementos independentes e reutilizáveis, cada um com uma responsabilidade só ¹⁷.
 
-**Justificativa:** A interface possui vários elementos reutilizados em diferentes telas, como cartões de status, formulários e indicadores de quilometragem. Sem componentes reutilizáveis, qualquer alteração visual precisaria ser feita manualmente em cada página. Com os componentes isolados, uma mudança feita em um único lugar já reflete em toda a aplicação. Isso foi especialmente importante nas últimas sprints, quando o design passou por ajustes após os testes de usabilidade realizados com os auditores.
+**Justificativa:** Mesmo em HTML e CSS estáticos, é possível estabelecer uma linguagem visual consistente por meio de um sistema de estilos compartilhados. O projeto organiza o CSS em dois níveis: `global.css`, que define variáveis, tipografia e elementos reutilizados em todas as telas, e arquivos de estilo específicos por página, que estendem esse sistema sem duplicar regras. Isso garante que alterações visuais transversais, como cor de destaque ou espaçamento padrão, sejam feitas em um único ponto e reflitam automaticamente em todas as páginas.
 
-**Onde se aplica no projeto:** Nos componentes de cartão de esteira, formulários de cadastro de atletas e equipes, modal de checkpoint e indicadores de placar.
+**Onde se aplica no projeto:** No sistema de estilos compartilhados (`global.css` + CSS por página) e nos elementos HTML estruturais reutilizados entre telas, como a barra de gradiente superior e o padrão de navegação lateral por etapas.
 
 
 **9. Container/Presentational Pattern:**
 
 **Categoria:** Arquitetural / Frontend
 
-**O que é:** Padrão de projeto que divide os componentes de interface em duas responsabilidades distintas. Os Container Components são responsáveis pela lógica de negócio: buscam dados, gerenciam estado e coordenam efeitos colaterais. Os Presentational Components, por sua vez, são puramente declarativos — recebem dados via props e se limitam à renderização da interface, sem conhecimento algum da origem ou transformação desses dados ¹⁷.
+**O que é:** Padrão de projeto que divide os componentes de interface em duas responsabilidades distintas. Os Container Components são responsáveis pela lógica de negócio: buscam dados, gerenciam estado e coordenam efeitos colaterais. Os Presentational Components, por sua vez, são puramente declarativos, recebem dados e se limitam à renderização da interface, sem conhecimento da origem ou transformação desses dados ¹⁷.
 
-**Justificativa:** O fluxo de configuração da auditoria envolve múltiplas etapas interdependentes — seleção de corrida, equipe e esteira — o que gera um estado complexo e mutável ao longo da navegação. A mistura de lógica de busca e regras de progressão diretamente nos componentes visuais resultaria em alto acoplamento, dificultando testes, manutenção e reuso. A adoção deste padrão isola essas responsabilidades: o componente Container gerencia em qual etapa o usuário se encontra e persiste as escolhas realizadas, enquanto os componentes apresentacionais de cada etapa exibem listas e controles de forma desacoplada e coesa.
+**Justificativa:** O fluxo de configuração da auditoria envolve etapas interdependentes, como a seleção de corrida, equipe e esteira, o que gera estado que precisa persistir ao longo da navegação. Na estrutura HTML atual, essa separação já é refletida na distinção entre `<aside class="etapas">`, que representa o estado de progressão do assistente de etapas, e `<section class="conteudo">`, que renderiza o conteúdo específico de cada etapa. A camada de lógica de estado e busca de dados, que completará esse padrão, está prevista para ser implementada em JavaScript nas sprints de desenvolvimento do frontend.
 
-**Onde se aplica no projeto:** Tela de Setup da Auditoria (Assistente de Etapas), onde o Container controla o progresso e as seleções do usuário; e Tela de Registro de Turnos, onde o Container gerencia a contagem e o fluxo dos dados dinâmicos, delegando exclusivamente a renderização aos componentes visuais.
+**Onde se aplica no projeto:** Na estrutura HTML da tela de setup da auditoria (`competição.html`), onde a barra lateral de etapas e a seção de conteúdo já refletem a separação estrutural entre controle de estado e renderização.
 
 
 **10. MVVM (Model-View-ViewModel):**
@@ -2268,9 +2262,9 @@ O desenvolvimento do frontend do projeto demandou atenção especial à organiza
 
 **O que é:** Padrão arquitetural que segrega a interface do usuário (View), a lógica de apresentação (ViewModel) e os dados brutos (Model). O ViewModel atua como camada intermediária: transforma, formata e prepara os dados provenientes do Model para que a View possa exibi-los sem realizar conversões ou processamentos diretamente ¹⁸.
 
-**Justificativa:** Os dados retornados pelo servidor, como identificadores numéricos, carimbos de data/hora em formato UTC e códigos de status, não estão em formato adequado para exibição direta ao usuário final. Delegar essas transformações à View violaria o princípio de responsabilidade única e tornaria os componentes visuais frágeis e difíceis de testar isoladamente. O ViewModel centraliza a formatação de datas de competições passadas, a concatenação de nomes de equipes e a preparação do resumo de configuração exibido antes do início do registro de turnos, mantendo a View coesa e focada exclusivamente na apresentação.
+**Justificativa:** Os dados retornados pelo servidor, como identificadores numéricos, carimbos de data/hora em formato UTC e códigos de status, não estão em formato adequado para exibição direta. Delegar essas transformações à View violaria o princípio de responsabilidade única e tornaria os componentes visuais frágeis. O padrão será aplicado na camada JavaScript do frontend, com ViewModels responsáveis por formatar datas, converter códigos de status em rótulos legíveis e preparar os resumos exibidos nas telas de confirmação. Na versão atual, os dados exibidos nas páginas HTML são estáticos e representam a estrutura visual planejada para essa camada.
 
-**Onde se aplica no projeto:** ViewModels responsáveis pelo tratamento dos dados na listagem do Histórico de Competições (Tela Inicial) e na Tela de Confirmação/Resumo do Setup, exibida imediatamente antes do início do registro dos turnos.
+**Onde se aplica no projeto:** Previsto para a listagem do Histórico de Competições (Tela Inicial) e para a Tela de Confirmação do Setup, a serem implementadas com JavaScript nas próximas sprints.
 
 
 
@@ -2282,7 +2276,7 @@ Os princípios SOLID são cinco diretrizes de design de software definidas por R
 
 **S — Single Responsibility Principle (Princípio da Responsabilidade Única):** Define que cada classe ou módulo deve ter apenas uma razão para mudar, ou seja, deve ser responsável por uma única parte do comportamento do sistema ¹⁵. No projeto, isso se traduz na divisão clara entre Controller, Service e Repository. O Controller recebe a requisição HTTP, o Service aplica as regras de negócio e o Repository acessa o banco. Nenhum dos três faz o trabalho do outro, o que torna cada mudança mais segura e previsível.
 
-**O — Open/Closed Principle (Princípio do Aberto/Fechado):** Define que um módulo deve estar aberto para extensão, mas fechado para modificação, ou seja, deve ser possível adicionar novos comportamentos sem alterar o código existente ¹⁵. No projeto, o Strategy Pattern para os cálculos de turno aplica esse princípio diretamente: um novo critério de validação pode ser adicionado como uma nova estratégia sem tocar nas que já existem.
+**O — Open/Closed Principle (Princípio do Aberto/Fechado):** Define que um módulo deve estar aberto para extensão, mas fechado para modificação, ou seja, deve ser possível adicionar novos comportamentos sem alterar o código existente ¹⁵. No projeto, o Service Layer aplica esse princípio por meio das guard clauses de validação: cada verificação de negócio está isolada no início dos métodos de service, de modo que um novo critério pode ser adicionado sem alterar as verificações existentes. O mesmo vale para os Repositories, onde novos métodos de acesso ao banco podem ser incluídos sem modificar os que já existem.
 
 **L — Liskov Substitution Principle (Princípio da Substituição de Liskov):** Define que implementações de uma mesma abstração devem ser intercambiáveis sem que o código que as utiliza precise ser alterado ¹⁵. No projeto, isso ficou evidente nos testes: os repositórios reais puderam ser substituídos por mocks sem que os Services precisassem mudar, o que viabilizou os testes com Jest e supertest sem depender de uma conexão real com o banco.
 
@@ -3965,11 +3959,22 @@ No eixo mercadológico, observa-se a consolidação de soluções digitais espec
 
 ---
 
-_a) Segmentação de Mercado (até 250 palavras)_
-Descreva os principais segmentos de mercado a serem atendidos pela aplicação. Utilize bases de dados e fontes confiáveis.\*
+_a) Segmentação de Mercado:_ 
 
-_b) Perfil do Público-Alvo (até 250 palavras)_
-_Caracterize o público-alvo com dados demográficos, psicográficos e comportamentais, incluindo necessidades específicas. Utilize fontes obrigatórias._
+O RedRun atende a um segmento primário bem delimitado: as equipes operacionais do Red Bull 24 Horas no Brasil. Geograficamente, o evento é realizado em múltiplas regiões do país, incluindo capitais e cidades de médio porte, e cada edição regional opera com sua própria equipe, tornando a solução replicável sem adaptações estruturais.
+
+Dentro desse segmento, dois grupos compõem o público direto. O primeiro é o gerente do evento, responsável pela configuração e coordenação geral da operação antes e durante a competição. O segundo é formado pelos auditores, membros da equipe de Field Marketing da Red Bull que atuam na linha de frente ao longo das 24 horas. Segundo a ABRAPE (2025), o setor de eventos registrou 179.133 empregos formais em 2024, evidenciando a profissionalização crescente das equipes operacionais que sustentam eventos dessa escala ¹⁸.
+
+Como segmento secundário, identifica-se o mercado de eventos de corrida em revezamento de forma geral: competições universitárias, corporativas e de academias que operam no mesmo formato de equipes em esteira por períodos prolongados e que enfrentam o mesmo problema de apuração manual. Esse mercado representa uma oportunidade de expansão natural da solução após a validação no contexto Red Bull.
+
+O que une ambos os segmentos é a demanda por um sistema simples, estável e confiável, capaz de operar continuamente em ambientes de alta pressão operacional e substituir registros manuais por um fluxo digital rastreável.
+
+_b) Perfil do Público-Alvo:_
+O RedRun possui dois perfis de usuário com papéis e momentos de uso distintos: o gerente e o auditor.
+
+O gerente é o responsável pela configuração do sistema antes do evento. Atua em um setor que, segundo a ABRAPE (2025), registrou 179.133 empregos formais em 2024, crescimento de 60,8% em relação ao período pré-pandemia ¹⁸, evidenciando a profissionalização crescente da área. Comportamentalmente, organiza o pré-evento por meio de planilhas dispersas e comunicação manual entre equipes, sem um sistema centralizado que integre locais, equipes, corredores e auditores em um único lugar. Sua principal dor é a fragmentação desse processo: informações desencontradas aumentam o risco de inconsistências e geram retrabalho que se acumula justamente nas horas que antecedem o evento, quando a margem para correções é menor. Sua necessidade é um sistema que centralize todas essas informações antes do evento começar. Sua expectativa é chegar no dia da competição com tudo estruturado, sem pendências operacionais e com menos exposição a imprevistos.
+
+O auditor é o usuário que opera o sistema durante as 24 horas da competição. É um adulto jovem, geralmente entre 20 e 30 anos, integrante da equipe de Field Marketing da Red Bull, com vínculo profissional direto com a marca e forte afinidade com tecnologia e o universo esportivo. Comportamentalmente, opera em condições de alta pressão, com atenção dividida entre múltiplas esteiras e fadiga progressiva ao longo da maratona. Sua principal dor é o registro manual contínuo com prancheta física, processo suscetível a erros de anotação, distrações e inconsistências que comprometem a integridade dos resultados. Sua necessidade é uma ferramenta que possa ser usada sem treinamento extenso, mesmo no meio da operação. Sua expectativa é contar com uma interface intuitiva e estável, que reduza a carga cognitiva e garanta registros confiáveis do início ao fim da competição.
 
 ## 6.5 Posicionamento
 
@@ -4039,6 +4044,8 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 ---
 
 ¹⁷ ABRAMOV, Dan. **Presentational and Container Components.** Medium, 23 mar. 2015. Disponível em: https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0. Acesso em: 26 mai. 2026.
+
+¹⁸ ABRAPE. Setor de eventos segue em crescimento e registra, em 2024, nível de emprego 60,8% superior ao período pré-pandemia. Associação Brasileira dos Promotores de Eventos, 26 fev. 2025. Disponível em: https://www.abrape.com.br/setor-de-eventos-segue-em-crescimento-e-registra-em-2024-nivel-de-emprego-608-superior-ao-periodo-pre-pandemia/. Acesso em: 02 jun. 2026. 
 
 ⁸ BUSINESS RULES GROUP. **Business Rules Manifesto:** the principles of rule independence. Version 2.0. S. l.: Business Rules Group, 2003. Disponível em: <https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf>. Acesso em: 27 abr. 2026.
 
