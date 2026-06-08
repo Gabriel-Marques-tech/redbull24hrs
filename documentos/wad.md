@@ -3402,102 +3402,75 @@ Entre os principais conectivos lógicos utilizados, temos:
 
 Dentro do banco de dados foram implementadas as seguintes consultas:
 
-#### Consulta 1: *Sync offline* - inserir ou atualizar por conflito de versão
+#### Consulta 1: *Sync offline* — inserção idempotente de checkpoint por `sync_id`
 
-&nbsp;&nbsp;&nbsp;&nbsp;Ao tentar sincronizar a inserção dos dados capturados *offline*, o registro só é inserido se não existe no banco. Caso o registro já exista mas o timestamp local for mais recente e o novo km estiver dentro do intervalo físico delimitado pelos checkpoints vizinhos na linha do tempo (considerando a ordem cronológica do turno), o banco é atualizado. Se o banco tiver versão mais recente ou o dado violar a cronologia física, o registro é ignorado.
- 
+&nbsp;&nbsp;&nbsp;&nbsp;Ao reconectar após um período offline, o frontend envia cada checkpoint com um `sync_id` gerado localmente como `SHA256(shift_id|distance|checkpoint_type|timestamp)`. O banco tenta inserir o registro com o timestamp original (preservando a cronologia do evento); se o `sync_id` já existir no índice único parcial, o conflito é descartado silenciosamente com `DO NOTHING`, sem retornar erro e sem duplicar o registro. Checkpoints registrados online não possuem `sync_id` (valor `NULL`) e não são afetados pelo índice parcial.
+
 **Consulta SQL:**
 ```sql
-INSERT INTO checkpoints (id, shift_id, distance, type, timestamp)
-VALUES (:id, :shift_id, :distance, :type, :timestamp)
-ON CONFLICT (id) DO UPDATE
-SET distance  = EXCLUDED.distance,
-    type      = EXCLUDED.type,
-    timestamp = EXCLUDED.timestamp
-WHERE checkpoints.timestamp < EXCLUDED.timestamp
-  -- Garante que a nova distância é MAIOR ou igual à distância do ponto imediatamente anterior no tempo
-  AND EXCLUDED.distance >= COALESCE(
-      (SELECT distance FROM checkpoints 
-       WHERE shift_id = EXCLUDED.shift_id AND timestamp < EXCLUDED.timestamp
-       ORDER BY timestamp DESC LIMIT 1), 
-      0
-  )
-  -- Garante que a nova distância é MENOR ou igual à distância do ponto imediatamente posterior no tempo
-  AND EXCLUDED.distance <= COALESCE(
-      (SELECT distance FROM checkpoints 
-       WHERE shift_id = EXCLUDED.shift_id AND timestamp > EXCLUDED.timestamp
-       ORDER BY timestamp ASC LIMIT 1), 
-      EXCLUDED.distance
-  );
+INSERT INTO checkpoints (shift_id, distance, type, timestamp, sync_id)
+VALUES ($1, $2, $3, $4::timestamptz, $5)
+ON CONFLICT (sync_id) WHERE sync_id IS NOT NULL DO NOTHING
 ```
- 
+
 <br>
 <div align="center">
   <sub> Quadro 26 - Lógica Proposicional: 1 </sub><br>
 
 | | |
 | :--- | :--- |
-| **Proposições lógicas** | **$A$**: O registro não existe no banco (NOT EXISTS)<br><br>**$B$**: O registro existe e o timestamp local é mais recente (`checkpoints.timestamp < :timestamp`)<br><br>**$C$**: O novo valor de distância está dentro do intervalo entre a distância do checkpoint cronologicamente anterior e a do cronologicamente posterior no mesmo turno.<br>*(:distance BETWEEN (SELECT distance... WHERE timestamp < :timestamp ORDER BY timestamp DESC LIMIT 1) AND (SELECT distance... WHERE timestamp > :timestamp ORDER BY timestamp ASC LIMIT 1))* |
-| **Expressão lógica proposicional** | $A \lor (B \land C)$ |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$B \land C$</th><th>$A \lor (B \land C)$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
- 
+| **Proposições lógicas** | **$A$**: O `sync_id` informado já existe no banco (`ON CONFLICT (sync_id) WHERE sync_id IS NOT NULL`) |
+| **Expressão lógica proposicional** | $A \rightarrow \neg\text{INSERT}$ |
+| **Interpretação** | Se o `sync_id` já existe (A é verdadeiro), o `INSERT` é suprimido; se não existe (A é falso), o registro é inserido normalmente. A condicional garante exatamente uma inserção por `sync_id`, tornando o endpoint de sync idempotente independentemente de quantas vezes o mesmo batch seja reenviado. |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$\neg A$ (INSERT ocorre)</th></tr></thead><tbody><tr><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td></tr></tbody></table> |
+
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
-#### Consulta 2: *Ranking final* — corredores com mais de 25 km corridos ao fim do evento
+#### Consulta 2: *Ranking por equipe* — distância total acumulada por equipe em um evento
 
-&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar o evento, a consulta recupera o nome de todos os corredores que acumularam mais de 25 km percorridos no total, considerando ambas as equipes. Os corredores são listados em ordem decrescente de distância percorrida — do que mais correu para o que menos correu — sendo exibidos apenas aqueles que ultrapassaram o limite mínimo estabelecido. 
+&nbsp;&nbsp;&nbsp;&nbsp;A consulta retorna todas as equipes de um evento com a soma dos quilômetros percorridos em turnos concluídos, ordenadas do maior para o menor total. O `LEFT JOIN` com `shifts` garantido pelo filtro `status = 'completed'` assegura que equipes sem nenhum turno encerrado apareçam com `total_km = 0` em vez de serem omitidas. O filtro `deleted_at IS NULL` em ambas as entidades exclui equipes e atletas que tenham sido desativados via *soft delete*.
 
 **Consulta SQL:**
 ```sql
-SELECT    
-    athletes.name             AS corredor,    
-    teams.name                AS equipe,    
-    SUM(shifts.distance)      AS total_km
-FROM shifts
-JOIN athletes ON athletes.id   = shifts.athlete_id
-JOIN teams    ON teams.id      = athletes.team_id
-JOIN events   ON events.id     = teams.event_id
-WHERE shifts.end_at IS NOT NULL  
-  AND events.end_at IS NOT NULL
-  AND teams.event_id = :event_id
-GROUP BY athletes.id, athletes.name, teams.name
-HAVING SUM(shifts.distance) > 25
-ORDER BY total_km DESC; 
+SELECT t.id, t.name,
+       COALESCE(SUM(s.distance), 0) AS total_km
+FROM teams t
+LEFT JOIN athletes a ON a.team_id = t.id AND a.deleted_at IS NULL
+LEFT JOIN shifts s   ON s.athlete_id = a.id AND s.status = 'completed'
+WHERE t.event_id = $1 AND t.deleted_at IS NULL
+GROUP BY t.id, t.name
+ORDER BY total_km DESC
 ```
- 
+
 <br>
 <div align="center">
   <sub> Quadro 27 - Lógica Proposicional: 2 </sub><br>
 
 | | |
 |---|---|
-| **Proposições lógicas** | $A$: O turno está encerrado (`shifts.end_at IS NOT NULL`) <br> $B$: O evento foi encerrado (`events.end_at IS NOT NULL`) <br> $C$: A soma dos turnos do corredor ultrapassa 25 km (`SUM(shifts.distance) > 25`) |
-| **Expressão lógica proposicional** | $A \land B \land C$ |
-| **Interpretação** | Um corredor só é exibido no ranking quando, simultaneamente: o turno está encerrado, o evento foi encerrado **e** a distância total acumulada ultrapassa 25 km |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$A \land B \land C$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
- 
+| **Proposições lógicas** | $A$: A equipe está ativa (`t.deleted_at IS NULL`) <br> $B$: O atleta está ativo (`a.deleted_at IS NULL`) <br> $C$: O turno foi concluído (`s.status = 'completed'`) |
+| **Expressão lógica proposicional** | $A \land (B \land C)$ para contabilizar distância; $A$ sozinho para listar a equipe |
+| **Interpretação** | Uma equipe só aparece no resultado se estiver ativa ($A$). Sua distância acumulada considera apenas turnos de atletas ativos cujos turnos foram concluídos ($B \land C$). O uso de `LEFT JOIN` garante que equipes sem nenhum turno concluído apareçam com `total_km = 0`, em vez de serem omitidas. |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$B \land C$</th><th>equipe listada</th><th>distância contada</th></tr></thead><tbody><tr><td>F</td><td>*</td><td>*</td><td>*</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>*</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
-#### Consulta 3: *Auditores mais ativos* — auditores que registraram mais de um turno encerrado durante o evento
+#### Consulta 3: *Dashboard do evento* — contagem de turnos ativos, encerrados e distância total
 
-&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar o evento (`events.end_at IS NOT NULL`), a consulta recupera o nome de todos os auditores que supervisionaram mais de um turno concluído durante as 24 horas de competição. Os auditores são listados em ordem decrescente pela quantidade de turnos auditados — do que supervisionou mais para o que supervisionou menos — sendo exibidos apenas aqueles que ultrapassaram o mínimo de um turno encerrado.
+&nbsp;&nbsp;&nbsp;&nbsp;A consulta agrega, em uma única varredura sobre `shifts`, três métricas simultâneas do evento: quantidade de turnos em andamento, quantidade de turnos concluídos e quilometragem total percorrida. O uso de `COUNT(*) FILTER (WHERE ...)` permite calcular contagens condicionais distintas sem subconsultas separadas, tornando a consulta eficiente para exibição em tempo real no dashboard.
 
 **Consulta SQL:**
 ```sql
 SELECT
-    auditors.name                  AS auditor,
-    COUNT(shifts.id)               AS total_turnos_auditados
-FROM shifts
-JOIN auditors  ON auditors.id  = shifts.auditor_id
-JOIN events    ON events.id    = shifts.event_id
-WHERE shifts.status        = 'completed'
-  AND auditors.is_active   = TRUE
-  AND events.end_at        IS NOT NULL
-GROUP BY auditors.id, auditors.name
-HAVING COUNT(shifts.id) > 1
-ORDER BY total_turnos_auditados DESC;
+    COUNT(*) FILTER (WHERE s.status = 'in_progress') AS active_shifts,
+    COUNT(*) FILTER (WHERE s.status = 'completed')   AS completed_shifts,
+    COALESCE(SUM(s.distance) FILTER (WHERE s.status = 'completed'), 0) AS total_km
+FROM shifts s
+JOIN athletes a ON a.id = s.athlete_id
+JOIN teams t    ON t.id = a.team_id
+WHERE t.event_id = $1
 ```
 
 <br>
@@ -3506,34 +3479,33 @@ ORDER BY total_turnos_auditados DESC;
 
 | | |
 |---|---|
-| **Proposições lógicas** | $A$: O turno está encerrado (`shifts.status = 'completed'`) <br> $B$: O auditor está ativo no sistema (`auditors.is_active = TRUE`) <br> $C$: O evento foi encerrado (`events.end_at IS NOT NULL`) <br> $D$: O auditor supervisionou mais de um turno encerrado (`COUNT(shifts.id) > 1`) |
-| **Expressão lógica proposicional** | $A \land B \land C \land D$ |
-| **Interpretação** | Um auditor só é listado quando, simultaneamente: o turno está encerrado, o auditor não foi desativado no sistema, o evento foi encerrado **e** sua contagem de turnos ultrapassa um |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$D$</th><th>$A \land B \land C \land D$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+| **Proposições lógicas** | $A$: O turno está em andamento (`s.status = 'in_progress'`) <br> $B$: O turno foi concluído (`s.status = 'completed'`) |
+| **Expressão lógica proposicional** | $A \lor B$ (cada turno contribui para exatamente um dos dois contadores) |
+| **Interpretação** | $A$ e $B$ são mutuamente exclusivos: um mesmo turno jamais satisfaz as duas condições ao mesmo tempo ($A \land B$ é sempre falso). Cada turno é contado uma única vez, no contador correspondente ao seu estado atual. Turnos `pending` não satisfazem nem $A$ nem $B$ e, portanto, não aparecem em nenhum dos agregados. |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th><th>$A \lor B$</th><th>contado em</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>nenhum</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td><td>completed_shifts</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td><td>active_shifts</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>impossível</td></tr></tbody></table> |
 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
 #### Consulta 4: *Encerramento de turno* — finalizar apenas turnos em andamento
 
-&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar um turno, o sistema atualiza o registro para `completed`, gravando o horário de fim (`end_at`), a quilometragem final, e calculando automaticamente a distância, a duração total e a velocidade média. A atualização só é aplicada quando o `id` informado corresponde a um turno **e** esse turno ainda está `in_progress` — o que impede reencerrar um turno já finalizado ou alterar um turno inexistente (nenhuma linha é afetada nesses casos). É uma consulta de escrita do tipo `UPDATE`, em contraste com as anteriores, demonstrando uma combinação distinta de condições.
+&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar um turno, o sistema atualiza o registro para `completed`, gravando o horário de fim gerado pelo banco (`NOW()`), a quilometragem final informada pelo auditor, e calculando automaticamente a distância percorrida, a duração total e a velocidade média. A atualização só é aplicada quando o `id` informado corresponde a um turno **e** esse turno ainda está `in_progress`, impedindo reencerrar um turno já finalizado ou alterar um inexistente. O `CASE` na velocidade evita divisão por zero quando o tempo decorrido é nulo.
 
 **Consulta SQL:**
 ```sql
 UPDATE shifts
 SET status     = 'completed',
     end_at     = NOW(),
-    km_end     = :km_end,
-    distance   = :km_end - km_start,
+    km_end     = $1,
+    distance   = $1 - km_start,
     total_time = NOW() - start_at,
     speed      = CASE
                    WHEN EXTRACT(EPOCH FROM (NOW() - start_at)) > 0
-                   THEN ROUND((:km_end - km_start) / (EXTRACT(EPOCH FROM (NOW() - start_at)) / 3600.0))
+                   THEN ROUND(($1 - km_start) / (EXTRACT(EPOCH FROM (NOW() - start_at)) / 3600.0))
                    ELSE 0
                  END
-WHERE id = :id
-  AND status = 'in_progress'
-RETURNING *;
+WHERE id = $2 AND status = 'in_progress'
+RETURNING *
 ```
 
 <br>
@@ -3542,9 +3514,9 @@ RETURNING *;
 
 | | |
 | :--- | :--- |
-| **Proposições lógicas** | **$A$**: Existe um turno com o identificador informado (`id = :id`)<br><br>**$B$**: O turno está em andamento (`status = 'in_progress'`) |
+| **Proposições lógicas** | **$A$**: Existe um turno com o identificador informado (`id = $2`)<br><br>**$B$**: O turno está em andamento (`status = 'in_progress'`) |
 | **Expressão lógica proposicional** | $A \land B$ |
-| **Interpretação** | O `UPDATE` só efetiva o encerramento quando ambas as condições são verdadeiras: o `id` corresponde a um turno existente **e** esse turno está em andamento. Turnos já encerrados (`completed`) ou inexistentes não satisfazem a cláusula `WHERE` e, portanto, não são alterados. |
+| **Interpretação** | O `UPDATE` só efetiva o encerramento quando ambas as condições são verdadeiras: o `id` corresponde a um turno existente **e** esse turno está em andamento. Turnos já encerrados (`completed`) ou inexistentes não satisfazem a cláusula `WHERE` e não são alterados — o `RETURNING *` retorna zero linhas nesses casos, sinal que o serviço usa para retornar 404. |
 | **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
