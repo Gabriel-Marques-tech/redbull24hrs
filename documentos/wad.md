@@ -3884,7 +3884,7 @@ _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com 
 ## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
 
 ---
-## 5.1.1 Estratégia de Testes
+### 5.1.1 Estratégia de Testes
 
 A estratégia de testes automatizados da WebAPI foi organizada considerando a separação por camadas da aplicação e o vínculo entre Requisitos Funcionais (RF), Regras de Negócio (RN), endpoints e casos de teste (CT).
 
@@ -3904,7 +3904,7 @@ A suíte também busca garantir determinismo, evitando dependência de ordem de 
 
 ---
 
-## 5.1.2 Testes Unitários de Service (White-Box)
+### 5.1.2 Testes Unitários de Service (White-Box)
 
 Os testes unitários de Service validam diretamente as regras internas do sistema. A prioridade foi dada às regras de autenticação, cadastro, início de turno, registro de checkpoint e finalização de turno, pois esses fluxos concentram as principais validações operacionais da aplicação.
 
@@ -3914,7 +3914,7 @@ A cobertura mínima esperada para a camada Service é de **80%**, evidenciada pe
 npm test -- --coverage
 ```
 
-### Casos prioritários de Service
+#### Casos prioritários de Service
 
 | CT   | RN coberta          | RF associado            | Camada  | Objetivo |
 | ---- | ------------------- | ----------------------- | ------- | -------- |
@@ -3924,7 +3924,7 @@ npm test -- --coverage
 | CT04 | RN06/RN07/RN32/RN33 | RF015/RF017/RF018/RF019 | Service | Validar finalização do turno e cálculo de distância, duração e velocidade média       |
 | CT05 | RN38/RN39/RN41      | RF027                   | Service | Validar autenticação segura, senha com hash, JWT e bloqueio de auditor inativo      |
 
-### CT01 – Bloqueio de corredor com turno em andamento
+#### CT01 – Bloqueio de corredor com turno em andamento
 
 **RN coberta:** RN01
 **RF associado:** RF007
@@ -3939,7 +3939,7 @@ npm test -- --coverage
 
 **Caminho de falha:** corredor já em execução não pode iniciar outro turno.
 
-### CT02 – Bloqueio de esteira ocupada
+#### CT02 – Bloqueio de esteira ocupada
 
 **RNs cobertas:** RN02 e RN19
 **RFs associados:** RF008 e RF004
@@ -3954,7 +3954,7 @@ npm test -- --coverage
 
 **Caminho de falha:** esteiras ocupadas não podem receber novo turno.
 
-### CT03 – Validação de checkpoint
+#### CT03 – Validação de checkpoint
 
 **RNs cobertas:** RN04 e RN34
 **RFs associados:** RF013 e RF032
@@ -3969,7 +3969,7 @@ npm test -- --coverage
 
 **Caminho de falha:** quilometragem menor ou tipo inválido deve ser rejeitado.
 
-### CT04 – Finalização de turno e cálculo automático
+#### CT04 – Finalização de turno e cálculo automático
 
 **RNs cobertas:** RN06, RN07, RN32 e RN33
 **RFs associados:** RF015, RF017, RF018 e RF019
@@ -3984,7 +3984,7 @@ npm test -- --coverage
 
 **Caminho de falha:** km final menor, velocidade negativa ou timestamp final anterior ao inicial devem ser rejeitados.
 
-### CT05 – Autenticação segura
+#### CT05 – Autenticação segura
 
 **RNs cobertas:** RN38, RN39 e RN41
 **RF associado:** RF027
