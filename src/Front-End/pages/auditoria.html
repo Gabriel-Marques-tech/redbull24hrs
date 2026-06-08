@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoria</title>
+
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/auditoria.css">
+</head>
+
+<body>
+    <div class="barra-gradiente"></div>
+
+    <header class="topo">
+        <div class="operador">
+            <span class="avatar"></span>
+
+            <div>
+                <small>Operador</small>
+                <p id="nomeOperador">Lucas Andrade</p>
+            </div>
+
+            <button class="btn-trocar" type="button">⇄</button>
+        </div>
+
+        <p class="tempo-restante">Restam <span id="tempoRestante">23:20:03</span></p>
+
+        <button class="btn-sair" type="button">↪</button>
+    </header>
+
+    <main class="conteudo-auditoria">
+        <section class="cronometro-area">
+            <div class="corredor-atual">
+                <small>Corredor atual</small>
+                <p>
+                    <span id="corredorAtual">Mariana Toledo</span>
+                    <button class="btn-editar" type="button">✎</button>
+                </p>
+            </div>
+
+            <div class="cronometro" id="cronometro">
+                00:00:00
+            </div>
+
+            <div class="acoes-corrida">
+                <button class="btn-iniciar" id="btnIniciar" type="button">
+                    Iniciar corrida
+                </button>
+
+                <button class="btn-esteira" type="button">
+                    <span id="numeroEsteira">1</span>
+                    <span>🏃</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="area-registros">
+            <div class="ultimos-registros">
+                <h2>Últimos registros</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Corredor</th>
+                            <th>Correu</th>
+                            <th>Esteira</th>
+                            <th>Início</th>
+                            <th>Fim</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tabelaRegistros">
+                        <tr>
+                            <td>Pietro Sansão</td>
+                            <td>4km</td>
+                            <td>Esteira 2</td>
+                            <td>12:02:53</td>
+                            <td>12:30:19</td>
+                        </tr>
+
+                        <tr>
+                            <td>Pietro Sansão</td>
+                            <td>2km</td>
+                            <td>Esteira 1</td>
+                            <td>12:02:53</td>
+                            <td>12:30:19</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <aside class="proximos-corredores">
+                <h2>Próximo corredor</h2>
+
+                <div class="corredor-fila">
+                    <span class="avatar"></span>
+                    <p>Pietro Sansão</p>
+                    <span class="drag">⠿</span>
+                </div>
+
+                <div class="corredor-fila">
+                    <span class="avatar"></span>
+                    <p>Gabriel Marques</p>
+                    <span class="drag">⠿</span>
+                </div>
+
+                <div class="corredor-fila">
+                    <span class="avatar"></span>
+                    <p>Laura Faria</p>
+                    <span class="drag">⠿</span>
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <script src="../js/auditoria.js"></script>
+</body>
+
+</html>
