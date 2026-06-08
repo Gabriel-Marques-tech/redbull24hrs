@@ -2219,47 +2219,47 @@ O que é: Divide a aplicação em três partes com funções diferentes. O Model
 **Onde se aplica no projeto:** Nos objetos de entrada dos endpoints de criação de turno, registro de checkpoint e finalização de turno, filtrando os campos antes de passar para os Services.
 
 
-**7. Strategy Pattern:**
+**7. Guard Clause (Cláusula de Guarda):**
 
 
-**Categoria:** Comportamental
+**Categoria:** Comportamental / Boas Práticas
 
 
-**O que é:** Permite ter diferentes formas de resolver um mesmo problema, onde cada forma fica separada e pode ser trocada sem alterar o restante do código.
+**O que é:** Cada pré-condição de um método é verificada no início da função, antes de qualquer lógica principal. Se a condição não for atendida, o método interrompe a execução imediatamente com um erro claro, sem processar o restante do fluxo.
 
 
-**Justificativa:** Ao encerrar um turno, o sistema precisa realizar diferentes cálculos, como distância percorrida, tempo total e velocidade média. Além disso, as verificações de inconsistência seguem lógicas diferentes dependendo do tipo de problema identificado, como gaps entre checkpoints ou quilometragem fora de ordem. O Strategy Pattern ajudou a separar cada uma dessas regras, facilitando a manutenção e permitindo adicionar novos critérios futuramente sem alterar os que já existem.
+**Justificativa:** Os Services concentram múltiplas regras de negócio que precisam ser validadas antes de qualquer acesso ao banco. Posicionar essas verificações no início de cada método, de forma sequencial e isolada, garante que o código principal só execute quando todas as pré-condições estão satisfeitas, evitando estados inconsistentes. O padrão também torna o fluxo de controle mais legível: ao ler um método de service, é imediato identificar quais condições inviabilizam a operação. Em `registerCheckpoint`, por exemplo, são verificados em sequência o tipo de checkpoint, a positividade da distância, o status do turno, a ordenação crescente de quilometragem e o intervalo máximo desde o último registro. Cada guarda tem responsabilidade única e pode ser alterada ou removida sem afetar as demais.
 
 
-**Onde se aplica no projeto:** Nas estratégias de cálculo de métricas ao encerrar um turno e nas verificações de consistência antes de persistir os dados de turnos e checkpoints.
+**Onde se aplica no projeto:** Nos métodos `startShift`, `registerCheckpoint` e `finishShift` do `shiftService`, onde cada guard clause corresponde a uma regra de negócio independente, verificada antes da persistência dos dados.
 
 
 #### 3.2.7.2 Frontend
 
 ---
-O desenvolvimento do frontend do projeto demandou atenção especial à organização dos componentes, dado que a aplicação opera em contextos distintos: interface de auditoria em campo, modo TV e tela de configuração do setup, cada um com requisitos de atualização, legibilidade e reuso diferentes. Os padrões a seguir foram adotados para lidar com essa complexidade de forma estruturada.
+O desenvolvimento do frontend seguiu uma abordagem progressiva, compatível com o estágio atual do projeto. As páginas de interface estão implementadas em HTML e CSS estáticos, sem dependência de frameworks ou bundlers, o que permitiu iteração rápida sobre o layout e a estrutura visual nas primeiras sprints. Os padrões descritos a seguir refletem as decisões tomadas para organizar essa camada, considerando tanto o que já está implementado quanto a arquitetura planejada para a adição da camada JavaScript nas próximas sprints.
 
 
 **8. Component Pattern:**
 
 **Categoria:** Estrutural
 
-**O que é:** A interface é construída com componentes independentes e reutilizáveis, cada um com uma responsabilidade só ¹⁷.
+**O que é:** A interface é construída com elementos independentes e reutilizáveis, cada um com uma responsabilidade só ¹⁷.
 
-**Justificativa:** A interface possui vários elementos reutilizados em diferentes telas, como cartões de status, formulários e indicadores de quilometragem. Sem componentes reutilizáveis, qualquer alteração visual precisaria ser feita manualmente em cada página. Com os componentes isolados, uma mudança feita em um único lugar já reflete em toda a aplicação. Isso foi especialmente importante nas últimas sprints, quando o design passou por ajustes após os testes de usabilidade realizados com os auditores.
+**Justificativa:** Mesmo em HTML e CSS estáticos, é possível estabelecer uma linguagem visual consistente por meio de um sistema de estilos compartilhados. O projeto organiza o CSS em dois níveis: `global.css`, que define variáveis, tipografia e elementos reutilizados em todas as telas, e arquivos de estilo específicos por página, que estendem esse sistema sem duplicar regras. Isso garante que alterações visuais transversais, como cor de destaque ou espaçamento padrão, sejam feitas em um único ponto e reflitam automaticamente em todas as páginas.
 
-**Onde se aplica no projeto:** Nos componentes de cartão de esteira, formulários de cadastro de atletas e equipes, modal de checkpoint e indicadores de placar.
+**Onde se aplica no projeto:** No sistema de estilos compartilhados (`global.css` + CSS por página) e nos elementos HTML estruturais reutilizados entre telas, como a barra de gradiente superior e o padrão de navegação lateral por etapas.
 
 
 **9. Container/Presentational Pattern:**
 
 **Categoria:** Arquitetural / Frontend
 
-**O que é:** Padrão de projeto que divide os componentes de interface em duas responsabilidades distintas. Os Container Components são responsáveis pela lógica de negócio: buscam dados, gerenciam estado e coordenam efeitos colaterais. Os Presentational Components, por sua vez, são puramente declarativos — recebem dados via props e se limitam à renderização da interface, sem conhecimento algum da origem ou transformação desses dados ¹⁷.
+**O que é:** Padrão de projeto que divide os componentes de interface em duas responsabilidades distintas. Os Container Components são responsáveis pela lógica de negócio: buscam dados, gerenciam estado e coordenam efeitos colaterais. Os Presentational Components, por sua vez, são puramente declarativos, recebem dados e se limitam à renderização da interface, sem conhecimento da origem ou transformação desses dados ¹⁷.
 
-**Justificativa:** O fluxo de configuração da auditoria envolve múltiplas etapas interdependentes — seleção de corrida, equipe e esteira — o que gera um estado complexo e mutável ao longo da navegação. A mistura de lógica de busca e regras de progressão diretamente nos componentes visuais resultaria em alto acoplamento, dificultando testes, manutenção e reuso. A adoção deste padrão isola essas responsabilidades: o componente Container gerencia em qual etapa o usuário se encontra e persiste as escolhas realizadas, enquanto os componentes apresentacionais de cada etapa exibem listas e controles de forma desacoplada e coesa.
+**Justificativa:** O fluxo de configuração da auditoria envolve etapas interdependentes, como a seleção de corrida, equipe e esteira, o que gera estado que precisa persistir ao longo da navegação. Na estrutura HTML atual, essa separação já é refletida na distinção entre `<aside class="etapas">`, que representa o estado de progressão do assistente de etapas, e `<section class="conteudo">`, que renderiza o conteúdo específico de cada etapa. A camada de lógica de estado e busca de dados, que completará esse padrão, está prevista para ser implementada em JavaScript nas sprints de desenvolvimento do frontend.
 
-**Onde se aplica no projeto:** Tela de Setup da Auditoria (Assistente de Etapas), onde o Container controla o progresso e as seleções do usuário; e Tela de Registro de Turnos, onde o Container gerencia a contagem e o fluxo dos dados dinâmicos, delegando exclusivamente a renderização aos componentes visuais.
+**Onde se aplica no projeto:** Na estrutura HTML da tela de setup da auditoria (`competição.html`), onde a barra lateral de etapas e a seção de conteúdo já refletem a separação estrutural entre controle de estado e renderização.
 
 
 **10. MVVM (Model-View-ViewModel):**
@@ -2268,9 +2268,9 @@ O desenvolvimento do frontend do projeto demandou atenção especial à organiza
 
 **O que é:** Padrão arquitetural que segrega a interface do usuário (View), a lógica de apresentação (ViewModel) e os dados brutos (Model). O ViewModel atua como camada intermediária: transforma, formata e prepara os dados provenientes do Model para que a View possa exibi-los sem realizar conversões ou processamentos diretamente ¹⁸.
 
-**Justificativa:** Os dados retornados pelo servidor, como identificadores numéricos, carimbos de data/hora em formato UTC e códigos de status, não estão em formato adequado para exibição direta ao usuário final. Delegar essas transformações à View violaria o princípio de responsabilidade única e tornaria os componentes visuais frágeis e difíceis de testar isoladamente. O ViewModel centraliza a formatação de datas de competições passadas, a concatenação de nomes de equipes e a preparação do resumo de configuração exibido antes do início do registro de turnos, mantendo a View coesa e focada exclusivamente na apresentação.
+**Justificativa:** Os dados retornados pelo servidor, como identificadores numéricos, carimbos de data/hora em formato UTC e códigos de status, não estão em formato adequado para exibição direta. Delegar essas transformações à View violaria o princípio de responsabilidade única e tornaria os componentes visuais frágeis. O padrão será aplicado na camada JavaScript do frontend, com ViewModels responsáveis por formatar datas, converter códigos de status em rótulos legíveis e preparar os resumos exibidos nas telas de confirmação. Na versão atual, os dados exibidos nas páginas HTML são estáticos e representam a estrutura visual planejada para essa camada.
 
-**Onde se aplica no projeto:** ViewModels responsáveis pelo tratamento dos dados na listagem do Histórico de Competições (Tela Inicial) e na Tela de Confirmação/Resumo do Setup, exibida imediatamente antes do início do registro dos turnos.
+**Onde se aplica no projeto:** Previsto para a listagem do Histórico de Competições (Tela Inicial) e para a Tela de Confirmação do Setup, a serem implementadas com JavaScript nas próximas sprints.
 
 
 
@@ -2282,7 +2282,7 @@ Os princípios SOLID são cinco diretrizes de design de software definidas por R
 
 **S — Single Responsibility Principle (Princípio da Responsabilidade Única):** Define que cada classe ou módulo deve ter apenas uma razão para mudar, ou seja, deve ser responsável por uma única parte do comportamento do sistema ¹⁵. No projeto, isso se traduz na divisão clara entre Controller, Service e Repository. O Controller recebe a requisição HTTP, o Service aplica as regras de negócio e o Repository acessa o banco. Nenhum dos três faz o trabalho do outro, o que torna cada mudança mais segura e previsível.
 
-**O — Open/Closed Principle (Princípio do Aberto/Fechado):** Define que um módulo deve estar aberto para extensão, mas fechado para modificação, ou seja, deve ser possível adicionar novos comportamentos sem alterar o código existente ¹⁵. No projeto, o Strategy Pattern para os cálculos de turno aplica esse princípio diretamente: um novo critério de validação pode ser adicionado como uma nova estratégia sem tocar nas que já existem.
+**O — Open/Closed Principle (Princípio do Aberto/Fechado):** Define que um módulo deve estar aberto para extensão, mas fechado para modificação, ou seja, deve ser possível adicionar novos comportamentos sem alterar o código existente ¹⁵. No projeto, o Service Layer aplica esse princípio por meio das guard clauses de validação: cada verificação de negócio está isolada no início dos métodos de service, de modo que um novo critério pode ser adicionado sem alterar as verificações existentes. O mesmo vale para os Repositories, onde novos métodos de acesso ao banco podem ser incluídos sem modificar os que já existem.
 
 **L — Liskov Substitution Principle (Princípio da Substituição de Liskov):** Define que implementações de uma mesma abstração devem ser intercambiáveis sem que o código que as utiliza precise ser alterado ¹⁵. No projeto, isso ficou evidente nos testes: os repositórios reais puderam ser substituídos por mocks sem que os Services precisassem mudar, o que viabilizou os testes com Jest e supertest sem depender de uma conexão real com o banco.
 
