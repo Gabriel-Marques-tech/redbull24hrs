@@ -1589,7 +1589,7 @@ Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio 
 | RN24 | A edição de quilometragem em um checkpoint só é válida se o novo valor for maior ou igual ao checkpoint imediatamente anterior e menor ou igual ao checkpoint imediatamente posterior do mesmo turno.                                                                                                      | RF023 |
 | RN25 | O sistema deve marcar como inconsistente qualquer turno onde: (a) km_final < km_inicial; (b) gap entre checkpoints superior a 10 minutos sem justificativa registrada; (c) corredor com dois turnos simultâneos. Inconsistências devem ser sinalizadas no dashboard sem bloquear a operação em andamento.  | RF028, RF044, RF045, RF046 |
 | RN26 | O CSV exportado deve conter duas seções: (1) turnos — corredor, equipe, esteira, km*inicial, km_final, duracao_min, timestamp_inicio, timestamp_fim; (2) checkpoints — turno_id, km, timestamp, tipo. O nome do arquivo deve seguir o padrão evento*{local}\_{data-ISO}.csv.                               | RF047, RF048 |
-| RN27 | Em caso de ausência de conexão, os registros devem ser persistidos localmente com o timestamp original do momento do registro. Ao restabelecer conexão, a sincronização deve ocorrer automaticamente sem duplicar registros, preservando a ordem cronológica original.                                     | RF025, RF026 |
+| RN27 | Em caso de ausência de conexão, os registros devem ser persistidos localmente com o timestamp original do momento do registro. Ao restabelecer conexão, a sincronização deve ocorrer automaticamente em até 30 segundos, sem duplicar registros, preservando a ordem cronológica original.                | RF025, RF026 |
 | RN28 | O evento deve ter exatamente duas equipes cadastradas antes do início do primeiro turno. A tentativa de iniciar qualquer turno sem que ambas as equipes estejam presentes deve ser bloqueada. | RF001, RF003 |
 | RN29 | O título e o local de um evento devem ser únicos no sistema. Não é permitido cadastrar dois eventos com o mesmo título ou com o mesmo local simultaneamente. | RF051 |
 | RN30 | O CPF de gerentes, auditores e atletas, quando informado, deve conter exatamente 11 dígitos numéricos. Valores em formato diferente devem ser rejeitados antes da persistência. | RF027 |
@@ -1705,24 +1705,24 @@ Essas restrições podem atuar de forma transversal no sistema, impactando sua o
 
 | ID         | Eixo                  | RF Relacionado                           | Requisito Não Funcional                                                                                                                               | Critério Mensurável (SMART)                                                                                                                                   |
 | :--------- | :-------------------- | :--------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **RNF001** | USAB — Usabilidade    | RF004, RF005, RF006, RF007, RF009, RF022 | O fluxo principal de operação (troca de corredores e início de turno) deve ser ágil para o Auditor.                                                   | **95%** dos operadores devem concluir o fluxo de início/troca em até **3 minutos** (via testes de usabilidade).                                               |
-| **RNF002** | USAB — Usabilidade    | RF013, RF025                             | O sistema deve manter alta legibilidade visual em ambientes externos e no modo TV.                                                                    | A interface deve atender ao nível **AA da WCAG 2.1** com contraste mínimo de **4.5:1** e fonte ≥ 48px no modo TV.                                             |
+| **RNF001** | USAB — Usabilidade    | RF004, RF005, RF006, RF007, RF009, RF034 | O fluxo principal de operação (troca de corredores e início de turno) deve ser ágil para o Auditor.                                                   | **95%** dos operadores devem concluir o fluxo de início/troca em até **3 minutos** (via testes de usabilidade).                                               |
+| **RNF002** | USAB — Usabilidade    | RF040                                    | O sistema deve manter alta legibilidade visual em ambientes externos e no modo TV.                                                                    | A interface deve atender ao nível **AA da WCAG 2.1** com contraste mínimo de **4.5:1** e fonte ≥ 48px no modo TV.                                             |
 | **RNF003** | USAB — Usabilidade    | Global                                   | O sistema deve fornecer mensagens de erro com ações corretivas claras, evitando códigos técnicos.                                                     | **100%** das mensagens de erro de validação devem sugerir a correção (ex: "km final deve ser > km inicial").                                                  |
-| **RNF004** | USAB — Usabilidade    | RF007, RF008, RF022                      | O sistema deve minimizar a quantidade de cliques e telas necessárias para que o Auditor execute ações operacionais urgentes durante o uso da esteira. | Nenhuma ação operacional crítica (início/checkpoint/troca) deve exigir mais de **3 cliques/toques**.                                                          |
-| **RNF005** | CONF — Confiabilidade | RF016                                    | O sistema deve possuir tolerância a falhas de rede, permitindo a operação contínua do evento.                                                         | **100%** dos dados registrados offline devem ser sincronizados em até **30 segundos** após a reconexão, sem duplicidade.                                      |
+| **RNF004** | USAB — Usabilidade    | RF007, RF008, RF034                      | O sistema deve minimizar a quantidade de cliques e telas necessárias para que o Auditor execute ações operacionais urgentes durante o uso da esteira. | Nenhuma ação operacional crítica (início/checkpoint/troca) deve exigir mais de **3 cliques/toques**.                                                          |
+| **RNF005** | CONF — Confiabilidade | RF025, RF026                             | O sistema deve possuir tolerância a falhas de rede, permitindo a operação contínua do evento.                                                         | **100%** dos dados registrados offline devem ser sincronizados em até **30 segundos** após a reconexão, sem duplicidade.                                      |
 | **RNF006** | CONF — Confiabilidade | Global                                   | O sistema deve garantir a integridade transacional, impedindo dados que firam as regras de negócio.                                                   | **100%** das tentativas de persistência de dados inválidos (ex: duplicatas) devem ser bloqueadas no servidor.                                                 |
-| **RNF007** | CONF — Confiabilidade | RF018, RF028 | O sistema deve ser resiliente na detecção de falhas operacionais e inconsistências lógicas. | **100%** das inconsistências definidas no RF028 devem gerar alertas sonoros/visuais automáticos. |
+| **RNF007** | CONF — Confiabilidade | RF028, RF029, RF030, RF031, RF039, RF044, RF045, RF046, RF053 | O sistema deve ser resiliente na detecção de falhas operacionais e inconsistências lógicas, gerando alertas e permitindo revisão pelo Auditor antes da persistência final. | **100%** das inconsistências definidas em RF044, RF045 e RF046 devem gerar alertas visuais automáticos (RF029) em até **100ms** da detecção; alertas sonoros (RF030) devem ser emitidos quando habilitados; o Auditor deve poder revisar e corrigir cada inconsistência antes da confirmação (RF031). |
 | **RNF008** | DES — Desempenho      | RF007, RF008, RF009, RF010, RF021        | O sistema deve processar os registros operacionais de turnos e checkpoints com baixa latência.                                                        | O tempo de resposta da API para registros operacionais (P95) deve ser inferior a **200ms**.                                                                   |
 | **RNF009** | DES — Desempenho      | Global                                   | O sistema deve fornecer feedback visual imediato após ações do usuário na interface.                                                                  | Alertas de inconsistência e validações de campo devem ser exibidos em até **100ms**.                                                                          |
-| **RNF010** | DES — Desempenho      | RF013, RF025                             | O dashboard e o modo TV devem apresentar dados atualizados de forma contínua para o público.                                                          | A atualização automática de métricas e placares deve ocorrer em no máximo **10 segundos** sem recarregamento manual.                                          |
-| **RNF011** | DES — Desempenho      | RF011, RF012, RF023, RF029               | O sistema deve consolidar e exibir as estatísticas de desempenho final de forma quase instantânea.                                                    | O processamento e renderização de métricas consolidadas deve ser concluído em até **1 segundo**.                                                              |
-| **RNF012** | SEG — Segurança       | RF017                                    | O sistema deve aplicar controle de acesso estrito para perfis administrativos e de auditoria.                                                         | **100%** das tentativas de acesso sem autenticação válida (Login/Senha) devem ser rejeitadas com erro 401.                                                    |
-| **RNF013** | SEG — Segurança       | RF015, Global                            | O sistema deve manter uma trilha de auditoria para edições retroativas e alterações críticas.                                                         | **100%** das edições devem registrar obrigatoriamente: `Usuário`, `Timestamp` e `Dado Anterior`.                                                              |
+| **RNF010** | DES — Desempenho      | RF021, RF038                             | O dashboard e o modo TV devem apresentar dados atualizados de forma contínua para o público.                                                          | A atualização automática de métricas e placares deve ocorrer em no máximo **10 segundos** sem recarregamento manual.                                          |
+| **RNF011** | DES — Desempenho      | RF020, RF035, RF036, RF037, RF049        | O sistema deve consolidar e exibir as estatísticas de desempenho final de forma quase instantânea.                                                    | O processamento e renderização de métricas consolidadas deve ser concluído em até **1 segundo**.                                                              |
+| **RNF012** | SEG — Segurança       | RF027, RF050                             | O sistema deve aplicar controle de acesso estrito para perfis administrativos e de auditoria.                                                         | **100%** das tentativas de acesso a recursos protegidos sem autenticação válida (Login/Senha) devem ser rejeitadas com erro 401, exceto endpoints públicos explicitamente definidos (ex: link de compartilhamento de métricas — RF050). |
+| **RNF013** | SEG — Segurança       | RF022, RF023, RF024                      | O sistema deve manter uma trilha de auditoria para edições retroativas e alterações críticas, exibível em ordem cronológica decrescente.              | **100%** das edições devem registrar obrigatoriamente: `Usuário`, `Timestamp` e `Dado Anterior`; o log deve ser consultável em ordem decrescente de timestamp (RF022). |
 | **RNF014** | SUP — Suportabilidade | Global                                   | A arquitetura do sistema deve isolar o processamento e as regras de negócio exclusivamente na API (Backend).                                          | A camada visual (Frontend) deve atuar apenas como consumidora; **100%** dos cálculos estatísticos e validações de regras de negócio devem ocorrer no backend. |
-| **RNF015** | SUP — Suportabilidade | Global                                   | O código-fonte deve garantir facilidade de suporte técnico através de testes automatizados.                                                           | Cobertura mínima de **75% em testes unitários** nos módulos de sincronização e regras de inconsistência.                                                      |
+| **RNF015** | SUP — Suportabilidade | Global                                   | O código-fonte deve garantir facilidade de suporte técnico através de testes automatizados.                                                           | Cobertura mínima de **75% (global) em testes automatizados** sobre todos os módulos de backend, aferida por `npm test -- --coverage`.                        |
 | **RNF016** | CAP — Capacidade      | Global                                   | O sistema deve suportar múltiplos acessos simultâneos (Auditores + Modo TV + Registros).                                                              | Suportar no mínimo **50 usuários simultâneos** ativos mantendo o tempo de resposta geral abaixo de **500ms**.                                                 |
-| **RNF017** | CAP — Capacidade      | RF014, RF023, RF026, RF028               | O sistema deve manter o desempenho ao lidar com o histórico acumulado de logs e turnos.                                                               | Consultas e exportações de até **10.000 registros** de histórico não devem ultrapassar **3 segundos** de processamento.                                       |
-| **RNF018** | REST — Restrições     | Global                                   | A compatibilidade do sistema cliente é restrita aos dispositivos e navegadores definidos para a operação do evento.                                   | A operação do sistema é garantida exclusivamente em **Tablets Android 10+** rodando as duas últimas versões estáveis dos navegadores **Chrome ou Safari**.    |
+| **RNF017** | CAP — Capacidade      | RF014, RF022, RF023, RF026, RF028, RF041, RF042, RF043, RF047, RF048 | O sistema deve manter o desempenho ao lidar com o histórico acumulado de logs e turnos, inclusive sob filtros e exportações. | Consultas filtradas (RF041-RF043) e exportações CSV (RF047, RF048) de até **10.000 registros** de histórico não devem ultrapassar **3 segundos** de processamento. |
+| **RNF018** | REST — Restrições     | Global                                   | A compatibilidade do sistema cliente é restrita aos dispositivos e navegadores definidos para a operação do evento.                                   | A operação do sistema é garantida exclusivamente em **Tablets Android 10+** rodando as duas últimas versões estáveis dos navegadores **Chrome ou Firefox**.   |
 | **RNF019** | REST — Restrições     | Global                                   | O sistema possui restrição de dependência externa para garantir a autonomia da operação principal.                                                    | Nenhuma funcionalidade de registro pode travar ou falhar devido à indisponibilidade de APIs externas.                                                         |
 | **RNF020** | ORG — Organizacionais | Global                                   | A interface deve respeitar a identidade visual do parceiro e patrocinadores do evento.                                                                | **100%** dos componentes de UI devem seguir o _Design System_ aprovado, validado em auditoria pré-sprint.                                                     |
 | **RNF021** | ORG — Organizacionais | Global                                   | O desenvolvimento do sistema deve ser concluído e bloqueado com antecedência para garantir a segurança da operação ao vivo.                           | A versão final do software deve ser testada, aprovada e bloqueada para novas alterações com pelo menos **30 dias de antecedência** da data do evento.         |
@@ -1750,18 +1750,18 @@ Na sprint 1, os RNFs foram definidos em nível conceitual, com critérios mensur
 | **RNF004** | USAB | Cada operação crítica (início, checkpoint, encerramento) resolvida em um único endpoint, minimizando idas ao servidor; contagem de cliques validada no frontend. | `shiftRoutes.ts` |
 | **RNF005** | CONF | Estratégia de *upsert* idempotente (`ON CONFLICT ... DO UPDATE` com checagem cronológica) definida (seção 3.6.4) e unicidade garantida por PK; exposição em lote via `POST /audit/sync` prevista para a sprint 4 (Quadro 31). | Consulta 1 (3.6.4); PK em `checkpoints` |
 | **RNF006** | CONF | Integridade transacional garantida em duas camadas: `CHECK`/`FK`/`UNIQUE` no banco e validações no Service antes da persistência. | `001_initialSchema.sql`; `shiftService.ts` |
-| **RNF007** | CONF | Detecção de inconsistências operacionais implementada: rotação de esteira (30 min), inatividade de checkpoint (5 min) e rejeição de intervalo > 10 min e de km fora de ordem. | `alertsRepository.ts`, `alertsService.ts`, `shiftService.ts` |
+| **RNF007** | CONF | Detecção de inconsistências operacionais implementada (RF044-RF046, RF053): rotação de esteira RF039 (30 min), inatividade RF053 (5 min), intervalo > 10 min RF045 e km fora de ordem RF044; alertas visuais e sonoros RF029/RF030 são responsabilidade do frontend; fluxo de revisão RF031 suportado pelo retorno de erro antes da persistência. | `alertsRepository.ts`, `alertsService.ts`, `shiftService.ts` |
 | **RNF008** | DES | Consultas operacionais atendidas por índices sobre todas as FKs e *pool* de conexões; aferição formal de p95 prevista para a sprint 4. | índices em `001_initialSchema.sql`; `connection.ts` |
 | **RNF009** | DES | Feedback imediato de validação suportado por respostas de erro síncronas e específicas da API; renderização em 100 ms é responsabilidade do frontend. | `shiftService.ts` / controllers |
 | **RNF010** | DES | Métricas e placar disponibilizados por endpoint de dashboard consultável; o ciclo de atualização ≤ 10 s é feito por *polling* no frontend. | `GET /metrics/events/:id/dashboard` |
-| **RNF011** | DES | Estatísticas consolidadas calculadas via consultas SQL agregadas sobre colunas indexadas; aferição de tempo prevista para a sprint 4. | `metricsRepository.ts` |
-| **RNF012** | SEG | Camada de autenticação implementada: senha com hash **bcrypt (custo 10)**, **JWT** de acesso (15 min) e *refresh token* rotativo armazenado como hash SHA-256, com *middleware* de autenticação (401) e de autorização por perfil (403). | `authService.ts`, `middlewares/authMiddleware.ts`, `utils/jwt.ts` |
-| **RNF013** | SEG | Esquema de trilha de auditoria em vigor (tabela `logs` com `type` ∈ {created, updated, finished} e `timestamp` do servidor); endpoint de consulta do log (RF024) previsto para a sprint 4. | tabela `logs` (`001_initialSchema.sql`) |
+| **RNF011** | DES | Estatísticas consolidadas calculadas via consultas SQL agregadas sobre colunas indexadas, cobrindo RF035 (distância total por corredor), RF036 (média por turno) e RF037 (snapshots a cada 60 min); aferição de tempo (≤ 1s) prevista para a sprint 4. | `metricsRepository.ts` |
+| **RNF012** | SEG | Camada de autenticação implementada: senha com hash **bcrypt (custo 10)**, **JWT** de acesso (15 min) e *refresh token* rotativo armazenado como hash SHA-256, com *middleware* de autenticação (401) e de autorização por perfil (403); endpoint público de RF050 (compartilhamento de métricas sem login) deve ser implementado sem passar pelo middleware de autenticação. | `authService.ts`, `middlewares/authMiddleware.ts`, `utils/jwt.ts` |
+| **RNF013** | SEG | Esquema de trilha de auditoria em vigor (tabela `logs` com `type` ∈ {created, updated, finished} e `timestamp` do servidor); exibição do histórico em ordem decrescente (RF022) e endpoint de consulta do log (RF024) previstos para a sprint 4. | tabela `logs` (`001_initialSchema.sql`) |
 | **RNF014** | SUP | Arquitetura em camadas Controller–Service–Repository com **100% das regras de negócio concentradas no Service**; Controllers só tratam HTTP e Repositories só acessam o banco. | `src/services/`, `src/controllers/`, `src/repositories/` |
-| **RNF015** | SUP | Suíte de testes automatizados (Jest + Supertest) com **cobertura de 95,95% na camada Service** (global 78,7%), acima do mínimo de 75%. | `src/__tests__/`; `npm test -- --coverage` |
+| **RNF015** | SUP | Suíte de testes automatizados (Jest + Supertest) com **cobertura global de 78,7%** (95,95% na camada Service), acima do mínimo de 75% sobre todos os módulos de backend. | `src/__tests__/`; `npm test -- --coverage` |
 | **RNF016** | CAP | Acesso concorrente suportado por *pool* de conexões PostgreSQL (`max: 15`, `idleTimeout 30s`, `connectionTimeout 5s`); teste de carga (50 usuários) previsto para a sprint 4. | `connection.ts` |
-| **RNF017** | CAP | Consultas de histórico e exportação aceleradas por índices secundários sobre as FKs; aferição com 10 mil registros prevista para a sprint 4. | índices em `001_initialSchema.sql` |
-| **RNF018** | REST | Restrição de cliente (Tablets Android 10+, Chrome/Safari) tratada na camada de frontend/implantação; sem impacto no contrato da API. | — (frontend/deploy) |
+| **RNF017** | CAP | Consultas de histórico (RF022), filtros por equipe/esteira/corredor (RF041-RF043) e exportações CSV (RF047, RF048) aceleradas por índices secundários sobre as FKs; aferição com 10 mil registros (≤ 3s) prevista para a sprint 4. | índices em `001_initialSchema.sql` |
+| **RNF018** | REST | Restrição de cliente (Tablets Android 10+, Chrome/Firefox) tratada na camada de frontend/implantação; sem impacto no contrato da API. | — (frontend/deploy) |
 | **RNF019** | REST | Autonomia operacional garantida: o backend não depende de nenhuma API/SDK externo — apenas `express`, `pg`, `bcrypt`, `jsonwebtoken`, `dotenv` e `natural-compare`. | `package.json` |
 | **RNF020** | ORG | Identidade visual aplicada no Guia de Estilos (seção 3.4) e consumida pelo frontend; conformidade dos componentes validada no desenvolvimento da interface. | seção 3.4 (Guia de Estilos) |
 | **RNF021** | ORG | Congelamento da versão com antecedência é uma diretriz de processo a ser cumprida na sprint 5 (entrega final). | — (processo, sprint 5) |
@@ -2287,47 +2287,47 @@ O que é: Divide a aplicação em três partes com funções diferentes. O Model
 **Onde se aplica no projeto:** Nos objetos de entrada dos endpoints de criação de turno, registro de checkpoint e finalização de turno, filtrando os campos antes de passar para os Services.
 
 
-**7. Strategy Pattern:**
+**7. Guard Clause (Cláusula de Guarda):**
 
 
-**Categoria:** Comportamental
+**Categoria:** Comportamental / Boas Práticas
 
 
-**O que é:** Permite ter diferentes formas de resolver um mesmo problema, onde cada forma fica separada e pode ser trocada sem alterar o restante do código.
+**O que é:** Cada pré-condição de um método é verificada no início da função, antes de qualquer lógica principal. Se a condição não for atendida, o método interrompe a execução imediatamente com um erro claro, sem processar o restante do fluxo.
 
 
-**Justificativa:** Ao encerrar um turno, o sistema precisa realizar diferentes cálculos, como distância percorrida, tempo total e velocidade média. Além disso, as verificações de inconsistência seguem lógicas diferentes dependendo do tipo de problema identificado, como gaps entre checkpoints ou quilometragem fora de ordem. O Strategy Pattern ajudou a separar cada uma dessas regras, facilitando a manutenção e permitindo adicionar novos critérios futuramente sem alterar os que já existem.
+**Justificativa:** Os Services concentram múltiplas regras de negócio que precisam ser validadas antes de qualquer acesso ao banco. Posicionar essas verificações no início de cada método, de forma sequencial e isolada, garante que o código principal só execute quando todas as pré-condições estão satisfeitas, evitando estados inconsistentes. O padrão também torna o fluxo de controle mais legível: ao ler um método de service, é imediato identificar quais condições inviabilizam a operação. Em `registerCheckpoint`, por exemplo, são verificados em sequência o tipo de checkpoint, a positividade da distância, o status do turno, a ordenação crescente de quilometragem e o intervalo máximo desde o último registro. Cada guarda tem responsabilidade única e pode ser alterada ou removida sem afetar as demais.
 
 
-**Onde se aplica no projeto:** Nas estratégias de cálculo de métricas ao encerrar um turno e nas verificações de consistência antes de persistir os dados de turnos e checkpoints.
+**Onde se aplica no projeto:** Nos métodos `startShift`, `registerCheckpoint` e `finishShift` do `shiftService`, onde cada guard clause corresponde a uma regra de negócio independente, verificada antes da persistência dos dados.
 
 
 #### 3.2.7.2 Frontend
 
 ---
-O desenvolvimento do frontend do projeto demandou atenção especial à organização dos componentes, dado que a aplicação opera em contextos distintos: interface de auditoria em campo, modo TV e tela de configuração do setup, cada um com requisitos de atualização, legibilidade e reuso diferentes. Os padrões a seguir foram adotados para lidar com essa complexidade de forma estruturada.
+O desenvolvimento do frontend seguiu uma abordagem progressiva, compatível com o estágio atual do projeto. As páginas de interface estão implementadas em HTML e CSS estáticos, sem dependência de frameworks ou bundlers, o que permitiu iteração rápida sobre o layout e a estrutura visual nas primeiras sprints. Os padrões descritos a seguir refletem as decisões tomadas para organizar essa camada, considerando tanto o que já está implementado quanto a arquitetura planejada para a adição da camada JavaScript nas próximas sprints.
 
 
 **8. Component Pattern:**
 
 **Categoria:** Estrutural
 
-**O que é:** A interface é construída com componentes independentes e reutilizáveis, cada um com uma responsabilidade só ¹⁷.
+**O que é:** A interface é construída com elementos independentes e reutilizáveis, cada um com uma responsabilidade só ¹⁷.
 
-**Justificativa:** A interface possui vários elementos reutilizados em diferentes telas, como cartões de status, formulários e indicadores de quilometragem. Sem componentes reutilizáveis, qualquer alteração visual precisaria ser feita manualmente em cada página. Com os componentes isolados, uma mudança feita em um único lugar já reflete em toda a aplicação. Isso foi especialmente importante nas últimas sprints, quando o design passou por ajustes após os testes de usabilidade realizados com os auditores.
+**Justificativa:** Mesmo em HTML e CSS estáticos, é possível estabelecer uma linguagem visual consistente por meio de um sistema de estilos compartilhados. O projeto organiza o CSS em dois níveis: `global.css`, que define variáveis, tipografia e elementos reutilizados em todas as telas, e arquivos de estilo específicos por página, que estendem esse sistema sem duplicar regras. Isso garante que alterações visuais transversais, como cor de destaque ou espaçamento padrão, sejam feitas em um único ponto e reflitam automaticamente em todas as páginas.
 
-**Onde se aplica no projeto:** Nos componentes de cartão de esteira, formulários de cadastro de atletas e equipes, modal de checkpoint e indicadores de placar.
+**Onde se aplica no projeto:** No sistema de estilos compartilhados (`global.css` + CSS por página) e nos elementos HTML estruturais reutilizados entre telas, como a barra de gradiente superior e o padrão de navegação lateral por etapas.
 
 
 **9. Container/Presentational Pattern:**
 
 **Categoria:** Arquitetural / Frontend
 
-**O que é:** Padrão de projeto que divide os componentes de interface em duas responsabilidades distintas. Os Container Components são responsáveis pela lógica de negócio: buscam dados, gerenciam estado e coordenam efeitos colaterais. Os Presentational Components, por sua vez, são puramente declarativos — recebem dados via props e se limitam à renderização da interface, sem conhecimento algum da origem ou transformação desses dados ¹⁷.
+**O que é:** Padrão de projeto que divide os componentes de interface em duas responsabilidades distintas. Os Container Components são responsáveis pela lógica de negócio: buscam dados, gerenciam estado e coordenam efeitos colaterais. Os Presentational Components, por sua vez, são puramente declarativos, recebem dados e se limitam à renderização da interface, sem conhecimento da origem ou transformação desses dados ¹⁷.
 
-**Justificativa:** O fluxo de configuração da auditoria envolve múltiplas etapas interdependentes — seleção de corrida, equipe e esteira — o que gera um estado complexo e mutável ao longo da navegação. A mistura de lógica de busca e regras de progressão diretamente nos componentes visuais resultaria em alto acoplamento, dificultando testes, manutenção e reuso. A adoção deste padrão isola essas responsabilidades: o componente Container gerencia em qual etapa o usuário se encontra e persiste as escolhas realizadas, enquanto os componentes apresentacionais de cada etapa exibem listas e controles de forma desacoplada e coesa.
+**Justificativa:** O fluxo de configuração da auditoria envolve etapas interdependentes, como a seleção de corrida, equipe e esteira, o que gera estado que precisa persistir ao longo da navegação. Na estrutura HTML atual, essa separação já é refletida na distinção entre `<aside class="etapas">`, que representa o estado de progressão do assistente de etapas, e `<section class="conteudo">`, que renderiza o conteúdo específico de cada etapa. A camada de lógica de estado e busca de dados, que completará esse padrão, está prevista para ser implementada em JavaScript nas sprints de desenvolvimento do frontend.
 
-**Onde se aplica no projeto:** Tela de Setup da Auditoria (Assistente de Etapas), onde o Container controla o progresso e as seleções do usuário; e Tela de Registro de Turnos, onde o Container gerencia a contagem e o fluxo dos dados dinâmicos, delegando exclusivamente a renderização aos componentes visuais.
+**Onde se aplica no projeto:** Na estrutura HTML da tela de setup da auditoria (`competição.html`), onde a barra lateral de etapas e a seção de conteúdo já refletem a separação estrutural entre controle de estado e renderização.
 
 
 **10. MVVM (Model-View-ViewModel):**
@@ -2336,9 +2336,9 @@ O desenvolvimento do frontend do projeto demandou atenção especial à organiza
 
 **O que é:** Padrão arquitetural que segrega a interface do usuário (View), a lógica de apresentação (ViewModel) e os dados brutos (Model). O ViewModel atua como camada intermediária: transforma, formata e prepara os dados provenientes do Model para que a View possa exibi-los sem realizar conversões ou processamentos diretamente ¹⁸.
 
-**Justificativa:** Os dados retornados pelo servidor, como identificadores numéricos, carimbos de data/hora em formato UTC e códigos de status, não estão em formato adequado para exibição direta ao usuário final. Delegar essas transformações à View violaria o princípio de responsabilidade única e tornaria os componentes visuais frágeis e difíceis de testar isoladamente. O ViewModel centraliza a formatação de datas de competições passadas, a concatenação de nomes de equipes e a preparação do resumo de configuração exibido antes do início do registro de turnos, mantendo a View coesa e focada exclusivamente na apresentação.
+**Justificativa:** Os dados retornados pelo servidor, como identificadores numéricos, carimbos de data/hora em formato UTC e códigos de status, não estão em formato adequado para exibição direta. Delegar essas transformações à View violaria o princípio de responsabilidade única e tornaria os componentes visuais frágeis. O padrão será aplicado na camada JavaScript do frontend, com ViewModels responsáveis por formatar datas, converter códigos de status em rótulos legíveis e preparar os resumos exibidos nas telas de confirmação. Na versão atual, os dados exibidos nas páginas HTML são estáticos e representam a estrutura visual planejada para essa camada.
 
-**Onde se aplica no projeto:** ViewModels responsáveis pelo tratamento dos dados na listagem do Histórico de Competições (Tela Inicial) e na Tela de Confirmação/Resumo do Setup, exibida imediatamente antes do início do registro dos turnos.
+**Onde se aplica no projeto:** Previsto para a listagem do Histórico de Competições (Tela Inicial) e para a Tela de Confirmação do Setup, a serem implementadas com JavaScript nas próximas sprints.
 
 
 
@@ -2350,7 +2350,7 @@ Os princípios SOLID são cinco diretrizes de design de software definidas por R
 
 **S — Single Responsibility Principle (Princípio da Responsabilidade Única):** Define que cada classe ou módulo deve ter apenas uma razão para mudar, ou seja, deve ser responsável por uma única parte do comportamento do sistema ¹⁵. No projeto, isso se traduz na divisão clara entre Controller, Service e Repository. O Controller recebe a requisição HTTP, o Service aplica as regras de negócio e o Repository acessa o banco. Nenhum dos três faz o trabalho do outro, o que torna cada mudança mais segura e previsível.
 
-**O — Open/Closed Principle (Princípio do Aberto/Fechado):** Define que um módulo deve estar aberto para extensão, mas fechado para modificação, ou seja, deve ser possível adicionar novos comportamentos sem alterar o código existente ¹⁵. No projeto, o Strategy Pattern para os cálculos de turno aplica esse princípio diretamente: um novo critério de validação pode ser adicionado como uma nova estratégia sem tocar nas que já existem.
+**O — Open/Closed Principle (Princípio do Aberto/Fechado):** Define que um módulo deve estar aberto para extensão, mas fechado para modificação, ou seja, deve ser possível adicionar novos comportamentos sem alterar o código existente ¹⁵. No projeto, o Service Layer aplica esse princípio por meio das guard clauses de validação: cada verificação de negócio está isolada no início dos métodos de service, de modo que um novo critério pode ser adicionado sem alterar as verificações existentes. O mesmo vale para os Repositories, onde novos métodos de acesso ao banco podem ser incluídos sem modificar os que já existem.
 
 **L — Liskov Substitution Principle (Princípio da Substituição de Liskov):** Define que implementações de uma mesma abstração devem ser intercambiáveis sem que o código que as utiliza precise ser alterado ¹⁵. No projeto, isso ficou evidente nos testes: os repositórios reais puderam ser substituídos por mocks sem que os Services precisassem mudar, o que viabilizou os testes com Jest e supertest sem depender de uma conexão real com o banco.
 
@@ -3993,29 +3993,41 @@ O RedRun é uma aplicação web desenvolvida para digitalizar esse fluxo de pont
 O principal diferencial do RedRun reside em sua aderência total à dinâmica do evento. A solução foi concebida sem integrações com hardware externo, sem pulseiras e sem sincronizações prévias, pois a realidade operacional do evento não comporta tais dependências. Trata-se de um sistema simples, estável e confiável, desenvolvido para operar sem interrupções nas condições reais de uma competição ao vivo. O objetivo estratégico imediato é demonstrar que essa abordagem entrega consistência superior ao processo atual, abrindo caminho para que o RedRun seja expandido às demais edições regionais do Red Bull 24 Horas no Brasil.
 
 
-
+---
 ## 6.2 Análise de Mercado
 
----
+### 6.2.1 Visão Geral do Setor
 
-_a) Visão Geral do Setor (até 250 palavras)_
-_Contextualize o setor no qual a aplicação está inserida, considerando aspectos econômicos, tecnológicos e regulatórios. Utilize fontes confiáveis._
+A aplicação RedRun está inserida na convergência entre eventos esportivos experienciais, brand activation e tecnologia para gestão operacional de eventos (EventTech). Trata-se de um nicho no qual marcas utilizam experiências esportivas, como corridas de endurance e desafios coletivos, para fortalecer relacionamento com comunidades, gerar engajamento presencial e produzir dados sobre participação e desempenho. No caso do Red Bull 24 Horas, a criticidade operacional é elevada, pois a legitimidade da competição depende da precisão contínua dos registros ao longo de 24 horas.
 
-_b) Tamanho e Crescimento do Mercado (até 250 palavras)_
-_Apresente dados quantitativos sobre o tamanho atual e projeções de crescimento do mercado. Utilize fontes confiáveis._
+Economicamente, o setor de eventos no Brasil demonstra retomada consistente: segundo a ABRAPE, em 2024 o nível de emprego no núcleo do setor ficou **60,8% acima do período pré-pandemia**, evidenciando sua relevância para cadeias de serviços, tecnologia, marketing e entretenimento ao vivo [¹⁹](#8-referências). Esse crescimento se articula à digitalização da operação de eventos, impulsionada pela demanda por plataformas com registros em tempo real, automação, dashboards e capacidade de auditoria [²⁰](#8-referências).
+
+No âmbito regulatório, o RedRun deve atender à LGPD, pois processa dados de corredores, equipes, auditores, registros de turnos, horários de atividade e métricas de desempenho. Portanto, controle de acesso, minimização de dados, rastreabilidade e segurança da informação são requisitos estruturais da solução [²¹](#8-referências). Nesse contexto, a RedRun posiciona-se como uma solução de digitalização operacional para eventos esportivos de endurance, atuando especificamente na coleta, validação e rastreabilidade de dados de desempenho em tempo real. Sua proposta responde à necessidade de reduzir erros manuais, aumentar a confiabilidade dos registros e fornecer informações consolidadas para auditoria, tomada de decisão operacional e análise pós-evento.
+
+### 6.2.2 Tamanho e Crescimento do Mercado
+
+O mercado relacionado à RedRun deve ser analisado a partir de dois níveis: o setor demandante, composto por empresas e operações de eventos, e o mercado tecnológico, formado por soluções digitais voltadas à automação operacional, registro de dados, acompanhamento em tempo real e geração de relatórios. A RedRun não representa o setor de eventos como um todo, mas uma solução de camada operacional — uma API e aplicação web voltadas ao controle de turnos, rastreabilidade dos registros e consolidação automatizada de dados em eventos de endurance. Na ausência de dados públicos específicos para esse nicho, a análise utiliza o mercado de softwares de gestão de eventos como aproximação mais próxima, dado que a RedRun opera dentro desse ecossistema tecnológico.
+
+No recorte brasileiro, o setor demandante apresenta dimensão econômica expressiva. O III Dimensionamento Econômico do Setor de Eventos no Brasil, elaborado pela ABEOC Brasil, Sebrae e FIEC, estimou faturamento de **R\$ 813,5 bilhões em 2024** para o setor de eventos [²²](#8-referências). Esse valor não corresponde diretamente ao mercado de softwares de gestão, mas representa a escala econômica das organizações que demandam soluções digitais de controle, rastreabilidade e digitalização de processos operacionais.
+
+No mercado global de tecnologia para eventos, a Grand View Research estima que o segmento de softwares de gestão de eventos foi avaliado em **US\$ 8,40 bilhões em 2024** e deve alcançar **US\$ 17,33 bilhões até 2030**, com CAGR de **13,2%** entre 2025 e 2030 [²⁰](#8-referências). A Global Market Insights reforça essa tendência ao estimar o mesmo mercado em **US\$ 7,6 bilhões em 2023**, com crescimento superior a **13%** ao ano entre 2024 e 2032 [²³](#8-referências).
+
+Além do crescimento em valor de mercado, a composição tecnológica do setor reforça a aderência da RedRun a esse contexto: segundo a Grand View Research, soluções baseadas em nuvem representaram mais de **63,0%** do mercado global de softwares de gestão de eventos em 2024 [²⁰](#8-referências). Esse dado aproxima diretamente a solução do comportamento do mercado, pois a RedRun opera como aplicação web e API, com potencial de acesso multiplataforma, atualização contínua e menor dependência de infraestrutura local.
+
+O recorte latino-americano indica oportunidade regional direta: o mercado de softwares de gestão de eventos na América Latina gerou **US\$ 624 milhões em 2024** e deve atingir **US\$ 1,26 bilhão até 2030**, com CAGR de **12,8%** [²⁴](#8-referências). Esses dados indicam que a RedRun está inserida em um mercado tecnológico em expansão acelerada, impulsionado pela digitalização de operações, necessidade de monitoramento em tempo real e automação de processos em eventos de grande porte.
+
+### 6.2.3 Tendências de Mercado
 
 _c) Tendências de Mercado (até 300 palavras)_
 _Identifique e analise tendências relevantes (tecnológicas, comportamentais e mercadológicas) que influenciam o setor. Utilize fontes confiáveis._
 
-## 6.3 Análise da Concorrência
+## 6.2.3 Análise da Concorrência
 
----
+A adoção da RedRun é influenciada por três tendências principais: digitalização operacional em eventos, uso crescente de dados em experiências esportivas e busca por soluções especializadas de controle em tempo real. No eixo tecnológico, o mercado de softwares de gestão de eventos vem sendo impulsionado pela automação de processos, uso de plataformas em nuvem, aplicações móveis e análise de dados para apoiar decisões operacionais [²⁰](#8-referências). Essa tendência favorece aplicações web e APIs como a RedRun, que substituem registros manuais por fluxos digitais capazes de consolidar informações com maior precisão e rastreabilidade.
 
-_a) Principais Concorrentes (até 250 palavras)_
-_Liste os concorrentes diretos e indiretos, destacando suas principais características e posicionamento no mercado._
+No eixo comportamental, organizações esportivas e marcas vêm ampliando o uso de dados para qualificar experiências ao vivo, relacionamento com comunidades e estratégias de patrocínio. A Deloitte aponta, em sua análise global da indústria esportiva de 2025, que bases de dados de fãs e participantes permitem aprimorar experiências em eventos presenciais, personalizar estratégias de engajamento e fortalecer propostas comerciais para patrocinadores [²⁵](#8-referências). Nesse contexto, a RedRun acompanha uma mudança comportamental importante: eventos deixam de ser apenas experiências presenciais e passam a gerar dados estruturados sobre participação, desempenho e operação.
 
-_b) Vantagens Competitivas da Aplicação Web (até 250 palavras)_
-_Descreva os diferenciais da sua aplicação em relação aos concorrentes, sem necessidade de citação de fontes._
+No eixo mercadológico, observa-se a consolidação de soluções digitais especializadas para eficiência operacional, especialmente em eventos que exigem múltiplos registros, usuários simultâneos, consolidação de métricas e acompanhamento em tempo real. Em vez de depender apenas de plataformas genéricas de inscrição, bilheteria ou comunicação, organizações tendem a demandar ferramentas mais específicas para controle, rastreabilidade e análise operacional. Para a RedRun, essa tendência é relevante porque sua proposta atua justamente nessa camada: controle de turnos, registro de métricas, rastreabilidade operacional e consolidação automatizada de dados em eventos que exigem precisão contínua.
 
 ## 6.4 Público-Alvo
 
@@ -4027,22 +4039,50 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 _b) Perfil do Público-Alvo (até 250 palavras)_
 _Caracterize o público-alvo com dados demográficos, psicográficos e comportamentais, incluindo necessidades específicas. Utilize fontes obrigatórias._
 
-## 6.5 Posicionamento
+## 6.5 Business Model Canva (BMC)
 
----
+O Business Model Canvas (BMC) é uma ferramenta estratégica visual que organiza os elementos essenciais de um negócio em nove blocos interdependentes, oferecendo uma visão sistêmica e simplificada de como a empresa cria, entrega e captura valor. Para aplicá-lo, basta preencher cada bloco com as informações do seu projeto, partindo da proposta de valor e expandindo para os demais elementos como clientes, canais, receitas e custos. Dessa forma, o BMC permite identificar oportunidades, alinhar estratégias e validar o modelo de negócios de maneira ágil e colaborativa. Abaixo está o Business Model Canva do nosso projeto RedRun:
 
-_a) Proposta de Valor Única (até 250 palavras)_
-_Defina de maneira clara o que torna a sua aplicação única e valiosa para o mercado._
+<div align="center">
+  <sub> Imagem X - Business Model Canva </sub>
+  <br><br>
+  <img src="documentos\assets\business_model_canva\business_model_canva.png" width=100%>
+  <br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br>
+  <br>
+</div>
 
-_b) Estratégia de Diferenciação (até 250 palavras)_
-_Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento._
+O Business Model Canvas do nosso projeto, o RedRun, foi estruturado em torno de uma proposta de valor clara: oferecer aos auditores do Red Bull 24 Horas um sistema confiável, seguro e prático para o registro padronizado dos turnos de corrida — respondendo diretamente à fragilidade do método manual com prancheta, identificada como a maior dor da empresa no evento.
+
+Na seção de segmentos de clientes do BMC, abrangemos auditores, gerentes, atletas participantes e a Equipe de Field Marketing do Red Bull 24 Horas, os quais, em sua maioria, foram ouvidos por meio de Sprint Reviews ao final de cada Sprint. Esse relacionamento iterativo é fundamental para o alinhamento do projeto, sustentado por recursos-chave como a equipe de desenvolvimento, o banco de dados e a própria aplicação web — onde desenvolvemos, implementamos, testamos e atualizamos todas as *features* necessárias para atender ao que a Red Bull nos solicitou: um sistema web para auditar o evento de 24 horas.
+
+A estrutura de custos do RedRun concentrou-se no desenvolvimento da aplicação, enquanto as fontes de receita — interpretadas como benefícios gerados — compreendem a redução do tempo de auditoria, a eliminação de materiais físicos e a dispensa de auditores adicionais, evidenciando que o valor da RedRun é tanto operacional quanto econômico para o cliente.
 
 ## 6.6 Estratégia de Marketing
 
----
+### 6.6.1 Produto/Serviço
 
-_a) Produto/Serviço (até 200 palavras)_
-_Descreva as funcionalidades, benefícios e diferenciais da aplicação_
+A RedRun é uma aplicação web integrada a uma API, desenvolvida exclusivamente para digitalizar o registro, o acompanhamento e a auditoria operacional do Red Bull 24 Horas Brasil. Seu objetivo é substituir o processo manual baseado em pranchetas físicas e consolidação posterior em planilhas por um fluxo digital estruturado, rastreável e mais confiável. A solução foi projetada para controlar turnos, registrar métricas de desempenho, acompanhar checkpoints e manter histórico auditável dos registros durante as 24 horas de competição.
+
+A solução atende diferentes perfis de uso dentro da operação do evento. Para o auditor de campo, oferece um fluxo simples para registrar início e encerramento de turnos, selecionar equipe, corredor e esteira, inserir quilometragem e acompanhar checkpoints periódicos. Para o coordenador ou gestor da operação, disponibiliza visão consolidada da competição por meio de dashboards, histórico de registros, identificação de inconsistências e métricas acumuladas por equipe e participante. Para a organização do Red Bull 24 Horas Brasil, entrega dados estruturados para validação de resultados, auditoria pós-evento e exportação para análise posterior.
+
+As principais funcionalidades da RedRun incluem:
+
+- cadastro de eventos, equipes, corredores e locais;
+- registro de início e fim de turnos de corrida;
+- associação de cada registro a auditor, corredor, equipe, esteira e horário;
+- criação de checkpoints periódicos para reduzir perda de referência durante a operação;
+- cálculo automatizado de distância percorrida e métricas acumuladas;
+- histórico consultável dos registros realizados;
+- dashboard com indicadores consolidados da competição;
+- identificação de inconsistências operacionais;
+- exportação dos dados para análise e auditoria;
+- preservação de registros em cenários de instabilidade de conexão, com armazenamento local temporário e sincronização posterior quando a rede é restabelecida.
+
+O principal benefício da RedRun é reduzir a fragilidade da apuração manual. Ao padronizar entradas, registrar horários automaticamente, estruturar os dados e manter histórico auditável, a aplicação diminui o risco de erro humano, reduz retrabalho e aumenta a confiabilidade dos resultados.
+
+Seu diferencial está na aderência ao contexto específico do Red Bull 24 Horas Brasil. A aplicação não foi pensada como uma ferramenta genérica de eventos, mas como uma solução direcionada ao problema operacional do evento: registrar desempenho contínuo, validar turnos, acompanhar métricas e auditar dados durante uma competição de 24 horas. A RedRun se diferencia justamente por atuar nesse ponto crítico, oferecendo uma solução simples para o auditor em campo, mas robusta para a organização que precisa de precisão, rastreabilidade e segurança na consolidação dos dados.
 
 _b) Preço (até 200 palavras)_
 _Explique o modelo de precificação adotado e justifique com base nas análises anteriores._
@@ -4077,8 +4117,9 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ¹⁴ FOWLER, Martin. **Patterns of Enterprise Application Architecture.** Boston: Addison-Wesley, 2002. Disponível em: https://martinfowler.com/books/eaa.html. Acesso em: 25 mai. 2026.
 
-¹³ GAMMA, Erich; HELM, Richard; JOHNSON, Ralph; VLISSIDES, John. **Design Patterns: Elements of Reusable Object-Oriented Software.** Reading: Addison-Wesley, 1994. 
-¹⁸ FOWLER, Martin. Presentation Model. martinfowler.com, 19 jul. 2004. Disponível em: https://martinfowler.com/eaaDev/PresentationModel.html. Acesso em: 26 mai. 2026. 
+¹³ GAMMA, Erich; HELM, Richard; JOHNSON, Ralph; VLISSIDES, John. **Design Patterns: Elements of Reusable Object-Oriented Software.** Reading: Addison-Wesley, 1994.
+
+¹⁸ FOWLER, Martin. **Presentation Model**. martinfowler.com, 19 jul. 2004. Disponível em: https://martinfowler.com/eaaDev/PresentationModel.html. Acesso em: 26 mai. 2026.
 
 ³ H.PRIME SAÚDE. **A revolução da geração wellness: por que a saúde se tornou o novo símbolo de sucesso**. Disponível em: <https://hprimesaude.com.br/blog/a-revolucao-da-geracao-wellness-por-que-a-saude-se-tornou-o-novo-simbolo-de-sucesso/>. Acesso em: 28 abr. 2026.
 
@@ -4100,7 +4141,17 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ² TIMES BRASIL. **Red Bull e marcas para a Geração Z**. Disponível em: <https://timesbrasil.com.br/empresas-e-negocios/red-bull-marcas-geracao-z/>. Acesso em: 28 abr. 2026.
 
-# <a name="c9"></a>Anexos
+¹⁹ ABRAPE. **Setor de eventos segue em crescimento e registra, em 2024, nível de emprego 60,8% superior ao período pré-pandemia**. Associação Brasileira dos Promotores de Eventos, 2024. Disponível em: <https://www.abrape.com.br/setor-de-eventos-segue-em-crescimento-e-registra-em-2024-nivel-de-emprego-608-superior-ao-periodo-pre-pandemia/>. Acesso em: 1 jun. 2026.
+
+²⁰ GRAND VIEW RESEARCH. **Event Management Software Market Size, Share & Trends Analysis Report**. Grand View Research, 2024. Disponível em: <https://www.grandviewresearch.com/industry-analysis/event-management-software-market-report>. Acesso em: 1 jun. 2026.
+
+²¹ BRASIL. **Lei Geral de Proteção de Dados Pessoais (LGPD)**. Gov.br, 2026. Disponível em: <https://www.gov.br/pt-br/lgpd/lei-geral-de-protecao-de-dados-lgpd>. Acesso em: 1 jun. 2026.
+
+²² ABEOC BRASIL; SEBRAE; FIEC. **III Dimensionamento Econômico do Setor de Eventos no Brasil 2024/2025**. 2026. Disponível em: <https://abeoc.org.br/wp-content/uploads/2026/05/III-Dimensionamento-setor-eventos-digital.pdf>. Acesso em: 6 jun. 2026.
+
+²³ GLOBAL MARKET INSIGHTS. **Event Management Software Market Share, Size and Forecast 2024-2032**. Global Market Insights, 2024. Disponível em: <https://www.gminsights.com/industry-analysis/event-management-software-market>. Acesso em: 6 jun. 2026.
+
+²⁴ GRAND VIEW RESEARCH. **Latin America Event Management Software Market Size & Outlook, 2030**. Grand View Research, 2024. Disponível em: <https://www.grandviewresearch.com/horizon/outlook/event-management-software-market/latin-america>. Acesso em: 6 jun. 2026.
 
 ---
 
