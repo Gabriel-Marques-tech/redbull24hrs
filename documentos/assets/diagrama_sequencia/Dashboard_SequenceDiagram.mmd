@@ -1,6 +1,7 @@
 
 %%{init: {
   "theme": "base",
+  "background": "#ffffff",
   "themeVariables": {
     "primaryColor": "#0F0069",
     "primaryTextColor": "#FFFFFF",
@@ -33,36 +34,28 @@
 }}%%
 sequenceDiagram
     participant C as Client
-    participant DC as DashboardController
-    participant DS as DashboardService
-    participant DR as DashboardRepository
+    participant MC as MetricsController
+    participant MS as MetricsService
+    participant MR as MetricsRepository
     participant DB as Data Base
 
-    Note over C,DB: 1 · Polling automatic ≤10s (RF013 · RN11)
+    Note over C,DB: 1 · Dashboard polling — auto ≤10s (RF013 · RN11)
 
     loop Every ≤10s
-        C->>+DC: 1. GET /dashboard
-        DC->>+DS: 2. getDashboardData()
-        DS->>+DR: 3. getTotalTeamKm()
-        DR->>+DB: 4. SELECT total Team km(Finished Shifts)
-        DB-->>-DR: 5. [ { team_id, km_total } ]
-        DR-->>-DS: 6. [ { team_id, km_total } ]
-        DS->>+DR: 7. getTreadmillsStatus()
-        DR->>+DB: 8. SELECT Treadmill + current Athlete 
-        DB-->>-DR: 9. [ { treadmill_id, status, current_athlete } ]
-        DR-->>-DS: 10. [ { treadmill_id, status, current_athlete } ]
-        DS->>+DR: 11. getSnapshotsPerHour()
-        DR->>+DB: 12. SELECT snapshots per Event hour
-        DB-->>-DR: 13. [ { hour, team_id, km_accumulated } ]
-        DR-->>-DS: 14. [ { hour, team_id, km_accumulated } ]
-        DC-->>-C: 15. 200 { scoreboard, treadmills, snapshots }
-        deactivate DS
+        C->>+MC: 1. GET /metrics/events/{event_id}/dashboard
+        MC->>+MS: 2. getDashboard(event_id)
+        MS->>+MR: 3. dashboardByEvent(event_id)
+        MR->>+DB: 4. SELECT scoreboard + stats + athletes in progress (3 parallel queries)
+        DB-->>-MR: 5. rows
+        MR-->>-MS: 6. { scoreboard[], active_shifts, completed_shifts, total_km, athletes_on_track[] }
+        MS-->>-MC: 7. dashboardData
+        MC-->>-C: 8. 200 { scoreboard, active_shifts, completed_shifts, total_km, athletes_on_track }
     end
 
-    Note over C,DB: 2 · Healthcheck of connection(RN11)
+    Note over C,DB: 2 · Healthcheck (RN11) — planejado, não implementado
 
-    C->>+DC: 16. GET /status
-    DC->>+DB: 17. ping connection
-    DB-->>-DC: 18. ok
-    DC-->>-C: 19. 200 { db: "ok", timestamp }
-    Note over C,DC: If fail — display "outdated data" + timestamp
+    C->>+MC: 9. GET /status
+    MC->>+DB: 10. ping connection
+    DB-->>-MC: 11. ok
+    MC-->>-C: 12. 200 { db: "ok", timestamp }
+    Note over C,MC: If fail — display "outdated data" + timestamp
