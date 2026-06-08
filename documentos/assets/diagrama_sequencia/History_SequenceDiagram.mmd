@@ -1,6 +1,7 @@
 
 %%{init: {
   "theme": "base",
+  "background": "#ffffff",
   "themeVariables": {
     "primaryColor": "#0F0069",
     "primaryTextColor": "#FFFFFF",
@@ -35,65 +36,50 @@ sequenceDiagram
     participant C as Client
     participant HC as HistoryController
     participant HS as HistoryService
-    participant TR as ShiftRepository
+    participant HR as HistoryRepository
+    participant SC as ShiftController
+    participant SS as ShiftService
+    participant SR as ShiftRepository
     participant DB as Data Base
 
-    Note over C,DB: 1 · Event listing (RF014 · RN13)
+    Note over C,DB: 1 · Listagem de histórico (RF014 · RN13)
 
-    C->>+HC: 1. GET /history?team_id&treadmill_id&athlete_id
-    HC->>+HS: 2. listEvents(filters)
-    HS->>+TR: 3. findShifts(filters)
-    TR->>+DB: 4. SELECT Shift + Athlete + Treadmill + Team
-    DB-->>-TR: 5. [ { shift, athlete, treadmill, team } ]
-    TR-->>-HS: 6. [ { shift, athlete, treadmill, team } ]
+    C->>+HC: 1. GET /audit/history?event_id={id}&team_id=&treadmill_id=&athlete_id=
+    Note over HC: event_id é obrigatório
+    HC->>+HS: 2. getHistory({ event_id, team_id, treadmill_id, athlete_id })
+    HS->>+HR: 3. findByEvent(filters)
+    HR->>+DB: 4. SELECT Shift + Athlete + Treadmill + Team + Checkpoints WHERE event_id [+ optional filters]
+    DB-->>-HR: 5. [ { shift, athlete, treadmill, team, checkpoints[] } ]
+    HR-->>-HS: 6. entries[]
+    HS-->>-HC: 7. entries[]
+    HC-->>-C: 8. 200 entries[]
 
-    HS->>+TR: 7. findCheckpoints(shift_ids[])
-    TR->>+DB: 8. SELECT Checkpoints by Shift ORDER DESC
-    DB-->>-TR: 9. [ { checkpoint, type, timestamp } ]
-    TR-->>-HS: 10. [ { checkpoint, type, timestamp } ]
+    Note over C,DB: 2 · Correção retroativa de checkpoint (RF015 · RN23 · RN24)
 
-    HS-->>HS: 11. sort — end > checkpoint > start
-    HC-->>-C: 12. 200 { events[] }
-    deactivate HS
+    C->>+SC: 9. PATCH /audit/checkpoints/{id} { distance, justification? }
+    Note over SC: requer autenticação (JWT)
+    SC->>+SS: 10. correctCheckpoint(checkpoint_id, distance, user_id, role, justification)
 
-    Note over C,DB: 2 · Athlete swap in history (RF020 · RN08)
+    SS->>+SR: 11. findCheckpointById(checkpoint_id)
+    SR->>+DB: 12. SELECT Checkpoint WHERE id
+    DB-->>-SR: 13. { distance, shift_id }
+    SR-->>-SS: 14. checkpoint
 
-    C->>+HC: 13. GET /history?treadmill_id=1
-    HC->>+HS: 14. listEvents({ treadmill_id })
-    HS->>+TR: 15. findAthleteSwaps(treadmill_id)
-    TR->>+DB: 16. SELECT consecutive Shifts by Treadmill
-    DB-->>-TR: 17. [ { previous_shift, new_shift, timestamp, type: "hot_swap" } ]
-    TR-->>-HS: 18. [ { previous_shift, new_shift, timestamp, type: "hot_swap" } ]
+    SS->>+SR: 15. findById(shift_id)
+    SR->>+DB: 16. SELECT Shift WHERE id
+    DB-->>-SR: 17. { km_start, status }
+    SR-->>-SS: 18. shift
 
-    HC-->>-C: 19. 200 { events[] type "athlete_swap" }
-    deactivate HS
+    SS->>+SR: 19. findNeighborCheckpoints(checkpoint_id, shift_id)
+    SR->>+DB: 20. SELECT previous and next Checkpoints
+    DB-->>-SR: 21. { prev, next }
+    SR-->>-SS: 22. { prev, next }
 
-    Note over C,DB: 3 · Retroactive checkpoint editing (RF015 · RN23 · RN24)
+    Note right of SS: valida prev <= new_distance <= next (RN24)
 
-    C->>+HC: 20. PATCH /history/checkpoints/{id} { new_distance }
-    HC->>+HS: 21. editCheckpoint(checkpoint_id, new_distance, auditor_id)
-
-    HS->>+TR: 22. findCheckpoint(checkpoint_id)
-    TR->>+DB: 23. SELECT Checkpoint by id
-    DB-->>-TR: 24. { current_distance, shift_id }
-    TR-->>-HS: 25. { current_distance, shift_id }
-
-    HS->>+TR: 26. findAdjacentShiftCheckpoints(shift_id, checkpoint_id)
-    TR->>+DB: 27. SELECT previous and next Checkpoints
-    DB-->>-TR: 28. { previous_distance, next_distance }
-    TR-->>-HS: 29. { previous_distance, next_distance }
-
-    Note right of HS: validates prev_dist <= new_distance <= next_dist (RN24)
-
-    HS->>+TR: 30. updateCheckpoint(checkpoint_id, new_distance)
-    TR->>+DB: 31. UPDATE Checkpoint SET distance
-    DB-->>-TR: 32. ok
-    TR-->>-HS: 33. ok
-
-    HS->>+TR: 34. registerLog(checkpoint_id, previous, new, auditor_id)
-    TR->>+DB: 35. INSERT Log — immutable (RN23)
-    DB-->>-TR: 36. { log_id }
-    TR-->>-HS: 37. { log_id }
-
-    HC-->>-C: 38. 200 { checkpoint_id, new_distance, log_id }
-    deactivate HS
+    SS->>+SR: 23. correctCheckpoint(checkpoint_id, new_distance, old_distance, author_id, role, justification)
+    SR->>+DB: 24. UPDATE Checkpoint SET distance + INSERT checkpoint_corrections (imutável, RN23)
+    DB-->>-SR: 25. { updated checkpoint + correction_id }
+    SR-->>-SS: 26. result
+    SS-->>-SC: 27. result
+    SC-->>-C: 28. 200 { id, shift_id, distance, timestamp, type, correction_id }
