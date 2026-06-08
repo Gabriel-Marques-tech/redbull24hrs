@@ -1,6 +1,7 @@
 
 %%{init: {
   "theme": "base",
+  "background": "#ffffff",
   "themeVariables": {
     "primaryColor": "#0F0069",
     "primaryTextColor": "#FFFFFF",
@@ -36,79 +37,56 @@ sequenceDiagram
     participant CT as EventController
     participant ES as EventService
     participant ER as EventRepository
+    participant MC as MetricsController
+    participant MS as MetricsService
+    participant MR as MetricsRepository
+    participant ExC as ExportController
+    participant ExS as ExportService
     participant DB as Data Base
 
-    Note over C,DB: 1 · Create event (RF025 · RN22)
+    Note over C,DB: 1 · Criar evento (RF025 · RN22)
 
-    C->>+CT: 1. POST /events
-    CT->>+ES: 2. createEvent(dto)
-    ES->>+ER: 3. checkConflictDataLocal()
-    ER->>+DB: 4. SELECT Event on the same date and location
-    DB-->>-ER: 5. result
-    alt conflict encountered 
-        ER-->>-ES: existing Event 
-        ES-->>CT: ConflictException
-        CT-->>C: 409 { there is already an Event on that date and location }
-    else no conflict
-        ER-->>ES: null
-        ES->>+ER: 6. save(Event)
-        ER->>+DB: 7. INSERT Event { title, place, date, status: "waiting" }
-        DB-->>-ER: 8. Event { id, status: "waiting" }
-        ER-->>-ES: Event { id, status: "waiting" }
-        CT-->>-C: 9. 201 { event_id, status: "waiting" }
-    end
-    deactivate ES
+    C->>+CT: 1. POST /events { manager_id, title, local, date }
+    CT->>+ES: 2. registerEvent(manager_id, title, local, date)
+    ES->>+ER: 3. createWithManager(title, local, date, manager_id)
+    ER->>+DB: 4. INSERT INTO events (title, local, date, manager_id)
+    DB-->>-ER: 5. event { id, title, local, date, status, ... }
+    ER-->>-ES: 6. event
+    ES-->>-CT: 7. event
+    CT-->>-C: 8. 201 { id, title, local, date, status, ... }
 
-    Note over C,DB: 2 · Real-time metrics (RF019 · RN10)
+    Note over C,DB: 2 · Métricas e placar do evento (RF019 · RF014 · RN10 · RN14)
 
-    C->>+CT: 10. GET /events/{id}/metrics
-    CT->>+ES: 11. calculateMetrics(event_id)
-    ES->>+ER: 12. findShiftsActive(event_id)
-    ER->>+DB: 13. SELECT Event active Shifts 
-    DB-->>-ER: 14. shifts[]
-    ER-->>-ES: 15. shifts[]
-    Note right of ES: calculates total km per Team
-    Note right of ES: calculate average speed by Shift
-    Note right of ES: counts Teams currently on track
-    CT-->>-C: 16. 200 { total_km, average_speed, teams_on_track }
-    deactivate ES
+    C->>+MC: 9. GET /metrics/events/{id}/dashboard
+    MC->>+MS: 10. getDashboard(event_id)
+    MS->>+MR: 11. dashboardByEvent(event_id)
+    MR->>+DB: 12. SELECT scoreboard + stats + athletes in progress
+    DB-->>-MR: 13. rows
+    MR-->>-MS: 14. { scoreboard[], active_shifts, completed_shifts, total_km, athletes_on_track[] }
+    MS-->>-MC: 15. dashboardData
+    MC-->>-C: 16. 200 { scoreboard, active_shifts, completed_shifts, total_km, athletes_on_track }
 
-    Note over C,DB: 3 · Scoreboard (RF014 · RN14)
+    C->>+MC: 17. GET /metrics/events/{id}/teams
+    MC->>+MS: 18. getTeamKm(event_id)
+    MS->>+MR: 19. teamKmByEvent(event_id)
+    MR->>+DB: 20. SELECT SUM(distance) by Team (completed Shifts) ORDER BY total_km DESC
+    DB-->>-MR: 21. [ { id, name, total_km } ]
+    MR-->>-MS: 22. [ { id, name, total_km } ]
+    MS-->>-MC: 23. [ { id, name, total_km } ]
+    MC-->>-C: 24. 200 [ { id, name, total_km } ]
 
-    C->>+CT: 17. GET /events/{id}/scoreboard
-    CT->>+ES: 18. getScoreboard(event_id)
-    ES->>+ER: 19. findKmByTeam(event_id)
-    ER->>+DB: 20. SELECT accumulated km by Team (finished Shifts)
-    DB-->>-ER: 21. teams[] with accumulated km
-    ER-->>-ES: 22. teams[] with accumulated km
+    Note over C,DB: 3 · Exportar dados (RF024 · RN26)
 
-    Note right of ES: sorts by descending km
-    CT-->>-C: 23. 200 { scoreboard[ { team_id, name, accumulated_km, position } ] }
-    deactivate ES
+    C->>+ExC: 25. GET /export/events/{id}/shifts
+    ExC->>+ExS: 26. shiftsCsv(event_id)
+    ExS->>+DB: 27. SELECT Shifts + Athlete + Team + Treadmill
+    DB-->>-ExS: 28. rows
+    ExS-->>-ExC: 29. CSV string
+    ExC-->>-C: 30. 200 Content-Type: text/csv (shifts-{id}.csv)
 
-    Note over C,DB: 4 · Inconsistencies (RF023 · RN25)
-
-    C->>+CT: 24. GET /events/{id}/inconsistencies
-    CT->>+ES: 25. checkInconsistencies(event_id)
-    ES->>+ER: 26. findLogRecords(event_id)
-    ER->>+DB: 27. SELECT Event logs
-    DB-->>-ER: 28. logs[]
-    ER-->>-ES: 29. logs[]
-
-    Note right of ES: detects Checkpoint gaps
-    Note right of ES: detects retroactive km
-    CT-->>-C: 30. 200 { inconsistencies[ { type, shift_id, description } ] }
-    deactivate ES
-
-    Note over C,DB: 5 · Export data (RF024 · RN26)
-
-    C->>+CT: 31. GET /events/{id}/export
-    CT->>+ES: 32. exportData(event_id)
-    ES->>+ER: 33. findCompleteData(event_id)
-    ER->>+DB: 34. SELECT Shifts + Checkpoints + Event logs
-    DB-->>-ER: 35. completeData{}
-    ER-->>-ES: 36. completeData{}
-
-    Note right of ES: serializes Shifts, Checkpoints, and metrics
-    CT-->>-C: 37. 200 { file, format, generation_timestamp }
-    deactivate ES
+    C->>+ExC: 31. GET /export/events/{id}/checkpoints
+    ExC->>+ExS: 32. checkpointsCsv(event_id)
+    ExS->>+DB: 33. SELECT Checkpoints + Shift + Athlete
+    DB-->>-ExS: 34. rows
+    ExS-->>-ExC: 35. CSV string
+    ExC-->>-C: 36. 200 Content-Type: text/csv (checkpoints-{id}.csv)
