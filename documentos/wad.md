@@ -3983,8 +3983,14 @@ O auditor é o usuário que opera o sistema durante as 24 horas da competição.
 _a) Proposta de Valor Única (até 250 palavras)_
 _Defina de maneira clara o que torna a sua aplicação única e valiosa para o mercado._
 
-_b) Estratégia de Diferenciação (até 250 palavras)_
-_Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento._
+**b) Estratégia de Diferenciação**
+O posicionamento do RedRun não se baseia em disputar espaço com soluções genéricas de gestão de eventos. Ele se baseia em algo mais difícil de replicar, que é o conhecimento profundo de um problema muito específico e a confiança necessária para resolvê-lo em tempo real, sem margem para falhas.
+
+Como identificado na análise das Cinco Forças de Porter, a rivalidade direta no nicho do Red Bull 24 Horas é baixa. As alternativas existentes, como pulseiras de sincronização com as esteiras e relógios inteligentes, são inviáveis pela dinâmica de revezamento rápido, com trocas de até 15 segundos e equipamentos insuficientes para todos os participantes. A prancheta física, por sua vez, continua sendo o método atual justamente porque ainda não existia uma solução pensada para esse contexto específico.
+
+É exatamente aí que o RedRun se diferencia. A lógica do posicionamento é direta: enquanto qualquer desenvolvedor pode criar uma aplicação de registro, poucos conseguem garantir que ela funcione de forma estável por 24 horas ininterruptas em um evento ao vivo de uma marca global, com interface ágil o suficiente para acompanhar o ritmo das trocas e histórico completo para suportar auditoria pós-evento.
+
+Essa combinação de especificidade, estabilidade e rastreabilidade é o que diferencia o RedRun de qualquer substituto disponível. Não é uma solução adaptada, é uma solução construída do zero para esse problema, e isso é o que a torna difícil de substituir.
 
 ## 6.6 Estratégia de Marketing
 
