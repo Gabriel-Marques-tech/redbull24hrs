@@ -3995,6 +3995,19 @@ npm test -- --coverage
 
 ---
 
+## 5.1.3 Testes de Integração de Endpoints (Black-Box)
+
+Os testes de integração validam a API a partir de requisições HTTP simuladas. Para os endpoints principais, a cobertura esperada considera quatro cenários-chave:
+
+| Cenário                  | Status esperado    |
+| ------------------------ | ------------------ |
+| Sucesso                  | 200 ou 201         |
+| Falha de validação       | 400 ou 422         |
+| Regra de negócio violada | 409 ou equivalente |
+| Recurso não encontrado   | 404                |
+
+---
+
 ## 5.2. Testes de usabilidade (sprint 5)
 
 ---
