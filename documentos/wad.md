@@ -4051,7 +4051,7 @@ O Business Model Canvas (BMC) é uma ferramenta estratégica visual que organiza
 <div align="center">
   <sub> Imagem X - Business Model Canva </sub>
   <br><br>
-  <img src="documentos\assets\business_model_canva\business_model_canva.png" width=100%>
+  <img src="documentos/assets/business_model_canva/business_model_canva.png" width=100%>
   <br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br>
