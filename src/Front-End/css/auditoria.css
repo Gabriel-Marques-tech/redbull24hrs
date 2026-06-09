@@ -20,6 +20,8 @@
     border-radius: 50%;
     background-color: #d9d9d9;
     display: inline-block;
+    flex-shrink: 0;
+    margin-top: 12px;
 }
 
 .operador small {
@@ -29,6 +31,10 @@
 
 .operador p {
     font-size: 16px;
+}
+
+.btn-trocar{
+    margin-top: 20px;
 }
 
 .btn-trocar,
@@ -45,7 +51,7 @@
     color: #d0d0d0;
     font-weight: 700;
     font-size: 16px;
-    margin-right: 160px;
+    margin-right: 170px;
 }
 
 /* ---------------- CONTEÚDO ---------------- */
@@ -154,8 +160,11 @@
 
 table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     font-size: 16px;
+    overflow: hidden;
+    border-radius: 8px;
 }
 
 th {
@@ -166,16 +175,38 @@ th {
     border: 1px solid #8a0030;
 }
 
+th:first-child {
+    border-top-left-radius: 4px;
+}
+
+th:last-child {
+    border-top-right-radius: 4px;
+}
+
 td {
     height: 43px;
     text-align: center;
     border: 1px solid #8f8f8f;
 }
 
-/* ---------------- FILA ---------------- */
+tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 8px;
+}
+
+tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 8px;
+}
+
+/* ---------------- FILA DE CORREDORES ---------------- */
 
 .proximos-corredores {
     width: 250px;
+}
+
+.lista-corredores {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .corredor-fila {
@@ -183,14 +214,45 @@ td {
     align-items: center;
     gap: 14px;
     height: 46px;
+    cursor: grab;
+    border-radius: 6px;
+    padding: 0 6px;
+    transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.corredor-fila:hover {
+    background-color: #f3f3f3;
+}
+
+.corredor-fila:active {
+    cursor: grabbing;
+}
+
+.corredor-fila.arrastando {
+    opacity: 0.45;
+    transform: scale(0.98);
+}
+
+.corredor-fila.alvo {
+    background-color: #eeeeee;
+    transform: translateY(2px);
 }
 
 .corredor-fila p {
     flex: 1;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .drag {
     color: #9c9c9c;
-    font-size: 20px;
+    font-size: 24px;
+    cursor: grab;
+    user-select: none;
+}
+
+/* ---------------- IMG ---------------- */
+
+img {
+    width: 25px;
+    margin-top: 7px;
 }
