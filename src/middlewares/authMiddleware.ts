@@ -38,4 +38,15 @@ const requireRole = (...roles: UserRole[]) => {
   };
 };
 
-export default { requireAuth, requireRole };
+const requirePageAuth = (req: Request, res: Response, next: NextFunction) => {
+
+	const token = req.cookies.accessToken
+	if (!token ) {
+		res.redirect('/login')
+		return
+	}
+
+	next()
+}
+
+export default { requireAuth, requireRole, requirePageAuth };
