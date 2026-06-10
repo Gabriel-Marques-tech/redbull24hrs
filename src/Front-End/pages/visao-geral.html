@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/visao-geral.css">
+</head>
+<body>
+    
+    <div class="barra-gradiente"></div>
+    <a href="home-auditor.html" class="cancelar">
+        <img src="../assets/competição/Seta.svg" alt="">
+        Cancelar
+    </a>
+
+    <main>
+        <aside class="etapas">
+            <h3>Etapas</h3>
+
+            <div class="etapa">
+                <span>1</span>
+                <p>Competição</p>
+            </div>
+
+            <div class="etapa">
+                <span>2</span>
+                <p>Equipe</p>
+            </div>
+
+            <div class="etapa">
+                <span>3</span>
+                <p>Esteira</p>
+            </div>
+
+            <div class="etapa ativa">
+                <span>4</span>
+                <p>Visão geral</p>
+            </div>
+        </aside>
+
+        <section class="conteudo">
+            <h2>Preparado para iniciar?</h2>
+
+            <div class="card-resumo">
+                <div class="linha-resumo">
+                    <span class="icone"><img src="../assets/visao-geral/mapa.svg" alt=""></span>
+                    <p id="resumoLocal">Carregando...</p>
+                </div>
+
+                <div class="linha-resumo">
+                    <span class="icone"><img src="../assets/visao-geral/calendario.svg" alt=""></span>
+                    <p id="resumoDataHora">Carregando...</p>
+                </div>
+
+                <div class="linha-resumo">
+                    <span class="icone"><img src="../assets/visao-geral/pessoas.svg" alt=""></span>
+                    <p id="resumoEquipe">Carregando...</p>
+                </div>
+
+                <div class="linha-resumo">
+                    <span class="icone"><img src="../assets/visao-geral/esteira.svg" alt=""></span>
+                    <p id="resumoEsteira">Carregando...</p>
+                </div>
+            </div>
+
+            <div class="botoes">
+                <button class="btn-voltar" type="button" onclick="window.location.href='esteira.html'">
+                    Anterior
+                </button>
+
+                <button class="btn-iniciar" type="button" id="btnIniciar">
+                    Iniciar
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/visao-geral.js"></script>
+</body>
+</html>
