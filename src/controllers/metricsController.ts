@@ -67,4 +67,19 @@ export const metricsController = {
 			res.status(500).json({ error: error.message });
 		}
 	},
+
+	// RF050 – link público de desempenho (RN36): sem auth, só dados do atleta
+	async shareAthletePerformance(req: Request, res: Response) {
+		const athleteId = Number(req.params.athleteId);
+		if (isNaN(athleteId)) {
+			res.status(400).json({ error: "athleteId inválido" });
+			return;
+		}
+		try {
+			const data = await metricsService.getAthletePerformance(athleteId);
+			res.status(200).json(data);
+		} catch (error: any) {
+			res.status(500).json({ error: error.message });
+		}
+	},
 };

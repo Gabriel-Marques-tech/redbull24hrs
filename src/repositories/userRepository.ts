@@ -63,10 +63,12 @@ const saveRefreshToken = async (
   role: UserRole,
   expiresAt: Date,
 ): Promise<void> => {
+  const managerId = role === "manager" ? userId : null;
+  const auditorId = role === "auditor" ? userId : null;
   await pool.query(
-    `INSERT INTO refresh_tokens (token_hash, user_id, user_role, expires_at)
+    `INSERT INTO refresh_tokens (token_hash, manager_id, auditor_id, expires_at)
      VALUES ($1, $2, $3, $4)`,
-    [tokenHash, userId, role, expiresAt],
+    [tokenHash, managerId, auditorId, expiresAt],
   );
 };
 
@@ -79,7 +81,7 @@ const findActiveRefreshToken = async (
   expires_at: Date;
 } | null> => {
   const result = await pool.query(
-    `SELECT id, user_id, user_role, expires_at
+    `SELECT id, manager_id, auditor_id, expires_at
      FROM refresh_tokens
      WHERE token_hash = $1
        AND revoked_at IS NULL
@@ -88,10 +90,11 @@ const findActiveRefreshToken = async (
   );
   const row = result.rows[0];
   if (!row) return null;
+  const isManager = row.manager_id != null;
   return {
     id: String(row.id),
-    user_id: String(row.user_id),
-    user_role: row.user_role,
+    user_id: String(isManager ? row.manager_id : row.auditor_id),
+    user_role: isManager ? "manager" : "auditor",
     expires_at: row.expires_at,
   };
 };

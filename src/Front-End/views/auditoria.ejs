@@ -22,10 +22,12 @@
                 <p id="nomeOperador">Lucas Andrade</p>
             </div>
 
-            <button class="btn-trocar" type="button">⇄</button>
+            <button class="btn-trocar" type="button"><strong>⇄</strong></button>
         </div>
 
-        <p class="tempo-restante">Restam <span id="tempoRestante">23:20:03</span></p>
+        <p class="tempo-restante">
+            Restam <span id="tempoRestante">23:20:03</span>
+        </p>
 
         <button class="btn-sair" type="button">↪</button>
     </header>
@@ -49,9 +51,9 @@
                     Iniciar corrida
                 </button>
 
-                <button class="btn-esteira" type="button">
+                <button class="btn-esteira" id="btnAbrirEsteira" type="button">
                     <span id="numeroEsteira">1</span>
-                    <span>🏃</span>
+                    <span><img src="../assets/esteira/esteira-branca.svg" alt=""></span>
                 </button>
             </div>
         </section>
@@ -94,26 +96,53 @@
             <aside class="proximos-corredores">
                 <h2>Próximo corredor</h2>
 
-                <div class="corredor-fila">
-                    <span class="avatar"></span>
-                    <p>Pietro Sansão</p>
-                    <span class="drag">⠿</span>
-                </div>
+                <div class="lista-corredores" id="listaCorredores">
+                    <div class="corredor-fila" draggable="true">
+                        <span class="avatar"></span>
+                        <p>Pietro Sansão</p>
+                        <span class="drag">⠿</span>
+                    </div>
 
-                <div class="corredor-fila">
-                    <span class="avatar"></span>
-                    <p>Gabriel Marques</p>
-                    <span class="drag">⠿</span>
-                </div>
+                    <div class="corredor-fila" draggable="true">
+                        <span class="avatar"></span>
+                        <p>Gabriel Marques</p>
+                        <span class="drag">⠿</span>
+                    </div>
 
-                <div class="corredor-fila">
-                    <span class="avatar"></span>
-                    <p>Laura Faria</p>
-                    <span class="drag">⠿</span>
+                    <div class="corredor-fila" draggable="true">
+                        <span class="avatar"></span>
+                        <p>Laura Faria</p>
+                        <span class="drag">⠿</span>
+                    </div>
                 </div>
             </aside>
         </section>
     </main>
+
+    <div class="modal-esteira escondido" id="modalEsteira">
+        <div class="modal-conteudo">
+            <h2>Selecione uma esteira</h2>
+
+            <div class="opcoes-esteira">
+                <button class="opcao-esteira selecionada" type="button" data-esteira="1">
+                    <img class="icone-esteira icone-branco" src="../assets/esteira/esteira-branca.svg" alt="">
+                    <img class="icone-esteira icone-preto" src="../assets/esteira/esteira.svg" alt="">
+                    <span>Esteira 1</span>
+                </button>
+
+                <button class="opcao-esteira" type="button" data-esteira="2">
+                    <img class="icone-esteira icone-branco" src="../assets/esteira/esteira-branca.svg" alt="">
+                    <img class="icone-esteira icone-preto" src="../assets/esteira/esteira.svg" alt="">
+                    <span>Esteira 2</span>
+                </button>
+            </div>
+
+            <div class="acoes-modal">
+                <button class="btn-cancelar-modal" id="btnCancelarEsteira" type="button">Cancelar</button>
+                <button class="btn-selecionar-modal" id="btnSelecionarEsteira" type="button">Selecionar</button>
+            </div>
+        </div>
+    </div>
 
     <script src="../js/auditoria.js"></script>
 </body>

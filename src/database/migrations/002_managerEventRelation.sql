@@ -1,4 +1,4 @@
-ALTER TABLE events DROP COLUMN manager_id;
+ALTER TABLE events DROP COLUMN IF EXISTS manager_id;
 
 CREATE TABLE IF NOT EXISTS manager_events (
 	manager_id INT NOT NULL,

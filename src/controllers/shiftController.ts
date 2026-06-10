@@ -6,6 +6,7 @@ function statusFromError(message: string): number {
 	if (message.includes("em aberto") || message.includes("ocupada") || message.includes("em andamento"))
 		return 409;
 	if (message.includes("inválid")) return 400;
+	if (message.startsWith("RN")) return 422;
 	return 500;
 }
 
