@@ -1918,7 +1918,7 @@ Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação
 
 <div align = "center">
   <sub>Imagem 20 - Diagrama de Classes de Domínio</sub><br>
-  <img src="./assets/classes_dominio/diagrama_classes_corrigido.png" width="100%" alt="Diagrama de Classes"><br>
+  <img src="./assets/classes_dominio/diagrama_classes.svg" width="100%" alt="Diagrama de Classes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -3873,18 +3873,348 @@ _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com 
 
 # <a name="c5"></a>5. Testes
 
----
-
-## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
+Esta seção apresenta os testes realizados na WebAPI da plataforma RedRun, evidenciando a validação das principais funcionalidades, regras de negócio e fluxos operacionais do sistema. Os resultados obtidos demonstram a confiabilidade da aplicação e a conformidade com os requisitos definidos para o projeto.
 
 ---
 
-_Liste e descreva os testes automatizados dos endpoints criados e planejados para sua solução, implementados com **Jest**. Cubra as duas abordagens:_
+## 5.1 Relatório de Testes de Integração de Endpoints Automatizados
 
-- **_White-box_** _— testes unitários de Service que exercitam ramos internos, exceções e regras de negócio (conhecimento da implementação)._
-- **_Black-box_** _— testes de integração dos endpoints via Jest + Supertest, verificando apenas o contrato HTTP (status, body, efeito observável), sem depender da implementação interna._
+Os testes automatizados foram desenvolvidos utilizando Jest e Supertest com o objetivo de validar o comportamento dos endpoints da API e das regras de negócio implementadas na aplicação. A suíte contempla cenários de sucesso, validação, tratamento de erros e restrições operacionais, garantindo maior qualidade, estabilidade e segurança ao sistema.
 
-_Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown)._
+---
+
+### 5.1.1 Estratégia de Testes
+
+A estratégia de testes automatizados da WebAPI foi organizada considerando a separação por camadas da aplicação e o vínculo entre Requisitos Funcionais (RF), Regras de Negócio (RN), endpoints e casos de teste (CT).
+
+A camada de **Service** foi tratada como foco dos testes unitários white-box, pois concentra regras de negócio, validações e decisões internas do sistema. Já a camada de **Controller/Endpoint** foi validada por testes de integração black-box, utilizando Jest e Supertest para simular requisições HTTP e verificar as respostas da API.
+
+A camada **Repository** é considerada complementar e deve ser testada diretamente apenas quando houver lógica própria de consulta, filtro, ordenação ou persistência que não esteja coberta pelos testes de Service ou integração.
+
+Os testes seguem o padrão **AAA**:
+
+| Etapa   | Aplicação no projeto                                                                   |
+| ------- | -------------------------------------------------------------------------------------- |
+| Arrange | Preparação dos dados, mocks, payloads e estado inicial do teste                        |
+| Act     | Execução da função de Service ou chamada HTTP ao endpoint                              |
+| Assert  | Validação do resultado esperado, status HTTP, retorno da API ou chamada ao repositório |
+
+A suíte também busca garantir determinismo, evitando dependência de ordem de execução, rede externa, dados residuais, relógio do sistema ou banco persistente não controlado. Para isso, são utilizados mocks, limpeza de estado entre testes e dados específicos para cada cenário.
+
+---
+
+### 5.1.2 Testes Unitários de Service (White-Box)
+
+Os testes unitários de Service validam diretamente as regras internas do sistema. A prioridade foi dada às regras de autenticação, cadastro, início de turno, registro de checkpoint e finalização de turno, pois esses fluxos concentram as principais validações operacionais da aplicação.
+
+A cobertura mínima esperada para a camada Service é de **80%**, evidenciada pelo relatório gerado com:
+
+```bash
+npm test -- --coverage
+```
+
+#### Casos prioritários de Service
+
+| CT   | RN coberta          | RF associado            | Camada  | Objetivo |
+| ---- | ------------------- | ----------------------- | ------- | -------- |
+| CT01 | RN01                | RF007                   | Service | Bloquear início de turno se o corredor já possuir turno em andamento                 |
+| CT02 | RN02/RN19           | RF008/RF004             | Service | Bloquear início de turno em esteira ocupada              |
+| CT03 | RN04/RN34           | RF013/RF032             | Service | Validar checkpoint com quilometragem correta e tipo permitido                 |
+| CT04 | RN06/RN07/RN32/RN33 | RF015/RF017/RF018/RF019 | Service | Validar finalização do turno e cálculo de distância, duração e velocidade média       |
+| CT05 | RN38/RN39/RN41      | RF027                   | Service | Validar autenticação segura, senha com hash, JWT e bloqueio de auditor inativo      |
+
+#### CT01 – Bloqueio de corredor com turno em andamento
+
+| RN coberta | RF associado | 
+|----------- | ------------ |
+| RN01       | RF007        |
+
+Arrange: prepara um corredor que já possui turno com status `in_progress`.
+
+Act: executa a tentativa de iniciar um novo turno para o mesmo corredor.
+
+Assert: o sistema deve rejeitar a operação e não persistir novo turno.
+
+Determinismo: o teste usa dados controlados e não depende da ordem de execução.
+
+Caminho de falha: corredor já em execução não pode iniciar outro turno.
+
+#### CT02 – Bloqueio de esteira ocupada
+
+| RN coberta   | RF associado   | 
+|------------- | -------------- |
+| RN02 e RN19  | RF008 e RF004  | 
+
+Arrange: prepara uma esteira com status ocupado ou vinculada a um turno em andamento.
+
+Act: executa a tentativa de iniciar novo turno nessa esteira.
+
+Assert: o sistema deve retornar erro e impedir a criação do turno.
+
+Determinismo: o status da esteira é definido dentro do próprio teste.
+
+Caminho de falha: esteiras ocupadas não podem receber novo turno.
+
+#### CT03 – Validação de checkpoint
+
+| RN coberta   | RF associado   | 
+|------------- | -------------- |
+| RN04 e RN34  | RF013 e RF032  | 
+
+Arrange: prepara um turno em andamento com quilometragem inicial ou checkpoint anterior.
+
+Act: registra um checkpoint voluntário ou obrigatório.
+
+Assert: o sistema aceita apenas quilometragem maior ou igual à anterior e tipo `mandatory` ou `voluntary`.
+
+Determinismo: o teste utiliza valores fixos de quilometragem e tipo.
+
+Caminho de falha: quilometragem menor ou tipo inválido deve ser rejeitado.
+
+#### CT04 – Finalização de turno e cálculo automático
+
+| RN coberta               | RF associado                 | 
+|------------------------- | ---------------------------- |
+| RN06, RN07, RN32 e RN33  | RF015, RF017, RF018 e RF019  | 
+
+Arrange: prepara um turno iniciado, com checkpoint registrado e valores válidos de km e timestamp.
+
+Act: executa a finalização do turno.
+
+Assert: o sistema calcula e persiste distância, duração e velocidade média.
+
+Determinismo: os valores de entrada são fixos e independentes do relógio real.
+
+Caminho de falha: km final menor, velocidade negativa ou timestamp final anterior ao inicial devem ser rejeitados.
+
+#### CT05 – Autenticação segura
+
+| RN coberta         | RF associado | 
+|------------------- | ------------ |
+| RN38, RN39 e RN41  | RF027        | 
+
+Arrange: prepara usuário com senha criptografada, token válido ou auditor inativo.
+
+Act: executa login ou validação de autenticação.
+
+Assert: senha deve ser verificada por hash, tokens inválidos devem retornar 401 e auditor inativo não deve autenticar.
+
+Determinismo: bcrypt, JWT e repositórios podem ser mockados.
+
+Caminho de falha: senha incorreta, token inválido ou usuário inativo bloqueiam o acesso.
+
+---
+
+### 5.1.3 Testes de Integração de Endpoints (Black-Box)
+
+Os testes de integração validam a API a partir de requisições HTTP simuladas. Para os endpoints principais, a cobertura esperada considera quatro cenários-chave:
+
+| Cenário                  | Status esperado    |
+| ------------------------ | ------------------ |
+| Sucesso                  | 200 ou 201         |
+| Falha de validação       | 400 ou 422         |
+| Regra de negócio violada | 409 ou equivalente |
+| Recurso não encontrado   | 404                |
+
+#### Mapeamento por fluxo da aplicação
+
+| Fluxo                        | Endpoint Principal                   | RNs Relacionadas                                                 | RFs Associados                                                              |
+| ---------------------------- | ------------------------------------ | ---------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Cadastro de evento           | `POST /events`                       | RN18, RN29, RN37                                                 | RF051                                                                       |
+| Consulta de evento           | `GET /events/:id`                    | RN37                                                             | RF051                                                                       |
+| Atualização de evento        | `PATCH /events/:id`                  | RN18, RN29, RN37                                                 | RF051                                                                       |
+| Exclusão lógica de evento    | `DELETE /events/:id`                 | RN37                                                             | RF051                                                                       |
+| Cadastro de equipe           | `POST /teams`                        | RN15, RN16, RN28                                                 | RF001, RF002, RF003                                                         |
+| Consulta de equipe           | `GET /teams/:id`                     | RN15, RN16                                                       | RF001, RF002                                                                |
+| Atualização de equipe        | `PATCH /teams/:id`                   | RN15, RN16, RN20                                                 | RF001, RF002, RF005                                                         |
+| Remoção de equipe            | `DELETE /teams/:id`                  | RN16, RN28                                                       | RF002, RF003                                                                |
+| Cadastro/validação de atleta | `POST /athletes`                     | RN16, RN17, RN21, RN30                                           | RF002, RF003, RF006, RF027                                                  |
+| Início de turno              | `POST /audit/shifts/start`           | RN01, RN02, RN12, RN17, RN19, RN20, RN21, RN28, RN31, RN35, RN37 | RF003, RF004, RF005, RF006, RF007, RF008, RF027, RF038, RF039, RF051        |
+| Registro de checkpoint       | `POST /audit/shifts/:id/checkpoints` | RN03, RN04, RN24, RN25, RN31, RN34                               | RF012, RF013, RF023, RF028, RF032, RF044, RF045, RF046                      |
+| Finalização de turno         | `POST /audit/shifts/:id/finish`      | RN05, RN06, RN07, RN09, RN12, RN25, RN32, RN33, RN35             | RF014, RF015, RF017, RF018, RF019, RF020, RF038, RF039, RF044, RF045, RF046 |
+| Hot swap                     | `POST /audit/shifts/hot-swap`        | RN08                                                             | RF034                                                                       |
+| Histórico                    | `GET /history`                       | RN13, RN22, RN23                                                 | RF022, RF024, RF041, RF042, RF043                                           |
+| Dashboard/Métricas           | `GET /metrics`                       | RN09, RN10, RN11, RN12, RN25                                     | RF020, RF021, RF037, RF038, RF039, RF044, RF045, RF046                      |
+| Alertas                      | `GET /alerts`                        | RN11, RN12, RN25                                                 | RF021, RF038, RF039, RF044, RF045, RF046                                    |
+| Exportação CSV               | `GET /export/csv`                    | RN26                                                             | RF047, RF048                                                                |
+| Sincronização offline        | `POST /sync`                         | RN27                                                             | RF025, RF026                                                                |
+| Compartilhamento final       | `GET /share/:token`                  | RN36                                                             | RF050                                                                       |
+| Login                        | `POST /auth/login`                   | RN38, RN39, RN41                                                 | RF027                                                                       |
+| Refresh Token                | `POST /auth/refresh`                 | RN39, RN40                                                       | RF027                                                                       |
+| Logout                       | `POST /auth/logout`                  | RN40, RN41                                                       | RF027                                                                       |
+
+### 5.1.4 Justificativa dos Casos de Teste
+
+A tabela a seguir apresenta a finalidade de cada conjunto de testes automatizados implementados no projeto, demonstrando quais comportamentos do sistema estão sendo validados e por que esses testes são importantes para a confiabilidade da aplicação.
+
+| Arquivo de Teste          | Objetivo                                        | Justificativa                                                                                                                                                               |
+| ------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `auth.service.test.ts`    | Validar regras de autenticação e cadastro       | Garante que usuários inválidos não sejam cadastrados, que senhas sejam armazenadas com hash criptográfico e que tokens JWT sejam emitidos apenas para usuários autorizados. |
+| `auth.controller.test.ts` | Validar respostas dos endpoints de autenticação | Garante retorno correto dos códigos HTTP (200, 201, 400, 401, 409 e 500) e tratamento adequado de erros.                                                                    |
+| `auth.middleware.test.ts` | Validar autorização e autenticação por token    | Garante que apenas usuários autenticados e com perfil autorizado consigam acessar recursos protegidos.                                                                      |
+| `event.test.ts`           | Validar CRUD de eventos e esteiras              | Garante a criação, consulta, atualização e exclusão lógica dos eventos utilizados na operação.                                                                              |
+| `team.test.ts`            | Validar CRUD de equipes e atletas               | Garante integridade do cadastro de equipes e corredores participantes do evento.                                                                                            |
+| `shift.test.ts`           | Validar início de turno                         | Garante que somente atletas válidos possam iniciar turnos e que não existam conflitos de esteira ou duplicidade de corrida.                                                 |
+| `shift.test.ts`           | Validar checkpoints                             | Garante consistência dos registros de quilometragem, tipos de checkpoint e regras de negócio relacionadas à corrida.                                                        |
+| `shift.test.ts`           | Validar regras RN17, RN28 e RN31                | Garante que o evento possua equipes válidas e quantidade mínima de corredores antes da operação.                                                                            |
+| `alerts.test.ts`          | Validar geração de alertas                      | Garante que alertas de rotação e ausência de checkpoint sejam exibidos corretamente.                                                                                        |
+| `history.test.ts`         | Validar histórico operacional                   | Garante recuperação correta dos registros históricos com aplicação adequada dos filtros disponíveis.                                                                        |
+| `metrics.test.ts`         | Validar métricas e dashboard                    | Garante cálculo correto de quilometragem, ranking, estatísticas por equipe e desempenho individual.                                                                         |
+| `export.test.ts`          | Validar exportação CSV                          | Garante geração correta dos relatórios exportados e compatibilidade com ferramentas externas.                                                                               |
+| `logs.test.ts`            | Validar rastreabilidade e auditoria             | Garante consulta correta dos logs operacionais e preservação do histórico de alterações.                                                                                    |
+
+#### Resumo Quantitativo dos Testes
+
+| Módulo               | Quantidade de Cenários         |
+| -------------------- | ------------------------------ |
+| Auth Service         | 18                             |
+| Auth Controller      | 17                             |
+| Auth Middleware      | 7                              |
+| Eventos              | 18                             |
+| Equipes e Atletas    | 23                             |
+| Turnos e Checkpoints | 36                             |
+| Alertas              | 7                              |
+| Histórico            | 8                              |
+| Logs                 | 15                             |
+| Métricas             | 20                             |
+| Exportação CSV       | 11                             |
+| **Total**            | **180 cenários automatizados** |
+
+A implementação desses testes automatizados garante a validação das principais regras de negócio da plataforma RedRun, reduzindo riscos de regressão e aumentando a confiabilidade dos fluxos críticos da operação do evento.
+
+---
+
+### 5.1.5 Evidências de Execução
+
+A execução da suíte de testes deve ser evidenciada com o comando:
+
+```bash
+npm test
+```
+
+Resultado obtido:
+
+```bash
+Test Suites: 11 passed, 11 total
+Tests: 180 passed, 180 total
+Snapshots: 0 total
+Time: 28.261 s
+```
+
+As Figuras 1 a 5 apresentam a execução completa da suíte automatizada, evidenciando que todos os testes foram aprovados com sucesso.
+
+<div align="center">
+  <sub>Imagem X - Print dos teste - 1 </sub><br>
+  <img src= "./assets/testes/teste_1.png" width="100%" alt="testes 1"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem X - Print dos teste - 2 </sub><br>
+  <img src= "./assets/testes/teste_2.png" width="100%" alt="testes 2"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem X - Print dos teste - 3 </sub><br>
+  <img src= "./assets/testes/teste_3.png" width="100%" alt="testes 3"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem X - Print dos teste - 4 </sub><br>
+  <img src= "./assets/testes/teste_4.png" width="100%" alt="testes 4"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem X - Print dos teste - 5 </sub><br>
+  <img src= "./assets/testes/teste_5.png" width="100%" alt="testes 5"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+A cobertura deve ser evidenciada com:
+
+```bash
+npm test -- --coverage
+```
+
+O relatório deve apresentar os percentuais de cobertura por camada, especialmente para a camada Service.
+
+A figura a seguir apresenta o relatório de cobertura gerado pelo Jest, incluindo os percentuais obtidos pela camada Service.
+
+<div align="center">
+  <sub>Imagem X - Relatório de cobertura do jest - 1 </sub><br>
+  <img src= "./assets/testes/tabela_1.png" width="100%" alt="jest 1"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+A execução do relatório de cobertura demonstrou que a camada Service atingiu os requisitos mínimos definidos para o projeto, apresentando:
+
+```bash
+Statements: 96,02%
+Branches: 89,88%
+Functions: 100%
+Lines: 99,56%
+```
+
+Os resultados evidenciam ampla cobertura das regras de negócio implementadas na camada de serviços, superando a cobertura mínima de 80% definida para esta entrega.
+
+#### Mapeamento de Regras de Negócio para Fluxos Testados
+
+| RN   | RF associado               | Fluxo/Endpoint                      |
+| ---- | -------------------------- | ----------------------------------- |
+| RN01 | RF007                      | Início de turno                     |
+| RN02 | RF008                      | Início de turno                     |
+| RN03 | RF012                      | Checkpoint obrigatório              |
+| RN04 | RF013                      | Checkpoint voluntário               |
+| RN05 | RF014                      | Finalização de turno                |
+| RN06 | RF015                      | Finalização de turno                |
+| RN07 | RF017, RF018, RF019        | Cálculos do turno                   |
+| RN08 | RF034                      | Hot swap                            |
+| RN09 | RF020                      | Métricas por equipe                 |
+| RN10 | RF037                      | Snapshots por hora                  |
+| RN11 | RF021                      | Dashboard                           |
+| RN12 | RF038, RF039               | Status de esteira e revezamento     |
+| RN13 | RF022                      | Histórico                           |
+| RN14 | RF040                      | Modo TV                             |
+| RN15 | RF001                      | Cadastro de equipes                 |
+| RN16 | RF002                      | Vínculo de corredores               |
+| RN17 | RF003                      | Validação de equipe completa        |
+| RN18 | RF051                      | Cadastro/edição de evento           |
+| RN19 | RF004                      | Seleção de esteira                  |
+| RN20 | RF005                      | Associação de equipe à esteira      |
+| RN21 | RF006                      | Seleção de corredor                 |
+| RN22 | RF041, RF042, RF043        | Filtros                             |
+| RN23 | RF024                      | Auditoria de edição                 |
+| RN24 | RF023                      | Edição de checkpoint                |
+| RN25 | RF028, RF044, RF045, RF046 | Inconsistências                     |
+| RN26 | RF047, RF048               | Exportação CSV                      |
+| RN27 | RF025, RF026               | Sincronização offline               |
+| RN28 | RF001, RF003               | Pré-condição para início            |
+| RN29 | RF051                      | Unicidade de evento                 |
+| RN30 | RF027                      | Validação de CPF                    |
+| RN31 | RF027                      | Auditor inativo em operação         |
+| RN32 | RF010, RF017               | Validação de distância e velocidade |
+| RN33 | RF016, RF018               | Validação de timestamp              |
+| RN34 | RF012, RF032               | Tipo de checkpoint                  |
+| RN35 | RF007, RF014               | Status de turno                     |
+| RN36 | RF050                      | Link público de desempenho          |
+| RN37 | RF051                      | Evento excluído logicamente         |
+| RN38 | RF027                      | Hash de senha                       |
+| RN39 | RF027                      | Validação de JWT                    |
+| RN40 | RF027                      | Rotação de refresh token            |
+| RN41 | RF027                      | Auditor inativo e logout            |
+
+Esse mapeamento garante que as 41 Regras de Negócio estejam ligadas aos RFs correspondentes e aos principais fluxos testáveis da WebAPI.
+
+---
 
 ## 5.2. Testes de usabilidade (sprint 5)
 
