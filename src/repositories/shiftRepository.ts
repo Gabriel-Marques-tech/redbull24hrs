@@ -44,7 +44,15 @@ export const shiftRepository = {
 			 RETURNING *`,
 			[athlete_id, auditor_id, treadmill_id, km_start]
 		);
-		return result.rows[0];
+		const shift = result.rows[0];
+
+		// RF024/RN23: registra abertura do turno na trilha de auditoria
+		await pool.query(
+			`INSERT INTO logs (shift_id, type, author_id, author_role) VALUES ($1, 'created', $2, 'auditor')`,
+			[shift.id, auditor_id]
+		);
+
+		return shift;
 	},
 
 	async lastCheckpointKm(shift_id: number): Promise<number | null> {
@@ -153,6 +161,16 @@ export const shiftRepository = {
 			 RETURNING *`,
 			[km_end, id]
 		);
-		return result.rows[0] ?? null;
+		const shift = result.rows[0] ?? null;
+
+		// RF024/RN23: registra encerramento do turno na trilha de auditoria
+		if (shift) {
+			await pool.query(
+				`INSERT INTO logs (shift_id, type) VALUES ($1, 'finished')`,
+				[shift.id]
+			);
+		}
+
+		return shift;
 	},
 };
