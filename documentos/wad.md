@@ -2908,15 +2908,15 @@ As entidades foram derivadas diretamente do domínio descrito no TAPI e dos caso
 
 | Entidade | Descrição | Atributos | Chave primária |
 | :--- | :--- | :--- | :--- |
-| **Manager** | Gerente regional do time de Field Marketing da Red Bull, responsável por instanciar e gerir os eventos sob sua regional. | `ID`, `NAME`, `EMAIL`, `CPF`, `PASSWORD` | `ID` |
-| **Event** | Instância de uma etapa do Red Bull 24 Horas (regional ou final nacional), identificada por local, título da edição e data de realização. | `ID`, `TITLE`, `LOCAL`, `DATE`, `DELETED_AT` | `ID` |
-| **Team** | Uma das duas equipes que competem no evento (tradicionalmente "azul" e "vermelha"), à qual os atletas são vinculados antes do início da competição. | `ID`, `NAME`, `DELETED_AT` | `ID` |
-| **Athlete** | Corredor inscrito que reveza com seu time durante as 24 horas, identificado pessoalmente por CPF para fins de auditoria pós-evento. | `ID`, `NAME`, `GENDER`, `CPF`, `DELETED_AT` | `ID` |
-| **Auditor** | Operador do sistema (substituindo a operação atual da prancheta) que registra os turnos e seus checkpoints à beira da esteira. | `ID`, `NAME`, `CPF`, `REGISTRATION_NUMBER`, `IS_ACTIVE`, `EMAIL`, `PASSWORD` | `ID` |
-| **Shift** | Sessão individual de corrida — um único atleta em uma única esteira, do play até o stop, antes da próxima zeragem. É a entidade central do registro operacional do evento. | `ID`, `STATUS`, `START_AT`, `END_AT`, `TOTAL_TIME`, `SPEED`, `KM_START`, `KM_END`, `DISTANCE` | `ID` |
-| **Treadmill** | Equipamento físico (Technogym) onde os turnos ocorrem. Cada equipe opera duas esteiras simultaneamente durante o evento. | `ID`, `NUMBER` | `ID` |
-| **Checkpoint** | Marcação periódica de segurança que registra a quilometragem parcial dentro de um turno. Contém atributos robustos para gerenciar revisões manuais e sincronização offline. | `ID`, `TIMESTAMP`, `DISTANCE`, `TYPE` (`MANDATORY` / `VOLUNTARY`), `REVIEWED`, `JUSTIFICATION`, `REVIEWED_AT`, `REVIEWED_BY_ID`, `REVIEWED_BY_ROLE`, `OLD_DISTANCE`, `SYNC_ID` | `ID` |
-| **Log** | Registro auditável das modificações e estados de um turno (criação, edição e finalização), garantindo rastreabilidade completa e armazenamento de históricos para a auditoria. | `ID`, `TIMESTAMP`, `TYPE` (`CREATED` / `UPDATED` / `FINISHED`), `OLD_VALUE`, `NEW_VALUE`, `AUTHOR_ID`, `AUTHOR_ROLE`, `JUSTIFICATION` | `ID` |
+| **Managers** | Gerente regional do time de Field Marketing da Red Bull, responsável por instanciar e gerir os eventos sob sua regional. | `ID`, `NAME`, `EMAIL`, `CPF`, `PASSWORD` | `ID` |
+| **Events** | Instância de uma etapa do Red Bull 24 Horas (regional ou final nacional), identificada por local, título da edição e data de realização. | `ID`, `TITLE`, `LOCAL`, `DATE`, `DELETED_AT` | `ID` |
+| **Teams** | Uma das duas equipes que competem no evento (tradicionalmente "azul" e "vermelha"), à qual os atletas são vinculados antes do início da competição. | `ID`, `NAME`, `DELETED_AT` | `ID` |
+| **Athletes** | Corredor inscrito que reveza com seu time durante as 24 horas, identificado pessoalmente por CPF para fins de auditoria pós-evento. | `ID`, `NAME`, `GENDER`, `CPF`, `DELETED_AT` | `ID` |
+| **Auditors** | Operador do sistema (substituindo a operação atual da prancheta) que registra os turnos e seus checkpoints à beira da esteira. | `ID`, `NAME`, `CPF`, `REGISTRATION_NUMBER`, `IS_ACTIVE`, `EMAIL`, `PASSWORD` | `ID` |
+| **Shifts** | Sessão individual de corrida — um único atleta em uma única esteira, do play até o stop, antes da próxima zeragem. É a entidade central do registro operacional do evento. | `ID`, `STATUS`, `START_AT`, `END_AT`, `TOTAL_TIME`, `SPEED`, `KM_START`, `KM_END`, `DISTANCE` | `ID` |
+| **Treadmills** | Equipamento físico (Technogym) onde os turnos ocorrem. Cada equipe opera duas esteiras simultaneamente durante o evento. | `ID`, `NUMBER` | `ID` |
+| **Checkpoints** | Marcação periódica de segurança que registra a quilometragem parcial dentro de um turno. Contém atributos robustos para gerenciar revisões manuais e sincronização offline. | `ID`, `TIMESTAMP`, `DISTANCE`, `TYPE` (`MANDATORY` / `VOLUNTARY`), `REVIEWED`, `JUSTIFICATION`, `REVIEWED_AT`, `REVIEWED_BY_ID`, `REVIEWED_BY_ROLE`, `OLD_DISTANCE`, `SYNC_ID` | `ID` |
+| **Logs** | Registro auditável das modificações e estados de um turno (criação, edição e finalização), garantindo rastreabilidade completa e armazenamento de históricos para a auditoria. | `ID`, `TIMESTAMP`, `TYPE` (`CREATED` / `UPDATED` / `FINISHED`), `OLD_VALUE`, `NEW_VALUE`, `AUTHOR_ID`, `AUTHOR_ROLE`, `JUSTIFICATION` | `ID` |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
