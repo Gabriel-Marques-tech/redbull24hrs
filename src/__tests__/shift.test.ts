@@ -5,6 +5,7 @@ jest.mock("../repositories/shiftRepository", () => ({
 	shiftRepository: {
 		findById: jest.fn(),
 		athleteExists: jest.fn(),
+		validateTeamsForAthlete: jest.fn(),
 		treadmillExists: jest.fn(),
 		auditorExists: jest.fn(),
 		findOpenByAthlete: jest.fn(),
@@ -31,8 +32,14 @@ const completedShift = { ...openShift, status: "completed", km_end: 150, distanc
 
 const validStart = { athlete_id: 1, auditor_id: 3, treadmill_id: 2, km_start: 100 };
 
+const validTeams = [
+	{ team_id: 1, name: "Alpha", count: 16 },
+	{ team_id: 2, name: "Beta",  count: 16 },
+];
+
 const happyStart = () => {
 	(shiftRepository.athleteExists as jest.Mock).mockResolvedValue(true);
+	(shiftRepository.validateTeamsForAthlete as jest.Mock).mockResolvedValue(validTeams);
 	(shiftRepository.treadmillExists as jest.Mock).mockResolvedValue(true);
 	(shiftRepository.auditorExists as jest.Mock).mockResolvedValue(true);
 	(shiftRepository.findOpenByAthlete as jest.Mock).mockResolvedValue(null);
@@ -97,6 +104,51 @@ describe("POST /audit/shifts/start", () => {
 		(shiftRepository.findOpenByTreadmill as jest.Mock).mockResolvedValue(openShift);
 		const res = await request(app).post("/audit/shifts/start").send(validStart);
 		expect(res.status).toBe(409);
+	});
+
+	// RF003 – RN28/RN17
+	it("422 – RN28: nenhuma equipe cadastrada no evento", async () => {
+		happyStart();
+		(shiftRepository.validateTeamsForAthlete as jest.Mock).mockResolvedValue([]);
+		const res = await request(app).post("/audit/shifts/start").send(validStart);
+		expect(res.status).toBe(422);
+		expect(res.body.error).toMatch(/RN28/);
+	});
+
+	it("422 – RN17: equipe com menos de 16 corredores", async () => {
+		happyStart();
+		(shiftRepository.validateTeamsForAthlete as jest.Mock).mockResolvedValue([
+			{ team_id: 1, name: "Alpha", count: 14 },
+			{ team_id: 2, name: "Beta",  count: 16 },
+		]);
+		const res = await request(app).post("/audit/shifts/start").send(validStart);
+		expect(res.status).toBe(422);
+		expect(res.body.error).toMatch(/RN17/);
+		expect(res.body.error).toMatch(/Alpha/);
+		expect(res.body.error).toMatch(/14\/16/);
+	});
+
+	it("422 – RN17: ambas equipes sem 16 corredores", async () => {
+		happyStart();
+		(shiftRepository.validateTeamsForAthlete as jest.Mock).mockResolvedValue([
+			{ team_id: 1, name: "Alpha", count: 10 },
+			{ team_id: 2, name: "Beta",  count: 8 },
+		]);
+		const res = await request(app).post("/audit/shifts/start").send(validStart);
+		expect(res.status).toBe(422);
+		expect(res.body.error).toMatch(/Alpha/);
+		expect(res.body.error).toMatch(/Beta/);
+	});
+
+	it("422 – RN17: equipe com mais de 16 corredores", async () => {
+		happyStart();
+		(shiftRepository.validateTeamsForAthlete as jest.Mock).mockResolvedValue([
+			{ team_id: 1, name: "Alpha", count: 17 },
+			{ team_id: 2, name: "Beta",  count: 16 },
+		]);
+		const res = await request(app).post("/audit/shifts/start").send(validStart);
+		expect(res.status).toBe(422);
+		expect(res.body.error).toMatch(/RN17/);
 	});
 });
 
