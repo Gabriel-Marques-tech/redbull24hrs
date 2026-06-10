@@ -3875,9 +3875,12 @@ _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com 
 
 ---
 
-## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
+## 5.1. Relatório de testes de integração de endpoints automatizados
+
+Nesta seção são apresentados os resultados dos testes de integração automatizados realizados nos endpoints da aplicação. Os testes tiveram como objetivo validar a comunicação entre as camadas do sistema, verificando o comportamento esperado das rotas, o tratamento de erros e a correta persistência dos dados, garantindo a confiabilidade dos fluxos implementados.
 
 ---
+
 ### 5.1.1 Estratégia de Testes
 
 A estratégia de testes automatizados da WebAPI foi organizada considerando a separação por camadas da aplicação e o vínculo entre Requisitos Funcionais (RF), Regras de Negócio (RN), endpoints e casos de teste (CT).
@@ -4006,8 +4009,6 @@ Os testes de integração validam a API a partir de requisições HTTP simuladas
 | Regra de negócio violada | 409 ou equivalente |
 | Recurso não encontrado   | 404                |
 
----
-
 #### Mapeamento por fluxo da aplicação
 
 | Fluxo                        | Endpoint Principal                   | RNs Relacionadas                                                 | RFs Associados                                                              |
@@ -4034,6 +4035,131 @@ Os testes de integração validam a API a partir de requisições HTTP simuladas
 | Login                        | `POST /auth/login`                   | RN38, RN39, RN41                                                 | RF027                                                                       |
 | Refresh Token                | `POST /auth/refresh`                 | RN39, RN40                                                       | RF027                                                                       |
 | Logout                       | `POST /auth/logout`                  | RN40, RN41                                                       | RF027                                                                       |
+
+---
+
+### 5.1.4 Evidências de Execução
+
+A execução da suíte de testes deve ser evidenciada com o comando:
+
+```bash
+npm test
+```
+
+Resultado obtido:
+
+```bash
+Test Suites: 10 passed, 10 total
+Tests: 156 passed, 156 total
+Snapshots: 0 total
+Time: 28.261 s
+```
+
+As Figuras 1 a 4 apresentam a execução completa da suíte automatizada, evidenciando que todos os testes foram aprovados com sucesso.
+
+<div align="center">
+  <sub>Imagem X - Print dos teste - 1 </sub><br>
+  <img src= "./assets/testes/teste_1.png" width="100%" alt="testes 1"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem X - Print dos teste - 2 </sub><br>
+  <img src= "./assets/testes/teste_2.png" width="100%" alt="testes 2"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem X - Print dos teste - 3 </sub><br>
+  <img src= "./assets/testes/teste_3.png" width="100%" alt="testes 3"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem X - Print dos teste - 4 </sub><br>
+  <img src= "./assets/testes/teste_4.png" width="100%" alt="testes 4"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+A cobertura deve ser evidenciada com:
+
+```bash
+npm test -- --coverage
+```
+
+O relatório deve apresentar os percentuais de cobertura por camada, especialmente para a camada Service.
+
+A Figura 5 apresenta o relatório de cobertura gerado pelo Jest, incluindo os percentuais obtidos pela camada Service.
+
+<div align="center">
+  <sub>Imagem X - Relatório de cobertura do jest - 1 </sub><br>
+  <img src= "./assets/testes/tabela_1.png" width="100%" alt="jest 1"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+A execução do relatório de cobertura demonstrou que a camada Service atingiu os requisitos mínimos definidos para o projeto, apresentando:
+
+```bash
+Statements: 95,80%
+Branches: 89,37%
+Functions: 100%
+Lines: 99,53%
+```
+
+Os resultados evidenciam ampla cobertura das regras de negócio implementadas na camada de serviços, superando a cobertura mínima de 80% definida para esta entrega.
+
+#### Mapeamento de Regras de Negócio para Fluxos Testados
+
+| RN   | RF associado               | Fluxo/Endpoint                      |
+| ---- | -------------------------- | ----------------------------------- |
+| RN01 | RF007                      | Início de turno                     |
+| RN02 | RF008                      | Início de turno                     |
+| RN03 | RF012                      | Checkpoint obrigatório              |
+| RN04 | RF013                      | Checkpoint voluntário               |
+| RN05 | RF014                      | Finalização de turno                |
+| RN06 | RF015                      | Finalização de turno                |
+| RN07 | RF017, RF018, RF019        | Cálculos do turno                   |
+| RN08 | RF034                      | Hot swap                            |
+| RN09 | RF020                      | Métricas por equipe                 |
+| RN10 | RF037                      | Snapshots por hora                  |
+| RN11 | RF021                      | Dashboard                           |
+| RN12 | RF038, RF039               | Status de esteira e revezamento     |
+| RN13 | RF022                      | Histórico                           |
+| RN14 | RF040                      | Modo TV                             |
+| RN15 | RF001                      | Cadastro de equipes                 |
+| RN16 | RF002                      | Vínculo de corredores               |
+| RN17 | RF003                      | Validação de equipe completa        |
+| RN18 | RF051                      | Cadastro/edição de evento           |
+| RN19 | RF004                      | Seleção de esteira                  |
+| RN20 | RF005                      | Associação de equipe à esteira      |
+| RN21 | RF006                      | Seleção de corredor                 |
+| RN22 | RF041, RF042, RF043        | Filtros                             |
+| RN23 | RF024                      | Auditoria de edição                 |
+| RN24 | RF023                      | Edição de checkpoint                |
+| RN25 | RF028, RF044, RF045, RF046 | Inconsistências                     |
+| RN26 | RF047, RF048               | Exportação CSV                      |
+| RN27 | RF025, RF026               | Sincronização offline               |
+| RN28 | RF001, RF003               | Pré-condição para início            |
+| RN29 | RF051                      | Unicidade de evento                 |
+| RN30 | RF027                      | Validação de CPF                    |
+| RN31 | RF027                      | Auditor inativo em operação         |
+| RN32 | RF010, RF017               | Validação de distância e velocidade |
+| RN33 | RF016, RF018               | Validação de timestamp              |
+| RN34 | RF012, RF032               | Tipo de checkpoint                  |
+| RN35 | RF007, RF014               | Status de turno                     |
+| RN36 | RF050                      | Link público de desempenho          |
+| RN37 | RF051                      | Evento excluído logicamente         |
+| RN38 | RF027                      | Hash de senha                       |
+| RN39 | RF027                      | Validação de JWT                    |
+| RN40 | RF027                      | Rotação de refresh token            |
+| RN41 | RF027                      | Auditor inativo e logout            |
+
+Esse mapeamento garante que as 41 Regras de Negócio estejam ligadas aos RFs correspondentes e aos principais fluxos testáveis da WebAPI.
 
 ---
 
