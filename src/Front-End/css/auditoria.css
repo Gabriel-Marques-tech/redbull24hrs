@@ -11,7 +11,7 @@
 .operador {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .avatar {
@@ -24,17 +24,31 @@
     margin-top: 12px;
 }
 
+.avatar-operador {
+    width: 42px;
+    height: 42px;
+}
+
 .operador small {
     color: #a8a8a8;
-    font-size: 11px;
+    font-size: 10px;
 }
 
 .operador p {
     font-size: 16px;
+    line-height: 1.05;
 }
 
-.btn-trocar{
-    margin-top: 20px;
+.operador > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.operador .btn-trocar {
+    margin-left: 8px;
+    align-self: flex-end;
+    margin-bottom: 1px;
 }
 
 .btn-trocar,
@@ -54,7 +68,7 @@
     margin-right: 170px;
 }
 
-/* ---------------- CONTEÚDO ---------------- */
+/* ---------------- CONTEUDO ---------------- */
 
 .conteudo-auditoria {
     display: flex;
@@ -83,7 +97,7 @@
     font-weight: 500;
 }
 
-/* ---------------- CRONÔMETRO ---------------- */
+/* ---------------- CRONOMETRO ---------------- */
 
 .cronometro {
     width: 545px;
@@ -100,7 +114,7 @@
     font-weight: 700;
 }
 
-/* ---------------- AÇÕES ---------------- */
+/* ---------------- ACOES ---------------- */
 
 .acoes-corrida {
     display: flex;
@@ -120,6 +134,42 @@
     cursor: pointer;
 }
 
+.btn-proximo-corredor {
+    width: 63px;
+    height: 64px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--vermelho);
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-proximo-corredor.escondido {
+    display: none;
+}
+
+.icone-proximo {
+    width: 0;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 16px solid var(--branco);
+    position: relative;
+}
+
+.icone-proximo::after {
+    content: "";
+    position: absolute;
+    top: -12px;
+    left: 6px;
+    width: 4px;
+    height: 24px;
+    background-color: var(--branco);
+}
+
 .btn-esteira {
     width: 63px;
     height: 64px;
@@ -135,6 +185,123 @@
     align-items: center;
     justify-content: center;
     gap: 5px;
+}
+
+.btn-esteira img {
+    width: 25px;
+}
+
+.btn-esteira.inativa {
+    background-color: #e56f91;
+    cursor: not-allowed;
+}
+
+/* ---------------- MODAL ESTEIRA ---------------- */
+
+.modal-esteira {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.modal-esteira.escondido {
+    display: none;
+}
+
+.modal-conteudo {
+    width: 86vw;
+    height: 76vh;
+    max-width: none;
+    background-color: #fff7f7;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+}
+
+.modal-conteudo h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 36px;
+}
+
+.opcoes-esteira {
+    display: flex;
+    gap: 54px;
+}
+
+.opcao-esteira {
+    width: 260px;
+    height: 230px;
+    border: 1px solid #8f8f8f;
+    border-radius: 8px;
+    background-color: transparent;
+    color: #000;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.opcao-esteira.selecionada {
+    border-color: var(--vermelho);
+    background-color: var(--vermelho);
+    color: var(--branco);
+}
+
+.opcao-esteira .icone-esteira {
+    width: 130px;
+    margin: 0;
+}
+
+.opcao-esteira .icone-branco {
+    display: none;
+}
+
+.opcao-esteira.selecionada .icone-branco {
+    display: block;
+}
+
+.opcao-esteira.selecionada .icone-preto {
+    display: none;
+}
+
+.acoes-modal {
+    display: flex;
+    gap: 18px;
+    margin-top: 42px;
+}
+
+.btn-cancelar-modal,
+.btn-selecionar-modal {
+    width: 180px;
+    height: 60px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-cancelar-modal {
+    border: 1px solid #000;
+    background-color: transparent;
+    color: #000;
+}
+
+.btn-selecionar-modal {
+    border: none;
+    background-color: var(--vermelho);
+    color: var(--branco);
 }
 
 /* ---------------- REGISTROS ---------------- */
@@ -255,112 +422,4 @@ tbody tr:last-child td:last-child {
 img {
     width: 25px;
     margin-top: 7px;
-}
-
-/* ---------------- MODAL ESTEIRA ---------------- */
-
-.modal-esteira {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-}
-
-.modal-esteira.escondido {
-    display: none;
-}
-
-.modal-conteudo {
-    width: 86vw;
-    height: 76vh;
-    max-width: none;
-    background-color: #fff7f7;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 48px;
-}
-
-.modal-conteudo h2 {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 36px;
-}
-
-.opcoes-esteira {
-    display: flex;
-    gap: 54px;
-}
-
-.opcao-esteira {
-    width: 260px;
-    height: 230px;
-    border: 1px solid #8f8f8f;
-    border-radius: 8px;
-    background-color: transparent;
-    color: #000;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    font-size: 20px;
-    font-weight: 500;
-}
-
-.opcao-esteira.selecionada {
-    border-color: var(--vermelho);
-    background-color: var(--vermelho);
-    color: var(--branco);
-}
-
-.opcao-esteira .icone-esteira {
-    width: 130px;
-    margin: 0;
-}
-
-.opcao-esteira .icone-branco {
-    display: none;
-}
-
-.opcao-esteira.selecionada .icone-branco {
-    display: block;
-}
-
-.opcao-esteira.selecionada .icone-preto {
-    display: none;
-}
-
-.acoes-modal {
-    display: flex;
-    gap: 18px;
-    margin-top: 42px;
-}
-
-.btn-cancelar-modal,
-.btn-selecionar-modal {
-    width: 180px;
-    height: 60px;
-    border-radius: 6px;
-    font-size: 18px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.btn-cancelar-modal {
-    border: 1px solid #000;
-    background-color: transparent;
-    color: #000;
-}
-
-.btn-selecionar-modal {
-    border: none;
-    background-color: var(--vermelho);
-    color: var(--branco);
 }
