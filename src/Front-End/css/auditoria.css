@@ -20,6 +20,8 @@
     border-radius: 50%;
     background-color: #d9d9d9;
     display: inline-block;
+    flex-shrink: 0;
+    margin-top: 12px;
 }
 
 .avatar-operador {
@@ -59,19 +61,14 @@
     color: #9c9c9c;
 }
 
-.btn-sair,
-.btn-editar {
-    font-size: 22px;
-}
-
 .tempo-restante {
     color: #d0d0d0;
     font-weight: 700;
     font-size: 16px;
-    margin-right: 160px;
+    margin-right: 170px;
 }
 
-/* ---------------- CONTEÚDO ---------------- */
+/* ---------------- CONTEUDO ---------------- */
 
 .conteudo-auditoria {
     display: flex;
@@ -100,7 +97,7 @@
     font-weight: 500;
 }
 
-/* ---------------- CRONÔMETRO ---------------- */
+/* ---------------- CRONOMETRO ---------------- */
 
 .cronometro {
     width: 545px;
@@ -117,7 +114,7 @@
     font-weight: 700;
 }
 
-/* ---------------- AÇÕES ---------------- */
+/* ---------------- ACOES ---------------- */
 
 .acoes-corrida {
     display: flex;
@@ -330,8 +327,11 @@
 
 table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     font-size: 16px;
+    overflow: hidden;
+    border-radius: 8px;
 }
 
 th {
@@ -342,13 +342,29 @@ th {
     border: 1px solid #8a0030;
 }
 
+th:first-child {
+    border-top-left-radius: 4px;
+}
+
+th:last-child {
+    border-top-right-radius: 4px;
+}
+
 td {
     height: 43px;
     text-align: center;
     border: 1px solid #8f8f8f;
 }
 
-/* ---------------- FILA ---------------- */
+tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 8px;
+}
+
+tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 8px;
+}
+
+/* ---------------- FILA DE CORREDORES ---------------- */
 
 .proximos-corredores {
     width: 250px;
@@ -391,12 +407,19 @@ td {
 
 .corredor-fila p {
     flex: 1;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .drag {
     color: #9c9c9c;
-    font-size: 20px;
+    font-size: 24px;
     cursor: grab;
     user-select: none;
+}
+
+/* ---------------- IMG ---------------- */
+
+img {
+    width: 25px;
+    margin-top: 7px;
 }
