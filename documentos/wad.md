@@ -3873,11 +3873,13 @@ _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com 
 
 # <a name="c5"></a>5. Testes
 
+Esta seção apresenta os testes realizados na WebAPI da plataforma RedRun, evidenciando a validação das principais funcionalidades, regras de negócio e fluxos operacionais do sistema. Os resultados obtidos demonstram a confiabilidade da aplicação e a conformidade com os requisitos definidos para o projeto.
+
 ---
 
-## 5.1. Relatório de testes de integração de endpoints automatizados
+## 5.1 Relatório de Testes de Integração de Endpoints Automatizados
 
-Nesta seção são apresentados os resultados dos testes de integração automatizados realizados nos endpoints da aplicação. Os testes tiveram como objetivo validar a comunicação entre as camadas do sistema, verificando o comportamento esperado das rotas, o tratamento de erros e a correta persistência dos dados, garantindo a confiabilidade dos fluxos implementados.
+Os testes automatizados foram desenvolvidos utilizando Jest e Supertest com o objetivo de validar o comportamento dos endpoints da API e das regras de negócio implementadas na aplicação. A suíte contempla cenários de sucesso, validação, tratamento de erros e restrições operacionais, garantindo maior qualidade, estabilidade e segurança ao sistema.
 
 ---
 
@@ -3923,78 +3925,83 @@ npm test -- --coverage
 
 #### CT01 – Bloqueio de corredor com turno em andamento
 
-**RN coberta:** RN01
-**RF associado:** RF007
+| RN coberta | RF associado | 
+|----------- | ------------ |
+| RN01       | RF007        |
 
-**Arrange:** prepara um corredor que já possui turno com status `in_progress`.
+Arrange: prepara um corredor que já possui turno com status `in_progress`.
 
-**Act:** executa a tentativa de iniciar um novo turno para o mesmo corredor.
+Act: executa a tentativa de iniciar um novo turno para o mesmo corredor.
 
-**Assert:** o sistema deve rejeitar a operação e não persistir novo turno.
+Assert: o sistema deve rejeitar a operação e não persistir novo turno.
 
-**Determinismo:** o teste usa dados controlados e não depende da ordem de execução.
+Determinismo: o teste usa dados controlados e não depende da ordem de execução.
 
-**Caminho de falha:** corredor já em execução não pode iniciar outro turno.
+Caminho de falha: corredor já em execução não pode iniciar outro turno.
 
 #### CT02 – Bloqueio de esteira ocupada
 
-**RNs cobertas:** RN02 e RN19
-**RFs associados:** RF008 e RF004
+| RN coberta   | RF associado   | 
+|------------- | -------------- |
+| RN02 e RN19  | RF008 e RF004  | 
 
-**Arrange:** prepara uma esteira com status ocupado ou vinculada a um turno em andamento.
+Arrange: prepara uma esteira com status ocupado ou vinculada a um turno em andamento.
 
-**Act:** executa a tentativa de iniciar novo turno nessa esteira.
+Act: executa a tentativa de iniciar novo turno nessa esteira.
 
-**Assert:** o sistema deve retornar erro e impedir a criação do turno.
+Assert: o sistema deve retornar erro e impedir a criação do turno.
 
-**Determinismo:** o status da esteira é definido dentro do próprio teste.
+Determinismo: o status da esteira é definido dentro do próprio teste.
 
-**Caminho de falha:** esteiras ocupadas não podem receber novo turno.
+Caminho de falha: esteiras ocupadas não podem receber novo turno.
 
 #### CT03 – Validação de checkpoint
 
-**RNs cobertas:** RN04 e RN34
-**RFs associados:** RF013 e RF032
+| RN coberta   | RF associado   | 
+|------------- | -------------- |
+| RN04 e RN34  | RF013 e RF032  | 
 
-**Arrange:** prepara um turno em andamento com quilometragem inicial ou checkpoint anterior.
+Arrange: prepara um turno em andamento com quilometragem inicial ou checkpoint anterior.
 
-**Act:** registra um checkpoint voluntário ou obrigatório.
+Act: registra um checkpoint voluntário ou obrigatório.
 
-**Assert:** o sistema aceita apenas quilometragem maior ou igual à anterior e tipo `mandatory` ou `voluntary`.
+Assert: o sistema aceita apenas quilometragem maior ou igual à anterior e tipo `mandatory` ou `voluntary`.
 
-**Determinismo:** o teste utiliza valores fixos de quilometragem e tipo.
+Determinismo: o teste utiliza valores fixos de quilometragem e tipo.
 
-**Caminho de falha:** quilometragem menor ou tipo inválido deve ser rejeitado.
+Caminho de falha: quilometragem menor ou tipo inválido deve ser rejeitado.
 
 #### CT04 – Finalização de turno e cálculo automático
 
-**RNs cobertas:** RN06, RN07, RN32 e RN33
-**RFs associados:** RF015, RF017, RF018 e RF019
+| RN coberta               | RF associado                 | 
+|------------------------- | ---------------------------- |
+| RN06, RN07, RN32 e RN33  | RF015, RF017, RF018 e RF019  | 
 
-**Arrange:** prepara um turno iniciado, com checkpoint registrado e valores válidos de km e timestamp.
+Arrange: prepara um turno iniciado, com checkpoint registrado e valores válidos de km e timestamp.
 
-**Act:** executa a finalização do turno.
+Act: executa a finalização do turno.
 
-**Assert:** o sistema calcula e persiste distância, duração e velocidade média.
+Assert: o sistema calcula e persiste distância, duração e velocidade média.
 
-**Determinismo:** os valores de entrada são fixos e independentes do relógio real.
+Determinismo: os valores de entrada são fixos e independentes do relógio real.
 
-**Caminho de falha:** km final menor, velocidade negativa ou timestamp final anterior ao inicial devem ser rejeitados.
+Caminho de falha: km final menor, velocidade negativa ou timestamp final anterior ao inicial devem ser rejeitados.
 
 #### CT05 – Autenticação segura
 
-**RNs cobertas:** RN38, RN39 e RN41
-**RF associado:** RF027
+| RN coberta         | RF associado | 
+|------------------- | ------------ |
+| RN38, RN39 e RN41  | RF027        | 
 
-**Arrange:** prepara usuário com senha criptografada, token válido ou auditor inativo.
+Arrange: prepara usuário com senha criptografada, token válido ou auditor inativo.
 
-**Act:** executa login ou validação de autenticação.
+Act: executa login ou validação de autenticação.
 
-**Assert:** senha deve ser verificada por hash, tokens inválidos devem retornar 401 e auditor inativo não deve autenticar.
+Assert: senha deve ser verificada por hash, tokens inválidos devem retornar 401 e auditor inativo não deve autenticar.
 
-**Determinismo:** bcrypt, JWT e repositórios podem ser mockados.
+Determinismo: bcrypt, JWT e repositórios podem ser mockados.
 
-**Caminho de falha:** senha incorreta, token inválido ou usuário inativo bloqueiam o acesso.
+Caminho de falha: senha incorreta, token inválido ou usuário inativo bloqueiam o acesso.
 
 ---
 
@@ -4036,9 +4043,48 @@ Os testes de integração validam a API a partir de requisições HTTP simuladas
 | Refresh Token                | `POST /auth/refresh`                 | RN39, RN40                                                       | RF027                                                                       |
 | Logout                       | `POST /auth/logout`                  | RN40, RN41                                                       | RF027                                                                       |
 
+### 5.1.4 Justificativa dos Casos de Teste
+
+A tabela a seguir apresenta a finalidade de cada conjunto de testes automatizados implementados no projeto, demonstrando quais comportamentos do sistema estão sendo validados e por que esses testes são importantes para a confiabilidade da aplicação.
+
+| Arquivo de Teste          | Objetivo                                        | Justificativa                                                                                                                                                               |
+| ------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `auth.service.test.ts`    | Validar regras de autenticação e cadastro       | Garante que usuários inválidos não sejam cadastrados, que senhas sejam armazenadas com hash criptográfico e que tokens JWT sejam emitidos apenas para usuários autorizados. |
+| `auth.controller.test.ts` | Validar respostas dos endpoints de autenticação | Garante retorno correto dos códigos HTTP (200, 201, 400, 401, 409 e 500) e tratamento adequado de erros.                                                                    |
+| `auth.middleware.test.ts` | Validar autorização e autenticação por token    | Garante que apenas usuários autenticados e com perfil autorizado consigam acessar recursos protegidos.                                                                      |
+| `event.test.ts`           | Validar CRUD de eventos e esteiras              | Garante a criação, consulta, atualização e exclusão lógica dos eventos utilizados na operação.                                                                              |
+| `team.test.ts`            | Validar CRUD de equipes e atletas               | Garante integridade do cadastro de equipes e corredores participantes do evento.                                                                                            |
+| `shift.test.ts`           | Validar início de turno                         | Garante que somente atletas válidos possam iniciar turnos e que não existam conflitos de esteira ou duplicidade de corrida.                                                 |
+| `shift.test.ts`           | Validar checkpoints                             | Garante consistência dos registros de quilometragem, tipos de checkpoint e regras de negócio relacionadas à corrida.                                                        |
+| `shift.test.ts`           | Validar regras RN17, RN28 e RN31                | Garante que o evento possua equipes válidas e quantidade mínima de corredores antes da operação.                                                                            |
+| `alerts.test.ts`          | Validar geração de alertas                      | Garante que alertas de rotação e ausência de checkpoint sejam exibidos corretamente.                                                                                        |
+| `history.test.ts`         | Validar histórico operacional                   | Garante recuperação correta dos registros históricos com aplicação adequada dos filtros disponíveis.                                                                        |
+| `metrics.test.ts`         | Validar métricas e dashboard                    | Garante cálculo correto de quilometragem, ranking, estatísticas por equipe e desempenho individual.                                                                         |
+| `export.test.ts`          | Validar exportação CSV                          | Garante geração correta dos relatórios exportados e compatibilidade com ferramentas externas.                                                                               |
+| `logs.test.ts`            | Validar rastreabilidade e auditoria             | Garante consulta correta dos logs operacionais e preservação do histórico de alterações.                                                                                    |
+
+#### Resumo Quantitativo dos Testes
+
+| Módulo               | Quantidade de Cenários         |
+| -------------------- | ------------------------------ |
+| Auth Service         | 18                             |
+| Auth Controller      | 17                             |
+| Auth Middleware      | 7                              |
+| Eventos              | 18                             |
+| Equipes e Atletas    | 23                             |
+| Turnos e Checkpoints | 36                             |
+| Alertas              | 7                              |
+| Histórico            | 8                              |
+| Logs                 | 15                             |
+| Métricas             | 20                             |
+| Exportação CSV       | 11                             |
+| **Total**            | **180 cenários automatizados** |
+
+A implementação desses testes automatizados garante a validação das principais regras de negócio da plataforma RedRun, reduzindo riscos de regressão e aumentando a confiabilidade dos fluxos críticos da operação do evento.
+
 ---
 
-### 5.1.4 Evidências de Execução
+### 5.1.5 Evidências de Execução
 
 A execução da suíte de testes deve ser evidenciada com o comando:
 
@@ -4049,13 +4095,13 @@ npm test
 Resultado obtido:
 
 ```bash
-Test Suites: 10 passed, 10 total
-Tests: 156 passed, 156 total
+Test Suites: 11 passed, 11 total
+Tests: 180 passed, 180 total
 Snapshots: 0 total
 Time: 28.261 s
 ```
 
-As Figuras 1 a 4 apresentam a execução completa da suíte automatizada, evidenciando que todos os testes foram aprovados com sucesso.
+As Figuras 1 a 5 apresentam a execução completa da suíte automatizada, evidenciando que todos os testes foram aprovados com sucesso.
 
 <div align="center">
   <sub>Imagem X - Print dos teste - 1 </sub><br>
@@ -4085,6 +4131,13 @@ As Figuras 1 a 4 apresentam a execução completa da suíte automatizada, eviden
   <br><br><br>
 </div>
 
+<div align="center">
+  <sub>Imagem X - Print dos teste - 5 </sub><br>
+  <img src= "./assets/testes/teste_5.png" width="100%" alt="testes 5"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
 A cobertura deve ser evidenciada com:
 
 ```bash
@@ -4093,7 +4146,7 @@ npm test -- --coverage
 
 O relatório deve apresentar os percentuais de cobertura por camada, especialmente para a camada Service.
 
-A Figura 5 apresenta o relatório de cobertura gerado pelo Jest, incluindo os percentuais obtidos pela camada Service.
+A figura a seguir apresenta o relatório de cobertura gerado pelo Jest, incluindo os percentuais obtidos pela camada Service.
 
 <div align="center">
   <sub>Imagem X - Relatório de cobertura do jest - 1 </sub><br>
@@ -4105,10 +4158,10 @@ A Figura 5 apresenta o relatório de cobertura gerado pelo Jest, incluindo os pe
 A execução do relatório de cobertura demonstrou que a camada Service atingiu os requisitos mínimos definidos para o projeto, apresentando:
 
 ```bash
-Statements: 95,80%
-Branches: 89,37%
+Statements: 96,02%
+Branches: 89,88%
 Functions: 100%
-Lines: 99,53%
+Lines: 99,56%
 ```
 
 Os resultados evidenciam ampla cobertura das regras de negócio implementadas na camada de serviços, superando a cobertura mínima de 80% definida para esta entrega.
