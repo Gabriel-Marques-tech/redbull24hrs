@@ -1707,20 +1707,6 @@ Na sprint 1, os RNFs foram definidos em nível conceitual, com critérios mensur
 ---
 A seção de Arquitetura apresenta a estrutura organizacional e a modelagem dos principais componentes do sistema desenvolvidos ao longo das sprints 1 a 5. Por meio dos diagramas arquiteturais, diagramas de classes e diagramas de casos de uso, é possível compreender como os módulos da aplicação se relacionam, quais são as responsabilidades de cada camada e como ocorre o fluxo de dados entre os componentes. Esses artefatos auxiliam na documentação técnica do projeto, facilitando o entendimento da solução, a manutenção do software e a evolução contínua da arquitetura proposta.
 
-> **Cobertura atual dos diagramas e plano de evolução (sprint 4).**
->
-> Os diagramas de arquitetura (3.2.1), de classes arquiteturais (3.2.1.1) e de sequência (3.2.4)
-> cobrem, nesta sprint, os fluxos de **Eventos, Equipes, Atletas, Turnos, Histórico, Métricas
-> (Dashboard) e Registros/Logs (sincronização)**.
->
-> Os fluxos de **Autenticação, Esteiras, Alertas (inconsistências) e Exportação** já estão
-> **implementados e operantes no código** (ver seção 3.7 e a RTM em 3.9), mas seus diagramas
-> ainda **não foram modelados** — estão **planejados para a sprint 4**. A decisão de implementar
-> a autenticação, por exemplo, surgiu durante esta sprint (ver relatório de desenvolvimento, seção
-> 4.1), e a modelagem visual desses fluxos será incorporada nas próximas atualizações desta seção,
-> mantendo a documentação alinhada ao código já entregue. Trata-se de um débito de documentação
-> registrado de forma explícita, não de funcionalidade ausente.
-
 ### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
 
 ---
