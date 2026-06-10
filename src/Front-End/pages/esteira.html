@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/esteira.css">
+    <link rel="stylesheet" href="../css/global.css">
+</head>
+<body>
+
+    <div class="barra-gradiente"></div>
+    <a href="home-auditor.html" class="cancelar">
+        <img src="../assets/competição/Seta.svg" alt="">
+        Cancelar
+    </a>
+
+    <main>
+        <aside class="etapas">
+            <h3>Etapas</h3>
+            <div class="etapa">
+                <span>1</span>
+                <p>Competição</p>
+            </div>
+            <div class="etapa">
+                <span>2</span>
+                <p>Equipe</p>
+            </div>
+            <div class="etapa ativa">
+                <span>3</span>
+                <p>Esteira</p>
+            </div>
+            <div class="etapa">
+                <span>4</span>
+                <p>Visão geral</p>
+            </div>
+        </aside>
+    
+        <section class="conteudo">
+
+        <h2>Selecione a esteira inicial</h2>
+
+        <div class="lista-esteiras">
+
+            <div class="esteira">
+                <img src="../assets/esteira/esteira.svg" alt="">
+                <p><strong>Esteira 1</strong></p>
+            </div>
+
+            <div class="esteira">
+                <img src="../assets/esteira/esteira.svg" alt="">
+                <p><strong>Esteira 2</strong></p>
+            </div>
+
+        </div>
+
+        <div class="botoes">
+            <button class="btn-voltar" onclick="window.location.href='equipe.html'">Anterior</button>
+            <button class="btn-proximo" onclick="window.location.href='visao-geral.html'">Próximo</button>
+        </div>
+
+        </section>
+    </main>
+    <script src="../js/esteira.js"></script>
+</body>
+</html>

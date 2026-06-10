@@ -1,5 +1,6 @@
 %%{init: {
     "theme": "base",
+    "background": "#ffffff",
     "themeVariables": {
         "primaryColor": "#0F0069",
         "primaryTextColor": "#FFFFFF",
@@ -27,126 +28,140 @@
         "labelTextColor": "#0F0069",
         "loopTextColor": "#0F0069",
         "fontFamily": "Arial, sans-serif",
-        "fontSize": "14px"
+        "fontSize": "14px",
+        "background": "#FFFFFF"
     }
 }}%%
 sequenceDiagram
     autonumber
     actor User
-    participant RegistrationController
-    participant RegistrationService
-    participant RegistrationRepository
+    participant ShiftController
+    participant ShiftService
+    participant ShiftRepository
     participant Database
 
-    Note over User, Database: Retroactive Record Editing
+    Note over User, Database: Correção Retroativa de Checkpoint (RF015 · RN23 · RN24)
 
-    User->>RegistrationController: PATCH /records/{id} (newValue, auditorId)
-    activate RegistrationController
+    User->>ShiftController: PATCH /audit/checkpoints/{id} { distance, justification? }
+    Note over ShiftController: requer autenticação JWT (req.user)
+    activate ShiftController
 
-    RegistrationController->>RegistrationService: editRecord(id, newValue, auditorId)
-    activate RegistrationService
+    ShiftController->>ShiftService: correctCheckpoint(checkpoint_id, distance, user_id, role, justification)
+    activate ShiftService
 
-    RegistrationService->>RegistrationRepository: findRecord(id)
-    activate RegistrationRepository
+    ShiftService->>ShiftRepository: findCheckpointById(checkpoint_id)
+    activate ShiftRepository
 
-    RegistrationRepository->>Database: SELECT record WHERE id
+    ShiftRepository->>Database: SELECT checkpoint WHERE id
     activate Database
 
-    Database-->>RegistrationRepository: record (currentValue, checkpoints)
+    Database-->>ShiftRepository: { distance, shift_id }
     deactivate Database
 
-    RegistrationRepository-->>RegistrationService: recordData
-    deactivate RegistrationRepository
+    ShiftRepository-->>ShiftService: checkpoint
+    deactivate ShiftRepository
 
-    RegistrationService->>RegistrationService: validateKmRange(newValue, checkpoints)
+    ShiftService->>ShiftRepository: findById(shift_id)
+    activate ShiftRepository
 
-    RegistrationService->>RegistrationRepository: updateRecord(id, newValue)
-    activate RegistrationRepository
-
-    RegistrationRepository->>Database: UPDATE record SET km = newValue
+    ShiftRepository->>Database: SELECT shift WHERE id
     activate Database
 
-    Database-->>RegistrationRepository: success
+    Database-->>ShiftRepository: { km_start, status }
     deactivate Database
 
-    RegistrationRepository-->>RegistrationService: ok
-    deactivate RegistrationRepository
+    ShiftRepository-->>ShiftService: shift
+    deactivate ShiftRepository
 
-    RegistrationService->>RegistrationRepository: saveAudit(id, previousValue, newValue, auditorId)
-    activate RegistrationRepository
+    ShiftService->>ShiftRepository: findNeighborCheckpoints(checkpoint_id, shift_id)
+    activate ShiftRepository
 
-    RegistrationRepository->>Database: INSERT audit (immutable)
+    ShiftRepository->>Database: SELECT previous and next Checkpoints
     activate Database
 
-    Database-->>RegistrationRepository: auditId
+    Database-->>ShiftRepository: { prev, next }
     deactivate Database
 
-    RegistrationRepository-->>RegistrationService: ok
-    deactivate RegistrationRepository
+    ShiftRepository-->>ShiftService: { prev, next }
+    deactivate ShiftRepository
 
-    RegistrationService-->>RegistrationController: updatedRecord + generatedAudit
-    deactivate RegistrationService
+    ShiftService->>ShiftService: validateKmRange(new_distance, prev, next)
 
-    RegistrationController-->>User: 200 OK — Record edited and audit logged
-    deactivate RegistrationController
+    ShiftService->>ShiftRepository: correctCheckpoint(id, new_distance, old_distance, author_id, role, justification)
+    activate ShiftRepository
 
-    alt newValue < previousCheckpoint or newValue > nextCheckpoint
-        Note over RegistrationService: [Alternative] Value outside valid range
-        RegistrationService-->>RegistrationController: error: invalid mileage
-        RegistrationController-->>User: 422 — Value must be between checkpoints
+    ShiftRepository->>Database: UPDATE checkpoint SET distance + INSERT checkpoint_corrections (imutável)
+    activate Database
+
+    Database-->>ShiftRepository: { updated checkpoint + correction_id }
+    deactivate Database
+
+    ShiftRepository-->>ShiftService: result
+    deactivate ShiftRepository
+
+    ShiftService-->>ShiftController: result
+    deactivate ShiftService
+
+    ShiftController-->>User: 200 { id, shift_id, distance, timestamp, type, correction_id }
+    deactivate ShiftController
+
+    alt new_distance < prev or new_distance > next
+        Note over ShiftService: [Alternativo] Valor fora do intervalo válido
+        ShiftService-->>ShiftController: error: distância inválida
+        ShiftController-->>User: 422 — Value must be between checkpoints
     end
 
-    Note over User, Database: Offline Sync
+    Note over User, Database: Sincronização Offline — planejado, não implementado
 
-    Note over User: Device without connection
+    Note over User: Dispositivo sem conexão
 
-    loop For each offline record
+    loop Para cada registro offline
         User->>User: persistLocally(data)
     end
 
-    Note over User: Connection restored
+    Note over User: Conexão restaurada
 
-    User->>RegistrationController: POST /sync (localRecords[])
-    activate RegistrationController
+    User->>ShiftController: POST /sync (localRecords[])
+    activate ShiftController
 
-    RegistrationController->>RegistrationService: syncRecords(localRecords[])
-    activate RegistrationService
+    ShiftController->>ShiftService: syncRecords(localRecords[])
+    activate ShiftService
 
-    loop For each record in queue
-        RegistrationService->>RegistrationRepository: checkDuplicate(id, timestamp)
-        activate RegistrationRepository
+    loop Para cada registro na fila
+        ShiftService->>ShiftRepository: checkDuplicate(id, timestamp)
+        activate ShiftRepository
 
-        RegistrationRepository->>Database: SELECT WHERE id AND timestamp
+        ShiftRepository->>Database: SELECT WHERE id AND timestamp
         activate Database
 
-        Database-->>RegistrationRepository: exists (true/false)
+        Database-->>ShiftRepository: exists (true/false)
         deactivate Database
 
-        RegistrationRepository-->>RegistrationService: duplicate (false)
-        deactivate RegistrationRepository
+        ShiftRepository-->>ShiftService: duplicate (false)
+        deactivate ShiftRepository
 
-        RegistrationService->>RegistrationRepository: saveRecord(data)
-        activate RegistrationRepository
+        ShiftService->>ShiftRepository: saveRecord(data)
+        activate ShiftRepository
 
-        RegistrationRepository->>Database: INSERT record
+        ShiftRepository->>Database: INSERT record
         activate Database
 
-        Database-->>RegistrationRepository: success
+        Database-->>ShiftRepository: success
         deactivate Database
 
-        RegistrationRepository-->>RegistrationService: ok
-        deactivate RegistrationRepository
+        ShiftRepository-->>ShiftService: ok
+        deactivate ShiftRepository
     end
 
-    RegistrationService-->>RegistrationController: syncCompleted
-    deactivate RegistrationService
+    ShiftService-->>ShiftController: syncCompleted
+    deactivate ShiftService
 
-    RegistrationController-->>User: 200 OK — Records synchronized
-    deactivate RegistrationController
+    ShiftController-->>User: 200 OK — Records synchronized
+    deactivate ShiftController
 
-    alt record already exists in database
-        Note over RegistrationService: [Alternative] Duplicate record ignored
-        RegistrationService->>RegistrationService: ignoreRecord(id)
-        RegistrationService-->>RegistrationController: warning: duplicates discarded
-        RegistrationController-->>User: 200 OK — Partial sync
+    alt registro já existe no banco
+        Note over ShiftService: [Alternativo] Registro duplicado ignorado
+        ShiftService->>ShiftService: ignoreRecord(id)
+        ShiftService-->>ShiftController: warning: duplicates discarded
+        ShiftController-->>User: 200 OK — Partial sync
     end
