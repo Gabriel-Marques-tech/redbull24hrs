@@ -4,6 +4,9 @@ import AuthMiddleware from "../middlewares/authMiddleware";
 
 const router: Router = express.Router();
 
+// RF050 – rota pública (sem auth) — deve vir ANTES do router.use(requireAuth)
+router.get("/athletes/:athleteId/share", metricsController.shareAthletePerformance);
+
 router.use(AuthMiddleware.requireAuth);
 
 router.get("/events/:eventId/dashboard",  metricsController.getDashboard);
