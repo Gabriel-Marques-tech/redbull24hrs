@@ -51,7 +51,7 @@
                     Iniciar corrida
                 </button>
 
-                <button class="btn-esteira" type="button">
+                <button class="btn-esteira" id="btnAbrirEsteira" type="button">
                     <span id="numeroEsteira">1</span>
                     <span><img src="../assets/esteira/esteira-branca.svg" alt=""></span>
                 </button>
@@ -118,6 +118,31 @@
             </aside>
         </section>
     </main>
+
+    <div class="modal-esteira escondido" id="modalEsteira">
+        <div class="modal-conteudo">
+            <h2>Selecione uma esteira</h2>
+
+            <div class="opcoes-esteira">
+                <button class="opcao-esteira selecionada" type="button" data-esteira="1">
+                    <img class="icone-esteira icone-branco" src="../assets/esteira/esteira-branca.svg" alt="">
+                    <img class="icone-esteira icone-preto" src="../assets/esteira/esteira.svg" alt="">
+                    <span>Esteira 1</span>
+                </button>
+
+                <button class="opcao-esteira" type="button" data-esteira="2">
+                    <img class="icone-esteira icone-branco" src="../assets/esteira/esteira-branca.svg" alt="">
+                    <img class="icone-esteira icone-preto" src="../assets/esteira/esteira.svg" alt="">
+                    <span>Esteira 2</span>
+                </button>
+            </div>
+
+            <div class="acoes-modal">
+                <button class="btn-cancelar-modal" id="btnCancelarEsteira" type="button">Cancelar</button>
+                <button class="btn-selecionar-modal" id="btnSelecionarEsteira" type="button">Selecionar</button>
+            </div>
+        </div>
+    </div>
 
     <script src="../js/auditoria.js"></script>
 </body>
