@@ -4320,8 +4320,12 @@ O que torna o RedRun único é a combinação de três características que nenh
 No fim, o RedRun transforma uma operação frágil e manual em um processo digital, padronizado e confiável, sem abrir mão da agilidade que o evento exige.
 
 
-_b) Estratégia de Diferenciação (até 250 palavras)_
-_Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento._
+**b) Estratégia de Diferenciação**
+O RedRun não foi criado para competir com ferramentas genéricas de gestão de eventos. Ele foi criado para resolver um problema que essas ferramentas não conseguem resolver, porque nunca foram pensadas para ele.
+
+Como a análise das Cinco Forças de Porter mostrou, as alternativas que existem hoje falham por razões bem concretas. As pulseiras de sincronização com as esteiras não funcionam porque as trocas de corredores acontecem em até 15 segundos e não há dispositivos suficientes para todos os participantes. A prancheta continua sendo usada não porque é boa, mas porque até agora era a única opção que existia.
+
+A diferenciação do RedRun se apoia em três pontos, cada um ligado a uma decisão real tomada durante o desenvolvimento. O primeiro é a especificidade: o sistema tem funcionalidades que só fazem sentido para esse evento, como o aviso automático a cada 5 minutos para padronizar as marcações e a tela de seleção rápida de equipe, esteira e corredor, pensada para caber no tempo de uma troca. O segundo é a estabilidade: o sistema foi desenvolvido para funcionar mesmo sem internet, salvando os registros no dispositivo e sincronizando quando a conexão voltar, o que é essencial em locais abertos como parques e praças. O terceiro é a rastreabilidade: cada marcação tem horário registrado automaticamente, o histórico pode ser filtrado por equipe e corredor, e os dados podem ser exportados em CSV para auditoria, permitindo validar resultados mesmo quando a diferença entre equipes é de menos de 150 metros.
 
 ## 6.6 Estratégia de Marketing
 
