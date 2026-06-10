@@ -1,0 +1,122 @@
+classDiagram
+    direction TB
+
+    class Manager {
+        +int id
+        +string name
+        +string email
+        +string cpf
+        +string password
+        +login() AuthTokens
+    }
+
+    class Auditor {
+        +int id
+        +string name
+        +string email
+        +string cpf
+        +int registration_number
+        +boolean is_active
+        +string password
+        +login() AuthTokens
+    }
+
+    class Event {
+        +int id
+        +string title
+        +string local
+        +date date
+        +timestamp deleted_at
+        +generateReport() void
+    }
+
+    class Team {
+        +int id
+        +string name
+        +int event_id
+        +timestamp deleted_at
+        +addAthlete() void
+        +removeAthlete() void
+    }
+
+    class Athlete {
+        +int id
+        +string name
+        +string cpf
+        +string gender
+        +int team_id
+        +timestamp deleted_at
+        +checkPerformance() Metrics
+    }
+
+    class Treadmill {
+        +int id
+        +int number
+        +isAvailable() boolean
+        +provideData() ShiftData
+        +assignShift() void
+    }
+
+    class Shift {
+        +int id
+        +string status
+        +timestamp start_at
+        +timestamp end_at
+        +interval total_time
+        +int speed
+        +int km_start
+        +int km_end
+        +int distance
+        +int athlete_id
+        +int auditor_id
+        +int treadmill_id
+        +start() void
+        +finish() void
+    }
+
+    class Checkpoint {
+        +int id
+        +int shift_id
+        +timestamp timestamp
+        +int distance
+        +string type
+        +register() void
+    }
+
+    class Log {
+        +int id
+        +int shift_id
+        +timestamp timestamp
+        +string type
+        +save() void
+    }
+
+    class History {
+        +int shift_id
+        +int athlete_id
+        +object metrics
+        +export() File
+        +show() HistoryData
+    }
+
+    class RefreshToken {
+        +int id
+        +string token_hash
+        +int user_id
+        +string user_role
+        +timestamp expires_at
+        +timestamp revoked_at
+        +revoke() void
+    }
+
+    Manager "0..*" -- "0..*" Event : gerencia
+    Event "1" *-- "1..*" Team : contém
+    Team "1" *-- "1..*" Athlete : agrupa
+    Athlete "1" --> "0..*" Shift : realiza
+    Auditor "1" --> "0..*" Shift : supervisiona
+    Treadmill "1" --> "0..1" Shift : é usada em
+    Shift "1" *-- "0..*" Checkpoint : registra
+    Shift "1" *-- "1..*" Log : gera
+    Shift "1" --> "1" History : origina
+    Manager ..> RefreshToken : autentica via
+    Auditor ..> RefreshToken : autentica via
