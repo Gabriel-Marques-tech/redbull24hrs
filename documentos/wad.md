@@ -3980,8 +3980,15 @@ O auditor é o usuário que opera o sistema durante as 24 horas da competição.
 
 ---
 
-_a) Proposta de Valor Única (até 250 palavras)_
-_Defina de maneira clara o que torna a sua aplicação única e valiosa para o mercado._
+**a) Proposta de Valor Única**
+O RedRun é uma solução única desenvolvida especificamente para digitalizar a apuração do Red Bull 24 Horas, evento de corrida anual em esteira que opera em revezamento contínuo por 24 horas seguidas em múltiplas regiões do Brasil.
+
+O processo atual depende de pranchetas físicas e transcrição manual para planilha, um fluxo que gera erros de anotação, retrabalho e atrasos na consolidação dos resultados. Em uma competição onde a diferença entre equipes pode ser de menos de 150 metros, a confiabilidade dos registros não é detalhe, mas sim, o que define o resultado.
+
+O que torna o RedRun único é a combinação de três características que nenhuma solução genérica consegue entregar ao mesmo tempo nesse contexto. A primeira é a aderência total à dinâmica do evento, com uma interface pensada para registros rápidos durante trocas e anotação de checkpoint e dados durante a corrida, sem depender de integração com as esteiras ou outros dispositivos. A segunda é a confiabilidade ao longo das 24 horas, já que o sistema calcula os quilômetros automaticamente, registra o horário de cada marcação e guarda um histórico completo que permite revisar qualquer momento da competição. A terceira é a capacidade de ser replicado em outras edições sem precisar de ajustes, pois por ser uma aplicação web acessível em qualquer dispositivo conectado, o mesmo fluxo funciona em todas as etapas regionais do evento.
+
+No fim, o RedRun transforma uma operação frágil e manual em um processo digital, padronizado e confiável, sem abrir mão da agilidade que o evento exige.
+
 
 **b) Estratégia de Diferenciação**
 O posicionamento do RedRun não se baseia em disputar espaço com soluções genéricas de gestão de eventos. Ele se baseia em algo mais difícil de replicar, que é o conhecimento profundo de um problema muito específico e a confiança necessária para resolvê-lo em tempo real, sem margem para falhas.
