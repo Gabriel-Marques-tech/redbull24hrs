@@ -4044,25 +4044,25 @@ O gerente é o responsável pela configuração do sistema antes do evento. Atua
 
 O auditor é o usuário que opera o sistema durante as 24 horas da competição. É um adulto jovem, geralmente entre 20 e 30 anos, integrante da equipe de Field Marketing da Red Bull, com vínculo profissional direto com a marca e forte afinidade com tecnologia e o universo esportivo. Comportamentalmente, opera em condições de alta pressão, com atenção dividida entre múltiplas esteiras e fadiga progressiva ao longo da maratona. Sua principal dor é o registro manual contínuo com prancheta física, processo suscetível a erros de anotação, distrações e inconsistências que comprometem a integridade dos resultados. Sua necessidade é uma ferramenta que possa ser usada sem treinamento extenso, mesmo no meio da operação. Sua expectativa é contar com uma interface intuitiva e estável, que reduza a carga cognitiva e garanta registros confiáveis do início ao fim da competição.
 
-## 6.5 Business Model Canva (BMC)
+## 6.5 Business Model Canvas (BMC)
 
 O Business Model Canvas (BMC) é uma ferramenta estratégica visual que organiza os elementos essenciais de um negócio em nove blocos interdependentes, oferecendo uma visão sistêmica e simplificada de como a empresa cria, entrega e captura valor. Para aplicá-lo, basta preencher cada bloco com as informações do seu projeto, partindo da proposta de valor e expandindo para os demais elementos como clientes, canais, receitas e custos. Dessa forma, o BMC permite identificar oportunidades, alinhar estratégias e validar o modelo de negócios de maneira ágil e colaborativa. Abaixo está o Business Model Canva do nosso projeto RedRun:
 
 <div align="center">
-  <sub> Imagem X - Business Model Canva </sub>
+  <sub> Imagem X - Business Model Canvas </sub>
   <br><br>
-  <img src="documentos/assets/business_model_canva/business_model_canva.png" width=100%>
+  <img src="documentos/assets/business_model_canvas/business_model_canvas.png" width=100%>
   <br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br>
   <br>
 </div>
 
-O Business Model Canvas do nosso projeto, o RedRun, foi estruturado em torno de uma proposta de valor clara: oferecer aos auditores do Red Bull 24 Horas um sistema confiável, seguro e prático para o registro padronizado dos turnos de corrida — respondendo diretamente à fragilidade do método manual com prancheta, identificada como a maior dor da empresa no evento.
+O Business Model Canvas do RedRun foi estruturado em torno de uma proposta de valor clara: oferecer aos auditores do Red Bull 24 Horas um sistema confiável, seguro e prático para o registro padronizado dos turnos de corrida — respondendo diretamente à fragilidade do método manual com prancheta, identificada como a maior dor da empresa no evento. O segmento de clientes abrange auditores, gerentes, atletas participantes e a Equipe de Field Marketing do Red Bull 24 Horas, perfis identificados ao longo das Sprints com base nas necessidades reais do evento. O relacionamento com esses clientes foi construído por meio de Sprint Reviews periódicas, que funcionaram como ciclos contínuos de feedback e ajuste — essenciais para garantir que o desenvolvimento permanecesse alinhado às expectativas do cliente e para reduzir o risco de retrabalho nas entregas.
 
-Na seção de segmentos de clientes do BMC, abrangemos auditores, gerentes, atletas participantes e a Equipe de Field Marketing do Red Bull 24 Horas, os quais, em sua maioria, foram ouvidos por meio de Sprint Reviews ao final de cada Sprint. Esse relacionamento iterativo é fundamental para o alinhamento do projeto, sustentado por recursos-chave como a equipe de desenvolvimento, o banco de dados e a própria aplicação web — onde desenvolvemos, implementamos, testamos e atualizamos todas as *features* necessárias para atender ao que a Red Bull nos solicitou: um sistema web para auditar o evento de 24 horas.
+Os canais pelos quais a solução chega aos usuários são a própria aplicação web, acessada diretamente durante o evento, e as reuniões com os stakeholders da Red Bull, que serviram como canal formal de validação e aprovação de cada entrega. As atividades-chave concentram-se no ciclo de desenvolvimento, implementação, teste e atualização contínua das features da aplicação, repetido a cada Sprint para incorporar os requisitos de forma incremental e controlada. Esse ciclo só é viável graças aos recursos-chave do projeto: a equipe de desenvolvimento, responsável por toda a construção técnica da solução; o banco de dados, que garante a persistência e integridade dos registros de auditoria; e a aplicação web em si, que é o meio pelo qual toda a proposta de valor é entregue ao usuário final.
 
-A estrutura de custos do RedRun concentrou-se no desenvolvimento da aplicação, enquanto as fontes de receita — interpretadas como benefícios gerados — compreendem a redução do tempo de auditoria, a eliminação de materiais físicos e a dispensa de auditores adicionais, evidenciando que o valor da RedRun é tanto operacional quanto econômico para o cliente.
+As parcerias-chave envolvem principalmente a Red Bull e seus representantes, que além de clientes são os detentores do conhecimento sobre o processo de auditoria do evento. Sem essa parceria, não seria possível compreender com profundidade as regras, fluxos e restrições que precisavam ser modeladas no sistema. A estrutura de custos concentrou-se no tempo da equipe de desenvolvimento e nos recursos tecnológicos utilizados ao longo das Sprints, como infraestrutura e ferramentas de desenvolvimento. Por fim, as fontes de receita — interpretadas como os benefícios gerados ao cliente — compreendem a redução do tempo de auditoria, a eliminação de materiais físicos como pranchetas e formulários impressos, e a dispensa de auditores adicionais, demonstrando que o valor do RedRun é tanto operacional quanto econômico para a Red Bull.
 
 ## 6.6 Estratégia de Marketing
 
