@@ -1714,47 +1714,58 @@ Os diagramas de arquitetura representam a estrutura organizacional do sistema, d
 
 DASHBOARD 
 
-O diagrama de arquitetura de Dashboard apresenta a organização do módulo responsável pelo painel de monitoramento em tempo real. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados a métricas consolidadas e checagem de conexão.
-
 <div align="center">
   <sub>Imagem 9 - Diagrama de Arquitetura - DASHBOARD </sub><br>
-  <img src= "./assets/diagramas_arquitetura/dashboard.svg" width="100%" alt="Diagrama de Arquitetura - Dashboard"><br>
+  <img src= "./assets/diagramas_arquitetura/dashboard.svg" width="100%" alt="Diagrama de Arquitetura - 1"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
-EVENTOS E HISTÓRICO 
-
-O diagrama de arquitetura de Eventos e Histórico apresenta a organização do módulo responsável pelo gerenciamento e monitoramento de eventos. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados aos eventos e métricas do sistema.
+EVENTOS 
 
 <div align="center">
-  <sub>Imagem 10 - Diagrama de Arquitetura - EVENTS E HISTÓRICO </sub><br>
-  <img src= "./assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de Arquitetura - Events"><br>
+  <sub>Imagem 10 - Diagrama de Arquitetura - EVENTOS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/eventos.svg" width="100%" alt="Diagrama de Arquitetura - 2"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
-REGISTROS, LOGS E EQUIPES
-
-O diagrama de arquitetura de Registros, Logs e Equipes apresenta a organização do módulo responsável pela edição retroativa de dados e pelo sincronismo offline. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados aos ajustes manuais de quilometragem e auditoria.
+EVENTO HISTÓRICO
 
 <div align="center">
-  <sub>Imagem 11 - Diagrama de Arquitetura - LOGS </sub><br>
-  <img src= "./assets/diagramas_arquitetura/logs.svg" width="100%" alt="Diagrama de Arquitetura - Logs"><br>
+  <sub>Imagem 11 - Diagrama de Arquitetura - EVENTO HISTÓRICO </sub><br>
+  <img src= "./assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de Arquitetura - 3"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+LOGS
+
+<div align="center">
+  <sub>Imagem 12 - Diagrama de Arquitetura - LOGS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/logs.svg" width="100%" alt="Diagrama de Arquitetura - 4"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+TEAMS
+
+<div align="center">
+  <sub>Imagem 13 - Diagrama de Arquitetura - TEAMS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/teams.svg" width="100%" alt="Diagrama de Arquitetura - 5"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 TURNOS
 
-O diagrama de arquitetura de Turns apresenta a organização do módulo responsável pelo controle de atletas e uso das esteiras. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados ao início, marcos intermediários e finalização dos turnos.
-
 <div align="center">
-  <sub>Imagem 12 - Diagrama de Arquitetura - TURNS </sub><br>
-  <img src= "./assets/diagramas_arquitetura/turnos.svg" width="100%" alt="Diagrama de Arquitetura - Turns"><br>
+  <sub>Imagem 14 - Diagrama de Arquitetura - TURNOS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/turnos" width="100%" alt="Diagrama de Arquitetura - 6"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
+
 
 #### 3.2.1.1. Diagrama de Classes Arquiteturais 
 
