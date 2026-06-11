@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipes - Gerente</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/equipe.css">
+    <link rel="stylesheet" href="../css/gerente-equipes.css">
+</head>
+<body>
+    <div class="barra-gradiente"></div>
+
+    <a href="index.html" class="cancelar">
+        <img src="../assets/competição/Seta.svg" alt="">
+        Cancelar
+    </a>
+
+    <span class="progresso-equipes">1/4</span>
+
+    <main>
+        <aside class="etapas">
+            <h3>Etapas</h3>
+
+            <div class="etapa">
+                <span>1</span>
+                <p>Local</p>
+            </div>
+
+            <div class="etapa">
+                <span>2</span>
+                <p>Data e hora</p>
+            </div>
+
+            <div class="etapa ativa">
+                <span>3</span>
+                <p>Equipes</p>
+            </div>
+        </aside>
+
+        <section class="conteudo conteudo-equipes-gerente">
+            <div class="formulario-equipes-gerente passo-equipe ativo" data-passo="1">
+                <h2>Preencha as informa&ccedil;&otilde;es</h2>
+
+                <label for="nomePrimeiraEquipe">Nome da primeira equipe</label>
+                <input id="nomePrimeiraEquipe" name="nomePrimeiraEquipe" type="text" value="Amigos do Pace">
+            </div>
+
+            <div class="formulario-equipes-gerente passo-equipe" data-passo="2">
+                <h2 id="tituloAtletasPrimeiraEquipe">Adicione os atletas de Amigos do Pace</h2>
+
+                <div class="lista-atletas" data-lista-atletas="primeira">
+                    <div class="campo-atleta lider">
+                        <span>1</span>
+                        <input type="text" aria-label="Atleta 1 da primeira equipe">
+                        <small>L&iacute;der</small>
+                    </div>
+                    <strong class="contador-atletas">1/19</strong>
+                </div>
+
+                <button class="btn-adicionar-atleta" type="button" data-adicionar-atleta="primeira">
+                    Adicionar
+                </button>
+            </div>
+
+            <div class="formulario-equipes-gerente passo-equipe" data-passo="3">
+                <h2>Preencha as informa&ccedil;&otilde;es</h2>
+
+                <label for="nomeSegundaEquipe">Nome da segunda equipe</label>
+                <input id="nomeSegundaEquipe" name="nomeSegundaEquipe" type="text" value="Inimigos do Pace">
+            </div>
+
+            <div class="formulario-equipes-gerente passo-equipe" data-passo="4">
+                <h2 id="tituloAtletasSegundaEquipe">Adicione os atletas de Inimigos do Pace</h2>
+
+                <div class="lista-atletas" data-lista-atletas="segunda">
+                    <div class="campo-atleta lider">
+                        <span>1</span>
+                        <input type="text" aria-label="Atleta 1 da segunda equipe">
+                        <small>L&iacute;der</small>
+                    </div>
+                    <strong class="contador-atletas">1/19</strong>
+                </div>
+
+                <button class="btn-adicionar-atleta" type="button" data-adicionar-atleta="segunda">
+                    Adicionar
+                </button>
+            </div>
+
+            <div class="botoes botoes-equipes-gerente">
+                <button class="btn-voltar" id="btnAnteriorEquipes" type="button">
+                    Anterior
+                </button>
+
+                <button class="btn-proximo btn-proximo-equipes" id="btnProximoEquipes" type="button">
+                    Pr&oacute;ximo
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/gerente-equipes.js"></script>
+</body>
+</html>
