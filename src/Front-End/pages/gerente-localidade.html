@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Competi&ccedil;&atilde;o Pr&eacute; Sele&ccedil;&atilde;o 1 - Gerente</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/equipe.css">
+    <link rel="stylesheet" href="../css/gerente-localidade.css">
+</head>
+<body>
+    <div class="barra-gradiente"></div>
+
+    <a href="index.html" class="cancelar">
+        <img src="../assets/competição/Seta.svg" alt="">
+        Cancelar
+    </a>
+
+    <main>
+        <aside class="etapas">
+            <h3>Etapas</h3>
+
+            <div class="etapa ativa">
+                <span>1</span>
+                <p>Local</p>
+            </div>
+
+            <div class="etapa">
+                <span>2</span>
+                <p>Data e hora</p>
+            </div>
+
+            <div class="etapa">
+                <span>3</span>
+                <p>Equipes</p>
+            </div>
+        </aside>
+
+        <section class="conteudo conteudo-localidade">
+            <div class="formulario-localidade">
+                <h1>Selecione uma localidade</h1>
+
+                <label for="estado">Estado</label>
+                <div class="campo-select">
+                    <select id="estado" name="estado">
+                        <option value="Rio de Janeiro">Rio de Janeiro</option>
+                        <option value="Sao Paulo">S&atilde;o Paulo</option>
+                        <option value="Minas Gerais">Minas Gerais</option>
+                        <option value="Pernambuco">Pernambuco</option>
+                        <option value="Rio Grande do Sul">Rio Grande do Sul</option>
+                    </select>
+                </div>
+
+                <label for="cidade">Cidade</label>
+                <div class="campo-select">
+                    <select id="cidade" name="cidade">
+                        <option value="Rio de Janeiro">Rio de Janeiro</option>
+                        <option value="Niteroi">Niter&oacute;i</option>
+                        <option value="Petropolis">Petr&oacute;polis</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="botoes botoes-localidade">
+                <button class="btn-proximo-localidade" type="button">
+                    Pr&oacute;ximo
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/gerente-localidade.js"></script>
+</body>
+</html>
