@@ -1,52 +1,94 @@
-graph LR
-    %% Configurações Globais de Temas para Alto Contraste
-    classDef client fill:#FFFFFF,stroke:#1A237E,stroke-width:2.5px,color:#000000;
-    classDef controller fill:#C5CAE9,stroke:#3F51B5,stroke-width:2.5px,color:#000000;
-    classDef service fill:#C8E6C9,stroke:#2E7D32,stroke-width:2.5px,color:#000000;
-    classDef repository fill:#FFE082,stroke:#EF6C00,stroke-width:2.5px,color:#000000;
-    classDef model fill:#E1BEE7,stroke:#6A1B9A,stroke-width:2.5px,color:#000000;
-    classDef db fill:#CFD8DC,stroke:#37474F,stroke-width:2.5px,color:#000000;
+%%{init: {"theme":"base","flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":80,"rankSpacing":95,"padding":24},"themeVariables":{"fontFamily":"Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryTextColor":"#0F0069","primaryBorderColor":"#0F0069","lineColor":"#0F0069","tertiaryColor":"#F5F5FA","tertiaryTextColor":"#0F0069"}}}%%
+flowchart TB
 
-    subgraph CLIENTES [CLIENTES]
-        C4[Terminal Auditor <br> na Esteira]:::client
+    classDef client fill:#FFFFFF,stroke:#0F0069,stroke-width:2px,color:#0F0069;
+    classDef route fill:#FFF7CC,stroke:#D6A700,stroke-width:2px,color:#0F0069;
+    classDef controller fill:#E8E8F5,stroke:#0F0069,stroke-width:2px,color:#0F0069;
+    classDef service fill:#E7F5E8,stroke:#2E7D32,stroke-width:2px,color:#0F0069;
+    classDef repository fill:#FFF0D6,stroke:#EF6C00,stroke-width:2px,color:#0F0069;
+    classDef db fill:#ECEFF1,stroke:#37474F,stroke-width:2px,color:#0F0069;
+    classDef output fill:#FDE7EF,stroke:#D2003C,stroke-width:2px,color:#0F0069;
+    classDef note fill:#FFFFFF,stroke:#D2003C,stroke-width:2px,stroke-dasharray: 6 4,color:#0F0069;
+
+    subgraph L1["Cliente"]
+        direction TB
+        C["Terminal do auditor<br/>na esteira"]:::client
     end
 
-    subgraph CONTROLLER_LAYER [CONTROLLER LAYER - ShiftController]
-        A10[Endpoints: /start, <br> /checkpoints, /finish]:::controller --> A11[Bloqueia se Atleta <br> Ocupado]:::controller
+    subgraph L2["Rotas operacionais"]
+        direction TB
+        R1["POST /audit/shifts/start"]:::route
+        R2["POST /audit/shifts/:id/checkpoints"]:::route
+        R3["PATCH /audit/shifts/:id/finish"]:::route
     end
 
-    subgraph SERVICE_LAYER [SERVICE LAYER - ShiftService]
-        B10[Gerencia Estado: <br> Occupied / Available]:::service --> B11[Regra: Distância <br> >= Último Checkpoint]:::service
-        B10 --> B12[Regra: Calcula Distância, <br> Tempo e Velocidade]:::service
+    subgraph L3["Controller"]
+        direction TB
+        SC["ShiftController"]:::controller
     end
 
-    subgraph REPOSITORY_LAYER [REPOSITORY LAYER - ShiftRepository]
-        D10[INSERT Shift <br> status='in_progress']:::repository
-        D11[INSERT Checkpoint]:::repository
-        D12[UPDATE Treadmill <br> SET status]:::repository
+    subgraph L4["Service"]
+        direction TB
+        SS["ShiftService<br/>ciclo de vida do turno"]:::service
+        V1["atleta livre"]:::note
+        V2["esteira livre"]:::note
+        V3["KM crescente"]:::note
+        V4["cálculo de métricas"]:::note
     end
 
-    subgraph MODEL_LAYER [MODEL LAYER]
-        E8[Entidade: Shift]:::model
-        E9[Entidade: Checkpoint]:::model
-        E10[Entidade: Treadmill]:::model
+    subgraph L5["Repository"]
+        direction TB
+        SR["ShiftRepository"]:::repository
+        Q1["start"]:::repository
+        Q2["addCheckpoint"]:::repository
+        Q3["finish"]:::repository
+        Q4["findById"]:::repository
     end
 
-    subgraph BANCO_DE_DADOS [BANCO DE DADOS]
-        DB4[(Base de Dados Relacional)]:::db
+    subgraph L6["Banco de Dados"]
+        direction TB
+        DB["PostgreSQL"]:::db
+        SH["shifts"]:::db
+        CP["checkpoints"]:::db
+        AT["athletes"]:::db
+        TM["treadmills"]:::db
+        AU["auditors"]:::db
     end
 
-    %% Fluxo Linear
-    C4 --> A10
-    A11 --> B10
-    B11 --> D11
-    B12 --> D10
-    B10 -.-> D12
+    subgraph L7["Saídas"]
+        direction TB
+        O1["201 turno iniciado"]:::output
+        O2["201 checkpoint"]:::output
+        O3["200 turno finalizado"]:::output
+    end
 
-    D10 --> DB4
-    D11 --> DB4
-    D12 --> DB4
-
-    D10 -.->|Mapeia| E8
-    D11 -.->|Mapeia| E9
-    D12 -.->|Mapeia| E10
+    C --> R1 --> SC --> SS
+    C --> R2 --> SC
+    C --> R3 --> SC
+    SS --> V1
+    SS --> V2
+    SS --> V3
+    SS --> V4
+    SS --> SR
+    SR --> Q1
+    SR --> Q2
+    SR --> Q3
+    SR --> Q4
+    Q1 --> SH
+    Q1 --> AT
+    Q1 --> TM
+    Q1 --> AU
+    Q2 --> CP
+    Q2 --> SH
+    Q4 --> SH
+    Q4 --> CP
+    Q3 --> SH
+    SH --> DB
+    CP --> DB
+    AT --> DB
+    TM --> DB
+    AU --> DB
+    DB --> SR --> SS --> SC
+    SC --> O1 --> C
+    SC --> O2 --> C
+    SC --> O3 --> C

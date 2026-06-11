@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 # Claude Code / config local (não commitar)
 CLAUDE.md
 .claude/
@@ -6,6 +8,7 @@ CLAUDE.md
 graphify-out/
 .rtk/
 
+>>>>>>> 3dc01bb1bbbd6043784ad83a86c4b5cb6e6b20af
 #Arquivos de documentação
 documentos/outros/regras_de_negocio.md
 documentos/outros/requisitos_funcionais.md

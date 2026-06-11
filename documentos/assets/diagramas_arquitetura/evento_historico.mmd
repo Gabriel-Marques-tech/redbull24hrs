@@ -1,50 +1,94 @@
-graph LR
-    %% Configurações Globais de Temas para Alto Contraste
-    classDef client fill:#FFFFFF,stroke:#1A237E,stroke-width:2.5px,color:#000000;
-    classDef controller fill:#C5CAE9,stroke:#3F51B5,stroke-width:2.5px,color:#000000;
-    classDef service fill:#C8E6C9,stroke:#2E7D32,stroke-width:2.5px,color:#000000;
-    classDef repository fill:#FFE082,stroke:#EF6C00,stroke-width:2.5px,color:#000000;
-    classDef model fill:#E1BEE7,stroke:#6A1B9A,stroke-width:2.5px,color:#000000;
-    classDef db fill:#CFD8DC,stroke:#37474F,stroke-width:2.5px,color:#000000;
+%%{init: {"theme":"base","flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":80,"rankSpacing":95,"padding":24},"themeVariables":{"fontFamily":"Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryTextColor":"#0F0069","primaryBorderColor":"#0F0069","lineColor":"#0F0069","tertiaryColor":"#F5F5FA","tertiaryTextColor":"#0F0069"}}}%%
+flowchart TB
 
-    subgraph CLIENTES [CLIENTES]
-        C2[Web Admin / API Client]:::client
+    classDef client fill:#FFFFFF,stroke:#0F0069,stroke-width:2px,color:#0F0069;
+    classDef route fill:#FFF7CC,stroke:#D6A700,stroke-width:2px,color:#0F0069;
+    classDef controller fill:#E8E8F5,stroke:#0F0069,stroke-width:2px,color:#0F0069;
+    classDef service fill:#E7F5E8,stroke:#2E7D32,stroke-width:2px,color:#0F0069;
+    classDef repository fill:#FFF0D6,stroke:#EF6C00,stroke-width:2px,color:#0F0069;
+    classDef db fill:#ECEFF1,stroke:#37474F,stroke-width:2px,color:#0F0069;
+    classDef output fill:#FDE7EF,stroke:#D2003C,stroke-width:2px,color:#0F0069;
+    classDef note fill:#FFFFFF,stroke:#D2003C,stroke-width:2px,stroke-dasharray: 6 4,color:#0F0069;
+
+    subgraph L1["Cliente"]
+        direction TB
+        C["Web Admin<br/>API Client"]:::client
     end
 
-    subgraph CONTROLLER_LAYER [CONTROLLER LAYER - EventController]
-        A4[Recebe Requisições <br> POST /events e GET]:::controller --> A5[Trata Exceções <br> ConflictException 409]:::controller
+    subgraph L2["Rotas do fluxo"]
+        direction TB
+        R1["POST /events"]:::route
+        R2["GET /metrics/events/:id/dashboard"]:::route
+        R3["GET /metrics/events/:id/teams"]:::route
+        R4["GET /export/events/:id/..."]:::route
     end
 
-    subgraph SERVICE_LAYER [SERVICE LAYER - EventService]
-        B4[Valida Conflitos]:::service --> B5[Regra: Ordenar Placar KM]:::service
-        B4 --> B6[Regra: Calcular Médias]:::service
+    subgraph L3["Controllers"]
+        direction TB
+        EC["EventController"]:::controller
+        MC["MetricsController"]:::controller
+        EXC["ExportController"]:::controller
     end
 
-    subgraph REPOSITORY_LAYER [REPOSITORY LAYER - EventRepository]
-        D4[SELECT Event <br> same date]:::repository
-        D5[SELECT active <br> Shifts]:::repository
-        D6[SELECT Event logs <br> Auditoria]:::repository
+    subgraph L4["Services"]
+        direction TB
+        ES["EventService"]:::service
+        MS["MetricsService"]:::service
+        EXS["ExportService"]:::service
+        RN["RF025 · RF019<br/>RF014 · RF024"]:::note
     end
 
-    subgraph MODEL_LAYER [MODEL LAYER]
-        E4[Entidade: Event]:::model
-        E5[Value Object: Scoreboard]:::model
+    subgraph L5["Repositories"]
+        direction TB
+        ER["EventRepository"]:::repository
+        MR["MetricsRepository"]:::repository
+        EQ["Export queries"]:::repository
     end
 
-    subgraph BANCO_DE_DADOS [BANCO DE DADOS]
-        DB2[(Base de Dados Relacional)]:::db
+    subgraph L6["Banco de Dados"]
+        direction TB
+        DB["PostgreSQL"]:::db
+        E["events"]:::db
+        M["managers"]:::db
+        TE["teams"]:::db
+        A["athletes"]:::db
+        S["shifts"]:::db
+        CP["checkpoints"]:::db
+        TR["treadmills"]:::db
     end
 
-    %% Fluxo Linear
-    C2 --> A4
-    A5 --> B4
-    B5 --> D5
-    B6 --> D6
-    B4 -.-> D4
+    subgraph L7["Saídas"]
+        direction TB
+        O1["201 evento criado"]:::output
+        O2["200 dashboard/ranking"]:::output
+        O3["200 CSV"]:::output
+    end
 
-    D4 --> DB2
-    D5 --> DB2
-    D6 --> DB2
-
-    D4 -.->|Mapeia| E4
-    D5 -.->|Mapeia| E5
+    C --> R1 --> EC --> ES --> ER
+    C --> R2 --> MC --> MS --> MR
+    C --> R3 --> MC
+    C --> R4 --> EXC --> EXS --> EQ
+    ES -.-> RN
+    MS -.-> RN
+    EXS -.-> RN
+    ER --> E
+    ER --> M
+    MR --> TE
+    MR --> A
+    MR --> S
+    MR --> TR
+    EQ --> S
+    EQ --> CP
+    EQ --> A
+    EQ --> TE
+    EQ --> TR
+    E --> DB
+    M --> DB
+    TE --> DB
+    A --> DB
+    S --> DB
+    CP --> DB
+    TR --> DB
+    DB --> ER --> ES --> EC --> O1 --> C
+    DB --> MR --> MS --> MC --> O2 --> C
+    DB --> EQ --> EXS --> EXC --> O3 --> C

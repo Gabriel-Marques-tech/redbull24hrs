@@ -9,11 +9,18 @@ const numeroEsteira = document.getElementById("numeroEsteira");
 const opcoesEsteira = document.querySelectorAll(".opcao-esteira");
 const listaCorredores = document.getElementById("listaCorredores");
 const corredoresFila = document.querySelectorAll(".corredor-fila");
+const btnAbrirFinalizarCompeticao = document.querySelector(".btn-sair");
+const modalFinalizarCompeticao = document.getElementById("modalFinalizarCompeticao");
+const btnCancelarFinalizarCompeticao = document.getElementById("btnCancelarFinalizarCompeticao");
+const btnConfirmarFinalizarCompeticao = document.getElementById("btnConfirmarFinalizarCompeticao");
+const modalTurno = document.getElementById("modalTurno");
+const btnRegistrarTurno = document.getElementById("btnRegistrarTurno");
 
 let corridaIniciada = false;
 let segundosCorrida = 0;
 let esteiraSelecionada = numeroEsteira.textContent;
 let itemArrastado = null;
+let arrasteInicializado = false;
 
 function formatarTempo(totalSegundos) {
     const horas = String(Math.floor(totalSegundos / 3600)).padStart(2, "0");
@@ -50,6 +57,60 @@ function fecharModalEsteira() {
     modalEsteira.classList.add("escondido");
 }
 
+function habilitarArrasteCorredores() {
+    corredoresFila.forEach((corredor) => {
+        corredor.setAttribute("draggable", "true");
+    });
+
+    if (arrasteInicializado) {
+        return;
+    }
+
+    arrasteInicializado = true;
+
+    corredoresFila.forEach((corredor) => {
+        corredor.addEventListener("dragstart", (evento) => {
+            itemArrastado = corredor;
+            corredor.classList.add("arrastando");
+
+            evento.dataTransfer.effectAllowed = "move";
+            evento.dataTransfer.setData("text/plain", corredor.innerText);
+        });
+
+        corredor.addEventListener("dragover", (evento) => {
+            evento.preventDefault();
+        });
+
+        corredor.addEventListener("dragenter", () => {
+            if (corredor !== itemArrastado) {
+                corredor.classList.add("alvo");
+            }
+        });
+
+        corredor.addEventListener("dragleave", () => {
+            corredor.classList.remove("alvo");
+        });
+
+        corredor.addEventListener("drop", (evento) => {
+            evento.preventDefault();
+            corredor.classList.remove("alvo");
+
+            if (itemArrastado !== null && itemArrastado !== corredor) {
+                listaCorredores.insertBefore(itemArrastado, corredor);
+            }
+        });
+
+        corredor.addEventListener("dragend", () => {
+            corredor.classList.remove("arrastando");
+            itemArrastado = null;
+
+            corredoresFila.forEach((item) => {
+                item.classList.remove("alvo");
+            });
+        });
+    });
+}
+
 btnIniciar.addEventListener("click", () => {
     if (!corridaIniciada) {
         corridaIniciada = true;
@@ -58,6 +119,7 @@ btnIniciar.addEventListener("click", () => {
         btnAbrirEsteira.classList.add("inativa");
         btnAbrirEsteira.setAttribute("aria-disabled", "true");
         document.title = "Competição Iniciada - Auditor";
+        habilitarArrasteCorredores();
         iniciarCronometro();
         return;
     }
@@ -66,7 +128,7 @@ btnIniciar.addEventListener("click", () => {
 });
 
 btnProximoCorredor.addEventListener("click", () => {
-    console.log("Próximo corredor selecionado");
+    modalTurno.classList.remove("escondido");
 });
 
 btnAbrirEsteira.addEventListener("click", abrirModalEsteira);
@@ -90,44 +152,36 @@ modalEsteira.addEventListener("click", (evento) => {
     }
 });
 
-corredoresFila.forEach((corredor) => {
-    corredor.addEventListener("dragstart", (evento) => {
-        itemArrastado = corredor;
-        corredor.classList.add("arrastando");
+function abrirModalFinalizarCompeticao() {
+    modalFinalizarCompeticao.classList.remove("escondido");
+}
 
-        evento.dataTransfer.effectAllowed = "move";
-        evento.dataTransfer.setData("text/plain", corredor.innerText);
-    });
+function fecharModalFinalizarCompeticao() {
+    modalFinalizarCompeticao.classList.add("escondido");
+}
 
-    corredor.addEventListener("dragover", (evento) => {
-        evento.preventDefault();
-    });
+btnAbrirFinalizarCompeticao.addEventListener("click", abrirModalFinalizarCompeticao);
+btnCancelarFinalizarCompeticao.addEventListener("click", fecharModalFinalizarCompeticao);
 
-    corredor.addEventListener("dragenter", () => {
-        if (corredor !== itemArrastado) {
-            corredor.classList.add("alvo");
-        }
-    });
-
-    corredor.addEventListener("dragleave", () => {
-        corredor.classList.remove("alvo");
-    });
-
-    corredor.addEventListener("drop", (evento) => {
-        evento.preventDefault();
-        corredor.classList.remove("alvo");
-
-        if (itemArrastado !== null && itemArrastado !== corredor) {
-            listaCorredores.insertBefore(itemArrastado, corredor);
-        }
-    });
-
-    corredor.addEventListener("dragend", () => {
-        corredor.classList.remove("arrastando");
-        itemArrastado = null;
-
-        corredoresFila.forEach((item) => {
-            item.classList.remove("alvo");
-        });
-    });
+btnConfirmarFinalizarCompeticao.addEventListener("click", () => {
+    fecharModalFinalizarCompeticao();
+    console.log("Competição finalizada");
 });
+
+modalFinalizarCompeticao.addEventListener("click", (evento) => {
+    if (evento.target === modalFinalizarCompeticao) {
+        fecharModalFinalizarCompeticao();
+    }
+});
+
+modalTurno.addEventListener("click", (evento) => {
+    if (evento.target === modalTurno) {
+        modalTurno.classList.add("escondido");
+    }
+});
+
+btnRegistrarTurno.addEventListener("click", () => {
+    modalTurno.classList.add("escondido");
+});
+
+habilitarArrasteCorredores();
