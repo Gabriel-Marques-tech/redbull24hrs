@@ -11,6 +11,9 @@ import AlertsRoutes from "./routes/alertsRoutes";
 import ExportRoutes from "./routes/exportRoutes";
 import cookieParser from "cookie-parser";
 import pageRoutes from './routes/pageRoutes'
+import SyncRoutes from "./routes/syncRoutes";   
+import LogsRoutes from "./routes/logsRoutes";    
+
 
 config();
 
@@ -31,6 +34,8 @@ app.use("/teams", TeamRoutes);
 app.use("/audit", ShiftRoutes);
 app.use("/audit", HistoryRoutes);
 app.use("/audit", AlertsRoutes);
+app.use("/audit", SyncRoutes);  
+app.use("/audit", LogsRoutes);    
 app.use("/metrics", MetricsRoutes);
 app.use("/export", ExportRoutes);
 app.use('', pageRoutes)
