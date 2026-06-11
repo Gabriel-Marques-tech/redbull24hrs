@@ -148,6 +148,58 @@
         </div>
     </div>
 
+    <div class="modal-finalizar-competicao escondido" id="modalFinalizarCompeticao">
+        <div class="modal-finalizar-conteudo">
+            <div class="icone-finalizar">↪</div>
+
+            <h2>Finalizar competição?</h2>
+            <p>Ao finalizar uma competição, não é<br>possível iniciá-la novamente.</p>
+
+            <div class="acoes-finalizar">
+                <button class="btn-cancelar-finalizar" id="btnCancelarFinalizarCompeticao" type="button">
+                    Cancelar
+                </button>
+
+                <button class="btn-confirmar-finalizar" id="btnConfirmarFinalizarCompeticao" type="button">
+                    Finalizar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-turno escondido" id="modalTurno">
+        <div class="modal-turno-conteudo">
+            <div class="campos-turno">
+                <div class="campo-turno campo-corredor">
+                    <label for="selectCorredor">Corredor</label>
+                    <select id="selectCorredor">
+                        <option>Mariana Toledo</option>
+                        <option>Pietro Sansão</option>
+                        <option>Gabriel Marques</option>
+                        <option>Laura Faria</option>
+                    </select>
+                </div>
+
+                <div class="campo-turno campo-horario">
+                    <label for="inicioTurno">Início</label>
+                    <input id="inicioTurno" type="text" value="12:14">
+                </div>
+
+                <div class="campo-turno campo-horario">
+                    <label for="fimTurno">Fim</label>
+                    <input id="fimTurno" type="text" value="12:30">
+                </div>
+            </div>
+
+            <div class="campo-turno campo-quilometragem">
+                <label for="quilometragemTurno">Registre a quilometragem</label>
+                <input id="quilometragemTurno" type="text" value="2km">
+            </div>
+
+            <button class="btn-registrar-turno" id="btnRegistrarTurno" type="button">Registrar</button>
+        </div>
+    </div>
+
     <script src="../js/auditoria.js"></script>
 </body>
 
