@@ -9,6 +9,10 @@ const numeroEsteira = document.getElementById("numeroEsteira");
 const opcoesEsteira = document.querySelectorAll(".opcao-esteira");
 const listaCorredores = document.getElementById("listaCorredores");
 const corredoresFila = document.querySelectorAll(".corredor-fila");
+const btnAbrirFinalizarCompeticao = document.querySelector(".btn-sair");
+const modalFinalizarCompeticao = document.getElementById("modalFinalizarCompeticao");
+const btnCancelarFinalizarCompeticao = document.getElementById("btnCancelarFinalizarCompeticao");
+const btnConfirmarFinalizarCompeticao = document.getElementById("btnConfirmarFinalizarCompeticao");
 
 let corridaIniciada = false;
 let segundosCorrida = 0;
@@ -87,6 +91,28 @@ opcoesEsteira.forEach((opcao) => {
 modalEsteira.addEventListener("click", (evento) => {
     if (evento.target === modalEsteira) {
         fecharModalEsteira();
+    }
+});
+
+function abrirModalFinalizarCompeticao() {
+    modalFinalizarCompeticao.classList.remove("escondido");
+}
+
+function fecharModalFinalizarCompeticao() {
+    modalFinalizarCompeticao.classList.add("escondido");
+}
+
+btnAbrirFinalizarCompeticao.addEventListener("click", abrirModalFinalizarCompeticao);
+btnCancelarFinalizarCompeticao.addEventListener("click", fecharModalFinalizarCompeticao);
+
+btnConfirmarFinalizarCompeticao.addEventListener("click", () => {
+    fecharModalFinalizarCompeticao();
+    console.log("Competição finalizada");
+});
+
+modalFinalizarCompeticao.addEventListener("click", (evento) => {
+    if (evento.target === modalFinalizarCompeticao) {
+        fecharModalFinalizarCompeticao();
     }
 });
 
