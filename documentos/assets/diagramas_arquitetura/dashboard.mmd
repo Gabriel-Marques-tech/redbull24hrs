@@ -1,53 +1,71 @@
-graph LR
-    %% Configurações Globais de Temas para Alto Contraste
-    %% Força o texto de todos os nós a ser preto (#000000) e aumenta as bordas
-    classDef client fill:#FFFFFF,stroke:#1A237E,stroke-width:2.5px,color:#000000;
-    classDef controller fill:#C5CAE9,stroke:#3F51B5,stroke-width:2.5px,color:#000000;
-    classDef service fill:#C8E6C9,stroke:#2E7D32,stroke-width:2.5px,color:#000000;
-    classDef repository fill:#FFE082,stroke:#EF6C00,stroke-width:2.5px,color:#000000;
-    classDef model fill:#E1BEE7,stroke:#6A1B9A,stroke-width:2.5px,color:#000000;
-    classDef db fill:#CFD8DC,stroke:#37474F,stroke-width:2.5px,color:#000000;
+%%{init: {"theme":"base","flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":80,"rankSpacing":95,"padding":24},"themeVariables":{"fontFamily":"Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryTextColor":"#0F0069","primaryBorderColor":"#0F0069","lineColor":"#0F0069","tertiaryColor":"#F5F5FA","tertiaryTextColor":"#0F0069"}}}%%
+flowchart TB
 
-    subgraph CLIENTES [CLIENTES]
-        C1[Web / Mobile App]:::client
+    classDef client fill:#FFFFFF,stroke:#0F0069,stroke-width:2px,color:#0F0069;
+    classDef route fill:#FFF7CC,stroke:#D6A700,stroke-width:2px,color:#0F0069;
+    classDef controller fill:#E8E8F5,stroke:#0F0069,stroke-width:2px,color:#0F0069;
+    classDef service fill:#E7F5E8,stroke:#2E7D32,stroke-width:2px,color:#0F0069;
+    classDef repository fill:#FFF0D6,stroke:#EF6C00,stroke-width:2px,color:#0F0069;
+    classDef db fill:#ECEFF1,stroke:#37474F,stroke-width:2px,color:#0F0069;
+    classDef output fill:#FDE7EF,stroke:#D2003C,stroke-width:2px,color:#0F0069;
+    classDef note fill:#FFFFFF,stroke:#D2003C,stroke-width:2px,stroke-dasharray: 6 4,color:#0F0069;
+
+    subgraph L1["Cliente"]
+        direction TB
+        C["Dashboard Web<br/>Modo TV"]:::client
     end
 
-    subgraph CONTROLLER_LAYER [CONTROLLER LAYER - DashboardController]
-        A1[Valida Requisição Polling <br> GET /dashboard]:::controller --> A2[Chama DashboardService]:::controller
-        A1 --> A3[Define Status de Resposta <br> 200 OK ou Falha]:::controller
+    subgraph L2["Rota protegida"]
+        direction TB
+        R["GET /metrics/events/:id/dashboard<br/>AuthMiddleware"]:::route
     end
 
-    subgraph SERVICE_LAYER [SERVICE LAYER - DashboardService]
-        B1[Orquestra Busca Geral]:::service --> B2[Aplica Regra: Consolida Dados]:::service
-        B1 --> B3[Coordena Chamadas Repositório]:::service
+    subgraph L3["Controller"]
+        direction TB
+        MC["MetricsController<br/>getDashboard"]:::controller
     end
 
-    subgraph REPOSITORY_LAYER [REPOSITORY LAYER - DashboardRepository]
-        D1[Query: KM das Equipes]:::repository
-        D2[Query: Status Esteiras]:::repository
-        D3[Query: Histórico por Hora]:::repository
+    subgraph L4["Service"]
+        direction TB
+        MS["MetricsService<br/>consolida indicadores"]:::service
+        RN["RF013 + RN11<br/>atualização recorrente"]:::note
     end
 
-    subgraph MODEL_LAYER [MODEL LAYER - Domínio]
-        E1[DashboardSnapshot]:::model
-        E2[TeamKilometrage]:::model
-        E3[TreadmillStatus]:::model
+    subgraph L5["Repository"]
+        direction TB
+        MR["MetricsRepository<br/>dashboardByEvent"]:::repository
+        Q1["placar por equipe"]:::repository
+        Q2["turnos ativos/finalizados"]:::repository
+        Q3["atletas em prova"]:::repository
     end
 
-    subgraph BANCO_DE_DADOS [BANCO DE DADOS]
-        DB1[(Base de Dados Relacional)]:::db
+    subgraph L6["Banco de Dados"]
+        direction TB
+        DB["PostgreSQL"]:::db
+        T1["events"]:::db
+        T2["teams"]:::db
+        T3["athletes"]:::db
+        T4["shifts"]:::db
+        T5["treadmills"]:::db
     end
 
-    %% Fluxo de Relacionamentos Lineares (Esquerda para Direita)
-    C1 -->|GET /dashboard| A1
-    A2 --> B1
-    B3 --> D1 & D2 & D3
-    
-    %% Conexões limpas com o Banco e Modelos
-    D1 --> DB1
-    D2 --> DB1
-    D3 --> DB1
-    
-    D1 -.->|Mapeia| E2
-    D2 -.->|Mapeia| E3
-    D3 -.->|Mapeia| E1
+    subgraph L7["Resposta"]
+        direction TB
+        OUT["200 OK<br/>scoreboard + métricas"]:::output
+    end
+
+    C --> R --> MC --> MS --> MR
+    MS -.-> RN
+    MR --> Q1 --> T2
+    Q1 --> T4
+    MR --> Q2 --> T4
+    Q2 --> T5
+    MR --> Q3 --> T3
+    Q3 --> T4
+    T1 --> DB
+    T2 --> DB
+    T3 --> DB
+    T4 --> DB
+    T5 --> DB
+    DB --> MR
+    MR --> MS --> MC --> OUT --> C
