@@ -12,83 +12,74 @@ flowchart TB
 
     subgraph L1["Cliente"]
         direction TB
-        C["Terminal do auditor<br/>na esteira"]:::client
+        C["Auditor / Gestor<br/>consulta e correção"]:::client
     end
 
-    subgraph L2["Rotas operacionais"]
+    subgraph L2["Rotas protegidas"]
         direction TB
-        R1["POST /audit/shifts/start"]:::route
-        R2["POST /audit/shifts/:id/checkpoints"]:::route
-        R3["PATCH /audit/shifts/:id/finish"]:::route
+        R1["GET /audit/history"]:::route
+        R2["PATCH /audit/checkpoints/:id"]:::route
+        AUTH["JWT obrigatório"]:::route
     end
 
-    subgraph L3["Controller"]
+    subgraph L3["Controllers"]
         direction TB
+        HC["HistoryController"]:::controller
         SC["ShiftController"]:::controller
     end
 
-    subgraph L4["Service"]
+    subgraph L4["Services"]
         direction TB
-        SS["ShiftService<br/>ciclo de vida do turno"]:::service
-        V1["atleta livre"]:::note
-        V2["esteira livre"]:::note
-        V3["KM crescente"]:::note
-        V4["cálculo de métricas"]:::note
+        HS["HistoryService"]:::service
+        SS["ShiftService"]:::service
+        RN["RF016 histórico<br/>RF015 correção<br/>RN23/RN24 rastreabilidade"]:::note
     end
 
-    subgraph L5["Repository"]
+    subgraph L5["Repositories"]
         direction TB
-        SR["ShiftRepository"]:::repository
-        Q1["start"]:::repository
-        Q2["addCheckpoint"]:::repository
-        Q3["finish"]:::repository
-        Q4["findById"]:::repository
+        HR["HistoryRepository"]:::repository
+        SR1["findCheckpointById"]:::repository
+        SR2["findNeighbors"]:::repository
+        SR3["correctCheckpoint"]:::repository
     end
 
     subgraph L6["Banco de Dados"]
         direction TB
         DB["PostgreSQL"]:::db
         SH["shifts"]:::db
-        CP["checkpoints"]:::db
         AT["athletes"]:::db
+        TE["teams"]:::db
         TM["treadmills"]:::db
-        AU["auditors"]:::db
+        CP["checkpoints"]:::db
+        CC["checkpoint_corrections"]:::db
     end
 
     subgraph L7["Saídas"]
         direction TB
-        O1["201 turno iniciado"]:::output
-        O2["201 checkpoint"]:::output
-        O3["200 turno finalizado"]:::output
+        O1["200 entries[]"]:::output
+        O2["200 checkpoint corrigido"]:::output
+        O3["422 distância inválida"]:::output
     end
 
-    C --> R1 --> SC --> SS
-    C --> R2 --> SC
-    C --> R3 --> SC
-    SS --> V1
-    SS --> V2
-    SS --> V3
-    SS --> V4
-    SS --> SR
-    SR --> Q1
-    SR --> Q2
-    SR --> Q3
-    SR --> Q4
-    Q1 --> SH
-    Q1 --> AT
-    Q1 --> TM
-    Q1 --> AU
-    Q2 --> CP
-    Q2 --> SH
-    Q4 --> SH
-    Q4 --> CP
-    Q3 --> SH
+    C --> R1 --> AUTH --> HC --> HS --> HR
+    C --> R2 --> AUTH --> SC --> SS
+    HS -.-> RN
+    SS -.-> RN
+    HR --> SH
+    HR --> AT
+    HR --> TE
+    HR --> TM
+    HR --> CP
+    SS --> SR1 --> CP
+    SS --> SR2 --> CP
+    SS --> SR3 --> CP
+    SR3 --> CC
     SH --> DB
-    CP --> DB
     AT --> DB
+    TE --> DB
     TM --> DB
-    AU --> DB
-    DB --> SR --> SS --> SC
-    SC --> O1 --> C
-    SC --> O2 --> C
-    SC --> O3 --> C
+    CP --> DB
+    CC --> DB
+    DB --> HR --> HS --> HC --> O1 --> C
+    DB --> SR3 --> SS --> SC --> O2 --> C
+    SS -. valida intervalo .-> O3
