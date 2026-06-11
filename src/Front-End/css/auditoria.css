@@ -304,6 +304,114 @@
     color: var(--branco);
 }
 
+/* ---------------- MODAL FINALIZAR TURNO ---------------- */
+
+.modal-turno {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.58);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.modal-turno.escondido {
+    display: none;
+}
+
+.modal-turno-conteudo {
+    width: 86vw;
+    height: 76vh;
+    max-width: none;
+    border-radius: 12px;
+    background-color: var(--branco);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 72px;
+}
+
+.campos-turno {
+    display: flex;
+    justify-content: center;
+    gap: 44px;
+    width: fit-content;
+}
+
+.campo-turno {
+    display: flex;
+    flex-direction: column;
+}
+
+.campo-turno label {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.campo-turno select,
+.campo-turno input {
+    height: 64px;
+    border: 1px solid #c8c7c7;
+    border-radius: 6px;
+    font-size: 24px;
+}
+
+.campo-corredor {
+    width: 300px;
+}
+
+.campo-corredor select {
+    width: 300px;
+    padding: 0 20px;
+    border: none;
+    background-color: var(--vermelho);
+    color: var(--branco);
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--branco) 50%),
+        linear-gradient(135deg, var(--branco) 50%, transparent 50%);
+    background-position: calc(100% - 28px) 28px, calc(100% - 18px) 28px;
+    background-size: 10px 10px, 10px 10px;
+    background-repeat: no-repeat;
+}
+
+.campo-horario {
+    width: 160px;
+}
+
+.campo-horario input {
+    width: 160px;
+    background-color: var(--vermelho);
+    color: var(--branco);
+    text-align: center;
+}
+
+.campo-quilometragem {
+    width: 520px;
+    align-self: center;
+    transform: translateX(-100px);
+    margin-top: 52px;
+}
+
+.campo-quilometragem input {
+    width: 310px;
+    padding: 0 28px;
+}
+
+.btn-registrar-turno {
+    width: 260px;
+    height: 76px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--vermelho);
+    color: var(--branco);
+    font-size: 30px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 90px;
+}
+
 /* ---------------- REGISTROS ---------------- */
 
 .area-registros {
@@ -382,6 +490,7 @@ tbody tr:last-child td:last-child {
     gap: 14px;
     height: 46px;
     cursor: grab;
+    user-select: none;
     border-radius: 6px;
     padding: 0 6px;
     transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
@@ -408,6 +517,7 @@ tbody tr:last-child td:last-child {
 .corredor-fila p {
     flex: 1;
     font-size: 18px;
+    pointer-events: none;
 }
 
 .drag {
@@ -415,6 +525,7 @@ tbody tr:last-child td:last-child {
     font-size: 24px;
     cursor: grab;
     user-select: none;
+    pointer-events: none;
 }
 
 /* ---------------- IMG ---------------- */
