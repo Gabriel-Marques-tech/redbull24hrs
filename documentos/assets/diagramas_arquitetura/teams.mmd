@@ -12,60 +12,70 @@ flowchart TB
 
     subgraph L1["Cliente"]
         direction TB
-        C["Dashboard Web<br/>Modo TV"]:::client
+        C["Web Admin<br/>API Client"]:::client
     end
 
-    subgraph L2["Rota protegida"]
+    subgraph L2["Rotas"]
         direction TB
-        R["GET /metrics/events/:id/dashboard<br/>AuthMiddleware"]:::route
+        R1["POST /teams"]:::route
+        R2["POST /teams/:id/athletes"]:::route
+        R3["GET /teams/:id<br/>GET athletes"]:::route
+        R4["GET /metrics/events/:id/teams"]:::route
     end
 
-    subgraph L3["Controller"]
+    subgraph L3["Controllers"]
         direction TB
-        MC["MetricsController<br/>getDashboard"]:::controller
+        TC["TeamController"]:::controller
+        MC["MetricsController"]:::controller
     end
 
-    subgraph L4["Service"]
+    subgraph L4["Services"]
         direction TB
-        MS["MetricsService<br/>consolida indicadores"]:::service
-        RN["RF013 + RN11<br/>atualização recorrente"]:::note
+        TS["TeamService"]:::service
+        MS["MetricsService"]:::service
+        RN["RN16 atleta único<br/>RF001–RF003 · RF019"]:::note
     end
 
-    subgraph L5["Repository"]
+    subgraph L5["Repositories"]
         direction TB
-        MR["MetricsRepository<br/>dashboardByEvent"]:::repository
-        Q1["placar por equipe"]:::repository
-        Q2["turnos ativos/finalizados"]:::repository
-        Q3["atletas em prova"]:::repository
+        TR["TeamRepository"]:::repository
+        MR["MetricsRepository"]:::repository
     end
 
     subgraph L6["Banco de Dados"]
         direction TB
         DB["PostgreSQL"]:::db
-        T1["events"]:::db
-        T2["teams"]:::db
-        T3["athletes"]:::db
-        T4["shifts"]:::db
-        T5["treadmills"]:::db
+        EV["events"]:::db
+        TE["teams"]:::db
+        AT["athletes"]:::db
+        SH["shifts"]:::db
     end
 
-    subgraph L7["Resposta"]
+    subgraph L7["Saídas"]
         direction TB
-        OUT["200 OK<br/>scoreboard + métricas"]:::output
+        O1["201 equipe"]:::output
+        O2["201 atleta"]:::output
+        O3["200 consulta"]:::output
+        O4["200 ranking KM"]:::output
     end
 
-    C --> R --> MC --> MS --> MR
+    C --> R1 --> TC --> TS --> TR
+    C --> R2 --> TC
+    C --> R3 --> TC
+    C --> R4 --> MC --> MS --> MR
+    TS -.-> RN
     MS -.-> RN
-    MR --> Q1 --> T2
-    Q1 --> T4
-    MR --> Q2 --> T4
-    Q2 --> T5
-    MR --> Q3 --> T3
-    Q3 --> T4
-    T1 --> DB
-    T2 --> DB
-    T3 --> DB
-    T4 --> DB
-    T5 --> DB
-    DB --> MR
-    MR --> MS --> MC --> OUT --> C
+    TR --> EV
+    TR --> TE
+    TR --> AT
+    MR --> TE
+    MR --> SH
+    EV --> DB
+    TE --> DB
+    AT --> DB
+    SH --> DB
+    DB --> TR --> TS --> TC
+    TC --> O1 --> C
+    TC --> O2 --> C
+    TC --> O3 --> C
+    DB --> MR --> MS --> MC --> O4 --> C
