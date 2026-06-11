@@ -1775,20 +1775,6 @@ Na sprint 1, os RNFs foram definidos em nível conceitual, com critérios mensur
 ---
 A seção de Arquitetura apresenta a estrutura organizacional e a modelagem dos principais componentes do sistema desenvolvidos ao longo das sprints 1 a 5. Por meio dos diagramas arquiteturais, diagramas de classes e diagramas de casos de uso, é possível compreender como os módulos da aplicação se relacionam, quais são as responsabilidades de cada camada e como ocorre o fluxo de dados entre os componentes. Esses artefatos auxiliam na documentação técnica do projeto, facilitando o entendimento da solução, a manutenção do software e a evolução contínua da arquitetura proposta.
 
-> **Cobertura atual dos diagramas e plano de evolução (sprint 4).**
->
-> Os diagramas de arquitetura (3.2.1), de classes arquiteturais (3.2.1.1) e de sequência (3.2.4)
-> cobrem, nesta sprint, os fluxos de **Eventos, Equipes, Atletas, Turnos, Histórico, Métricas
-> (Dashboard) e Registros/Logs (sincronização)**.
->
-> Os fluxos de **Autenticação, Esteiras, Alertas (inconsistências) e Exportação** já estão
-> **implementados e operantes no código** (ver seção 3.7 e a RTM em 3.9), mas seus diagramas
-> ainda **não foram modelados** — estão **planejados para a sprint 4**. A decisão de implementar
-> a autenticação, por exemplo, surgiu durante esta sprint (ver relatório de desenvolvimento, seção
-> 4.1), e a modelagem visual desses fluxos será incorporada nas próximas atualizações desta seção,
-> mantendo a documentação alinhada ao código já entregue. Trata-se de um débito de documentação
-> registrado de forma explícita, não de funcionalidade ausente.
-
 ### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
 
 ---
@@ -1796,47 +1782,58 @@ Os diagramas de arquitetura representam a estrutura organizacional do sistema, d
 
 DASHBOARD 
 
-O diagrama de arquitetura de Dashboard apresenta a organização do módulo responsável pelo painel de monitoramento em tempo real. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados a métricas consolidadas e checagem de conexão.
-
 <div align="center">
   <sub>Imagem 9 - Diagrama de Arquitetura - DASHBOARD </sub><br>
-  <img src= "./assets/diagramas_arquitetura/dashboard.svg" width="100%" alt="Diagrama de Arquitetura - Dashboard"><br>
+  <img src= "./assets/diagramas_arquitetura/dashboard.svg" width="100%" alt="Diagrama de Arquitetura - 1"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
-EVENTOS E HISTÓRICO 
-
-O diagrama de arquitetura de Eventos e Histórico apresenta a organização do módulo responsável pelo gerenciamento e monitoramento de eventos. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados aos eventos e métricas do sistema.
+EVENTOS 
 
 <div align="center">
-  <sub>Imagem 10 - Diagrama de Arquitetura - EVENTS E HISTÓRICO </sub><br>
-  <img src= "./assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de Arquitetura - Events"><br>
+  <sub>Imagem 10 - Diagrama de Arquitetura - EVENTOS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/eventos.svg" width="100%" alt="Diagrama de Arquitetura - 2"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
-REGISTROS, LOGS E EQUIPES
-
-O diagrama de arquitetura de Registros, Logs e Equipes apresenta a organização do módulo responsável pela edição retroativa de dados e pelo sincronismo offline. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados aos ajustes manuais de quilometragem e auditoria.
+EVENTO HISTÓRICO
 
 <div align="center">
-  <sub>Imagem 11 - Diagrama de Arquitetura - LOGS </sub><br>
-  <img src= "./assets/diagramas_arquitetura/logs.svg" width="100%" alt="Diagrama de Arquitetura - Logs"><br>
+  <sub>Imagem 11 - Diagrama de Arquitetura - EVENTO HISTÓRICO </sub><br>
+  <img src= "./assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de Arquitetura - 3"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+LOGS
+
+<div align="center">
+  <sub>Imagem 12 - Diagrama de Arquitetura - LOGS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/logs.svg" width="100%" alt="Diagrama de Arquitetura - 4"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+TEAMS
+
+<div align="center">
+  <sub>Imagem 13 - Diagrama de Arquitetura - TEAMS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/teams.svg" width="100%" alt="Diagrama de Arquitetura - 5"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 TURNOS
 
-O diagrama de arquitetura de Turns apresenta a organização do módulo responsável pelo controle de atletas e uso das esteiras. A arquitetura evidencia o fluxo de tratamento das informações, desde o recebimento das requisições até o armazenamento e consulta dos dados relacionados ao início, marcos intermediários e finalização dos turnos.
-
 <div align="center">
-  <sub>Imagem 12 - Diagrama de Arquitetura - TURNS </sub><br>
-  <img src= "./assets/diagramas_arquitetura/turnos.svg" width="100%" alt="Diagrama de Arquitetura - Turns"><br>
+  <sub>Imagem 14 - Diagrama de Arquitetura - TURNOS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/turnos.svg" width="100%" alt="Diagrama de Arquitetura - 6"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
+
 
 #### 3.2.1.1. Diagrama de Classes Arquiteturais 
 
@@ -1845,10 +1842,8 @@ A seção de Diagramas de Classes Arquiteturais apresenta a modelagem estrutural
 
 DASHBOARD
 
-O diagrama de classes do Dashboard representa a organização das classes responsáveis pela exibição e gerenciamento das informações do painel principal do sistema. Ele demonstra os relacionamentos entre entidades, serviços e componentes utilizados para consolidar métricas e indicadores apresentados aos usuários.
-
 <div align="center">
-  <sub>Imagem 13 - Diagrama de Classes Arquiteturais - DASHBOARD </sub><br>
+  <sub>Imagem 15 - Diagrama de Classes Arquiteturais - DASHBOARD </sub><br>
   <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1856,55 +1851,45 @@ O diagrama de classes do Dashboard representa a organização das classes respon
 
 EVENTS
 
-O diagrama de classes de Events descreve a estrutura das classes relacionadas ao gerenciamento de eventos da aplicação. Ele evidencia como as entidades, serviços e repositórios interagem para realizar operações de cadastro, consulta e processamento dos eventos do sistema.
-
 <div align="center">
-  <sub>Imagem 14 - Diagrama de Classes Arquiteturais - EVENTS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/EVENTS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Imagem 16 - Diagrama de Classes Arquiteturais - EVENTS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 HISTORY
 
-O diagrama de classes de History apresenta as classes responsáveis pelo armazenamento e gerenciamento do histórico de operações realizadas na aplicação. O modelo demonstra os relacionamentos entre os componentes que garantem rastreabilidade e controle das informações históricas.
-
 <div align="center">
-  <sub>Imagem 15 - Diagrama de Classes Arquiteturais - HISTORY </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/HISTORY_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Imagem 17 - Diagrama de Classes Arquiteturais - HISTORY </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 LOGS
 
-O diagrama de classes de Logs representa a estrutura utilizada para registrar e organizar os logs do sistema. Ele demonstra como as classes se relacionam para capturar, armazenar e consultar informações importantes para monitoramento e auditoria da aplicação.
-
 <div align="center">
-  <sub>Imagem 16 - Diagrama de Classes Arquiteturais - LOGS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/LOGS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Imagem 18 - Diagrama de Classes Arquiteturais - LOGS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 TEAMS
 
-O diagrama de classes de Teams descreve a modelagem das classes relacionadas ao gerenciamento de equipes e atletas. Ele apresenta os relacionamentos entre entidades e componentes responsáveis pelas operações de cadastro, atualização e consulta das equipes no sistema.
-
 <div align="center">
-  <sub>Imagem 17 - Diagrama de Classes Arquiteturais - TEAMS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/TEAMS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Imagem 19 - Diagrama de Classes Arquiteturais - TEAMS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 TURNS
 
-O diagrama de classes de Turns representa a estrutura das classes responsáveis pelo controle de turnos e checkpoints da aplicação. O diagrama evidencia como os componentes interagem para processar, validar e armazenar as informações relacionadas aos turnos dos usuários.
-
 <div align="center">
-  <sub>Imagem 18 - Diagrama de Classes Arquiteturais - TURNS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/TURNS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Imagem 20 - Diagrama de Classes Arquiteturais - TURNS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1915,7 +1900,7 @@ O diagrama de classes de Turns representa a estrutura das classes responsáveis 
 O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 Horas a partir da prática **Light Use-Case Modeling** descrita em Jacobson et al.[⁹](#8-referências), evoluindo para o nível **System Boundary Established** ao incluir todos os atores e casos de uso planejados para o MVP. A notação adotada segue o guia _Use-Case 3.0 — The Definitive Guide_: atores são representados por bonecos-palito, casos de uso por elipses contidas dentro do retângulo do _System of Interest_, associações por linhas contínuas com setas indicando o iniciador da interação, `<<include>>` por seta tracejada apontando do caso-base para o caso obrigatoriamente incluído, e `<<extend>>` por seta tracejada apontando do caso opcional para o caso-base que ele estende.
 
 <div align="center">
-  <sub>Imagem 19 - Diagrama Casos de Uso</sub><br>
+  <sub>Imagem 21 - Diagrama Casos de Uso</sub><br>
   <img src= "./assets/use_case/use_case.jpeg" width="100%" alt="Casos de uso"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1985,7 +1970,7 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação UML, com o objetivo de representar a estrutura do sistema por meio de suas classes, atributos, relacionamentos e responsabilidades. A modelagem organiza logicamente os elementos do domínio do evento Red Bull 24h, facilitando a compreensão das dependências entre as entidades e da solução proposta pelo grupo.
 
 <div align = "center">
-  <sub>Imagem 20 - Diagrama de Classes de Domínio</sub><br>
+  <sub>Imagem 22 - Diagrama de Classes de Domínio</sub><br>
   <img src="./assets/classes_dominio/diagrama_classes.svg" width="100%" alt="Diagrama de Classes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2006,7 +1991,7 @@ A seguir, cada diagrama é apresentado com uma descrição detalhada de seus flu
 O Diagrama de Sequência de Eventos cobre três fluxos integrados: a criação do evento, a consulta de métricas e placar, e a exportação de dados para auditoria.
 
 <div align="center">
-  <sub>Imagem 21 - Diagrama de Sequencia: Eventos</sub><br>
+  <sub>Imagem 23 - Diagrama de Sequencia: Eventos</sub><br>
   <img src="./assets/diagrama_sequencia/Events_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2031,7 +2016,7 @@ Não há fluxos alternativos explícitos neste diagrama. Falhas de validação n
 O Diagrama de Sequência de Equipes cobre quatro fluxos: cadastro de equipe, cadastro individual de atletas, consulta de equipe com seus atletas e consulta de quilometragem acumulada por equipe.
 
 <div align="center">
-  <sub>Imagem 22 - Diagrama de Sequência: Equipes</sub>
+  <sub>Imagem 24 - Diagrama de Sequência: Equipes</sub>
     <br><img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026 </sub>
   <br><br><br>
@@ -2058,7 +2043,7 @@ Não há fluxos alternativos explícitos neste diagrama. Erros de validação, c
 O Diagrama de Sequência de Turnos mapeia quatro fluxos: inicialização do turno com verificação de disponibilidade, registro de checkpoints obrigatórios, registro de checkpoints voluntários e encerramento do turno com cálculo automático de métricas.
 
 <div align="center">
-  <sub>Imagem 23 - Diagrama de Sequência: Turnos</sub><br>
+  <sub>Imagem 25 - Diagrama de Sequência: Turnos</sub><br>
   <img src="./assets/diagrama_sequencia/Turns_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de turnos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2087,7 +2072,7 @@ O Diagrama de Sequência de Turnos mapeia quatro fluxos: inicialização do turn
 O Diagrama de Sequência de Histórico cobre dois fluxos: a listagem de registros históricos de um evento com filtros opcionais e a correção retroativa de um checkpoint com geração de trilha de auditoria imutável.
 
 <div align="center">
-  <sub>Imagem 24 - Diagrama de Sequência: Historico</sub><br>
+  <sub>Imagem 26 - Diagrama de Sequência: Historico</sub><br>
   <img src="./assets/diagrama_sequencia/History_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2110,7 +2095,7 @@ O Diagrama de Sequência de Histórico cobre dois fluxos: a listagem de registro
 O Diagrama de Registros e Sincronização cobre dois fluxos: a correção retroativa de checkpoints com trilha de auditoria imutável e a sincronização offline de registros acumulados localmente (planejado, não implementado).
 
 <div align="center">
-  <sub>Imagem 25 - Diagrama de Sequência: Registros/Sync</sub><br>
+  <sub>Imagem 27 - Diagrama de Sequência: Registros/Sync</sub><br>
   <img src="./assets/diagrama_sequencia/Logs_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de registros e sync"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2135,7 +2120,7 @@ O Diagrama de Registros e Sincronização cobre dois fluxos: a correção retroa
 O Diagrama de Sequência do Dashboard cobre dois fluxos: o polling automático de métricas para atualização contínua da tela e o healthcheck de conectividade com o banco de dados (planejado, não implementado).
 
 <div align="center">
-  <sub>Imagem 26 - Diagrama de Sequência: Dashboard</sub><br>
+  <sub>Imagem 28 - Diagrama de Sequência: Dashboard</sub><br>
   <img src="assets/diagrama_sequencia/Dashboard_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do painel de controle (dashboard)"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2369,7 +2354,7 @@ A seguir, são apresentados os wireframes de baixa e média fidelidade desenvolv
 O wireframe de baixa fidelidade representa a estrutura inicial das telas, com foco na disposição dos elementos e nos fluxos principais de navegação. Nesta etapa, foram mapeadas as telas essenciais do sistema, desde o cadastro pré-evento até o acompanhamento das esteiras em tempo real, sem preocupação com detalhamento visual ou componentes definitivos.
 
 <div align="center">
-  <sub>Imagem 27 - Wireframe de Baixa Fidelidade</sub><br>
+  <sub>Imagem 29 - Wireframe de Baixa Fidelidade</sub><br>
   <img src="./assets/wireframes/wireframe-baixa-fidelidade.svg" width="900px" alt="Wireframe de baixa fidelidade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2423,7 +2408,7 @@ Os wireframes de média fidelidade foram desenvolvidos a partir da evolução di
 O conjunto de telas cobre todos os fluxos críticos do sistema: cadastro pré-evento, operação em tempo real (início, checkpoint e encerramento de turno), detecção de inconsistências e visualização de métricas consolidadas.
 
 <div align="center">
-  <sub>Imagem 28 - Wireframe de Média Fidelidade</sub><br>
+  <sub>Imagem 30 - Wireframe de Média Fidelidade</sub><br>
   <img src="./assets/wireframes/Wireframe-Média-Fidelidade.svg" width="900px" alt="Wireframe de média fidelidade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2571,7 +2556,7 @@ A paleta cromática da aplicação foi derivada diretamente das cores institucio
 As cores neutras complementam o sistema cromático com a função de sustentar legibilidade e organização hierárquica. O branco (#FFFFFF) é o fundo padrão de toda a aplicação, garantindo amplitude visual e contraste adequado com os demais elementos. O preto (#0D0D0D) é reservado ao texto de maior peso, como títulos e dados críticos de quilometragem. O cinza médio (#6B6B6B) atende textos secundários, rótulos e informações de suporte, reduzindo a densidade visual sem eliminar o conteúdo. Já o cinza claro (#D4D4D4) é empregado em bordas, linhas divisórias e planos de fundo de campos, delimitando espaços e organizando os blocos de informação de forma discreta.
 
 <div align="center">
-  <sub>Imagem 29 - Paleta de Cores da Aplicação</sub><br>
+  <sub>Imagem 31 - Paleta de Cores da Aplicação</sub><br>
   <img src="./assets/guia-de-estilos/paleta-de-cores.png" width="900px" alt="Paleta de Cores"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2589,7 +2574,7 @@ A tipografia de uma interface vai além da escolha de uma fonte: ela estrutura a
 Para a aplicação Red Bull 24 Horas, foi adotada exclusivamente a fonte Inter, aplicada em diferentes pesos e tamanhos para construir toda a hierarquia visual da interface. A Inter é uma família tipográfica de código aberto projetada especificamente para telas, com alta legibilidade em tamanhos reduzidos e excelente desempenho em displays de diferentes densidades. Sua geometria neutra e suas proporções equilibradas fazem dela uma escolha sólida para interfaces que precisam exibir dados numéricos com precisão, como registros de quilometragem e tempos de etapa, sem que a fonte concorra com o conteúdo. Os pesos utilizados variam do Regular (400) ao Black (900), cada um com uma função definida na escala tipográfica do projeto.
 
 <div align="center">
-  <sub>Imagem 30 - Tipografia da Aplicação</sub><br>
+  <sub>Imagem 32 - Tipografia da Aplicação</sub><br>
   <img src="./assets/guia-de-estilos/tipografia.png" width="900px" alt="Tipografia"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2608,7 +2593,7 @@ A nossa aplicação para a Red Bull 24 Horas utiliza ícones do Iconify, bibliot
 Cada ícone desempenha um papel funcional específico, seja representando métricas no dashboard, identificando campos nos formulários de registro ou sinalizando ações de navegação. 
 
 <div align="center">
-  <sub>Imagem 31 - Iconografia da Aplicação</sub><br>
+  <sub>Imagem 33 - Iconografia da Aplicação</sub><br>
   <img src="./assets/guia-de-estilos/iconografia.png" width="900px" alt="Iconografia da Cores"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2631,7 +2616,7 @@ As telas apresentadas a seguir representam os principais fluxos da solução des
 A tela de login representa o ponto de entrada da plataforma, permitindo a autenticação dos usuários por meio de suas credenciais. Embora gerentes e auditores utilizem a mesma interface de acesso, o sistema identifica automaticamente o perfil associado ao usuário informado e o direciona para o ambiente correspondente às suas responsabilidades. Dessa forma, cada usuário acessa apenas as funcionalidades necessárias para a execução de suas atividades.
 
 <div align="center">
-  <sub>Imagem 32 - Login</sub><br>
+  <sub>Imagem 34 - Login</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/tela-login.svg" width="900px" alt="Login"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2646,7 +2631,7 @@ Após a autenticação, os usuários com perfil de gerente são direcionados par
 Após realizar o login, o gerente é direcionado para a tela inicial da plataforma. Nessa interface, é possível visualizar as competições cadastradas e acessar rapidamente as principais funcionalidades do sistema. A partir dos cards das competições, o gerente pode selecionar um evento para acessar o [Histórico da Competição](#histórico-da-competição), onde são exibidos os registros realizados durante a corrida. Essa funcionalidade está relacionada às User Stories US04, US05 e US06, pois permite acompanhar os dados consolidados, consultar o histórico completo e visualizar os quilômetros acumulados por equipe. Além disso, o botão principal permite iniciar o processo de cadastro de uma nova competição.
 
 <div align="center">
-  <sub>Imagem 33 - Tela Inicial do Gerente</sub><br>
+  <sub>Imagem 35 - Tela Inicial do Gerente</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/tela-inicial-gerente.svg" width="900px" alt="Tela Inicial do Gerente"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2657,7 +2642,7 @@ Após realizar o login, o gerente é direcionado para a tela inicial da platafor
 A primeira etapa do cadastro permite ao gerente informar a localização da competição, selecionando o estado e a cidade em que o evento será realizado. Essas informações ajudam a identificar e organizar a competição dentro da plataforma, garantindo que o evento seja cadastrado com dados básicos suficientes para seu acompanhamento posterior.
 
 <div align="center">
-  <sub>Imagem 34 - Informações Gerais</sub><br>
+  <sub>Imagem 36 - Informações Gerais</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/configurar-competicao/tela-criar-competicao-1.svg" width="900px" alt="Informações Gerais"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2669,7 +2654,7 @@ A primeira etapa do cadastro permite ao gerente informar a localização da comp
 Nesta etapa, o gerente informa a data e o horário de realização da competição. Esses dados são utilizados pelo sistema para identificar o momento em que o evento ocorrerá, auxiliando na organização das atividades de auditoria e no gerenciamento dos participantes. Além disso, as informações definidas nessa etapa servem como referência para os registros e estatísticas gerados ao longo da competição.
 
 <div align="center">
-  <sub>Imagem 35 - Data e Horário da Competição</sub><br>
+  <sub>Imagem 37 - Data e Horário da Competição</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/configurar-competicao/tela-criar-competicao-2.svg" width="900px" alt="Data e Horário da Competição"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2680,7 +2665,7 @@ Nesta etapa, o gerente informa a data e o horário de realização da competiç�
 Nesta etapa, o gerente seleciona ou cadastra as equipes participantes da competição, garantindo que todos os grupos estejam devidamente vinculados ao evento antes de seu início. Essa definição permite que os registros realizados posteriormente sejam organizados por equipe, apoiando a visualização consolidada prevista nas User Stories US04 e US06.
 
 <div align="center">
-  <sub>Imagem 36 - Equipes Participantes</sub><br>
+  <sub>Imagem 38 - Equipes Participantes</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/configurar-competicao/tela-criar-competicao-3.svg" width="900px" alt="Equipes Participantes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2691,7 +2676,7 @@ Nesta etapa, o gerente seleciona ou cadastra as equipes participantes da competi
 Nesta etapa, o gerente vincula os atletas às equipes participantes da competição. Essa configuração contribui para a rastreabilidade individual dos participantes, permitindo que os registros da corrida sejam associados aos atletas corretos, conforme previsto na User Story US07. Após o preenchimento das informações necessárias, o usuário pode concluir o processo de criação do evento. Ao finalizar o cadastro, o sistema retorna automaticamente para a [tela inicial do gerente](#tela-inicial-do-gerente), onde a competição recém-criada passa a ser exibida em um card com suas principais informações.
 
 <div align="center">
-  <sub>Imagem 37 - Atletas Participantes</sub><br>
+  <sub>Imagem 39 - Atletas Participantes</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/configurar-competicao/tela-criar-competicao-4.svg" width="900px" alt="Atletas Participantes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2708,7 +2693,7 @@ Em algumas etapas do fluxo, são apresentadas duas imagens consecutivas da mesma
 Após realizar o [login](#tela-de-login-2), o auditor é direcionado para sua tela inicial. Nessa interface, são exibidas as competições disponíveis para acompanhamento, permitindo que o usuário identifique rapidamente os eventos em andamento ou aqueles que aguardam o início da auditoria. Ao clicar no botão de início da auditoria, o sistema direciona o usuário para o fluxo de configuração do acompanhamento, no qual serão selecionadas a competição, a equipe e a esteira. A partir dessa tela, o auditor também pode acessar ações relacionadas a cada competição, como consultar o [Histórico da Competição](#histórico-da-competição). A tela funciona como ponto central de acesso às atividades operacionais do auditor, facilitando a navegação para as competições sob sua responsabilidade.
 
 <div align="center">
-  <sub>Imagem 38 - Tela Inicial do Auditor</sub><br>
+  <sub>Imagem 40 - Tela Inicial do Auditor</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/tela-inicial-auditor.svg" width="900px" alt="Tela Inicial do Auditor"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2719,14 +2704,14 @@ Após realizar o [login](#tela-de-login-2), o auditor é direcionado para sua te
 Após iniciar a auditoria, o sistema apresenta as competições disponíveis para acompanhamento. Nessa etapa, o auditor seleciona o evento que deseja monitorar, garantindo que os registros realizados sejam vinculados à competição correta. As imagens demonstram o estado padrão da interface e o estado após a seleção de uma competição.
 
 <div align="center">
-  <sub>Imagem 39 - Seleção da Competição: estado padrão</sub><br>
+  <sub>Imagem 41 - Seleção da Competição: estado padrão</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-competicao-agendada-1.svg" width="900px" alt="Seleção da Competição em estado padrão"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 40 - Seleção da Competição: item selecionado</sub><br>
+  <sub>Imagem 42 - Seleção da Competição: item selecionado</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-competicao-agendada-2.svg" width="900px" alt="Seleção da Competição com item selecionado"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2737,14 +2722,14 @@ Após iniciar a auditoria, o sistema apresenta as competições disponíveis par
 Após selecionar a competição, o auditor define qual equipe participará do acompanhamento na esteira auditada. A tela apresenta campos de seleção que permitem associar a equipe ao processo de auditoria antes do início da corrida, atendendo ao critério de seleção de equipe previsto na US01. As imagens demonstram o estado padrão da interface e o estado após a seleção da equipe.
 
 <div align="center">
-  <sub>Imagem 41 - Seleção da Equipe: estado padrão</sub><br>
+  <sub>Imagem 43 - Seleção da Equipe: estado padrão</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-equipe-1.svg" width="900px" alt="Seleção da Equipe em estado padrão"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 42 - Seleção da Equipe: item selecionado</sub><br>
+  <sub>Imagem 44 - Seleção da Equipe: item selecionado</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-equipe-2.svg" width="900px" alt="Seleção da Equipe com item selecionado"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2756,14 +2741,14 @@ Após selecionar a competição, o auditor define qual equipe participará do ac
 Nesta etapa, o auditor seleciona a esteira que será utilizada durante a competição. Essa definição permite que os registros realizados posteriormente sejam vinculados ao equipamento correto, atendendo ao critério de seleção de esteira previsto na US01 e facilitando a organização dos dados coletados durante o evento. As imagens demonstram o estado padrão da interface e o estado após a seleção da esteira.
 
 <div align="center">
-  <sub>Imagem 43 - Seleção da Esteira: estado padrão</sub><br>
+  <sub>Imagem 45 - Seleção da Esteira: estado padrão</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-esteira-1.svg" width="900px" alt="Seleção da Esteira em estado padrão"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 44 - Seleção da Esteira: item selecionado</sub><br>
+  <sub>Imagem 46 - Seleção da Esteira: item selecionado</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-esteira-2.svg" width="900px" alt="Seleção da Esteira com item selecionado"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2774,7 +2759,7 @@ Nesta etapa, o auditor seleciona a esteira que será utilizada durante a competi
 Após a conclusão das etapas de seleção da competição, equipe e esteira, o sistema apresenta uma visão geral contendo todas as informações configuradas para a auditoria. Nessa tela, o auditor pode revisar os dados selecionados e verificar se estão corretos antes de iniciar a competição. O objetivo dessa etapa é reduzir erros de configuração e garantir que todos os registros realizados durante a prova sejam associados corretamente aos participantes e ao evento correspondente.
 
 <div align="center">
-  <sub>Imagem 45 - Visão Geral da Auditoria</sub><br>
+  <sub>Imagem 47 - Visão Geral da Auditoria</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/visao-geral-competicao.svg" width="900px" alt="Visão Geral da Auditoria"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2786,7 +2771,7 @@ Concluídas as etapas de configuração, o sistema apresenta uma tela com o cron
 
 
 <div align="center">
-  <sub>Imagem 46 - Início da Competição</sub><br>
+  <sub>Imagem 48 - Início da Competição</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/tela-auditoria-inicial.svg" width="900px" alt="Início da Competição"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2797,7 +2782,7 @@ Concluídas as etapas de configuração, o sistema apresenta uma tela com o cron
 Durante a competição, o auditor pode registrar os turnos realizados pelos corredores. Para isso, a tela disponibiliza campos para seleção do atleta, horários de início e término do turno e quilometragem percorrida. Essa etapa está relacionada às User Stories US02, US03 e US07, pois permite registrar informações da corrida, encerrar ciclos de participação e manter a rastreabilidade individual dos atletas.
 
 <div align="center">
-  <sub>Imagem 47 - Registro de Turno</sub><br>
+  <sub>Imagem 49 - Registro de Turno</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/tela-auditoria-registro-corrida.svg" width="900px" alt="Registro de Turno"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2808,7 +2793,7 @@ Durante a competição, o auditor pode registrar os turnos realizados pelos corr
 Após o início da corrida, o cronômetro passa a contabilizar o tempo decorrido da competição. A tela exibe os últimos registros realizados, informações sobre os próximos corredores e o botão para finalização do evento, permitindo que o auditor acompanhe a operação em tempo real. Essa tela apoia o acompanhamento contínuo previsto nas US02 e US03.
 
 <div align="center">
-  <sub>Imagem 48 - Competição em Andamento</sub><br>
+  <sub>Imagem 50 - Competição em Andamento</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/tela-auditoria-corrida-iniciada.svg" width="900px" alt="Competição em Andamento"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2820,7 +2805,7 @@ Após o início da corrida, o cronômetro passa a contabilizar o tempo decorrido
 Quando o sistema identifica que não houve registro de checkpoints por um período superior ao esperado, uma mensagem de alerta é exibida ao auditor. A tela informa a pendência e disponibiliza uma ação para realizar imediatamente o registro do checkpoint. Essa interface está relacionada à US09, pois auxilia o auditor a identificar possíveis falhas técnicas ou atrasos na troca de corredor.
 
 <div align="center">
-  <sub>Imagem 49 - Alerta de Checkpoint Não Registrado</sub><br>
+  <sub>Imagem 51 - Alerta de Checkpoint Não Registrado</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/aviso-de-checkpoint-não-registrado-auditor.svg" width="900px" alt="Alerta de Checkpoint Não Registrado"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2831,7 +2816,7 @@ Quando o sistema identifica que não houve registro de checkpoints por um perío
 Caso a quilometragem informada apresente divergências em relação aos registros anteriores, o sistema exibe uma mensagem de inconsistência. A tela apresenta os valores registrados e permite que o auditor cancele ou corrija a informação antes de confirmar o registro. Essa interface está relacionada à US11, pois contribui para evitar erros humanos e falhas na inserção dos dados durante a operação.
 
 <div align="center">
-  <sub>Imagem 50 - Alerta de Inconsistência de Dados</sub><br>
+  <sub>Imagem 52 - Alerta de Inconsistência de Dados</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/aviso-de-Inconsistencia-de-dados-auditor.svg" width="900px" alt="Alerta de Inconsistência de Dados"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2849,7 +2834,7 @@ A tela de histórico está relacionada principalmente às User Stories US04, US0
 A visão geral da competição apresenta um resumo dos principais dados do evento, permitindo que gerente e auditor acompanhem informações consolidadas sobre a corrida. Essa tela funciona como ponto de entrada para a análise dos registros, reunindo dados essenciais para conferência e acompanhamento da competição.
 
 <div align="center">
-  <sub>Imagem 51 - Visão Geral da Competição</sub><br>
+  <sub>Imagem 53 - Visão Geral da Competição</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/estatisticas-competicao/card-evento-geral.svg" width="900px" alt="Visão Geral da Competição"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2862,7 +2847,7 @@ A tela de histórico da auditoria reúne os registros operacionais realizados du
 Além disso, a interface apresenta a opção de compartilhar os dados como planilha, funcionalidade relacionada à User Story US05. Essa ação representa a exportação dos registros em formato estruturado, como CSV, permitindo que o gerente realize auditorias pós-evento e reduza a dependência de conferências manuais.
 
 <div align="center">
-  <sub>Imagem 52 - Histórico da Auditoria</sub><br>
+  <sub>Imagem 54 - Histórico da Auditoria</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/estatisticas-competicao/card-evento-auditoria.svg" width="900px" alt="Histórico da Auditoria"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2873,7 +2858,7 @@ Além disso, a interface apresenta a opção de compartilhar os dados como plani
 A tela de histórico por equipes apresenta os dados da competição organizados de acordo com as equipes participantes. Essa organização permite comparar o desempenho entre os grupos, acompanhar a quilometragem acumulada e verificar os registros vinculados a cada equipe, contribuindo diretamente para a visualização consolidada prevista nas User Stories US04, US05 e US06.
 
 <div align="center">
-  <sub>Imagem 53 - Histórico por Equipes</sub><br>
+  <sub>Imagem 55 - Histórico por Equipes</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/estatisticas-competicao/card-evento-equipes.png" width="900px" alt="Histórico por Equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2892,7 +2877,7 @@ O protótipo completo pode ser acessado no Figma por meio do seguinte link: [Pro
 O Modelo Entidade-Relacionamento (MER) é a representação conceitual do banco de dados, na qual se descrevem as entidades do domínio, seus atributos e os relacionamentos que as conectam, abstraindo decisões de implementação física como tipos de dados, índices ou chaves estrangeiras. Para este projeto, o MER traduz em linguagem de dados o domínio do Red Bull 24 Horas modelado nas seções anteriores: o evento operado por gerentes (Managers), suas equipes (Teams) e atletas (Athletes), e o registro de cada sessão de corrida (Shift) auditada à beira da esteira (Treadmill), com os checkpoints periódicos e logs que sustentam a apuração oficial da competição. A notação adotada é a de **Peter Chen**, na qual entidades são representadas por retângulos, atributos por elipses (com elipses preenchidas indicando chave primária e atributos compostos/derivados com ramificações), relacionamentos por losangos e a cardinalidade explicitada nas extremidades de cada relacionamento com a razão (1) e (N). Os nomes de entidades, atributos e relacionamentos foram padronizados em inglês para garantir consistência com a nomenclatura técnica adotada no modelo relacional e no código-fonte da aplicação.
 
 <div align="center">
-  <sub>Imagem 54 - Modelo Entidade-Relacionamento</sub><br>
+  <sub>Imagem 56 - Modelo Entidade-Relacionamento</sub><br>
   <img src="./assets/modelo_entidade_relacionamento/modelo_entidade_relacionamento.png" width="80%" alt="Modelo Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2966,7 +2951,7 @@ O MER traduz o domínio do Red Bull 24 Horas em um modelo conceitual de dados ra
 O DER traduz o modelo conceitual do MER para a estrutura relacional do banco de dados (PostgreSQL), adotando a **notação de tabelas relacionais** com tipos de dados, restrições (`NOT NULL`, `UNIQUE`, `CHECK`), chaves primárias (`PK`) e chaves estrangeiras (`FK`).
 
 <div align="center">
-  <sub>Imagem 55 - Diagrama Entidade-Relacionamento</sub><br>
+  <sub>Imagem 57 - Diagrama Entidade-Relacionamento</sub><br>
   <img src="./assets/diagrama_entidade_relacionamento/DER.png" width="90%" alt="Diagrama Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -3716,7 +3701,7 @@ O foco dessa sprint foi a implementação do backend da aplicação. Todos os fl
 Implementamos a camada responsável pelo gerenciamento dos eventos da competição. Por ele, é possível criar um evento, validar data, local e esteiras, acompanhar métricas como quilometragem total por equipe e velocidade média, além de exportar os dados coletados durante o evento ao fim da competição. Abaixo temos os diagramas realizados durante a sprint 3, que são os diagramas de arquitetura e classe arquitetural. 
 
 <div align="center">
-  <sub>Imagem 56 – Diagrama de arquitetura do fluxo de Eventos e Histórico</sub><br>
+  <sub>Imagem 58 – Diagrama de arquitetura do fluxo de Eventos e Histórico</sub><br>
   <img src="./assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de arquitetura - Eventos e Histórico"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -3724,7 +3709,7 @@ Implementamos a camada responsável pelo gerenciamento dos eventos da competiç�
 
 
 <div align="center">
-  <sub>Imagem 57 – Diagrama de classes arquiteturais do fluxo de Eventos</sub><br>
+  <sub>Imagem 59 – Diagrama de classes arquiteturais do fluxo de Eventos</sub><br>
   <img src="./assets/diagramas_arquiteturais/EVENTS_ClassDiagram.png" width="100%" alt="Diagrama de arquitetura - Eventos e Histórico"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -3737,7 +3722,7 @@ Implementamos o módulo de cadastro e gerenciamento das equipes e seus corredore
 
 
 <div align="center">
-  <sub>Imagem 58 – Diagrama de classes arquiteturais do fluxo de Equipes</sub><br>
+  <sub>Imagem 60 – Diagrama de classes arquiteturais do fluxo de Equipes</sub><br>
   <img src="./assets/diagramas_arquiteturais/TEAMS_ClassDiagram.png" width="100%" alt="Diagrama de classes - Teams"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -3748,14 +3733,14 @@ Implementamos o módulo de cadastro e gerenciamento das equipes e seus corredore
 Essa é a parte central do sistema. O auditor consegue registrar o início e o fim de cada turno de corrida, informando a esteira, o corredor e a quilometragem mostrada no display. Os checkpoints obrigatórios a cada 5 minutos e os voluntários também estão funcionando, com o horário registrado automaticamente pelo banco de dados. Abaixo temos os diagramas realizados durante a sprint 3, que são os diagramas de arquitetura e classe arquitetural. 
 
 <div align="center">
-  <sub>Imagem 59 – Diagrama de arquitetura do fluxo de Turnos</sub><br>
+  <sub>Imagem 61 – Diagrama de arquitetura do fluxo de Turnos</sub><br>
   <img src="./assets/diagramas_arquitetura/turnos.svg" width="100%" alt="Diagrama de arquitetura - Turnos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 60 – Diagrama de classes arquiteturais do fluxo de Turnos</sub><br>
+  <sub>Imagem 62 – Diagrama de classes arquiteturais do fluxo de Turnos</sub><br>
   <img src="./assets/diagramas_arquiteturais/TURNS_ClassDiagram.png" width="100%" alt="Diagrama de classes - Turns"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -3767,7 +3752,7 @@ Implementamos também o fluxo de histórico com todos os lançamentos realizados
 
 
 <div align="center">
-  <sub>Imagem 61 – Diagrama de classes arquiteturais do fluxo de Histórico</sub><br>
+  <sub>Imagem 63 – Diagrama de classes arquiteturais do fluxo de Histórico</sub><br>
   <img src="./assets/diagramas_arquiteturais/HISTORY_ClassDiagram.png" width="100%" alt="Diagrama de classes - History"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -3778,14 +3763,14 @@ Implementamos também o fluxo de histórico com todos os lançamentos realizados
 Implementamos o módulo de logs de auditoria e a lógica de sincronização offline. Em caso de queda de rede durante o evento, o sistema armazena os dados localmente e os envia ao servidor assim que a conexão é restabelecida, garantindo que nenhum registro seja perdido. Abaixo temos os diagramas realizados durante a sprint 3, que são os diagramas de arquitetura e classe arquitetural. 
 
 <div align="center">
-  <sub>Imagem 62 – Diagrama de arquitetura do fluxo de Logs</sub><br>
+  <sub>Imagem 64 – Diagrama de arquitetura do fluxo de Logs</sub><br>
   <img src="./assets/diagramas_arquitetura/logs.svg" width="100%" alt="Diagrama de arquitetura - Logs"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 63 – Diagrama de classes arquiteturais do fluxo de Logs</sub><br>
+  <sub>Imagem 65 – Diagrama de classes arquiteturais do fluxo de Logs</sub><br>
   <img src="./assets/diagramas_arquiteturais/LOGS_ClassDiagram.png" width="100%" alt="Diagrama de classes - Logs"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -3796,14 +3781,14 @@ Implementamos o módulo de logs de auditoria e a lógica de sincronização offl
 Desenvolvemos o módulo de acompanhamento em tempo real que mostra a quilometragem acumulada por cada equipe e os principais indicadores da competição. Qualquer pessoa da organização consegue acompanhar o andamento da disputa sem precisar intervir manualmente nos registros. Esse fluxo conta com diagrama de arquitetura, diagrama de classes arquiteturais e diagrama de sequência UML completos.
 
 <div align="center">
-  <sub>Imagem 64 – Diagrama de arquitetura do Dashboard</sub><br>
+  <sub>Imagem 66 – Diagrama de arquitetura do Dashboard</sub><br>
   <img src="./assets/diagramas_arquitetura/dashboard.svg" width="100%" alt="Diagrama de arquitetura - Dashboard"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 65 – Diagrama de classes arquiteturais do Dashboard</sub><br>
+  <sub>Imagem 67 – Diagrama de classes arquiteturais do Dashboard</sub><br>
   <img src="./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de classes - Dashboard"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -3862,7 +3847,7 @@ Desenvolvemos a Matriz de Rastreabilidade do projeto, consolidando os vínculos 
 Finalizamos 20 telas do protótipo de alta fidelidade, com guia completo de tipografia, iconografia e imagens, definindo a identidade visual da aplicação. A seguir, destacamos telas que cobrem o evento, principalmente por onde auditores e gerentes passam ao longo das 24 horas.
 
 <div align="center">
-  <sub>Imagem 66 – Tela de login</sub><br>
+  <sub>Imagem 68 – Tela de login</sub><br>
   <img src="./assets/relatorio_desenvolvimento/prototipo_login.png" width="100%" alt="Protótipo - Login"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -3870,35 +3855,35 @@ Finalizamos 20 telas do protótipo de alta fidelidade, com guia completo de tipo
 
 
 <div align="center">
-  <sub>Imagem 67 – Tela de histórico de auditoria (dashboard)</sub><br>
+  <sub>Imagem 69 – Tela de histórico de auditoria (dashboard)</sub><br>
   <img src="./assets/relatorio_desenvolvimento/prototipo_historico_auditoria.png" width="100%" alt="Protótipo - Histórico auditoria"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 68 – Tela de histórico de equipes (dashboard)</sub><br>
+  <sub>Imagem 70 – Tela de histórico de equipes (dashboard)</sub><br>
   <img src="./assets/relatorio_desenvolvimento/prototipo_historico_equipes.png" width="100%" alt="Protótipo - Histórico equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 69 – Tela de histórico geral (dashboard)</sub><br>
+  <sub>Imagem 71 – Tela de histórico geral (dashboard)</sub><br>
   <img src="./assets/relatorio_desenvolvimento/prototipo_historico_geral.png" width="100%" alt="Protótipo - Histórico geral"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 70 – Tela de inconsistência</sub><br>
+  <sub>Imagem 72 – Tela de inconsistência</sub><br>
   <img src="./assets/relatorio_desenvolvimento/prototipo_inconsistencia.png" width="100%" alt="Protótipo - inconsistencia"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 71 – Tela de registro de checkpoints</sub><br>
+  <sub>Imagem 73 – Tela de registro de checkpoints</sub><br>
   <img src="./assets/relatorio_desenvolvimento/prototipo_checkpoints.png" width="100%" alt="Protótipo - checkpoints"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -4172,35 +4157,35 @@ Time: 28.261 s
 As Figuras 1 a 5 apresentam a execução completa da suíte automatizada, evidenciando que todos os testes foram aprovados com sucesso.
 
 <div align="center">
-  <sub>Imagem X - Print dos teste - 1 </sub><br>
+  <sub>Imagem 74 - Print dos teste - 1 </sub><br>
   <img src= "./assets/testes/teste_1.png" width="100%" alt="testes 1"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem X - Print dos teste - 2 </sub><br>
+  <sub>Imagem 75 - Print dos teste - 2 </sub><br>
   <img src= "./assets/testes/teste_2.png" width="100%" alt="testes 2"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem X - Print dos teste - 3 </sub><br>
+  <sub>Imagem 76 - Print dos teste - 3 </sub><br>
   <img src= "./assets/testes/teste_3.png" width="100%" alt="testes 3"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem X - Print dos teste - 4 </sub><br>
+  <sub>Imagem 77 - Print dos teste - 4 </sub><br>
   <img src= "./assets/testes/teste_4.png" width="100%" alt="testes 4"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem X - Print dos teste - 5 </sub><br>
+  <sub>Imagem 78 - Print dos teste - 5 </sub><br>
   <img src= "./assets/testes/teste_5.png" width="100%" alt="testes 5"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -4217,7 +4202,7 @@ O relatório deve apresentar os percentuais de cobertura por camada, especialmen
 A figura a seguir apresenta o relatório de cobertura gerado pelo Jest, incluindo os percentuais obtidos pela camada Service.
 
 <div align="center">
-  <sub>Imagem X - Relatório de cobertura do jest - 1 </sub><br>
+  <sub>Imagem 79 - Relatório de cobertura do jest - 1 </sub><br>
   <img src= "./assets/testes/tabela_1.png" width="100%" alt="jest 1"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
