@@ -1,50 +1,84 @@
-graph LR
-    %% Configurações Globais de Temas para Alto Contraste
-    classDef client fill:#FFFFFF,stroke:#1A237E,stroke-width:2.5px,color:#000000;
-    classDef controller fill:#C5CAE9,stroke:#3F51B5,stroke-width:2.5px,color:#000000;
-    classDef service fill:#C8E6C9,stroke:#2E7D32,stroke-width:2.5px,color:#000000;
-    classDef repository fill:#FFE082,stroke:#EF6C00,stroke-width:2.5px,color:#000000;
-    classDef model fill:#E1BEE7,stroke:#6A1B9A,stroke-width:2.5px,color:#000000;
-    classDef db fill:#CFD8DC,stroke:#37474F,stroke-width:2.5px,color:#000000;
+%%{init: {"theme":"base","flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":80,"rankSpacing":95,"padding":24},"themeVariables":{"fontFamily":"Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryTextColor":"#0F0069","primaryBorderColor":"#0F0069","lineColor":"#0F0069","tertiaryColor":"#F5F5FA","tertiaryTextColor":"#0F0069"}}}%%
+flowchart TB
 
-    subgraph CLIENTES [CLIENTES]
-        C3[Dispositivo Mobile <br> Coletor Offline]:::client
+    classDef client fill:#FFFFFF,stroke:#0F0069,stroke-width:2px,color:#0F0069;
+    classDef route fill:#FFF7CC,stroke:#D6A700,stroke-width:2px,color:#0F0069;
+    classDef controller fill:#E8E8F5,stroke:#0F0069,stroke-width:2px,color:#0F0069;
+    classDef service fill:#E7F5E8,stroke:#2E7D32,stroke-width:2px,color:#0F0069;
+    classDef repository fill:#FFF0D6,stroke:#EF6C00,stroke-width:2px,color:#0F0069;
+    classDef db fill:#ECEFF1,stroke:#37474F,stroke-width:2px,color:#0F0069;
+    classDef output fill:#FDE7EF,stroke:#D2003C,stroke-width:2px,color:#0F0069;
+    classDef note fill:#FFFFFF,stroke:#D2003C,stroke-width:2px,stroke-dasharray: 6 4,color:#0F0069;
+
+    subgraph L1["Clientes"]
+        direction TB
+        C["Auditor / Gestor"]:::client
+        OFF["Dispositivo offline"]:::client
     end
 
-    subgraph CONTROLLER_LAYER [CONTROLLER LAYER - RegistrationController]
-        A7[Recebe POST /sync <br> ou PATCH /records]:::controller --> A8[Define Códigos: <br> 200 / 422]:::controller
+    subgraph L2["Rotas do fluxo"]
+        direction TB
+        R1["GET /logs"]:::route
+        R2["PATCH /audit/checkpoints/:id"]:::route
+        R3["POST /sync"]:::route
+        AUTH["JWT obrigatório"]:::route
     end
 
-    subgraph SERVICE_LAYER [SERVICE LAYER - RegistrationService]
-        B7[Laço de Sincronismo]:::service --> B8[Regra: Valida KM <br> entre Checkpoints]:::service
-        B7 --> B9[Regra: Evita Duplicados]:::service
+    subgraph L3["Controllers"]
+        direction TB
+        LC["LogsController"]:::controller
+        SC["ShiftController"]:::controller
+        SYC["SyncController"]:::controller
     end
 
-    subgraph REPOSITORY_LAYER [REPOSITORY LAYER - RegistrationRepository]
-        D7[SELECT WHERE <br> id AND timestamp]:::repository
-        D8[UPDATE record <br> SET km = value]:::repository
-        D9[INSERT audit <br> Log Imutável]:::repository
+    subgraph L4["Services"]
+        direction TB
+        LS["LogsService"]:::service
+        SS["ShiftService"]:::service
+        SYS["SyncService"]:::service
+        RN["RN23 log imutável<br/>RN24 justificativa<br/>RN04 offline/sync"]:::note
     end
 
-    subgraph MODEL_LAYER [MODEL LAYER]
-        E6[Entidade: <br> RegistrationRecord]:::model
-        E7[Entidade: <br> AuditLog]:::model
+    subgraph L5["Repositories"]
+        direction TB
+        LR["LogsRepository"]:::repository
+        SR["ShiftRepository"]:::repository
+        SYR["SyncRepository"]:::repository
     end
 
-    subgraph BANCO_DE_DADOS [BANCO DE DADOS]
-        DB3[(Base de Dados Relacional)]:::db
+    subgraph L6["Banco de Dados"]
+        direction TB
+        DB["PostgreSQL"]:::db
+        LOG["logs"]:::db
+        CP["checkpoints"]:::db
+        CC["checkpoint_corrections"]:::db
+        SH["shifts"]:::db
     end
 
-    %% Fluxo Linear
-    C3 -->|Ao conectar: /sync| A7
-    A8 --> B7
-    B8 --> D8
-    B9 --> D7
-    B7 -.-> D9
+    subgraph L7["Saídas"]
+        direction TB
+        O1["200 logs[]"]:::output
+        O2["200 correção"]:::output
+        O3["200 syncCompleted"]:::output
+    end
 
-    D7 --> DB3
-    D8 --> DB3
-    D9 --> DB3
-
-    D8 -.->|Mapeia| E6
-    D9 -.->|Mapeia| E7
+    C --> R1 --> AUTH --> LC --> LS --> LR
+    C --> R2 --> AUTH --> SC --> SS --> SR
+    OFF --> R3 --> AUTH --> SYC --> SYS --> SYR
+    LS -.-> RN
+    SS -.-> RN
+    SYS -.-> RN
+    LR --> LOG
+    SR --> CP
+    SR --> CC
+    SR --> SH
+    SYR --> LOG
+    SYR --> CP
+    SYR --> SH
+    LOG --> DB
+    CP --> DB
+    CC --> DB
+    SH --> DB
+    DB --> LR --> LS --> LC --> O1 --> C
+    DB --> SR --> SS --> SC --> O2 --> C
+    DB --> SYR --> SYS --> SYC --> O3 --> OFF

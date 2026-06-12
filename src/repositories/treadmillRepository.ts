@@ -1,16 +1,24 @@
 import { pool } from "../database/connection";
 
 export const treadmillRepository = {
-	async create(number: number) {
+	async create(number: number, team_id?: number) {
 		const result = await pool.query(
-			`INSERT INTO treadmills (number) VALUES ($1) RETURNING *`,
-			[number]
+			`INSERT INTO treadmills (number, team_id) VALUES ($1, $2) RETURNING *`,
+			[number, team_id ?? null]
 		);
 		return result.rows[0];
 	},
 
 	async findAll() {
 		const result = await pool.query(`SELECT * FROM treadmills ORDER BY number ASC`);
+		return result.rows;
+	},
+
+	async findByTeam(team_id: number) {
+		const result = await pool.query(
+			`SELECT * FROM treadmills WHERE team_id = $1 ORDER BY number ASC`,
+			[team_id]
+		);
 		return result.rows;
 	},
 
@@ -25,6 +33,13 @@ export const treadmillRepository = {
 			[number, id]
 		);
 		return result.rows[0] ?? null;
+	},
+
+	async findBusyIds(): Promise<number[]> {
+		const result = await pool.query(
+			`SELECT DISTINCT treadmill_id FROM shifts WHERE status = 'in_progress' AND treadmill_id IS NOT NULL`
+		);
+		return result.rows.map((r: any) => r.treadmill_id);
 	},
 
 	async hardDelete(id: number) {

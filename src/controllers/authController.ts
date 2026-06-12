@@ -63,14 +63,28 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
       res.status(401).json({ error: "Credenciais inválidas" });
       return;
     }
-    res.status(200).json(result);
+    const {user, tokens} = result
+    const {accessToken, refreshToken} = tokens
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    })
+     res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000
+    })
+    res.status(200).json({user} );
   } catch {
     res.status(500).json({ error: "Erro ao autenticar usuário" });
   }
 };
 
 const refreshToken = async (req: Request, res: Response): Promise<void> => {
-  const { refreshToken } = req.body;
+  const  refreshToken  = req.cookies.refreshToken;
   try {
     const tokens = await AuthService.refresh(refreshToken);
     if (!tokens) {
@@ -84,12 +98,21 @@ const refreshToken = async (req: Request, res: Response): Promise<void> => {
 };
 
 const logout = async (req: Request, res: Response): Promise<void> => {
-  const { refreshToken } = req.body;
+  const { refreshToken } = req.body ?? {};
   try {
     await AuthService.logout(refreshToken);
     res.status(204).send();
   } catch {
     res.status(500).json({ error: "Erro ao encerrar sessão" });
+  }
+};
+
+const listAuditors = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const auditors = await AuthService.listAuditors();
+    res.status(200).json(auditors);
+  } catch {
+    res.status(500).json({ error: "Erro ao listar auditores" });
   }
 };
 
@@ -99,4 +122,5 @@ export default {
   loginUser,
   refreshToken,
   logout,
+  listAuditors,
 };
