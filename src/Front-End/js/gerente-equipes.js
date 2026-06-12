@@ -58,7 +58,7 @@ function adicionarCampoAtleta(tipo) {
                aria-label="Atleta ${qtd + 1} da equipe ${tipo}">
         <small></small>
     `;
-    lista.insertBefore(campo, lista.querySelector(".contador-atletas"));
+    lista.querySelector(".lista-atletas-scroll").appendChild(campo);
     atualizarContadorAtletas(tipo);
 
     const input = campo.querySelector("input");
@@ -90,6 +90,17 @@ function popularTodosAtletas() {
         obterCamposAtletas(tipo).forEach((input, i) => {
             popularInputAtleta(input, tipo, i);
         });
+    });
+}
+
+function restaurarCamposAtletas() {
+    const estado = JSON.parse(localStorage.getItem("cadastroEquipesGerente") || "{}");
+
+    ["primeira", "segunda"].forEach((tipo) => {
+        const totalSalvo = estado.atletas?.[tipo]?.length || 0;
+        while (obterCamposAtletas(tipo).length < totalSalvo) {
+            adicionarCampoAtleta(tipo);
+        }
     });
 }
 
@@ -279,6 +290,7 @@ inputNomeSegundaEquipe.addEventListener("input", atualizarTitulosAtletas);
 
 // ---- inicialização ----
 restaurarNomesEquipes();
+restaurarCamposAtletas();
 atualizarContadorAtletas("primeira");
 atualizarContadorAtletas("segunda");
 atualizarPasso();
