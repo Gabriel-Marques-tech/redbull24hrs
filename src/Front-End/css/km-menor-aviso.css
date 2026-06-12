@@ -1,0 +1,153 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #000;
+}
+
+.barra-gradiente {
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(90deg, #12006b 0%, #d90043 55%, #ffcc00 100%);
+}
+
+.pagina-km-menor-aviso {
+    position: relative;
+    min-height: calc(100vh - 10px);
+    background-color: rgba(0, 0, 0, 0.42);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-sair-km-menor {
+    position: absolute;
+    top: 30px;
+    right: 38px;
+    border: none;
+    background: transparent;
+    color: #000;
+    font-size: 32px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.modal-km-menor-teste {
+    position: relative;
+    width: 820px;
+    min-height: 470px;
+    border-radius: 6px;
+    background-color: #fff7f7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 44px 58px 40px;
+}
+
+
+.icone-km-menor-teste {
+    position: relative;
+    width: 82px;
+    height: 82px;
+    margin-bottom: 26px;
+    border-radius: 50%;
+    background-color: #d90043;
+}
+
+.icone-km-menor-teste::before,
+.icone-km-menor-teste::after {
+    content: "";
+    position: absolute;
+    top: 39px;
+    left: 18px;
+    width: 46px;
+    height: 6px;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.icone-km-menor-teste::before {
+    transform: rotate(45deg);
+}
+
+.icone-km-menor-teste::after {
+    transform: rotate(-45deg);
+}
+
+.modal-km-menor-teste h1 {
+    font-size: 27px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.modal-km-menor-teste p {
+    font-size: 20px;
+    line-height: 1.15;
+    font-weight: 600;
+    margin-bottom: 22px;
+}
+
+.resumo-km-menor-teste {
+    width: 355px;
+    border-radius: 8px;
+    background-color: #d9d9d9;
+    padding: 18px 24px;
+    margin-bottom: 36px;
+}
+
+.linha-km-menor-teste {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.divisor-km-menor-teste {
+    width: 100%;
+    height: 2px;
+    margin: 12px 0;
+    background-color: #fff;
+}
+
+.valor-km-informado-teste {
+    color: #d90043;
+}
+
+.acoes-km-menor-teste {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.btn-cancelar-km-menor-teste,
+.btn-corrigir-km-menor-teste {
+    width: 146px;
+    height: 53px;
+    border-radius: 9px;
+    font-size: 19px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-cancelar-km-menor-teste {
+    border: 1px solid #000;
+    background-color: transparent;
+    color: #000;
+}
+
+.btn-corrigir-km-menor-teste {
+    border: none;
+    background-color: #d90043;
+    color: #fff;
+}
+

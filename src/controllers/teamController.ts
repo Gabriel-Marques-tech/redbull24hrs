@@ -83,6 +83,14 @@ export const teamController = {
 			const athlete = await teamService.registerAthlete(team_id, name, gender, cpf ?? null);
 			res.status(201).json(athlete);
 		} catch (error: any) {
+			if (error.code === "23505") {
+				res.status(409).json({ error: "CPF já cadastrado" });
+				return;
+			}
+			if (error.code === "23514") {
+				res.status(400).json({ error: "CPF inválido: precisa ter 11 dígitos" });
+				return;
+			}
 			const status = error.message.includes("não encontrada") ? 404 : 500;
 			res.status(status).json({ error: error.message });
 		}
