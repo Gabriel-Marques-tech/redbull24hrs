@@ -3095,6 +3095,16 @@ O modelo físico implementa o DER da seção 3.6.2 como **migrations DDL version
 | [`005_checkpointCorrection.sql`](../src/database/migrations/005_checkpointCorrection.sql) | 4      | RF031: adiciona metadados de correção retroativa à tabela `checkpoints` (`reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`) e campos de trilha de auditoria à tabela `logs` (`checkpoint_id`, `old_value`, `new_value`, `author_id`, `author_role`, `justification`). |
 | [`006_refreshTokenUserLink.sql`](../src/database/migrations/006_refreshTokenUserLink.sql) | 4      | Substitui a modelagem polimórfica de `refresh_tokens` (`user_id` + `user_role` sem FK) por duas colunas FK nullable mutuamente exclusivas: `manager_id → managers(id)` e `auditor_id → auditors(id)`, ambas `ON DELETE CASCADE`, com `CHECK` garantindo que exatamente uma delas esteja preenchida. Remove `user_id`, `user_role` e o índice `idx_refresh_tokens_user`. |
 | [`007_checkpointSyncId.sql`](../src/database/migrations/007_checkpointSyncId.sql)         | 4      | RF026: adiciona coluna `sync_id VARCHAR(64)` à tabela `checkpoints` e cria índice único parcial `ON checkpoints(sync_id) WHERE sync_id IS NOT NULL`, viabilizando a sincronização offline idempotente. |
+| [`008_managerAsAuditor.sql`](../src/database/migrations/008_managerAsAuditor.sql)           | 4      | Permite que gerentes registrem turnos: remove `NOT NULL` de `shifts.auditor_id`, adiciona `shifts.manager_id` (FK → `managers(id)`) e constraint `chk_shifts_operator` (`num_nonnulls(auditor_id, manager_id) = 1`) garantindo exatamente um operador por turno. |
+| [`009_treadmillTeamRelation.sql`](../src/database/migrations/009_treadmillTeamRelation.sql) | 4      | Vincula esteiras a equipes: adiciona `treadmills.team_id` (FK → `teams(id)`, `ON DELETE SET NULL`) com índice auxiliar, permitindo que cada equipe gerencie seu próprio conjunto de esteiras. |
+| [`010_logTypes.sql`](../src/database/migrations/010_logTypes.sql)                           | 4      | Expande o vocabulário de auditoria: substitui o `CHECK chk_logs_type` para aceitar também `'abandoned'` (encerramento por saída voluntária do atleta) e `'force_closed'` (encerramento manual por gerente ou operador). |
+| [`011_dropTreadmillShiftLegacy.sql`](../src/database/migrations/011_dropTreadmillShiftLegacy.sql) | 4 | Remove a coluna legada `treadmills.shift_id` (criada na migration 001, substituída por `shifts.treadmill_id` na 004): descarta `fk_treadmills_shift` e a coluna, eliminando o `ON DELETE CASCADE` que apagava esteiras ao limpar turnos. |
+| [`012_eventStatus.sql`](../src/database/migrations/012_eventStatus.sql)                     | 4      | Introduz ciclo de vida formal nos eventos: adiciona `status VARCHAR(20) DEFAULT 'pending'`, `started_at` e `finished_at` à tabela `events`, com `CHECK chk_events_status` restringindo o status a `pending`, `in_progress` ou `finished`. |
+| [`013_eventStatusFix.sql`](../src/database/migrations/013_eventStatusFix.sql)               | 4      | Normalização retroativa idempotente: remapeia valores legados `'open'` → `'in_progress'` e `'closed'` → `'finished'` em bancos onde a migration 012 foi aplicada antes do rewrite, e reaplica o `CHECK` e o `DEFAULT` do modelo de três estados. |
+| [`014_checkpointDistanceDecimal.sql`](../src/database/migrations/014_checkpointDistanceDecimal.sql) | 4 | Converte `distance` de `INT` para `NUMERIC(8,2)` em `checkpoints` e `shifts`, permitindo registrar quilometragens com precisão decimal conforme reportado pelas esteiras Technogym. |
+| [`015_treadmillNumberNotUnique.sql`](../src/database/migrations/015_treadmillNumberNotUnique.sql) | 4 | Remove a constraint `UNIQUE` de `treadmills.number`: o número da esteira passa a ser relativo ao contexto evento/equipe (cada equipe numera suas esteiras de 1 a N), permitindo o mesmo número em equipes distintas. |
+| [`016_logsValueNumeric.sql`](../src/database/migrations/016_logsValueNumeric.sql)           | 4      | Converte `logs.old_value` e `logs.new_value` de `INT` para `NUMERIC(8,2)`, preservando a precisão decimal nos registros de auditoria de alterações de distância após a migration 014. |
+| [`017_checkpointOldDistanceNumeric.sql`](../src/database/migrations/017_checkpointOldDistanceNumeric.sql) | 4 | Converte `checkpoints.old_distance` de `INT` para `NUMERIC(8,2)`, completando a propagação do tipo decimal à trilha de auditoria de checkpoints (complemento da migration 014). |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -3437,9 +3447,141 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_checkpoints_sync_id
   WHERE sync_id IS NOT NULL;
 ```
 
+#### Migration 008: Gerente como operador de turno
+
+A migration `008_managerAsAuditor.sql` estende o modelo operacional ao permitir que gerentes também registrem turnos, papel que até então era exclusivo dos auditores. A mudança reflete uma decisão de produto da sprint 4: em situações de campo, um gerente presente pode iniciar ou encerrar um turno sem depender de um auditor disponível.
+
+A coluna `auditor_id` em `shifts` tem o `NOT NULL` removido, tornando-se opcional. Em paralelo, é adicionada a coluna `manager_id` (`INT`, nullable) com `FOREIGN KEY` para `managers(id)`. A constraint antiga `fk_shifts_auditor` é removida e recriada implicitamente pelo `REFERENCES`. Para garantir a integridade do vínculo operador↔turno sem abrir a possibilidade de um turno sem operador ou com dois operadores simultâneos, a migration adiciona o `CHECK` `chk_shifts_operator` — baseado em `num_nonnulls(auditor_id, manager_id) = 1` — que impõe que exatamente um dos dois campos esteja preenchido. O índice `idx_shifts_manager_id` é criado para acelerar as consultas que listam turnos por gerente.
+
+```sql
+ALTER TABLE shifts
+    DROP CONSTRAINT IF EXISTS fk_shifts_auditor,
+    ADD COLUMN IF NOT EXISTS manager_id INT REFERENCES managers(id),
+    ALTER COLUMN auditor_id DROP NOT NULL;
+
+ALTER TABLE shifts
+    DROP CONSTRAINT IF EXISTS chk_shifts_operator,
+    ADD CONSTRAINT chk_shifts_operator
+        CHECK (num_nonnulls(auditor_id, manager_id) = 1);
+
+CREATE INDEX IF NOT EXISTS idx_shifts_manager_id ON shifts(manager_id);
+```
+
+#### Migration 009: Vínculo direto esteira → equipe
+
+A migration `009_treadmillTeamRelation.sql` vincula cada esteira à equipe que a utiliza durante o evento. Antes desta migration, `treadmills` não tinha relação direta com `teams`: o elo era inferido indiretamente via `shifts → athlete → team`. Com o crescimento do modelo operacional (duas equipes, cada uma com seu conjunto de esteiras numeradas de 1 a N), passou a ser necessário registrar explicitamente a qual equipe cada esteira pertence, para que a alocação e o monitoramento sejam feitos de forma direta.
+
+A coluna `team_id` é adicionada como `INT` com `FOREIGN KEY` para `teams(id)` e política `ON DELETE SET NULL`: ao remover uma equipe, as esteiras não são apagadas, apenas ficam desvinculadas (`team_id = NULL`), preservando o histórico de existência do equipamento. O índice `idx_treadmills_team_id` acelera as consultas que listam esteiras por equipe.
+
+```sql
+ALTER TABLE treadmills
+    ADD COLUMN IF NOT EXISTS team_id INT REFERENCES teams(id) ON DELETE SET NULL;
+
+CREATE INDEX IF NOT EXISTS idx_treadmills_team_id ON treadmills(team_id);
+```
+
+#### Migration 010: Expansão dos tipos de log
+
+A migration `010_logTypes.sql` amplia o vocabulário de eventos auditáveis em um turno. A constraint `chk_logs_type`, criada na migration 001 com três valores (`created`, `updated`, `finished`), é substituída por uma nova que adiciona dois tipos: `abandoned` (turno encerrado por saída voluntária do atleta antes do tempo previsto) e `force_closed` (encerramento manual realizado por gerente ou operador, por exemplo em caso de desistência ou incidente). Essa distinção é necessária para a auditoria pós-evento: saber se um turno foi concluído normalmente, abandonado pelo atleta ou encerrado à força pelo staff tem impacto direto na apuração de resultados e nas estatísticas de competição.
+
+```sql
+ALTER TABLE logs DROP CONSTRAINT IF EXISTS chk_logs_type;
+ALTER TABLE logs ADD CONSTRAINT chk_logs_type
+    CHECK (type IN ('created', 'updated', 'finished', 'abandoned', 'force_closed'));
+```
+
+#### Migration 011: Remoção da coluna legada `treadmills.shift_id`
+
+A migration `011_dropTreadmillShiftLegacy.sql` elimina o vínculo inverso legado entre esteiras e turnos introduzido na migration 001. Naquele schema inicial, `treadmills.shift_id` apontava para o turno em execução na esteira, com `ON DELETE CASCADE`: ao apagar um turno, a esteira associada era removida em cascata, o que gerava perda involuntária de registros de equipamento durante operações de limpeza ou reset de turnos. A migration 004 já havia introduzido a referência no sentido oposto (`shifts.treadmill_id`), tornando `treadmills.shift_id` redundante. Esta migration concretiza a remoção definitiva: a constraint `fk_treadmills_shift` é descartada e a coluna `shift_id` é removida da tabela.
+
+```sql
+ALTER TABLE treadmills DROP CONSTRAINT IF EXISTS fk_treadmills_shift;
+ALTER TABLE treadmills DROP COLUMN IF EXISTS shift_id;
+```
+
+> **Nota de coerência:** após esta migration, a coluna `shift_id` e a constraint `fk_treadmills_shift` descritas na migration 001 deixam de existir. O vínculo esteira↔turno passa a ser feito exclusivamente por `shifts.treadmill_id` (migration 004).
+
+#### Migration 012: Ciclo de vida do evento (três estados)
+
+A migration `012_eventStatus.sql` introduz um ciclo de vida formal para os eventos, modelando o fluxo operacional real do Red Bull 24 Horas: o evento começa como `pending` (cadastrado mas não iniciado), avança para `in_progress` quando o gerente dá a largada e transita para `finished` ao encerramento. Antes desta migration, `events` não possuía campo de estado próprio — o controle de abertura era inferido por presença ou ausência de `start_at`.
+
+Três colunas são adicionadas: `status` (`VARCHAR(20) NOT NULL DEFAULT 'pending'`) com `CHECK` `chk_events_status` restringindo aos três valores do ciclo; `started_at` (`TIMESTAMP`, nullable) registrando o instante em que o gerente iniciou o evento; e `finished_at` (`TIMESTAMP`, nullable) registrando o encerramento. Essa separação entre `status` e os timestamps permite consultas diretas sobre o estado atual sem precisar inferir estado por presença de datas, e suporta a regra de negócio que impede auditores de operarem turnos fora do estado `in_progress`.
+
+```sql
+ALTER TABLE events ADD COLUMN IF NOT EXISTS status      VARCHAR(20) NOT NULL DEFAULT 'pending';
+ALTER TABLE events ADD COLUMN IF NOT EXISTS started_at  TIMESTAMP;
+ALTER TABLE events ADD COLUMN IF NOT EXISTS finished_at TIMESTAMP;
+
+ALTER TABLE events DROP CONSTRAINT IF EXISTS chk_events_status;
+ALTER TABLE events ADD  CONSTRAINT chk_events_status
+    CHECK (status IN ('pending', 'in_progress', 'finished'));
+```
+
+#### Migration 013: Normalização retroativa do status do evento
+
+A migration `013_eventStatusFix.sql` é idempotente e corretiva: garante que bancos onde a migration 012 foi aplicada com o modelo antigo de dois estados (`open`/`closed`) sejam migrados para o modelo de três estados (`pending`/`in_progress`/`finished`) sem inconsistências. O cenário ocorre quando a migration 012 foi aplicada antes de seu rewrite, deixando registros com valores de `status` que a nova constraint não aceita.
+
+A migration reconstrói as colunas com `ADD COLUMN IF NOT EXISTS` (no-op se já existirem), remove a constraint antes de remapear os dados — evitando violação durante o `UPDATE` — e então reclassifica: eventos `open` tornam-se `in_progress` (com `started_at` preenchido pelo `NOW()` se ainda nulo) e eventos `closed` tornam-se `finished` (com `finished_at` preenchido analogamente). Após o remap, o `DEFAULT` e a constraint do modelo de três estados são aplicados definitivamente.
+
+```sql
+ALTER TABLE events ADD COLUMN IF NOT EXISTS status      VARCHAR(20) NOT NULL DEFAULT 'pending';
+ALTER TABLE events ADD COLUMN IF NOT EXISTS started_at  TIMESTAMP;
+ALTER TABLE events ADD COLUMN IF NOT EXISTS finished_at TIMESTAMP;
+
+ALTER TABLE events DROP CONSTRAINT IF EXISTS chk_events_status;
+
+UPDATE events SET status = 'in_progress', started_at = COALESCE(started_at, NOW())
+ WHERE status = 'open';
+UPDATE events SET status = 'finished', finished_at = COALESCE(finished_at, NOW())
+ WHERE status = 'closed';
+
+ALTER TABLE events ALTER COLUMN status SET DEFAULT 'pending';
+ALTER TABLE events ADD CONSTRAINT chk_events_status
+    CHECK (status IN ('pending', 'in_progress', 'finished'));
+```
+
+#### Migration 014: Distância decimal em checkpoints e turnos
+
+A migration `014_checkpointDistanceDecimal.sql` converte a coluna `distance` de `INT` para `NUMERIC(8,2)` tanto em `checkpoints` quanto em `shifts`. A mudança habilita o registro de quilometragens com precisão de centésimos (por exemplo, 12,75 km), necessária porque as esteiras Technogym reportam distância com casas decimais e arredondar para inteiro introduzia erro acumulado mensurável ao longo das 24 horas de competição. O `USING distance::NUMERIC(8,2)` converte os valores inteiros existentes sem perda de dados.
+
+```sql
+ALTER TABLE checkpoints
+    ALTER COLUMN distance TYPE NUMERIC(8,2) USING distance::NUMERIC(8,2);
+
+ALTER TABLE shifts
+    ALTER COLUMN distance TYPE NUMERIC(8,2) USING distance::NUMERIC(8,2);
+```
+
+#### Migration 015: Remoção da unicidade do número de esteira
+
+A migration `015_treadmillNumberNotUnique.sql` remove a constraint `UNIQUE` sobre `treadmills.number`, criada na migration 001. A unicidade global do número de esteira fazia sentido no modelo inicial, onde havia um único conjunto de esteiras por banco. Com a introdução do vínculo `treadmills.team_id` (migration 009), o número da esteira passou a ser relativo ao contexto evento/equipe: cada equipe numera suas próprias esteiras de 1 a N, de modo que o número 1 pode existir simultaneamente para duas equipes diferentes. A unicidade global deixou de ser uma invariante válida e passou a bloquear inserções legítimas.
+
+```sql
+ALTER TABLE treadmills DROP CONSTRAINT IF EXISTS treadmills_number_key;
+```
+
+#### Migration 016: Valores numéricos decimais nos logs
+
+A migration `016_logsValueNumeric.sql` converte as colunas `old_value` e `new_value` da tabela `logs` de `INT` para `NUMERIC(8,2)`. Essas colunas armazenam, respectivamente, o valor anterior e o novo valor quando um campo numérico de um turno é alterado. Com a migração de `checkpoints.distance` e `shifts.distance` para `NUMERIC(8,2)` (migration 014), os logs que registram alterações nesses campos precisam ser capazes de armazenar valores decimais — do contrário, a trilha de auditoria truncaria as casas decimais e perderia precisão.
+
+```sql
+ALTER TABLE logs
+    ALTER COLUMN old_value TYPE NUMERIC(8,2) USING old_value::numeric,
+    ALTER COLUMN new_value TYPE NUMERIC(8,2) USING new_value::numeric;
+```
+
+#### Migration 017: `old_distance` decimal em checkpoints
+
+A migration `017_checkpointOldDistanceNumeric.sql` converte a coluna `old_distance` da tabela `checkpoints` de `INT` para `NUMERIC(8,2)`, completando o conjunto de alterações de tipo iniciado na migration 014. A coluna `old_distance` armazena o valor anterior de `distance` quando um checkpoint é atualizado (trilha de auditoria imutável introduzida na migration 005). Com `checkpoints.distance` já sendo `NUMERIC(8,2)`, manter `old_distance` como `INT` criaria assimetria de tipo entre o valor atual e o valor histórico do mesmo campo, comprometendo comparações e relatórios de auditoria.
+
+```sql
+ALTER TABLE checkpoints
+    ALTER COLUMN old_distance TYPE NUMERIC(8,2) USING old_distance::numeric;
+```
+
 **Síntese do modelo físico**
 
-O modelo físico é entregue em **sete migrations versionadas e reproduzíveis** — todas idempotentes com `IF NOT EXISTS` e `IF EXISTS` — aplicadas em ordem sequencial. A migration 001 estabelece o schema-base com integridade referencial e regras de domínio garantidas no próprio banco; as migrations 002, 003 e 004 evoluem esse schema na sprint 3 — N:N entre gerentes e eventos, exclusão lógica e vínculo direto turno→esteira. As migrations 005, 006 e 007, desenvolvidas na sprint 4, adicionam: metadados de correção retroativa de checkpoints com trilha de auditoria imutável; integridade referencial real em `refresh_tokens` via duas FKs nullable mutuamente exclusivas; e suporte à sincronização offline idempotente por `sync_id`. As políticas `ON DELETE` diferenciadas (`CASCADE` ao longo das entidades temporárias do evento, `RESTRICT` para entidades de carreira como gerentes, auditores e atletas), os `CHECK` sobre estados e quilometragem, e os índices secundários sobre todas as FKs traduzem as regras operacionais do Red Bull 24 Horas em estrutura física do PostgreSQL, apoiando tanto a operação em tempo real durante o evento quanto a auditoria formal posterior.
+O modelo físico é entregue em **dezessete migrations versionadas e reproduzíveis** — todas idempotentes com `IF NOT EXISTS` e `IF EXISTS` — aplicadas em ordem sequencial. A migration 001 estabelece o schema-base com integridade referencial e regras de domínio garantidas no próprio banco; as migrations 002, 003 e 004 evoluem esse schema na sprint 3 — N:N entre gerentes e eventos, exclusão lógica e vínculo direto turno→esteira. As migrations 005, 006 e 007, desenvolvidas na sprint 4, adicionam: metadados de correção retroativa de checkpoints com trilha de auditoria imutável; integridade referencial real em `refresh_tokens` via duas FKs nullable mutuamente exclusivas; e suporte à sincronização offline idempotente por `sync_id`. As migrations 008 a 017 consolidam as evoluções operacionais da sprint 4: permissão de gerentes como operadores de turno com constraint de operador único (008); vínculo direto esteira→equipe (009); expansão dos tipos de log com `abandoned` e `force_closed` (010); remoção da coluna legada `treadmills.shift_id` cujo cascade causava perda acidental de registros (011); ciclo de vida formal do evento em três estados — `pending`, `in_progress`, `finished` — com normalização retroativa de dados legados (012 e 013); conversão de distâncias de `INT` para `NUMERIC(8,2)` em `checkpoints` e `shifts` para suportar precisão decimal das esteiras Technogym (014); remoção da unicidade global do número de esteira, tornando-o relativo à equipe (015); e propagação do tipo decimal para as colunas de auditoria `logs.old_value`/`new_value` e `checkpoints.old_distance` (016 e 017). As políticas `ON DELETE` diferenciadas (`CASCADE` ao longo das entidades temporárias do evento, `RESTRICT` para entidades de carreira como gerentes, auditores e atletas), os `CHECK` sobre estados e quilometragem, e os índices secundários sobre todas as FKs traduzem as regras operacionais do Red Bull 24 Horas em estrutura física do PostgreSQL, apoiando tanto a operação em tempo real durante o evento quanto a auditoria formal posterior.
 
 ### 3.6.4. Consultas SQL e lógica proposicional
  
