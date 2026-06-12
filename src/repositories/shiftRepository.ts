@@ -11,6 +11,24 @@ export const shiftRepository = {
 		return (result.rowCount ?? 0) > 0;
 	},
 
+	async validateTeamsForAthlete(athlete_id: number): Promise<{ team_id: number; name: string; count: number }[]> {
+		const result = await pool.query(
+			`SELECT t.id AS team_id, t.name, COUNT(a.id)::int AS count
+			 FROM teams t
+			 LEFT JOIN athletes a ON a.team_id = t.id AND a.deleted_at IS NULL
+			 WHERE t.deleted_at IS NULL
+			   AND t.event_id = (
+			       SELECT te.event_id FROM athletes at2
+			       JOIN teams te ON te.id = at2.team_id
+			       WHERE at2.id = $1
+			   )
+			 GROUP BY t.id, t.name
+			 ORDER BY t.id`,
+			[athlete_id]
+		);
+		return result.rows;
+	},
+
 	async treadmillExists(treadmill_id: number): Promise<boolean> {
 		const result = await pool.query(`SELECT 1 FROM treadmills WHERE id = $1`, [treadmill_id]);
 		return (result.rowCount ?? 0) > 0;
@@ -44,7 +62,15 @@ export const shiftRepository = {
 			 RETURNING *`,
 			[athlete_id, auditor_id, treadmill_id, km_start]
 		);
-		return result.rows[0];
+		const shift = result.rows[0];
+
+		// RF024/RN23: registra abertura do turno na trilha de auditoria
+		await pool.query(
+			`INSERT INTO logs (shift_id, type, author_id, author_role) VALUES ($1, 'created', $2, 'auditor')`,
+			[shift.id, auditor_id]
+		);
+
+		return shift;
 	},
 
 	async lastCheckpointKm(shift_id: number): Promise<number | null> {
@@ -153,6 +179,16 @@ export const shiftRepository = {
 			 RETURNING *`,
 			[km_end, id]
 		);
-		return result.rows[0] ?? null;
+		const shift = result.rows[0] ?? null;
+
+		// RF024/RN23: registra encerramento do turno na trilha de auditoria
+		if (shift) {
+			await pool.query(
+				`INSERT INTO logs (shift_id, type) VALUES ($1, 'finished')`,
+				[shift.id]
+			);
+		}
+
+		return shift;
 	},
 };

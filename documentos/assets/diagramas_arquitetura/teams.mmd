@@ -1,0 +1,81 @@
+%%{init: {"theme":"base","flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":80,"rankSpacing":95,"padding":24},"themeVariables":{"fontFamily":"Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryTextColor":"#0F0069","primaryBorderColor":"#0F0069","lineColor":"#0F0069","tertiaryColor":"#F5F5FA","tertiaryTextColor":"#0F0069"}}}%%
+flowchart TB
+
+    classDef client fill:#FFFFFF,stroke:#0F0069,stroke-width:2px,color:#0F0069;
+    classDef route fill:#FFF7CC,stroke:#D6A700,stroke-width:2px,color:#0F0069;
+    classDef controller fill:#E8E8F5,stroke:#0F0069,stroke-width:2px,color:#0F0069;
+    classDef service fill:#E7F5E8,stroke:#2E7D32,stroke-width:2px,color:#0F0069;
+    classDef repository fill:#FFF0D6,stroke:#EF6C00,stroke-width:2px,color:#0F0069;
+    classDef db fill:#ECEFF1,stroke:#37474F,stroke-width:2px,color:#0F0069;
+    classDef output fill:#FDE7EF,stroke:#D2003C,stroke-width:2px,color:#0F0069;
+    classDef note fill:#FFFFFF,stroke:#D2003C,stroke-width:2px,stroke-dasharray: 6 4,color:#0F0069;
+
+    subgraph L1["Cliente"]
+        direction TB
+        C["Web Admin<br/>API Client"]:::client
+    end
+
+    subgraph L2["Rotas"]
+        direction TB
+        R1["POST /teams"]:::route
+        R2["POST /teams/:id/athletes"]:::route
+        R3["GET /teams/:id<br/>GET athletes"]:::route
+        R4["GET /metrics/events/:id/teams"]:::route
+    end
+
+    subgraph L3["Controllers"]
+        direction TB
+        TC["TeamController"]:::controller
+        MC["MetricsController"]:::controller
+    end
+
+    subgraph L4["Services"]
+        direction TB
+        TS["TeamService"]:::service
+        MS["MetricsService"]:::service
+        RN["RN16 atleta único<br/>RF001–RF003 · RF019"]:::note
+    end
+
+    subgraph L5["Repositories"]
+        direction TB
+        TR["TeamRepository"]:::repository
+        MR["MetricsRepository"]:::repository
+    end
+
+    subgraph L6["Banco de Dados"]
+        direction TB
+        DB["PostgreSQL"]:::db
+        EV["events"]:::db
+        TE["teams"]:::db
+        AT["athletes"]:::db
+        SH["shifts"]:::db
+    end
+
+    subgraph L7["Saídas"]
+        direction TB
+        O1["201 equipe"]:::output
+        O2["201 atleta"]:::output
+        O3["200 consulta"]:::output
+        O4["200 ranking KM"]:::output
+    end
+
+    C --> R1 --> TC --> TS --> TR
+    C --> R2 --> TC
+    C --> R3 --> TC
+    C --> R4 --> MC --> MS --> MR
+    TS -.-> RN
+    MS -.-> RN
+    TR --> EV
+    TR --> TE
+    TR --> AT
+    MR --> TE
+    MR --> SH
+    EV --> DB
+    TE --> DB
+    AT --> DB
+    SH --> DB
+    DB --> TR --> TS --> TC
+    TC --> O1 --> C
+    TC --> O2 --> C
+    TC --> O3 --> C
+    DB --> MR --> MS --> MC --> O4 --> C
