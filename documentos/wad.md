@@ -4088,30 +4088,46 @@ Os testes de integração validam a API a partir de requisições HTTP simuladas
 
 #### Mapeamento por fluxo da aplicação
 
-| Fluxo                        | Endpoint Principal                   | RNs Relacionadas                                                 | RFs Associados                                                              |
-| ---------------------------- | ------------------------------------ | ---------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| Cadastro de evento           | `POST /events`                       | RN18, RN29, RN37                                                 | RF051                                                                       |
-| Consulta de evento           | `GET /events/:id`                    | RN37                                                             | RF051                                                                       |
-| Atualização de evento        | `PATCH /events/:id`                  | RN18, RN29, RN37                                                 | RF051                                                                       |
-| Exclusão lógica de evento    | `DELETE /events/:id`                 | RN37                                                             | RF051                                                                       |
-| Cadastro de equipe           | `POST /teams`                        | RN15, RN16, RN28                                                 | RF001, RF002, RF003                                                         |
-| Consulta de equipe           | `GET /teams/:id`                     | RN15, RN16                                                       | RF001, RF002                                                                |
-| Atualização de equipe        | `PATCH /teams/:id`                   | RN15, RN16, RN20                                                 | RF001, RF002, RF005                                                         |
-| Remoção de equipe            | `DELETE /teams/:id`                  | RN16, RN28                                                       | RF002, RF003                                                                |
-| Cadastro/validação de atleta | `POST /athletes`                     | RN16, RN17, RN21, RN30                                           | RF002, RF003, RF006, RF027                                                  |
-| Início de turno              | `POST /audit/shifts/start`           | RN01, RN02, RN12, RN17, RN19, RN20, RN21, RN28, RN31, RN35, RN37 | RF003, RF004, RF005, RF006, RF007, RF008, RF027, RF038, RF039, RF051        |
-| Registro de checkpoint       | `POST /audit/shifts/:id/checkpoints` | RN03, RN04, RN24, RN25, RN31, RN34                               | RF012, RF013, RF023, RF028, RF032, RF044, RF045, RF046                      |
-| Finalização de turno         | `POST /audit/shifts/:id/finish`      | RN05, RN06, RN07, RN09, RN12, RN25, RN32, RN33, RN35             | RF014, RF015, RF017, RF018, RF019, RF020, RF038, RF039, RF044, RF045, RF046 |
-| Hot swap                     | `POST /audit/shifts/hot-swap`        | RN08                                                             | RF034                                                                       |
-| Histórico                    | `GET /history`                       | RN13, RN22, RN23                                                 | RF022, RF024, RF041, RF042, RF043                                           |
-| Dashboard/Métricas           | `GET /metrics`                       | RN09, RN10, RN11, RN12, RN25                                     | RF020, RF021, RF037, RF038, RF039, RF044, RF045, RF046                      |
-| Alertas                      | `GET /alerts`                        | RN11, RN12, RN25                                                 | RF021, RF038, RF039, RF044, RF045, RF046                                    |
-| Exportação CSV               | `GET /export/csv`                    | RN26                                                             | RF047, RF048                                                                |
-| Sincronização offline        | `POST /sync`                         | RN27                                                             | RF025, RF026                                                                |
-| Compartilhamento final       | `GET /share/:token`                  | RN36                                                             | RF050                                                                       |
-| Login                        | `POST /auth/login`                   | RN38, RN39, RN41                                                 | RF027                                                                       |
-| Refresh Token                | `POST /auth/refresh`                 | RN39, RN40                                                       | RF027                                                                       |
-| Logout                       | `POST /auth/logout`                  | RN40, RN41                                                       | RF027                                                                       |
+| Fluxo                         | Endpoint Principal                                     | RNs Relacionadas                               | RFs Associados                                  |
+| ----------------------------- | ------------------------------------------------------ | ---------------------------------------------- | ----------------------------------------------- |
+| Cadastro de evento            | `POST /events`                                         | RN18, RN29, RN37                               | RF051                                           |
+| Consulta de evento            | `GET /events/:id`                                      | RN37                                           | RF051                                           |
+| Atualização de evento         | `PATCH /events/:id`                                    | RN18, RN29, RN37                               | RF051                                           |
+| Exclusão lógica de evento     | `DELETE /events/:id`                                   | RN37                                           | RF051                                           |
+| Cadastro de equipe            | `POST /teams`                                          | RN15, RN28                                     | RF001                                           |
+| Consulta de equipe            | `GET /teams/:id`                                       | RN15                                           | RF001                                           |
+| Atualização de equipe         | `PATCH /teams/:id`                                     | RN15, RN20                                     | RF001, RF005                                    |
+| Remoção de equipe             | `DELETE /teams/:id`                                    | RN15, RN28                                     | RF001                                           |
+| Cadastro de atleta            | `POST /teams/:teamId/athletes`                         | RN16                                           | RF002                                           |
+| Consulta de atleta            | `GET /teams/:teamId/athletes/:id`                      | RN16                                           | RF002, RF006                                    |
+| Atualização de atleta         | `PATCH /teams/:teamId/athletes/:id`                    | RN16, RN24                                     | RF002, RF023                                    |
+| Remoção de atleta             | `DELETE /teams/:teamId/athletes/:id`                   | RN16                                           | RF002                                           |
+| Validação de equipe           | `GET /teams/:teamId/validation`                        | RN17, RN28                                     | RF003                                           |
+| Início de turno               | `POST /audit/shifts/start`                             | RN01, RN02, RN17, RN19, RN20, RN21, RN28, RN35 | RF004, RF005, RF006, RF007, RF008               |
+| Registro de checkpoint        | `POST /audit/shifts/:id/checkpoints`                   | RN03, RN04, RN25, RN34                         | RF012, RF013, RF025, RF028, RF032, RF045        |
+| Correção de checkpoint        | `PATCH /audit/checkpoints/:id`                         | RN23, RN24, RN25                               | RF023, RF031                                    |
+| Finalização de turno          | `PATCH /audit/shifts/:id/finish`                       | RN05, RN06, RN07, RN09, RN25, RN32, RN33, RN35 | RF014, RF015, RF016, RF017, RF018, RF019, RF044 |
+| Hot swap                      | `POST /audit/shifts/start`                             | RN08                                           | RF034                                           |
+| Histórico                     | `GET /audit/history?event_id=`                         | RN13, RN22                                     | RF022, RF041, RF042, RF043                      |
+| Logs de auditoria             | `GET /audit/logs`                                      | RN23                                           | RF024                                           |
+| Dashboard geral               | `GET /metrics/events/:eventId/dashboard`               | RN09, RN11, RN12                               | RF020, RF021, RF038, RF040                      |
+| Métricas por equipe           | `GET /metrics/events/:eventId/teams`                   | RN09                                           | RF020                                           |
+| Métricas por atleta           | `GET /metrics/events/:eventId/athletes`                | RN10                                           | RF035                                           |
+| Histórico de turnos do atleta | `GET /metrics/athletes/:athleteId/shifts`              | RN10                                           | RF036                                           |
+| Snapshots do atleta           | `GET /metrics/athletes/:athleteId/snapshots?event_id=` | RN10                                           | RF037                                           |
+| Performance do atleta         | `GET /metrics/athletes/:athleteId/performance`         | RN10                                           | RF049, RF052                                    |
+| Alertas                       | `GET /audit/alerts?event_id=`                          | RN11, RN12, RN25                               | RF028, RF029, RF030, RF039, RF053               |
+| Exportação de turnos          | `GET /export/events/:eventId/shifts`                   | RN26                                           | RF047                                           |
+| Exportação de checkpoints     | `GET /export/events/:eventId/checkpoints`              | RN26                                           | RF048                                           |
+| Sincronização offline         | `POST /audit/sync`                                     | RN27                                           | RF025, RF026                                    |
+| Compartilhamento final        | `GET /metrics/athletes/:athleteId/share`               | RN36                                           | RF050                                           |
+| Cadastro de gerente           | `POST /auth/register/manager`                          | RN38                                           | RF027                                           |
+| Cadastro de auditor           | `POST /auth/register/auditor`                          | RN38                                           | RF027                                           |
+| Login                         | `POST /auth/login`                                     | RN38, RN39, RN41                               | RF027                                           |
+| Refresh Token                 | `POST /auth/refresh`                                   | RN39, RN40                                     | RF027                                           |
+| Logout                        | `POST /auth/logout`                                    | RN40, RN41                                     | RF027                                           |
+| Perfil autenticado            | `GET /auth/me`                                         | RN41                                           | RF027                                           |
+
 
 ### 5.1.4 Justificativa dos Casos de Teste
 
