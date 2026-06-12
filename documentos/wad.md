@@ -4429,6 +4429,8 @@ O auditor é o usuário que opera o sistema durante as 24 horas da competição.
 
 A atleta participante, representada pela persona Nicole Rauen, é beneficiária da solução — por meio do acesso e compartilhamento do próprio desempenho (RF050) —, mas não compõe o público-alvo de adoção, já que não é responsável pela contratação nem pela operação do sistema. Por esse motivo, embora suas necessidades orientem decisões pontuais de produto — como o formato dos relatórios individuais e do compartilhamento —, ela se posiciona como destinatária final do valor gerado pela solução, e não como agente de sua adoção.
 
+---
+
 ## 6.4 Business Model Canvas (BMC)
 
 O Business Model Canvas (BMC) é uma ferramenta estratégica visual que organiza os elementos essenciais de um negócio em nove blocos interdependentes, oferecendo uma visão sistêmica e simplificada de como a empresa cria, entrega e captura valor. Para aplicá-lo, basta preencher cada bloco com as informações do seu projeto, partindo da proposta de valor e expandindo para os demais elementos como clientes, canais, receitas e custos. Dessa forma, o BMC permite identificar oportunidades, alinhar estratégias e validar o modelo de negócios de maneira ágil e colaborativa. Abaixo está o Business Model Canva do nosso projeto RedRun:
