@@ -1033,6 +1033,15 @@ tbody tr:hover td {
     text-align: center;
 }
 
+.modal-op-senha #inputSenhaOperador {
+    align-self: center;
+}
+
+.modal-op-senha .acoes-modal {
+    width: 100%;
+    justify-content: center;
+}
+
 /* ---------------- BANDEJA CORREDOR ---------------- */
 
 .corredor-atual {
@@ -1190,6 +1199,27 @@ img {
 /* Variante do modal para checkpoint */
 .modal-checkpoint-conteudo::before {
     content: "Registrar checkpoint";
+}
+
+.modal-checkpoint-conteudo #kmCheckpointModal {
+    width: 100%;
+    padding: 0 16px;
+}
+
+.modal-checkpoint-conteudo .acoes-modal-turno {
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-checkpoint-conteudo .btn-cancelar-turno,
+.modal-checkpoint-conteudo .btn-registrar-turno {
+    width: 180px;
+    height: 56px;
+    margin: 0;
+    padding: 0 20px;
+    flex: 0 0 180px;
+    align-self: auto;
+    transform: none;
 }
 
 .campo-cps-sessao {
