@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estat&iacute;sticas da competi&ccedil;&atilde;o</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/estatisticas.css">
+</head>
+<body>
+    <div class="barra-gradiente"></div>
+
+    <main class="pagina-estatisticas">
+        <a href="home.ejs" class="voltar-estatisticas">
+            <img src="../assets/competi%C3%A7%C3%A3o/Seta.svg" alt="">
+            Voltar
+        </a>
+
+        <header class="cabecalho-estatisticas">
+            <div>
+                <h1>Estat&iacute;sticas da competi&ccedil;&atilde;o</h1>
+                <p class="info-evento" class="mapa">
+                    <img src="../assets/estatisticas/mapa.svg" alt="">
+                    Rio de Janeiro, RJ
+                </p>
+                <p class="info-evento" class="estatisticas">
+                    <img src="../assets/estatisticas/calendario.svg" alt="">
+                    22/02/2026
+                </p>
+            </div>
+
+            <button class="btn-compartilhar" type="button">
+                <img class="icone-botao" src="../assets/estatisticas/compartilhar.svg" alt="">
+                Compartilhar como planilha
+            </button>
+        </header>
+
+        <nav class="abas-estatisticas" aria-label="Se&ccedil;&otilde;es de estat&iacute;sticas">
+            <button class="aba" type="button" data-aba="geral">Geral</button>
+            <button class="aba" type="button" data-aba="historico">Hist&oacute;rico de Auditoria</button>
+            <button class="aba ativa" type="button" data-aba="equipes">Equipes</button>
+        </nav>
+
+        <section class="painel-estatisticas" id="aba-geral">
+            <article class="card-time campeao">
+                <h2>Inimigos do Pace <span>Trof&eacute;u</span></h2>
+                <div class="metricas-time">
+                    <div class="metrica">
+                        <img class="icone-metrica" src="../assets/estatisticas/tênis.svg" alt="">
+                        <strong>452</strong>
+                        <small>Quilometragem total</small>
+                    </div>
+                    <div class="metrica">
+                        <img class="icone-metrica" src="../assets/estatisticas/relogio.svg" alt="">
+                        <strong>4:30</strong>
+                        <small>Pace m&eacute;dio</small>
+                    </div>
+                    <div class="metrica">
+                        <img class="icone-metrica" src="../assets/estatisticas/corredor.svg" alt="">
+                        <strong>25km/h</strong>
+                        <small>Velocidade m&eacute;dia</small>
+                    </div>
+                    <div class="metrica">
+                        <img class="icone-metrica" src="../assets/estatisticas/infinito.svg" alt="">
+                        <strong>95</strong>
+                        <small>Turnos registrados</small>
+                    </div>
+                    <a class="metrica atleta-destaque" href="estatisticas-atleta.html?nome=Pietro%20Sansao&time=Inimigos%20do%20Pace">
+                        <img class="icone-metrica" src="../assets/estatisticas/icone.svg" alt="">
+                        <strong>Pietro Sans&atilde;o</strong>
+                        <small>Atleta destaque</small>
+                    </a>
+                </div>
+            </article>
+
+            <article class="card-time">
+                <h2>Amigos do Pace <span>Trof&eacute;u</span></h2>
+                <div class="metricas-time">
+                    <div class="metrica">
+                        <img class="icone-metrica" src="../assets/estatisticas/tênis.svg" alt="">
+                        <strong>320</strong>
+                        <small>Quilometragem total</small>
+                    </div>
+                    <div class="metrica">
+                        <img class="icone-metrica" src="../assets/estatisticas/relogio.svg" alt="">
+                        <strong>4:30</strong>
+                        <small>Pace m&eacute;dio</small>
+                    </div>
+                    <div class="metrica">
+                        <img class="icone-metrica" src="../assets/estatisticas/corredor.svg" alt="">
+                        <strong>25km/h</strong>
+                        <small>Velocidade m&eacute;dia</small>
+                    </div>
+                    <div class="metrica">
+                        <img class="icone-metrica" src="../assets/estatisticas/infinito.svg" alt="">
+                        <strong>95</strong>
+                        <small>Turnos registrados</small>
+                    </div>
+                    <a class="metrica atleta-destaque" href="estatisticas-atleta.html?nome=Miguel%20Vinicius&time=Amigos%20do%20Pace">
+                        <img class="icone-metrica" src="../assets/estatisticas/icone.svg" alt="">
+                        <strong>Miguel Vinicius</strong>
+                        <small>Atleta destaque</small>
+                    </a>
+                </div>
+            </article>
+        </section>
+
+        <section class="painel-estatisticas" id="aba-historico">
+            <div class="acoes-tabela">
+                <button class="btn-editar-estatisticas" type="button">Editar <span>&#9998;</span></button>
+                <button class="btn-filtrar-estatisticas" type="button">Filtrar <img class="icone-filtro" src="../assets/estatisticas/controle.svg" alt=""></button>
+            </div>
+
+            <table class="tabela-estatisticas tabela-historico">
+                <thead>
+                    <tr>
+                        <th>Operador</th>
+                        <th>Corredor</th>
+                        <th>Correu (KMs)</th>
+                        <th>Esteira</th>
+                        <th>Equipe</th>
+                        <th>In&iacute;cio</th>
+                        <th>Fim</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Lucas Andrade</td><td>Pietro Sans&atilde;o</td><td>4km</td><td>Esteira 2</td><td>Inimigos do Pace</td><td>12:02:53</td><td>12:30:19</td></tr>
+                    <tr><td>Lucas Andrade</td><td>Pietro Sans&atilde;o</td><td>2km</td><td>Esteira 1</td><td>Inimigos do Pace</td><td>12:02:53</td><td>12:30:19</td></tr>
+                    <tr><td>Lucas Andrade</td><td>Pietro Sans&atilde;o</td><td>7km</td><td>Esteira 2</td><td>Inimigos do Pace</td><td>12:02:53</td><td>12:30:19</td></tr>
+                    <tr><td>Lucas Andrade</td><td>Pietro Sans&atilde;o</td><td>9km</td><td>Esteira 1</td><td>Inimigos do Pace</td><td>12:02:53</td><td>12:30:19</td></tr>
+                    <tr><td>Lucas Andrade</td><td>Pietro Sans&atilde;o</td><td>10km</td><td>Esteira 2</td><td>Inimigos do Pace</td><td>12:02:53</td><td>12:30:19</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="painel-estatisticas ativo" id="aba-equipes">
+            <div class="grade-equipes">
+                <article>
+                    <h2>Inimigos do Pace</h2>
+                    <table class="tabela-estatisticas tabela-equipe">
+                        <thead>
+                            <tr><th>Corredor</th><th>KMs totais</th><th>Vel. m&eacute;dia</th><th>Pace m&eacute;dio</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr data-atleta="Pietro Sansao" data-time="Inimigos do Pace"><td>Pietro Sans&atilde;o</td><td>50km</td><td>20Km/h</td><td>4:40</td></tr>
+                            <tr data-atleta="Miguel Vinicius" data-time="Inimigos do Pace"><td>Miguel Vinicius</td><td>42km</td><td>23Km/h</td><td>4:20</td></tr>
+                            <tr data-atleta="Gabriel Marques" data-time="Inimigos do Pace"><td>Gabriel Marques</td><td>95km</td><td>32Km/h</td><td>4:40</td></tr>
+                            <tr data-atleta="Laura Damasceno" data-time="Inimigos do Pace"><td>Laura Damasceno</td><td>50km</td><td>20Km/h</td><td>4:40</td></tr>
+                            <tr data-atleta="Pietro Sansao" data-time="Inimigos do Pace"><td>Pietro Sans&atilde;o</td><td>50km</td><td>20Km/h</td><td>4:40</td></tr>
+                        </tbody>
+                    </table>
+                </article>
+
+                <article>
+                    <h2>Amigos do Pace</h2>
+                    <table class="tabela-estatisticas tabela-equipe">
+                        <thead>
+                            <tr><th>Corredor</th><th>KMs totais</th><th>Vel. m&eacute;dia</th><th>Pace m&eacute;dio</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr data-atleta="Pietro Sansao" data-time="Amigos do Pace"><td>Pietro Sans&atilde;o</td><td>50km</td><td>20Km/h</td><td>4:40</td></tr>
+                            <tr data-atleta="Miguel Vinicius" data-time="Amigos do Pace"><td>Miguel Vinicius</td><td>42km</td><td>23Km/h</td><td>4:20</td></tr>
+                            <tr data-atleta="Gabriel Marques" data-time="Amigos do Pace"><td>Gabriel Marques</td><td>95km</td><td>32Km/h</td><td>4:40</td></tr>
+                            <tr data-atleta="Laura Damasceno" data-time="Amigos do Pace"><td>Laura Damasceno</td><td>50km</td><td>20Km/h</td><td>4:40</td></tr>
+                            <tr data-atleta="Pietro Sansao" data-time="Amigos do Pace"><td>Pietro Sans&atilde;o</td><td>50km</td><td>20Km/h</td><td>4:40</td></tr>
+                        </tbody>
+                    </table>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/estatisticas.js"></script>
+</body>
+</html>
+
+
+
+
+
