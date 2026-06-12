@@ -1,4 +1,4 @@
-const btnIniciar = document.getElementById("btnIniciar");
+﻿const btnIniciar = document.getElementById("btnIniciar");
 const btnProximoCorredor = document.getElementById("btnProximoCorredor");
 const cronometro = document.getElementById("cronometro");
 const btnAbrirEsteira = document.getElementById("btnAbrirEsteira");
@@ -118,7 +118,7 @@ btnIniciar.addEventListener("click", () => {
         btnProximoCorredor.classList.remove("escondido");
         btnAbrirEsteira.classList.add("inativa");
         btnAbrirEsteira.setAttribute("aria-disabled", "true");
-        document.title = "Competição Iniciada - Auditor";
+        document.title = "CompetiÃ§Ã£o Iniciada - Auditor";
         habilitarArrasteCorredores();
         iniciarCronometro();
         return;
@@ -165,7 +165,7 @@ btnCancelarFinalizarCompeticao.addEventListener("click", fecharModalFinalizarCom
 
 btnConfirmarFinalizarCompeticao.addEventListener("click", () => {
     fecharModalFinalizarCompeticao();
-    console.log("Competição finalizada");
+    console.log("CompetiÃ§Ã£o finalizada");
 });
 
 modalFinalizarCompeticao.addEventListener("click", (evento) => {
@@ -185,3 +185,37 @@ btnRegistrarTurno.addEventListener("click", () => {
 });
 
 habilitarArrasteCorredores();
+
+const modalCheckpointAviso = document.getElementById("modalCheckpointAviso");
+const btnRegistrarCheckpointAviso = document.getElementById("btnRegistrarCheckpointAviso");
+const btnFecharCheckpointAviso = document.getElementById("btnFecharCheckpointAviso");
+
+function abrirModalCheckpointAviso() {
+    modalCheckpointAviso.classList.remove("escondido");
+}
+
+function fecharModalCheckpointAviso() {
+    modalCheckpointAviso.classList.add("escondido");
+}
+
+window.abrirModalCheckpointAviso = abrirModalCheckpointAviso;
+
+const parametrosCheckpointAviso = new URLSearchParams(window.location.search);
+if (parametrosCheckpointAviso.has("checkpoint") || window.location.hash === "#checkpoint") {
+    abrirModalCheckpointAviso();
+}
+
+modalCheckpointAviso.addEventListener("click", (evento) => {
+    if (evento.target === modalCheckpointAviso) {
+        fecharModalCheckpointAviso();
+    }
+});
+
+btnFecharCheckpointAviso.addEventListener("click", fecharModalCheckpointAviso);
+
+btnRegistrarCheckpointAviso.addEventListener("click", () => {
+    fecharModalCheckpointAviso();
+    console.log("Solicita registro de checkpoint");
+});
+
+

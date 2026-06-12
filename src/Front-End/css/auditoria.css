@@ -1,4 +1,4 @@
-/* ---------------- TOPO ---------------- */
+﻿/* ---------------- TOPO ---------------- */
 
 .topo {
     height: 90px;
@@ -482,7 +482,7 @@
     border-radius: 8px;
     background-color: var(--vermelho);
     color: var(--branco);
-    font-size: 30px;
+    font-size: 28px;
     font-weight: 700;
     cursor: pointer;
     margin-top: 90px;
@@ -610,3 +610,79 @@ img {
     width: 25px;
     margin-top: 7px;
 }
+
+/* ---------------- MODAL AVISO CHECKPOINT ---------------- */
+
+.modal-checkpoint-aviso {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.42);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 12;
+}
+
+.modal-checkpoint-aviso.escondido {
+    display: none;
+}
+
+.modal-checkpoint-conteudo {
+    position: relative;
+    width: 665px;
+    min-height: 340px;
+    border-radius: 6px;
+    background-color: #fff7f7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 34px 48px 42px;
+}
+
+.icone-checkpoint-aviso {
+    width: 82px;
+    height: auto;
+    margin: 0 0 24px;
+}
+
+.modal-checkpoint-conteudo h2 {
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.modal-checkpoint-conteudo p {
+    font-size: 19px;
+    line-height: 1.2;
+    margin-bottom: 28px;
+}
+
+.btn-checkpoint-aviso {
+    width: 215px;
+    height: 49px;
+    border: none;
+    border-radius: 9px;
+    background-color: var(--vermelho);
+    color: var(--branco);
+    font-size: 17px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.btn-fechar-checkpoint-aviso {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    border: none;
+    background: transparent;
+    color: #000;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+
+
+
