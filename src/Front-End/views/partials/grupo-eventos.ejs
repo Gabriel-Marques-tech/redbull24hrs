@@ -1,0 +1,20 @@
+<div class="grupo-eventos">
+    <h3 class="grupo-titulo grupo-<%= grupo.chave %>">
+        <%= grupo.titulo %> <span class="grupo-contador"><%= lista.length %></span>
+    </h3>
+
+    <% if (lista.length === 0) { %>
+        <p class="grupo-vazio">Nenhuma competição.</p>
+    <% } else { %>
+    <div class="cards">
+        <% lista.forEach(event => {
+            const destino = `/manager/event/${event.id}`; %>
+        <a class="card card-event" href="<%= destino %>">
+            <span class="card-status status-<%= event.status || 'pending' %>"></span>
+            <h3><%= event.title || 'Red Bull 24h' %></h3>
+            <p class="card-local"><%= event.local %></p>
+        </a>
+        <% }) %>
+    </div>
+    <% } %>
+</div>
