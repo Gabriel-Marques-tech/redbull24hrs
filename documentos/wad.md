@@ -3703,9 +3703,9 @@ WHERE t.event_id = $1
 
 #### Consulta 4: *Encerramento de turno* — finalizar apenas turnos em andamento
 
-&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar um turno, o sistema atualiza o registro para `completed`, gravando o horário de fim gerado pelo banco (`NOW()`), a quilometragem final informada pelo auditor, e calculando automaticamente a distância percorrida, a duração total e a velocidade média. A atualização só é aplicada quando o `id` informado corresponde a um turno **e** esse turno ainda está `in_progress`, impedindo reencerrar um turno já finalizado ou alterar um inexistente. O `CASE` na velocidade evita divisão por zero quando o tempo decorrido é nulo.
+&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar um turno, o sistema atualiza o registro para `completed`, gravando o horário de fim, a quilometragem final informada pelo auditor, e calculando automaticamente a distância percorrida, a duração total e a velocidade média. A atualização só é aplicada quando o `id` informado corresponde a um turno **e** esse turno ainda está `in_progress`, impedindo reencerrar um turno já finalizado ou alterar um inexistente. O `CASE` na velocidade evita divisão por zero quando o tempo decorrido é nulo. O encerramento tem duas variantes: por padrão o horário de fim é gerado pelo banco (`NOW()`) e a duração é o intervalo decorrido desde o início; quando o auditor informa uma duração manual (correção operacional), o `end_at` passa a ser calculado como `start_at + duração` e tanto a duração quanto a velocidade derivam desse valor. Ambas as variantes compartilham a mesma cláusula `WHERE id = $2 AND status = 'in_progress'`, de modo que a lógica proposicional abaixo vale para as duas.
 
-**Consulta SQL:**
+**Consulta SQL (variante padrão, horário gerado pelo banco):**
 ```sql
 UPDATE shifts
 SET status     = 'completed',
@@ -3716,6 +3716,23 @@ SET status     = 'completed',
     speed      = CASE
                    WHEN EXTRACT(EPOCH FROM (NOW() - start_at)) > 0
                    THEN ROUND(($1 - km_start) / (EXTRACT(EPOCH FROM (NOW() - start_at)) / 3600.0))
+                   ELSE 0
+                 END
+WHERE id = $2 AND status = 'in_progress'
+RETURNING *
+```
+
+**Consulta SQL (variante com duração editada pelo auditor):**
+```sql
+UPDATE shifts
+SET status     = 'completed',
+    end_at     = start_at + ($3 * interval '1 second'),
+    km_end     = $1,
+    distance   = $1 - km_start,
+    total_time = $3 * interval '1 second',
+    speed      = CASE
+                   WHEN $3 > 0
+                   THEN ROUND(($1 - km_start) / ($3 / 3600.0))
                    ELSE 0
                  END
 WHERE id = $2 AND status = 'in_progress'
