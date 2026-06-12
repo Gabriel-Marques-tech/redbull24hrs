@@ -1,0 +1,110 @@
+
+%%{init: {
+  "theme": "base",
+  "background": "#ffffff",
+  "themeVariables": {
+    "primaryColor": "#0F0069",
+    "primaryTextColor": "#FFFFFF",
+    "primaryBorderColor": "#D2003C",
+    "secondaryColor": "#D2003C",
+    "secondaryTextColor": "#FFFFFF",
+    "secondaryBorderColor": "#D2003C",
+    "tertiaryColor": "#E8E8F5",
+    "tertiaryTextColor": "#0F0069",
+    "tertiaryBorderColor": "#0F0069",
+    "noteBkgColor": "#FFCC00",
+    "noteTextColor": "#0F0069",
+    "noteBorderColor": "#D2003C",
+    "activationBkgColor": "#D2003C",
+    "activationBorderColor": "#0F0069",
+    "actorBkg": "#0F0069",
+    "actorTextColor": "#FFFFFF",
+    "actorBorderColor": "#D2003C",
+    "actorLineColor": "#000000",
+    "signalColor": "#000000",
+    "signalTextColor": "#000000",
+    "labelBoxBkgColor": "#E8E8F5",
+    "labelBoxBorderColor": "#0F0069",
+    "labelTextColor": "#0F0069",
+    "loopTextColor": "#0F0069",
+    "fontFamily": "Arial, sans-serif",
+    "fontSize": "14px",
+    "background": "#FFFFFF"
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    participant C as Client
+    participant MC as MetricsController
+    participant MS as MetricsService
+    participant MR as MetricsRepository
+    participant DB as Database
+
+    Note over C,DB: 1 · Ranking de atletas por km — RF035 · RN10
+
+    C->>+MC: GET /metrics/events/{eventId}/athletes
+    Note over MC: requireAuth — JWT obrigatório
+    MC->>+MS: getAthleteKm(eventId)
+    MS->>+MR: athleteKmByEvent(eventId)
+    MR->>+DB: SELECT athletes, SUM(distance) as total_km<br/>FROM checkpoints JOIN shifts JOIN athletes<br/>WHERE event_id = $1 AND shifts.status = 'finished'<br/>GROUP BY athlete_id ORDER BY total_km DESC
+    DB-->>-MR: athlete ranking rows[]
+    MR-->>-MS: athletes[]
+    MS-->>-MC: athletes[]
+    MC-->>-C: 200 [ { id, name, team_name, total_km, shift_count } ]
+
+    Note over C,DB: 2 · Histórico de turnos de um atleta — RF036 · RN10
+
+    C->>+MC: GET /metrics/athletes/{athleteId}/shifts
+    MC->>+MS: getAvgDistancePerShift(athleteId)
+    MS->>+MR: shiftsByAthlete(athleteId)
+    MR->>+DB: SELECT shifts, distance, duration, speed<br/>FROM shifts WHERE athlete_id = $1<br/>ORDER BY started_at DESC
+    DB-->>-MR: shift rows[]
+    MR-->>-MS: { shifts[], avg_distance }
+    MS-->>-MC: result
+    MC-->>-C: 200 { shifts: [ { id, distance, duration, avg_speed, started_at } ], avg_distance }
+
+    Note over C,DB: 3 · Snapshots de km ao longo do evento — RF037 · RN10
+
+    C->>+MC: GET /metrics/athletes/{athleteId}/snapshots?event_id={id}
+    MC->>+MS: getKmSnapshots(athleteId, eventId)
+    MS->>+MR: kmSnapshotsByAthlete(athleteId, eventId)
+    MR->>+DB: SELECT SUM(distance) acumulado por hora<br/>FROM checkpoints JOIN shifts<br/>WHERE athlete_id = $1 AND event_id = $2
+    DB-->>-MR: snapshot rows[]
+    MR-->>-MS: snapshots[]
+    MS-->>-MC: snapshots[]
+    MC-->>-C: 200 [ { hour, cumulative_km } ]
+
+    Note over C,DB: 4 · Desempenho individual do atleta — RF049 · RF052
+
+    C->>+MC: GET /metrics/athletes/{athleteId}/performance
+    Note over MC: requireAuth — JWT obrigatório
+    MC->>+MS: getAthletePerformance(athleteId)
+    MS->>+MR: performanceByAthlete(athleteId)
+    MR->>+DB: SELECT total_km, total_shifts, avg_speed,<br/>best_shift_km, team_name<br/>FROM shifts JOIN checkpoints JOIN teams
+    DB-->>-MR: performance row
+    MR-->>-MS: performanceData
+    MS-->>-MC: performanceData
+    MC-->>-C: 200 { total_km, total_shifts, avg_speed, best_shift_km, team_name }
+
+    Note over C,DB: 5 · Link público de compartilhamento — RF050 · RN36 (sem autenticação)
+
+    C->>+MC: GET /metrics/athletes/{athleteId}/share
+    Note over MC: Rota pública — NÃO requer requireAuth (declarada antes do router.use(requireAuth))
+    MC->>+MS: shareAthletePerformance(athleteId)
+    MS->>+MR: performanceByAthlete(athleteId)
+    MR->>+DB: SELECT desempenho público do atleta
+    DB-->>-MR: performanceData
+    MR-->>-MS: performanceData
+    MS-->>-MC: performanceData
+    MC-->>-C: 200 { name, team, total_km, avg_speed, total_shifts } (sem dados sensíveis)
+
+    Note over C,DB: 6 · Atleta não encontrado
+
+    C->>+MC: GET /metrics/athletes/999/performance
+    MC->>+MS: getAthletePerformance(999)
+    MS->>+MR: performanceByAthlete(999)
+    MR->>+DB: SELECT ... WHERE athlete_id = 999
+    DB-->>-MR: null
+    MR-->>-MS: null
+    MS-->>-MC: null
+    MC-->>-C: 404 { error: "Atleta não encontrado" }
