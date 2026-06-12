@@ -4324,15 +4324,17 @@ _Posicione aqui o relatório dos testes SUS realizados._
 
 O Red Bull 24 Horas é um evento de corrida em esteira realizado em diversas regiões do Brasil todos os anos, no qual duas equipes competem e seus integrantes se revezam continuamente ao longo de 24 horas com o objetivo de acumular a maior quilometragem possível. Apesar da escala e da credibilidade de uma marca global, o processo de apuração dos quilômetros percorridos ainda é realizado de forma inteiramente manual, em que auditores posicionados ao lado de cada esteira registram os dados em pranchetas físicas, corrida por corrida, durante todas as 24 horas do evento.
 
-Essa fragilidade operacional representa a oportunidade central que o RedRun veio atender. Em uma competição onde o volume de registros é alto, o ritmo é acelerado e a margem para erros é estreita, depender de anotações manuais significa conviver com inconsistências, distrações e dados de difícil rastreabilidade. Tais limitações comprometem justamente o que mais importa em uma competição: a confiabilidade dos resultados.
+Essa fragilidade operacional representa a oportunidade central que a RedRun veio atender. Em uma competição onde o volume de registros é alto, o ritmo é acelerado e a margem para erros é estreita, depender de anotações manuais significa conviver com inconsistências, distrações e dados de difícil rastreabilidade. Tais limitações comprometem justamente o que mais importa em uma competição: a confiabilidade dos resultados.
 
-O RedRun é uma aplicação web desenvolvida para digitalizar esse fluxo de ponta a ponta. Antes do evento, o gerente cadastra locais, equipes, corredores e auditores. Durante a competição, os auditores são responsáveis por registrar o início e o encerramento de cada percurso, informando a esteira, o corredor e a quilometragem lida no display. O sistema disponibiliza um dashboard em tempo real e gera, ao final das 24 horas, uma planilha completa para validação formal dos resultados.
+A RedRun é uma aplicação web desenvolvida para digitalizar esse fluxo de ponta a ponta. Antes do evento, o gerente cadastra locais, equipes, corredores e auditores. Durante a competição, os auditores são responsáveis por registrar o início e o encerramento de cada percurso, informando a esteira, o corredor e a quilometragem lida no display. O sistema disponibiliza um dashboard em tempo real e gera, ao final das 24 horas, uma planilha completa para validação formal dos resultados.
 
-O principal diferencial do RedRun reside em sua aderência total à dinâmica do evento. A solução foi concebida sem integrações com hardware externo, sem pulseiras e sem sincronizações prévias, pois a realidade operacional do evento não comporta tais dependências. Trata-se de um sistema simples, estável e confiável, desenvolvido para operar sem interrupções nas condições reais de uma competição ao vivo. O objetivo estratégico imediato é demonstrar que essa abordagem entrega consistência superior ao processo atual, abrindo caminho para que o RedRun seja expandido às demais edições regionais do Red Bull 24 Horas no Brasil.
+O principal diferencial da RedRun reside em sua aderência total à dinâmica do evento. A solução foi concebida sem integrações com hardware externo, sem pulseiras e sem sincronizações prévias, pois a realidade operacional do evento não comporta tais dependências. Trata-se de um sistema simples, estável e confiável, desenvolvido para operar sem interrupções nas condições reais de uma competição ao vivo. O objetivo estratégico imediato é demonstrar que essa abordagem entrega consistência superior ao processo atual, abrindo caminho para que a RedRun seja expandida às demais edições regionais do Red Bull 24 Horas no Brasil.
 
 
 ---
 ## 6.2 Análise de Mercado
+
+---
 
 ### 6.2.1 Visão Geral do Setor
 
@@ -4340,15 +4342,17 @@ A aplicação RedRun está inserida na convergência entre eventos esportivos ex
 
 Economicamente, o setor de eventos no Brasil demonstra retomada consistente: segundo a ABRAPE, em 2024 o nível de emprego no núcleo do setor ficou **60,8% acima do período pré-pandemia**, evidenciando sua relevância para cadeias de serviços, tecnologia, marketing e entretenimento ao vivo [¹⁹](#8-referências). Esse crescimento se articula à digitalização da operação de eventos, impulsionada pela demanda por plataformas com registros em tempo real, automação, dashboards e capacidade de auditoria [²⁰](#8-referências).
 
-No âmbito regulatório, o RedRun deve atender à LGPD, pois processa dados de corredores, equipes, auditores, registros de turnos, horários de atividade e métricas de desempenho. Portanto, controle de acesso, minimização de dados, rastreabilidade e segurança da informação são requisitos estruturais da solução [²¹](#8-referências). Nesse contexto, a RedRun posiciona-se como uma solução de digitalização operacional para eventos esportivos de endurance, atuando especificamente na coleta, validação e rastreabilidade de dados de desempenho em tempo real. Sua proposta responde à necessidade de reduzir erros manuais, aumentar a confiabilidade dos registros e fornecer informações consolidadas para auditoria, tomada de decisão operacional e análise pós-evento.
+No âmbito regulatório, a RedRun deve atender à LGPD, pois processa dados de corredores, equipes, auditores, registros de turnos, horários de atividade e métricas de desempenho. Portanto, controle de acesso, minimização de dados, rastreabilidade e segurança da informação são requisitos estruturais da solução [²¹](#8-referências). Nesse contexto, a RedRun posiciona-se como uma solução de digitalização operacional para eventos esportivos de endurance, atuando especificamente na coleta, validação e rastreabilidade de dados de desempenho em tempo real. Sua proposta responde à necessidade de reduzir erros manuais, aumentar a confiabilidade dos registros e fornecer informações consolidadas para auditoria, tomada de decisão operacional e análise pós-evento.
 
 ### 6.2.2 Tamanho e Crescimento do Mercado
+
+---
 
 O mercado relacionado à RedRun deve ser analisado a partir de dois níveis: o setor demandante, composto por empresas e operações de eventos, e o mercado tecnológico, formado por soluções digitais voltadas à automação operacional, registro de dados, acompanhamento em tempo real e geração de relatórios. A RedRun não representa o setor de eventos como um todo, mas uma solução de camada operacional — uma API e aplicação web voltadas ao controle de turnos, rastreabilidade dos registros e consolidação automatizada de dados em eventos de endurance. Na ausência de dados públicos específicos para esse nicho, a análise utiliza o mercado de softwares de gestão de eventos como aproximação mais próxima, dado que a RedRun opera dentro desse ecossistema tecnológico.
 
 No recorte brasileiro, o setor demandante apresenta dimensão econômica expressiva. O III Dimensionamento Econômico do Setor de Eventos no Brasil, elaborado pela ABEOC Brasil, Sebrae e FIEC, estimou faturamento de **R\$ 813,5 bilhões em 2024** para o setor de eventos [²²](#8-referências). Esse valor não corresponde diretamente ao mercado de softwares de gestão, mas representa a escala econômica das organizações que demandam soluções digitais de controle, rastreabilidade e digitalização de processos operacionais.
 
-No mercado global de tecnologia para eventos, a Grand View Research estima que o segmento de softwares de gestão de eventos foi avaliado em **US\$ 8,40 bilhões em 2024** e deve alcançar **US\$ 17,33 bilhões até 2030**, com CAGR de **13,2%** entre 2025 e 2030 [²⁰](#8-referências). A Global Market Insights reforça essa tendência ao estimar o mesmo mercado em **US\$ 7,6 bilhões em 2023**, com crescimento superior a **13%** ao ano entre 2024 e 2032 [²³](#8-referências).
+No mercado global de tecnologia para eventos, a Grand View Research estima que o segmento de softwares de gestão de eventos foi avaliado em **US\$ 8,40 bilhões em 2024** e deve alcançar **US\$ 17,33 bilhões até 2030**, com CAGR de **13,2%** entre 2025 e 2030 [²⁰](#8-referências). Ainda que as estimativas variem conforme a metodologia e o ano-base adotados, as fontes convergem em um ponto central: um crescimento anual sustentado acima de 13%, o que evidencia a expansão consistente do mercado em que a RedRun se insere. A Global Market Insights reforça essa tendência ao estimar o mesmo mercado em **US\$ 7,6 bilhões em 2023**, com crescimento superior a **13%** ao ano entre 2024 e 2032 [²³](#8-referências).
 
 Além do crescimento em valor de mercado, a composição tecnológica do setor reforça a aderência da RedRun a esse contexto: segundo a Grand View Research, soluções baseadas em nuvem representaram mais de **63,0%** do mercado global de softwares de gestão de eventos em 2024 [²⁰](#8-referências). Esse dado aproxima diretamente a solução do comportamento do mercado, pois a RedRun opera como aplicação web e API, com potencial de acesso multiplataforma, atualização contínua e menor dependência de infraestrutura local.
 
@@ -4356,118 +4360,157 @@ O recorte latino-americano indica oportunidade regional direta: o mercado de sof
 
 ### 6.2.3 Tendências de Mercado
 
-_c) Tendências de Mercado (até 300 palavras)_
-_Identifique e analise tendências relevantes (tecnológicas, comportamentais e mercadológicas) que influenciam o setor. Utilize fontes confiáveis._
+---
 
-## 6.2.3 Análise da Concorrência
+A adoção da RedRun é influenciada por três tendências estruturais que reorganizam o setor de eventos e definem o espaço em que a solução opera: a digitalização da operação, o uso crescente de dados em experiências esportivas e a busca por ferramentas especializadas de controle em tempo real.
 
-A adoção da RedRun é influenciada por três tendências principais: digitalização operacional em eventos, uso crescente de dados em experiências esportivas e busca por soluções especializadas de controle em tempo real. No eixo tecnológico, o mercado de softwares de gestão de eventos vem sendo impulsionado pela automação de processos, uso de plataformas em nuvem, aplicações móveis e análise de dados para apoiar decisões operacionais [²⁰](#8-referências). Essa tendência favorece aplicações web e APIs como a RedRun, que substituem registros manuais por fluxos digitais capazes de consolidar informações com maior precisão e rastreabilidade.
+No eixo tecnológico, o mercado de softwares de gestão de eventos é impulsionado pela automação de processos, pela migração para arquiteturas em nuvem e pela análise de dados como apoio à decisão operacional. Soluções baseadas em nuvem já representam mais de 63% desse mercado global [²⁰](#8-referências), comportamento ao qual a RedRun adere diretamente por ser uma aplicação web integrada a uma API, com acesso multiplataforma e baixa dependência de infraestrutura local. A tendência favorece justamente o tipo de fluxo que a solução propõe: a substituição de registros manuais por uma camada digital capaz de consolidar dados com precisão e rastreabilidade.
 
-No eixo comportamental, organizações esportivas e marcas vêm ampliando o uso de dados para qualificar experiências ao vivo, relacionamento com comunidades e estratégias de patrocínio. A Deloitte aponta, em sua análise global da indústria esportiva de 2025, que bases de dados de fãs e participantes permitem aprimorar experiências em eventos presenciais, personalizar estratégias de engajamento e fortalecer propostas comerciais para patrocinadores [²⁵](#8-referências). Nesse contexto, a RedRun acompanha uma mudança comportamental importante: eventos deixam de ser apenas experiências presenciais e passam a gerar dados estruturados sobre participação, desempenho e operação.
+No eixo comportamental, organizações esportivas e marcas ampliam o uso de dados para qualificar experiências ao vivo, fortalecer o relacionamento com comunidades e sustentar propostas de patrocínio. A Deloitte aponta que bases de dados de participantes permitem personalizar o engajamento e agregar valor comercial a eventos presenciais [²⁵](#8-referências). A RedRun acompanha essa mudança: o evento deixa de ser apenas uma experiência presencial e passa a gerar dados estruturados sobre participação, desempenho e operação.
 
-No eixo mercadológico, observa-se a consolidação de soluções digitais especializadas para eficiência operacional, especialmente em eventos que exigem múltiplos registros, usuários simultâneos, consolidação de métricas e acompanhamento em tempo real. Em vez de depender apenas de plataformas genéricas de inscrição, bilheteria ou comunicação, organizações tendem a demandar ferramentas mais específicas para controle, rastreabilidade e análise operacional. Para a RedRun, essa tendência é relevante porque sua proposta atua justamente nessa camada: controle de turnos, registro de métricas, rastreabilidade operacional e consolidação automatizada de dados em eventos que exigem precisão contínua.
+No eixo mercadológico, consolida-se a demanda por soluções especializadas em eficiência operacional, voltadas a eventos com múltiplos registros simultâneos, consolidação de métricas e acompanhamento contínuo. Em vez de plataformas genéricas de inscrição ou bilheteria, as organizações passam a buscar ferramentas específicas de controle e rastreabilidade — camada exata em que a RedRun atua.
 
-## 6.4 Público-Alvo
+## 6.2.4 Análise da Concorrência
 
 ---
 
-_a) Segmentação de Mercado:_ 
+A concorrência enfrentada pela RedRun não se concentra em um produto equivalente, mas em um conjunto de alternativas que disputam a mesma função: registrar e consolidar, de forma confiável, a quilometragem percorrida ao longo das 24 horas de competição. Essas alternativas dividem-se em dois grupos — substitutos diretos, que hoje ocupam ou poderiam ocupar a operação do evento, e concorrentes indiretos, que atuam em camadas adjacentes do ecossistema de tecnologia para eventos.
+ 
+**Substitutos diretos.** O principal concorrente atual é o **método manual com prancheta física**, complementado pela posterior transcrição para planilha. Trata-se de um substituto paradoxalmente forte: é integralmente aderente à dinâmica de revezamento do evento, não depende de software e é resiliente a quedas de sistema. Sua fragilidade, no entanto, é exatamente o que a RedRun resolve — está sujeito a erro humano acumulado ao longo das madrugadas, não oferece consolidação em tempo real e gera retrabalho de transcrição com baixa rastreabilidade para auditoria. O segundo substituto são os **dispositivos vestíveis**, como relógios inteligentes com GPS e pulseiras de sincronização do tipo da Technogym. Embora ofereçam captura automática, mostram-se inadequados ao formato: o GPS é impreciso em corrida estática sobre esteira, a sincronização prévia é inviável diante de trocas de atleta em até 15 segundos, e não há dispositivos em número suficiente para toda a operação — limitações já mapeadas na análise das Cinco Forças de Porter (seção 2.1.1).
+ 
+**Concorrentes indiretos.** Em uma camada distinta operam as **plataformas comerciais de gestão de eventos** (como Sympla, Even3 e Eventbrite) e as **soluções de cronometragem esportiva por chip RFID** (amplamente usadas em corridas de rua). As primeiras são maduras e escaláveis, mas resolvem inscrição, bilheteria e credenciamento — não o registro de desempenho em tempo real. As segundas pressupõem um percurso físico com pontos de captura, premissa que não se aplica a uma esteira estática, onde não há deslocamento espacial a ser cronometrado. Nenhuma das duas modela a semântica central do evento: a sessão de corrida em uma esteira zerada a cada troca de corredor.
+ 
+<div align="center">
+  <sub> Quadro 32 - Análise comparativa da concorrência </sub><br>
 
-O RedRun atende a um segmento primário bem delimitado: as equipes operacionais do Red Bull 24 Horas no Brasil. Geograficamente, o evento é realizado em múltiplas regiões do país, incluindo capitais e cidades de médio porte, e cada edição regional opera com sua própria equipe, tornando a solução replicável sem adaptações estruturais.
+| Critério | Método manual (prancheta) | Dispositivos vestíveis | Plataformas genéricas / chip RFID | **RedRun** |
+| :--- | :---: | :---: | :---: | :---: |
+| Aderência à dinâmica de revezamento contínuo | Alta | Baixa | Baixa | **Alta** |
+| Consolidação de dados em tempo real | Não | Parcial | Sim (escopo próprio) | **Sim** |
+| Rastreabilidade e auditoria pós-evento | Baixa | Média | Alta | **Alta** |
+| Independência de hardware externo e sincronização prévia | Sim | Não | Varia | **Sim** |
+| Operação contínua e resiliente por 24h | Média | Baixa | Alta | **Alta** |
+| Especialização para o formato esteira/endurance | Sim | Não | Não | **Sim** |
+| Custo e complexidade de adoção | Muito baixo | Alto | Médio-alto | **Baixo** |
 
-Dentro desse segmento, dois grupos compõem o público direto. O primeiro é o gerente do evento, responsável pela configuração e coordenação geral da operação antes e durante a competição. O segundo é formado pelos auditores, membros da equipe de Field Marketing da Red Bull que atuam na linha de frente ao longo das 24 horas. Segundo a ABRAPE (2025), o setor de eventos registrou 179.133 empregos formais em 2024, evidenciando a profissionalização crescente das equipes operacionais que sustentam eventos dessa escala ¹⁸.
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+A comparação evidencia o espaço competitivo que a RedRun ocupa. O método manual é aderente à dinâmica do evento, mas frágil na confiabilidade; os vestíveis e as plataformas genéricas são digitais e robustos, mas não se ajustam ao formato de revezamento em esteira. A RedRun é a única alternativa que reúne, simultaneamente, **aderência total à dinâmica do evento e digitalização rastreável da operação** — combinação que nenhum concorrente entrega de forma integrada. Esse posicionamento de nicho, detalhado na seção 6.6, transforma uma necessidade operacional específica em uma vantagem defensável: não competir em amplitude de funcionalidades, mas em precisão e confiabilidade dentro de um contexto que as soluções de mercado não atendem.
+
+A adoção da RedRun é influenciada por três tendências principais: digitalização operacional em eventos, uso crescente de dados em experiências esportivas e busca por soluções especializadas de controle em tempo real. No eixo tecnológico, o mercado de softwares de gestão de eventos vem sendo impulsionado pela automação de processos, uso de plataformas em nuvem, aplicações móveis e análise de dados para apoiar decisões operacionais . Essa tendência favorece aplicações web e APIs como a RedRun, que substituem registros manuais por fluxos digitais capazes de consolidar informações com maior precisão e rastreabilidade.
+
+---
+
+## 6.3 Público-Alvo
+
+---
+
+### 6.3.1 Segmentação de Mercado:
+
+A RedRun atende a um segmento primário bem delimitado: as equipes operacionais do Red Bull 24 Horas no Brasil. Geograficamente, o evento é realizado em múltiplas regiões do país, incluindo capitais e cidades de médio porte, e cada edição regional opera com sua própria equipe, tornando a solução replicável sem adaptações estruturais.
+
+Dentro desse segmento, dois grupos compõem o público direto. O primeiro é o gerente do evento, responsável pela configuração e coordenação geral da operação antes e durante a competição. O segundo é formado pelos auditores, membros da equipe de Field Marketing da Red Bull que atuam na linha de frente ao longo das 24 horas. Segundo a ABRAPE (2025), o setor de eventos registrou 179.133 empregos formais em 2024, evidenciando a profissionalização crescente das equipes operacionais que sustentam eventos dessa escala [¹⁹](#8-referências).
 
 Como segmento secundário, identifica-se o mercado de eventos de corrida em revezamento de forma geral: competições universitárias, corporativas e de academias que operam no mesmo formato de equipes em esteira por períodos prolongados e que enfrentam o mesmo problema de apuração manual. Esse mercado representa uma oportunidade de expansão natural da solução após a validação no contexto Red Bull.
 
 O que une ambos os segmentos é a demanda por um sistema simples, estável e confiável, capaz de operar continuamente em ambientes de alta pressão operacional e substituir registros manuais por um fluxo digital rastreável.
 
-_b) Perfil do Público-Alvo:_
-O RedRun possui dois perfis de usuário com papéis e momentos de uso distintos: o gerente e o auditor.
+---
 
-O gerente é o responsável pela configuração do sistema antes do evento. Atua em um setor que, segundo a ABRAPE (2025), registrou 179.133 empregos formais em 2024, crescimento de 60,8% em relação ao período pré-pandemia ¹⁸, evidenciando a profissionalização crescente da área. Comportamentalmente, organiza o pré-evento por meio de planilhas dispersas e comunicação manual entre equipes, sem um sistema centralizado que integre locais, equipes, corredores e auditores em um único lugar. Sua principal dor é a fragmentação desse processo: informações desencontradas aumentam o risco de inconsistências e geram retrabalho que se acumula justamente nas horas que antecedem o evento, quando a margem para correções é menor. Sua necessidade é um sistema que centralize todas essas informações antes do evento começar. Sua expectativa é chegar no dia da competição com tudo estruturado, sem pendências operacionais e com menos exposição a imprevistos.
+### 6.3.2 Perfil do Público-Alvo:
+
+A RedRun possui dois perfis de usuário com papéis e momentos de uso distintos: o gerente e o auditor.
+
+O gerente é o responsável pela configuração do sistema antes do evento. Atua em um setor em expansão, com crescente profissionalização das equipes operacionais de eventos. Comportamentalmente, organiza o pré-evento por meio de planilhas dispersas e comunicação manual entre equipes, sem um sistema centralizado que integre locais, equipes, corredores e auditores em um único lugar. Sua principal dor é a fragmentação desse processo: informações desencontradas aumentam o risco de inconsistências e geram retrabalho que se acumula justamente nas horas que antecedem o evento, quando a margem para correções é menor. Sua necessidade é um sistema que centralize todas essas informações antes do evento começar. Sua expectativa é chegar no dia da competição com tudo estruturado, sem pendências operacionais e com menos exposição a imprevistos.
 
 O auditor é o usuário que opera o sistema durante as 24 horas da competição. É um adulto jovem, geralmente entre 20 e 30 anos, integrante da equipe de Field Marketing da Red Bull, com vínculo profissional direto com a marca e forte afinidade com tecnologia e o universo esportivo. Comportamentalmente, opera em condições de alta pressão, com atenção dividida entre múltiplas esteiras e fadiga progressiva ao longo da maratona. Sua principal dor é o registro manual contínuo com prancheta física, processo suscetível a erros de anotação, distrações e inconsistências que comprometem a integridade dos resultados. Sua necessidade é uma ferramenta que possa ser usada sem treinamento extenso, mesmo no meio da operação. Sua expectativa é contar com uma interface intuitiva e estável, que reduza a carga cognitiva e garanta registros confiáveis do início ao fim da competição.
 
-## 6.5 Business Model Canvas (BMC)
+A atleta participante, representada pela persona Nicole Rauen, é beneficiária da solução — por meio do acesso e compartilhamento do próprio desempenho (RF050) —, mas não compõe o público-alvo de adoção, já que não é responsável pela contratação nem pela operação do sistema. Por esse motivo, embora suas necessidades orientem decisões pontuais de produto — como o formato dos relatórios individuais e do compartilhamento —, ela se posiciona como destinatária final do valor gerado pela solução, e não como agente de sua adoção.
+
+---
+
+## 6.4 Business Model Canvas (BMC)
 
 O Business Model Canvas (BMC) é uma ferramenta estratégica visual que organiza os elementos essenciais de um negócio em nove blocos interdependentes, oferecendo uma visão sistêmica e simplificada de como a empresa cria, entrega e captura valor. Para aplicá-lo, basta preencher cada bloco com as informações do seu projeto, partindo da proposta de valor e expandindo para os demais elementos como clientes, canais, receitas e custos. Dessa forma, o BMC permite identificar oportunidades, alinhar estratégias e validar o modelo de negócios de maneira ágil e colaborativa. Abaixo está o Business Model Canva do nosso projeto RedRun:
 
 <div align="center">
-  <sub> Imagem X - Business Model Canvas </sub>
+  <sub> Imagem 80 - Business Model Canvas </sub>
   <br><br>
-  <img src="documentos/assets/business_model_canvas/business_model_canvas.png" width=100%>
+  <img src="./assets/business_model_canvas/business_model_canvas.png" width=100%>
   <br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br>
   <br>
 </div>
 
-O Business Model Canvas do RedRun foi estruturado em torno de uma proposta de valor clara: oferecer aos auditores do Red Bull 24 Horas um sistema confiável, seguro e prático para o registro padronizado dos turnos de corrida — respondendo diretamente à fragilidade do método manual com prancheta, identificada como a maior dor da empresa no evento. O segmento de clientes abrange auditores, gerentes, atletas participantes e a Equipe de Field Marketing do Red Bull 24 Horas, perfis identificados ao longo das Sprints com base nas necessidades reais do evento. O relacionamento com esses clientes foi construído por meio de Sprint Reviews periódicas, que funcionaram como ciclos contínuos de feedback e ajuste — essenciais para garantir que o desenvolvimento permanecesse alinhado às expectativas do cliente e para reduzir o risco de retrabalho nas entregas.
+O Business Model Canvas da RedRun foi estruturado em torno de uma proposta de valor clara: oferecer aos auditores do Red Bull 24 Horas um sistema confiável, seguro e prático para o registro padronizado dos turnos de corrida — respondendo diretamente à fragilidade do método manual com prancheta, identificada como a maior dor da empresa no evento. O segmento de clientes abrange auditores, gerentes, atletas participantes e a Equipe de Field Marketing do Red Bull 24 Horas, perfis identificados ao longo das Sprints com base nas necessidades reais do evento. O relacionamento com esses clientes foi construído por meio de Sprint Reviews periódicas, que funcionaram como ciclos contínuos de feedback e ajuste — essenciais para garantir que o desenvolvimento permanecesse alinhado às expectativas do cliente e para reduzir o risco de retrabalho nas entregas.
 
 Os canais pelos quais a solução chega aos usuários são a própria aplicação web, acessada diretamente durante o evento, e as reuniões com os stakeholders da Red Bull, que serviram como canal formal de validação e aprovação de cada entrega. As atividades-chave concentram-se no ciclo de desenvolvimento, implementação, teste e atualização contínua das features da aplicação, repetido a cada Sprint para incorporar os requisitos de forma incremental e controlada. Esse ciclo só é viável graças aos recursos-chave do projeto: a equipe de desenvolvimento, responsável por toda a construção técnica da solução; o banco de dados, que garante a persistência e integridade dos registros de auditoria; e a aplicação web em si, que é o meio pelo qual toda a proposta de valor é entregue ao usuário final.
 
-As parcerias-chave envolvem principalmente a Red Bull e seus representantes, que além de clientes são os detentores do conhecimento sobre o processo de auditoria do evento. Sem essa parceria, não seria possível compreender com profundidade as regras, fluxos e restrições que precisavam ser modeladas no sistema. A estrutura de custos concentrou-se no tempo da equipe de desenvolvimento e nos recursos tecnológicos utilizados ao longo das Sprints, como infraestrutura e ferramentas de desenvolvimento. Por fim, as fontes de receita — interpretadas como os benefícios gerados ao cliente — compreendem a redução do tempo de auditoria, a eliminação de materiais físicos como pranchetas e formulários impressos, e a dispensa de auditores adicionais, demonstrando que o valor do RedRun é tanto operacional quanto econômico para a Red Bull.
+As parcerias-chave envolvem principalmente a Red Bull e seus representantes, que, além de clientes, são os detentores do conhecimento sobre o processo de auditoria do evento. Sem essa parceria, não seria possível compreender com profundidade as regras, fluxos e restrições que precisavam ser modeladas no sistema. A estrutura de custos concentrou-se no tempo da equipe de desenvolvimento e nos recursos tecnológicos utilizados ao longo das Sprints, como infraestrutura e ferramentas de desenvolvimento.
+ 
+As fontes de receita da RedRun decorrem de seu modelo de desenvolvimento sob encomenda (detalhado na seção 6.5.2): a remuneração principal vem da entrega da aplicação web e da API à Red Bull, mediante contrato de desenvolvimento da solução personalizada. A esse fluxo somam-se receitas potenciais recorrentes — contratos de hospedagem, suporte e manutenção evolutiva após a entrega, além de novos contratos de implantação à medida que a solução é expandida para as demais edições regionais e para a final nacional do evento.
+ 
+Esse modelo de receita é sustentado pela proposta de valor econômica entregue ao cliente, que não se confunde com a receita em si. Para a Red Bull, a adoção da RedRun representa redução do tempo de auditoria, eliminação de materiais físicos como pranchetas e formulários impressos e diminuição da carga operacional da equipe — economias que reforçam o retorno sobre o investimento e justificam tanto a contratação inicial quanto a expansão da solução. Dessa forma, o valor da RedRun é, ao mesmo tempo, operacional para a equipe de Field Marketing e econômico para a marca, o que fundamenta a viabilidade do modelo de negócio.
 
-## 6.6 Estratégia de Marketing
+---
 
-### 6.6.1 Produto/Serviço
+## 6.5 Estratégia de Marketing
 
-A RedRun é uma aplicação web integrada a uma API, desenvolvida exclusivamente para digitalizar o registro, o acompanhamento e a auditoria operacional do Red Bull 24 Horas Brasil. Seu objetivo é substituir o processo manual baseado em pranchetas físicas e consolidação posterior em planilhas por um fluxo digital estruturado, rastreável e mais confiável. A solução foi projetada para controlar turnos, registrar métricas de desempenho, acompanhar checkpoints e manter histórico auditável dos registros durante as 24 horas de competição.
+---
 
-A solução atende diferentes perfis de uso dentro da operação do evento. Para o auditor de campo, oferece um fluxo simples para registrar início e encerramento de turnos, selecionar equipe, corredor e esteira, inserir quilometragem e acompanhar checkpoints periódicos. Para o coordenador ou gestor da operação, disponibiliza visão consolidada da competição por meio de dashboards, histórico de registros, identificação de inconsistências e métricas acumuladas por equipe e participante. Para a organização do Red Bull 24 Horas Brasil, entrega dados estruturados para validação de resultados, auditoria pós-evento e exportação para análise posterior.
+### 6.5.1 Produto/Serviço
 
-As principais funcionalidades da RedRun incluem:
+Identificou-se que a RedRun é uma aplicação web integrada a uma API, desenvolvida exclusivamente para digitalizar o registro, o acompanhamento e a auditoria operacional do Red Bull 24 Horas Brasil. Sua função é substituir o processo manual baseado em pranchetas e planilhas por um fluxo digital estruturado e rastreável, capaz de controlar turnos, registrar métricas e manter histórico auditável ao longo das 24 horas de competição.
 
-- cadastro de eventos, equipes, corredores e locais;
-- registro de início e fim de turnos de corrida;
-- associação de cada registro a auditor, corredor, equipe, esteira e horário;
-- criação de checkpoints periódicos para reduzir perda de referência durante a operação;
-- cálculo automatizado de distância percorrida e métricas acumuladas;
-- histórico consultável dos registros realizados;
-- dashboard com indicadores consolidados da competição;
-- identificação de inconsistências operacionais;
-- exportação dos dados para análise e auditoria;
-- preservação de registros em cenários de instabilidade de conexão, com armazenamento local temporário e sincronização posterior quando a rede é restabelecida.
+Entre as principais funcionalidades, observou-se: o cadastro prévio de eventos, equipes, corredores e locais; o registro de início e fim de turno associado a auditor, esteira e horário; checkpoints a cada cinco minutos para preservar a referência durante a operação; o cálculo automatizado de distância e métricas acumuladas; o dashboard consolidado; a exportação dos dados; e a sincronização posterior em caso de instabilidade de conexão. 
 
-O principal benefício da RedRun é reduzir a fragilidade da apuração manual. Ao padronizar entradas, registrar horários automaticamente, estruturar os dados e manter histórico auditável, a aplicação diminui o risco de erro humano, reduz retrabalho e aumenta a confiabilidade dos resultados.
+O benefício central reside na redução da fragilidade da apuração manual, com menor risco de erro humano e maior confiabilidade dos resultados. Concluiu-se que o diferencial da RedRun está na aderência ao contexto específico do evento: uma solução simples para o auditor em campo, porém robusta na precisão e na rastreabilidade exigidas pela organização.
 
-Seu diferencial está na aderência ao contexto específico do Red Bull 24 Horas Brasil. A aplicação não foi pensada como uma ferramenta genérica de eventos, mas como uma solução direcionada ao problema operacional do evento: registrar desempenho contínuo, validar turnos, acompanhar métricas e auditar dados durante uma competição de 24 horas. A RedRun se diferencia justamente por atuar nesse ponto crítico, oferecendo uma solução simples para o auditor em campo, mas robusta para a organização que precisa de precisão, rastreabilidade e segurança na consolidação dos dados.
+---
 
-### 6.2 Preço
+### 6.5.2 Preço
 
-Como a RedRun foi desenvolvida exclusivamente para o Red Bull 24 Horas Brasil, o modelo de precificação mais adequado é o de desenvolvimento sob encomenda, com entrega da aplicação web e da API ao cliente ao final do projeto. Nesse formato, o valor não está associado a uma assinatura mensal ou a um licenciamento recorrente, mas à construção de uma solução personalizada para resolver uma necessidade operacional específica do evento: substituir o processo manual de registro por pranchetas por um sistema digital, rastreável e auditável.
+Identificou-se que, por ter sido desenvolvida exclusivamente para o Red Bull 24 Horas Brasil, o modelo de precificação mais adequado à RedRun é o de desenvolvimento sob encomenda, com entrega da aplicação web e da API ao cliente ao final do projeto. Nesse formato, o valor não decorre de assinatura ou licenciamento recorrente, mas da construção de uma solução personalizada para uma necessidade operacional específica.
 
-Como referência de mercado, projetos de software sob medida no Brasil podem variar de aproximadamente **R\$ 40.000** em soluções simples a mais de **R\$ 500.000** em sistemas de maior complexidade empresarial [²⁶](#8-referências). No caso da RedRun, não há definição pública de valor comercial específico, pois o projeto é desenvolvido no contexto de parceria institucional. Ainda assim, seu escopo técnico indica que a precificação deveria considerar fatores como aplicação web, API, autenticação, dashboard, registros operacionais, histórico, exportação, sincronização de dados, testes, documentação e implantação.
+Como referência de mercado, observou-se que projetos de software sob medida no Brasil variam de aproximadamente R$ 40.000, em soluções simples, a mais de R$ 500.000, em sistemas de maior complexidade [²⁶](#8-referências). Por se tratar de parceria institucional, a RedRun não possui valor comercial público; ainda assim, seu escopo, que abrange aplicação web, API, autenticação, dashboard, histórico, exportação, sincronização, testes e documentação, posiciona-a acima de uma aplicação institucional simples e abaixo de um sistema enterprise.
 
-A justificativa para esse modelo está no grau de personalização da solução. A RedRun supera o escopo de uma aplicação institucional simples, ao exigir backend estruturado, modelagem de dados, controle de usuários, regras de negócio, persistência, visualização de métricas e mecanismos de rastreabilidade. Ao mesmo tempo, não possui a complexidade de um sistema enterprise de grande escala, com múltiplas integrações externas, módulos financeiros ou operação contínua para milhares de usuários.
+Concluiu-se que a precificação deve contemplar levantamento de requisitos, prototipação, desenvolvimento, testes, implantação e documentação. Após a entrega, hospedagem, suporte e manutenções evolutivas passam à responsabilidade do cliente, podendo ser tratadas como novos contratos. O modelo justifica-se pela personalização da solução e pelo valor operacional gerado na redução de erros e no aumento da confiabilidade dos registros.
 
-O modelo de preço deve contemplar as etapas de levantamento de requisitos, prototipação, desenvolvimento, testes, implantação e documentação da solução. Após a entrega, a aplicação passa a ser de responsabilidade do cliente, incluindo hospedagem, operação, suporte técnico e eventuais manutenções futuras. Caso sejam solicitadas melhorias, adaptações para novas edições ou correções evolutivas após a entrega, essas demandas podem ser tratadas como novos contratos ou pacotes adicionais de serviço.
+---
 
-Esse modelo é mais adequado ao contexto da RedRun porque o projeto não busca vender uma plataforma aberta ao mercado, mas entregar uma solução específica e funcional para uma operação já definida. Assim, o preço é justificado pelo desenvolvimento personalizado, pela transferência da aplicação ao cliente e pelo valor operacional gerado na redução de erros manuais, aumento da confiabilidade dos registros e melhoria da auditoria dos dados do evento.
+### 6.5.3 Praça (Distribuição)
 
-### 6.3 Praça (Distribuição)
+Identificou-se que a distribuição da RedRun ocorre por disponibilização digital controlada, já que a solução é uma aplicação web integrada a uma API e desenvolvida exclusivamente para o Red Bull 24 Horas Brasil. Diferentemente de produtos abertos ao público, ela não depende de lojas de aplicativos, venda em site comercial ou marketplaces, pois o acesso é restrito aos usuários da operação, como auditores, coordenadores e responsáveis pela organização.
 
-A distribuição da RedRun ocorre por meio de disponibilização digital controlada, uma vez que a solução é uma aplicação web integrada a uma API e desenvolvida exclusivamente para o Red Bull 24 Horas Brasil. Diferentemente de produtos digitais abertos ao público, a RedRun não depende de lojas de aplicativos, venda direta em site comercial ou canais de marketplace. Seu acesso é restrito aos usuários envolvidos na operação do evento, como auditores, coordenadores e responsáveis pela organização.
+O principal canal de entrega é o ambiente web, acessado por navegador. Observou-se que o uso prioritário previsto é em tablets, pelo equilíbrio entre mobilidade, área de tela e facilidade de interação; o acesso por celular é admitido em contingência, mediante validação prévia da equipe. A aplicação é entregue em funcionamento, com link de acesso, backend, API e banco de dados configurados.
 
-O principal canal de entrega da solução é o ambiente web, acessado por navegador nos dispositivos utilizados durante a operação. O uso prioritário previsto é em tablets, por oferecerem melhor equilíbrio entre mobilidade, área de tela e facilidade de interação durante o registro dos turnos. Em cenários de contingência ou necessidade operacional, o acesso por celular também pode ser utilizado, desde que validado previamente pela equipe responsável pela operação. A aplicação deve ser entregue em funcionamento, com link de acesso, backend, API e banco de dados configurados para uso no fluxo operacional definido.
+A disponibilização ocorre em três momentos: antes do evento, na configuração dos dados iniciais; 
+durante, no registro de turnos e métricas em tempo real; e após o encerramento, na consulta, exportação e auditoria dos dados. Concluiu-se que a estratégia é coerente com a natureza da solução, pois seu objetivo não é alcançar usuários em massa, mas assegurar que a equipe operacional disponha da ferramenta certa no momento crítico.
 
-A disponibilização da RedRun deve ocorrer em três momentos. Antes do evento, a aplicação é configurada com dados iniciais, como local, equipes, corredores e usuários autorizados. Durante o evento, o sistema é utilizado pela equipe operacional para registrar turnos, checkpoints e métricas em tempo real. Após o encerramento, os dados permanecem disponíveis para consulta, exportação e auditoria pós-evento.
+---
 
-Após a entrega inicial, eventuais decisões sobre continuidade de hospedagem, domínio, manutenção, alterações de infraestrutura, ajustes de funcionalidades ou evolução da aplicação passam a depender da Red Bull Brasil, organização responsável pelo uso da solução. Dessa forma, a entrega contempla uma aplicação funcional e acessível para validação e operação, enquanto modificações posteriores podem ser tratadas como novas demandas de manutenção ou evolução.
+### 6.5.4 Promoção
 
-Assim, a estratégia de distribuição da RedRun é baseada em implantação direta para o parceiro, acesso por link, uso restrito por perfis autorizados e operação em ambiente web controlado. Esse modelo é coerente com a natureza da aplicação, pois sua finalidade não é alcançar usuários em massa, mas garantir que os usuários responsáveis pela operação tenham acesso à ferramenta certa no momento crítico do evento.
+Identificou-se que a promoção da RedRun deve ser compreendida como promoção da solução, e não como divulgação do evento, cuja comunicação pública permanece sob responsabilidade da Red Bull e de sua equipe de Field Marketing. No contexto do projeto, a promoção relaciona-se à apresentação, à adoção e à validação da aplicação junto aos usuários e partes interessadas da operação.
 
-### 6.6.4 Promoção
+Por se tratar de uma ferramenta operacional interna, observou-se que canais como SEO, campanhas pagas e redes sociais abertas não são prioritários, pois se destinam a produtos voltados ao público amplo. Os canais mais relevantes são as demonstrações funcionais, os treinamentos, as parcerias institucionais e as estratégias de relacionamento com o parceiro.
 
-A estratégia de promoção da RedRun deve ser compreendida como promoção da solução, e não como divulgação do Red Bull 24 Horas Brasil. A comunicação pública do evento, incluindo campanhas, redes sociais, mídia paga, influenciadores, conteúdo promocional e aquisição de participantes, permanece sob responsabilidade da Red Bull e de sua equipe de Field Marketing. No contexto deste projeto, a promoção da RedRun está relacionada à apresentação, adoção e validação da aplicação junto aos usuários e stakeholders envolvidos na operação.
+A principal estratégia é a demonstração funcional: antes do evento, a RedRun é apresentada em simulações práticas do fluxo operacional, e, no contexto do PBL, no pitch final da Sprint 5. O treinamento dos usuários, por meio de guias rápidos e onboarding, reduz a resistência à adoção. Concluiu-se que, após o uso, a promoção apoia-se na comprovação de valor: dashboards, histórico e evidências de redução de retrabalho demonstram o impacto ao parceiro e sustentam a expansão para novas edições do Red Bull 24 Horas.
 
-Por se tratar de uma aplicação desenvolvida exclusivamente para uso operacional, canais tradicionais como SEO, campanhas pagas e redes sociais abertas não são prioritários. Esses canais seriam adequados para produtos digitais vendidos ao público ou para divulgação do evento, mas não para uma ferramenta interna de auditoria e controle. Para a RedRun, os canais promocionais mais relevantes são demonstrações funcionais, treinamentos operacionais, materiais de apoio, validações com usuários e apresentações de resultado para o parceiro.
+---
 
-A principal estratégia de promoção da solução é a demonstração funcional. Antes do evento, a RedRun deve ser apresentada em simulações práticas do fluxo operacional, demonstrando como substitui a prancheta física, registra turnos, consolida métricas, identifica inconsistências e permite consulta posterior dos dados. No contexto do PBL do Inteli, essa demonstração também se concretiza no pitch final da Sprint 5, em que a equipe apresenta a solução desenvolvida, seus resultados, decisões técnicas e potencial de uso para o parceiro. Além disso, o WAD funciona como material de apoio à promoção e transferência da solução, pois documenta desde a arquitetura de backend e API até as telas, funcionalidades, regras de negócio e orientações de uso. Essa combinação entre demonstração prática e documentação técnica permite que auditores, coordenadores e responsáveis pela operação compreendam o valor da aplicação a partir do funcionamento real, e não apenas por uma descrição conceitual.
+## 6.6 Posicionamento & Branding
 
-Outro eixo relevante é o treinamento dos usuários. A interface da RedRun foi pensada para ser intuitiva, reduzir dúvidas durante a operação e facilitar o uso em um ambiente de alta pressão, no qual os registros precisam ser feitos com rapidez e precisão. Ainda assim, auditores e coordenadores devem compreender como utilizar os fluxos principais e por que a padronização dos registros, checkpoints e validação das informações melhora a confiabilidade da apuração. Guias rápidos, sessões de onboarding e testes simulados funcionam como instrumentos de promoção interna, pois reduzem resistência à adoção e aumentam a segurança dos usuários durante a operação.
+A RedRun posiciona-se como uma solução operacional especializada para eventos esportivos de endurance, e não como uma plataforma genérica de gestão de eventos. Identificou-se que os concorrentes se dividem em dois grupos.
 
-Após o uso, a promoção da RedRun deve se apoiar na comprovação de valor. Dashboards, histórico de registros, dados exportados e evidências de redução de retrabalho podem demonstrar para o parceiro o impacto da solução na confiabilidade operacional. Caso a aplicação seja validada com sucesso em uma edição, como uma etapa em São Paulo, os resultados obtidos podem sustentar sua expansão para outras cidades brasileiras e, futuramente, para edições internacionais do Red Bull 24 Horas. Assim, a promoção da RedRun está centrada em adoção interna, relacionamento com o parceiro e demonstração objetiva de valor, sem se confundir com o marketing público do evento.
+Entre os concorrentes diretos/substitutos atuais estão o método manual com prancheta física e os dispositivos vestíveis (relógios inteligentes e pulseiras de sincronização, como a da Technogym); ambos foram analisados na seção 2.1.1 (5 Forças de Porter) e mostram-se inadequados à dinâmica de revezamento contínuo do evento.
+
+Entre os concorrentes indiretos estão as plataformas comerciais de gestão de eventos (inscrição, bilheteria, credenciamento), que atuam em camadas diferentes e não resolvem o registro de desempenho em tempo real. O atributo de marca que a RedRun pretende projetar é o de ferramenta confiável de missão crítica: estável, simples e precisa, feita sob medida para a operação.
+
+A identidade pretendida associa-se a precisão, integridade de dados e aderência ao contexto real do Red Bull 24 Horas. Concluiu-se que a percepção de valor desejada é a de uma solução que "não falha durante o evento" — posicionamento que privilegia confiabilidade operacional acima de amplitude de funcionalidades, diferenciando-a tanto do processo analógico quanto das plataformas de mercado.
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
@@ -4484,8 +4527,6 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 ---
 
 ¹⁷ ABRAMOV, Dan. **Presentational and Container Components.** Medium, 23 mar. 2015. Disponível em: https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0. Acesso em: 26 mai. 2026.
-
-¹⁸ ABRAPE. Setor de eventos segue em crescimento e registra, em 2024, nível de emprego 60,8% superior ao período pré-pandemia. Associação Brasileira dos Promotores de Eventos, 26 fev. 2025. Disponível em: https://www.abrape.com.br/setor-de-eventos-segue-em-crescimento-e-registra-em-2024-nivel-de-emprego-608-superior-ao-periodo-pre-pandemia/. Acesso em: 02 jun. 2026. 
 
 ⁸ BUSINESS RULES GROUP. **Business Rules Manifesto:** the principles of rule independence. Version 2.0. S. l.: Business Rules Group, 2003. Disponível em: <https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf>. Acesso em: 27 abr. 2026.
 
@@ -4530,6 +4571,10 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 ²² ABEOC BRASIL; SEBRAE; FIEC. **III Dimensionamento Econômico do Setor de Eventos no Brasil 2024/2025**. 2026. Disponível em: <https://abeoc.org.br/wp-content/uploads/2026/05/III-Dimensionamento-setor-eventos-digital.pdf>. Acesso em: 6 jun. 2026.
 
 ²³ GLOBAL MARKET INSIGHTS. **Event Management Software Market Share, Size and Forecast 2024-2032**. Global Market Insights, 2024. Disponível em: <https://www.gminsights.com/industry-analysis/event-management-software-market>. Acesso em: 6 jun. 2026.
+
+²⁴ GRAND VIEW RESEARCH. Latin America Event Management Software Market Size & Outlook, 2030. Grand View Research, 2024. Disponível em: <https://www.grandviewresearch.com/horizon/outlook/event-management-software-market/latin-america>. Acesso em: 12 jun. 2026.
+
+²⁵ DELOITTE. 2025 Sports Industry Outlook. Deloitte Insights, 2025. Disponível em: <https://www2.deloitte.com/us/en/insights/industry/technology/technology-media-and-telecom-predictions.html>. Acesso em: 12 jun. 2026.
 
 # <a name="c9"></a>Anexos
 
