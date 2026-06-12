@@ -4469,6 +4469,8 @@ Entre as principais funcionalidades, observou-se: o cadastro prévio de eventos,
 
 O benefício central reside na redução da fragilidade da apuração manual, com menor risco de erro humano e maior confiabilidade dos resultados. Concluiu-se que o diferencial da RedRun está na aderência ao contexto específico do evento: uma solução simples para o auditor em campo, porém robusta na precisão e na rastreabilidade exigidas pela organização.
 
+---
+
 ### 6.5.2 Preço
 
 Identificou-se que, por ter sido desenvolvida exclusivamente para o Red Bull 24 Horas Brasil, o modelo de precificação mais adequado à RedRun é o de desenvolvimento sob encomenda, com entrega da aplicação web e da API ao cliente ao final do projeto. Nesse formato, o valor não decorre de assinatura ou licenciamento recorrente, mas da construção de uma solução personalizada para uma necessidade operacional específica.
