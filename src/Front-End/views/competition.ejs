@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditor</title>
+    <link rel="stylesheet" href="/css/competição.css">
+    <link rel="stylesheet" href="/css/global.css">
+</head>
+    <body>
+
+    <div class="barra-gradiente"></div>
+
+    <a href="/home" class="cancelar">
+        <img src="/assets/competição/Seta.svg" alt=""> Cancelar
+    </a>
+
+    <main>
+
+        <aside class="etapas">
+            <h3>Etapas</h3>
+
+            <div class="etapa ativa">
+                <span>1</span>
+                <p>Competição</p>
+            </div>
+
+            <div class="etapa">
+                <span>2</span>
+                <p>Equipe</p>
+            </div>
+
+            <div class="etapa">
+                <span>3</span>
+                <p>Esteira</p>
+            </div>
+
+            <div class="etapa">
+                <span>4</span>
+                <p>Visão geral</p>
+            </div>
+        </aside>
+
+        <section class="conteudo">
+            <h2>Selecione uma competição agendada</h2>
+
+            <div class="lista-competicoes">
+
+                <% events.forEach((event, index) => { %>
+                <div class="competicao" data-id="<%= event.id %>">
+                    <span><b><%= index + 1 %></b></span>
+                    <p><%= event.local %></p>
+                    <p><%= new Date(event.date).toLocaleDateString('pt-BR') %></p>
+                </div>
+                <% }) %>
+
+            </div>
+
+            <button id="btn-proximo" disabled onclick="proximaEtapa()">
+                Próximo
+            </button>
+        </section>
+
+    </main>
+    <script src="/js/competition.js"></script>
+</body> 
+</html>
