@@ -4374,6 +4374,7 @@ A concorrência enfrentada pela RedRun não se concentra em um produto equivalen
  
 <div align="center">
   <sub> Quadro 32 - Análise comparativa da concorrência </sub><br>
+
 | Critério | Método manual (prancheta) | Dispositivos vestíveis | Plataformas genéricas / chip RFID | **RedRun** |
 | :--- | :---: | :---: | :---: | :---: |
 | Aderência à dinâmica de revezamento contínuo | Alta | Baixa | Baixa | **Alta** |
@@ -4383,7 +4384,7 @@ A concorrência enfrentada pela RedRun não se concentra em um produto equivalen
 | Operação contínua e resiliente por 24h | Média | Baixa | Alta | **Alta** |
 | Especialização para o formato esteira/endurance | Sim | Não | Não | **Sim** |
 | Custo e complexidade de adoção | Muito baixo | Alto | Médio-alto | **Baixo** |
- 
+
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
