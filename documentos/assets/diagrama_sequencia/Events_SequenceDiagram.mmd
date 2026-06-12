@@ -55,7 +55,28 @@ sequenceDiagram
     ES-->>-CT: 7. event
     CT-->>-C: 8. 201 { id, title, local, date, status, ... }
 
-    Note over C,DB: 2 · Métricas e placar do evento (RF019 · RF014 · RN10 · RN14)
+    Note over C,DB: 2 · Ciclo de vida do evento — RF051
+
+    C->>+CT: 9. PATCH /events/eventId/start
+    Note over CT: requireAuth + requireRole(manager)
+    CT->>+ES: 10. startEvent(eventId)
+    ES->>+ER: 11. updateStatus(eventId, "in_progress")
+    ER->>+DB: 12. UPDATE events SET status="in_progress", started_at=NOW() WHERE id=$1
+    DB-->>-ER: 13. ok
+    ER-->>-ES: 14. updated event
+    ES-->>-CT: 15. event
+    CT-->>-C: 16. 200 { id, status: "in_progress", started_at }
+
+    C->>+CT: 17. PATCH /events/eventId/finish
+    CT->>+ES: 18. finishEvent(eventId)
+    ES->>+ER: 19. updateStatus(eventId, "completed")
+    ER->>+DB: 20. UPDATE events SET status="completed", finished_at=NOW() WHERE id=$1
+    DB-->>-ER: 21. ok
+    ER-->>-ES: 22. updated event
+    ES-->>-CT: 23. event
+    CT-->>-C: 24. 200 { id, status: "completed", finished_at }
+
+    Note over C,DB: 3 · Métricas e placar do evento (RF019 · RF014 · RN10 · RN14)
 
     C->>+MC: 9. GET /metrics/events/{id}/dashboard
     MC->>+MS: 10. getDashboard(event_id)
@@ -75,7 +96,7 @@ sequenceDiagram
     MS-->>-MC: 23. [ { id, name, total_km } ]
     MC-->>-C: 24. 200 [ { id, name, total_km } ]
 
-    Note over C,DB: 3 · Exportar dados (RF024 · RN26)
+    Note over C,DB: 4 · Exportar dados (RF024 · RN26)
 
     C->>+ExC: 25. GET /export/events/{id}/shifts
     ExC->>+ExS: 26. shiftsCsv(event_id)

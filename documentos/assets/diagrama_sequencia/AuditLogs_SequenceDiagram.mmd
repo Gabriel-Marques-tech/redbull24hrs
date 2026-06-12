@@ -1,0 +1,78 @@
+
+%%{init: {
+  "theme": "base",
+  "background": "#ffffff",
+  "themeVariables": {
+    "primaryColor": "#0F0069",
+    "primaryTextColor": "#FFFFFF",
+    "primaryBorderColor": "#D2003C",
+    "secondaryColor": "#D2003C",
+    "secondaryTextColor": "#FFFFFF",
+    "secondaryBorderColor": "#D2003C",
+    "tertiaryColor": "#E8E8F5",
+    "tertiaryTextColor": "#0F0069",
+    "tertiaryBorderColor": "#0F0069",
+    "noteBkgColor": "#FFCC00",
+    "noteTextColor": "#0F0069",
+    "noteBorderColor": "#D2003C",
+    "activationBkgColor": "#D2003C",
+    "activationBorderColor": "#0F0069",
+    "actorBkg": "#0F0069",
+    "actorTextColor": "#FFFFFF",
+    "actorBorderColor": "#D2003C",
+    "actorLineColor": "#000000",
+    "signalColor": "#000000",
+    "signalTextColor": "#000000",
+    "labelBoxBkgColor": "#E8E8F5",
+    "labelBoxBorderColor": "#0F0069",
+    "labelTextColor": "#0F0069",
+    "loopTextColor": "#0F0069",
+    "fontFamily": "Arial, sans-serif",
+    "fontSize": "14px",
+    "background": "#FFFFFF"
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    participant C as Client (Gerente)
+    participant LC as LogsController
+    participant LS as LogsService
+    participant LR as LogsRepository
+    participant DB as Database
+
+    Note over C,DB: 1 · Consulta de trilha de auditoria — RF022 · RF024 · RN23 · RN24
+
+    C->>+LC: GET /audit/logs?event_id={id}&shift_id={id}&page={n}
+    Note over LC: requireAuth — JWT obrigatório
+    LC->>+LS: getLogs(filters)
+    LS->>+LR: findLogs({ event_id, shift_id, page })
+    LR->>+DB: SELECT logs JOIN shifts WHERE filters<br/>ORDER BY timestamp DESC LIMIT 50 OFFSET n
+    Note over DB: Campos retornados: id, shift_id, type,<br/>old_value, new_value, author_id, author_role,<br/>checkpoint_id, justification, created_at
+    DB-->>-LR: log rows[]
+    LR-->>-LS: logs[]
+    LS-->>-LC: { logs[], total, page }
+    LC-->>-C: 200 { logs: [ { id, type, old_value, new_value, author, timestamp, justification } ], total, page }
+
+    Note over C,DB: 2 · Geração automática de log (via correção retroativa)
+
+    Note over C: Gerente corrige checkpoint via PATCH /audit/checkpoints/:id
+    C->>+LC: PATCH /audit/checkpoints/{id} { distance, justification }
+    LC->>+LS: correctCheckpoint(...)
+    LS->>+LR: correctCheckpoint + insertLog(shift_id, type, old_value, new_value, author_id, role)
+    LR->>+DB: UPDATE checkpoints SET distance, old_distance, reviewed=true ...<br/>INSERT INTO logs (shift_id, type, checkpoint_id, old_value, new_value, ...)
+    Note over DB: Log é imutável — nenhum DELETE ou UPDATE permitido na tabela logs
+    DB-->>-LR: { checkpoint, log_id }
+    LR-->>-LS: result
+    LS-->>-LC: updated checkpoint
+    LC-->>-C: 200 { id, shift_id, distance, old_distance, reviewed, reviewed_at }
+
+    Note over C,DB: 3 · Sem logs para o filtro informado
+
+    C->>+LC: GET /audit/logs?shift_id=999
+    LC->>+LS: getLogs({ shift_id: 999 })
+    LS->>+LR: findLogs(...)
+    LR->>+DB: SELECT ... WHERE shift_id = 999
+    DB-->>-LR: []
+    LR-->>-LS: []
+    LS-->>-LC: { logs: [], total: 0, page: 1 }
+    LC-->>-C: 200 { logs: [], total: 0, page: 1 }

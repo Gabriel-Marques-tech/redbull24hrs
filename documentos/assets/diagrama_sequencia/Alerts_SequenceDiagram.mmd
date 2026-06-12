@@ -1,0 +1,73 @@
+
+%%{init: {
+  "theme": "base",
+  "background": "#ffffff",
+  "themeVariables": {
+    "primaryColor": "#0F0069",
+    "primaryTextColor": "#FFFFFF",
+    "primaryBorderColor": "#D2003C",
+    "secondaryColor": "#D2003C",
+    "secondaryTextColor": "#FFFFFF",
+    "secondaryBorderColor": "#D2003C",
+    "tertiaryColor": "#E8E8F5",
+    "tertiaryTextColor": "#0F0069",
+    "tertiaryBorderColor": "#0F0069",
+    "noteBkgColor": "#FFCC00",
+    "noteTextColor": "#0F0069",
+    "noteBorderColor": "#D2003C",
+    "activationBkgColor": "#D2003C",
+    "activationBorderColor": "#0F0069",
+    "actorBkg": "#0F0069",
+    "actorTextColor": "#FFFFFF",
+    "actorBorderColor": "#D2003C",
+    "actorLineColor": "#000000",
+    "signalColor": "#000000",
+    "signalTextColor": "#000000",
+    "labelBoxBkgColor": "#E8E8F5",
+    "labelBoxBorderColor": "#0F0069",
+    "labelTextColor": "#0F0069",
+    "loopTextColor": "#0F0069",
+    "fontFamily": "Arial, sans-serif",
+    "fontSize": "14px",
+    "background": "#FFFFFF"
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    participant C as Client (Auditor)
+    participant AC as AlertsController
+    participant AS as AlertsService
+    participant AR as AlertsRepository
+    participant DB as Database
+
+    Note over C,DB: 1 · Consulta de alertas ativos — RF028 · RF029 · RF039 · RN11 · RN12
+
+    loop Polling periódico (auditor em turno)
+        C->>+AC: GET /audit/alerts?event_id={id}
+        Note over AC: requireAuth — JWT obrigatório
+        AC->>+AS: getAlerts(event_id)
+        AS->>+AR: findAlerts(event_id)
+        AR->>+DB: SELECT shifts + checkpoints p/ detectar inconsistências
+        Note over DB: Verifica: turno sem checkpoint há >5min (RN11),<br/>corredor sem rotação (RN12), km negativo (RN25)
+        DB-->>-AR: rows de turnos + checkpoints
+        AR-->>-AS: alertsData[]
+        AS->>AS: classify(alertsData) → { type, severity, shift_id, athlete_name }
+        AS-->>-AC: alerts[]
+        AC-->>-C: 200 { alerts: [ { type, message, shift_id, athlete_name, since } ] }
+    end
+
+    Note over C,DB: 2 · Nenhum alerta ativo
+
+    C->>+AC: GET /audit/alerts?event_id={id}
+    AC->>+AS: getAlerts(event_id)
+    AS->>+AR: findAlerts(event_id)
+    AR->>+DB: SELECT ...
+    DB-->>-AR: [] (vazio)
+    AR-->>-AS: []
+    AS-->>-AC: []
+    AC-->>-C: 200 { alerts: [] }
+
+    Note over C,DB: 3 · event_id ausente ou inválido
+
+    C->>+AC: GET /audit/alerts (sem event_id)
+    AC-->>-C: 400 { error: "event_id obrigatório" }

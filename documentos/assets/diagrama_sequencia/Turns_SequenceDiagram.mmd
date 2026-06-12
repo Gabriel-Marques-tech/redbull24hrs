@@ -113,3 +113,23 @@ sequenceDiagram
     TR-->>-TS: 42. finishedShift
     TS-->>-CT: 43. finishedShift
     CT-->>-C: 44. 200 { id, status: "completed", distance, speed, total_time, ... }
+
+    Note over C,DB: 5 · Abandono de turno — RF014
+
+    C->>+CT: 45. PATCH /audit/shifts/shiftId/abandon { justification }
+    Note over CT: requireAuth — auditor responsavel pelo turno
+    CT->>+TS: 46. abandonShift(shift_id, justification)
+    TS->>+TR: 47. findById(shift_id)
+    TR->>+DB: 48. SELECT * FROM shifts WHERE id = $1
+    DB-->>-TR: 49. Shift { status: "in_progress", auditor_id }
+    TR-->>-TS: 50. shift
+
+    Note right of TS: valida shift.auditor_id === req.user.id
+    Note right of TS: justification obrigatoria (RN13)
+
+    TS->>+TR: 51. abandon(shift_id, justification)
+    TR->>+DB: 52. UPDATE shifts SET status="abandoned", justification=$2, end_at=NOW()
+    DB-->>-TR: 53. Updated Shift
+    TR-->>-TS: 54. abandonedShift
+    TS-->>-CT: 55. abandonedShift
+    CT-->>-C: 56. 200 { id, status: "abandoned", justification, end_at }
