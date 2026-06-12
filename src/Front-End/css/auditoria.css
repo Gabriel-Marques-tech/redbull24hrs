@@ -1,4 +1,4 @@
-/* ---------------- TOPO ---------------- */
+﻿/* ---------------- TOPO ---------------- */
 
 .topo {
     height: 90px;
@@ -11,7 +11,7 @@
 .operador {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .avatar {
@@ -20,15 +20,35 @@
     border-radius: 50%;
     background-color: #d9d9d9;
     display: inline-block;
+    flex-shrink: 0;
+    margin-top: 12px;
+}
+
+.avatar-operador {
+    width: 42px;
+    height: 42px;
 }
 
 .operador small {
     color: #a8a8a8;
-    font-size: 11px;
+    font-size: 10px;
 }
 
 .operador p {
     font-size: 16px;
+    line-height: 1.05;
+}
+
+.operador > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.operador .btn-trocar {
+    margin-left: 8px;
+    align-self: flex-end;
+    margin-bottom: 1px;
 }
 
 .btn-trocar,
@@ -45,10 +65,10 @@
     color: #d0d0d0;
     font-weight: 700;
     font-size: 16px;
-    margin-right: 160px;
+    margin-right: 170px;
 }
 
-/* ---------------- CONTEÚDO ---------------- */
+/* ---------------- CONTEUDO ---------------- */
 
 .conteudo-auditoria {
     display: flex;
@@ -77,7 +97,7 @@
     font-weight: 500;
 }
 
-/* ---------------- CRONÔMETRO ---------------- */
+/* ---------------- CRONOMETRO ---------------- */
 
 .cronometro {
     width: 545px;
@@ -94,7 +114,7 @@
     font-weight: 700;
 }
 
-/* ---------------- AÇÕES ---------------- */
+/* ---------------- ACOES ---------------- */
 
 .acoes-corrida {
     display: flex;
@@ -114,6 +134,42 @@
     cursor: pointer;
 }
 
+.btn-proximo-corredor {
+    width: 63px;
+    height: 64px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--vermelho);
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-proximo-corredor.escondido {
+    display: none;
+}
+
+.icone-proximo {
+    width: 0;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 16px solid var(--branco);
+    position: relative;
+}
+
+.icone-proximo::after {
+    content: "";
+    position: absolute;
+    top: -12px;
+    left: 6px;
+    width: 4px;
+    height: 24px;
+    background-color: var(--branco);
+}
+
 .btn-esteira {
     width: 63px;
     height: 64px;
@@ -129,6 +185,307 @@
     align-items: center;
     justify-content: center;
     gap: 5px;
+}
+
+.btn-esteira img {
+    width: 25px;
+}
+
+.btn-esteira.inativa {
+    background-color: #e56f91;
+    cursor: not-allowed;
+}
+
+/* ---------------- MODAL ESTEIRA ---------------- */
+
+.modal-esteira {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.modal-esteira.escondido {
+    display: none;
+}
+
+.modal-conteudo {
+    width: 86vw;
+    height: 76vh;
+    max-width: none;
+    background-color: #fff7f7;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+}
+
+.modal-conteudo h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 36px;
+}
+
+.opcoes-esteira {
+    display: flex;
+    gap: 54px;
+}
+
+.opcao-esteira {
+    width: 260px;
+    height: 230px;
+    border: 1px solid #8f8f8f;
+    border-radius: 8px;
+    background-color: transparent;
+    color: #000;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.opcao-esteira.selecionada {
+    border-color: var(--vermelho);
+    background-color: var(--vermelho);
+    color: var(--branco);
+}
+
+.opcao-esteira .icone-esteira {
+    width: 130px;
+    margin: 0;
+}
+
+.opcao-esteira .icone-branco {
+    display: none;
+}
+
+.opcao-esteira.selecionada .icone-branco {
+    display: block;
+}
+
+.opcao-esteira.selecionada .icone-preto {
+    display: none;
+}
+
+.acoes-modal {
+    display: flex;
+    gap: 18px;
+    margin-top: 42px;
+}
+
+.btn-cancelar-modal,
+.btn-selecionar-modal {
+    width: 180px;
+    height: 60px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-cancelar-modal {
+    border: 1px solid #000;
+    background-color: transparent;
+    color: #000;
+}
+
+.btn-selecionar-modal {
+    border: none;
+    background-color: var(--vermelho);
+    color: var(--branco);
+}
+
+/* ---------------- MODAL FINALIZAR COMPETICAO ---------------- */
+
+.modal-finalizar-competicao {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.42);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.modal-finalizar-competicao.escondido {
+    display: none;
+}
+
+.modal-finalizar-conteudo {
+    width: 74vw;
+    height: 70vh;
+    background-color: #fff7f7;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+}
+
+.icone-finalizar {
+    color: #333333;
+    font-size: 46px;
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.modal-finalizar-conteudo h2 {
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: 14px;
+    text-align: center;
+}
+
+.modal-finalizar-conteudo p {
+    font-size: 24px;
+    line-height: 1.25;
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.acoes-finalizar {
+    display: flex;
+    gap: 16px;
+}
+
+.btn-cancelar-finalizar,
+.btn-confirmar-finalizar {
+    width: 140px;
+    height: 52px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-cancelar-finalizar {
+    border: 1px solid #000;
+    background-color: transparent;
+    color: #000;
+}
+
+.btn-confirmar-finalizar {
+    border: none;
+    background-color: var(--vermelho);
+    color: var(--branco);
+}
+
+/* ---------------- MODAL FINALIZAR TURNO ---------------- */
+
+.modal-turno {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.58);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.modal-turno.escondido {
+    display: none;
+}
+
+.modal-turno-conteudo {
+    width: 86vw;
+    height: 76vh;
+    max-width: none;
+    border-radius: 12px;
+    background-color: var(--branco);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 72px;
+}
+
+.campos-turno {
+    display: flex;
+    justify-content: center;
+    gap: 44px;
+    width: fit-content;
+}
+
+.campo-turno {
+    display: flex;
+    flex-direction: column;
+}
+
+.campo-turno label {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.campo-turno select,
+.campo-turno input {
+    height: 64px;
+    border: 1px solid #c8c7c7;
+    border-radius: 6px;
+    font-size: 24px;
+}
+
+.campo-corredor {
+    width: 300px;
+}
+
+.campo-corredor select {
+    width: 300px;
+    padding: 0 20px;
+    border: none;
+    background-color: var(--vermelho);
+    color: var(--branco);
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--branco) 50%),
+        linear-gradient(135deg, var(--branco) 50%, transparent 50%);
+    background-position: calc(100% - 28px) 28px, calc(100% - 18px) 28px;
+    background-size: 10px 10px, 10px 10px;
+    background-repeat: no-repeat;
+}
+
+.campo-horario {
+    width: 160px;
+}
+
+.campo-horario input {
+    width: 160px;
+    background-color: var(--vermelho);
+    color: var(--branco);
+    text-align: center;
+}
+
+.campo-quilometragem {
+    width: 520px;
+    align-self: center;
+    transform: translateX(-100px);
+    margin-top: 52px;
+}
+
+.campo-quilometragem input {
+    width: 310px;
+    padding: 0 28px;
+}
+
+.btn-registrar-turno {
+    width: 260px;
+    height: 76px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--vermelho);
+    color: var(--branco);
+    font-size: 28px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 90px;
 }
 
 /* ---------------- REGISTROS ---------------- */
@@ -154,8 +511,11 @@
 
 table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     font-size: 16px;
+    overflow: hidden;
+    border-radius: 8px;
 }
 
 th {
@@ -166,16 +526,38 @@ th {
     border: 1px solid #8a0030;
 }
 
+th:first-child {
+    border-top-left-radius: 4px;
+}
+
+th:last-child {
+    border-top-right-radius: 4px;
+}
+
 td {
     height: 43px;
     text-align: center;
     border: 1px solid #8f8f8f;
 }
 
-/* ---------------- FILA ---------------- */
+tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 8px;
+}
+
+tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 8px;
+}
+
+/* ---------------- FILA DE CORREDORES ---------------- */
 
 .proximos-corredores {
     width: 250px;
+}
+
+.lista-corredores {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .corredor-fila {
@@ -183,14 +565,255 @@ td {
     align-items: center;
     gap: 14px;
     height: 46px;
+    cursor: grab;
+    user-select: none;
+    border-radius: 6px;
+    padding: 0 6px;
+    transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.corredor-fila:hover {
+    background-color: #f3f3f3;
+}
+
+.corredor-fila:active {
+    cursor: grabbing;
+}
+
+.corredor-fila.arrastando {
+    opacity: 0.45;
+    transform: scale(0.98);
+}
+
+.corredor-fila.alvo {
+    background-color: #eeeeee;
+    transform: translateY(2px);
 }
 
 .corredor-fila p {
     flex: 1;
-    font-size: 16px;
+    font-size: 18px;
+    pointer-events: none;
 }
 
 .drag {
     color: #9c9c9c;
-    font-size: 20px;
+    font-size: 24px;
+    cursor: grab;
+    user-select: none;
+    pointer-events: none;
 }
+
+/* ---------------- IMG ---------------- */
+
+img {
+    width: 25px;
+    margin-top: 7px;
+}
+
+/* ---------------- MODAL AVISO CHECKPOINT ---------------- */
+
+.modal-checkpoint-aviso {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.42);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 12;
+}
+
+.modal-checkpoint-aviso.escondido {
+    display: none;
+}
+
+.modal-checkpoint-conteudo {
+    position: relative;
+    width: 665px;
+    min-height: 340px;
+    border-radius: 6px;
+    background-color: #fff7f7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 34px 48px 42px;
+}
+
+.icone-checkpoint-aviso {
+    width: 82px;
+    height: auto;
+    margin: 0 0 24px;
+}
+
+.modal-checkpoint-conteudo h2 {
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.modal-checkpoint-conteudo p {
+    font-size: 19px;
+    line-height: 1.2;
+    margin-bottom: 28px;
+}
+
+.btn-checkpoint-aviso {
+    width: 215px;
+    height: 49px;
+    border: none;
+    border-radius: 9px;
+    background-color: var(--vermelho);
+    color: var(--branco);
+    font-size: 17px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.btn-fechar-checkpoint-aviso {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    border: none;
+    background: transparent;
+    color: #000;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+
+
+
+
+/* ---------------- MODAL KM MENOR QUE ANTERIOR ---------------- */
+
+.modal-km-menor-aviso {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.42);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 13;
+}
+
+.modal-km-menor-aviso.escondido {
+    display: none;
+}
+
+.modal-km-menor-conteudo {
+    position: relative;
+    width: 820px;
+    min-height: 470px;
+    border-radius: 6px;
+    background-color: #fff7f7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 44px 58px 40px;
+}
+
+
+.icone-km-menor-aviso {
+    position: relative;
+    width: 82px;
+    height: 82px;
+    margin-bottom: 26px;
+    border-radius: 50%;
+    background-color: var(--vermelho);
+}
+
+.icone-km-menor-aviso::before,
+.icone-km-menor-aviso::after {
+    content: "";
+    position: absolute;
+    top: 39px;
+    left: 18px;
+    width: 46px;
+    height: 6px;
+    border-radius: 4px;
+    background-color: var(--branco);
+}
+
+.icone-km-menor-aviso::before {
+    transform: rotate(45deg);
+}
+
+.icone-km-menor-aviso::after {
+    transform: rotate(-45deg);
+}
+
+.modal-km-menor-conteudo h2 {
+    font-size: 27px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.modal-km-menor-conteudo p {
+    font-size: 20px;
+    line-height: 1.15;
+    font-weight: 600;
+    margin-bottom: 22px;
+}
+
+.resumo-km-menor {
+    width: 355px;
+    border-radius: 8px;
+    background-color: #d9d9d9;
+    padding: 18px 24px;
+    margin-bottom: 36px;
+}
+
+.linha-km-menor {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.divisor-km-menor {
+    width: 100%;
+    height: 2px;
+    margin: 12px 0;
+    background-color: var(--branco);
+}
+
+.valor-km-informado {
+    color: var(--vermelho);
+}
+
+.acoes-km-menor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.btn-cancelar-km-menor,
+.btn-corrigir-km-menor {
+    width: 146px;
+    height: 53px;
+    border-radius: 9px;
+    font-size: 19px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-cancelar-km-menor {
+    border: 1px solid #000;
+    background-color: transparent;
+    color: #000;
+}
+
+.btn-corrigir-km-menor {
+    border: none;
+    background-color: var(--vermelho);
+    color: var(--branco);
+}
+
