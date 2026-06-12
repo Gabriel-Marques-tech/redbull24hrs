@@ -1,4 +1,4 @@
-/* ---------------- TOPO ---------------- */
+﻿/* ---------------- TOPO ---------------- */
 
 .topo {
     height: 90px;
@@ -469,6 +469,307 @@
     border: none;
     background-color: var(--vermelho);
     color: var(--branco);
+}
+
+.btn-esteira img {
+    width: 25px;
+}
+
+.btn-esteira.inativa {
+    background-color: #e56f91;
+    cursor: not-allowed;
+}
+
+/* ---------------- MODAL ESTEIRA ---------------- */
+
+.modal-esteira {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.modal-esteira.escondido {
+    display: none;
+}
+
+.modal-conteudo {
+    width: 86vw;
+    height: 76vh;
+    max-width: none;
+    background-color: #fff7f7;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+}
+
+.modal-conteudo h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 36px;
+}
+
+.opcoes-esteira {
+    display: flex;
+    gap: 54px;
+}
+
+.opcao-esteira {
+    width: 260px;
+    height: 230px;
+    border: 1px solid #8f8f8f;
+    border-radius: 8px;
+    background-color: transparent;
+    color: #000;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.opcao-esteira.selecionada {
+    border-color: var(--vermelho);
+    background-color: var(--vermelho);
+    color: var(--branco);
+}
+
+.opcao-esteira .icone-esteira {
+    width: 130px;
+    margin: 0;
+}
+
+.opcao-esteira .icone-branco {
+    display: none;
+}
+
+.opcao-esteira.selecionada .icone-branco {
+    display: block;
+}
+
+.opcao-esteira.selecionada .icone-preto {
+    display: none;
+}
+
+.acoes-modal {
+    display: flex;
+    gap: 18px;
+    margin-top: 42px;
+}
+
+.btn-cancelar-modal,
+.btn-selecionar-modal {
+    width: 180px;
+    height: 60px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-cancelar-modal {
+    border: 1px solid #000;
+    background-color: transparent;
+    color: #000;
+}
+
+.btn-selecionar-modal {
+    border: none;
+    background-color: var(--vermelho);
+    color: var(--branco);
+}
+
+/* ---------------- MODAL FINALIZAR COMPETICAO ---------------- */
+
+.modal-finalizar-competicao {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.42);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.modal-finalizar-competicao.escondido {
+    display: none;
+}
+
+.modal-finalizar-conteudo {
+    width: 74vw;
+    height: 70vh;
+    background-color: #fff7f7;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+}
+
+.icone-finalizar {
+    color: #333333;
+    font-size: 46px;
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.modal-finalizar-conteudo h2 {
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: 14px;
+    text-align: center;
+}
+
+.modal-finalizar-conteudo p {
+    font-size: 24px;
+    line-height: 1.25;
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.acoes-finalizar {
+    display: flex;
+    gap: 16px;
+}
+
+.btn-cancelar-finalizar,
+.btn-confirmar-finalizar {
+    width: 140px;
+    height: 52px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-cancelar-finalizar {
+    border: 1px solid #000;
+    background-color: transparent;
+    color: #000;
+}
+
+.btn-confirmar-finalizar {
+    border: none;
+    background-color: var(--vermelho);
+    color: var(--branco);
+}
+
+/* ---------------- MODAL FINALIZAR TURNO ---------------- */
+
+.modal-turno {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.58);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.modal-turno.escondido {
+    display: none;
+}
+
+.modal-turno-conteudo {
+    width: 86vw;
+    height: 76vh;
+    max-width: none;
+    border-radius: 12px;
+    background-color: var(--branco);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 72px;
+}
+
+.campos-turno {
+    display: flex;
+    justify-content: center;
+    gap: 44px;
+    width: fit-content;
+}
+
+.campo-turno {
+    display: flex;
+    flex-direction: column;
+}
+
+.campo-turno label {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.campo-turno select,
+.campo-turno input {
+    height: 64px;
+    border: 1px solid #c8c7c7;
+    border-radius: 6px;
+    font-size: 24px;
+}
+
+.campo-corredor {
+    width: 300px;
+}
+
+.campo-corredor select {
+    width: 300px;
+    padding: 0 20px;
+    border: none;
+    background-color: var(--vermelho);
+    color: var(--branco);
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--branco) 50%),
+        linear-gradient(135deg, var(--branco) 50%, transparent 50%);
+    background-position: calc(100% - 28px) 28px, calc(100% - 18px) 28px;
+    background-size: 10px 10px, 10px 10px;
+    background-repeat: no-repeat;
+}
+
+.campo-horario {
+    width: 160px;
+}
+
+.campo-horario input {
+    width: 160px;
+    background-color: var(--vermelho);
+    color: var(--branco);
+    text-align: center;
+}
+
+.campo-quilometragem {
+    width: 520px;
+    align-self: center;
+    transform: translateX(-100px);
+    margin-top: 52px;
+}
+
+.campo-quilometragem input {
+    width: 310px;
+    padding: 0 28px;
+}
+
+.btn-registrar-turno {
+    width: 260px;
+    height: 76px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--vermelho);
+    color: var(--branco);
+    font-size: 28px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 90px;
 }
 
 /* ---------------- REGISTROS ---------------- */
