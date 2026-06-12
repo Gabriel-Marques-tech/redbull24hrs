@@ -4396,7 +4396,7 @@ A adoção da RedRun é influenciada por três tendências principais: digitaliz
 
 ---
 
-_a) Segmentação de Mercado:_ 
+### 6.4.1 Segmentação de Mercado:
 
 A RedRun atende a um segmento primário bem delimitado: as equipes operacionais do Red Bull 24 Horas no Brasil. Geograficamente, o evento é realizado em múltiplas regiões do país, incluindo capitais e cidades de médio porte, e cada edição regional opera com sua própria equipe, tornando a solução replicável sem adaptações estruturais.
 
@@ -4406,7 +4406,7 @@ Como segmento secundário, identifica-se o mercado de eventos de corrida em reve
 
 O que une ambos os segmentos é a demanda por um sistema simples, estável e confiável, capaz de operar continuamente em ambientes de alta pressão operacional e substituir registros manuais por um fluxo digital rastreável.
 
-_b) Perfil do Público-Alvo:_
+### 6.4.2 Perfil do Público-Alvo:
 A RedRun possui dois perfis de usuário com papéis e momentos de uso distintos: o gerente e o auditor.
 
 O gerente é o responsável pela configuração do sistema antes do evento. Atua em um setor em expansão, com crescente profissionalização das equipes operacionais de eventos. Comportamentalmente, organiza o pré-evento por meio de planilhas dispersas e comunicação manual entre equipes, sem um sistema centralizado que integre locais, equipes, corredores e auditores em um único lugar. Sua principal dor é a fragmentação desse processo: informações desencontradas aumentam o risco de inconsistências e geram retrabalho que se acumula justamente nas horas que antecedem o evento, quando a margem para correções é menor. Sua necessidade é um sistema que centralize todas essas informações antes do evento começar. Sua expectativa é chegar no dia da competição com tudo estruturado, sem pendências operacionais e com menos exposição a imprevistos.
