@@ -70,3 +70,12 @@ button{
 button:hover{
     background-color: #b10033;
 }
+
+button:disabled{
+    background-color: #C8C8C8;
+    cursor: not-allowed;
+}
+
+button:disabled:hover{
+    background-color: #C8C8C8;
+}
