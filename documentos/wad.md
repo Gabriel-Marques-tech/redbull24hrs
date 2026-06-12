@@ -4360,6 +4360,8 @@ O recorte latino-americano indica oportunidade regional direta: o mercado de sof
 
 ### 6.2.3 Tendências de Mercado
 
+---
+
 A adoção da RedRun é influenciada por três tendências estruturais que reorganizam o setor de eventos e definem o espaço em que a solução opera: a digitalização da operação, o uso crescente de dados em experiências esportivas e a busca por ferramentas especializadas de controle em tempo real.
 
 No eixo tecnológico, o mercado de softwares de gestão de eventos é impulsionado pela automação de processos, pela migração para arquiteturas em nuvem e pela análise de dados como apoio à decisão operacional. Soluções baseadas em nuvem já representam mais de 63% desse mercado global [²⁰](#8-referências), comportamento ao qual a RedRun adere diretamente por ser uma aplicação web integrada a uma API, com acesso multiplataforma e baixa dependência de infraestrutura local. A tendência favorece justamente o tipo de fluxo que a solução propõe: a substituição de registros manuais por uma camada digital capaz de consolidar dados com precisão e rastreabilidade.
