@@ -4412,26 +4412,11 @@ As parcerias-chave envolvem principalmente a Red Bull e seus representantes, que
 
 ### 6.6.1 Produto/Serviço
 
-A RedRun é uma aplicação web integrada a uma API, desenvolvida exclusivamente para digitalizar o registro, o acompanhamento e a auditoria operacional do Red Bull 24 Horas Brasil. Seu objetivo é substituir o processo manual baseado em pranchetas físicas e consolidação posterior em planilhas por um fluxo digital estruturado, rastreável e mais confiável. A solução foi projetada para controlar turnos, registrar métricas de desempenho, acompanhar checkpoints e manter histórico auditável dos registros durante as 24 horas de competição.
+Identificou-se que a RedRun é uma aplicação web integrada a uma API, desenvolvida exclusivamente para digitalizar o registro, o acompanhamento e a auditoria operacional do Red Bull 24 Horas Brasil. Sua função é substituir o processo manual baseado em pranchetas e planilhas por um fluxo digital estruturado, rastreável e confiável, projetado para controlar turnos, registrar métricas, acompanhar checkpoints e manter histórico auditável durante as 24 horas de competição.
 
-A solução atende diferentes perfis de uso dentro da operação do evento. Para o auditor de campo, oferece um fluxo simples para registrar início e encerramento de turnos, selecionar equipe, corredor e esteira, inserir quilometragem e acompanhar checkpoints periódicos. Para o coordenador ou gestor da operação, disponibiliza visão consolidada da competição por meio de dashboards, histórico de registros, identificação de inconsistências e métricas acumuladas por equipe e participante. Para a organização do Red Bull 24 Horas Brasil, entrega dados estruturados para validação de resultados, auditoria pós-evento e exportação para análise posterior.
+A solução atende três perfis. Para o auditor de campo, oferece um fluxo simples de registro de início e fim de turno, com seleção de equipe, corredor e esteira e acompanhamento de checkpoints. Para o coordenador, disponibiliza visão consolidada por meio de dashboards, histórico e identificação de inconsistências. Para a organização, entrega dados estruturados para validação e auditoria pós-evento.
 
-As principais funcionalidades da RedRun incluem:
-
-- cadastro de eventos, equipes, corredores e locais;
-- registro de início e fim de turnos de corrida;
-- associação de cada registro a auditor, corredor, equipe, esteira e horário;
-- criação de checkpoints periódicos para reduzir perda de referência durante a operação;
-- cálculo automatizado de distância percorrida e métricas acumuladas;
-- histórico consultável dos registros realizados;
-- dashboard com indicadores consolidados da competição;
-- identificação de inconsistências operacionais;
-- exportação dos dados para análise e auditoria;
-- preservação de registros em cenários de instabilidade de conexão, com armazenamento local temporário e sincronização posterior quando a rede é restabelecida.
-
-O principal benefício da RedRun é reduzir a fragilidade da apuração manual. Ao padronizar entradas, registrar horários automaticamente, estruturar os dados e manter histórico auditável, a aplicação diminui o risco de erro humano, reduz retrabalho e aumenta a confiabilidade dos resultados.
-
-Seu diferencial está na aderência ao contexto específico do Red Bull 24 Horas Brasil. A aplicação não foi pensada como uma ferramenta genérica de eventos, mas como uma solução direcionada ao problema operacional do evento: registrar desempenho contínuo, validar turnos, acompanhar métricas e auditar dados durante uma competição de 24 horas. A RedRun se diferencia justamente por atuar nesse ponto crítico, oferecendo uma solução simples para o auditor em campo, mas robusta para a organização que precisa de precisão, rastreabilidade e segurança na consolidação dos dados.
+As principais funcionalidades são: cadastro de eventos, equipes, corredores e locais; registro de turnos; cálculo automatizado de distância e métricas acumuladas; checkpoints periódicos; dashboard consolidado; exportação de dados; e sincronização posterior em caso de instabilidade de conexão. Concluiu-se que o principal diferencial está na aderência ao contexto específico do evento: uma solução simples para o auditor, porém robusta na precisão e rastreabilidade exigidas pela organização.
 
 ### 6.6.2 Preço
 
