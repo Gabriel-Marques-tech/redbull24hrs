@@ -34,6 +34,27 @@ img{
   transform: translateY(-50px);
 }
 
+/*-------------------ROLE SELECTOR-------------------------*/
+
+.role-selector {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.role-selector input[type="radio"] {
+  width: auto;
+  height: auto;
+  accent-color: var(--vermelho);
+}
+
+.role-selector label {
+  margin-left: 0;
+  font-size: 15px;
+  cursor: pointer;
+}
+
 /*-------------------FORM-------------------------*/
 
 .form{
@@ -72,6 +93,7 @@ button{
   align-self: center;
   color: var(--branco);
   font-size: 25px;
+  margin-top: 20px;
 }
 button:hover{
   background-color: var(--amarelo);
@@ -80,4 +102,31 @@ button:hover{
 a{
   text-decoration: none;
   color: inherit;
+}
+
+/*-------------------ROLE SELECTOR-------------------------*/
+
+.role-selector {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.role-selector label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-left: 0;
+}
+.role-selector input[type="radio"] {
+  width: auto;
+  height: auto;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  accent-color: var(--vermelho);
+}
+button {
+  margin-top: 20px;
 }
