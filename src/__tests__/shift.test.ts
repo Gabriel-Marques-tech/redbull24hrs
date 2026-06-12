@@ -22,14 +22,7 @@ jest.mock("../repositories/shiftRepository", () => ({
 		lastCheckpointTimestamp: jest.fn(),
 		addCheckpoint: jest.fn(),
 		finish: jest.fn(),
-		findCheckpointById: jest.fn(),
-		findNeighborCheckpoints: jest.fn(),
-		correctCheckpoint: jest.fn(),
 	},
-}));
-
-jest.mock("../utils/jwt", () => ({
-	verifyAccessToken: jest.fn(() => ({ sub: 3, email: "auditor@test.com", role: "auditor", name: "Auditor" })),
 }));
 
 import { shiftRepository } from "../repositories/shiftRepository";
