@@ -28,12 +28,36 @@ export const eventService = {
 		return event;
 	},
 
+	async startEvent(id: number) {
+		const event = await eventRepository.findById(id);
+		if (!event) throw new Error("Evento não encontrado");
+		if (event.status === "in_progress") throw new Error("Evento já está em andamento");
+		if (event.status === "finished") throw new Error("Evento já está encerrado");
+		const started = await eventRepository.start(id);
+		if (!started) throw new Error("Não foi possível iniciar o evento");
+		return started;
+	},
+
+	async finishEvent(id: number) {
+		const event = await eventRepository.findById(id);
+		if (!event) throw new Error("Evento não encontrado");
+		if (event.status === "pending") throw new Error("Evento ainda não foi iniciado");
+		if (event.status === "finished") throw new Error("Evento já está encerrado");
+		const finished = await eventRepository.finish(id);
+		if (!finished) throw new Error("Não foi possível encerrar o evento");
+		return finished;
+	},
+
 	async registerTreadmill(number: number) {
 		return treadmillRepository.create(number);
 	},
 
 	async listTreadmills() {
 		return treadmillRepository.findAll();
+	},
+
+	async listTreadmillsByTeam(team_id: number) {
+		return treadmillRepository.findByTeam(team_id);
 	},
 
 	async updateTreadmill(id: number, number: number) {
