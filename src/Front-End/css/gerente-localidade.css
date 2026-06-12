@@ -1,5 +1,16 @@
+body {
+    overflow: hidden;
+}
+
+main {
+    height: calc(100vh - 170px);
+}
+
 .conteudo-localidade {
     width: 700px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .formulario-localidade {
@@ -7,59 +18,116 @@
 }
 
 .formulario-localidade h1 {
-    font-size: 35px;
-    margin-bottom: 30px;
+    font-size: 30px;
+    margin-bottom: 18px;
 }
 
 .formulario-localidade label {
     display: block;
-    font-size: 22px;
-    margin-bottom: 8px;
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 6px;
 }
 
 .campo-select {
     position: relative;
     width: 700px;
-    margin-bottom: 25px;
+    margin-bottom: 16px;
 }
 
-.campo-select select {
+.campo-select select,
+.campo-select input {
     width: 100%;
-    height: 60px;
-    padding: 0 70px 0 40px;
+    height: 50px;
+    padding: 0 60px 0 20px;
     border: 1px solid #8d8d8d;
     border-radius: 4px;
     background-color: var(--branco);
     color: #1c1c1c;
-    font-size: 22px;
-    appearance: none;
+    font-size: 18px;
+    box-sizing: border-box;
+}
+
+.campo-select input:disabled {
+    background-color: #f0f0f0;
+    color: #9d9d9d;
+    cursor: not-allowed;
+}
+
+/* seta dropdown */
+.combo-seta {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border: none;
+    background: transparent;
     cursor: pointer;
 }
 
-.campo-select::after {
+.combo-seta::after {
     content: "";
     position: absolute;
-    right: 40px;
-    top: 50%;
-    transform: translateY(-35%);
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 14px solid #000000;
-    pointer-events: none;
+    left: 2px;
+    top: 5px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 11px solid #1c1c1c;
+    transition: transform 0.15s;
+}
+
+.campo-select.aberto .combo-seta::after {
+    transform: rotate(180deg);
+}
+
+/* lista dropdown */
+.combo-lista {
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 0;
+    right: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 4px 0;
+    list-style: none;
+    background: var(--branco);
+    border: 1px solid #8d8d8d;
+    border-radius: 4px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    z-index: 50;
+    display: none;
+}
+
+.campo-select.aberto .combo-lista {
+    display: block;
+}
+
+.combo-lista li {
+    padding: 10px 20px;
+    font-size: 17px;
+    color: #1c1c1c;
+    cursor: pointer;
+}
+
+.combo-lista li:hover {
+    background: #f0f0f0;
 }
 
 .botoes-localidade {
-    margin-top: auto;
+    margin-top: 20px;
 }
 
 .btn-proximo-localidade {
-    width: 180px;
-    height: 60px;
+    width: 160px;
+    height: 52px;
     border: none;
     border-radius: 6px;
     background-color: var(--vermelho);
     color: var(--branco);
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 700;
     cursor: pointer;
 }

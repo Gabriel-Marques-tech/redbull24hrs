@@ -1,0 +1,236 @@
+/* override equipe.css que trava scroll */
+body { overflow: auto !important; }
+main { height: auto !important; }
+
+.conteudo-editar {
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+.etapas-editar .etapa {
+    cursor: pointer;
+}
+
+.subetapa-editar {
+    display: block;
+    color: var(--vermelho);
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.conteudo-editar h1 {
+    font-size: 32px;
+    margin: 0 0 16px;
+}
+
+.secao-editar { }
+
+.bloco {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+}
+
+.bloco h2 {
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.bloco label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.bloco input,
+.bloco select {
+    display: block;
+    width: 100%;
+    height: 42px;
+    margin-top: 4px;
+    padding: 0 12px;
+    border: 1px solid #8d8d8d;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.linha-dupla {
+    display: flex;
+    gap: 14px;
+}
+.linha-dupla label { flex: 1; }
+
+/* equipes */
+.equipe-edit {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    background: #fafafa;
+}
+
+.label-equipe {
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #444;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.label-equipe .eq-nome {
+    flex: 1;
+    height: 38px;
+    padding: 0 12px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-bottom: 2px solid #ddd;
+    border-radius: 0;
+    background: transparent;
+    margin-top: 0;
+    width: auto;
+    transition: border-color 0.15s;
+}
+
+.label-equipe .eq-nome:focus {
+    outline: none;
+    border-bottom-color: var(--vermelho);
+}
+
+.linha-atleta {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 1.4fr 40px;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.linha-atleta input,
+.linha-atleta select {
+    height: 40px;
+    margin-top: 0;
+    font-size: 14px;
+}
+
+.btn-remover-atleta {
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 50%;
+    background: #f0f0f0;
+    color: #c62828;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+}
+.btn-remover-atleta:hover { background: #ffe0e0; }
+
+.btn-add-atleta {
+    margin-top: 8px;
+    padding: 10px 18px;
+    background: var(--vermelho);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.btn-add-atleta:hover:not(:disabled) { background: #b10033; }
+
+/* slot com lápis + X */
+.campo-atleta--edit {
+    grid-template-columns: 34px 1fr 70px 28px 28px;
+}
+.btn-slot-editar,
+.btn-slot-remover {
+    width: 26px;
+    height: 26px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+.btn-slot-editar        { color: #555; }
+.btn-slot-editar:hover  { background: #e8f0ff; color: var(--azul); }
+.btn-slot-remover       { color: #c62828; }
+.btn-slot-remover:hover { background: #ffe0e0; }
+
+/* ações */
+.botoes-secao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+    padding-right: 16px;
+}
+
+.btn-salvar {
+    padding: 14px 32px;
+    background: var(--vermelho);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.btn-salvar:hover { background: #b10033; }
+.btn-salvar:disabled { opacity: 0.6; cursor: default; }
+
+.btn-excluir {
+    padding: 12px 20px;
+    background: transparent;
+    border: 1.5px solid #c62828;
+    border-radius: 8px;
+    color: #c62828;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.btn-excluir:hover { background: #ffecec; }
+
+.btn-avancar-secao {
+    padding: 14px 28px;
+    background: var(--vermelho);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.btn-avancar-secao:hover { background: #b10033; }
+
+.btn-voltar-secao {
+    padding: 12px 18px;
+    background: transparent;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    color: #555;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.btn-voltar-secao:hover { background: #f5f5f5; }

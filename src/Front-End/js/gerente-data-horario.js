@@ -8,6 +8,10 @@ btnProximoData.addEventListener("click", () => {
         horario: inputHorario.value
     };
 
+    if (!dataHorario.data || !dataHorario.horario) {
+        alert("Preencha data e horário antes de continuar.");
+        return;
+    }
     localStorage.setItem("dataHorarioCompeticao", JSON.stringify(dataHorario));
-    console.log("Data e horario definidos:", dataHorario);
+    window.location.href = "/manager/create-event/teams";
 });
