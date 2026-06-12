@@ -4417,6 +4417,8 @@ Como segmento secundário, identifica-se o mercado de eventos de corrida em reve
 
 O que une ambos os segmentos é a demanda por um sistema simples, estável e confiável, capaz de operar continuamente em ambientes de alta pressão operacional e substituir registros manuais por um fluxo digital rastreável.
 
+---
+
 ### 6.3.2 Perfil do Público-Alvo:
 
 A RedRun possui dois perfis de usuário com papéis e momentos de uso distintos: o gerente e o auditor.
