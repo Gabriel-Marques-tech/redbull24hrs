@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estat&iacute;sticas do atleta</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/estatisticas.css">
+</head>
+<body>
+    <div class="barra-gradiente"></div>
+
+    <main class="pagina-estatisticas pagina-atleta">
+        <a href="estatisticas-competicao.html?aba=equipes" class="voltar-estatisticas voltar-atleta">
+            <img src="../assets/competi%C3%A7%C3%A3o/Seta.svg" alt="">
+            Voltar
+        </a>
+
+        <header class="cabecalho-atleta">
+            <div>
+                <h1 id="nomeAtleta">Pietro Sans&atilde;o</h1>
+                <p class="time-atleta">
+                    <img src="../assets/visao-geral/pessoas.svg" alt="">
+                    <span id="timeAtleta">Inimigos do Pace</span>
+                </p>
+            </div>
+
+            <button class="btn-compartilhar btn-exportar" type="button">
+                <img class="icone-botao" src="../assets/estatisticas/compartilhar.svg" alt="">
+                Exportar
+            </button>
+        </header>
+
+        <section class="estatisticas-atleta">
+            <h2>Estat&iacute;sticas do atleta</h2>
+
+            <div class="grade-graficos">
+                <article class="grafico-card">
+                    <svg viewBox="0 0 420 150" aria-label="Gr&aacute;fico de quilometragem">
+                        <polyline class="linha-grafico" points="18,128 108,88 158,120 210,74 232,96 248,70 274,82 318,54 352,70 378,32 410,14" />
+                        <g class="pontos-grafico">
+                            <circle cx="108" cy="88" r="4" />
+                            <circle cx="158" cy="120" r="4" />
+                            <circle cx="210" cy="74" r="4" />
+                            <circle cx="232" cy="96" r="4" />
+                            <circle cx="248" cy="70" r="4" />
+                            <circle cx="274" cy="82" r="4" />
+                            <circle cx="318" cy="54" r="4" />
+                            <circle cx="352" cy="70" r="4" />
+                            <circle cx="378" cy="32" r="4" />
+                        </g>
+                    </svg>
+
+                    <div class="metricas-atleta">
+                        <p><span>Quilometragem total</span><strong>35km</strong></p>
+                        <p><span>Velocidade m&eacute;dia</span><strong>25km/h</strong></p>
+                        <p><span>Pace m&eacute;dio</span><strong>4:40</strong></p>
+                        <p><span>Tempo total percorrido</span><strong>1h 24min</strong></p>
+                    </div>
+                </article>
+
+                <article class="grafico-card">
+                    <svg viewBox="0 0 420 150" aria-label="Gr&aacute;fico de velocidade">
+                        <polyline class="linha-grafico" points="18,128 108,88 158,120 210,74 232,96 248,70 274,82 318,54 352,70 378,32 410,14" />
+                        <g class="pontos-grafico">
+                            <circle cx="108" cy="88" r="4" />
+                            <circle cx="158" cy="120" r="4" />
+                            <circle cx="210" cy="74" r="4" />
+                            <circle cx="232" cy="96" r="4" />
+                            <circle cx="248" cy="70" r="4" />
+                            <circle cx="274" cy="82" r="4" />
+                            <circle cx="318" cy="54" r="4" />
+                            <circle cx="352" cy="70" r="4" />
+                            <circle cx="378" cy="32" r="4" />
+                        </g>
+                    </svg>
+
+                    <div class="metricas-atleta">
+                        <p><span>Quilometragem total</span><strong>35km</strong></p>
+                        <p><span>Velocidade m&eacute;dia</span><strong>25km/h</strong></p>
+                        <p><span>Pace m&eacute;dio</span><strong>4:40</strong></p>
+                        <p><span>Tempo total percorrido</span><strong>1h 24min</strong></p>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/estatisticas.js"></script>
+</body>
+</html>
+
+

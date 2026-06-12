@@ -1,0 +1,59 @@
+body {
+    min-height: 100vh;
+    background-color: var(--branco);
+}
+
+.agenda-competicoes {
+    width: 100%;
+    min-height: calc(100vh - 105px);
+    padding-top: 8px;
+    background-color: var(--branco);
+}
+
+.cabecalho-agenda {
+    text-align: center;
+    margin-top: 2px;
+}
+
+.cabecalho-agenda p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.icone-localizacao {
+    width: 23px;
+    height: 23px;
+    object-fit: contain;
+    display: block;
+}
+
+.cabecalho-agenda h1 {
+    font-size: 34px;
+    font-weight: 800;
+}
+
+.lista-agenda {
+    width: 704px;
+    margin: 46px auto 0;
+}
+
+.linha-competicao {
+    display: grid;
+    grid-template-columns: 44px 212px 172px 126px 1fr;
+    align-items: center;
+    min-height: 60px;
+    border-bottom: 1px solid #c8c8c8;
+    font-size: 20px;
+}
+
+.linha-competicao span {
+    text-align: center;
+}
+
+.linha-competicao:last-child {
+    border-bottom: none;
+}
