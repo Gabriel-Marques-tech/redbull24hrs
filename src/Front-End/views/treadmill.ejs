@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esteira</title>
+    <link rel="stylesheet" href="/css/esteira.css">
+    <link rel="stylesheet" href="/css/global.css">
+</head>
+<body>
+
+    <div class="barra-gradiente"></div>
+    <a href="/home" class="cancelar">
+        <img src="/assets/competição/Seta.svg" alt="">
+        Cancelar
+    </a>
+
+    <main>
+        <aside class="etapas">
+            <h3>Etapas</h3>
+            <div class="etapa">
+                <span>1</span>
+                <p>Competição</p>
+            </div>
+            <div class="etapa">
+                <span>2</span>
+                <p>Equipe</p>
+            </div>
+            <div class="etapa ativa">
+                <span>3</span>
+                <p>Esteira</p>
+            </div>
+            <div class="etapa">
+                <span>4</span>
+                <p>Visão geral</p>
+            </div>
+        </aside>
+
+        <section class="conteudo">
+
+            <h2>Selecione a esteira inicial</h2>
+
+            <div class="lista-esteiras">
+                <% treadmills.forEach(treadmill => {
+                    const ocupada = busyIds.includes(treadmill.id);
+                %>
+                <div class="esteira <%= ocupada ? 'esteira-ocupada' : '' %>"
+                     data-id="<%= treadmill.id %>"
+                     <%= ocupada ? '' : 'onclick="selecionarEsteira(this)"' %>>
+                    <img src="/assets/esteira/<%= ocupada ? 'esteira-cinza.svg' : 'esteira.svg' %>" alt="">
+                    <p><strong>Esteira <%= treadmill.number %></strong></p>
+                    <% if (ocupada) { %>
+                    <span class="badge-ocupada">Em uso</span>
+                    <% } %>
+                </div>
+                <% }) %>
+            </div>
+
+            <div class="botoes">
+                <button class="btn-voltar" onclick="window.location.href='/team?eventId=<%= eventId %>'">Anterior</button>
+                <button class="btn-proximo" id="btn-proximo" disabled onclick="proximaEtapa()">Próximo</button>
+            </div>
+
+        </section>
+    </main>
+    <script>
+        sessionStorage.setItem("eventId", "<%= eventId %>");
+        sessionStorage.setItem("teamId", "<%= teamId %>");
+    </script>
+    <script src="/js/esteira.js"></script>
+</body>
+</html>
