@@ -219,3 +219,39 @@ btnRegistrarCheckpointAviso.addEventListener("click", () => {
 });
 
 
+
+const modalKmMenorAviso = document.getElementById("modalKmMenorAviso");
+const btnCancelarKmMenorAviso = document.getElementById("btnCancelarKmMenorAviso");
+const btnCorrigirKmMenorAviso = document.getElementById("btnCorrigirKmMenorAviso");
+const valorKmAnteriorAviso = document.getElementById("valorKmAnteriorAviso");
+const valorKmInformadoAviso = document.getElementById("valorKmInformadoAviso");
+
+function abrirModalKmMenorAnterior(kmAnterior = "10km", kmInformado = "2 km") {
+    valorKmAnteriorAviso.textContent = kmAnterior;
+    valorKmInformadoAviso.textContent = kmInformado;
+    modalKmMenorAviso.classList.remove("escondido");
+}
+
+function fecharModalKmMenorAnterior() {
+    modalKmMenorAviso.classList.add("escondido");
+}
+
+window.abrirModalKmMenorAnterior = abrirModalKmMenorAnterior;
+
+const parametrosKmMenorAviso = new URLSearchParams(window.location.search);
+if (parametrosKmMenorAviso.has("km-menor") || window.location.hash === "#km-menor") {
+    abrirModalKmMenorAnterior();
+}
+
+modalKmMenorAviso.addEventListener("click", (evento) => {
+    if (evento.target === modalKmMenorAviso) {
+        fecharModalKmMenorAnterior();
+    }
+});
+
+btnCancelarKmMenorAviso.addEventListener("click", fecharModalKmMenorAnterior);
+btnCorrigirKmMenorAviso.addEventListener("click", () => {
+    fecharModalKmMenorAnterior();
+    console.log("Solicita correcao de quilometragem");
+});
+

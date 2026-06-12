@@ -209,9 +209,36 @@
             <button class="btn-checkpoint-aviso" id="btnRegistrarCheckpointAviso" type="button">Registrar checkpoint</button>
         </div>
     </div>
+
+    <div class="modal-km-menor-aviso escondido" id="modalKmMenorAviso">
+        <div class="modal-km-menor-conteudo" role="dialog" aria-modal="true" aria-labelledby="tituloKmMenorAviso">
+            <div class="icone-km-menor-aviso" aria-hidden="true"></div>
+            <h2 id="tituloKmMenorAviso">Km menor que o anterior</h2>
+            <p>O Km informado &eacute; menor que o<br>&uacute;ltimo valor registrado</p>
+
+            <div class="resumo-km-menor">
+                <div class="linha-km-menor">
+                    <span>Km anterior</span>
+                    <strong id="valorKmAnteriorAviso">10km</strong>
+                </div>
+                <div class="divisor-km-menor"></div>
+                <div class="linha-km-menor">
+                    <span>Km informado</span>
+                    <strong class="valor-km-informado" id="valorKmInformadoAviso">2 km</strong>
+                </div>
+            </div>
+
+            <div class="acoes-km-menor">
+                <button class="btn-cancelar-km-menor" id="btnCancelarKmMenorAviso" type="button">Cancelar</button>
+                <button class="btn-corrigir-km-menor" id="btnCorrigirKmMenorAviso" type="button">Corrigir</button>
+            </div>
+        </div>
+    </div>
     <script src="../js/auditoria.js"></script>
 </body>
 
 </html>
+
+
 
 
