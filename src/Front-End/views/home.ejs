@@ -3,35 +3,298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auditor</title>
-    <link rel="stylesheet" href="../css/home-auditor.css">
-    <link rel="stylesheet" href="../css/global.css">
-    <script type="module" src="../js/home.js"></script>
+    <title><%= user && user.role === 'manager' ? 'Manager' : 'Auditor' %></title>
+    <link rel="stylesheet" href="/css/home-auditor.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <script type="module" src="/js/home.js"></script>
 </head>
 <body>
+
+    <!-- Aviso: competições agendadas são exclusivas de managers -->
+    <script>
+        (function () {
+            const aviso = new URLSearchParams(location.search).get('aviso')
+            if (aviso === 'agendada_manager') {
+                alert('Competições agendadas são exclusivas de managers. Auditores só operam competições em andamento.')
+                history.replaceState(null, '', '/home')
+            }
+        })()
+    </script>
+
+    <!-- Modal de recuperação de turno ativo (apenas auditor) -->
+    <% if (!user || user.role !== 'manager') { %>
+    <div id="overlayTurnoAtivo" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:9999; align-items:center; justify-content:center;">
+        <div style="background:#fff; border-radius:16px; padding:40px 36px; width:420px; max-width:90vw; text-align:center; box-shadow:0 8px 40px rgba(0,0,0,0.25);">
+            <div style="width:48px; height:4px; background:var(--vermelho); border-radius:2px; margin:0 auto 20px;"></div>
+            <h2 style="font-size:22px; font-weight:700; margin-bottom:10px; color:#1a1a1a;">Turno em andamento</h2>
+            <p id="modalTurnoTexto" style="font-size:16px; color:#555; margin-bottom:32px; line-height:1.5;"></p>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+                <button id="modalBtnRetomar" style="padding:16px; background:#c62828; color:#fff; border:none; border-radius:10px; font-size:17px; font-weight:700; cursor:pointer;">Retomar turno</button>
+                <button onclick="descartarTurnoAtivo()" style="padding:14px; background:#f5f5f5; color:#555; border:none; border-radius:10px; font-size:16px; font-weight:600; cursor:pointer;">Ignorar e continuar</button>
+            </div>
+        </div>
+    </div>
+
+    <% } %>
+
+    <!-- Overlay do drawer -->
+    <div id="drawerOverlay" onclick="fecharDrawer()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:1000;"></div>
+
+    <!-- Drawer lateral -->
+    <div id="userDrawer" style="
+        position:fixed; top:0; right:-340px; width:320px; height:100vh;
+        background:#fff; z-index:1001; box-shadow:-4px 0 30px rgba(0,0,0,0.2);
+        transition:right 0.3s ease; display:flex; flex-direction:column;
+        border-radius:16px 0 0 16px; overflow:hidden;
+    ">
+        <!-- Topo -->
+        <div style="background:var(--azul); padding:32px 28px 28px; color:#fff; position:relative;">
+            <button onclick="fecharDrawer()" style="
+                position:absolute; top:16px; right:16px;
+                background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:#fff;
+                width:36px; height:36px; border-radius:50%; font-size:20px; cursor:pointer; line-height:1;
+                font-family:inherit;
+            ">×</button>
+            <!-- Avatar com iniciais -->
+            <div style="
+                width:72px; height:72px; border-radius:50%;
+                background:var(--vermelho); border:3px solid rgba(255,255,255,0.4);
+                display:flex; align-items:center; justify-content:center;
+                font-size:26px; font-weight:700; margin-bottom:16px; letter-spacing:1px;
+                font-family:'Inter', sans-serif;
+            "><%= user ? user.name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase() : '?' %></div>
+            <p style="font-size:20px; font-weight:700; margin-bottom:4px; font-family:'Inter',sans-serif;"><%= user ? user.name : '—' %></p>
+            <p style="font-size:13px; opacity:0.7; font-family:'Inter',sans-serif;"><%= user ? user.email : '' %></p>
+        </div>
+
+        <!-- Info -->
+        <div style="padding:24px 28px; flex:1; display:flex; flex-direction:column; gap:16px;">
+            <!-- Função — apenas informação -->
+            <div style="padding:14px 16px; background:#f5f5f5; border-radius:8px;">
+                <p style="font-size:11px; color:#999; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:4px; font-family:'Inter',sans-serif;">Função</p>
+                <p style="font-size:16px; font-weight:600; font-family:'Inter',sans-serif;"><%= user ? (user.role === 'manager' ? 'Gerente' : 'Auditor') : '—' %></p>
+            </div>
+
+            <% if (user && user.role === 'manager') { %>
+            <!-- Navegação — outlined com seta -->
+            <a href="/manager/shifts" style="
+                display:flex; align-items:center; justify-content:space-between;
+                padding:14px 16px; background:#fff;
+                border:1.5px solid var(--azul); border-radius:8px;
+                text-decoration:none; color:var(--azul);
+                font-family:'Inter',sans-serif;
+                transition:background 0.15s;
+            " onmouseover="this.style.background='#f0f0ff'"
+               onmouseout="this.style.background='#fff'">
+                <div>
+                    <p style="font-size:11px; color:#999; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:3px;">Turnos</p>
+                    <p style="font-size:15px; font-weight:600;">Ver em andamento</p>
+                </div>
+                <span style="font-size:20px; font-weight:300;">›</span>
+            </a>
+            <% } %>
+        </div>
+
+        <!-- Logout -->
+        <div style="padding:24px 28px; border-top:1px solid #eee;">
+            <button onclick="fazerLogout()" style="
+                width:100%; height:52px; background:var(--vermelho); border:none;
+                color:#fff; border-radius:8px; font-size:16px; font-weight:700; cursor:pointer;
+                font-family:'Inter',sans-serif; letter-spacing:0.3px;
+            " onmouseover="this.style.background='#b10033'"
+               onmouseout="this.style.background='var(--vermelho)'">
+                Sair da conta
+            </button>
+        </div>
+    </div>
+
     <header>
-        <img src="../assets/logo-RB24h/logo.png" alt="">
+        <img src="/assets/logo-RB24h/logo.png" alt="">
+        <!-- Botão de perfil -->
+        <button onclick="abrirDrawer()" style="
+            position:absolute; right:30px; top:60px;
+            width:48px; height:48px; border-radius:50%; border:none;
+            background:#D9D9D9; color:#333;
+            font-size:14px; font-weight:700; cursor:pointer; letter-spacing:0.5px;
+            font-family:'Inter',sans-serif; z-index:2;
+            border:2px solid rgba(255,255,255,0.7);
+            transition:background 0.15s, border-color 0.15s;
+        " onmouseover="this.style.background='#fff';this.style.borderColor='#D2003C'"
+           onmouseout="this.style.background='#D9D9D9';this.style.borderColor='rgba(255,255,255,0.7)'"
+        ><%= user ? user.name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase() : '?' %></button>
     </header>
    <main>
     <section class="Bem-vindo">
-            <h1>Seja bem-vindo!</h1>
-            <span>Pronto para criar aasas?</span>
-            <button onclick="window.location.href='/competition'"><img src="../assets/Home-Auditor/Vector.svg" alt=""><strong>Iniciar Auditoria</strong></button>
+        <h1>Seja bem-vindo<% if (user && user.name) { %>, <%= user.name.split(' ')[0] %><% } %>!</h1>
+
+        <% if (user && user.role === 'manager') { %>
+            <span>Gerencie competições e equipes.</span>
+            <button onclick="window.location.href='/manager/create-event/location'">
+                <img src="/assets/Home-Auditor/Vector.svg" alt="">
+                <strong>Registrar Competição</strong>
+            </button>
+            <div style="margin-top:12px">
+                <a href="/manager/shifts" style="font-size:14px; color:#c62828; font-weight:600;">Ver turnos em andamento →</a>
+            </div>
+        <% } else { %>
+            <span>Pronto para criar asas?</span>
+            <button onclick="window.location.href='/competition'">
+                <img src="/assets/Home-Auditor/Vector.svg" alt="">
+                <strong>Iniciar Auditoria</strong>
+            </button>
+        <% } %>
     </section>
     <section class="Histórico">
         <div class="historico-titulo">
-            <h2>Histórico de competições</h2>
-            <a href="#">Ver tudo</a>
+            <h2>Competições</h2>
         </div>
 
-        <div class="cards">
-            <article class="card rio"><h3>Red Bull 24h<br>Rio de Janeiro</h3></article>
-            <article class="card sp"><h3>Red Bull 24h<br>São Paulo</h3></article>
-            <article class="card recife"><h3>Red Bull 24h<br>Recife</h3></article>
-            <article class="card bh"><h3>Red Bull 24h<br>Belo Horizonte</h3></article>
-            <article class="card poa"><h3>Red Bull 24h<br>Porto Alegre</h3></article>
+        <%
+            const grupoPrincipal = { chave: 'in_progress', titulo: 'Acontecendo' };
+            const gruposExtra = [
+                { chave: 'pending',  titulo: 'Agendadas' },
+                { chave: 'finished', titulo: 'Finalizadas' }
+            ];
+            const renderGrupo = (grupo) => {
+                const lista = events.filter(e => (e.status || 'pending') === grupo.chave);
+                return { grupo, lista };
+            };
+            const extras = gruposExtra.map(renderGrupo);
+            const totalExtras = extras.reduce((n, g) => n + g.lista.length, 0);
+        %>
+
+        <%- include('partials/grupo-eventos', renderGrupo(grupoPrincipal)) %>
+
+        <% if (totalExtras > 0) { %>
+        <button type="button" id="btnVerMais" class="btn-ver-mais" onclick="toggleVerMais()">
+            Ver mais (<%= totalExtras %>)
+        </button>
+
+        <div id="gruposExtra" style="display:none;">
+            <% extras.forEach(g => { %>
+                <%- include('partials/grupo-eventos', g) %>
+            <% }) %>
         </div>
+        <% } %>
     </section>
+
+    <script>
+    function toggleVerMais() {
+        const box = document.getElementById('gruposExtra');
+        const btn = document.getElementById('btnVerMais');
+        const aberto = box.style.display !== 'none';
+        box.style.display = aberto ? 'none' : 'block';
+        btn.textContent = aberto ? 'Ver mais (<%= totalExtras %>)' : 'Ver menos';
+    }
+    </script>
    </main>
+
+<script>
+function abrirDrawer() {
+    document.getElementById('userDrawer').style.right = '0'
+    document.getElementById('drawerOverlay').style.display = 'block'
+}
+function fecharDrawer() {
+    document.getElementById('userDrawer').style.right = '-340px'
+    document.getElementById('drawerOverlay').style.display = 'none'
+}
+async function fazerLogout() {
+    try {
+        const accessToken = localStorage.getItem('accessToken')
+        await fetch('/auth/logout', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${accessToken}` },
+            credentials: 'include'
+        })
+    } catch(e) {}
+    localStorage.clear()
+    window.location.href = '/login'
+}
+</script>
+
+<% if (!user || user.role !== 'manager') { %>
+<script>
+(async function() {
+    const raw = localStorage.getItem('activeShift')
+    if (!raw) return
+    try {
+        const s = JSON.parse(raw)
+        if (!s.shiftId) { localStorage.removeItem('activeShift'); return; }
+
+        // Verificar se turno ainda está aberto no servidor
+        const statusUrl = `/audit/shifts/${s.shiftId}/status`
+        const doFetch = (token) => fetch(statusUrl, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            credentials: 'include'
+        })
+
+        let res = await doFetch(localStorage.getItem('accessToken'))
+
+        // Token expirado: tenta refresh antes de descartar o turno
+        if (res.status === 401) {
+            const refreshRes = await fetch('/auth/refresh', { method: 'POST', credentials: 'include' })
+            if (!refreshRes.ok) return  // sem sessão válida; mantém activeShift p/ próxima visita
+            const { accessToken: newToken } = await refreshRes.json()
+            localStorage.setItem('accessToken', newToken)
+            res = await doFetch(newToken)
+        }
+
+        if (!res.ok) {
+            // 404 = turno não existe mais
+            if (res.status === 404) localStorage.removeItem('activeShift')
+            return
+        }
+        const data = await res.json()
+        if (data.status !== 'in_progress') {
+            localStorage.removeItem('activeShift')
+            return
+        }
+
+        const overlay = document.getElementById('overlayTurnoAtivo')
+        const texto   = document.getElementById('modalTurnoTexto')
+        const btn     = document.getElementById('modalBtnRetomar')
+
+        const hora = s.startAt
+            ? new Date(s.startAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+            : '?'
+        texto.textContent = `Esteira ${s.treadmillId || '?'} com turno iniciado às ${hora}. Deseja retornar para continuar?`
+        overlay.style.display = 'flex'
+
+        btn.addEventListener('click', () => {
+            const params = new URLSearchParams({
+                eventId:     s.eventId     || '',
+                teamId:      s.teamId      || '',
+                treadmillId: s.treadmillId || '',
+            })
+            window.location.href = '/audit?' + params.toString()
+        })
+    } catch(e) {
+        localStorage.removeItem('activeShift')
+    }
+})()
+
+async function descartarTurnoAtivo() {
+    const raw = localStorage.getItem('activeShift')
+    if (raw) {
+        try {
+            const s = JSON.parse(raw)
+            if (s.shiftId) {
+                const accessToken = localStorage.getItem('accessToken')
+                await fetch(`/audit/shifts/${s.shiftId}/abandon`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` },
+                    body: JSON.stringify({ force_close: true })
+                })
+            }
+        } catch(e) {}
+    }
+    localStorage.removeItem('activeShift')
+    document.getElementById('overlayTurnoAtivo').style.display = 'none'
+}
+</script>
+<% } %>
 </body>
 </html>

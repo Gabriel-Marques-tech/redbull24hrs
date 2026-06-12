@@ -67,12 +67,14 @@ body{
 /* ---------------- ETAPAS TELA AUDITOR ---------------- */
 
 .etapas{
-    width: 270px;
+    width: 240px;
+    min-width: 200px;
+    flex-shrink: 0;
     height: fit-content;
     background-color: #eeeeee;
     border: 1px solid #C8C7C7;
     margin-top: 100px;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .etapas h3{

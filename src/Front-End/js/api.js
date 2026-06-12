@@ -1,15 +1,16 @@
 
 async function apiFetch(url, options = {}) {
-	const accessToken = localStorage.getItem('accessToken');
+	const accessToken = localStorage.getItem('accessToken')
 
-	const res = await fetch(url, { 
+	const res = await fetch(url, {
+		credentials: 'include',
 		...options,
 		headers: {
-		'Content-Type': 'application/json',
-      	'Authorization': `Bearer ${accessToken}`,
-		...options.headers
-	}
-})
+			'Content-Type': 'application/json',
+			'Authorization': `Bearer ${accessToken}`,
+			...options.headers
+		}
+	})
 
 	if (res.status === 401) {
 		const refreshRes = await fetch('/auth/refresh', {
@@ -18,23 +19,22 @@ async function apiFetch(url, options = {}) {
 		})
 
 		if (!refreshRes.ok) {
-			window.location.href = '/pages/index.html';
-		return
+			window.location.href = '/login'
+			return
 		}
 
-		const {accessToken: newToken} = await refreshRes.json()
+		const { accessToken: newToken } = await refreshRes.json()
 		localStorage.setItem('accessToken', newToken)
 
-
-		return await fetch(url, { 
+		return await fetch(url, {
+			credentials: 'include',
 			...options,
 			headers: {
 				'Content-Type': 'application/json',
-      			'Authorization': `Bearer ${accessToken}`,
+				'Authorization': `Bearer ${newToken}`,
 				...options.headers
 			}
 		})
-		
 	}
 
 	return res

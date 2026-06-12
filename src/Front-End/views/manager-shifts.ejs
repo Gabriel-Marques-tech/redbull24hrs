@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turnos em andamento</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <style>
+        body { font-family: sans-serif; padding: 40px; }
+        h1 { font-size: 28px; margin-bottom: 8px; }
+        .subtitulo { color: #666; margin-bottom: 32px; font-size: 15px; }
+        table { width: 100%; border-collapse: collapse; font-size: 15px; }
+        th { text-align: left; padding: 10px 14px; background: #f5f5f5; border-bottom: 2px solid #ddd; font-weight: 600; }
+        td { padding: 10px 14px; border-bottom: 1px solid #eee; }
+        tr:hover td { background: #fafafa; }
+        .badge-idle { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 12px; font-weight: 600; }
+        .idle-ok   { background: #e8f5e9; color: #2e7d32; }
+        .idle-warn { background: #fff3e0; color: #e65100; }
+        .idle-dead { background: #ffebee; color: #c62828; }
+        .btn-fechar {
+            padding: 6px 16px; background: #c62828; color: #fff;
+            border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600;
+        }
+        .btn-fechar:hover { background: #b71c1c; }
+        .empty { text-align: center; padding: 60px; color: #999; font-size: 18px; }
+        .barra-topo {
+            display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px;
+        }
+        .btn-voltar {
+            padding: 8px 20px; background: #fff; border: 1px solid #ccc;
+            border-radius: 6px; cursor: pointer; font-size: 14px;
+        }
+        .btn-voltar:hover { border-color: var(--vermelho); color: var(--vermelho); }
+        .contador { font-size: 14px; color: #666; }
+    </style>
+</head>
+<body>
+
+<div class="barra-topo">
+    <div>
+        <h1>Turnos em andamento</h1>
+        <p class="subtitulo">Turnos ativos agora. Feche turnos presos manualmente se necessário.</p>
+    </div>
+    <div style="display:flex;gap:12px;align-items:center">
+        <span class="contador"><%= openShifts.length %> turno(s) ativo(s)</span>
+        <button class="btn-voltar" onclick="window.location.href='/home'">← Voltar</button>
+    </div>
+</div>
+
+<% if (openShifts.length === 0) { %>
+<p class="empty">Nenhum turno em andamento.</p>
+<% } else { %>
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Equipe</th>
+            <th>Corredor</th>
+            <th>Auditor</th>
+            <th>Esteira</th>
+            <th>Início</th>
+            <th>Última atividade</th>
+            <th>Inativo há</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% openShifts.forEach(s => {
+            const idle = Math.round(Number(s.idle_minutes));
+            const idleClass = idle < 10 ? 'idle-ok' : idle < 20 ? 'idle-warn' : 'idle-dead';
+            const idleLabel = idle < 1 ? '<1 min' : idle + ' min';
+            const inicio = new Date(s.start_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            const ultima = new Date(s.last_activity).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        %>
+        <tr>
+            <td><strong>#<%= s.id %></strong></td>
+            <td><%= s.team_name %></td>
+            <td><%= s.athlete_name %></td>
+            <td><%= s.operator_name || '—' %></td>
+            <td>Esteira <%= s.treadmill_number || '?' %></td>
+            <td><%= inicio %></td>
+            <td><%= ultima %></td>
+            <td><span class="badge-idle <%= idleClass %>"><%- idleLabel %></span></td>
+            <td>
+                <button class="btn-fechar" onclick="fecharTurno(<%= s.id %>, this)">
+                    Forçar encerramento
+                </button>
+            </td>
+        </tr>
+        <% }) %>
+    </tbody>
+</table>
+<% } %>
+
+<script>
+async function fecharTurno(shiftId, btn) {
+    if (!confirm(`Forçar encerramento do turno #${shiftId}?`)) return
+    btn.disabled = true
+    btn.textContent = 'Encerrando...'
+    const accessToken = localStorage.getItem('accessToken')
+    const res = await fetch(`/audit/shifts/${shiftId}/abandon`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` },
+        body: JSON.stringify({ force_close: true })
+    })
+    if (res.ok) {
+        btn.closest('tr').style.opacity = '0.4'
+        btn.textContent = 'Encerrado'
+    } else {
+        btn.disabled = false
+        btn.textContent = 'Forçar encerramento'
+        alert('Erro ao encerrar turno.')
+    }
+}
+</script>
+
+</body>
+</html>

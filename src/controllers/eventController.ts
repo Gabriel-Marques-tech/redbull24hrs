@@ -56,6 +56,44 @@ export const eventController = {
 		}
 	},
 
+	async startEvent(req: Request, res: Response) {
+		const id = Number(req.params.id);
+		if (isNaN(id)) {
+			res.status(400).json({ error: "ID inválido" });
+			return;
+		}
+		try {
+			const event = await eventService.startEvent(id);
+			res.status(200).json(event);
+		} catch (error: any) {
+			const status = error.message.includes("não encontrad")
+				? 404
+				: error.message.includes("já está")
+				? 409
+				: 500;
+			res.status(status).json({ error: error.message });
+		}
+	},
+
+	async finishEvent(req: Request, res: Response) {
+		const id = Number(req.params.id);
+		if (isNaN(id)) {
+			res.status(400).json({ error: "ID inválido" });
+			return;
+		}
+		try {
+			const event = await eventService.finishEvent(id);
+			res.status(200).json(event);
+		} catch (error: any) {
+			const status = error.message.includes("não encontrad")
+				? 404
+				: error.message.includes("já está") || error.message.includes("ainda não foi iniciado")
+				? 409
+				: 500;
+			res.status(status).json({ error: error.message });
+		}
+	},
+
 	async getTreadmills(_req: Request, res: Response) {
 		try {
 			const treadmills = await eventService.listTreadmills();
