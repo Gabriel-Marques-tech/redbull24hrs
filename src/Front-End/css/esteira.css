@@ -13,6 +13,7 @@ main{
     margin-top: 40px;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .conteudo h2{
@@ -44,10 +45,30 @@ main{
     margin-bottom: 15px;
 }
 
-.esteira:hover,
+.esteira:not(.esteira-ocupada):hover,
 .esteira.selecionada{
     background-color: var(--vermelho);
     color: var(--branco);
+}
+
+.esteira-ocupada{
+    background-color: #F5F5F5;
+    border-color: #BDBDBD;
+    cursor: not-allowed;
+    opacity: 0.65;
+    pointer-events: none;
+}
+
+.badge-ocupada{
+    display: inline-block;
+    margin-top: 6px;
+    padding: 4px 14px;
+    background-color: #9E9E9E;
+    color: #fff;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
 }
 /* ---------------- BOTÕES ---------------- */
 
@@ -78,6 +99,16 @@ main{
     background-color: #C8C8C8;
     border: none;
     color: var(--branco);
+    cursor: not-allowed;
+}
+
+.btn-proximo:not([disabled]){
+    background-color: var(--vermelho);
+    cursor: pointer;
+}
+
+.btn-proximo:not([disabled]):hover{
+    background-color: #b10033;
 }
 .btn-voltar:hover{
     border: 2px solid var(--vermelho);

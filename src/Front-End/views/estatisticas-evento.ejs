@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estatísticas — <%= evento.title %></title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/equipe.css">
+    <link rel="stylesheet" href="/css/estatisticas-evento.css">
+</head>
+<body>
+    <div class="barra-gradiente"></div>
+
+    <a href="/home" class="cancelar">
+        <img src="/assets/competição/Seta.svg" alt="">
+        Voltar
+    </a>
+
+    <main>
+        <aside class="etapas">
+            <h3>Competição</h3>
+            <div class="etapa ativa"><span>1</span><p>Estatísticas</p></div>
+        </aside>
+
+        <section class="conteudo conteudo-stats">
+            <%
+                const statusLabel = { in_progress: 'Em andamento', finished: 'Finalizada' };
+                const statusClass = { in_progress: 'badge-in_progress', finished: 'badge-finished' };
+                const dataFmt = evento.date
+                    ? new Date(evento.date).toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' })
+                    : '—';
+                const startedAtIso = evento.started_at ? new Date(evento.started_at).toISOString() : '';
+            %>
+
+            <div class="stats-topo">
+                <div class="stats-topo-info">
+                    <span class="badge-status <%= statusClass[evento.status] || 'badge-finished' %>">
+                        <%= statusLabel[evento.status] || evento.status %>
+                    </span>
+                    <h1><%= evento.title %></h1>
+                    <div class="stats-meta">
+                        <span><img src="/assets/estatisticas/mapa.svg" alt="" class="meta-icone"> <%= evento.local %></span>
+                        <span><img src="/assets/estatisticas/calendario.svg" alt="" class="meta-icone"> <%= dataFmt %></span>
+                    </div>
+                </div>
+                <button type="button" class="btn-exportar" onclick="exportarPlanilha(<%= evento.id %>)">
+                    <img src="/assets/estatisticas/compartilhar.svg" alt="" class="btn-exportar-icone">
+                    Compartilhar como planilha
+                </button>
+            </div>
+
+            <% if (evento.status === 'in_progress') { %>
+            <div class="stats-barra-acao">
+                <div class="countdown-bloco">
+                    <span class="countdown-label">Tempo restante</span>
+                    <span class="countdown-timer" id="countdown">--:--:--</span>
+                </div>
+                <% if (user_role === 'manager') { %>
+                <button type="button" class="btn-finalizar" onclick="finalizarCompetição(<%= evento.id %>)">
+                    Finalizar competição
+                </button>
+                <% } %>
+            </div>
+            <% } %>
+
+            <div class="stats-tabs">
+                <button class="tab tab-ativa" data-tab="geral">Geral</button>
+                <button class="tab" data-tab="dashboard">Dashboard</button>
+                <button class="tab" data-tab="historico">Histórico de Auditoria</button>
+                <button class="tab" data-tab="equipes">Equipes</button>
+            </div>
+
+            <!-- TAB GERAL -->
+            <div class="tab-conteudo" id="tab-geral">
+                <% teamStats.forEach((team, i) => {
+                    const km = Number(team.total_km).toFixed(1);
+                    const ps = Number(team.avg_pace_seconds);
+                    const pace = ps > 0
+                        ? Math.floor(ps / 60) + ':' + String(Math.round(ps % 60)).padStart(2, '0')
+                        : '—';
+                    const speed = team.avg_speed ? team.avg_speed + ' km/h' : '—';
+                    const shifts = Number(team.shift_count);
+                    const isLider = i === 0 && Number(team.total_km) > 0;
+                %>
+                <div class="team-stat-card">
+                    <div class="team-stat-header <%= isLider ? 'lider' : '' %>">
+                        <span class="team-stat-nome"><%= team.name %></span>
+                        <% if (isLider) { %>
+                        <span class="lider-badge">1°</span>
+                        <% } %>
+                    </div>
+                    <div class="team-stat-body">
+                        <div class="stat-item">
+                            <img src="/assets/estatisticas/tênis.svg" alt="" class="stat-icone">
+                            <div class="stat-info">
+                                <span class="stat-valor"><%= km %></span>
+                                <span class="stat-label">Quilometragem total</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <img src="/assets/estatisticas/relogio.svg" alt="" class="stat-icone">
+                            <div class="stat-info">
+                                <span class="stat-valor"><%= pace %></span>
+                                <span class="stat-label">Pace médio</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <img src="/assets/estatisticas/corredor.svg" alt="" class="stat-icone">
+                            <div class="stat-info">
+                                <span class="stat-valor"><%= speed %></span>
+                                <span class="stat-label">Velocidade média</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <img src="/assets/estatisticas/controle.svg" alt="" class="stat-icone">
+                            <div class="stat-info">
+                                <span class="stat-valor"><%= shifts %></span>
+                                <span class="stat-label">Turnos registrados</span>
+                            </div>
+                        </div>
+                        <div class="stat-item stat-item-destaque">
+                            <img src="/assets/visao-geral/pessoas.svg" alt="" class="stat-icone">
+                            <div class="stat-info">
+                                <span class="stat-valor stat-atleta"><%= team.top_athlete %></span>
+                                <span class="stat-label">Atleta destaque</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+                <% if (!teamStats || teamStats.length === 0) { %>
+                <p class="stats-vazio">Nenhum dado disponível ainda.</p>
+                <% } %>
+            </div>
+
+            <!-- TAB DASHBOARD -->
+            <div class="tab-conteudo tab-oculto" id="tab-dashboard">
+                <%
+                    const ds = dashboardStats;
+                    const periodos = ['Madrugada', 'Manhã', 'Tarde', 'Noite'];
+                    const periodoIcone = { 'Madrugada': '🌙', 'Manhã': '🌅', 'Tarde': '☀️', 'Noite': '🌆' };
+                    const kmByHourJson = JSON.stringify(ds.kmByHour);
+                %>
+
+                <!-- KPIs de topo -->
+                <div class="dash-kpis">
+                    <div class="dash-kpi dash-kpi-destaque">
+                        <span class="dash-kpi-label"><%= evento.status === 'finished' ? 'Total percorrido' : 'Previsão de km ao fim' %></span>
+                        <span class="dash-kpi-valor"><%= ds.projectedKm != null ? ds.projectedKm : '—' %> <span class="dash-kpi-unit">km</span></span>
+                        <% if (evento.status === 'in_progress') { %>
+                        <span class="dash-kpi-sub">Taxa atual: <%= ds.rateKmH != null ? ds.rateKmH + ' km/h' : '—' %> · <%= ds.elapsedHours != null ? ds.elapsedHours + 'h' : '—' %> decorridas</span>
+                        <% } else { %>
+                        <span class="dash-kpi-sub">Evento finalizado · <%= ds.elapsedHours != null ? ds.elapsedHours + 'h' : '—' %> de duração</span>
+                        <% } %>
+                    </div>
+                    <div class="dash-kpi">
+                        <span class="dash-kpi-label">Km percorridos</span>
+                        <span class="dash-kpi-valor"><%= Number(ds.totalKm).toFixed(1) %> <span class="dash-kpi-unit">km</span></span>
+                        <span class="dash-kpi-sub"><%= ds.elapsedHours != null ? Math.min(100, Math.round((ds.elapsedHours / 24) * 100)) + '%' : '—' %> do evento concluído</span>
+                    </div>
+                    <% if (ds.topShifts && ds.topShifts.length > 0) {
+                        const best = ds.topShifts[0];
+                        const dur = best.duration_seconds
+                            ? Math.floor(best.duration_seconds/3600)+'h '+(Math.floor((best.duration_seconds%3600)/60))+'min'
+                            : '—';
+                    %>
+                    <div class="dash-kpi">
+                        <span class="dash-kpi-label">Maior turno</span>
+                        <span class="dash-kpi-valor"><%= Number(best.distance).toFixed(1) %> <span class="dash-kpi-unit">km</span></span>
+                        <span class="dash-kpi-sub"><%= best.athlete_name %> · <%= dur %></span>
+                    </div>
+                    <% } %>
+                </div>
+
+                <!-- Gráfico: km acumulado por equipe ao longo do evento -->
+                <div class="dash-card">
+                    <h3 class="dash-card-titulo">Km acumulado por equipe (por hora)</h3>
+                    <div class="dash-chart-wrapper">
+                        <canvas id="chartKmAcumulado"></canvas>
+                    </div>
+                </div>
+
+                <!-- Grid: top atletas por período + top turnos -->
+                <div class="dash-grid-2">
+                    <div class="dash-card">
+                        <h3 class="dash-card-titulo">Destaques por período do dia</h3>
+                        <div class="dash-periodos">
+                            <% periodos.forEach(p => {
+                                const top = ds.topByPeriod[p];
+                            %>
+                            <div class="periodo-item <%= top ? '' : 'periodo-vazio' %>">
+                                <div class="periodo-header">
+                                    <span class="periodo-nome"><%= p %></span>
+                                    <% if (p === 'Madrugada') { %><span class="periodo-hora">00h–06h</span>
+                                    <% } else if (p === 'Manhã') { %><span class="periodo-hora">06h–12h</span>
+                                    <% } else if (p === 'Tarde') { %><span class="periodo-hora">12h–18h</span>
+                                    <% } else { %><span class="periodo-hora">18h–24h</span><% } %>
+                                </div>
+                                <% if (top) { %>
+                                <div class="periodo-atleta">
+                                    <span class="periodo-atleta-nome"><%= top.athlete_name %></span>
+                                    <span class="periodo-equipe"><%= top.team_name %></span>
+                                </div>
+                                <div class="periodo-stats">
+                                    <span><strong><%= Number(top.km_periodo).toFixed(1) %></strong> km</span>
+                                    <span><strong><%= top.turnos_periodo %></strong> turno<%= top.turnos_periodo !== 1 ? 's' : '' %></span>
+                                </div>
+                                <% } else { %>
+                                <span class="periodo-sem-dados">Sem dados ainda</span>
+                                <% } %>
+                            </div>
+                            <% }) %>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <h3 class="dash-card-titulo">Top 5 maiores turnos</h3>
+                        <% if (!ds.topShifts || ds.topShifts.length === 0) { %>
+                        <p class="stats-vazio">Nenhum turno completo ainda.</p>
+                        <% } else { %>
+                        <ul class="dash-top-turnos">
+                            <% ds.topShifts.forEach((s, i) => {
+                                const dur = s.duration_seconds
+                                    ? Math.floor(s.duration_seconds/3600)+'h '+(Math.floor((s.duration_seconds%3600)/60))+'min'
+                                    : '—';
+                            %>
+                            <li class="dash-turno-item">
+                                <span class="dash-turno-pos <%= i === 0 ? 'pos-1' : '' %>"><%= i + 1 %></span>
+                                <div class="dash-turno-info">
+                                    <span class="dash-turno-atleta"><%= s.athlete_name %></span>
+                                    <span class="dash-turno-equipe"><%= s.team_name %> · <%= dur %></span>
+                                </div>
+                                <span class="dash-turno-km"><%= Number(s.distance).toFixed(1) %> km</span>
+                            </li>
+                            <% }) %>
+                        </ul>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Gráfico: km por período do dia por equipe -->
+                <div class="dash-card">
+                    <h3 class="dash-card-titulo">Km por período do dia (por equipe)</h3>
+                    <div class="dash-chart-wrapper dash-chart-sm">
+                        <canvas id="chartKmPeriodo"></canvas>
+                    </div>
+                </div>
+
+                <!-- Top por gênero + Top por equipe -->
+                <div class="dash-grid-2">
+                    <!-- Top por gênero -->
+                    <div class="dash-card">
+                        <h3 class="dash-card-titulo">Maiores corredores por gênero</h3>
+                        <%
+                            const generos = Object.keys(dashboardStats.topByGender || {}).sort();
+                        %>
+                        <% if (generos.length === 0) { %>
+                        <p class="stats-vazio">Sem dados de gênero ainda.</p>
+                        <% } else { %>
+                        <% generos.forEach(genero => {
+                            const lista = dashboardStats.topByGender[genero] || [];
+                            const maxKm = lista.length ? Number(lista[0].total_km) : 1;
+                        %>
+                        <div class="genero-grupo">
+                            <div class="genero-titulo"><%= genero %></div>
+                            <% lista.forEach((a, i) => {
+                                const pct = maxKm > 0 ? Math.round((Number(a.total_km) / maxKm) * 100) : 0;
+                            %>
+                            <div class="genero-atleta">
+                                <span class="genero-pos <%= i === 0 ? 'pos-1' : '' %>"><%= i + 1 %></span>
+                                <div class="genero-info">
+                                    <div class="genero-nome-equipe">
+                                        <span class="genero-nome"><%= a.athlete_name %></span>
+                                        <span class="genero-equipe"><%= a.team_name %></span>
+                                    </div>
+                                    <div class="genero-barra-wrap">
+                                        <div class="genero-barra" style="width:<%= pct %>%"></div>
+                                    </div>
+                                </div>
+                                <span class="genero-km"><%= Number(a.total_km).toFixed(1) %> km</span>
+                            </div>
+                            <% }) %>
+                        </div>
+                        <% }) %>
+                        <% } %>
+                    </div>
+
+                    <!-- Top por equipe -->
+                    <div class="dash-card">
+                        <h3 class="dash-card-titulo">Maiores corredores por equipe</h3>
+                        <%
+                            const atletasPorEq = {};
+                            athleteStats.forEach(a => {
+                                if (!atletasPorEq[a.team_id]) atletasPorEq[a.team_id] = { name: a.team_name, atletas: [] };
+                                if (atletasPorEq[a.team_id].atletas.length < 3) atletasPorEq[a.team_id].atletas.push(a);
+                            });
+                        %>
+                        <% Object.values(atletasPorEq).forEach(eq => {
+                            const maxKm = eq.atletas.length ? Number(eq.atletas[0].total_km) : 1;
+                        %>
+                        <div class="genero-grupo">
+                            <div class="genero-titulo"><%= eq.name %></div>
+                            <% eq.atletas.forEach((a, i) => {
+                                const pct = maxKm > 0 ? Math.round((Number(a.total_km) / maxKm) * 100) : 0;
+                            %>
+                            <div class="genero-atleta">
+                                <span class="genero-pos <%= i === 0 ? 'pos-1' : '' %>"><%= i + 1 %></span>
+                                <div class="genero-info">
+                                    <span class="genero-nome"><%= a.athlete_name %></span>
+                                    <div class="genero-barra-wrap">
+                                        <div class="genero-barra" style="width:<%= pct %>%"></div>
+                                    </div>
+                                </div>
+                                <span class="genero-km"><%= Number(a.total_km).toFixed(1) %> km</span>
+                            </div>
+                            <% }) %>
+                        </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB HISTÓRICO -->
+            <div class="tab-conteudo tab-oculto" id="tab-historico">
+                <% const shifts = historyEntries.filter(e => e.entry_type === 'shift_start'); %>
+                <% if (shifts.length === 0) { %>
+                <p class="stats-vazio">Nenhum turno registrado.</p>
+                <% } else { %>
+                <%
+                    // Agrupa turnos por equipe (turnos de equipes diferentes acontecem em paralelo)
+                    const turnosPorEquipe = {};
+                    shifts.forEach(s => {
+                        const key = s.team_id ?? s.team_name;
+                        if (!turnosPorEquipe[key]) turnosPorEquipe[key] = { name: s.team_name, turnos: [] };
+                        turnosPorEquipe[key].turnos.push(s);
+                    });
+                    // Dentro da equipe, ordem cronológica (mais antigo -> mais recente)
+                    Object.values(turnosPorEquipe).forEach(eq =>
+                        eq.turnos.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
+                    );
+                %>
+                <% Object.values(turnosPorEquipe).forEach(eq => { %>
+                <div class="historico-equipe-bloco">
+                <h3 class="historico-equipe-nome"><%= eq.name %></h3>
+                <div class="tabela-wrapper">
+                <table class="tabela-historico">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Atleta</th>
+                            <th>Esteira</th>
+                            <th>Km início</th>
+                            <th>Km fim</th>
+                            <th>Início</th>
+                            <th>Fim</th>
+                            <th>Auditor</th>
+                            <% if (user_role === 'manager') { %><th>Editar</th><% } %>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% eq.turnos.forEach((s, idx) => {
+                            const tsFmt = s.timestamp ? new Date(s.timestamp).toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' }) : '—';
+                            const endFmt = s.end_at ? new Date(s.end_at).toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' }) : '—';
+                        %>
+                        <tr>
+                            <td class="col-num"><%= idx + 1 %></td>
+                            <td>
+                                <div class="cel-avatar">
+                                    <span class="avatar-circle"></span>
+                                    <%= s.athlete_name %>
+                                </div>
+                            </td>
+                            <td><%= s.treadmill_number != null ? '#' + s.treadmill_number : '—' %></td>
+                            <td><%= s.km_start != null ? Number(s.km_start).toFixed(1) : '—' %></td>
+                            <td><%= s.km_end != null ? Number(s.km_end).toFixed(1) : '—' %></td>
+                            <td><%= tsFmt %></td>
+                            <td><%= endFmt %></td>
+                            <td class="col-auditor">
+                                <div class="cel-avatar">
+                                    <span class="avatar-circle"></span>
+                                    <%= s.auditor_name || '—' %>
+                                </div>
+                            </td>
+                            <% if (user_role === 'manager') {
+                                const dtIni = s.timestamp ? new Date(s.timestamp).toLocaleString('sv-SE').slice(0,16).replace(' ','T') : '';
+                                const dtFim = s.end_at ? new Date(s.end_at).toLocaleString('sv-SE').slice(0,16).replace(' ','T') : '';
+                            %>
+                            <td class="col-editar">
+                                <button type="button" class="btn-editar-turno" title="Editar turno"
+                                    data-id="<%= s.shift_id %>"
+                                    data-athlete="<%= s.athlete_id %>"
+                                    data-team="<%= s.team_id %>"
+                                    data-kmstart="<%= s.km_start != null ? s.km_start : '' %>"
+                                    data-kmend="<%= s.km_end != null ? s.km_end : '' %>"
+                                    data-start="<%= dtIni %>"
+                                    data-end="<%= dtFim %>">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 20h9"></path>
+                                        <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+                                    </svg>
+                                </button>
+                            </td>
+                            <% } %>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+                </div>
+                </div>
+                <% }) %>
+                <% } %>
+            </div>
+
+            <!-- TAB EQUIPES -->
+            <div class="tab-conteudo tab-oculto" id="tab-equipes">
+                <%
+                    const atletasPorEquipe = {};
+                    athleteStats.forEach(a => {
+                        if (!atletasPorEquipe[a.team_id]) atletasPorEquipe[a.team_id] = { name: a.team_name, atletas: [] };
+                        atletasPorEquipe[a.team_id].atletas.push(a);
+                    });
+                %>
+                <% Object.values(atletasPorEquipe).forEach(eq => { %>
+                <div class="equipe-tab-bloco">
+                    <h3 class="equipe-tab-nome"><%= eq.name %></h3>
+                    <table class="tabela-atletas">
+                        <thead>
+                            <tr><th>#</th><th>Atleta</th><th>Km total</th><th>Turnos</th></tr>
+                        </thead>
+                        <tbody>
+                            <% eq.atletas.forEach((a, idx) => { %>
+                            <tr>
+                                <td class="col-num"><%= idx + 1 %></td>
+                                <td><%= a.athlete_name %></td>
+                                <td><%= Number(a.total_km).toFixed(1) %></td>
+                                <td><%= a.shift_count %></td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+                <% }) %>
+                <% if (!athleteStats || athleteStats.length === 0) { %>
+                <p class="stats-vazio">Nenhum atleta com dados.</p>
+                <% } %>
+            </div>
+
+        </section>
+    </main>
+
+    <% if (user_role === 'manager') { %>
+    <!-- Modal: editar turno (manager) -->
+    <div id="modalEditarTurno" class="modal-editar-overlay" style="display:none;">
+        <div class="modal-editar-conteudo">
+            <div class="modal-editar-barra"></div>
+            <h2>Editar turno</h2>
+            <form id="formEditarTurno">
+                <input type="hidden" id="editTurnoId">
+                <label>Atleta
+                    <select id="editAtleta"></select>
+                </label>
+                <div class="modal-editar-linha">
+                    <label>Km início
+                        <input type="number" id="editKmStart" min="0" step="0.1" required>
+                    </label>
+                    <label>Km fim
+                        <input type="number" id="editKmEnd" min="0" step="0.1" required>
+                    </label>
+                </div>
+                <div class="modal-editar-linha">
+                    <label>Início
+                        <input type="datetime-local" id="editInicio">
+                    </label>
+                    <label>Fim
+                        <input type="datetime-local" id="editFim">
+                    </label>
+                </div>
+                <p id="editErro" class="modal-editar-erro" style="display:none;"></p>
+                <div class="modal-editar-acoes">
+                    <button type="button" id="btnCancelarEditarTurno" class="btn-sec">Cancelar</button>
+                    <button type="submit" id="btnSalvarEditarTurno" class="btn-pri">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <% } %>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script>
+    window.STARTED_AT    = '<%= startedAtIso %>';
+    window.EVENTO_STATUS = '<%= evento.status %>';
+    window.EVENTO_ID     = <%= evento.id %>;
+    window.KM_BY_HOUR     = <%- JSON.stringify(dashboardStats.kmByHour) %>;
+    window.TOP_BY_PERIOD  = <%- JSON.stringify(dashboardStats.topByPeriod) %>;
+    window.TOP_BY_GENDER  = <%- JSON.stringify(dashboardStats.topByGender) %>;
+    window.TEAM_STATS     = <%- JSON.stringify(teamStats) %>;
+    window.ATHLETE_STATS  = <%- JSON.stringify(athleteStats) %>;
+    </script>
+    <script>
+    async function authFetch(url, options = {}) {
+        const token = localStorage.getItem('accessToken');
+        const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+        let res = await fetch(url, { ...options, headers, credentials: 'include' });
+        if (res.status === 401) {
+            const r = await fetch('/auth/refresh', { method: 'POST', credentials: 'include' });
+            if (!r.ok) { window.location.href = '/login'; return null; }
+            const { accessToken } = await r.json();
+            localStorage.setItem('accessToken', accessToken);
+            headers['Authorization'] = `Bearer ${accessToken}`;
+            res = await fetch(url, { ...options, headers, credentials: 'include' });
+        }
+        return res;
+    }
+
+    // Tabs
+    document.querySelectorAll('.tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('tab-ativa'));
+            document.querySelectorAll('.tab-conteudo').forEach(c => c.classList.add('tab-oculto'));
+            btn.classList.add('tab-ativa');
+            document.getElementById('tab-' + btn.dataset.tab).classList.remove('tab-oculto');
+        });
+    });
+
+    // Countdown
+    if (window.EVENTO_STATUS === 'in_progress' && window.STARTED_AT) {
+        const duracao = 24 * 60 * 60 * 1000; // 24h em ms
+        function atualizar() {
+            const agora = Date.now();
+            const fim = new Date(window.STARTED_AT).getTime() + duracao;
+            const diff = fim - agora;
+            const el = document.getElementById('countdown');
+            if (!el) return;
+            if (diff <= 0) { el.textContent = '00:00:00'; return; }
+            const h = String(Math.floor(diff / 3600000)).padStart(2, '0');
+            const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+            const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+            el.textContent = `${h}:${m}:${s}`;
+        }
+        atualizar();
+        setInterval(atualizar, 1000);
+    }
+
+    // Export planilha
+    async function exportarPlanilha(eventId) {
+        const btn = document.querySelector('.btn-exportar');
+        const original = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<img src="/assets/estatisticas/compartilhar.svg" alt="" class="btn-exportar-icone"> Gerando...';
+        try {
+            const res = await authFetch(`/export/events/${eventId}/shifts`);
+            if (!res || !res.ok) {
+                const err = await res?.json().catch(() => ({}));
+                alert(err?.error || 'Erro ao exportar.');
+                return;
+            }
+            const blob = await res.blob();
+            const contentDisposition = res.headers.get('content-disposition') || '';
+            const match = contentDisposition.match(/filename[^;=\n]*=["']?([^"';\n]+)["']?/);
+            const filename = match ? match[1] : `evento-${eventId}.csv`;
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = filename;
+            document.body.appendChild(a); a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = original;
+        }
+    }
+
+    // Gráficos (inicializados quando a aba dashboard é aberta pela primeira vez)
+    let chartsInit = false;
+    const TEAM_COLORS = ['#D2003C', '#0F0069', '#2e7d32', '#e65100', '#6a1b9a', '#00838f'];
+
+    function initCharts() {
+        if (chartsInit) return;
+        chartsInit = true;
+
+        const kmByHour  = window.KM_BY_HOUR  || {};
+        const teamStats = window.TEAM_STATS   || [];
+
+        // --- Gráfico 1: km acumulado por equipe (linha) ---
+        const teamIds = Object.keys(kmByHour);
+        const maxHour = teamIds.reduce((max, tid) => {
+            const buckets = Object.keys(kmByHour[tid].buckets || {}).map(Number);
+            return Math.max(max, buckets.length ? Math.max(...buckets) : 0);
+        }, 0);
+        const labels = Array.from({ length: Math.max(maxHour + 1, 1) }, (_, i) => `${i}h`);
+
+        const datasetsAcum = teamIds.map((tid, i) => {
+            const { name, buckets } = kmByHour[tid];
+            let acc = 0;
+            const data = labels.map((_, h) => {
+                acc += buckets[h] || 0;
+                return Math.round(acc * 10) / 10;
+            });
+            return {
+                label: name,
+                data,
+                borderColor: TEAM_COLORS[i % TEAM_COLORS.length],
+                backgroundColor: TEAM_COLORS[i % TEAM_COLORS.length] + '18',
+                borderWidth: 2.5,
+                pointRadius: 3,
+                tension: 0.3,
+                fill: false,
+            };
+        });
+
+        new Chart(document.getElementById('chartKmAcumulado'), {
+            type: 'line',
+            data: { labels, datasets: datasetsAcum },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: { legend: { position: 'top' }, tooltip: { mode: 'index', intersect: false } },
+                scales: {
+                    x: { title: { display: true, text: 'Hora do evento' } },
+                    y: { title: { display: true, text: 'Km acumulado' }, beginAtZero: true },
+                },
+            },
+        });
+
+        // --- Gráfico 2: km por período (barras agrupadas) ---
+        const periodos = ['Madrugada', 'Manhã', 'Tarde', 'Noite'];
+        const topByPeriod = window.TOP_BY_PERIOD || {};
+
+        // agrupa km por equipe×período a partir de topByPeriod (top1 por período)
+        // para o gráfico usamos teamStats total por período — mas só temos top1 do servidor
+        // usamos o que há: km do destaque como referência visual
+        const periodoDatasets = teamStats.map((team, i) => ({
+            label: team.name,
+            data: periodos.map(p => {
+                const top = topByPeriod[p];
+                return (top && top.team_name === team.name) ? Number(top.km_periodo) : 0;
+            }),
+            backgroundColor: TEAM_COLORS[i % TEAM_COLORS.length] + 'cc',
+            borderColor: TEAM_COLORS[i % TEAM_COLORS.length],
+            borderWidth: 1.5,
+            borderRadius: 6,
+        }));
+
+        new Chart(document.getElementById('chartKmPeriodo'), {
+            type: 'bar',
+            data: { labels: periodos, datasets: periodoDatasets },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: { legend: { position: 'top' }, tooltip: { mode: 'index', intersect: false } },
+                scales: {
+                    x: { title: { display: true, text: 'Período' } },
+                    y: { title: { display: true, text: 'Km (destaque do período)' }, beginAtZero: true },
+                },
+            },
+        });
+    }
+
+    // Hook nos tabs para inicializar gráficos ao abrir dashboard
+    document.querySelectorAll('.tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (btn.dataset.tab === 'dashboard') initCharts();
+        });
+    });
+
+    // Finalizar
+    async function finalizarCompetição(eventId) {
+        if (!confirm('Finalizar a competição agora? Esta ação não pode ser desfeita.')) return;
+        const btn = document.querySelector('.btn-finalizar');
+        btn.disabled = true;
+        btn.textContent = 'Finalizando...';
+        const res = await authFetch(`/events/${eventId}/finish`, { method: 'PATCH' });
+        if (res && res.ok) {
+            window.location.href = '/home';
+        } else {
+            const err = await res?.json().catch(() => ({}));
+            alert(err?.error || 'Erro ao finalizar competição.');
+            btn.disabled = false;
+            btn.textContent = 'Finalizar competição';
+        }
+    }
+    </script>
+
+    <% if (user_role === 'manager') { %>
+    <script>
+    (function () {
+        const overlay   = document.getElementById('modalEditarTurno');
+        if (!overlay) return;
+        const selAtleta = document.getElementById('editAtleta');
+        const inId      = document.getElementById('editTurnoId');
+        const inKmIni   = document.getElementById('editKmStart');
+        const inKmFim   = document.getElementById('editKmEnd');
+        const inIni     = document.getElementById('editInicio');
+        const inFim     = document.getElementById('editFim');
+        const erro      = document.getElementById('editErro');
+        const athletes  = window.ATHLETE_STATS || [];
+
+        function popularAtletas(teamId, selectedId) {
+            selAtleta.innerHTML = '';
+            athletes
+                .filter(a => String(a.team_id) === String(teamId))
+                .forEach(a => {
+                    const opt = document.createElement('option');
+                    opt.value = a.id;
+                    opt.textContent = a.athlete_name;
+                    if (String(a.id) === String(selectedId)) opt.selected = true;
+                    selAtleta.appendChild(opt);
+                });
+        }
+
+        function abrir(btn) {
+            erro.style.display = 'none';
+            inId.value    = btn.dataset.id;
+            inKmIni.value = btn.dataset.kmstart;
+            inKmFim.value = btn.dataset.kmend;
+            inIni.value   = btn.dataset.start;
+            inFim.value   = btn.dataset.end;
+            popularAtletas(btn.dataset.team, btn.dataset.athlete);
+            overlay.style.display = 'flex';
+        }
+        function fechar() { overlay.style.display = 'none'; }
+
+        document.querySelectorAll('.btn-editar-turno').forEach(b =>
+            b.addEventListener('click', () => abrir(b)));
+        document.getElementById('btnCancelarEditarTurno').addEventListener('click', fechar);
+        overlay.addEventListener('click', e => { if (e.target === overlay) fechar(); });
+
+        document.getElementById('formEditarTurno').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            erro.style.display = 'none';
+            const kmStart = parseFloat(inKmIni.value);
+            const kmEnd   = parseFloat(inKmFim.value);
+            if (isNaN(kmStart) || isNaN(kmEnd) || kmEnd < kmStart) {
+                erro.textContent = 'Km inválido: fim deve ser maior ou igual ao início.';
+                erro.style.display = 'block';
+                return;
+            }
+            const btn = document.getElementById('btnSalvarEditarTurno');
+            btn.disabled = true;
+            const res = await authFetch('/audit/shifts/' + inId.value, {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    athlete_id: selAtleta.value || null,
+                    km_start: kmStart,
+                    km_end: kmEnd,
+                    start_at: inIni.value || null,
+                    end_at: inFim.value || null,
+                })
+            });
+            if (res && res.ok) {
+                window.location.href = window.location.href;
+            } else {
+                const e2 = await res?.json().catch(() => ({}));
+                erro.textContent = e2?.error || 'Erro ao salvar turno.';
+                erro.style.display = 'block';
+                btn.disabled = false;
+            }
+        });
+    })();
+    </script>
+    <% } %>
+</body>
+</html>

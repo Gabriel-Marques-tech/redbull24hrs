@@ -49,28 +49,17 @@ export const historyRepository = {
 				tr.id          AS treadmill_id,
 				tr.number      AS treadmill_number,
 				NULL::NUMERIC  AS distance,
-				NULL::VARCHAR  AS checkpoint_type
-			FROM shifts s
-			JOIN athletes a    ON a.id = s.athlete_id
-			JOIN teams t       ON t.id = a.team_id
-			LEFT JOIN treadmills tr ON tr.id = s.treadmill_id
-			WHERE ${sharedWhere}
-
-			UNION ALL
-
-			SELECT
-				'shift_end',
+				NULL::VARCHAR  AS checkpoint_type,
+				s.km_start,
+				s.km_end,
 				s.end_at,
-				s.id,
-				a.id, a.name,
-				t.id, t.name,
-				tr.id, tr.number,
-				s.distance,
-				NULL
+				COALESCE(au.name, mg.name) AS auditor_name
 			FROM shifts s
 			JOIN athletes a    ON a.id = s.athlete_id
 			JOIN teams t       ON t.id = a.team_id
 			LEFT JOIN treadmills tr ON tr.id = s.treadmill_id
+			LEFT JOIN auditors au   ON au.id = s.auditor_id
+			LEFT JOIN managers mg   ON mg.id = s.manager_id
 			WHERE ${sharedWhere}
 			  AND s.status = 'completed'
 
@@ -84,15 +73,20 @@ export const historyRepository = {
 				t.id, t.name,
 				tr.id, tr.number,
 				c.distance,
-				c.type
+				c.type,
+				NULL, NULL, NULL,
+				COALESCE(au.name, mg.name)
 			FROM checkpoints c
 			JOIN shifts s      ON s.id = c.shift_id
 			JOIN athletes a    ON a.id = s.athlete_id
 			JOIN teams t       ON t.id = a.team_id
 			LEFT JOIN treadmills tr ON tr.id = s.treadmill_id
+			LEFT JOIN auditors au   ON au.id = s.auditor_id
+			LEFT JOIN managers mg   ON mg.id = s.manager_id
 			WHERE ${sharedWhere}
+			  AND s.status = 'completed'
 
-			ORDER BY timestamp DESC
+			ORDER BY shift_id DESC, timestamp ASC
 		`;
 
 		const result = await pool.query(query, params);

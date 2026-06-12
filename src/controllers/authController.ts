@@ -98,12 +98,21 @@ const refreshToken = async (req: Request, res: Response): Promise<void> => {
 };
 
 const logout = async (req: Request, res: Response): Promise<void> => {
-  const { refreshToken } = req.body;
+  const { refreshToken } = req.body ?? {};
   try {
     await AuthService.logout(refreshToken);
     res.status(204).send();
   } catch {
     res.status(500).json({ error: "Erro ao encerrar sessão" });
+  }
+};
+
+const listAuditors = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const auditors = await AuthService.listAuditors();
+    res.status(200).json(auditors);
+  } catch {
+    res.status(500).json({ error: "Erro ao listar auditores" });
   }
 };
 
@@ -113,4 +122,5 @@ export default {
   loginUser,
   refreshToken,
   logout,
+  listAuditors,
 };

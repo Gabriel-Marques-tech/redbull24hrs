@@ -106,6 +106,13 @@ const revokeRefreshToken = async (tokenHash: string): Promise<void> => {
   );
 };
 
+const listAuditors = async (): Promise<{ id: number; name: string; email: string }[]> => {
+  const result = await pool.query(
+    `SELECT id, name, email FROM auditors WHERE is_active = TRUE ORDER BY name ASC`
+  );
+  return result.rows;
+};
+
 export default {
   registerManager,
   registerAuditor,
@@ -114,4 +121,5 @@ export default {
   saveRefreshToken,
   findActiveRefreshToken,
   revokeRefreshToken,
+  listAuditors,
 };

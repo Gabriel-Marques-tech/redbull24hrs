@@ -197,6 +197,97 @@ main {
     background-color: var(--vermelho);
 }
 
+/* ---------------- SELEÇÃO DE EQUIPE ---------------- */
+
+.opcoes-equipe {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+.selecao-equipe {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s;
+}
+
+.selecao-equipe.selecionada {
+    border-color: var(--vermelho);
+}
+
+.selecao-topo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    background: #fff;
+    border: none;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s;
+}
+
+.selecao-topo:hover {
+    background: #fafafa;
+}
+
+.selecao-equipe.selecionada .selecao-topo {
+    background: var(--vermelho);
+    color: #fff;
+}
+
+.selecao-topo img {
+    width: 16px;
+    height: 16px;
+    opacity: 0.5;
+    transform: rotate(180deg);
+    transition: transform 0.2s;
+}
+
+.selecao-equipe.selecionada .selecao-topo img {
+    filter: invert(1);
+    opacity: 1;
+}
+
+.selecao-equipe.expandida .selecao-topo img {
+    transform: rotate(270deg);
+}
+
+.selecao-equipe.selecionada.expandida .selecao-topo img {
+    transform: rotate(270deg);
+}
+
+.selecao-lista {
+    display: none;
+    padding: 12px 20px;
+    background: #fafafa;
+    border-top: 1px solid #f0f0f0;
+}
+
+.selecao-equipe.expandida .selecao-lista {
+    display: block;
+}
+
+.selecao-lista p {
+    font-size: 16px;
+    color: #555;
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+    margin: 0;
+}
+
+.selecao-lista p:last-child {
+    border-bottom: none;
+}
+
 
 
 

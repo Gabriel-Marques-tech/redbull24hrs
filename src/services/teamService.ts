@@ -1,12 +1,25 @@
 import { eventRepository } from "../repositories/eventRepository";
 import { teamRepository } from "../repositories/teamRepository";
 import { athleteRepository } from "../repositories/athleteRepository";
+import { treadmillRepository } from "../repositories/treadmillRepository";
 
 export const teamService = {
 	async registerTeam(event_id: number, name: string) {
 		const event = await eventRepository.findById(event_id);
 		if (!event) throw new Error("Evento não encontrado");
-		return teamRepository.create(name, event_id);
+
+		// Count existing teams to determine treadmill numbers
+		const existingTeams = await teamRepository.findAll(event_id);
+		const teamIndex = existingTeams.length; // 0 = first team, 1 = second team
+
+		const team = await teamRepository.create(name, event_id);
+
+		// Auto-assign 2 treadmills: team #1 → [1,2], team #2 → [3,4]
+		const baseNumber = teamIndex * 2 + 1;
+		await treadmillRepository.create(baseNumber, team.id);
+		await treadmillRepository.create(baseNumber + 1, team.id);
+
+		return team;
 	},
 
 	async listTeams(event_id?: number) {

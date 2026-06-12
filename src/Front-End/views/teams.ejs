@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditor</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/equipe.css">
+</head>
+<body>
+
+    <div class="barra-gradiente"></div>
+    <a href="/home" class="cancelar">
+        <img src="/assets/competição/Seta.svg" alt="">
+        Cancelar
+    </a>
+
+    <main>
+
+        <aside class="etapas">
+            <h3>Etapas</h3>
+            <div class="etapa">
+                <span>1</span>
+                <p>Competição</p>
+            </div>
+            <div class="etapa ativa">
+                <span>2</span>
+                <p>Equipe</p>
+            </div>
+            <div class="etapa">
+                <span>3</span>
+                <p>Esteira</p>
+            </div>
+            <div class="etapa">
+                <span>4</span>
+                <p>Visão geral</p>
+            </div>
+        </aside>
+
+    <div class="conteudo">
+
+        <h2>Selecione a equipe</h2>
+        <div class="opcoes-equipe">
+
+            <% teams.forEach(team => { %>
+            <div class="selecao-equipe" data-id="<%= team.id %>">
+
+                <button class="selecao-topo">
+                    <span><%= team.name %></span>
+                    <img src="/assets/competição/Seta.svg" alt="">
+                </button>
+
+                <div class="selecao-lista">
+                    <% team.athletes.forEach(athlete => { %>
+                    <p><%= athlete.name %></p>
+                    <% }) %>
+                </div>
+
+            </div>
+            <% }) %>
+
+        </div>
+
+        <div class="botoes">
+            <button class="btn-voltar" onclick="window.location.href='/competition'">Anterior</button>
+            <button class="btn-proximo" id="btn-proximo" disabled onclick="proximaEtapa()">Próximo</button>
+        </div>
+    </div>
+    </main>
+    <script>
+    const eventId = <%= eventId %>;
+    let teamIdSelecionado = null;
+    const btnProximo = document.getElementById('btn-proximo');
+
+    document.querySelectorAll('.selecao-equipe').forEach(card => {
+        const topo = card.querySelector('.selecao-topo');
+        topo.addEventListener('click', () => {
+            const jaExpandida = card.classList.contains('expandida');
+
+            // fecha todas
+            document.querySelectorAll('.selecao-equipe').forEach(c => c.classList.remove('expandida'));
+
+            // seleciona esta
+            document.querySelectorAll('.selecao-equipe').forEach(c => c.classList.remove('selecionada'));
+            card.classList.add('selecionada');
+            if (!jaExpandida) card.classList.add('expandida');
+
+            teamIdSelecionado = card.dataset.id;
+            btnProximo.disabled = false;
+        });
+    });
+
+    function proximaEtapa() {
+        if (!teamIdSelecionado) return;
+        window.location.href = `/treadmill?eventId=${eventId}&teamId=${teamIdSelecionado}`;
+    }
+    </script>
+</body>
+</html>

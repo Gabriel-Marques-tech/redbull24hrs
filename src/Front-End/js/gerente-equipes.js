@@ -1,151 +1,258 @@
+// authFetch: fetch com Bearer token + refresh automático
+async function authFetch(url, options = {}) {
+    const token = localStorage.getItem("accessToken");
+    const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
+    if (token) headers["Authorization"] = `Bearer ${token}`;
+    let res = await fetch(url, { ...options, headers, credentials: "include" });
+    if (res.status === 401) {
+        const r = await fetch("/auth/refresh", { method: "POST", credentials: "include" });
+        if (!r.ok) { window.location.href = "/login"; return null; }
+        const { accessToken } = await r.json();
+        localStorage.setItem("accessToken", accessToken);
+        headers["Authorization"] = `Bearer ${accessToken}`;
+        res = await fetch(url, { ...options, headers, credentials: "include" });
+    }
+    return res;
+}
+
 const inputNomePrimeiraEquipe = document.getElementById("nomePrimeiraEquipe");
-const inputNomeSegundaEquipe = document.getElementById("nomeSegundaEquipe");
+const inputNomeSegundaEquipe  = document.getElementById("nomeSegundaEquipe");
 const tituloAtletasPrimeiraEquipe = document.getElementById("tituloAtletasPrimeiraEquipe");
-const tituloAtletasSegundaEquipe = document.getElementById("tituloAtletasSegundaEquipe");
-const progressoEquipes = document.querySelector(".progresso-equipes");
-const conteudoEquipes = document.querySelector(".conteudo-equipes-gerente");
-const passosEquipes = document.querySelectorAll(".passo-equipe");
+const tituloAtletasSegundaEquipe  = document.getElementById("tituloAtletasSegundaEquipe");
+const progressoEquipes  = document.querySelector(".progresso-equipes");
+const conteudoEquipes   = document.querySelector(".conteudo-equipes-gerente");
+const passosEquipes     = document.querySelectorAll(".passo-equipe");
 const btnAnteriorEquipes = document.getElementById("btnAnteriorEquipes");
-const btnProximoEquipes = document.getElementById("btnProximoEquipes");
+const btnProximoEquipes  = document.getElementById("btnProximoEquipes");
 const botoesAdicionarAtleta = document.querySelectorAll("[data-adicionar-atleta]");
 
 const totalAtletas = 16;
-let passoAtual = 1;
+let passoAtual = (window.PASSO_INICIAL && window.PASSO_INICIAL > 1) ? window.PASSO_INICIAL : 1;
 
-function obterListaAtletas(tipoEquipe) {
-    return document.querySelector(`[data-lista-atletas="${tipoEquipe}"]`);
+// ---- helpers de lista ----
+function obterListaAtletas(tipo) {
+    return document.querySelector(`[data-lista-atletas="${tipo}"]`);
 }
-
-function obterCamposAtletas(tipoEquipe) {
-    return [...obterListaAtletas(tipoEquipe).querySelectorAll(".campo-atleta input")];
+function obterCamposAtletas(tipo) {
+    return [...obterListaAtletas(tipo).querySelectorAll(".campo-atleta input")];
 }
-
-function atualizarContadorAtletas(tipoEquipe) {
-    const lista = obterListaAtletas(tipoEquipe);
+function atualizarContadorAtletas(tipo) {
+    const lista    = obterListaAtletas(tipo);
     const contador = lista.querySelector(".contador-atletas");
-    const quantidade = obterCamposAtletas(tipoEquipe).length;
-
-    contador.textContent = `${quantidade}/${totalAtletas}`;
+    contador.textContent = `${obterCamposAtletas(tipo).length}/${totalAtletas}`;
 }
 
-function adicionarCampoAtleta(tipoEquipe) {
-    const lista = obterListaAtletas(tipoEquipe);
-    const quantidadeAtual = obterCamposAtletas(tipoEquipe).length;
+// ---- adicionar slot de atleta ----
+function adicionarCampoAtleta(tipo) {
+    const lista   = obterListaAtletas(tipo);
+    const qtd     = obterCamposAtletas(tipo).length;
+    if (qtd >= totalAtletas) return null;
 
-    if (quantidadeAtual >= totalAtletas) {
-        return null;
-    }
-
-    const numeroAtleta = quantidadeAtual + 1;
+    const idx   = qtd; // 0-based
     const campo = document.createElement("div");
     campo.className = "campo-atleta";
     campo.innerHTML = `
-        <span>${numeroAtleta}</span>
-        <input type="text" aria-label="Atleta ${numeroAtleta}">
-        <small>Líder</small>
+        <span>${qtd + 1}</span>
+        <input type="text" readonly placeholder="Clique para preencher"
+               data-atleta-indice="${idx}" data-atleta-tipo="${tipo}"
+               aria-label="Atleta ${qtd + 1} da equipe ${tipo}">
+        <small></small>
     `;
-
     lista.insertBefore(campo, lista.querySelector(".contador-atletas"));
-    atualizarContadorAtletas(tipoEquipe);
+    atualizarContadorAtletas(tipo);
 
-    return campo.querySelector("input");
+    const input = campo.querySelector("input");
+    input.addEventListener("click", () => abrirFormAtleta(tipo, idx));
+    popularInputAtleta(input, tipo, idx);
+    return input;
 }
 
-function avancarFluxoEquipes() {
-    salvarEquipes();
+// ---- navegar para informacoes-atleta ----
+function abrirFormAtleta(tipo, indice) {
+    const passo = (tipo === "primeira") ? 2 : 4;
+    localStorage.setItem("atletaEmEdicao", JSON.stringify({ tipo, indice, passo }));
+    window.location.href = "/manager/create-event/athlete";
+}
 
-    if (passoAtual === 4) {
-        console.log("Cadastro de equipes concluído");
-        return;
+// ---- popular input com dados já salvos ----
+function popularInputAtleta(input, tipo, indice) {
+    const estado = JSON.parse(localStorage.getItem("cadastroEquipesGerente") || "{}");
+    const atleta = estado.atletas?.[tipo]?.[indice];
+    if (atleta?.nome) {
+        input.value = atleta.nome;
+        input.closest(".campo-atleta").querySelector("small").textContent = atleta.cargo || "";
     }
-
-    passoAtual += 1;
-    atualizarPasso();
 }
 
-function configurarEntradaAtleta(evento) {
-    if (!evento.target.matches(".campo-atleta input") || evento.key !== "Enter") {
-        return;
-    }
-
-    evento.preventDefault();
-
-    const lista = evento.target.closest("[data-lista-atletas]");
-    const tipoEquipe = lista.dataset.listaAtletas;
-
-    if (!evento.target.value.trim()) {
-        return;
-    }
-
-    const campos = obterCamposAtletas(tipoEquipe);
-    const ultimoCampo = campos[campos.length - 1];
-
-    if (evento.target !== ultimoCampo) {
-        campos[campos.indexOf(evento.target) + 1]?.focus();
-        return;
-    }
-
-    if (campos.length === totalAtletas) {
-        avancarFluxoEquipes();
-        return;
-    }
-
-    adicionarCampoAtleta(tipoEquipe)?.focus();
-}
-
-function obterNomesAtletas(tipoEquipe) {
-    return obterCamposAtletas(tipoEquipe)
-        .map((campo) => campo.value.trim())
-        .filter(Boolean);
-}
-
-function salvarEquipes() {
-    const equipes = {
-        primeiraEquipe: {
-            nome: inputNomePrimeiraEquipe.value,
-            atletas: obterNomesAtletas("primeira")
-        },
-        segundaEquipe: {
-            nome: inputNomeSegundaEquipe.value,
-            atletas: obterNomesAtletas("segunda")
-        }
-    };
-
-    localStorage.setItem("equipesCompeticao", JSON.stringify(equipes));
-    console.log("Equipes definidas:", equipes);
-}
-
-function atualizarTitulosAtletas() {
-    tituloAtletasPrimeiraEquipe.textContent = `Adicione os atletas de ${inputNomePrimeiraEquipe.value}`;
-    tituloAtletasSegundaEquipe.textContent = `Adicione os atletas de ${inputNomeSegundaEquipe.value}`;
-}
-
-function atualizarPasso() {
-    passosEquipes.forEach((passo) => {
-        passo.classList.toggle("ativo", Number(passo.dataset.passo) === passoAtual);
+// ---- popular todos os inputs ao retornar ----
+function popularTodosAtletas() {
+    ["primeira", "segunda"].forEach((tipo) => {
+        obterCamposAtletas(tipo).forEach((input, i) => {
+            popularInputAtleta(input, tipo, i);
+        });
     });
+}
 
+// ---- preencher nomes de equipe salvos ----
+function restaurarNomesEquipes() {
+    const estado = JSON.parse(localStorage.getItem("cadastroEquipesGerente") || "{}");
+    if (estado.nomeEquipes?.primeira) inputNomePrimeiraEquipe.value = estado.nomeEquipes.primeira;
+    if (estado.nomeEquipes?.segunda)  inputNomeSegundaEquipe.value  = estado.nomeEquipes.segunda;
+}
+
+// ---- salvar estado parcial ----
+function salvarEstado() {
+    const estado = JSON.parse(localStorage.getItem("cadastroEquipesGerente") || "{}");
+    estado.nomeEquipes = {
+        primeira: inputNomePrimeiraEquipe.value.trim(),
+        segunda:  inputNomeSegundaEquipe.value.trim()
+    };
+    localStorage.setItem("cadastroEquipesGerente", JSON.stringify(estado));
+}
+
+// ---- títulos dinâmicos ----
+function atualizarTitulosAtletas() {
+    tituloAtletasPrimeiraEquipe.textContent =
+        `Adicione os atletas de ${inputNomePrimeiraEquipe.value || "primeira equipe"}`;
+    tituloAtletasSegundaEquipe.textContent =
+        `Adicione os atletas de ${inputNomeSegundaEquipe.value || "segunda equipe"}`;
+}
+
+// ---- atualizar passo visual ----
+function atualizarPasso() {
+    passosEquipes.forEach((p) => {
+        p.classList.toggle("ativo", Number(p.dataset.passo) === passoAtual);
+    });
     atualizarTitulosAtletas();
     progressoEquipes.textContent = `${passoAtual}/4`;
     btnProximoEquipes.textContent = passoAtual === 4 ? "Concluir" : "Próximo";
     conteudoEquipes.classList.toggle("modo-atletas", passoAtual === 2 || passoAtual === 4);
-
-    if (passoAtual === 2) {
-        obterCamposAtletas("primeira")[0].focus();
-    }
-
-    if (passoAtual === 4) {
-        obterCamposAtletas("segunda")[0].focus();
-    }
+    popularTodosAtletas();
 }
 
-btnAnteriorEquipes.addEventListener("click", () => {
-    if (passoAtual === 1) {
-        window.location.href = "gerente-data-horario.html";
+// ---- avançar ----
+async function avancarFluxoEquipes() {
+    salvarEstado();
+    if (passoAtual < 4) {
+        passoAtual++;
+        atualizarPasso();
+        return;
+    }
+    // Passo 4 = Concluir: chamar API
+    await submeterCadastro();
+}
+
+// ---- validar antes de enviar ----
+function validarCadastro(estado) {
+    const equipes = [
+        { nome: estado.nomeEquipes?.primeira, chave: "primeira", rotulo: "primeira equipe" },
+        { nome: estado.nomeEquipes?.segunda,  chave: "segunda",  rotulo: "segunda equipe" }
+    ];
+    for (const eq of equipes) {
+        if (!eq.nome || !eq.nome.trim()) {
+            return `Dê um nome para a ${eq.rotulo}.`;
+        }
+        const atletas = (estado.atletas?.[eq.chave] || []).filter((a) => a?.nome?.trim());
+        if (atletas.length === 0) {
+            return `Adicione ao menos um atleta na equipe "${eq.nome}".`;
+        }
+    }
+    return null;
+}
+
+// ---- submeter para backend ----
+async function submeterCadastro() {
+    const estado = JSON.parse(localStorage.getItem("cadastroEquipesGerente") || "{}");
+
+    const erroValidacao = validarCadastro(estado);
+    if (erroValidacao) {
+        alert(erroValidacao);
         return;
     }
 
-    passoAtual -= 1;
+    btnProximoEquipes.disabled = true;
+    btnProximoEquipes.textContent = "Salvando...";
+
+    try {
+        const localidade  = JSON.parse(localStorage.getItem("localidadeCompeticao")  || "{}");
+        const dataHorario = JSON.parse(localStorage.getItem("dataHorarioCompeticao") || "{}");
+
+        const local = `${localidade.cidade || "?"}, ${localidade.estado || "?"}`;
+        const date  = dataHorario.data
+            ? `${dataHorario.data}T${dataHorario.horario || "00:00"}:00`
+            : new Date().toISOString();
+
+        // 1. Criar evento
+        const eventoRes = await authFetch("/events", {
+            method: "POST",
+            body: JSON.stringify({
+                title: localidade.nome || "Red Bull 24h Corrida",
+                local,
+                date,
+                manager_id: window.MANAGER_ID
+            })
+        });
+        if (!eventoRes || !eventoRes.ok) {
+            const err = await eventoRes?.json().catch(() => ({}));
+            throw new Error(err?.error || "Erro ao criar evento");
+        }
+        const evento = await eventoRes.json();
+
+        // 2. Criar equipes + atletas
+        const equipes = [
+            { chave: "primeira", nome: estado.nomeEquipes?.primeira || "Equipe 1" },
+            { chave: "segunda",  nome: estado.nomeEquipes?.segunda  || "Equipe 2" }
+        ];
+
+        for (const eq of equipes) {
+            const equipeRes = await authFetch("/teams", {
+                method: "POST",
+                body: JSON.stringify({ event_id: evento.id, name: eq.nome })
+            });
+            if (!equipeRes || !equipeRes.ok) {
+                const err = await equipeRes?.json().catch(() => ({}));
+                throw new Error(err?.error || `Erro ao criar equipe ${eq.nome}`);
+            }
+            const equipe = await equipeRes.json();
+
+            const atletasEquipe = estado.atletas?.[eq.chave] || [];
+            for (const atleta of atletasEquipe) {
+                if (!atleta?.nome) continue;
+                const atletaRes = await authFetch(`/teams/${equipe.id}/athletes`, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        name:   atleta.nome,
+                        gender: atleta.genero || "Outro",
+                        cpf:    atleta.cpf    || null
+                    })
+                });
+                if (!atletaRes || !atletaRes.ok) {
+                    const err = await atletaRes?.json().catch(() => ({}));
+                    throw new Error(`${atleta.nome}: ${err?.error || "erro ao cadastrar atleta"}`);
+                }
+            }
+        }
+
+        // Limpar localStorage do wizard
+        ["localidadeCompeticao", "dataHorarioCompeticao", "cadastroEquipesGerente", "atletaEmEdicao"]
+            .forEach((k) => localStorage.removeItem(k));
+
+        window.location.href = "/home";
+
+    } catch (e) {
+        alert("Erro ao cadastrar competição: " + e.message);
+        btnProximoEquipes.disabled = false;
+        btnProximoEquipes.textContent = "Concluir";
+    }
+}
+
+// ---- botões ----
+btnAnteriorEquipes.addEventListener("click", () => {
+    if (passoAtual === 1) {
+        window.location.href = "/manager/create-event/schedule";
+        return;
+    }
+    passoAtual--;
     atualizarPasso();
 });
 
@@ -153,14 +260,37 @@ btnProximoEquipes.addEventListener("click", avancarFluxoEquipes);
 
 botoesAdicionarAtleta.forEach((botao) => {
     botao.addEventListener("click", () => {
-        adicionarCampoAtleta(botao.dataset.adicionarAtleta)?.focus();
+        const input = adicionarCampoAtleta(botao.dataset.adicionarAtleta);
+        if (input) abrirFormAtleta(botao.dataset.adicionarAtleta, Number(input.dataset.atletaIndice));
     });
+});
+
+// ---- click em atleta já existente ----
+document.addEventListener("click", (e) => {
+    const input = e.target.closest(".campo-atleta input");
+    if (!input) return;
+    const tipo   = input.dataset.atletaTipo;
+    const indice = Number(input.dataset.atletaIndice);
+    if (tipo !== undefined) abrirFormAtleta(tipo, indice);
 });
 
 inputNomePrimeiraEquipe.addEventListener("input", atualizarTitulosAtletas);
 inputNomeSegundaEquipe.addEventListener("input", atualizarTitulosAtletas);
-document.addEventListener("keydown", configurarEntradaAtleta);
 
+// ---- inicialização ----
+restaurarNomesEquipes();
 atualizarContadorAtletas("primeira");
 atualizarContadorAtletas("segunda");
 atualizarPasso();
+
+// Adicionar data-atleta-* nos inputs do primeiro atleta (lider, já no HTML)
+["primeira", "segunda"].forEach((tipo) => {
+    const lista = obterListaAtletas(tipo);
+    const lider = lista.querySelector(".campo-atleta.lider input");
+    if (lider) {
+        lider.dataset.atletaTipo   = tipo;
+        lider.dataset.atletaIndice = "0";
+        lider.addEventListener("click", () => abrirFormAtleta(tipo, 0));
+        popularInputAtleta(lider, tipo, 0);
+    }
+});

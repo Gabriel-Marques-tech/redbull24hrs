@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auditor</title>
-    <link rel="stylesheet" href="../css/competição.css">
-    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="/css/competição.css">
+    <link rel="stylesheet" href="/css/global.css">
 </head>
     <body>
 
     <div class="barra-gradiente"></div>
 
     <a href="/home" class="cancelar">
-        <img src="../assets/competição/Seta.svg" alt=""> Cancelar
+        <img src="/assets/competição/Seta.svg" alt=""> Cancelar
     </a>
 
     <main>
@@ -46,42 +46,22 @@
 
             <div class="lista-competicoes">
 
-                <div class="competicao">
-                    <span><b>1</b></span>
-                    <p>Rio de Janeiro, RJ</p>
-                    <p>22/02/2025</p>
-                    <p>15:00:00</p>
+                <% events.forEach((event, index) => { %>
+                <div class="competicao" data-id="<%= event.id %>">
+                    <span><b><%= index + 1 %></b></span>
+                    <p><%= event.local %></p>
+                    <p><%= new Date(event.date).toLocaleDateString('pt-BR') %></p>
                 </div>
-
-                <div class="competicao">
-                    <span><b>2</b></span>
-                    <p>São Paulo, SP</p>
-                    <p>22/02/2025</p>
-                    <p>15:00:00</p>
-                </div>
-
-                <div class="competicao">
-                    <span><b>3</b></span>
-                    <p>São Paulo, SP</p>
-                    <p>22/02/2025</p>
-                    <p>15:00:00</p>
-                </div>
-
-                <div class="competicao">
-                    <span><b>4</b></span>
-                    <p>Rio de Janeiro, RJ</p>
-                    <p>22/02/2025</p>
-                    <p>15:00:00</p>
-                </div>
+                <% }) %>
 
             </div>
 
-            <button onclick="window.location.href='equipe.html'">
+            <button id="btn-proximo" disabled onclick="proximaEtapa()">
                 Próximo
             </button>
         </section>
 
     </main>
-    <script src="../js/competition.js"></script>
+    <script src="/js/competition.js"></script>
 </body> 
 </html>

@@ -1,5 +1,6 @@
 import express, { Router } from "express";
 import { eventController } from "../controllers/eventController";
+import authMiddleware from "../middlewares/authMiddleware";
 
 const router: Router = express.Router();
 
@@ -12,6 +13,10 @@ router.delete("/treadmills/:id", eventController.deleteTreadmill);
 router.get("/", eventController.getEvents);
 router.post("/", eventController.createEvent);
 router.get("/:id", eventController.getEvent);
+// iniciar competição: só manager; libera auditores a operar turnos (pending->in_progress)
+router.patch("/:id/start", authMiddleware.requireAuth, authMiddleware.requireRole("manager"), eventController.startEvent);
+// fechar competição: só manager; bloqueia auditores de salvar novos turnos (in_progress->finished)
+router.patch("/:id/finish", authMiddleware.requireAuth, authMiddleware.requireRole("manager"), eventController.finishEvent);
 router.patch("/:id", eventController.updateEvent);
 router.delete("/:id", eventController.deleteEvent);
 

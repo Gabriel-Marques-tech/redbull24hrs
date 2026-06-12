@@ -1,0 +1,171 @@
+body { overflow: auto !important; }
+main { height: auto !important; }
+
+.conteudo-visao {
+    width: 700px;
+    padding-bottom: 60px;
+}
+
+/* header */
+.visao-header { margin-bottom: 24px; }
+
+.visao-header h1 {
+    font-size: 34px;
+    margin: 8px 0 12px;
+}
+
+.visao-meta {
+    display: flex;
+    gap: 24px;
+    font-size: 16px;
+    color: #555;
+    align-items: center;
+}
+
+.visao-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.meta-icone {
+    width: 18px;
+    height: 18px;
+    opacity: 0.6;
+}
+
+/* badge status */
+.badge-status {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.badge-pending     { background: #fff8e1; color: #f9a825; }
+.badge-in_progress { background: #e8f5e9; color: #2e7d32; }
+.badge-finished    { background: #f5f5f5; color: #757575; }
+
+/* ação editar */
+.visao-acoes { margin-bottom: 28px; }
+
+.btn-editar-evento {
+    display: inline-block;
+    padding: 14px 30px;
+    background: var(--vermelho);
+    color: #fff;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+.btn-editar-evento:hover { background: #b10033; }
+
+/* equipes */
+.visao-equipes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.visao-equipe {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.visao-equipe h2 {
+    font-size: 18px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.equipe-num {
+    font-size: 13px;
+    color: #999;
+    font-weight: 500;
+}
+
+.lista-visao-atletas {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lista-visao-atletas li {
+    display: grid;
+    grid-template-columns: 26px 1fr auto;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 15px;
+}
+.lista-visao-atletas li:last-child { border-bottom: none; }
+
+.atleta-num {
+    color: var(--vermelho);
+    font-weight: 800;
+    font-size: 15px;
+}
+.atleta-nome { font-weight: 500; }
+.atleta-genero { color: #aaa; font-size: 13px; }
+
+.sem-atletas { color: #bbb; font-size: 14px; grid-column: 1/-1; }
+
+/* botões de ação */
+.visao-acoes {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 28px;
+}
+
+.btn-iniciar-evento {
+    padding: 14px 30px;
+    background: var(--vermelho);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.btn-iniciar-evento:hover:not(:disabled) { background: #b10033; }
+.btn-iniciar-evento:disabled { opacity: 0.6; cursor: default; }
+
+.btn-secundario {
+    display: inline-block;
+    padding: 13px 28px;
+    background: transparent;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    color: #555;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s, border-color 0.15s;
+}
+.btn-secundario:hover { background: #f5f5f5; border-color: #bbb; }
+
+/* aside link editar */
+.etapa-acao {
+    margin-top: 8px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: transparent;
+}
+.etapa-acao a {
+    text-decoration: none;
+    color: var(--vermelho);
+    font-weight: 700;
+    font-size: 15px;
+}

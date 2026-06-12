@@ -130,4 +130,8 @@ const logout = async (refreshToken: string): Promise<void> => {
   await UserRepository.revokeRefreshToken(hashToken(refreshToken));
 };
 
-export default { registerManager, registerAuditor, loginUser, refresh, logout };
+const listAuditors = async () => {
+  return UserRepository.listAuditors();
+};
+
+export default { registerManager, registerAuditor, loginUser, refresh, logout, listAuditors };

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoria</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/auditoria.css">
+</head>
+<body>
+    <div class="barra-gradiente"></div>
+
+    <header class="topo">
+        <div class="operador" id="areaOperador" onclick="abrirModalOperador()" title="Trocar operador" style="cursor:pointer">
+            <span class="avatar avatar-operador"></span>
+            <div>
+                <small>Operador <span class="seta-bandeja">▾</span></small>
+                <p id="nomeOperador"><%= auditor.name %></p>
+            </div>
+        </div>
+
+        <p class="tempo-restante">Esteira <strong id="labelEsteira"><%= treadmill.number %></strong> — <%= team.name %></p>
+
+        <button class="btn-sair" type="button" data-href="/home">↪</button>
+    </header>
+
+    <main class="conteudo-auditoria">
+        <section class="cronometro-area">
+            <div class="corredor-atual" id="corredorAtualArea" onclick="abrirBandejaCorredores()" title="Clique para selecionar corredor">
+                <small>Corredor atual <span class="seta-bandeja">▾</span></small>
+                <p>
+                    <span id="corredorAtual"><%= athletes[0] ? athletes[0].name : '—' %></span>
+                </p>
+            </div>
+
+            <div class="cronometro" id="cronometro">00:00:00</div>
+
+            <div class="acoes-wrapper">
+                <div class="acoes-corrida">
+                    <button class="btn-iniciar" id="btnAcao" type="button" onclick="acaoPrincipal()">
+                        Iniciar corrida
+                    </button>
+
+                    <button class="btn-proximo-corredor escondido" id="btnProximoCorredor" type="button" aria-label="Próximo corredor">
+                        <span class="icone-proximo"></span>
+                    </button>
+
+                    <button class="btn-esteira" id="btnAbrirEsteira" type="button" onclick="abrirModalEsteira()">
+                        <img src="/assets/esteira/esteira-branca.svg" alt="esteira">
+                    </button>
+                </div>
+
+                <div class="km-row">
+                    <input id="inputKm" class="input-km" type="number" min="0" step="0.1" placeholder="Km inicial (padrão 0)">
+                    <div class="ultimo-cp-info escondido" id="ultimoCpInfo">
+                        <span class="ultimo-cp-label">Último checkpoint</span>
+                        <span class="ultimo-cp-valor" id="ultimoCpValor">—</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="area-registros">
+            <div class="ultimos-registros">
+                <h2>Últimos registros</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Corredor</th>
+                            <th>Km início</th>
+                            <th>Km fim</th>
+                            <th>Início</th>
+                            <th>Fim</th>
+                            <th>Auditor</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaRegistros"></tbody>
+                </table>
+            </div>
+
+            <aside class="proximos-corredores">
+                <h2>Próximos corredores</h2>
+                <div id="fila">
+                    <% athletes.slice(1).forEach(athlete => { %>
+                    <div class="corredor-fila" draggable="true" data-id="<%= athlete.id %>">
+                        <span class="avatar"></span>
+                        <p><%= athlete.name %></p>
+                        <span class="drag">⠿</span>
+                    </div>
+                    <% }) %>
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <!-- Modal troca de operador -->
+    <div class="modal-overlay escondido" id="modalOperadorOverlay" onclick="fecharModalOperador()"></div>
+    <div class="modal-operador escondido" id="modalOperador">
+        <div class="modal-op-header">
+            <span>Trocar operador</span>
+            <button class="btn-fechar-bandeja" onclick="fecharModalOperador()">✕</button>
+        </div>
+        <div class="perfis-grid" id="perfisGrid">
+            <!-- preenchido via JS -->
+        </div>
+        <div class="modal-op-senha escondido" id="modalOpSenha">
+            <p id="labelSenhaOperador"></p>
+            <input type="password" id="inputSenhaOperador" class="input-km" placeholder="Senha" autocomplete="current-password">
+            <div class="acoes-modal" style="margin-top:16px">
+                <button class="btn-cancelar-modal" onclick="voltarPickerOperador()">Voltar</button>
+                <button class="btn-selecionar-modal" onclick="confirmarTrocaOperador()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bandeja seleção de corredor -->
+    <div class="bandeja-overlay escondido" id="bandejaOverlay" onclick="fecharBandejaCorredores()"></div>
+    <div class="bandeja-corredores escondido" id="bandejaCorredores">
+        <div class="bandeja-header">
+            <span>Selecionar corredor</span>
+            <button class="btn-fechar-bandeja" onclick="fecharBandejaCorredores()">✕</button>
+        </div>
+        <div class="bandeja-lista" id="bandejaLista">
+            <% athletes.forEach((athlete, i) => { %>
+            <div class="bandeja-item" data-id="<%= athlete.id %>" data-index="<%= i %>" onclick="selecionarCorredorManual(this)">
+                <span class="avatar"></span>
+                <p><%= athlete.name %></p>
+                <% if (i === 0) { %><span class="badge-atual">atual</span><% } %>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <!-- Modal troca de esteira -->
+    <div class="modal-esteira escondido" id="modalEsteira">
+        <div class="modal-conteudo">
+            <h2>Selecione uma esteira</h2>
+
+            <div class="opcoes-esteira">
+                <% treadmills.forEach(t => {
+                    const ocupadaModal = busyIds.includes(t.id) && t.id !== treadmill.id;
+                %>
+                <button class="opcao-esteira <%= t.id === treadmill.id ? 'selecionada' : '' %> <%= ocupadaModal ? 'opcao-ocupada' : '' %>"
+                        type="button"
+                        data-id="<%= t.id %>"
+                        data-number="<%= t.number %>"
+                        <%= ocupadaModal ? 'disabled' : '' %>>
+                    <img class="icone-esteira icone-branco" src="/assets/esteira/esteira-branca.svg" alt="">
+                    <img class="icone-esteira icone-preto" src="/assets/esteira/<%= ocupadaModal ? 'esteira-cinza.svg' : 'esteira.svg' %>" alt="">
+                    <span>Esteira <%= t.number %></span>
+                    <% if (ocupadaModal) { %><small class="badge-em-uso">Em uso</small><% } %>
+                </button>
+                <% }) %>
+            </div>
+
+            <div class="acoes-modal">
+                <button class="btn-cancelar-modal" id="btnCancelarEsteira" type="button">Cancelar</button>
+                <button class="btn-selecionar-modal" id="btnSelecionarEsteira" type="button">Selecionar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal registrar checkpoint -->
+    <div class="modal-turno escondido" id="modalCheckpoint">
+        <div class="modal-turno-conteudo modal-checkpoint-conteudo">
+            <div class="campos-turno">
+                <div class="campo-turno campo-corredor">
+                    <label for="kmCheckpointModal">Quilometragem</label>
+                    <input id="kmCheckpointModal" type="number" min="0" step="0.1" placeholder="Km checkpoint">
+                </div>
+                <div class="campo-turno campo-cps-sessao">
+                    <label>Checkpoints desta corrida</label>
+                    <div class="lista-cps-sessao" id="listaCpsSessao">
+                        <p class="cps-vazio">Nenhum checkpoint ainda</p>
+                    </div>
+                </div>
+            </div>
+            <div class="acoes-modal-turno">
+                <button class="btn-cancelar-turno" id="btnCancelarCheckpoint" type="button">Cancelar</button>
+                <button class="btn-registrar-turno" id="btnRegistrarCheckpoint" type="button">Registrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal lembrete checkpoint (5 min sem registrar) -->
+    <div class="modal-lembrete-cp escondido" id="modalLembreteCP">
+        <div class="modal-lembrete-conteudo">
+            <button class="btn-fechar-lembrete" id="btnLembreteMaisTarde" type="button" aria-label="Fechar">&times;</button>
+            <img class="icone-lembrete-svg" src="/assets/chekpoint/perigo.svg" alt="">
+            <h2>Registrar Checkpoint?</h2>
+            <p>Não identificamos checkpoints<br>registrados a mais de 5 minutos</p>
+            <button class="btn-registrar-lembrete" id="btnLembreteAgora" type="button">Registrar checkpoint</button>
+        </div>
+    </div>
+
+    <!-- Modal km menor que anterior -->
+    <div class="modal-km-menor escondido" id="modalKmMenorAviso">
+        <div class="modal-km-menor-conteudo">
+            <div class="icone-km-menor" aria-hidden="true"></div>
+            <h2>Km menor que o anterior</h2>
+            <p>O km informado é menor que o<br>último valor registrado</p>
+            <div class="resumo-km-menor">
+                <div class="linha-km-menor">
+                    <span>Km anterior</span>
+                    <strong id="valorKmAnteriorAviso">—</strong>
+                </div>
+                <div class="divisor-km-menor"></div>
+                <div class="linha-km-menor">
+                    <span>Km informado</span>
+                    <strong class="valor-km-informado" id="valorKmInformadoAviso">—</strong>
+                </div>
+            </div>
+            <div class="acoes-km-menor">
+                <button class="btn-cancelar-km-menor" id="btnCancelarKmMenorAviso" type="button">Cancelar</button>
+                <button class="btn-corrigir-km-menor" id="btnCorrigirKmMenorAviso" type="button">Corrigir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal finalizar turno -->
+    <div class="modal-turno escondido" id="modalTurno">
+        <div class="modal-turno-conteudo">
+            <div class="campos-turno">
+                <div class="campo-turno campo-corredor">
+                    <label for="selectCorredor">Corredor</label>
+                    <select id="selectCorredor"></select>
+                </div>
+
+                <div class="campo-turno campo-tempo">
+                    <label for="tempoPercorridoTurno">Tempo percorrido</label>
+                    <input class="tempo-percorrido" id="tempoPercorridoTurno"
+                           type="text" maxlength="8" placeholder="00:00:00"
+                           pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}">
+                    <small class="relacao-horario">
+                        Início <span id="inicioTurno">—</span> · Fim <span id="fimTurno">—</span>
+                    </small>
+                </div>
+            </div>
+
+            <div class="campo-turno campo-quilometragem">
+                <label for="quilometragemTurno">Registre a quilometragem final</label>
+                <input id="quilometragemTurno" type="number" min="0" step="0.1" placeholder="Km final">
+            </div>
+
+            <div class="acoes-modal-turno">
+                <button class="btn-cancelar-turno" id="btnCancelarTurno" type="button">Cancelar</button>
+                <button class="btn-registrar-turno" id="btnRegistrarTurno" type="button">Registrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal sair da auditoria -->
+    <div class="modal-finalizar-competicao escondido" id="modalFinalizarCompeticao">
+        <div class="modal-finalizar-conteudo">
+            <div class="icone-finalizar">↪</div>
+
+            <h2>Sair da auditoria?</h2>
+            <p>O turno em andamento será<br>encerrado automaticamente.</p>
+
+            <div class="acoes-finalizar">
+                <button class="btn-cancelar-finalizar" id="btnCancelarFinalizarCompeticao" type="button">
+                    Cancelar
+                </button>
+
+                <button class="btn-confirmar-finalizar" id="btnConfirmarFinalizarCompeticao" type="button">
+                    Sair
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let   AUDITOR_ID    = <%= auditor.id %>;
+        const OPERATOR_ROLE = '<%= auditor.role %>';
+        let   TREADMILL_ID  = <%= treadmill.id %>;
+        const TEAM_ID       = <%= teamId %>;
+        const EVENT_ID      = <%= eventId %>;
+        const ATHLETES      = <%- JSON.stringify(athletes) %>;
+        const OPEN_SHIFT    = <%- JSON.stringify(openShift) %>;
+        const HISTORY_ENTRIES = <%- JSON.stringify(historyEntries) %>;
+    </script>
+    <script src="/js/auditoria.js"></script>
+</body>
+</html>
