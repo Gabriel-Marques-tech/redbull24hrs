@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visão Geral</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/visao-geral.css">
+</head>
+<body>
+
+    <div class="barra-gradiente"></div>
+    <a href="/home" class="cancelar">
+        <img src="/assets/competição/Seta.svg" alt="">
+        Cancelar
+    </a>
+
+    <main>
+        <aside class="etapas">
+            <h3>Etapas</h3>
+            <div class="etapa">
+                <span>1</span>
+                <p>Competição</p>
+            </div>
+            <div class="etapa">
+                <span>2</span>
+                <p>Equipe</p>
+            </div>
+            <div class="etapa">
+                <span>3</span>
+                <p>Esteira</p>
+            </div>
+            <div class="etapa ativa">
+                <span>4</span>
+                <p>Visão geral</p>
+            </div>
+        </aside>
+
+        <section class="conteudo">
+            <h2>Preparado para iniciar?</h2>
+
+            <div class="card-resumo">
+                <div class="linha-resumo">
+                    <span class="icone"><img src="/assets/visao-geral/mapa.svg" alt=""></span>
+                    <p><%= event.local %></p>
+                </div>
+
+                <div class="linha-resumo">
+                    <span class="icone"><img src="/assets/visao-geral/calendario.svg" alt=""></span>
+                    <p><%= new Date(event.date).toLocaleDateString('pt-BR') %></p>
+                </div>
+
+                <div class="linha-resumo">
+                    <span class="icone"><img src="/assets/visao-geral/pessoas.svg" alt=""></span>
+                    <p><%= team.name %></p>
+                </div>
+
+                <div class="linha-resumo">
+                    <span class="icone"><img src="/assets/visao-geral/esteira.svg" alt=""></span>
+                    <p>Esteira <%= treadmill.number %></p>
+                </div>
+            </div>
+
+            <div class="botoes">
+                <button class="btn-voltar" type="button"
+                    onclick="window.location.href='/treadmill?eventId=<%= eventId %>&teamId=<%= teamId %>'">
+                    Anterior
+                </button>
+                <button class="btn-iniciar" type="button"
+                    onclick="window.location.href='/audit?eventId=<%= eventId %>&teamId=<%= teamId %>&treadmillId=<%= treadmillId %>'">
+                    Iniciar
+                </button>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
