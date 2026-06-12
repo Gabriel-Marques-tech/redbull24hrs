@@ -4120,7 +4120,92 @@ A maior dificuldade técnica da sprint foi garantir que o registro de turnos e c
 
 ---
 
-_Descreva e ilustre aqui o desenvolvimento da segunda versão do sistema web, com foco no que foi consolidado entre a primeira versão funcional e o sistema operacional integrado. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos._
+### a) O que foi implementado
+
+A segunda versão consolidou a integração ponta a ponta dos fluxos principais do sistema, eliminando as páginas HTML estáticas e conectando todas as interfaces ao backend via renderização server-side (SSR) com EJS. O foco da sprint foi tornar o sistema operacional em condições reais de evento: autenticação funcional, fluxos de auditoria e gerência integrados ao banco, estatísticas em tempo real e correção de bugs críticos identificados nos testes de integração.
+
+**Integração backend–frontend (SSR com autenticação)**
+
+Substituiu-se a arquitetura de páginas estáticas por views EJS servidas diretamente pelo Express, com estado inicial injetado pelo servidor via `res.render()`. O `pageController` centraliza a lógica de carregamento das páginas, consultando o banco antes de renderizar e repassando os dados às views. A autenticação JWT com cookies `HttpOnly` e `SameSite=Strict` foi integrada a todas as rotas protegidas, com refresh automático de token transparente ao usuário. Fechamento: issues #202, #204, #209, #233.
+
+**Fluxo de auditoria completo**
+
+Implementou-se o ciclo completo de registro de turno para auditores: seleção de esteira (`treadmill.ejs`), início de turno com seleção de atleta (`auditoria.ejs`), registro de checkpoints com validação de quilometragem (`audit.ejs`), cronômetro de tempo em pista, lembrete de inatividade e troca rápida de corredor. Sete bugs críticos identificados nos testes de integração foram corrigidos nesta sprint (issues #227–#233), incluindo falha de persistência do estado de esteira via `sessionStorage`, constante `AUDITOR_ID` impedindo reassignment no fluxo de troca de operador, modal de aviso de quilometragem menor que checkpoint anterior e crash no logout com `req.body` ausente. Fechamento: issues #208, #214, #215, #217, #227, #228, #229, #231.
+
+<div align="center">
+  <sub>Imagem XX – Tela de seleção de esteira (treadmill.ejs)</sub><br>
+  <img src="assets/relatorio_desenvolvimento/sprint4_treadmill.png" width="100%" alt="Seleção de esteira"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem XX – Tela de auditoria em andamento (audit.ejs)</sub><br>
+  <img src="assets/relatorio_desenvolvimento/sprint4_audit.png" width="100%" alt="Auditoria em andamento"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+**Fluxo do gerente**
+
+Implementou-se o módulo completo do gerente de evento: criação e edição de competições (`competition.ejs`, `editar-competicao.ejs`), cadastro e listagem de equipes e atletas (`gerente-equipes.ejs`, `informacoes-atleta.ejs`, `teams.ejs`), configuração de datas e localidades (`gerente-data-horario.ejs`, `gerente-localidade.ejs`) e gestão de turnos (`manager-shifts.ejs`), incluindo edição retroativa de checkpoints com trilha de auditoria imutável. Fechamento: issues #126, #129, #219, #220, #221, #222, #223, #224.
+
+<div align="center">
+  <sub>Imagem XX – Tela de gestão de equipes (gerente-equipes.ejs)</sub><br>
+  <img src="assets/relatorio_desenvolvimento/sprint4_gerente_equipes.png" width="100%" alt="Gestão de equipes"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem XX – Tela de turnos do gerente (manager-shifts.ejs)</sub><br>
+  <img src="assets/relatorio_desenvolvimento/sprint4_manager_shifts.png" width="100%" alt="Gestão de turnos"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+**Estatísticas e visão geral do evento**
+
+Implementou-se o módulo de acompanhamento em tempo real: placar por equipe com quilometragem acumulada e velocidade média (`estatisticas-evento.ejs`), visão geral do evento com atletas em pista e turnos ativos (`visao-evento.ejs`) e tela de overview para o gerente (`overview.ejs`). A correção do bug #232 garantiu que a velocidade seja recalculada corretamente ao editar apenas a quilometragem de um turno sem alterar o horário de encerramento. Fechamento: issues #197, #232.
+
+<div align="center">
+  <sub>Imagem XX – Tela de estatísticas do evento (estatisticas-evento.ejs)</sub><br>
+  <img src="assets/relatorio_desenvolvimento/sprint4_estatisticas.png" width="100%" alt="Estatísticas do evento"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+**Evolução do schema — migrations 008–017**
+
+Dez novas migrations corrigiram e expandiram o schema para suportar os fluxos da sprint: conversão das colunas `old_value`, `new_value` (tabela `logs`) e `old_distance` (tabela `checkpoints`) de `INT` para `NUMERIC`, eliminando truncamento de quilometragem decimal (ex.: 10,50 km → 10); e demais ajustes de integridade referencial e índices. Fechamento: issue #230.
+
+**Suíte de testes expandida**
+
+A suíte de testes automatizados foi expandida com novas suítes (`pageController.test.ts`, `auth.routes.test.ts`) e correção de falhas em dez arquivos existentes (`auth.controller.test.ts`, `shift.test.ts`, `alerts.test.ts`, `event.test.ts`, `history.test.ts`, `export.test.ts`, `metrics.test.ts`), resultando em 180 testes passando com cobertura de 96,02% em statements e 100% em funções na camada Service. Fechamento: issue #235.
+
+---
+
+### b) O que não foi concluído
+
+| Item | Motivo | Previsão |
+| :--- | :------ | :------- |
+| `GET /teams/:teamId/validation` (RF003) | Depende de regras de validação de equipe ainda em definição com o parceiro | Sprint 5 |
+| Modo TV — interface pública de placar (RF034) | Backend implementado; frontend da tela de exibição em pista não finalizado | Sprint 5 |
+| Link público de compartilhamento individual de atleta (RF050) | Endpoint implementado; integração com a tela do atleta não concluída | Sprint 5 |
+| Seções WAD §3.8.1 e §3.8.2 — Autenticação e Controle de sessão | Documentação textual pendente, implementação já feita | Sprint 5 |
+| Testes de usabilidade com usuários reais | Previsto para sprint 5 conforme barema do Art. 15 | Sprint 5 |
+
+---
+
+### c) Dificuldades técnicas enfrentadas e próximos passos
+
+A principal dificuldade técnica foi a **migração de arquitetura SPA-estática para SSR com EJS**. As páginas existentes foram desenvolvidas como HTML estático com fetch de API no cliente; integrá-las ao SSR exigiu refatorar o `pageController` para consultar o banco antes de cada render e injetar o estado inicial diretamente no template, evitando flicker e requisições redundantes no carregamento. A separação de responsabilidades entre o que o servidor injeta e o que o JavaScript do cliente gerencia de forma incremental demandou alinhamento cuidadoso entre as camadas.
+
+A segunda dificuldade foi a **resolução de conflitos entre cinco branches paralelas**. Como o trabalho da sprint foi desenvolvido em paralelo por membros distintos sobre uma base divergente, a integração sequencial em develop gerou conflitos extensos em arquivos de rotas e controllers compartilhados, resolvidos via reset para o HEAD de develop e re-apply seletivo dos arquivos por branch.
+
+O **bug #227** (sessionStorage não persistido ao navegar entre telas) revelou uma dependência implícita de estado no cliente que não estava documentada: a tela de seleção de esteira armazenava o `treadmill_id` apenas no `sessionStorage`, sem confirmação no backend, o que fazia o fluxo falhar ao recarregar a página. A correção passou a persistir a seleção via cookie de sessão validado pelo servidor.
+
+**Próximos passos para a sprint 5:** concluir RF003 e RF034, realizar testes de usabilidade com pelo menos três participantes, refatorar pontos de acoplamento identificados nos testes de integração, preencher as seções WAD pendentes (§3.8.1, §3.8.2) e preparar a versão final para publicação conforme os critérios do Art. 18.
 
 ## 4.3. Versão final da aplicação web (sprint 5)
 
