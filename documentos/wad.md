@@ -4830,20 +4830,22 @@ A tabela a seguir apresenta a finalidade de cada conjunto de testes automatizado
 
 #### Resumo Quantitativo dos Testes
 
-| Módulo               | Quantidade de Cenários         |
-| -------------------- | ------------------------------ |
-| Auth Service         | 18                             |
-| Auth Controller      | 17                             |
-| Auth Middleware      | 7                              |
-| Eventos              | 18                             |
-| Equipes e Atletas    | 23                             |
-| Turnos e Checkpoints | 36                             |
-| Alertas              | 7                              |
-| Histórico            | 8                              |
-| Logs                 | 15                             |
-| Métricas             | 20                             |
-| Exportação CSV       | 11                             |
-| **Total**            | **180 cenários automatizados** |
+| Módulo                    | Quantidade de Cenários         |
+| ------------------------- | ------------------------------ |
+| Auth Service              | 18                             |
+| Auth Controller           | 17                             |
+| Auth Middleware e Rotas   | 13                             |
+| Eventos                   | 36                             |
+| Equipes e Atletas         | 31                             |
+| Turnos e Checkpoints      | 78                             |
+| Sincronização             | 16                             |
+| Alertas                   | 7                              |
+| Histórico                 | 11                             |
+| Logs                      | 15                             |
+| Métricas                  | 20                             |
+| Exportação CSV            | 15                             |
+| Pages / Interface         | 24                             |
+| **Total**                 | **301 cenários automatizados** |
 
 A implementação desses testes automatizados garante a validação das principais regras de negócio da plataforma RedRun, reduzindo riscos de regressão e aumentando a confiabilidade dos fluxos críticos da operação do evento.
 
