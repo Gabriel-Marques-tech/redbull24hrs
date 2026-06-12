@@ -4334,6 +4334,8 @@ O principal diferencial da RedRun reside em sua aderência total à dinâmica do
 ---
 ## 6.2 Análise de Mercado
 
+---
+
 ### 6.2.1 Visão Geral do Setor
 
 A aplicação RedRun está inserida na convergência entre eventos esportivos experienciais, brand activation e tecnologia para gestão operacional de eventos (EventTech). Trata-se de um nicho no qual marcas utilizam experiências esportivas, como corridas de endurance e desafios coletivos, para fortalecer relacionamento com comunidades, gerar engajamento presencial e produzir dados sobre participação e desempenho. No caso do Red Bull 24 Horas, a criticidade operacional é elevada, pois a legitimidade da competição depende da precisão contínua dos registros ao longo de 24 horas.
@@ -4343,6 +4345,8 @@ Economicamente, o setor de eventos no Brasil demonstra retomada consistente: seg
 No âmbito regulatório, a RedRun deve atender à LGPD, pois processa dados de corredores, equipes, auditores, registros de turnos, horários de atividade e métricas de desempenho. Portanto, controle de acesso, minimização de dados, rastreabilidade e segurança da informação são requisitos estruturais da solução [²¹](#8-referências). Nesse contexto, a RedRun posiciona-se como uma solução de digitalização operacional para eventos esportivos de endurance, atuando especificamente na coleta, validação e rastreabilidade de dados de desempenho em tempo real. Sua proposta responde à necessidade de reduzir erros manuais, aumentar a confiabilidade dos registros e fornecer informações consolidadas para auditoria, tomada de decisão operacional e análise pós-evento.
 
 ### 6.2.2 Tamanho e Crescimento do Mercado
+
+---
 
 O mercado relacionado à RedRun deve ser analisado a partir de dois níveis: o setor demandante, composto por empresas e operações de eventos, e o mercado tecnológico, formado por soluções digitais voltadas à automação operacional, registro de dados, acompanhamento em tempo real e geração de relatórios. A RedRun não representa o setor de eventos como um todo, mas uma solução de camada operacional — uma API e aplicação web voltadas ao controle de turnos, rastreabilidade dos registros e consolidação automatizada de dados em eventos de endurance. Na ausência de dados públicos específicos para esse nicho, a análise utiliza o mercado de softwares de gestão de eventos como aproximação mais próxima, dado que a RedRun opera dentro desse ecossistema tecnológico.
 
