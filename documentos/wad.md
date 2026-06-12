@@ -4428,15 +4428,11 @@ Concluiu-se que o preço deve contemplar levantamento de requisitos, prototipaç
 
 ### 6.6.3 Praça (Distribuição)
 
-A distribuição da RedRun ocorre por meio de disponibilização digital controlada, uma vez que a solução é uma aplicação web integrada a uma API e desenvolvida exclusivamente para o Red Bull 24 Horas Brasil. Diferentemente de produtos digitais abertos ao público, a RedRun não depende de lojas de aplicativos, venda direta em site comercial ou canais de marketplace. Seu acesso é restrito aos usuários envolvidos na operação do evento, como auditores, coordenadores e responsáveis pela organização.
+Identificou-se que a distribuição da RedRun ocorre por disponibilização digital controlada, já que a solução é uma aplicação web integrada a uma API e desenvolvida exclusivamente para o Red Bull 24 Horas Brasil. Diferentemente de produtos abertos ao público, não depende de lojas de aplicativos, venda em site comercial ou marketplaces: o acesso é restrito aos usuários da operação — auditores, coordenadores e responsáveis pela organização.
 
-O principal canal de entrega da solução é o ambiente web, acessado por navegador nos dispositivos utilizados durante a operação. O uso prioritário previsto é em tablets, por oferecerem melhor equilíbrio entre mobilidade, área de tela e facilidade de interação durante o registro dos turnos. Em cenários de contingência ou necessidade operacional, o acesso por celular também pode ser utilizado, desde que validado previamente pela equipe responsável pela operação. A aplicação deve ser entregue em funcionamento, com link de acesso, backend, API e banco de dados configurados para uso no fluxo operacional definido.
+O principal canal de entrega é o ambiente web, acessado por navegador. O uso prioritário previsto é em tablets, pelo equilíbrio entre mobilidade, área de tela e facilidade de interação; o acesso por celular é admitido em contingência, mediante validação prévia da equipe. A aplicação é entregue em funcionamento, com link de acesso, backend, API e banco de dados configurados.
 
-A disponibilização da RedRun deve ocorrer em três momentos. Antes do evento, a aplicação é configurada com dados iniciais, como local, equipes, corredores e usuários autorizados. Durante o evento, o sistema é utilizado pela equipe operacional para registrar turnos, checkpoints e métricas em tempo real. Após o encerramento, os dados permanecem disponíveis para consulta, exportação e auditoria pós-evento.
-
-Após a entrega inicial, eventuais decisões sobre continuidade de hospedagem, domínio, manutenção, alterações de infraestrutura, ajustes de funcionalidades ou evolução da aplicação passam a depender da Red Bull Brasil, organização responsável pelo uso da solução. Dessa forma, a entrega contempla uma aplicação funcional e acessível para validação e operação, enquanto modificações posteriores podem ser tratadas como novas demandas de manutenção ou evolução.
-
-Assim, a estratégia de distribuição da RedRun é baseada em implantação direta para o parceiro, acesso por link, uso restrito por perfis autorizados e operação em ambiente web controlado. Esse modelo é coerente com a natureza da aplicação, pois sua finalidade não é alcançar usuários em massa, mas garantir que os usuários responsáveis pela operação tenham acesso à ferramenta certa no momento crítico do evento.
+Observou-se que a disponibilização ocorre em três momentos: antes do evento (configuração de dados iniciais), durante (registro de turnos e métricas em tempo real) e após (consulta, exportação e auditoria). Concluiu-se que a estratégia é coerente com a natureza da solução, pois seu objetivo não é alcançar usuários em massa, mas garantir que a equipe operacional tenha a ferramenta certa no momento crítico.
 
 ### 6.6.4 Promoção
 
