@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoria</title>
+
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/auditoria.css">
+</head>
+
+<body>
+    <div class="barra-gradiente"></div>
+
+    <header class="topo">
+        <div class="operador">
+            <span class="avatar avatar-operador"></span>
+
+            <div>
+                <small>Operador</small>
+                <p id="nomeOperador">Lucas Andrade</p>
+            </div>
+
+            <button class="btn-trocar" type="button"><strong>⇄</strong></button>
+        </div>
+
+        <p class="tempo-restante">
+            Restam <span id="tempoRestante">23:20:03</span>
+        </p>
+
+        <button class="btn-sair" type="button">↪</button>
+    </header>
+
+    <main class="conteudo-auditoria">
+        <section class="cronometro-area">
+            <div class="corredor-atual">
+                <small>Corredor atual</small>
+                <p>
+                    <span id="corredorAtual">Mariana Toledo</span>
+                    <button class="btn-editar" type="button">✎</button>
+                </p>
+            </div>
+
+            <div class="cronometro" id="cronometro">
+                00:00:00
+            </div>
+
+            <div class="acoes-corrida">
+                <button class="btn-iniciar" id="btnIniciar" type="button">
+                    Iniciar corrida
+                </button>
+
+                <button class="btn-proximo-corredor escondido" id="btnProximoCorredor" type="button" aria-label="Próximo corredor">
+                    <span class="icone-proximo"></span>
+                </button>
+
+                <button class="btn-esteira" id="btnAbrirEsteira" type="button">
+                    <span id="numeroEsteira">1</span>
+                    <span><img src="../assets/esteira/esteira-branca.svg" alt=""></span>
+                </button>
+            </div>
+        </section>
+
+        <section class="area-registros">
+            <div class="ultimos-registros">
+                <h2>Últimos registros</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Corredor</th>
+                            <th>Correu</th>
+                            <th>Esteira</th>
+                            <th>Início</th>
+                            <th>Fim</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tabelaRegistros">
+                        <tr>
+                            <td>Pietro Sansão</td>
+                            <td>4km</td>
+                            <td>Esteira 2</td>
+                            <td>12:02:53</td>
+                            <td>12:30:19</td>
+                        </tr>
+
+                        <tr>
+                            <td>Pietro Sansão</td>
+                            <td>2km</td>
+                            <td>Esteira 1</td>
+                            <td>12:02:53</td>
+                            <td>12:30:19</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <aside class="proximos-corredores">
+                <h2>Próximo corredor</h2>
+
+                <div class="lista-corredores" id="listaCorredores">
+                    <div class="corredor-fila" draggable="true">
+                        <span class="avatar"></span>
+                        <p>Pietro Sansão</p>
+                        <span class="drag">⠿</span>
+                    </div>
+
+                    <div class="corredor-fila" draggable="true">
+                        <span class="avatar"></span>
+                        <p>Gabriel Marques</p>
+                        <span class="drag">⠿</span>
+                    </div>
+
+                    <div class="corredor-fila" draggable="true">
+                        <span class="avatar"></span>
+                        <p>Laura Faria</p>
+                        <span class="drag">⠿</span>
+                    </div>
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <div class="modal-esteira escondido" id="modalEsteira">
+        <div class="modal-conteudo">
+            <h2>Selecione uma esteira</h2>
+
+            <div class="opcoes-esteira">
+                <button class="opcao-esteira selecionada" type="button" data-esteira="1">
+                    <img class="icone-esteira icone-branco" src="../assets/esteira/esteira-branca.svg" alt="">
+                    <img class="icone-esteira icone-preto" src="../assets/esteira/esteira.svg" alt="">
+                    <span>Esteira 1</span>
+                </button>
+
+                <button class="opcao-esteira" type="button" data-esteira="2">
+                    <img class="icone-esteira icone-branco" src="../assets/esteira/esteira-branca.svg" alt="">
+                    <img class="icone-esteira icone-preto" src="../assets/esteira/esteira.svg" alt="">
+                    <span>Esteira 2</span>
+                </button>
+            </div>
+
+            <div class="acoes-modal">
+                <button class="btn-cancelar-modal" id="btnCancelarEsteira" type="button">Cancelar</button>
+                <button class="btn-selecionar-modal" id="btnSelecionarEsteira" type="button">Selecionar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-finalizar-competicao escondido" id="modalFinalizarCompeticao">
+        <div class="modal-finalizar-conteudo">
+            <div class="icone-finalizar">↪</div>
+
+            <h2>Finalizar competição?</h2>
+            <p>Ao finalizar uma competição, não é<br>possível iniciá-la novamente.</p>
+
+            <div class="acoes-finalizar">
+                <button class="btn-cancelar-finalizar" id="btnCancelarFinalizarCompeticao" type="button">
+                    Cancelar
+                </button>
+
+                <button class="btn-confirmar-finalizar" id="btnConfirmarFinalizarCompeticao" type="button">
+                    Finalizar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-turno escondido" id="modalTurno">
+        <div class="modal-turno-conteudo">
+            <div class="campos-turno">
+                <div class="campo-turno campo-corredor">
+                    <label for="selectCorredor">Corredor</label>
+                    <select id="selectCorredor">
+                        <option>Mariana Toledo</option>
+                        <option>Pietro Sansão</option>
+                        <option>Gabriel Marques</option>
+                        <option>Laura Faria</option>
+                    </select>
+                </div>
+
+                <div class="campo-turno campo-horario">
+                    <label for="inicioTurno">Início</label>
+                    <input id="inicioTurno" type="text" value="12:14">
+                </div>
+
+                <div class="campo-turno campo-horario">
+                    <label for="fimTurno">Fim</label>
+                    <input id="fimTurno" type="text" value="12:30">
+                </div>
+            </div>
+
+            <div class="campo-turno campo-quilometragem">
+                <label for="quilometragemTurno">Registre a quilometragem</label>
+                <input id="quilometragemTurno" type="text" value="2km">
+            </div>
+
+            <button class="btn-registrar-turno" id="btnRegistrarTurno" type="button">Registrar</button>
+        </div>
+    </div>
+
+    <script src="../js/auditoria.js"></script>
+</body>
+
+</html>
