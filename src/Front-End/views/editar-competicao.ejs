@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar competição</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/equipe.css">
+    <link rel="stylesheet" href="/css/editar-competicao.css">
+</head>
+<body>
+    <div class="barra-gradiente"></div>
+
+    <a href="/home" class="cancelar">
+        <img src="/assets/competição/Seta.svg" alt="">
+        Voltar
+    </a>
+
+    <main>
+        <aside class="etapas etapas-editar">
+            <h3>Seções</h3>
+            <div class="etapa ativa" id="navGeral" onclick="navegarSecao('geral')">
+                <span>1</span><p>Dados gerais</p>
+            </div>
+            <div class="etapa" id="navEquipes" onclick="navegarSecao('equipes')">
+                <span>2</span><p>Equipes</p>
+            </div>
+        </aside>
+
+        <section class="conteudo conteudo-editar">
+            <span class="subetapa-editar">Competição agendada</span>
+            <h1>Editar competição</h1>
+
+            <!-- Seção 1: Dados gerais -->
+            <div id="secaoGeral" class="secao-editar">
+                <div class="bloco">
+                    <h2>Dados gerais</h2>
+                    <label>Nome da competição
+                        <input id="editNome" type="text" placeholder="Nome da competição">
+                    </label>
+                    <label>Local
+                        <input id="editLocal" type="text" placeholder="Cidade, Estado">
+                    </label>
+                    <div class="linha-dupla">
+                        <label>Data <input id="editData" type="date"></label>
+                        <label>Horário <input id="editHora" type="time"></label>
+                    </div>
+                </div>
+                <div class="botoes-secao">
+                    <button type="button" class="btn-excluir" id="btnExcluir">Excluir competição</button>
+                    <button type="button" class="btn-avancar-secao" onclick="navegarSecao('equipes')">
+                        Próximo: Equipes →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Seção 2: Equipes -->
+            <div id="secaoEquipes" class="secao-editar" style="display:none;">
+                <div id="listaEquipes"></div>
+                <div class="botoes-secao">
+                    <button type="button" class="btn-voltar-secao" onclick="navegarSecao('geral')">
+                        ← Dados gerais
+                    </button>
+                    <button type="button" class="btn-salvar" id="btnSalvar">Salvar alterações</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        window.MANAGER_ID = <%- manager_id %>;
+        window.EVENTO  = <%- JSON.stringify(evento) %>;
+        window.EQUIPES = <%- JSON.stringify(equipes) %>;
+    </script>
+    <script src="/js/editar-competicao.js"></script>
+</body>
+</html>
