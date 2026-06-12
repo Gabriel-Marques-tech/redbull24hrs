@@ -1,0 +1,85 @@
+%%{init: {"theme":"base","flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":80,"rankSpacing":95,"padding":24},"themeVariables":{"fontFamily":"Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryTextColor":"#0F0069","primaryBorderColor":"#0F0069","lineColor":"#0F0069","tertiaryColor":"#F5F5FA","tertiaryTextColor":"#0F0069"}}}%%
+flowchart TB
+
+    classDef client fill:#FFFFFF,stroke:#0F0069,stroke-width:2px,color:#0F0069;
+    classDef route fill:#FFF7CC,stroke:#D6A700,stroke-width:2px,color:#0F0069;
+    classDef controller fill:#E8E8F5,stroke:#0F0069,stroke-width:2px,color:#0F0069;
+    classDef service fill:#E7F5E8,stroke:#2E7D32,stroke-width:2px,color:#0F0069;
+    classDef repository fill:#FFF0D6,stroke:#EF6C00,stroke-width:2px,color:#0F0069;
+    classDef db fill:#ECEFF1,stroke:#37474F,stroke-width:2px,color:#0F0069;
+    classDef output fill:#FDE7EF,stroke:#D2003C,stroke-width:2px,color:#0F0069;
+    classDef note fill:#FFFFFF,stroke:#D2003C,stroke-width:2px,stroke-dasharray: 6 4,color:#0F0069;
+
+    subgraph L1["Cliente"]
+        direction TB
+        C["Auditor / Gestor<br/>consulta e correção"]:::client
+    end
+
+    subgraph L2["Rotas protegidas"]
+        direction TB
+        R1["GET /audit/history"]:::route
+        R2["PATCH /audit/checkpoints/:id"]:::route
+        AUTH["JWT obrigatório"]:::route
+    end
+
+    subgraph L3["Controllers"]
+        direction TB
+        HC["HistoryController"]:::controller
+        SC["ShiftController"]:::controller
+    end
+
+    subgraph L4["Services"]
+        direction TB
+        HS["HistoryService"]:::service
+        SS["ShiftService"]:::service
+        RN["RF016 histórico<br/>RF015 correção<br/>RN23/RN24 rastreabilidade"]:::note
+    end
+
+    subgraph L5["Repositories"]
+        direction TB
+        HR["HistoryRepository"]:::repository
+        SR1["findCheckpointById"]:::repository
+        SR2["findNeighbors"]:::repository
+        SR3["correctCheckpoint"]:::repository
+    end
+
+    subgraph L6["Banco de Dados"]
+        direction TB
+        DB["PostgreSQL"]:::db
+        SH["shifts"]:::db
+        AT["athletes"]:::db
+        TE["teams"]:::db
+        TM["treadmills"]:::db
+        CP["checkpoints"]:::db
+        CC["checkpoint_corrections"]:::db
+    end
+
+    subgraph L7["Saídas"]
+        direction TB
+        O1["200 entries[]"]:::output
+        O2["200 checkpoint corrigido"]:::output
+        O3["422 distância inválida"]:::output
+    end
+
+    C --> R1 --> AUTH --> HC --> HS --> HR
+    C --> R2 --> AUTH --> SC --> SS
+    HS -.-> RN
+    SS -.-> RN
+    HR --> SH
+    HR --> AT
+    HR --> TE
+    HR --> TM
+    HR --> CP
+    SS --> SR1 --> CP
+    SS --> SR2 --> CP
+    SS --> SR3 --> CP
+    SR3 --> CC
+    SH --> DB
+    AT --> DB
+    TE --> DB
+    TM --> DB
+    CP --> DB
+    CC --> DB
+    DB --> HR --> HS --> HC --> O1 --> C
+    DB --> SR3 --> SS --> SC --> O2 --> C
+    SS -. valida intervalo .-> O3
