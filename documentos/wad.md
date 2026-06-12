@@ -4372,6 +4372,8 @@ No eixo mercadológico, consolida-se a demanda por soluções especializadas em 
 
 ## 6.2.4 Análise da Concorrência
 
+---
+
 A concorrência enfrentada pela RedRun não se concentra em um produto equivalente, mas em um conjunto de alternativas que disputam a mesma função: registrar e consolidar, de forma confiável, a quilometragem percorrida ao longo das 24 horas de competição. Essas alternativas dividem-se em dois grupos — substitutos diretos, que hoje ocupam ou poderiam ocupar a operação do evento, e concorrentes indiretos, que atuam em camadas adjacentes do ecossistema de tecnologia para eventos.
  
 **Substitutos diretos.** O principal concorrente atual é o **método manual com prancheta física**, complementado pela posterior transcrição para planilha. Trata-se de um substituto paradoxalmente forte: é integralmente aderente à dinâmica de revezamento do evento, não depende de software e é resiliente a quedas de sistema. Sua fragilidade, no entanto, é exatamente o que a RedRun resolve — está sujeito a erro humano acumulado ao longo das madrugadas, não oferece consolidação em tempo real e gera retrabalho de transcrição com baixa rastreabilidade para auditoria. O segundo substituto são os **dispositivos vestíveis**, como relógios inteligentes com GPS e pulseiras de sincronização do tipo da Technogym. Embora ofereçam captura automática, mostram-se inadequados ao formato: o GPS é impreciso em corrida estática sobre esteira, a sincronização prévia é inviável diante de trocas de atleta em até 15 segundos, e não há dispositivos em número suficiente para toda a operação — limitações já mapeadas na análise das Cinco Forças de Porter (seção 2.1.1).
