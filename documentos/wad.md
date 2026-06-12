@@ -4455,7 +4455,11 @@ As fontes de receita da RedRun decorrem de seu modelo de desenvolvimento sob enc
  
 Esse modelo de receita é sustentado pela proposta de valor econômica entregue ao cliente, que não se confunde com a receita em si. Para a Red Bull, a adoção da RedRun representa redução do tempo de auditoria, eliminação de materiais físicos como pranchetas e formulários impressos e diminuição da carga operacional da equipe — economias que reforçam o retorno sobre o investimento e justificam tanto a contratação inicial quanto a expansão da solução. Dessa forma, o valor da RedRun é, ao mesmo tempo, operacional para a equipe de Field Marketing e econômico para a marca, o que fundamenta a viabilidade do modelo de negócio.
 
+---
+
 ## 6.5 Estratégia de Marketing
+
+---
 
 ### 6.5.1 Produto/Serviço
 
