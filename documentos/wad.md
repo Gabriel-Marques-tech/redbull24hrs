@@ -1949,17 +1949,6 @@ Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação
   <br><br><br>
 </div>
 
-#### 3.2.3.1. Diagrama de Classes Arquitetural
-
-O Diagrama de Classes Arquitetural representa a estrutura de implementação da aplicação, evidenciando as camadas da arquitetura MVC adotada no backend. Cada módulo funcional — Auth, Event, Team, Shift, Alerts, History, Metrics, Logs, Export e Sync — é composto por quatro artefatos: um arquivo de rotas que registra os endpoints no roteador Express, um Controller que recebe as requisições HTTP e delega a lógica ao Service, um Service que concentra as regras de negócio e orquestra o acesso aos dados via Repository, e um Repository que executa as queries SQL contra o Pool de conexão PostgreSQL. O AuthMiddleware atua como componente transversal, interceptando requisições protegidas antes que cheguem aos Controllers. O PageController é o único componente que não possui Service próprio, pois sua responsabilidade é exclusivamente renderizar as views EJS com server-side rendering.
-
-<div align="center">
-  <sub>Imagem 22.1 - Diagrama de Classes Arquitetural</sub><br>
-  <img src="./assets/diagrama_classes_arquitetural/diagrama_classes_arquitetural.svg" width="100%" alt="Diagrama de Classes Arquitetural — camadas Routes, Controllers, Services, Repositories e Database"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
 ### 3.2.4. Diagrama de Sequência UML
 
 A modelagem de software é uma etapa fundamental no desenvolvimento de aplicações, pois permite que equipes de desenvolvimento visualizem, comuniquem e validem o comportamento do sistema antes mesmo de escrever a primeira linha de código. Dentro das ferramentas de modelagem, a UML (Unified Modeling Language, ou Linguagem de Modelagem Unificada) é o padrão mais amplamente adotado na indústria de software. Trata-se de um conjunto de notações gráficas que descrevem diferentes aspectos de um sistema desde sua estrutura estática até o seu comportamento dinâmico em tempo de execução.
