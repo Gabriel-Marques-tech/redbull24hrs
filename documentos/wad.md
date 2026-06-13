@@ -2092,7 +2092,22 @@ _Ao menos um fluxo relevante em UML ou BPMN. Use a notação da ferramenta escol
 
 ---
 
-_Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP._
+O Diagrama de Implantação UML da RedRun descreve como os artefatos de software são distribuídos sobre os nós físicos e de execução que compõem o sistema, os protocolos de comunicação utilizados entre eles e as dependências de infraestrutura que sustentam a operação da aplicação durante o evento Red Bull 24 Horas.
+
+<div align="center">
+  <sub>Imagem XX – Diagrama de Implantação (Sprint 4)</sub><br>
+  <img src="assets/diagrama_implantacao/implantacao.svg" width="100%" alt="Diagrama de Implantação RedRun — Sprint 4"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+O sistema opera sobre quatro nós principais. O primeiro é o **dispositivo cliente** (`<<device>>`), composto por tablets Android 10+ ou PCs com Chrome/Firefox. Nesse nó residem dois artefatos: o browser, que consome as páginas EJS renderizadas pelo servidor, e o `localStorage`, utilizado como buffer persistente de checkpoints registrados em modo offline. Quando o dispositivo perde conectividade durante o evento, os checkpoints são armazenados localmente com um identificador determinístico (`sync_id = SHA256(shift_id|distance|type|timestamp)`); ao reconectar, o browser envia os registros em lote ao endpoint `POST /sync/checkpoints`, que os persiste de forma idempotente sem gerar duplicatas.
+
+O segundo nó é o **servidor de aplicação** (`<<executionEnvironment>>`), executado sobre Node.js 20+ com Express 5 e TypeScript compilado. Nele estão implantados cinco artefatos: (1) as rotas HTTP, cobrindo 49 endpoints distribuídos em 12 fluxos funcionais; (2) os middlewares de autenticação JWT, validação de corpo e tratamento centralizado de erros; (3) as views EJS, responsáveis pela renderização server-side das interfaces de auditoria, gerência e Modo TV; (4) a documentação estática da WebAPI servida em `/docs`; e (5) o arquivo `.env`, que concentra as variáveis de ambiente — `DATABASE_URL`, `JWT_SECRET`, `JWT_REFRESH_SECRET` e `PORT`. A comunicação entre cliente e servidor ocorre via HTTPS/HTTP 1.1, com tokens de acesso e de renovação transmitidos em cookies `HttpOnly` e `SameSite=Strict`, eliminando a exposição do token ao JavaScript da página.
+
+O terceiro nó é o **banco de dados** (`<<database>>`), PostgreSQL 15+, acessado pelo servidor de aplicação via TCP na porta 5432 por meio de um pool de conexões (`pg`, máximo de 10 conexões simultâneas). O schema é composto por 17 migrations DDL versionadas, aplicadas em ordem sequencial, cobrindo as tabelas `events`, `treadmills`, `teams`, `athletes`, `shifts`, `checkpoints`, `managers`, `auditors`, `refresh_tokens` e `audit_logs`. As migrations garantem reprodutibilidade do ambiente em qualquer máquina de desenvolvimento ou servidor de produção.
+
+O quarto nó é o **GitLab** (`<<cloud>>`), que hospeda o repositório do projeto (branches `main` e `develop`) e executa o pipeline de CI/CD. O pipeline publica automaticamente o arquivo `docs/api/index.html` no GitLab Pages, disponibilizando a documentação navegável da WebAPI publicamente em `g02-73a453.pages.git.inteli.edu.br/api/`. O deploy da aplicação em si é realizado manualmente via `npm run build` seguido de `npm start` no servidor de destino.
 
 ### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
