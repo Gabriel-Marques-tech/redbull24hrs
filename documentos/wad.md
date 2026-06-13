@@ -3730,7 +3730,49 @@ Cada endpoint contém: método HTTP, path completo, headers, body request (com c
 
 ---
 
-A documentação técnica completa da WebAPI está disponível de forma navegável no arquivo [`docs/api/index.html`](../docs/api/index.html), presente no repositório do projeto, e também pode ser acessada publicamente pelo link [https://g02-73a453.pages.git.inteli.edu.br/api/](https://g02-73a453.pages.git.inteli.edu.br/api/). A documentação reúne 49 endpoints organizados em doze fluxos: **Autenticação** (7 endpoints para registro de gerentes e auditores, login, renovação e revogação de token JWT, consulta do usuário autenticado e listagem de auditores ativos), **Eventos** (7 endpoints de CRUD completo de eventos mais o início e o encerramento da competição, restritos ao perfil gerente), **Esteiras** (4 endpoints de CRUD de esteiras vinculadas a eventos), **Equipes** (5 endpoints de CRUD de equipes), **Atletas** (5 endpoints de CRUD de atletas vinculados a equipes), **Turnos** (8 endpoints para iniciar turno, registrar e listar checkpoints, consultar status, encerrar, abandonar e editar retroativamente turno e checkpoint), **Histórico** (1 endpoint com filtros por equipe, esteira e atleta), **Alertas** (1 endpoint de inconsistências detectadas em tempo real), **Sincronização** (1 endpoint que recebe em lote os checkpoints registrados offline e os persiste de forma idempotente por `sync_id`), **Logs de Auditoria** (1 endpoint que expõe a trilha imutável de edições retroativas com filtros por turno, checkpoint, autor e tipo), **Métricas** (7 endpoints de desempenho individual e agregado por evento, incluindo o link público de compartilhamento sem autenticação) e **Exportação** (2 endpoints para geração de arquivos CSV de turnos e checkpoints). A documentação inclui ainda um Anexo de Mapeamento RF↔Endpoint com rastreabilidade completa dos RF001–RF053 definidos no WAD, indicando explicitamente os requisitos ainda não implementados. Cada endpoint está descrito com método HTTP, path completo, headers obrigatórios, body de requisição com campos e validações, shape da resposta de sucesso com exemplos em JSON e tabela de status codes possíveis (200, 201, 204, 400, 401, 403, 404, 409, 422 e 500).
+A documentação técnica completa da WebAPI está disponível de forma navegável no arquivo [`docs/api/index.html`](../docs/api/index.html), presente no repositório do projeto, e também pode ser acessada publicamente pelo link [https://g02-73a453.pages.git.inteli.edu.br/api/](https://g02-73a453.pages.git.inteli.edu.br/api/). A documentação reúne 49 endpoints organizados em doze fluxos:
+
+### 3.7.1. Tratamento de Erros (Error Handling)
+
+Todos os endpoints da WebAPI adotam um **contrato de resposta de erro uniforme**. Em qualquer situação de falha — validação, regra de negócio, recurso inexistente ou erro interno — a API retorna sempre um objeto JSON com a chave `error` contendo a mensagem descritiva do problema, sem expor stack traces ou detalhes internos ao cliente.
+
+**Formato padrão de erro:**
+
+```json
+{ "error": "<mensagem descritiva do problema>" }
+```
+
+**Formato estendido — conflito de turno (409):**
+
+Quando a tentativa de iniciar um turno viola a regra de ocupação de esteira ou de atleta em andamento, a resposta inclui campos adicionais que identificam o turno conflitante, permitindo ao frontend exibir contexto ao auditor sem nova requisição:
+
+```json
+{
+  "error": "Equipe já possui um turno em andamento",
+  "conflict_shift_id": 42,
+  "conflict_athlete": "João Silva",
+  "conflict_treadmill": "Esteira 3",
+  "conflict_start_at": "2026-05-10T14:32:00.000Z"
+}
+```
+
+**Mapeamento de status HTTP por categoria de erro:**
+
+| Status | Categoria | Quando ocorre |
+| :----- | :-------- | :------------ |
+| `400` | Validação de entrada | Campo obrigatório ausente, tipo inválido, ID não numérico |
+| `401` | Não autenticado | Cookie `accessToken` ausente ou expirado |
+| `403` | Não autorizado | Perfil sem permissão para o recurso (auditor tentando rota de gerente) |
+| `404` | Recurso não encontrado | Entidade (turno, atleta, equipe, esteira, evento) inexistente no banco |
+| `409` | Conflito de regra de negócio | Turno duplicado, email já cadastrado, esteira ocupada, atleta em andamento |
+| `422` | Violação de regra de negócio | Erro cujo código inicia com `RN` — condição de negócio não satisfeita |
+| `500` | Erro interno | Falha inesperada no servidor ou no banco de dados |
+
+**Propagação interna:**
+
+Os Services lançam `new Error("<mensagem>")` com textos padronizados. Os Controllers capturam a exceção e determinam o status HTTP inspecionando o texto da mensagem via `statusFromError(message)`: mensagens contendo `"não encontrad"` → 404; `"em aberto"`, `"ocupada"` ou `"em andamento"` → 409; `"inválid"` → 400; prefixo `"RN"` → 422; demais → 500. Esse padrão garante que a lógica de mapeamento esteja centralizada, sem duplicação por rota.
+
+--- **Autenticação** (7 endpoints para registro de gerentes e auditores, login, renovação e revogação de token JWT, consulta do usuário autenticado e listagem de auditores ativos), **Eventos** (7 endpoints de CRUD completo de eventos mais o início e o encerramento da competição, restritos ao perfil gerente), **Esteiras** (4 endpoints de CRUD de esteiras vinculadas a eventos), **Equipes** (5 endpoints de CRUD de equipes), **Atletas** (5 endpoints de CRUD de atletas vinculados a equipes), **Turnos** (8 endpoints para iniciar turno, registrar e listar checkpoints, consultar status, encerrar, abandonar e editar retroativamente turno e checkpoint), **Histórico** (1 endpoint com filtros por equipe, esteira e atleta), **Alertas** (1 endpoint de inconsistências detectadas em tempo real), **Sincronização** (1 endpoint que recebe em lote os checkpoints registrados offline e os persiste de forma idempotente por `sync_id`), **Logs de Auditoria** (1 endpoint que expõe a trilha imutável de edições retroativas com filtros por turno, checkpoint, autor e tipo), **Métricas** (7 endpoints de desempenho individual e agregado por evento, incluindo o link público de compartilhamento sem autenticação) e **Exportação** (2 endpoints para geração de arquivos CSV de turnos e checkpoints). A documentação inclui ainda um Anexo de Mapeamento RF↔Endpoint com rastreabilidade completa dos RF001–RF053 definidos no WAD, indicando explicitamente os requisitos ainda não implementados. Cada endpoint está descrito com método HTTP, path completo, headers obrigatórios, body de requisição com campos e validações, shape da resposta de sucesso com exemplos em JSON e tabela de status codes possíveis (200, 201, 204, 400, 401, 403, 404, 409, 422 e 500).
 
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
