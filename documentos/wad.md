@@ -1708,6 +1708,32 @@ Na sprint 1, os RNFs foram definidos em nível conceitual, com critérios mensur
   <br><br>
 </div>
 
+#### Evolução dos RNFs: Sprint 4 — métricas de verificação e procedimentos
+
+Na sprint 4, com a integração ponta a ponta dos fluxos de auditoria, gerência e estatísticas, os RNFs pendentes de aferição foram atualizados. O quadro a seguir apresenta, para cada RNF com evolução nesta sprint, a atualização técnica realizada, a **métrica de verificação** com valor-alvo concreto e o **procedimento de verificação** — forma objetiva de atestar o cumprimento do critério — mantendo formato uniforme entre todos os eixos.
+
+<div align = "center">
+  <sub> Quadro 16.2 - Evolução dos RNFs: Sprint 4 — métricas e procedimentos de verificação </sub><br>
+
+| RNF | Eixo | Atualização Sprint 4 | Métrica de Verificação | Procedimento de Verificação | Evidência |
+| :-- | :--- | :------------------- | :--------------------- | :-------------------------- | :-------- |
+| **RNF001** | USAB | Fluxo completo de início/troca de corredor integrado ao backend via SSR — auditor seleciona esteira, escolhe atleta e inicia turno em tela única sem navegação intermediária. | 95% dos usuários concluem o fluxo em ≤ 3 min | Teste de usabilidade com ≥ 3 participantes: cronometrar o tempo do clique em "Iniciar Turno" até a confirmação do servidor. Meta: ≤ 3 min em 95% das tentativas. | `treadmill.ejs` → `auditoria.ejs` → `POST /audit/shifts/start`; testes de usabilidade previstos para sprint 5 |
+| **RNF002** | USAB | Views EJS do modo TV (`estatisticas-evento.ejs`, `visao-evento.ejs`) implementadas. Contraste da paleta principal (vermelho #D2003C / branco #FFFFFF) atende 5,9:1 (> 4,5:1 WCAG AA). | Contraste ≥ 4,5:1 em todos os elementos de texto; fonte ≥ 48px no modo TV | Inspecionar com Colour Contrast Analyser (ou DevTools) todos os pares texto/fundo das views EJS. Validar tamanho de fonte no CSS do modo TV (`estatisticas-evento.ejs`). | `estatisticas-evento.ejs`, `visao-evento.ejs`; paleta em §3.4.1 |
+| **RNF003** | USAB | 100% das mensagens de erro de validação retornadas pela API incluem descrição da correção esperada, padronizadas em §3.7.1 (Error Handling). | 100% das respostas de erro com campo `error` descritivo e acionável | Executar `npm test` e inspecionar as asserções de mensagem em `shift.test.ts`, `team.test.ts` e `auth.service.test.ts`. Confirmar que nenhuma mensagem retorna apenas código técnico ou stack trace. | `shiftService.ts` — mensagens dos `throw`; `shift.test.ts` |
+| **RNF004** | USAB | Ações críticas (início, checkpoint, encerramento) resolvidas em ≤ 3 cliques: (1) selecionar esteira, (2) confirmar atleta, (3) confirmar início. | Nenhuma ação operacional crítica exige > 3 cliques | Percorrer o fluxo completo em ambiente local contando cliques até a resposta do servidor. Repetir para checkpoint e encerramento. | `treadmill.ejs`, `auditoria.ejs`, `audit.ejs` |
+| **RNF005** | CONF | `POST /audit/sync` implementado na sprint 4: recebe checkpoints em lote com `sync_id` determinístico e os persiste com idempotência via índice único parcial (`ON CONFLICT ... DO NOTHING`). | 100% dos checkpoints offline sincronizados em ≤ 30s sem duplicatas | Executar `sync.test.ts` (`npm test -- --testPathPattern sync`). Verificar que registros com o mesmo `sync_id` não geram duplicata e que o endpoint responde em < 30s. | `syncController.ts`, `syncService.ts`; `sync.test.ts` — idempotência e batch |
+| **RNF008** | DES | Pool de conexões PostgreSQL configurado (`max: 15`, `idleTimeoutMillis: 30000`, `connectionTimeoutMillis: 5000`); índices sobre todas as FKs em `001_initialSchema.sql`. Aferição de p95 a realizar. | P95 de tempo de resposta < 200ms para endpoints operacionais | Executar carga com `autocannon -c 50 -d 10 http://localhost:3000/audit/shifts/start` (ou equivalente k6). Coletar p95 do relatório. Meta: < 200ms. | `connection.ts` — configuração do pool; `001_initialSchema.sql` — índices |
+| **RNF011** | DES | `metricsRepository.ts` usa consultas SQL agregadas (`SUM`, `AVG`, `COUNT`) sobre colunas indexadas para calcular km total, velocidade média e snapshots por evento. | Renderização de métricas consolidadas ≤ 1s | Medir com DevTools (Network → tempo de resposta) ou `curl -w "%{time_total}"` em `GET /metrics/events/:id/teams`. Meta: ≤ 1s. | `metricsRepository.ts`; `metricsService.ts`; `metrics.test.ts` |
+| **RNF012** | SEG | Autenticação completa integrada ao frontend: JWT (15 min) + refresh rotativo (7 dias) em cookies `HttpOnly`, middleware `authMiddleware` bloqueando 100% das rotas protegidas sem token válido. Endpoint público RF050 não passa pelo middleware. | 100% de rejeições com 401 em rotas protegidas sem token; endpoint público RF050 acessível sem autenticação | Executar `auth.service.test.ts` e `auth.routes.test.ts`. Confirmar cobertura de: (a) 401 para token ausente, (b) 401 para token expirado, (c) 403 para perfil incorreto, (d) 200 para RF050 sem token. | `authMiddleware.ts`; `auth.service.test.ts`; `auth.routes.test.ts` |
+| **RNF013** | SEG | `GET /audit/logs` implementado (sprint 4): expõe trilha imutável com `user`, `timestamp`, `old_value`, `new_value` e `type` em ordem decrescente de timestamp. | 100% das edições registradas com usuário, timestamp e dado anterior; consultáveis em ordem decrescente | Executar `logs.test.ts`. Verificar que toda edição via `PATCH` gera entrada em `logs` com os três campos obrigatórios e que a consulta retorna em ordem decrescente. | `logsController.ts`, `logsRepository.ts`; `logs.test.ts` |
+| **RNF015** | SUP | Cobertura de testes atualizada após expansão da suíte na sprint 4 (issue #235): **96,02% em statements, 89,88% em branches, 100% em functions, 99,56% em lines** na camada Service. | Cobertura ≥ 75% global na camada Service, aferida por `npm test -- --coverage` | Executar `npm test -- --coverage`. Verificar coluna "%" no relatório por arquivo em `src/services/`. Meta: ≥ 75% em statements em todos os services. | Evidência em §5.1.5 (Quadro de cobertura); comando: `npm test -- --coverage` |
+| **RNF016** | CAP | Pool configurado (`max: 15`). Teste de carga com 50 usuários simultâneos a realizar antes da sprint 5. | 50 usuários simultâneos com tempo de resposta < 500ms | Executar `autocannon -c 50 -d 30 http://localhost:3000/metrics/events/1/dashboard`. Coletar p99. Meta: < 500ms. | `connection.ts` — `max: 15`; teste de carga previsto sprint 5 |
+| **RNF017** | CAP | Consultas de histórico e exportação CSV aceleradas por índices sobre FKs (`shift_id`, `event_id`, `team_id`, `athlete_id`, `treadmill_id`). Aferição com volume real a realizar. | Consultas filtradas e exportações de ≤ 10.000 registros em < 3s | Inserir 10.000 registros de teste via script SQL. Executar `curl -w "%{time_total}"` em `GET /audit/history?event_id=1` e `GET /export/events/1/shifts`. Meta: < 3s. | `001_initialSchema.sql` — índices secundários; `historyRepository.ts`, `exportService.ts` |
+
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
 ## 3.2. Arquitetura (sprints 1 a 5)
 
 ---
@@ -4134,14 +4160,14 @@ Implementou-se o ciclo completo de registro de turno para auditores: seleção d
 
 <div align="center">
   <sub>Imagem XX – Tela de seleção de esteira (treadmill.ejs)</sub><br>
-  <img src="assets/relatorio_desenvolvimento/sprint4_treadmill.png" width="100%" alt="Seleção de esteira"><br>
+  <img src="assets/relatorio_desenvolvimento/prototipo_checkpoints.png" width="100%" alt="Seleção de esteira"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
   <sub>Imagem XX – Tela de auditoria em andamento (audit.ejs)</sub><br>
-  <img src="assets/relatorio_desenvolvimento/sprint4_audit.png" width="100%" alt="Auditoria em andamento"><br>
+  <img src="assets/relatorio_desenvolvimento/prototipo_historico_auditoria.png" width="100%" alt="Auditoria em andamento"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -4152,14 +4178,14 @@ Implementou-se o módulo completo do gerente de evento: criação e edição de 
 
 <div align="center">
   <sub>Imagem XX – Tela de gestão de equipes (gerente-equipes.ejs)</sub><br>
-  <img src="assets/relatorio_desenvolvimento/sprint4_gerente_equipes.png" width="100%" alt="Gestão de equipes"><br>
+  <img src="assets/relatorio_desenvolvimento/prototipo_historico_equipes.png" width="100%" alt="Gestão de equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
   <sub>Imagem XX – Tela de turnos do gerente (manager-shifts.ejs)</sub><br>
-  <img src="assets/relatorio_desenvolvimento/sprint4_manager_shifts.png" width="100%" alt="Gestão de turnos"><br>
+  <img src="assets/relatorio_desenvolvimento/prototipo_historico_geral.png" width="100%" alt="Gestão de turnos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -4170,7 +4196,7 @@ Implementou-se o módulo de acompanhamento em tempo real: placar por equipe com 
 
 <div align="center">
   <sub>Imagem XX – Tela de estatísticas do evento (estatisticas-evento.ejs)</sub><br>
-  <img src="assets/relatorio_desenvolvimento/sprint4_estatisticas.png" width="100%" alt="Estatísticas do evento"><br>
+  <img src="assets/relatorio_desenvolvimento/prototipo_inconsistencia.png" width="100%" alt="Estatísticas do evento"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
