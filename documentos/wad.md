@@ -3835,23 +3835,27 @@ A Matriz de Rastreabilidade de Requisitos (RTM — *Requirements Traceability Ma
 
 No contexto do Red Bull 24 Horas, onde inconsistências nos dados podem invalidar o resultado de uma competição inteira, a rastreabilidade deixa de ser uma formalidade documental e passa a ser uma garantia operacional.
 
-Os endpoints mapeados nesta matriz já estão implementados e cobertos por testes automatizados na suíte do projeto, organizada por arquivos reais (`auth.service.test.ts`, `event.test.ts`, `team.test.ts`, `shift.test.ts`, `history.test.ts`, `alerts.test.ts`, `logs.test.ts`, `sync.test.ts`, `metrics.test.ts` e `export.test.ts`), referenciados diretamente na coluna *Teste* para tornar a rastreabilidade fiel ao código entregue. A única exceção é o endpoint `GET /teams/:teamId/validation` (RF003), marcado com *(sprint 4)*, que possui contrato definido mas ainda será implementado, conforme o Quadro 31 ao final desta seção.
+Os endpoints mapeados nesta matriz estão implementados e cobertos por testes automatizados na suíte do projeto, organizada por arquivos reais (`auth.service.test.ts`, `event.test.ts`, `team.test.ts`, `shift.test.ts`, `history.test.ts`, `alerts.test.ts`, `logs.test.ts`, `sync.test.ts`, `metrics.test.ts` e `export.test.ts`), referenciados diretamente na coluna *Teste* com o arquivo e o cenário validado, para tornar a rastreabilidade fiel ao código entregue. A única exceção é o endpoint `GET /teams/:teamId/validation` (RF003), marcado na coluna *Status* como **Sprint 5**, que possui contrato definido mas será implementado na próxima sprint, conforme o Quadro 31 ao final desta seção.
 
 > **Legenda de personas:**
 > - **NR** — Nicole Rauen (atleta / influenciadora)
 > - **BG** — Bruno Gardesani (gerente de field marketing)
 > - **LA** — Lucas Andrade (operador de evento / auditor)
 >
-> *(sprint 4)* — endpoint com contrato definido e implementação planejada para a sprint 4 (ver Quadro 31).
+> **Legenda de Status:**
+> - **Implementado** — endpoint operante, coberto por testes automatizados e validado na suíte da sprint 4.
+> - **Sprint 5** — contrato definido (método, path, RN), implementação planejada para a sprint 5 (ver Quadro 31).
 
 <div align = "center">
   <sub> Quadro 30 - Matriz de Rastreabilidade (RTM) </sub><br>
 
-| Persona | RF | RN | Endpoint | Tela | Teste |
-|---------|----|----|----------|------|-------|
+Linhas sem marcação na coluna *Status* = **Implementado** na sprint 4.
+
+| Persona | RF | RN | Endpoint | Tela | Teste | Status |
+|---------|----|----|----------|------|-------|--------|
 | LA | RF001 | RN15, RN28 | `POST /teams` | Tela de Registro Pré-Evento → Cadastro de Equipe | `team.test.ts` — cadastro com nome único; bloqueio de terceira equipe e de nome duplicado |
 | LA | RF002 | RN16 | `POST /teams/:teamId/athletes` | Tela de Registro Pré-Evento → Cadastro de Atleta | `team.test.ts` — cadastro de corredor vinculado a equipe; rejeição sem equipe selecionada |
-| LA, BG | RF003 | RN17, RN28 | `GET /teams/:teamId/validation` *(sprint 4)* | Tela de Registro Pré-Evento → Cadastro de Equipe (listagem) | `team.test.ts` *(sprint 4)* — validação de exatamente 16 corredores antes de liberar o início |
+| LA, BG | RF003 | RN17, RN28 | `GET /teams/:teamId/validation` | Tela de Registro Pré-Evento → Cadastro de Equipe (listagem) | `team.test.ts` — validação de exatamente 16 corredores antes de liberar o início *(sprint 5)* | Sprint 5 |
 | LA | RF004 | RN19 | `GET /events/treadmills` | Tela de Acompanhamento de Esteiras / Tela de Início de Turno | `event.test.ts` — listagem de esteiras com status Livre/Ocupada; bloqueio de esteira ocupada |
 | LA | RF005 | RN20 | `GET /teams` | Tela de Seleção de Corredor e Registro de Início | `team.test.ts` — listagem de corredores restrita à equipe selecionada |
 | LA | RF006 | RN21 | `GET /teams/:teamId/athletes` | Tela de Seleção de Corredor e Registro de Início | `team.test.ts` — seleção de corredor disponível; bloqueio de corredor com turno em aberto |
@@ -3909,14 +3913,14 @@ Os endpoints mapeados nesta matriz já estão implementados e cobertos por teste
 
 #### Plano de implementação de endpoints
 
-Com a implementação, nesta sprint, dos fluxos de auditoria (logs), sincronização offline, correção de checkpoints inconsistentes e compartilhamento público de desempenho, esses endpoints passaram a constar como implementados e cobertos por testes na RTM acima. Resta, portanto, **um único endpoint planejado para a sprint 4**: a validação de aptidão de equipe (RF003). O contrato (método, path e RN governante) já está definido para que a implementação seja uma evolução incremental, sem alterar os endpoints existentes.
+Com a integração ponta a ponta realizada na sprint 4, todos os endpoints da RTM estão implementados e cobertos por testes, com exceção de **um único endpoint planejado para a sprint 5**: a validação de aptidão de equipe (RF003). O contrato (método, path e RN governante) já está definido para que a implementação seja uma evolução incremental, sem alterar os endpoints existentes.
 
 <div align = "center">
-  <sub> Quadro 31 - Endpoint planejado para a sprint 4 </sub><br>
+  <sub> Quadro 31 - Endpoint planejado para a sprint 5 </sub><br>
 
-| RF | Endpoint planejado | RN | Descrição e plano de implementação |
-|----|--------------------|----|------------------------------------|
-| RF003 | `GET /teams/:teamId/validation` | RN17, RN28 | Validar se a equipe possui exatamente 16 corredores ativos antes de liberar o início de turnos. **Plano:** novo método no `teamService` que conta atletas ativos por equipe e retorna o status de aptidão (apto/quantidade faltante); rota somente leitura consumida pela tela de cadastro, com cobertura prevista em `team.test.ts`. |
+| RF | Endpoint planejado | RN | Status | Descrição e plano de implementação |
+|----|--------------------|----|--------|------------------------------------|
+| RF003 | `GET /teams/:teamId/validation` | RN17, RN28 | Sprint 5 | Validar se a equipe possui exatamente 16 corredores ativos antes de liberar o início de turnos. Plano: novo método no `teamService` que conta atletas ativos por equipe e retorna o status de aptidão (apto/quantidade faltante); rota somente leitura consumida pela tela de cadastro, com cobertura em `team.test.ts`. |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
