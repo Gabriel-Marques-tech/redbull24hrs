@@ -10,6 +10,8 @@ const buildRes = () => {
   res.status = jest.fn().mockReturnValue(res);
   res.json = jest.fn().mockReturnValue(res);
   res.send = jest.fn().mockReturnValue(res);
+  res.cookie = jest.fn().mockReturnValue(res);
+  res.clearCookie = jest.fn().mockReturnValue(res);
   return res;
 };
 
@@ -201,8 +203,11 @@ describe("loginUser", () => {
 
     await AuthController.loginUser(req, res);
 
+    // Tokens vão em cookies httpOnly; corpo retorna apenas o usuário
+    expect(res.cookie).toHaveBeenCalledWith("refreshToken", "ref", expect.any(Object));
+    expect(res.cookie).toHaveBeenCalledWith("accessToken", "acc", expect.any(Object));
     expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith(result);
+    expect(res.json).toHaveBeenCalledWith({ user: result.user });
   });
 
   it("Retorna 500 quando o service lança erro inesperado", async () => {
@@ -222,7 +227,7 @@ describe("loginUser", () => {
 describe("refreshToken", () => {
   it("Retorna 401 se refresh inválido", async () => {
     mockService.refresh.mockResolvedValue(null);
-    const req = { body: { refreshToken: "bad" } } as Request;
+    const req = { cookies: { refreshToken: "bad" } } as unknown as Request;
     const res = buildRes();
 
     await AuthController.refreshToken(req, res);
@@ -233,7 +238,7 @@ describe("refreshToken", () => {
   it("Retorna 200 com tokens novos", async () => {
     const tokens = { accessToken: "new-a", refreshToken: "new-r" };
     mockService.refresh.mockResolvedValue(tokens);
-    const req = { body: { refreshToken: "old" } } as Request;
+    const req = { cookies: { refreshToken: "old" } } as unknown as Request;
     const res = buildRes();
 
     await AuthController.refreshToken(req, res);
@@ -245,7 +250,7 @@ describe("refreshToken", () => {
 
   it("Retorna 500 quando o service lança erro inesperado", async () => {
     mockService.refresh.mockRejectedValue(new Error("db down"));
-    const req = { body: { refreshToken: "tok" } } as Request;
+    const req = { cookies: { refreshToken: "tok" } } as unknown as Request;
     const res = buildRes();
 
     await AuthController.refreshToken(req, res);

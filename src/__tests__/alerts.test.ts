@@ -6,6 +6,7 @@ jest.mock("../middlewares/authMiddleware", () => ({
 	default: {
 		requireAuth: (_req: any, _res: any, next: any) => next(),
 		requireRole: () => (_req: any, _res: any, next: any) => next(),
+		requirePageAuth: (_req: any, _res: any, next: any) => next(),
 	},
 }));
 
