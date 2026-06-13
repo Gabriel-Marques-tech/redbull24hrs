@@ -8,7 +8,14 @@ jest.mock("../repositories/eventRepository", () => ({
 		findById: jest.fn(),
 		update: jest.fn(),
 		softDelete: jest.fn(),
+		start: jest.fn(),
+		finish: jest.fn(),
 	},
+}));
+
+// JWT mockado: por padrão devolve um manager (necessário para start/finish do evento).
+jest.mock("../utils/jwt", () => ({
+	verifyAccessToken: jest.fn(() => ({ sub: 1, email: "m@test.com", role: "manager", name: "Gerente" })),
 }));
 
 jest.mock("../repositories/treadmillRepository", () => ({
@@ -23,9 +30,13 @@ jest.mock("../repositories/treadmillRepository", () => ({
 
 import { eventRepository } from "../repositories/eventRepository";
 import { treadmillRepository } from "../repositories/treadmillRepository";
+import { verifyAccessToken } from "../utils/jwt";
 
 const mockEvent = { id: 1, title: "Maratona SP", local: "São Paulo", date: "2026-06-01", deleted_at: null };
 const mockTreadmill = { id: 1, number: 5 };
+const managerHeader = { Authorization: "Bearer valid.token.here" };
+const asAuditorOnce = () =>
+	(verifyAccessToken as jest.Mock).mockReturnValueOnce({ sub: 2, email: "a@test.com", role: "auditor", name: "Auditor" });
 
 beforeEach(() => jest.clearAllMocks());
 
@@ -186,5 +197,75 @@ describe("DELETE /events/treadmills/:id", () => {
 		const res = await request(app).delete("/events/treadmills/999");
 		expect(res.status).toBe(404);
 		expect(res.body).toHaveProperty("error");
+	});
+});
+
+// ─── PATCH /events/:id/start (apenas manager) ─────────────────────────────────
+
+describe("PATCH /events/:id/start", () => {
+	it("200 – manager inicia evento pendente", async () => {
+		(eventRepository.findById as jest.Mock).mockResolvedValue({ ...mockEvent, status: "pending" });
+		(eventRepository.start as jest.Mock).mockResolvedValue({ ...mockEvent, status: "in_progress" });
+		const res = await request(app).patch("/events/1/start").set(managerHeader).send({});
+		expect(res.status).toBe(200);
+		expect(res.body).toMatchObject({ status: "in_progress" });
+	});
+
+	it("404 – evento não encontrado", async () => {
+		(eventRepository.findById as jest.Mock).mockResolvedValue(null);
+		const res = await request(app).patch("/events/999/start").set(managerHeader).send({});
+		expect(res.status).toBe(404);
+	});
+
+	it("409 – evento já está em andamento", async () => {
+		(eventRepository.findById as jest.Mock).mockResolvedValue({ ...mockEvent, status: "in_progress" });
+		const res = await request(app).patch("/events/1/start").set(managerHeader).send({});
+		expect(res.status).toBe(409);
+	});
+
+	it("403 – auditor não pode iniciar evento", async () => {
+		asAuditorOnce();
+		const res = await request(app).patch("/events/1/start").set(managerHeader).send({});
+		expect(res.status).toBe(403);
+	});
+
+	it("401 – sem token de autenticação", async () => {
+		const res = await request(app).patch("/events/1/start").send({});
+		expect(res.status).toBe(401);
+	});
+});
+
+// ─── PATCH /events/:id/finish (apenas manager) ────────────────────────────────
+
+describe("PATCH /events/:id/finish", () => {
+	it("200 – manager encerra evento em andamento", async () => {
+		(eventRepository.findById as jest.Mock).mockResolvedValue({ ...mockEvent, status: "in_progress" });
+		(eventRepository.finish as jest.Mock).mockResolvedValue({ ...mockEvent, status: "finished" });
+		const res = await request(app).patch("/events/1/finish").set(managerHeader).send({});
+		expect(res.status).toBe(200);
+		expect(res.body).toMatchObject({ status: "finished" });
+	});
+
+	it("404 – evento não encontrado", async () => {
+		(eventRepository.findById as jest.Mock).mockResolvedValue(null);
+		const res = await request(app).patch("/events/999/finish").set(managerHeader).send({});
+		expect(res.status).toBe(404);
+	});
+
+	it("409 – evento ainda não foi iniciado", async () => {
+		(eventRepository.findById as jest.Mock).mockResolvedValue({ ...mockEvent, status: "pending" });
+		const res = await request(app).patch("/events/1/finish").set(managerHeader).send({});
+		expect(res.status).toBe(409);
+	});
+
+	it("403 – auditor não pode encerrar evento", async () => {
+		asAuditorOnce();
+		const res = await request(app).patch("/events/1/finish").set(managerHeader).send({});
+		expect(res.status).toBe(403);
+	});
+
+	it("401 – sem token de autenticação", async () => {
+		const res = await request(app).patch("/events/1/finish").send({});
+		expect(res.status).toBe(401);
 	});
 });
