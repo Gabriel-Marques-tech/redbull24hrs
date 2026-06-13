@@ -1,7 +1,7 @@
 # Inteli - Instituto de Tecnologia e Liderança 
 
 <p align="center">
-<a href= "https://www.inteli.edu.br/"><img src="/assets/inteli.png" alt="Inteli - Instituto de Tecnologia e Liderança" border="0"></a>
+<a href= "https://www.inteli.edu.br/"><img src="documentos/assets/inteli.png" alt="Inteli - Instituto de Tecnologia e Liderança" border="0"></a>
 </p>
 
 # RedRun
@@ -35,19 +35,18 @@ Antes do RedRun, a apuração dos quilômetros era feita manualmente por auditor
 
 A plataforma oferece aos auditores e gerentes do evento um sistema digital completo para:
 
-- **Cadastrar** locais de competição, equipes e corredores;
-- **Registrar** o início e o encerramento de cada turno na esteira;
-- **Acompanhar** a quilometragem acumulada durante a competição;
-- **Visualizar** métricas totais ao final das 24 horas de competição;
-- **Exportar** os resultados para planilha, destinada à auditoria final do evento.
+- **Cadastrar** competições, equipes, corredores e esteiras;
+- **Registrar** o início, os checkpoints e o encerramento de cada turno na esteira;
+- **Registrar checkpoints** a cada 5 minutos, criando um histórico granular e rastreável de cada corrida;
+- **Acompanhar** a quilometragem acumulada por equipe em um dashboard de métricas em tempo real;
+- **Visualizar** as métricas totais ao final das 24 horas de competição;
+- **Exportar** os resultados em CSV, destinado à auditoria final do evento.
 
-O sistema conta com dois perfis de acesso: o **auditor**, responsável pelo registro em tempo real das corridas, e o **gerente**, que acompanha o desempenho geral e configura o evento. A autenticação é feita via JWT, garantindo segurança no acesso às informações.
+O sistema conta com dois perfis de acesso: o **auditor**, responsável pelo registro em tempo real das corridas em campo, e o **gerente** (Field Marketing), que configura o evento e acompanha o desempenho geral. A autenticação e a autorização por perfil são feitas via JWT, garantindo segurança no acesso às informações.
+
+Tecnicamente, o backend é construído em **Node.js + TypeScript** com **Express 5**, seguindo uma arquitetura em camadas (Controller, Service, Repository) e persistindo os dados em **PostgreSQL** hospedado no **Supabase**. O frontend é renderizado no servidor com **EJS**, complementado por CSS e JavaScript estáticos. A primeira versão funcional do backend já está implementada e testada, com 38 endpoints cobrindo 10 fluxos de negócio e suíte de testes de integração em Jest e Supertest.
 
 O RedRun substitui um processo frágil e manual por um sistema rastreável e confiável, reduzindo erros operacionais e garantindo maior integridade nos resultados da competição.
-
-## 📝 Link de demonstração
-
-_Coloque aqui o link para o vídeo de demonstração do projeto_
 
 ## 📁 Estrutura de pastas
 
@@ -55,41 +54,46 @@ _Coloque aqui o link para o vídeo de demonstração do projeto_
 ├── documentos/                                    # Documentação geral do projeto
 │   ├── assets/                                    # Recursos utilizados na documentação
 │   │   ├── classes_dominio/                       # Diagrama de classes de domínio
+│   │   ├── diagrama_entidade_relacionamento/      # Diagrama entidade-relacionamento
+│   │   ├── diagrama_sequencia/                    # Diagramas de sequência por módulo
 │   │   ├── diagramas_arquitetura/                 # Diagramas de arquitetura em Mermaid e SVG
 │   │   ├── diagramas_arquiteturais/               # Diagramas de classes por módulo
-│   │   ├── diagrama_sequencia/                    # Diagramas de sequência por módulo
 │   │   ├── guia-de-estilos/                       # Paleta de cores, tipografia e iconografia
 │   │   ├── modelo_entidade_relacionamento/        # MER do banco de dados
 │   │   ├── negocios/                              # Análises de negócio (Porter, SWOT, Canvas)
 │   │   ├── personas/                              # Personas do projeto
 │   │   ├── prototipos-alta-fidelidade/            # Protótipos de tela em SVG (fluxos auditor e gerente)
 │   │   ├── relatorio_desenvolvimento/             # Capturas de tela do protótipo em desenvolvimento
+│   │   ├── testes/                                # Evidências dos testes executados
 │   │   ├── use_case/                              # Diagrama de casos de uso
 │   │   └── wireframes/                            # Wireframes de baixa e média fidelidade
 │   ├── outros/                                    # Documentos complementares
+│   │   ├── migrations-schema.md                   # Histórico e descrição das migrações
 │   │   ├── regras_de_negocio.md                   # Regras de negócio do sistema
 │   │   ├── requisitos_funcionais.md               # Requisitos funcionais levantados
 │   │   ├── requisitos_nao_funcionais.md           # Requisitos não funcionais levantados
 │   │   └── user_stories.md                        # User stories do projeto
 │   └── wad.md                                     # Web Application Document principal do projeto
+├── docs/                                          # Documentação publicada da WebAPI
+│   └── api/                                       # Página estática da API (servida em /docs)
 ├── src/                                           # Código-fonte da aplicação
-│   ├── controllers/                               # Controladores HTTP da aplicação
+│   ├── controllers/                               # Controladores HTTP (requisição/resposta)
 │   ├── database/                                  # Configuração e migrações do banco de dados
 │   │   └── migrations/                            # Scripts SQL de migração incremental
-│   ├── Front-End/                                 # Recursos estáticos do front-end
+│   ├── Front-End/                                 # Frontend renderizado no servidor
 │   │   ├── assets/                                # Imagens e ícones da interface
 │   │   ├── css/                                   # Folhas de estilo das páginas
-│   │   └── pages/                                 # Páginas HTML da aplicação
-│   ├── middlewares/                               # Middlewares da aplicação (autenticação JWT)
-│   ├── repositories/                              # Camada de acesso ao banco de dados
-│   ├── routes/                                    # Definição das rotas da API REST
+│   │   ├── js/                                    # Scripts client-side das páginas
+│   │   └── views/                                 # Templates EJS (e HTML legado) das páginas
+│   ├── middlewares/                               # Middlewares (autenticação/autorização JWT)
+│   ├── repositories/                              # Camada de acesso ao banco (SQL parametrizado)
+│   ├── routes/                                    # Definição das rotas da API e das páginas
 │   ├── services/                                  # Lógica de negócio da aplicação
 │   ├── types/                                     # Tipos e interfaces TypeScript
-│   ├── utils/                                     # Funções utilitárias
-│   ├── __tests__/                                 # Testes automatizados (Jest)
+│   ├── utils/                                     # Funções utilitárias (ex.: emissão de JWT)
+│   ├── __tests__/                                 # Testes de integração (Jest + Supertest)
 │   ├── app.ts                                     # Configuração do servidor Express
 │   └── index.ts                                   # Ponto de entrada da aplicação
-├── assets/                                        # Recursos estáticos gerais
 ├── .env.example                                   # Modelo de variáveis de ambiente
 ├── .gitlab-ci.yml                                 # Pipeline de CI/CD
 ├── jest.config.js                                 # Configuração dos testes
@@ -130,9 +134,21 @@ cp .env.example .env
 Edite o arquivo `.env` com as credenciais do seu projeto Supabase e defina os segredos JWT:
 
 ```env
+# Banco de Dados (Supabase)
 DATABASE_URL=postgresql://USUARIO:SENHA@HOST:PORTA/NOME_DO_BANCO
+DATABASE_KEY=SUA_CHAVE_AQUI
+DATABASE_PORT=6543
+DATABASE_USER=postgres.SEU_PROJECT_REF
+DATABASE_NAME=postgres
+
+# Servidor
+SERVER_PORT=3000
+
+# Autenticação (JWT)
 JWT_ACCESS_SECRET=troque-por-um-segredo-forte
 JWT_REFRESH_SECRET=troque-por-outro-segredo-forte
+JWT_ACCESS_EXPIRES=15m
+JWT_REFRESH_EXPIRES=7d
 ```
 
 4. Execute as migrações do banco de dados:
@@ -147,7 +163,19 @@ npm run migrate
 npm run dev
 ```
 
-6. Acesse a aplicação em [http://localhost:3000](http://localhost:3000).
+6. Acesse a aplicação em [http://localhost:3000](http://localhost:3000). Você será redirecionado para a tela de login em [http://localhost:3000/login](http://localhost:3000/login).
+
+### Logins de teste
+
+Ao abrir a aplicação, a primeira tela é a de login. Para explorar o sistema sem precisar cadastrar usuários, utilize uma das três contas de teste já disponíveis no banco. As contas de **auditor** acessam os fluxos de registro em campo, e a de **manager** (gerente) acessa, além disso, a configuração de eventos e o acompanhamento geral.
+
+| Perfil | E-mail | Senha |
+|---|---|---|
+| Auditor 1 | `auditor1@test.com` | `senha123` |
+| Auditor 2 | `auditor2@test.com` | `senha123` |
+| Manager 1 | `manager1@test.com` | `senha123` |
+
+> As credenciais acima são exclusivas para teste/demonstração. Não as utilize em ambiente de produção.
 
 ### Scripts disponíveis
 
@@ -161,15 +189,13 @@ npm run dev
 
 ## 🗃 Histórico de lançamentos
 
-* 0.5.0 - XX/XX/2024
+* 0.4.0 - 12/06/2026
     * 
-* 0.4.0 - XX/XX/2024
+* 0.3.0 - 29/05/2026
     * 
-* 0.3.0 - XX/XX/2024
+* 0.2.0 - 15/05/2026
     * 
-* 0.2.0 - XX/XX/2024
-    * 
-* 0.1.0 - XX/XX/2024
+* 0.1.0 - 01/05/2026
     *
 
 ## 📋 Licença/License
