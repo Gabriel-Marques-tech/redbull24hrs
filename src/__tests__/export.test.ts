@@ -6,6 +6,7 @@ jest.mock("../middlewares/authMiddleware", () => ({
 	default: {
 		requireAuth: (_req: any, _res: any, next: any) => next(),
 		requireRole: () => (_req: any, _res: any, next: any) => next(),
+		requirePageAuth: (_req: any, _res: any, next: any) => next(),
 	},
 }));
 
@@ -74,10 +75,10 @@ describe("GET /export/events/:eventId/shifts", () => {
 		const res = await request(app).get("/export/events/1/shifts");
 		const lines = res.text.split("\n");
 		const headers = lines[0].split(",");
-		expect(headers).toContain("id");
-		expect(headers).toContain("athlete_name");
-		expect(headers).toContain("team_name");
-		expect(headers).toContain("distance");
+		expect(headers).toContain("ID");
+		expect(headers).toContain("Atleta");
+		expect(headers).toContain("Equipe");
+		expect(headers).toContain("Distância (km)");
 	});
 
 	it("200 – dados aparecem nas linhas seguintes ao header", async () => {
@@ -125,11 +126,11 @@ describe("GET /export/events/:eventId/checkpoints", () => {
 		(exportRepository.checkpointsByEvent as jest.Mock).mockResolvedValue(mockCheckpointRows);
 		const res = await request(app).get("/export/events/1/checkpoints");
 		const headers = res.text.split("\n")[0].split(",");
-		expect(headers).toContain("id");
-		expect(headers).toContain("timestamp");
-		expect(headers).toContain("distance");
-		expect(headers).toContain("type");
-		expect(headers).toContain("shift_id");
+		expect(headers).toContain("ID");
+		expect(headers).toContain("Horário");
+		expect(headers).toContain("Distância (km)");
+		expect(headers).toContain("Tipo");
+		expect(headers).toContain("Turno ID");
 	});
 
 	it("200 – dados aparecem nas linhas seguintes ao header", async () => {
