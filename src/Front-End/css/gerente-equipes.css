@@ -57,17 +57,37 @@ main {
     width: 700px;
     min-height: 230px;
     max-height: 230px;
-    padding: 18px 44px 42px;
+    padding: 0;
     border: 1px solid #8d8d8d;
     border-radius: 2px;
+    overflow: hidden;
+}
+
+.lista-atletas-scroll {
+    height: 172px;
+    padding: 18px 44px 8px;
     overflow-y: auto;
+}
+
+.rodape-lista-atletas {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 58px;
+    padding: 7px 44px;
+    background-color: var(--branco);
+    border-top: 1px solid #eeeeee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .campo-atleta {
     display: grid;
-    grid-template-columns: 34px 1fr 70px;
+    grid-template-columns: 20px 1fr 70px;
     align-items: center;
-    gap: 10px;
+    gap: 6px;
     margin-bottom: 8px;
 }
 
@@ -104,33 +124,41 @@ main {
 }
 
 .contador-atletas {
-    position: absolute;
-    right: 28px;
-    bottom: 18px;
+    position: static;
     color: #a5a5a5;
     font-size: 16px;
     font-weight: 400;
 }
 
 .btn-adicionar-atleta {
-    width: 250px;
-    height: 60px;
-    margin-top: 20px;
-    border: 1px solid #777777;
-    border-radius: 14px;
+    position: static;
+    width: 140px;
+    height: 44px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    border: 1px solid #999999;
+    border-radius: 8px;
     background-color: #b5b5b5;
     color: var(--branco);
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 700;
     cursor: pointer;
 }
 
 .botoes-equipes-gerente {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
     margin-top: 170px;
     padding-bottom: 0;
 }
 
 .conteudo-equipes-gerente.modo-atletas .botoes-equipes-gerente {
+    left: 50%;
+    right: auto;
+    bottom: 10px;
+    transform: translateX(-50%);
     margin-top: 15px;
 }
 

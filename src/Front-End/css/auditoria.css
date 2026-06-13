@@ -1033,6 +1033,15 @@ tbody tr:hover td {
     text-align: center;
 }
 
+.modal-op-senha #inputSenhaOperador {
+    align-self: center;
+}
+
+.modal-op-senha .acoes-modal {
+    width: 100%;
+    justify-content: center;
+}
+
 /* ---------------- BANDEJA CORREDOR ---------------- */
 
 .corredor-atual {
@@ -1192,6 +1201,27 @@ img {
     content: "Registrar checkpoint";
 }
 
+.modal-checkpoint-conteudo #kmCheckpointModal {
+    width: 100%;
+    padding: 0 16px;
+}
+
+.modal-checkpoint-conteudo .acoes-modal-turno {
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-checkpoint-conteudo .btn-cancelar-turno,
+.modal-checkpoint-conteudo .btn-registrar-turno {
+    width: 180px;
+    height: 56px;
+    margin: 0;
+    padding: 0 20px;
+    flex: 0 0 180px;
+    align-self: auto;
+    transform: none;
+}
+
 .campo-cps-sessao {
     flex: 1 1 240px;
 }
@@ -1326,7 +1356,8 @@ img {
 }
 
 .campo-tempo {
-    flex: 1 1 220px;
+    flex: 0 0 320px;
+    width: 320px;
 }
 
 .tempo-percorrido {
@@ -1340,8 +1371,12 @@ img {
     border-bottom: 2px solid transparent;
     background: transparent;
     outline: none;
-    width: 160px;
-    padding: 2px 0;
+    width: 100%;
+    min-width: 0;
+    padding: 8px 14px;
+    border: 1px solid #c8c7c7;
+    border-radius: 6px;
+    box-sizing: border-box;
     font-family: inherit;
     transition: border-color 0.15s;
 }
@@ -1352,6 +1387,8 @@ img {
 
 .relacao-horario {
     display: block;
+    width: 100%;
+    white-space: nowrap;
     margin-top: 6px;
     font-size: 13px;
     color: #777;
@@ -1371,6 +1408,29 @@ img {
 .campo-quilometragem input {
     width: 100%;
     padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.modal-turno-conteudo:not(.modal-checkpoint-conteudo) .campo-quilometragem {
+    width: 100%;
+    align-self: stretch;
+    transform: none;
+}
+
+.modal-turno-conteudo:not(.modal-checkpoint-conteudo) .acoes-modal-turno {
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-turno-conteudo:not(.modal-checkpoint-conteudo) .btn-cancelar-turno,
+.modal-turno-conteudo:not(.modal-checkpoint-conteudo) .btn-registrar-turno {
+    width: 180px;
+    height: 56px;
+    margin: 0;
+    padding: 0 20px;
+    flex: 0 0 180px;
+    align-self: auto;
+    transform: none;
 }
 
 .acoes-modal-turno {

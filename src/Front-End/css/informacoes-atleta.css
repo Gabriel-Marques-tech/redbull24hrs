@@ -95,7 +95,7 @@
 #formAtleta button {
     width: 180px;
     height: 60px;
-    margin: 42px 0 0 auto;
+    margin: 42px auto 0;
     border: none;
     border-radius: 6px;
     background-color: var(--vermelho);
@@ -104,7 +104,6 @@
     font-weight: 700;
     cursor: pointer;
 }
-
 
 
 
