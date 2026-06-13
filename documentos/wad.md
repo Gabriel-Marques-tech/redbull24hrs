@@ -2853,34 +2853,35 @@ O protótipo completo pode ser acessado no Figma por meio do seguinte link: [Pro
 
 ### 3.6.1. Modelo Entidade-Relacionamento (MER)
 
-O Modelo Entidade-Relacionamento (MER) é a representação conceitual do banco de dados, na qual se descrevem as entidades do domínio, seus atributos e os relacionamentos que as conectam, abstraindo decisões de implementação física como tipos de dados, índices ou chaves estrangeiras. Para este projeto, o MER traduz em linguagem de dados o domínio do Red Bull 24 Horas modelado nas seções anteriores: o evento operado por gerentes (Managers), suas equipes (Teams) e atletas (Athletes), e o registro de cada sessão de corrida (Shift) auditada à beira da esteira (Treadmill), com os checkpoints periódicos e logs que sustentam a apuração oficial da competição. A notação adotada é a de **Peter Chen**, na qual entidades são representadas por retângulos, atributos por elipses (com elipses preenchidas indicando chave primária e atributos compostos/derivados com ramificações), relacionamentos por losangos e a cardinalidade explicitada nas extremidades de cada relacionamento com a razão (1) e (N). Os nomes de entidades, atributos e relacionamentos foram padronizados em inglês para garantir consistência com a nomenclatura técnica adotada no modelo relacional e no código-fonte da aplicação.
+O Modelo Entidade-Relacionamento (MER) apresenta a visão conceitual consolidada do domínio do Red Bull 24 Horas após as evoluções realizadas nas sprints 2, 3 e 4. O modelo conecta a gestão dos eventos, a composição de equipes, a operação das esteiras e a trilha de auditoria dos turnos. Os nomes foram mantidos em inglês para conservar a correspondência com o código e com o modelo relacional.
 
 <div align="center">
   <sub>Imagem 56 - Modelo Entidade-Relacionamento</sub><br>
-  <img src="./assets/modelo_entidade_relacionamento/modelo_entidade_relacionamento.png" width="80%" alt="Modelo Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
+  <img src="./assets/modelo_entidade_relacionamento/modelo_entidade_relacionamento.svg" width="95%" alt="Modelo Entidade-Relacionamento consolidado do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 #### Entidades e atributos
 
-As entidades foram derivadas diretamente do domínio descrito no TAPI e dos casos de uso da seção 3.2.2, garantindo coerência entre o modelo conceitual de dados e o modelo comportamental do sistema. Cada entidade representa um concept do mundo real que precisa ser persistido para sustentar a apuração e a auditoria das 24 horas de competição.
+As entidades foram derivadas do domínio e revisadas conforme o schema resultante das migrations `001` a `017`. O MER inclui as entidades de autenticação porque seus vínculos possuem integridade referencial no banco e fazem parte da responsabilidade operacional dos usuários.
 
 <div align="center">
   <sub>Quadro 20 - Entidades e atributos do MER</sub>
 </div>
 
-| Entidade | Descrição | Atributos | Chave primária |
+| Entidade | Descrição | Atributos principais | Chave |
 | :--- | :--- | :--- | :--- |
-| **Managers** | Gerente regional do time de Field Marketing da Red Bull, responsável por instanciar e gerir os eventos sob sua regional. | `ID`, `NAME`, `EMAIL`, `CPF`, `PASSWORD` | `ID` |
-| **Events** | Instância de uma etapa do Red Bull 24 Horas (regional ou final nacional), identificada por local, título da edição e data de realização. | `ID`, `TITLE`, `LOCAL`, `DATE`, `DELETED_AT` | `ID` |
-| **Teams** | Uma das duas equipes que competem no evento (tradicionalmente "azul" e "vermelha"), à qual os atletas são vinculados antes do início da competição. | `ID`, `NAME`, `DELETED_AT` | `ID` |
-| **Athletes** | Corredor inscrito que reveza com seu time durante as 24 horas, identificado pessoalmente por CPF para fins de auditoria pós-evento. | `ID`, `NAME`, `GENDER`, `CPF`, `DELETED_AT` | `ID` |
-| **Auditors** | Operador do sistema (substituindo a operação atual da prancheta) que registra os turnos e seus checkpoints à beira da esteira. | `ID`, `NAME`, `CPF`, `REGISTRATION_NUMBER`, `IS_ACTIVE`, `EMAIL`, `PASSWORD` | `ID` |
-| **Shifts** | Sessão individual de corrida — um único atleta em uma única esteira, do play até o stop, antes da próxima zeragem. É a entidade central do registro operacional do evento. | `ID`, `STATUS`, `START_AT`, `END_AT`, `TOTAL_TIME`, `SPEED`, `KM_START`, `KM_END`, `DISTANCE` | `ID` |
-| **Treadmills** | Equipamento físico (Technogym) onde os turnos ocorrem. Cada equipe opera duas esteiras simultaneamente durante o evento. | `ID`, `NUMBER` | `ID` |
-| **Checkpoints** | Marcação periódica de segurança que registra a quilometragem parcial dentro de um turno. Contém atributos robustos para gerenciar revisões manuais e sincronização offline. | `ID`, `TIMESTAMP`, `DISTANCE`, `TYPE` (`MANDATORY` / `VOLUNTARY`), `REVIEWED`, `JUSTIFICATION`, `REVIEWED_AT`, `REVIEWED_BY_ID`, `REVIEWED_BY_ROLE`, `OLD_DISTANCE`, `SYNC_ID` | `ID` |
-| **Logs** | Registro auditável das modificações e estados de um turno (criação, edição e finalização), garantindo rastreabilidade completa e armazenamento de históricos para a auditoria. | `ID`, `TIMESTAMP`, `TYPE` (`CREATED` / `UPDATED` / `FINISHED`), `OLD_VALUE`, `NEW_VALUE`, `AUTHOR_ID`, `AUTHOR_ROLE`, `JUSTIFICATION` | `ID` |
+| **Manager** | Gerente que administra eventos e também pode operar turnos. | `id`, `name`, `cpf`, `email`, `password` | `id` |
+| **Event** | Edição da competição, incluindo seu ciclo de vida operacional. | `id`, `title`, `local`, `date`, `status`, `started_at`, `finished_at`, `deleted_at` | `id` |
+| **Team** | Equipe vinculada a uma edição específica. | `id`, `name`, `deleted_at` | `id` |
+| **Athlete** | Atleta pertencente a uma equipe. | `id`, `name`, `gender`, `cpf`, `deleted_at` | `id` |
+| **Auditor** | Operador responsável pelo registro dos turnos e checkpoints. | `id`, `name`, `cpf`, `registration_number`, `is_active`, `email`, `password` | `id` |
+| **Shift** | Sessão individual de corrida de um atleta em uma esteira. | `id`, `status`, `start_at`, `end_at`, `total_time`, `speed`, `km_start`, `km_end`, `distance` | `id` |
+| **Treadmill** | Esteira numerada e vinculada à equipe que a utiliza. | `id`, `number` | `id` |
+| **Checkpoint** | Leitura parcial do turno, com suporte a revisão e sincronização offline. | `id`, `timestamp`, `distance`, `type`, `reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`, `sync_id` | `id` |
+| **Log** | Registro imutável de ações e alterações relacionadas a um turno. | `id`, `timestamp`, `type`, `old_value`, `new_value`, `author_id`, `author_role`, `justification` | `id` |
+| **RefreshToken** | Sessão renovável pertencente exclusivamente a um gerente ou auditor. | `id`, `token_hash`, `expires_at`, `revoked_at`, `created_at` | `id` |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -2889,7 +2890,7 @@ As entidades foram derivadas diretamente do domínio descrito no TAPI e dos caso
 
 #### Relacionamentos e cardinalidades
 
-Os relacionamentos foram modelados a partir das regras de negócio levantadas na seção 3.1 e da dinâmica operacional descrita pelo parceiro: gerentes regionais gerem múltiplos eventos ao longo da temporada e um mesmo evento pode ser co-gerenciado por mais de um gerente; cada evento conta com exatamente duas equipes; cada equipe escala vários atletas que se revezam continuamente; cada atleta realiza diversos turnos ao longo das 24 horas; e cada turno é monitorado por um auditor e produz uma sequência de checkpoints e múltiplos logs de ações.
+Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui atletas e esteiras; um turno aponta para a esteira utilizada; e o operador do turno pode ser um gerente ou um auditor, mas nunca os dois simultaneamente.
 
 <div align="center">
   <sub>Quadro 21 - Relacionamentos e cardinalidades do MER</sub>
@@ -2897,14 +2898,19 @@ Os relacionamentos foram modelados a partir das regras de negócio levantadas na
 
 | Relacionamento | Entidade A | Cardinalidade | Entidade B | Descrição |
 | :--- | :--- | :--- | :--- | :--- |
-| **Menages** | Manager | (N, N) | Event | Um gerente regional pode gerir vários eventos (etapas regionais distintas ao longo da temporada) e um mesmo evento pode ser co-gerenciado por mais de um gerente, tornando a relação muitos-para-muitos. |
-| **Has** | Event | (1, N) | Team | Cada evento possui duas equipes, e cada uma pertence a um único evento. A entidade Team é instanciada por edição, refletindo a natureza efêmera da competição. |
-| **Rosters** | Team | (1, N) | Athlete | Uma equipe escala vários atletas (tipicamente 16 por equipe, conforme briefing), e cada atleta pertence a uma única equipe dentro de um mesmo evento. |
-| **Performs** | Athlete | (1, N) | Shift | Um atleta realiza vários turnos durante as 24 horas (cada entrada na esteira é um turno distinto), e cada turno é realizado por exatamente um atleta, refletindo a regra de que a esteira é zerada a cada troca de corredor. |
-| **Audits** | Auditor | (1, N) | Shift | Um auditor é responsável por auditar diversos turnos ao longo do seu plantão na operação, e cada turno é auditado por exatamente um auditor, garantindo responsabilidade unívoca sobre cada registro. |
-| **Occurs On** | Shift | (N, 1) | Treadmill | Vários turnos ocorrem ao longo das 24 horas em uma mesma esteira (que é zerada entre eles), enquanto cada turno acontece em uma única esteira específica. |
-| **Records** | Shift | (1, N) | Checkpoint | Cada turno guarda múltiplos checkpoints periódicos (a marcação de 5 em 5 minutos descrita pelo parceiro), enquanto cada checkpoint pertence a exatamente um turno, não existe checkpoint isolado fora de uma sessão de corrida ativa. |
-| **Has** | Shift | (1, N) | Log | Cada turno pode gerar múltiplos logs de ações, que armazenam cronologicamente as mutações de estado daquela sessão, sustentando a trilha de auditoria pós-evento. |
+| **Manages** | Manager | N:N | Event | Gerentes podem administrar vários eventos e eventos podem possuir vários gerentes. |
+| **Has** | Event | 1:N | Team | Cada equipe pertence a um único evento. |
+| **Rosters** | Team | 1:N | Athlete | Cada atleta pertence a uma única equipe. |
+| **Owns** | Team | 1:N | Treadmill | Uma equipe pode possuir várias esteiras; uma esteira pode ficar temporariamente sem equipe. |
+| **Performs** | Athlete | 1:N | Shift | Um atleta pode realizar vários turnos; cada turno possui um atleta. |
+| **Operates** | Manager | 1:N | Shift | Um gerente pode operar turnos quando atua na função operacional. |
+| **Audits** | Auditor | 1:N | Shift | Um auditor pode operar vários turnos. |
+| **Operator XOR** | Manager/Auditor | 1:N | Shift | Cada turno possui exatamente um operador: gerente ou auditor. |
+| **Occurs on** | Treadmill | 1:N | Shift | Uma esteira recebe vários turnos e cada turno referencia no máximo uma esteira. |
+| **Records** | Shift | 1:N | Checkpoint | Todo checkpoint pertence a um turno. |
+| **Generates** | Shift | 1:N | Log | Todo log pertence a um turno. |
+| **References** | Checkpoint | 1:N opcional | Log | Um log pode apontar para um checkpoint; vários logs podem referenciar o mesmo checkpoint. |
+| **Owns session** | Manager/Auditor | 1:N | RefreshToken | Cada token pertence exatamente a um dos dois tipos de usuário. |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -2913,25 +2919,20 @@ Os relacionamentos foram modelados a partir das regras de negócio levantadas na
 
 #### Decisões de modelagem
 
-Três decisões merecem destaque por traduzirem diretamente as regras de negócio do Red Bull 24 Horas para o modelo de dados:
-
-- **Shift como entidade central:** a quilometragem do evento não é monotônica em relação à esteira nem à equipe, pois a esteira é zerada a cada troca de corredor (dinâmica detalhada no Modelo de Sessão de Corrida da seção 3.2.2). Por isso, o **Shift** foi modelado como entidade de primeira classe, com `KM_START`, `KM_END`, `START_AT` e `END_AT` próprios, e não como um simples registro derivado da esteira ou da equipe. O total acumulado de uma equipe é, portanto, sempre uma função agregada sobre os turnos finalizados de seus atletas, e não um atributo persistido diretamente.
-
-- **Checkpoint estruturado para Contingência e Revisão:** o atributo `TYPE` do Checkpoint distingue as marcações automáticas obrigatórias (`MANDATORY`, geradas de 5 em 5 minutos) das voluntárias (`VOLUNTARY`, disparadas pelo auditor). Além disso, visando mitigar falhas operacionais e inconsistências, foram introduzidos os atributos de revisão (`REVIEWED`, `JUSTIFICATION`, `REVIEWED_AT`, `REVIEWED_BY_ID`, `REVIEWED_BY_ROLE` e `OLD_DISTANCE`), permitindo que a arbitragem corrija com total transparência e segurança distorções de digitação na quilometragem parcial, sem quebrar o vínculo com o `SYNC_ID` usado para controle da sincronização de dados locais.
-
-- **Log especializado com histórico completo de modificações:** para isolar completamente o fluxo de auditoria e garantir conformidade com o risco "Erro humano na leitura e digitação da quilometragem" (seção 2.1.5), a entidade **Log** foi expandida. Em vez de registrar apenas eventos simples, ela mapeia transições de ciclo de vida cruciais (`CREATED`, `UPDATED` e `FINISHED`) e armazena os valores antes e depois da modificação (`OLD_VALUE` e `NEW_VALUE`). O vínculo explícito com o autor do ajuste (`AUTHOR_ID`, `AUTHOR_ROLE`) e sua respectiva `JUSTIFICATION` viabiliza o pleno atendimento ao caso de uso "Editar registro" (seção 3.2.2) com total rastreabilidade.
-
-**Síntese do Modelo Entidade-Relacionamento**
-
-O MER traduz o domínio do Red Bull 24 Horas em um modelo conceitual de dados rastreável, no qual cada entidade tem propósito claro dentro do fluxo operacional (cadastro pré-evento -> registro de turnos -> checkpoints periódicos -> encerramento -> auditoria). A escolha do Shift como entidade central refletindo o conceito de **sessão de corrida**, somada às entidades Checkpoint e Log que sustentam a confiabilidade e a rastreabilidade dos dados, alinha o modelo de dados às prioridades de mitigação de risco da seção 2.1.5 e aos casos de uso da seção 3.2.2. A relação N:N entre Manager e Event, resolvida pela entidade associativa Manager_events no DER, reflete a flexibilidade operacional da gestão regional da Red Bull. Esse alinhamento garante que o banco de dados forneça base sólida tanto para a operação em tempo real durante as 24h quanto para a auditoria formal pós-evento e para as análises estatísticas inéditas identificadas como oportunidades do projeto.
+- **Shift como entidade central:** cada entrada de um atleta em uma esteira gera um turno próprio. Os totais do evento são calculados pela agregação dos turnos finalizados.
+- **Operador exclusivo:** a constraint `chk_shifts_operator` exige exatamente um responsável por turno, usando `auditor_id` ou `manager_id`.
+- **Esteira vinculada à equipe:** `treadmills.team_id` registra diretamente qual equipe utiliza o equipamento, enquanto `shifts.treadmill_id` preserva o histórico de uso por turno.
+- **Auditoria de checkpoints:** checkpoints guardam dados de revisão e `sync_id`; logs registram valores anteriores e novos, autoria, justificativa e vínculo opcional ao checkpoint.
+- **Ciclo de vida do evento:** `status`, `started_at` e `finished_at` distinguem eventos pendentes, em andamento e finalizados.
+- **Autenticação com integridade:** refresh tokens possuem duas FKs mutuamente exclusivas, garantindo que cada token pertença a um gerente ou a um auditor existente.
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER)
 
-O DER traduz o modelo conceitual do MER para a estrutura relacional do banco de dados (PostgreSQL), adotando a **notação de tabelas relacionais** com tipos de dados, restrições (`NOT NULL`, `UNIQUE`, `CHECK`), chaves primárias (`PK`) e chaves estrangeiras (`FK`).
+O DER traduz o MER para a estrutura relacional do PostgreSQL. A versão abaixo representa o estado efetivamente obtido após a execução sequencial das migrations `001` a `017`, e não apenas o schema inicial da migration `001`.
 
 <div align="center">
   <sub>Imagem 57 - Diagrama Entidade-Relacionamento</sub><br>
-  <img src="./assets/diagrama_entidade_relacionamento/diagrama_entidade_relacionamento.png" width="90%" alt="Diagrama Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
+  <img src="./assets/diagrama_entidade_relacionamento/diagrama_entidade_relacionamento.svg" width="100%" alt="Diagrama Entidade-Relacionamento consolidado do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -2940,81 +2941,19 @@ O DER traduz o modelo conceitual do MER para a estrutura relacional do banco de 
   <sub>Quadro 22 - Tabelas e colunas do DER</sub>
 </div>
 
-| Tabela             | Coluna                | Tipo           | Restrições                                           | Descrição                                                          |
-| ------------------ | --------------------- | -------------- | ---------------------------------------------------- | ------------------------------------------------------------------ |
-| **Managers**       | `id`                  | SERIAL         | PK                                                   | Identificador único do gerente                                     |
-|                    | `cpf`                 | VARCHAR        | UNIQUE                                               | CPF do gerente                                                     |
-|                    | `name`                | VARCHAR        | NOT NULL                                             | Nome completo                                                      |
-|                    | `email`               | VARCHAR(100)   | UNIQUE                                               | E-mail do gerente                                                  |
-|                    | `password`            | VARCHAR(100)   | —                                                    | Senha do gerente                                                   |
-| **Manager_events** | `id`                  | SERIAL         | PK                                                   | Identificador único do vínculo                                     |
-|                    | `manager_id`          | INT            | NOT NULL, FK → Managers(id)                          | Gerente vinculado ao evento                                        |
-|                    | `event_id`            | INT            | NOT NULL, FK → Events(id)                            | Evento vinculado ao gerente                                        |
-| **Events**         | `id`                  | SERIAL         | PK                                                   | Identificador único do evento                                      |
-|                    | `title`               | VARCHAR        | NOT NULL UNIQUE                                      | Título da edição (ex.: "Red Bull 24 Horas SP 2026")                |
-|                    | `local`               | VARCHAR        | NOT NULL UNIQUE                                      | Local de realização                                                |
-|                    | `date`                | DATE           | NOT NULL                                             | Data do evento                                                     |
-|                    | `deleted_at`          | TIMESTAMP      | —                                                    | Data de exclusão lógica                                            |
-| **Teams**          | `id`                  | SERIAL         | PK                                                   | Identificador único da equipe                                      |
-|                    | `name`                | VARCHAR        | NOT NULL UNIQUE                                      | Nome da equipe (ex.: "Azul", "Vermelha")                           |
-|                    | `deleted_at`          | TIMESTAMP      | —                                                    | Data de exclusão lógica                                            |
-|                    | `event_id`            | INT            | FK → Events(id)                                      | Evento ao qual a equipe pertence                                   |
-| **Athletes**       | `id`                  | SERIAL         | PK                                                   | Identificador único do atleta                                      |
-|                    | `name`                | VARCHAR        | NOT NULL                                             | Nome completo                                                      |
-|                    | `gender`              | VARCHAR        | NOT NULL                                             | Gênero, utilizado para apuração por categoria                      |
-|                    | `cpf`                 | VARCHAR        | UNIQUE                                               | CPF do atleta                                                      |
-|                    | `deleted_at`          | TIMESTAMP      | —                                                    | Data de exclusão lógica                                            |
-|                    | `team_id`             | INT            | FK → Teams(id)                                       | Equipe à qual o atleta pertence                                    |
-| **Auditors**       | `id`                  | SERIAL         | PK                                                   | Identificador único do auditor                                     |
-|                    | `name`                | VARCHAR        | NOT NULL                                             | Nome do auditor                                                    |
-|                    | `cpf`                 | VARCHAR        | UNIQUE                                               | CPF do auditor                                                     |
-|                    | `registration_number` | INT            | NOT NULL UNIQUE                                      | Número de registro funcional                                       |
-|                    | `is_active`           | BOOLEAN        | —                                                    | Indica se o auditor está ativo no sistema                          |
-|                    | `email`               | VARCHAR(100)   | UNIQUE                                               | E-mail do auditor                                                  |
-|                    | `password`            | VARCHAR(100)   | —                                                    | Senha do auditor                                                   |
-| **Treadmills**     | `id`                  | SERIAL         | PK                                                   | Identificador único da esteira                                     |
-|                    | `shift_id`            | INT            | FK → Shifts(id)                                      | Turno atualmente em execução                                       |
-|                    | `number`              | INT            | NOT NULL UNIQUE                                      | Número físico da esteira (Technogym)                               |
-| **Shifts**         | `id`                  | SERIAL         | PK                                                   | Identificador único do turno                                       |
-|                    | `status`              | VARCHAR        | NOT NULL CHECK ('pending','in progress','completed') | Estado do turno                                                    |
-|                    | `athlete_id`          | INT            | FK → Athletes(id)                                    | Atleta realizando o turno                                          |
-|                    | `auditor_id`          | INT            | FK → Auditors(id)                                    | Auditor responsável pelo registro                                  |
-|                    | `start_at`            | TIMESTAMP      | —                                                    | Início do turno                                                    |
-|                    | `total_time`          | INTERVAL       | —                                                    | Duração total (calculada ao finalizar)                             |
-|                    | `end_at`              | TIMESTAMP      | —                                                    | Encerramento do turno                                              |
-|                    | `speed`               | INT            | NOT NULL                                             | Velocidade configurada (km/h)                                      |
-|                    | `km_start`            | INT            | NOT NULL                                             | Quilometragem inicial no odômetro                                  |
-|                    | `km_end`              | INT            | NOT NULL                                             | Quilometragem final no odômetro                                    |
-|                    | `distance`            | INT            | NOT NULL                                             | Distância percorrida (`km_end - km_start`)                         |
-| **Checkpoints**    | `id`                  | SERIAL         | PK                                                   | Identificador único do checkpoint                                  |
-|                    | `shift_id`            | INT            | FK → Shifts(id)                                      | Turno ao qual o checkpoint pertence                                |
-|                    | `timestamp`           | TIMESTAMP      | —                                                    | Data e hora do registro                                            |
-|                    | `distance`            | INT            | NOT NULL                                             | Quilometragem parcial no momento do checkpoint                     |
-|                    | `reviewed`            | BOOLEAN        | NOT NULL DEFAULT FALSE                               | Indica se o checkpoint foi revisado                                |
-|                    | `justification`       | VARCHAR(400)   | —                                                    | Justificativa em caso de revisão ou contestação                    |
-|                    | `reviewed_at`         | TIMESTAMP      | —                                                    | Data e hora em que a revisão foi realizada                         |
-|                    | `reviewed_by_id`      | INT            | NOT NULL                                             | Identificador de quem realizou a revisão                           |
-|                    | `reviewed_by_role`    | VARCHAR(20)    | —                                                    | Papel do revisor (ex.: manager, auditor)                           |
-|                    | `type`                | VARCHAR        | CHECK ('mandatory', 'voluntary')                     | Obrigatório (a cada 5 min) ou voluntário                           |
-|                    | `old_distance`        | INT            | NOT NULL                                             | Quilometragem anterior ao ajuste, para fins de auditoria           |
-|                    | `sync_id`             | VARCHAR(64)    | —                                                    | Identificador de sincronização para controle de idempotência       |
-| **Logs**           | `id`                  | SERIAL         | PK                                                   | Identificador único do log                                         |
-|                    | `shift_id`            | INT            | FK NOT NULL → Shifts(id)                             | Turno ao qual o log está vinculado                                 |
-|                    | `timestamp`           | TIMESTAMP      | NOT NULL                                             | Data e hora da ação                                                |
-|                    | `type`                | VARCHAR        | CHECK ('created', 'updated', 'finished')             | Tipo da ação auditada                                              |
-|                    | `checkpoint_id`       | INT            | FK → Checkpoints(id)                                 | Checkpoint associado ao log, quando aplicável                      |
-|                    | `old_value`           | INT            | NOT NULL                                             | Valor anterior do campo alterado                                   |
-|                    | `new_value`           | INT            | NOT NULL                                             | Novo valor do campo alterado                                       |
-|                    | `author_id`           | INT            | NOT NULL                                             | Identificador do autor da ação                                     |
-|                    | `author_role`         | VARCHAR(20)    | —                                                    | Papel do autor da ação (ex.: manager, auditor)                     |
-|                    | `justification`       | VARCHAR(400)   | —                                                    | Justificativa textual da alteração realizada                       |
-| **Refresh_tokens** | `id`                  | SERIAL         | PK                                                   | Identificador único do token                                       |
-|                    | `token_hash`          | VARCHAR(255)   | UNIQUE NOT NULL                                      | Hash do refresh token                                              |
-|                    | `manager_id`          | INT            | FK → Managers(id)                                    | Gerente dono do token, quando aplicável                            |
-|                    | `auditor_id`          | INT            | FK → Auditors(id)                                    | Auditor dono do token, quando aplicável                            |
-|                    | `expires_at`          | TIMESTAMP      | NOT NULL                                             | Data de expiração do token                                         |
-|                    | `revoked_at`          | TIMESTAMP      | —                                                    | Data de revogação do token                                         |
-|                    | `created_at`          | TIMESTAMP      | NOT NULL DEFAULT CURRENT_TIMESTAMP                   | Data de criação do token                                           |
+| Tabela | Colunas consolidadas | Restrições e observações |
+| :--- | :--- | :--- |
+| **managers** | `id`, `cpf`, `name`, `password`, `email` | PK em `id`; CPF validado quando preenchido; `email` único e obrigatório. |
+| **manager_events** | `manager_id`, `event_id` | PK composta; ambas as colunas são FKs com `ON DELETE CASCADE`. |
+| **events** | `id`, `title`, `local`, `date`, `deleted_at`, `status`, `started_at`, `finished_at` | `title` único; `UNIQUE(date, local)`; status `pending`, `in_progress` ou `finished`. |
+| **teams** | `id`, `name`, `event_id`, `deleted_at` | FK obrigatória para `events`; `UNIQUE(event_id, name)`. |
+| **athletes** | `id`, `name`, `gender`, `cpf`, `team_id`, `deleted_at` | FK obrigatória para `teams`; CPF único quando preenchido. |
+| **auditors** | `id`, `name`, `cpf`, `registration_number`, `is_active`, `password`, `email` | Registro e e-mail únicos; CPF validado quando preenchido. |
+| **shifts** | `id`, `status`, `athlete_id`, `auditor_id`, `manager_id`, `treadmill_id`, `start_at`, `total_time`, `end_at`, `speed`, `km_start`, `km_end`, `distance` | `distance NUMERIC(8,2)`; exatamente um entre `auditor_id` e `manager_id`; FK de atleta e esteira. |
+| **treadmills** | `id`, `number`, `team_id` | `team_id` é FK nullable com `ON DELETE SET NULL`; `number` não possui unicidade no schema atual. |
+| **checkpoints** | `id`, `shift_id`, `timestamp`, `distance`, `type`, `reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`, `sync_id` | Distâncias em `NUMERIC(8,2)`; `sync_id` possui índice único parcial; campos de revisão são nullable. |
+| **logs** | `id`, `shift_id`, `timestamp`, `type`, `checkpoint_id`, `old_value`, `new_value`, `author_id`, `author_role`, `justification` | Tipos: `created`, `updated`, `finished`, `abandoned`, `force_closed`; valores em `NUMERIC(8,2)`; vínculo com checkpoint é opcional. |
+| **refresh_tokens** | `id`, `token_hash`, `manager_id`, `auditor_id`, `expires_at`, `revoked_at`, `created_at` | Exatamente um proprietário; FKs para gerente e auditor com `ON DELETE CASCADE`. |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -3025,35 +2964,35 @@ O DER traduz o modelo conceitual do MER para a estrutura relacional do banco de 
   <sub>Quadro 23 - Relacionamentos e chaves estrangeiras do DER</sub>
 </div>
 
-| Tabela origem      | Coluna FK         | Tabela referenciada | Cardinalidade | Relacionamento                                                        |
-| ------------------ | ----------------- | ------------------- | ------------- | --------------------------------------------------------------------- |
-| **Manager_events** | `manager_id`      | Managers            | N : 1         | Vários eventos podem ser geridos pelo mesmo gerente                   |
-| **Manager_events** | `event_id`        | Events              | N : 1         | Vários gerentes podem estar vinculados ao mesmo evento                |
-| **Teams**          | `event_id`        | Events              | N : 1         | Várias equipes pertencem a um evento                                  |
-| **Athletes**       | `team_id`         | Teams               | N : 1         | Vários atletas compõem uma equipe                                     |
-| **Treadmills**     | `shift_id`        | Shifts              | N : 1         | Uma esteira recebe vários turnos ao longo das 24 horas                |
-| **Shifts**         | `athlete_id`      | Athletes            | N : 1         | Um atleta realiza vários turnos durante a competição                  |
-| **Shifts**         | `auditor_id`      | Auditors            | N : 1         | Um auditor é responsável por vários turnos no seu plantão             |
-| **Checkpoints**    | `shift_id`        | Shifts              | N : 1         | Vários checkpoints são registrados dentro de um turno                 |
-| **Logs**           | `shift_id`        | Shifts              | N : 1         | Vários logs são gerados ao longo do ciclo de vida de um turno         |
-| **Logs**           | `checkpoint_id`   | Checkpoints         | 1 : 1         | Um log pode estar associado a um checkpoint específico revisado       |
-| **Refresh_tokens** | `manager_id`      | Managers            | N : 1         | Um gerente pode possuir vários tokens de sessão ativos                |
-| **Refresh_tokens** | `auditor_id`      | Auditors            | N : 1         | Um auditor pode possuir vários tokens de sessão ativos                |
+| Tabela origem | Coluna FK | Tabela referenciada | Cardinalidade | Política |
+| :--- | :--- | :--- | :--- | :--- |
+| **manager_events** | `manager_id` | managers | N:1 | `ON DELETE CASCADE` |
+| **manager_events** | `event_id` | events | N:1 | `ON DELETE CASCADE` |
+| **teams** | `event_id` | events | N:1 | `ON DELETE CASCADE` |
+| **athletes** | `team_id` | teams | N:1 | `ON DELETE CASCADE` |
+| **treadmills** | `team_id` | teams | N:1 opcional | `ON DELETE SET NULL` |
+| **shifts** | `athlete_id` | athletes | N:1 | `ON DELETE RESTRICT` |
+| **shifts** | `manager_id` | managers | N:1 opcional | Padrão PostgreSQL (`NO ACTION`) |
+| **shifts** | `treadmill_id` | treadmills | N:1 opcional | `ON DELETE RESTRICT` |
+| **checkpoints** | `shift_id` | shifts | N:1 | `ON DELETE CASCADE` |
+| **logs** | `shift_id` | shifts | N:1 | `ON DELETE CASCADE` |
+| **logs** | `checkpoint_id` | checkpoints | N:1 opcional | `ON DELETE CASCADE` |
+| **refresh_tokens** | `manager_id` | managers | N:1 opcional | `ON DELETE CASCADE` |
+| **refresh_tokens** | `auditor_id` | auditors | N:1 opcional | `ON DELETE CASCADE` |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
-Cinco decisões traduzem regras de negócio para restrições concretas no banco:
+#### Pendências de integridade identificadas
 
-- **`CHECK` nos campos de estado:** `status` em Shifts e `type` em Checkpoints e Logs aceitam apenas valores predefinidos, eliminando inconsistências sem depender exclusivamente da camada de aplicação.
-- **`number` como `UNIQUE` em Treadmills:** impede cadastro duplicado de equipamentos, espelhando a unicidade física de cada esteira Technogym.
-- **`shift_id` em Logs como `FK NOT NULL`:** garante que todo log esteja vinculado a um turno, assegurando a trilha de auditoria pós-evento.
-- **`deleted_at` como exclusão lógica:** Events, Teams e Athletes adotam soft delete, preservando o histórico de dados mesmo após remoção da interface.
-- **Rastreabilidade de revisões em Checkpoints:** os campos `reviewed`, `reviewed_by_id`, `reviewed_by_role`, `reviewed_at` e `old_distance` registram integralmente quem alterou um checkpoint, quando e qual era o valor anterior, viabilizando auditoria completa de contestações pós-turno.
+A consolidação das migrations revelou dois pontos que devem ser tratados em migrations futuras. Eles são documentados aqui para que o DER não atribua ao banco garantias que ainda não existem:
 
-A cadeia `Managers → Manager_events → Events → Teams → Athletes → Shifts → Checkpoints / Logs` reflete o fluxo operacional completo do sistema, do cadastro pré-evento à auditoria pós-evento. A tabela `Logs` passou a referenciar diretamente `Checkpoints`, permitindo rastrear com precisão qual registro foi contestado e qual valor foi corrigido. A tabela `Refresh_tokens` sustenta a camada de autenticação com FKs explícitas para `Managers` e `Auditors`, substituindo o campo genérico anterior e tornando a titularidade dos tokens verificável diretamente no banco.
+1. A migration `008_managerAsAuditor.sql` remove a constraint `fk_shifts_auditor` para tornar `auditor_id` opcional, mas não recria a FK para `auditors(id)`. Assim, no schema atual, `shifts.auditor_id` participa do `CHECK` de operador, porém não possui integridade referencial.
+2. A migration `015_treadmillNumberNotUnique.sql` remove a unicidade global de `treadmills.number`, mas não cria uma constraint composta como `UNIQUE(team_id, number)`. Portanto, o banco atualmente permite números repetidos inclusive dentro da mesma equipe.
+
+Essas pendências não alteram a estrutura visual principal do domínio, mas precisam ser consideradas em validações e em uma próxima evolução do modelo físico.
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
@@ -3074,14 +3013,14 @@ O modelo físico implementa o DER da seção 3.6.2 como **migrations DDL version
 | [`005_checkpointCorrection.sql`](../src/database/migrations/005_checkpointCorrection.sql) | 4      | RF031: adiciona metadados de correção retroativa à tabela `checkpoints` (`reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`) e campos de trilha de auditoria à tabela `logs` (`checkpoint_id`, `old_value`, `new_value`, `author_id`, `author_role`, `justification`). |
 | [`006_refreshTokenUserLink.sql`](../src/database/migrations/006_refreshTokenUserLink.sql) | 4      | Substitui a modelagem polimórfica de `refresh_tokens` (`user_id` + `user_role` sem FK) por duas colunas FK nullable mutuamente exclusivas: `manager_id → managers(id)` e `auditor_id → auditors(id)`, ambas `ON DELETE CASCADE`, com `CHECK` garantindo que exatamente uma delas esteja preenchida. Remove `user_id`, `user_role` e o índice `idx_refresh_tokens_user`. |
 | [`007_checkpointSyncId.sql`](../src/database/migrations/007_checkpointSyncId.sql)         | 4      | RF026: adiciona coluna `sync_id VARCHAR(64)` à tabela `checkpoints` e cria índice único parcial `ON checkpoints(sync_id) WHERE sync_id IS NOT NULL`, viabilizando a sincronização offline idempotente. |
-| [`008_managerAsAuditor.sql`](../src/database/migrations/008_managerAsAuditor.sql)           | 4      | Permite que gerentes registrem turnos: remove `NOT NULL` de `shifts.auditor_id`, adiciona `shifts.manager_id` (FK → `managers(id)`) e constraint `chk_shifts_operator` (`num_nonnulls(auditor_id, manager_id) = 1`) garantindo exatamente um operador por turno. |
+| [`008_managerAsAuditor.sql`](../src/database/migrations/008_managerAsAuditor.sql)           | 4      | Permite que gerentes registrem turnos: remove a FK e o `NOT NULL` de `shifts.auditor_id`, adiciona `shifts.manager_id` (FK → `managers(id)`) e a constraint `chk_shifts_operator` (`num_nonnulls(auditor_id, manager_id) = 1`). A FK de `auditor_id` não é recriada pela migration, pendência registrada na seção 3.6.2. |
 | [`009_treadmillTeamRelation.sql`](../src/database/migrations/009_treadmillTeamRelation.sql) | 4      | Vincula esteiras a equipes: adiciona `treadmills.team_id` (FK → `teams(id)`, `ON DELETE SET NULL`) com índice auxiliar, permitindo que cada equipe gerencie seu próprio conjunto de esteiras. |
 | [`010_logTypes.sql`](../src/database/migrations/010_logTypes.sql)                           | 4      | Expande o vocabulário de auditoria: substitui o `CHECK chk_logs_type` para aceitar também `'abandoned'` (encerramento por saída voluntária do atleta) e `'force_closed'` (encerramento manual por gerente ou operador). |
 | [`011_dropTreadmillShiftLegacy.sql`](../src/database/migrations/011_dropTreadmillShiftLegacy.sql) | 4 | Remove a coluna legada `treadmills.shift_id` (criada na migration 001, substituída por `shifts.treadmill_id` na 004): descarta `fk_treadmills_shift` e a coluna, eliminando o `ON DELETE CASCADE` que apagava esteiras ao limpar turnos. |
 | [`012_eventStatus.sql`](../src/database/migrations/012_eventStatus.sql)                     | 4      | Introduz ciclo de vida formal nos eventos: adiciona `status VARCHAR(20) DEFAULT 'pending'`, `started_at` e `finished_at` à tabela `events`, com `CHECK chk_events_status` restringindo o status a `pending`, `in_progress` ou `finished`. |
 | [`013_eventStatusFix.sql`](../src/database/migrations/013_eventStatusFix.sql)               | 4      | Normalização retroativa idempotente: remapeia valores legados `'open'` → `'in_progress'` e `'closed'` → `'finished'` em bancos onde a migration 012 foi aplicada antes do rewrite, e reaplica o `CHECK` e o `DEFAULT` do modelo de três estados. |
 | [`014_checkpointDistanceDecimal.sql`](../src/database/migrations/014_checkpointDistanceDecimal.sql) | 4 | Converte `distance` de `INT` para `NUMERIC(8,2)` em `checkpoints` e `shifts`, permitindo registrar quilometragens com precisão decimal conforme reportado pelas esteiras Technogym. |
-| [`015_treadmillNumberNotUnique.sql`](../src/database/migrations/015_treadmillNumberNotUnique.sql) | 4 | Remove a constraint `UNIQUE` de `treadmills.number`: o número da esteira passa a ser relativo ao contexto evento/equipe (cada equipe numera suas esteiras de 1 a N), permitindo o mesmo número em equipes distintas. |
+| [`015_treadmillNumberNotUnique.sql`](../src/database/migrations/015_treadmillNumberNotUnique.sql) | 4 | Remove a constraint `UNIQUE` de `treadmills.number`, permitindo o mesmo número em equipes distintas. A migration não adiciona `UNIQUE(team_id, number)`, portanto a unicidade dentro da equipe ainda depende da aplicação. |
 | [`016_logsValueNumeric.sql`](../src/database/migrations/016_logsValueNumeric.sql)           | 4      | Converte `logs.old_value` e `logs.new_value` de `INT` para `NUMERIC(8,2)`, preservando a precisão decimal nos registros de auditoria de alterações de distância após a migration 014. |
 | [`017_checkpointOldDistanceNumeric.sql`](../src/database/migrations/017_checkpointOldDistanceNumeric.sql) | 4 | Converte `checkpoints.old_distance` de `INT` para `NUMERIC(8,2)`, completando a propagação do tipo decimal à trilha de auditoria de checkpoints (complemento da migration 014). |
 
@@ -3430,7 +3369,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_checkpoints_sync_id
 
 A migration `008_managerAsAuditor.sql` estende o modelo operacional ao permitir que gerentes também registrem turnos, papel que até então era exclusivo dos auditores. A mudança reflete uma decisão de produto da sprint 4: em situações de campo, um gerente presente pode iniciar ou encerrar um turno sem depender de um auditor disponível.
 
-A coluna `auditor_id` em `shifts` tem o `NOT NULL` removido, tornando-se opcional. Em paralelo, é adicionada a coluna `manager_id` (`INT`, nullable) com `FOREIGN KEY` para `managers(id)`. A constraint antiga `fk_shifts_auditor` é removida e recriada implicitamente pelo `REFERENCES`. Para garantir a integridade do vínculo operador↔turno sem abrir a possibilidade de um turno sem operador ou com dois operadores simultâneos, a migration adiciona o `CHECK` `chk_shifts_operator` — baseado em `num_nonnulls(auditor_id, manager_id) = 1` — que impõe que exatamente um dos dois campos esteja preenchido. O índice `idx_shifts_manager_id` é criado para acelerar as consultas que listam turnos por gerente.
+A coluna `auditor_id` em `shifts` tem a constraint `fk_shifts_auditor` e o `NOT NULL` removidos, tornando-se opcional e, no estado atual, sem FK. Em paralelo, é adicionada a coluna `manager_id` (`INT`, nullable) com `FOREIGN KEY` para `managers(id)`. Para impedir um turno sem operador ou com dois operadores simultâneos, a migration adiciona o `CHECK` `chk_shifts_operator` — baseado em `num_nonnulls(auditor_id, manager_id) = 1` — que impõe que exatamente um dos dois campos esteja preenchido. O índice `idx_shifts_manager_id` é criado para acelerar as consultas que listam turnos por gerente. Uma migration corretiva futura deve recriar a FK de `auditor_id` sem voltar a torná-la obrigatória.
 
 ```sql
 ALTER TABLE shifts
@@ -3535,6 +3474,8 @@ ALTER TABLE shifts
 
 A migration `015_treadmillNumberNotUnique.sql` remove a constraint `UNIQUE` sobre `treadmills.number`, criada na migration 001. A unicidade global do número de esteira fazia sentido no modelo inicial, onde havia um único conjunto de esteiras por banco. Com a introdução do vínculo `treadmills.team_id` (migration 009), o número da esteira passou a ser relativo ao contexto evento/equipe: cada equipe numera suas próprias esteiras de 1 a N, de modo que o número 1 pode existir simultaneamente para duas equipes diferentes. A unicidade global deixou de ser uma invariante válida e passou a bloquear inserções legítimas.
 
+Entretanto, a migration remove somente a constraint global e não cria uma constraint composta. Assim, o schema atual também aceita números duplicados dentro da mesma equipe. Para representar integralmente a regra pretendida no banco, uma migration futura deve avaliar a inclusão de `UNIQUE(team_id, number)`.
+
 ```sql
 ALTER TABLE treadmills DROP CONSTRAINT IF EXISTS treadmills_number_key;
 ```
@@ -3560,7 +3501,9 @@ ALTER TABLE checkpoints
 
 **Síntese do modelo físico**
 
-O modelo físico é entregue em **dezessete migrations versionadas e reproduzíveis** — todas idempotentes com `IF NOT EXISTS` e `IF EXISTS` — aplicadas em ordem sequencial. A migration 001 estabelece o schema-base com integridade referencial e regras de domínio garantidas no próprio banco; as migrations 002, 003 e 004 evoluem esse schema na sprint 3 — N:N entre gerentes e eventos, exclusão lógica e vínculo direto turno→esteira. As migrations 005, 006 e 007, desenvolvidas na sprint 4, adicionam: metadados de correção retroativa de checkpoints com trilha de auditoria imutável; integridade referencial real em `refresh_tokens` via duas FKs nullable mutuamente exclusivas; e suporte à sincronização offline idempotente por `sync_id`. As migrations 008 a 017 consolidam as evoluções operacionais da sprint 4: permissão de gerentes como operadores de turno com constraint de operador único (008); vínculo direto esteira→equipe (009); expansão dos tipos de log com `abandoned` e `force_closed` (010); remoção da coluna legada `treadmills.shift_id` cujo cascade causava perda acidental de registros (011); ciclo de vida formal do evento em três estados — `pending`, `in_progress`, `finished` — com normalização retroativa de dados legados (012 e 013); conversão de distâncias de `INT` para `NUMERIC(8,2)` em `checkpoints` e `shifts` para suportar precisão decimal das esteiras Technogym (014); remoção da unicidade global do número de esteira, tornando-o relativo à equipe (015); e propagação do tipo decimal para as colunas de auditoria `logs.old_value`/`new_value` e `checkpoints.old_distance` (016 e 017). As políticas `ON DELETE` diferenciadas (`CASCADE` ao longo das entidades temporárias do evento, `RESTRICT` para entidades de carreira como gerentes, auditores e atletas), os `CHECK` sobre estados e quilometragem, e os índices secundários sobre todas as FKs traduzem as regras operacionais do Red Bull 24 Horas em estrutura física do PostgreSQL, apoiando tanto a operação em tempo real durante o evento quanto a auditoria formal posterior.
+O modelo físico é entregue em **dezessete migrations versionadas e reproduzíveis**, aplicadas em ordem sequencial. A migration 001 estabelece o schema-base; as migrations 002, 003 e 004 introduzem a relação N:N entre gerentes e eventos, exclusão lógica e o vínculo turno→esteira. As migrations 005, 006 e 007 adicionam a correção auditável de checkpoints, a titularidade referencial dos refresh tokens e a sincronização offline idempotente. As migrations 008 a 017 incorporam gerente como operador de turno, esteira por equipe, novos tipos de log, remoção do vínculo legado `treadmills.shift_id`, ciclo de vida do evento e distâncias decimais.
+
+O schema resultante possui constraints de estado, período, quilometragem e proprietário exclusivo, além de políticas `ON DELETE` adequadas a diferentes relações. A revisão consolidada, contudo, identificou duas garantias ainda incompletas: a ausência da FK de `shifts.auditor_id` após a migration 008 e a ausência de unicidade composta para o número da esteira após a migration 015. Essas pendências estão explicitadas no DER e devem orientar a próxima evolução do modelo físico.
 
 ### 3.6.4. Consultas SQL e lógica proposicional
  
@@ -3809,13 +3752,45 @@ Os Services lançam `new Error("<mensagem>")` com textos padronizados. Os Contro
 
 ---
 
-Esta seção será elaborada na sprint 4, contemplando a descrição completa do fluxo de autenticação implementado no sistema. Serão apresentados os mecanismos de persistência segura de senhas utilizando algoritmos de hash criptográfico, como bcrypt ou argon2, incluindo os parâmetros de custo adotados e suas respectivas justificativas técnicas. Além disso, a seção abordará o processo de validação de credenciais, criação e gerenciamento de sessão de usuário, garantindo conformidade com boas práticas de segurança e assegurando que nenhuma senha seja armazenada em texto plano no banco de dados.
+O sistema implementa autenticação própria, sem uso de bibliotecas de sessão completa como Passport, Auth0 ou similares. Toda a lógica está concentrada em `authService.ts`, `authController.ts` e `authMiddleware.ts`.
+
+**Persistência segura de senhas:**
+
+As senhas de gerentes e auditores são armazenadas exclusivamente como hash bcrypt, gerado com fator de custo `saltRounds = 10`. Esse parâmetro produz um tempo de processamento de aproximadamente 100 ms por operação de hash em hardware convencional, inviabilizando ataques de força bruta em escala sem impacto perceptível na experiência do usuário. Nenhuma senha é armazenada em texto plano no banco de dados — a coluna `password` das tabelas `managers` e `auditors` contém apenas o hash resultante.
+
+**Fluxo de login:**
+
+1. O cliente envia `POST /auth/login` com `{ email, password }`.
+2. O `authService` recupera o registro pelo e-mail e executa `bcrypt.compare(password, record.password)`.
+3. Se a comparação falhar ou o auditor estiver inativo (`is_active = false`), a operação é rejeitada com status 401.
+4. Em caso de sucesso, dois tokens JWT são emitidos: `accessToken` (expiração de 15 minutos, assinado com `JWT_ACCESS_SECRET`) e `refreshToken` (expiração de 7 dias, assinado com `JWT_REFRESH_SECRET`).
+5. Ambos os tokens são enviados ao cliente como cookies HttpOnly com atributo `SameSite=strict`, impedindo acesso via JavaScript e mitigando ataques CSRF.
+
+**Registro de usuários:**
+
+O registro de gerentes (`POST /auth/register/manager`) e auditores (`POST /auth/register/auditor`) aplica o mesmo processo de hash antes de persistir o registro. E-mail e número de registro possuem restrição de unicidade no banco, com retorno 409 em caso de duplicidade.
 
 ### 3.8.2. Controle de sessão
 
 ---
 
-_Descreva o controle de sessão baseado em `session id` persistido em tabela própria, com expiração. Se optar por JWT, justifique a escolha explicando os trade-offs (stateless, não revogável, payload exposto)._
+O controle de sessão adota uma arquitetura híbrida: o `accessToken` é um JWT stateless de curta duração, enquanto o `refreshToken` é persistido no banco de dados para permitir revogação explícita.
+
+**Justificativa da escolha por JWT:**
+
+JWT foi escolhido por reduzir a latência nas requisições autenticadas — o servidor valida o token localmente sem consultar o banco a cada chamada. O trade-off aceito é que o `accessToken`, por ser stateless, não pode ser revogado antes de seu vencimento natural (15 minutos). Esse risco é mitigado pela curta duração: mesmo que um token seja comprometido, sua janela de uso é mínima.
+
+**Tabela `refresh_tokens`:**
+
+O `refreshToken` não é armazenado em texto plano. O valor é convertido para hash SHA-256 via `hashToken()` antes da persistência na coluna `token_hash` da tabela `refresh_tokens`. A tabela mantém ainda os campos `expires_at` (data de vencimento), `revoked_at` (preenchido no logout ou rotação) e FKs mutuamente exclusivas para `managers` e `auditors`, garantindo que cada token pertença a exatamente um usuário.
+
+**Rotação de tokens:**
+
+A rota `POST /auth/refresh` valida o `refreshToken` recebido via cookie, revoga o registro correspondente no banco (preenchendo `revoked_at`) e emite um novo par de tokens. Isso implementa rotação automática: tokens de refresh são de uso único, limitando a janela de comprometimento.
+
+**Logout:**
+
+`POST /auth/logout` lê o `refreshToken` do corpo da requisição, calcula seu hash e marca o registro como revogado no banco. O `accessToken` expira naturalmente em até 15 minutos após o logout — comportamento esperado e documentado no contrato da API.
 
 ### 3.8.3. Autorização
 
