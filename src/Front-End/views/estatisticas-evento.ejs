@@ -37,16 +37,18 @@
                     <span class="badge-status <%= statusClass[evento.status] || 'badge-finished' %>">
                         <%= statusLabel[evento.status] || evento.status %>
                     </span>
-                    <h1><%= evento.title %></h1>
+                    <div class="stats-titulo-linha">
+                        <h1><%= evento.title %></h1>
+                        <button type="button" class="btn-exportar" onclick="exportarPlanilha(<%= evento.id %>)">
+                            <img src="/assets/estatisticas/compartilhar.svg" alt="" class="btn-exportar-icone">
+                            Compartilhar como planilha
+                        </button>
+                    </div>
                     <div class="stats-meta">
                         <span><img src="/assets/estatisticas/mapa.svg" alt="" class="meta-icone"> <%= evento.local %></span>
                         <span><img src="/assets/estatisticas/calendario.svg" alt="" class="meta-icone"> <%= dataFmt %></span>
                     </div>
                 </div>
-                <button type="button" class="btn-exportar" onclick="exportarPlanilha(<%= evento.id %>)">
-                    <img src="/assets/estatisticas/compartilhar.svg" alt="" class="btn-exportar-icone">
-                    Compartilhar como planilha
-                </button>
             </div>
 
             <% if (evento.status === 'in_progress') { %>
