@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= evento.title %></title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/equipe.css">
+    <link rel="stylesheet" href="/css/visao-evento.css">
+</head>
+<body>
+    <div class="barra-gradiente"></div>
+
+    <a href="/home" class="cancelar">
+        <img src="/assets/competição/Seta.svg" alt="">
+        Voltar
+    </a>
+
+    <main>
+        <aside class="etapas">
+            <h3>Competição</h3>
+            <div class="etapa ativa"><span>1</span><p>Visão geral</p></div>
+            <% if (evento.status === 'pending' && user_role === 'manager') { %>
+            <div class="etapa etapa-acao">
+                <a href="/manager/event/<%= evento.id %>/edit">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    Editar
+                </a>
+            </div>
+            <% } %>
+        </aside>
+
+        <section class="conteudo conteudo-visao">
+
+            <%
+                const statusLabel = { pending: 'Agendada', in_progress: 'Em andamento', finished: 'Finalizada' };
+                const statusClass = { pending: 'badge-pending', in_progress: 'badge-in_progress', finished: 'badge-finished' };
+                const dataFmt = evento.date
+                    ? new Date(evento.date).toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' })
+                    : '—';
+            %>
+
+            <div class="visao-header">
+                <span class="badge-status <%= statusClass[evento.status] || 'badge-pending' %>">
+                    <%= statusLabel[evento.status] || evento.status %>
+                </span>
+                <h1><%= evento.title %></h1>
+                <div class="visao-meta">
+                    <span><img src="/assets/visao-geral/mapa.svg" alt="" class="meta-icone"> <%= evento.local %></span>
+                    <span><img src="/assets/visao-geral/calendario.svg" alt="" class="meta-icone"> <%= dataFmt %></span>
+                </div>
+            </div>
+
+            <% if (evento.status === 'pending' && user_role === 'manager') { %>
+            <div class="visao-acoes">
+                <a href="/manager/event/<%= evento.id %>/edit" class="btn-editar-evento btn-secundario">
+                    Editar
+                </a>
+                <button type="button" class="btn-iniciar-evento" onclick="iniciarCompetição(<%= evento.id %>)">
+                    Iniciar competição
+                </button>
+            </div>
+            <% } %>
+
+            <div class="visao-equipes">
+                <% equipes.forEach((eq, i) => { %>
+                <div class="visao-equipe">
+                    <h2><%= eq.name %> <span class="equipe-num"><%= eq.atletas.length %> atletas</span></h2>
+                    <ul class="lista-visao-atletas">
+                        <% (eq.atletas || []).forEach((a, idx) => { %>
+                        <li>
+                            <span class="atleta-num"><%= idx + 1 %></span>
+                            <span class="atleta-nome"><%= a.name %></span>
+                            <span class="atleta-genero"><%= a.gender || '' %></span>
+                        </li>
+                        <% }) %>
+                        <% if (!eq.atletas || eq.atletas.length === 0) { %>
+                        <li class="sem-atletas">Nenhum atleta cadastrado.</li>
+                        <% } %>
+                    </ul>
+                </div>
+                <% }) %>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+    async function authFetch(url, options = {}) {
+        const token = localStorage.getItem('accessToken');
+        const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+        let res = await fetch(url, { ...options, headers, credentials: 'include' });
+        if (res.status === 401) {
+            const r = await fetch('/auth/refresh', { method: 'POST', credentials: 'include' });
+            if (!r.ok) { window.location.href = '/login'; return null; }
+            const { accessToken } = await r.json();
+            localStorage.setItem('accessToken', accessToken);
+            headers['Authorization'] = `Bearer ${accessToken}`;
+            res = await fetch(url, { ...options, headers, credentials: 'include' });
+        }
+        return res;
+    }
+
+    async function iniciarCompetição(eventId) {
+        if (!confirm('Iniciar a competição agora? Ela não poderá mais ser editada.')) return;
+        const btn = document.querySelector('.btn-iniciar-evento');
+        btn.disabled = true;
+        btn.textContent = 'Iniciando...';
+        const res = await authFetch(`/events/${eventId}/start`, { method: 'PATCH' });
+        if (res && res.ok) {
+            window.location.href = '/home';
+        } else {
+            const err = await res?.json().catch(() => ({}));
+            alert(err?.error || 'Erro ao iniciar competição.');
+            btn.disabled = false;
+            btn.textContent = 'Iniciar competição';
+        }
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+
+%%{init: {
+  "theme": "base",
+  "background": "#ffffff",
+  "themeVariables": {
+    "primaryColor": "#0F0069",
+    "primaryTextColor": "#FFFFFF",
+    "primaryBorderColor": "#D2003C",
+    "secondaryColor": "#D2003C",
+    "secondaryTextColor": "#FFFFFF",
+    "secondaryBorderColor": "#D2003C",
+    "tertiaryColor": "#E8E8F5",
+    "tertiaryTextColor": "#0F0069",
+    "tertiaryBorderColor": "#0F0069",
+    "noteBkgColor": "#FFCC00",
+    "noteTextColor": "#0F0069",
+    "noteBorderColor": "#D2003C",
+    "activationBkgColor": "#D2003C",
+    "activationBorderColor": "#0F0069",
+    "actorBkg": "#0F0069",
+    "actorTextColor": "#FFFFFF",
+    "actorBorderColor": "#D2003C",
+    "actorLineColor": "#000000",
+    "signalColor": "#000000",
+    "signalTextColor": "#000000",
+    "labelBoxBkgColor": "#E8E8F5",
+    "labelBoxBorderColor": "#0F0069",
+    "labelTextColor": "#0F0069",
+    "loopTextColor": "#0F0069",
+    "fontFamily": "Arial, sans-serif",
+    "fontSize": "14px",
+    "background": "#FFFFFF"
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    participant C as Client (Gerente)
+    participant EC as ExportController
+    participant ES as ExportService
+    participant ER as ExportRepository
+    participant DB as Database
+
+    Note over C,DB: 1 · Exportação de turnos CSV — RF047 · RN26
+
+    C->>+EC: GET /export/events/eventId/shifts
+    Note over EC: requireAuth — JWT obrigatório
+    EC->>+ES: exportShifts(eventId)
+    ES->>+ER: getShiftsForExport(eventId)
+    ER->>+DB: SELECT shifts JOIN athletes JOIN teams JOIN treadmills<br/>WHERE event_id = $1 ORDER BY started_at
+    DB-->>-ER: shift rows[]
+    ER-->>-ES: shifts[]
+    ES->>ES: serializeCSV(shifts) → "id,athlete,team,treadmill,started_at,finished_at,km,speed\n..."
+    ES-->>-EC: csvString
+    EC-->>-C: 200 Content-Type: text/csv — shifts-eventId.csv
+
+    Note over C,DB: 2 · Exportação de checkpoints CSV — RF048 · RN26
+
+    C->>+EC: GET /export/events/eventId/checkpoints
+    EC->>+ES: exportCheckpoints(eventId)
+    ES->>+ER: getCheckpointsForExport(eventId)
+    ER->>+DB: SELECT checkpoints JOIN shifts JOIN athletes<br/>WHERE shifts.event_id = $1 ORDER BY timestamp
+    DB-->>-ER: checkpoint rows[]
+    ER-->>-ES: checkpoints[]
+    ES->>ES: serializeCSV(checkpoints) → "id,shift_id,athlete,type,distance,timestamp,sync_id\n..."
+    ES-->>-EC: csvString
+    EC-->>-C: 200 Content-Type: text/csv — checkpoints-eventId.csv
+
+    Note over C,DB: 3 · Evento sem dados registrados
+
+    C->>+EC: GET /export/events/eventId/shifts — evento sem dados
+    EC->>+ES: exportShifts(999)
+    ES->>+ER: getShiftsForExport(999)
+    ER->>+DB: SELECT ... WHERE event_id = 999
+    DB-->>-ER: []
+    ER-->>-ES: []
+    ES->>ES: serializeCSV([]) → header only
+    ES-->>-EC: "id,athlete,team,...\n"
+    EC-->>-C: 200 Content-Type: text/csv (arquivo só com cabeçalho)

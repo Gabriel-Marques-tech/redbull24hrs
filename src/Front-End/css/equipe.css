@@ -1,0 +1,291 @@
+﻿/* ---------------- MAIN ---------------- */
+
+body {
+    overflow: hidden;
+}
+
+main {
+    display: flex;
+    gap: 80px;
+    margin-top: 50px;
+    align-items: stretch;
+    height: calc(100vh - 145px);
+}
+
+/* ---------------- CONTEUDO ---------------- */
+
+.conteudo {
+    width: 700px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.conteudo h2 {
+    font-size: 35px;
+    margin-bottom: 30px;
+}
+
+.progresso-equipes {
+    position: absolute;
+    top: 64px;
+    right: 52px;
+    color: #9f9f9f;
+    font-size: 18px;
+}
+
+.conteudo-equipes-gerente,
+.formulario-equipes-gerente {
+    width: 700px;
+}
+
+.conteudo-equipes-gerente {
+    position: relative;
+}
+
+
+.passo-equipe {
+    display: none;
+}
+
+.passo-equipe.ativo {
+    display: block;
+}
+
+.formulario-equipes-gerente label {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.formulario-equipes-gerente > input {
+    width: 700px;
+    height: 60px;
+    padding: 0 20px;
+    border: 1px solid #8d8d8d;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+.lista-atletas {
+    position: relative;
+    width: 700px;
+    height: 230px;
+    padding: 18px 44px 42px;
+    border: 1px solid #8d8d8d;
+    overflow-y: auto;
+}
+
+.campo-atleta {
+    display: grid;
+    grid-template-columns: 34px 1fr 70px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.campo-atleta span {
+    color: var(--vermelho);
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.campo-atleta input {
+    width: 100%;
+    height: 28px;
+    padding: 0 6px;
+    border: none;
+    border-bottom: 1px solid transparent;
+    background: transparent;
+    font-size: 20px;
+    outline: none;
+}
+
+.campo-atleta input:focus {
+    border-bottom-color: #bdbdbd;
+}
+
+.campo-atleta small {
+    color: var(--vermelho);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.campo-atleta:not(.lider) small {
+    visibility: hidden;
+}
+
+.contador-atletas {
+    position: absolute;
+    right: 28px;
+    bottom: 18px;
+    color: #a5a5a5;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.btn-adicionar-atleta {
+    position: absolute;
+    left: 0;
+    bottom: 20px;
+    width: 250px;
+    height: 60px;
+    margin-top: 0;
+    border: 1px solid #777;
+    border-radius: 14px;
+    background-color: #b5b5b5;
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* ---------------- BOTÕES ---------------- */
+
+.botoes {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding-bottom: 20px;
+    flex-shrink: 0;
+}
+
+.botoes-equipes-gerente {
+    position: absolute;
+    right: 0;
+    bottom: 20px;
+    padding-bottom: 0;
+}
+
+.botoes button {
+    width: 180px;
+    height: 60px;
+    border-radius: 6px;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.conteudo-equipes-gerente .botoes button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.btn-voltar {
+    background-color: var(--branco);
+    border: 1px solid black;
+    color: black;
+}
+
+.btn-proximo {
+    background-color: #C8C8C8;
+    border: none;
+    color: var(--branco);
+}
+
+.btn-proximo-equipes {
+    background-color: var(--vermelho);
+}
+
+.btn-voltar:hover {
+    border: 2px solid var(--vermelho);
+    color: var(--vermelho);
+}
+
+.btn-proximo:hover {
+    background-color: var(--vermelho);
+}
+
+/* ---------------- SELEÇÃO DE EQUIPE ---------------- */
+
+.opcoes-equipe {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+.selecao-equipe {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s;
+}
+
+.selecao-equipe.selecionada {
+    border-color: var(--vermelho);
+}
+
+.selecao-topo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    background: #fff;
+    border: none;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s;
+}
+
+.selecao-topo:hover {
+    background: #fafafa;
+}
+
+.selecao-equipe.selecionada .selecao-topo {
+    background: var(--vermelho);
+    color: #fff;
+}
+
+.selecao-topo img {
+    width: 16px;
+    height: 16px;
+    opacity: 0.5;
+    transform: rotate(180deg);
+    transition: transform 0.2s;
+}
+
+.selecao-equipe.selecionada .selecao-topo img {
+    filter: invert(1);
+    opacity: 1;
+}
+
+.selecao-equipe.expandida .selecao-topo img {
+    transform: rotate(270deg);
+}
+
+.selecao-equipe.selecionada.expandida .selecao-topo img {
+    transform: rotate(270deg);
+}
+
+.selecao-lista {
+    display: none;
+    padding: 12px 20px;
+    background: #fafafa;
+    border-top: 1px solid #f0f0f0;
+}
+
+.selecao-equipe.expandida .selecao-lista {
+    display: block;
+}
+
+.selecao-lista p {
+    font-size: 16px;
+    color: #555;
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+    margin: 0;
+}
+
+.selecao-lista p:last-child {
+    border-bottom: none;
+}
+
+

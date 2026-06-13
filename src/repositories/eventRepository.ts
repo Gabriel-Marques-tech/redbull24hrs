@@ -53,6 +53,28 @@ export const eventRepository = {
 		return result.rows[0] ?? null;
 	},
 
+	async start(id: number) {
+		const result = await pool.query(
+			`UPDATE events
+			 SET status = 'in_progress', started_at = NOW()
+			 WHERE id = $1 AND deleted_at IS NULL AND status = 'pending'
+			 RETURNING *`,
+			[id]
+		);
+		return result.rows[0] ?? null;
+	},
+
+	async finish(id: number) {
+		const result = await pool.query(
+			`UPDATE events
+			 SET status = 'finished', finished_at = NOW()
+			 WHERE id = $1 AND deleted_at IS NULL AND status = 'in_progress'
+			 RETURNING *`,
+			[id]
+		);
+		return result.rows[0] ?? null;
+	},
+
 	async softDelete(id: number) {
 		const result = await pool.query(
 			`UPDATE events SET deleted_at = NOW() WHERE id = $1 AND deleted_at IS NULL RETURNING *`,

@@ -1,6 +1,7 @@
 
 %%{init: {
   "theme": "base",
+  "background": "#ffffff",
   "themeVariables": {
     "primaryColor": "#0F0069",
     "primaryTextColor": "#FFFFFF",
@@ -38,88 +39,97 @@ sequenceDiagram
     participant TR as ShiftRepository
     participant DB as Data Base
 
-    Note over C,DB: 1 · Start shift
+    Note over C,DB: 1 · Iniciar turno
 
-    C->>+CT: 1. POST /shifts/start
-    CT->>+TS: 2. validateAvailability()
+    C->>+CT: 1. POST /audit/shifts/start { athlete_id, auditor_id, treadmill_id, km_start }
+    CT->>+TS: 2. startShift(athlete_id, auditor_id, treadmill_id, km_start)
 
-    TS->>+TR: 3. findActiveShift(athlete_id)
+    TS->>+TR: 3. findOpenByAthlete(athlete_id)
     TR->>+DB: 4. SELECT ongoing Shift for Athlete
     DB-->>-TR: 5. null
-    TR-->>-TS: 6. null (athlete available)
+    TR-->>-TS: 6. null (atleta disponível)
 
-    TS->>+TR: 7. findTreadmillStatus(treadmill_id)
-    TR->>+DB: 8. SELECT Treadmill status
-    DB-->>-TR: 9. "Available"
-    TR-->>-TS: 10. "Available"
+    TS->>+TR: 7. findOpenByTreadmill(treadmill_id)
+    TR->>+DB: 8. SELECT ongoing Shift for Treadmill
+    DB-->>-TR: 9. null
+    TR-->>-TS: 10. null (esteira disponível)
 
-    TS->>+TR: 11. createShift()
-    TR->>+DB: 12. INSERT Shift { athlete_id, treadmill_id, km_init, time_init }
-    DB-->>-TR: 13. Shift { id, status: "in_progress" }
-    TR-->>-TS: 14. Shift { id, status: "in_progress" }
+    TS->>+TR: 11. start(athlete_id, auditor_id, treadmill_id, km_start)
+    TR->>+DB: 12. INSERT Shift { athlete_id, treadmill_id, auditor_id, km_start, start_at, status: "in_progress" }
+    DB-->>-TR: 13. Shift { id, status: "in_progress", km_start, start_at }
+    TR-->>-TS: 14. shift
+    TS-->>-CT: 15. shift
+    CT-->>-C: 16. 201 { id, status: "in_progress", km_start, start_at, ... }
 
-    TS->>+TR: 15. updateTreadmillStatus("Occupied")
-    TR->>+DB: 16. UPDATE Treadmill SET status = "Occupied"
-    DB-->>-TR: 17. ok
-    TR-->>-TS: 18. ok
+    Note over C,DB: 2 · Checkpoint obrigatório — a cada ≤10 min desde o início ou último checkpoint (RN10)
 
-    CT-->>-C: 19. 201 { shift_id, time_init }
-    deactivate TS
+    loop A cada ≤10 min
+        C->>+CT: 17. POST /audit/shifts/{id}/checkpoints { distance, type: "mandatory" }
+        CT->>+TS: 18. registerCheckpoint(shift_id, distance, "mandatory")
 
-    Note over C,DB: 2 · Mandatory checkpoint — blocking modal every 5 min
+        Note right of TS: valida distance >= último checkpoint
+        Note right of TS: valida intervalo <= 10 min desde último registro
 
-    loop Every 300s since time_init
-        C->>+CT: 20. POST /shifts/{id}/checkpoints
-        CT->>+TS: 21. registerCheckpoint(distance, type: "mandatory")
-
-        Note right of TS: validates distance >= last Checkpoint
-
-        TS->>+TR: 22. saveCheckpoint()
-        TR->>+DB: 23. INSERT Checkpoint { shift_id, distance, timestamp, type: "mandatory" }
-        DB-->>-TR: 24. Checkpoint { id, timestamp }
-        TR-->>-TS: 25. Checkpoint { id, timestamp }
-
-        CT-->>-C: 26. 201 { checkpoint_id }
-        deactivate TS
+        TS->>+TR: 19. addCheckpoint(shift_id, distance, "mandatory")
+        TR->>+DB: 20. INSERT Checkpoint { shift_id, distance, timestamp, type: "mandatory" }
+        DB-->>-TR: 21. Checkpoint { id, timestamp }
+        TR-->>-TS: 22. checkpoint
+        TS-->>-CT: 23. checkpoint
+        CT-->>-C: 24. 201 { id, timestamp }
     end
 
-    Note over C,DB: 3 · Voluntary checkpoint — auditor registers at any time
+    Note over C,DB: 3 · Checkpoint voluntário — auditor registra a qualquer momento
 
-    C->>+CT: 27. POST /shifts/{id}/checkpoints
-    CT->>+TS: 28. registerCheckpoint(distance, type: "voluntary")
+    C->>+CT: 25. POST /audit/shifts/{id}/checkpoints { distance, type: "voluntary" }
+    CT->>+TS: 26. registerCheckpoint(shift_id, distance, "voluntary")
 
-    Note right of TS: validates distance >= last Checkpoint
+    Note right of TS: valida distance >= último checkpoint
+    Note right of TS: valida intervalo <= 10 min desde último registro
 
-    TS->>+TR: 29. saveCheckpoint()
-    TR->>+DB: 30. INSERT Checkpoint { shift_id, distance, timestamp, type: "voluntary" }
-    DB-->>-TR: 31. Checkpoint { id, timestamp }
-    TR-->>-TS: 32. Checkpoint { id, timestamp }
+    TS->>+TR: 27. addCheckpoint(shift_id, distance, "voluntary")
+    TR->>+DB: 28. INSERT Checkpoint { shift_id, distance, timestamp, type: "voluntary" }
+    DB-->>-TR: 29. Checkpoint { id, timestamp }
+    TR-->>-TS: 30. checkpoint
+    TS-->>-CT: 31. checkpoint
+    CT-->>-C: 32. 201 { id, timestamp }
 
-    CT-->>-C: 33. 201 { checkpoint_id }
-    deactivate TS
+    Note over C,DB: 4 · Encerrar turno — auditor informa km final lido na esteira
 
-    Note over C,DB: 4 · End shift — auditor informs final km read from treadmill
+    C->>+CT: 33. PATCH /audit/shifts/{id}/finish { km_end }
+    CT->>+TS: 34. finishShift(shift_id, km_end)
 
-    C->>+CT: 34. POST /shifts/{id}/finish
-    CT->>+TS: 35. finishShift(km_end)
+    TS->>+TR: 35. findById(shift_id)
+    TR->>+DB: 36. SELECT Shift with Checkpoints
+    DB-->>-TR: 37. Shift { km_start, checkpoints[] }
+    TR-->>-TS: 38. Shift { km_start, checkpoints[] }
 
-    TS->>+TR: 36. findShift(shift_id)
-    TR->>+DB: 37. SELECT Shift with Checkpoints
-    DB-->>-TR: 38. Shift { km_init, checkpoints[] }
-    TR-->>-TS: 39. Shift { km_init, checkpoints[] }
+    Note right of TS: valida km_end >= km_start
+    Note right of TS: valida km_end >= último checkpoint
+    Note right of TS: calcula distance, tempo e velocidade
 
-    Note right of TS: validates km_end >= last Checkpoint
-    Note right of TS: calculates distance, time, and speed
+    TS->>+TR: 39. finish(shift_id, km_end)
+    TR->>+DB: 40. UPDATE Shift SET status="completed", km_end, distance, speed, end_at, total_time
+    DB-->>-TR: 41. Updated Shift
+    TR-->>-TS: 42. finishedShift
+    TS-->>-CT: 43. finishedShift
+    CT-->>-C: 44. 200 { id, status: "completed", distance, speed, total_time, ... }
 
-    TS->>+TR: 40. updateShift(finished + metrics)
-    TR->>+DB: 41. UPDATE Shift SET status, km_end, distance, time, speed
-    DB-->>-TR: 42. Updated Shift
-    TR-->>-TS: 43. Updated Shift
+    Note over C,DB: 5 · Abandono de turno — RF014
 
-    TS->>+TR: 44. updateTreadmillStatus("Available")
-    TR->>+DB: 45. UPDATE Treadmill SET status = "Available"
-    DB-->>-TR: 46. ok
-    TR-->>-TS: 47. ok
+    C->>+CT: 45. PATCH /audit/shifts/shiftId/abandon { justification }
+    Note over CT: requireAuth — auditor responsavel pelo turno
+    CT->>+TS: 46. abandonShift(shift_id, justification)
+    TS->>+TR: 47. findById(shift_id)
+    TR->>+DB: 48. SELECT * FROM shifts WHERE id = $1
+    DB-->>-TR: 49. Shift { status: "in_progress", auditor_id }
+    TR-->>-TS: 50. shift
 
-    CT-->>-C: 48. 200 { distance, time, speed }
-    deactivate TS
+    Note right of TS: valida shift.auditor_id === req.user.id
+    Note right of TS: justification obrigatoria (RN13)
+
+    TS->>+TR: 51. abandon(shift_id, justification)
+    TR->>+DB: 52. UPDATE shifts SET status="abandoned", justification=$2, end_at=NOW()
+    DB-->>-TR: 53. Updated Shift
+    TR-->>-TS: 54. abandonedShift
+    TS-->>-CT: 55. abandonedShift
+    CT-->>-C: 56. 200 { id, status: "abandoned", justification, end_at }

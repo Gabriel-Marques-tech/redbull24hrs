@@ -5,22 +5,24 @@ body{
       rgba(93,30,176,0.5)
     ),
     url("../assets/Home-Auditor/img2.jpg");
-    background-size: cover;
-    background-position: center -150px;
-    background-size: 100%;
-    background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 main{
   background-color: var(--branco);
   width: 100%;
-  min-height: 100vh;
-  border-radius: 30px 30px 0 0;
+  min-height: 120vh;
+  border-radius: 30px;
   margin-top: -170px;
+  margin-bottom: 40px;
   position: relative;
   z-index: 1;
   padding-top: 160px;
   padding-left: 60px;
+  padding-bottom: 80px;
 }
 
 header{
@@ -29,10 +31,11 @@ header{
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: visible;
 }
 
 header img{
-  width: 150px;
+  width: 170px;
   position: absolute;
   z-index: 2;
 }
@@ -46,23 +49,31 @@ h1{
     margin-bottom: 10px;
 }
 .Bem-vindo button{
-  width: 290px;
+  width: 300px;
   height: 100px;
   border: none;
   border-radius: 10px;
   background-color: #D2003C;
   color: #ffff;
-  font-size: 25px;
+  font-size: 22px;
   margin-top: 20px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 64px 1fr;
   align-items: center;
-  justify-content: center;
-  gap: 7px;
+  padding: 0 16px;
   cursor: pointer;
 }
 .Bem-vindo button img{
   width: 28px;
-  display: block;
+  justify-self: center;
+}
+.Bem-vindo button strong{
+  text-align: left;
+  white-space: nowrap;
+}
+
+.Bem-vindo .btn-registrar-competicao{
+  width: 350px;
 }
 .Histórico{
   margin-top: 60px;
@@ -94,7 +105,8 @@ h1{
 }
 
 .card{
-  height: 250px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   border-radius: 12px;
   padding: 20px;
   display: flex;
@@ -105,6 +117,8 @@ h1{
   background-size: cover;
   background-position: center;
   box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .rio{
@@ -125,4 +139,96 @@ h1{
 
 .poa{
   background-image: linear-gradient(rgba(15,0,105,0.25), rgba(210,0,60,0.45)), url("../assets/Home-Auditor/poa.jpg");
+}
+
+.card-event {
+  background-image: linear-gradient(160deg, rgba(15,0,105,0.85) 0%, rgba(210,0,60,0.85) 100%);
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  position: relative;
+  gap: 6px;
+}
+
+.card-event h3 {
+  font-size: 22px;
+  line-height: 1.15;
+}
+
+.card-event .card-local {
+  font-size: 15px;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+/* bolinha de status no card */
+.card-status {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.7);
+}
+.status-in_progress { background: #2ecc71; }
+.status-pending     { background: #f1c40f; }
+.status-finished    { background: #95a5a6; }
+
+/* grupos */
+.grupo-eventos {
+  margin-top: 34px;
+}
+
+.grupo-titulo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  margin-bottom: 4px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #eee;
+}
+
+.grupo-titulo::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.grupo-in_progress::before { background: #2ecc71; }
+.grupo-pending::before     { background: #f1c40f; }
+.grupo-finished::before    { background: #95a5a6; }
+
+.grupo-contador {
+  font-size: 14px;
+  font-weight: 700;
+  color: #888;
+  background: #f0f0f0;
+  border-radius: 12px;
+  padding: 2px 10px;
+}
+
+.grupo-vazio {
+  color: #999;
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+.btn-ver-mais {
+  margin-top: 24px;
+  padding: 12px 24px;
+  background: #fff;
+  border: 1.5px solid var(--azul);
+  border-radius: 8px;
+  color: var(--azul);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.15s;
+}
+
+.btn-ver-mais:hover {
+  background: #f0f0ff;
 }

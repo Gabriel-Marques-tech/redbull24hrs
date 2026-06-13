@@ -6,6 +6,7 @@ jest.mock("../middlewares/authMiddleware", () => ({
 	default: {
 		requireAuth: (_req: any, _res: any, next: any) => next(),
 		requireRole: () => (_req: any, _res: any, next: any) => next(),
+		requirePageAuth: (_req: any, _res: any, next: any) => next(),
 	},
 }));
 
@@ -219,5 +220,45 @@ describe("GET /metrics/athletes/:athleteId/performance", () => {
 		(metricsRepository.athletePerformance as jest.Mock).mockResolvedValue([]);
 		await request(app).get("/metrics/athletes/1/performance");
 		expect(metricsRepository.athletePerformance).toHaveBeenCalledWith(1, undefined);
+	});
+});
+
+// ─── GET /metrics/athletes/:athleteId/share (RF050) ──────────────────────────
+
+describe("GET /metrics/athletes/:athleteId/share – RF050 link público", () => {
+	it("200 – acessível sem token de autenticação", async () => {
+		(metricsRepository.athletePerformance as jest.Mock).mockResolvedValue(mockPerformanceShifts);
+		const res = await request(app).get("/metrics/athletes/1/share");
+		expect(res.status).toBe(200);
+	});
+
+	it("200 – retorna summary e shifts do atleta", async () => {
+		(metricsRepository.athletePerformance as jest.Mock).mockResolvedValue(mockPerformanceShifts);
+		const res = await request(app).get("/metrics/athletes/1/share");
+		expect(res.status).toBe(200);
+		expect(res.body).toHaveProperty("summary");
+		expect(res.body).toHaveProperty("shifts");
+		expect(res.body.summary.shift_count).toBe(2);
+		expect(res.body.summary.total_distance).toBe(25);
+	});
+
+	it("200 – atleta sem turnos retorna summary zerado", async () => {
+		(metricsRepository.athletePerformance as jest.Mock).mockResolvedValue([]);
+		const res = await request(app).get("/metrics/athletes/999/share");
+		expect(res.status).toBe(200);
+		expect(res.body.summary.shift_count).toBe(0);
+		expect(res.body.shifts).toEqual([]);
+	});
+
+	it("200 – chama athletePerformance sem eventId (all-time)", async () => {
+		(metricsRepository.athletePerformance as jest.Mock).mockResolvedValue(mockPerformanceShifts);
+		await request(app).get("/metrics/athletes/3/share");
+		expect(metricsRepository.athletePerformance).toHaveBeenCalledWith(3, undefined);
+	});
+
+	it("400 – athleteId não numérico", async () => {
+		const res = await request(app).get("/metrics/athletes/abc/share");
+		expect(res.status).toBe(400);
+		expect(res.body.error).toMatch(/inválido/i);
 	});
 });
