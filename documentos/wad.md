@@ -3030,6 +3030,19 @@ O modelo físico implementa o DER da seção 3.6.2 como **migrations DDL version
 | [`002_managerEventRelation.sql`](../src/database/migrations/002_managerEventRelation.sql) | 3      | Transforma a relação `managers` ↔ `events` de 1:N para N:N: remove a coluna `manager_id` de `events` e cria a tabela associativa `manager_events` (PK composta `manager_id` + `event_id`, FKs `ON DELETE CASCADE`) com índices sobre ambas as chaves estrangeiras.                                          |
 | [`003_softDelete.sql`](../src/database/migrations/003_softDelete.sql)                   | 3      | Introduz exclusão lógica (*soft delete*): adiciona a coluna `deleted_at TIMESTAMP DEFAULT NULL` às tabelas `events`, `teams` e `athletes`, permitindo desativar registros sem removê-los fisicamente (suporte às RN37).                                                                                    |
 | [`004_shiftTreadmill.sql`](../src/database/migrations/004_shiftTreadmill.sql)           | 3      | Adiciona a coluna `treadmill_id` à tabela `shifts` (FK → `treadmills(id)`, `ON UPDATE CASCADE ON DELETE RESTRICT`), permitindo que cada turno referencie diretamente a esteira em que ocorre.                                                                                                              |
+| [`005_checkpointCorrection.sql`](../src/database/migrations/005_checkpointCorrection.sql) | 4      | RF031: adiciona metadados de correção retroativa à tabela `checkpoints` (`reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`) e campos de trilha de auditoria à tabela `logs` (`checkpoint_id`, `old_value`, `new_value`, `author_id`, `author_role`, `justification`). |
+| [`006_refreshTokenUserLink.sql`](../src/database/migrations/006_refreshTokenUserLink.sql) | 4      | Substitui a modelagem polimórfica de `refresh_tokens` (`user_id` + `user_role` sem FK) por duas colunas FK nullable mutuamente exclusivas: `manager_id → managers(id)` e `auditor_id → auditors(id)`, ambas `ON DELETE CASCADE`, com `CHECK` garantindo que exatamente uma delas esteja preenchida. Remove `user_id`, `user_role` e o índice `idx_refresh_tokens_user`. |
+| [`007_checkpointSyncId.sql`](../src/database/migrations/007_checkpointSyncId.sql)         | 4      | RF026: adiciona coluna `sync_id VARCHAR(64)` à tabela `checkpoints` e cria índice único parcial `ON checkpoints(sync_id) WHERE sync_id IS NOT NULL`, viabilizando a sincronização offline idempotente. |
+| [`008_managerAsAuditor.sql`](../src/database/migrations/008_managerAsAuditor.sql)           | 4      | Permite que gerentes registrem turnos: remove `NOT NULL` de `shifts.auditor_id`, adiciona `shifts.manager_id` (FK → `managers(id)`) e constraint `chk_shifts_operator` (`num_nonnulls(auditor_id, manager_id) = 1`) garantindo exatamente um operador por turno. |
+| [`009_treadmillTeamRelation.sql`](../src/database/migrations/009_treadmillTeamRelation.sql) | 4      | Vincula esteiras a equipes: adiciona `treadmills.team_id` (FK → `teams(id)`, `ON DELETE SET NULL`) com índice auxiliar, permitindo que cada equipe gerencie seu próprio conjunto de esteiras. |
+| [`010_logTypes.sql`](../src/database/migrations/010_logTypes.sql)                           | 4      | Expande o vocabulário de auditoria: substitui o `CHECK chk_logs_type` para aceitar também `'abandoned'` (encerramento por saída voluntária do atleta) e `'force_closed'` (encerramento manual por gerente ou operador). |
+| [`011_dropTreadmillShiftLegacy.sql`](../src/database/migrations/011_dropTreadmillShiftLegacy.sql) | 4 | Remove a coluna legada `treadmills.shift_id` (criada na migration 001, substituída por `shifts.treadmill_id` na 004): descarta `fk_treadmills_shift` e a coluna, eliminando o `ON DELETE CASCADE` que apagava esteiras ao limpar turnos. |
+| [`012_eventStatus.sql`](../src/database/migrations/012_eventStatus.sql)                     | 4      | Introduz ciclo de vida formal nos eventos: adiciona `status VARCHAR(20) DEFAULT 'pending'`, `started_at` e `finished_at` à tabela `events`, com `CHECK chk_events_status` restringindo o status a `pending`, `in_progress` ou `finished`. |
+| [`013_eventStatusFix.sql`](../src/database/migrations/013_eventStatusFix.sql)               | 4      | Normalização retroativa idempotente: remapeia valores legados `'open'` → `'in_progress'` e `'closed'` → `'finished'` em bancos onde a migration 012 foi aplicada antes do rewrite, e reaplica o `CHECK` e o `DEFAULT` do modelo de três estados. |
+| [`014_checkpointDistanceDecimal.sql`](../src/database/migrations/014_checkpointDistanceDecimal.sql) | 4 | Converte `distance` de `INT` para `NUMERIC(8,2)` em `checkpoints` e `shifts`, permitindo registrar quilometragens com precisão decimal conforme reportado pelas esteiras Technogym. |
+| [`015_treadmillNumberNotUnique.sql`](../src/database/migrations/015_treadmillNumberNotUnique.sql) | 4 | Remove a constraint `UNIQUE` de `treadmills.number`: o número da esteira passa a ser relativo ao contexto evento/equipe (cada equipe numera suas esteiras de 1 a N), permitindo o mesmo número em equipes distintas. |
+| [`016_logsValueNumeric.sql`](../src/database/migrations/016_logsValueNumeric.sql)           | 4      | Converte `logs.old_value` e `logs.new_value` de `INT` para `NUMERIC(8,2)`, preservando a precisão decimal nos registros de auditoria de alterações de distância após a migration 014. |
+| [`017_checkpointOldDistanceNumeric.sql`](../src/database/migrations/017_checkpointOldDistanceNumeric.sql) | 4 | Converte `checkpoints.old_distance` de `INT` para `NUMERIC(8,2)`, completando a propagação do tipo decimal à trilha de auditoria de checkpoints (complemento da migration 014). |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -3045,7 +3058,7 @@ A migration `001_initialSchema.sql` reúne em um único script o schema operacio
 Primeira tabela criada por estar no topo da hierarquia operacional (não depende de outra tabela). Identifica o gerente regional responsável por instanciar eventos. O `cpf` é opcional (`NULL` permitido), mas, quando preenchido, é `UNIQUE` e validado pelo `CHECK` `chk_managers_cpf`, que exige exatamente 11 dígitos numéricos via expressão regular. Os campos `email` (`NOT NULL UNIQUE`) e `password` (`NOT NULL`) suportam a autenticação do gerente: o `email` é o identificador de login e o `password` armazena o hash bcrypt da senha — nunca a senha em texto plano (RN38). Essas garantias de formato e integridade são aplicadas no próprio banco, independentemente da camada de aplicação.
 
 ```sql
-CREATE TABLE managers (
+CREATE TABLE IF NOT EXISTS managers (
 	id SERIAL PRIMARY KEY,
 	cpf VARCHAR(11) UNIQUE,
 	name VARCHAR(100) NOT NULL,
@@ -3060,7 +3073,7 @@ CREATE TABLE managers (
 Representa uma edição (regional ou final) do Red Bull 24 Horas. O `title` é `NOT NULL UNIQUE` (não existem duas edições com o mesmo título), enquanto a unicidade do local é garantida pela constraint composta `uq_events_date_local` (`UNIQUE (date, local)`), que impede dois eventos no mesmo local **na mesma data** — diferentes datas podem reutilizar o mesmo local. O campo `date` (`DATE NOT NULL`) registra o dia da edição. A `FOREIGN KEY` `manager_id` para `managers` usa `ON DELETE RESTRICT` (um gerente com eventos vinculados não pode ser removido) e `ON UPDATE CASCADE`. **Observação:** esta coluna `manager_id` é substituída pela tabela associativa `manager_events` na migration `002` (ver adiante), que converte a relação para N:N.
 
 ```sql
-CREATE TABLE events (
+CREATE TABLE IF NOT EXISTS events (
 	id SERIAL PRIMARY KEY,
 	title VARCHAR(100) UNIQUE NOT NULL,
 	local VARCHAR(100) NOT NULL,
@@ -3078,7 +3091,7 @@ CREATE TABLE events (
 Cada equipe pertence a um único evento. O nome da equipe é único **dentro do evento** (constraint composta `uq_teams_event_name`, `UNIQUE (event_id, name)`), e não globalmente — duas edições diferentes podem ter equipes homônimas. Diferente da relação `events → managers`, aqui a política é `ON DELETE CASCADE`: ao excluir um evento, suas equipes são removidas junto, já que a equipe só faz sentido no contexto de uma edição específica do Red Bull 24 Horas e não tem existência própria fora dele.
 
 ```sql
-CREATE TABLE teams (
+CREATE TABLE IF NOT EXISTS teams (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(100) NOT NULL,
 	event_id INT NOT NULL,
@@ -3094,7 +3107,7 @@ CREATE TABLE teams (
 Cadastro dos corredores inscritos em uma equipe. O `gender` é `NOT NULL` por ser usado na apuração por categoria; o `cpf` segue o mesmo padrão de `managers` (opcional, mas validado por regex quando presente). A `FK` para `teams` cascateia no delete, mantendo a coerência da hierarquia `event → team → athlete`: ao remover a edição, todos os atletas vinculados àquela equipe também são apagados.
 
 ```sql
-CREATE TABLE athletes (
+CREATE TABLE IF NOT EXISTS athletes (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(100) NOT NULL,
 	gender VARCHAR(20) NOT NULL,
@@ -3112,7 +3125,7 @@ CREATE TABLE athletes (
 Operadores do sistema. Como o auditor é uma pessoa de carreira (não vinculada a uma edição específica), `auditors` é uma entidade independente, sem `FK` para event ou team. O `registration_number` é `NOT NULL UNIQUE`, o que garante identificação funcional única do auditor na operação. O campo `is_active` (default `TRUE`) permite desativar auditores sem removê-los do banco, preservando o vínculo histórico com os turnos que já auditaram (RN31/RN41). Assim como `managers`, possui `email` (`NOT NULL UNIQUE`) como identificador de login e `password` (`NOT NULL`) armazenando o hash bcrypt da senha (RN38).
 
 ```sql
-CREATE TABLE auditors (
+CREATE TABLE IF NOT EXISTS auditors (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(100) NOT NULL,
 	cpf VARCHAR(11) UNIQUE,
@@ -3134,7 +3147,7 @@ Entidade central do registro operacional, conforme detalhado na seção 3.6.1. C
 - Tanto a `FK` para `athletes` quanto a para `auditors` usam `ON DELETE RESTRICT`, o que protege o histórico de auditoria pós-evento contra remoção acidental de pessoas que já têm turnos registrados.
 
 ```sql
-CREATE TABLE shifts (
+CREATE TABLE IF NOT EXISTS shifts (
 	id SERIAL PRIMARY KEY,
 	status VARCHAR(20) NOT NULL DEFAULT 'pending',
 	athlete_id INT NOT NULL,
@@ -3165,7 +3178,7 @@ CREATE TABLE shifts (
 Representa o equipamento físico (Technogym) onde os turnos ocorrem. O `number` é `NOT NULL UNIQUE`, refletindo a unicidade de cada esteira no espaço físico do evento. A tabela é criada **depois** de `shifts` porque a `FK` `shift_id` aponta para o turno em execução naquela esteira, ordem necessária para que a referência seja válida no momento do `CREATE TABLE`.
 
 ```sql
-CREATE TABLE treadmills (
+CREATE TABLE IF NOT EXISTS treadmills (
 	id SERIAL PRIMARY KEY,
 	shift_id INT NOT NULL,
 	number INT UNIQUE NOT NULL,
@@ -3180,7 +3193,7 @@ CREATE TABLE treadmills (
 Registro auditável das ações executadas dentro de um turno. O `timestamp` usa `DEFAULT CURRENT_TIMESTAMP`, ou seja, é gerado pelo próprio banco no momento do `INSERT`. Isso elimina a dependência do relógio da aplicação e garante que o registro corresponda ao instante real da persistência. O `CHECK` `chk_logs_type` restringe `type` aos três eventos do ciclo de vida do turno (`created`, `updated`, `finished`), evitando categorias inválidas que poderiam quebrar relatórios de auditoria.
 
 ```sql
-CREATE TABLE logs (
+CREATE TABLE IF NOT EXISTS logs (
 	id SERIAL PRIMARY KEY,
 	shift_id INT NOT NULL,
 	timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -3197,7 +3210,7 @@ CREATE TABLE logs (
 Marcações periódicas dentro de um turno (de 5 em 5 minutos ou voluntárias, conforme regra de negócio do parceiro). Como `logs`, usa `DEFAULT CURRENT_TIMESTAMP` para garantir consistência temporal. O `chk_checkpoints_distance` impede quilometragem negativa, e o `chk_checkpoints_type` restringe `type` às duas categorias funcionais (`mandatory` automática e `voluntary` registrada pelo auditor), distinção importante para a auditoria pós-evento.
 
 ```sql
-CREATE TABLE checkpoints (
+CREATE TABLE IF NOT EXISTS checkpoints (
 	id SERIAL PRIMARY KEY,
 	shift_id INT NOT NULL,
 	timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -3216,7 +3229,7 @@ CREATE TABLE checkpoints (
 Sustenta o mecanismo de sessão e rotação de tokens da autenticação (RN39, RN40, RN41). Cada linha representa um *refresh token* emitido para um usuário (gerente ou auditor). O `token_hash` é `NOT NULL UNIQUE` — armazena o hash do token, nunca o valor bruto. Os campos `expires_at` e `revoked_at` controlam, respectivamente, a expiração e a revogação (rotação de uso único): ao usar um token, ele é marcado como revogado e um novo par é emitido. O `CHECK` `chk_refresh_tokens_role` restringe `user_role` a `manager` ou `auditor`. Como o usuário dono do token pode estar em uma de duas tabelas distintas (`managers` ou `auditors`), o vínculo foi modelado de forma polimórfica pelo par (`user_id`, `user_role`), sem uma `FOREIGN KEY` direta.
 
 ```sql
-CREATE TABLE refresh_tokens (
+CREATE TABLE IF NOT EXISTS refresh_tokens (
 	id SERIAL PRIMARY KEY,
 	token_hash VARCHAR(255) UNIQUE NOT NULL,
 	user_id INT NOT NULL,
@@ -3228,34 +3241,22 @@ CREATE TABLE refresh_tokens (
 );
 ```
 
-> ⚠️ **Limitação conhecida e plano de correção — `refresh_tokens` sem integridade referencial.**
->
-> **Problema mapeado.** A tabela `refresh_tokens` **não possui `FOREIGN KEY`** para `managers` nem para `auditors`. A coluna `user_id` referencia, de forma lógica, uma de duas tabelas distintas conforme o valor de `user_role`, mas o banco não consegue impor uma `FK` apontando para duas tabelas ao mesmo tempo. Na prática, isso significa que: (a) o banco **não garante** que o `user_id` armazenado realmente exista na tabela de usuário correspondente, permitindo *tokens órfãos*; e (b) ao remover um gerente ou auditor, os tokens associados **não são removidos em cascata** automaticamente — a limpeza depende exclusivamente da camada de aplicação. Hoje, a coerência do vínculo token↔usuário é sustentada apenas pelo `CHECK chk_refresh_tokens_role` (que valida o papel, não a existência do usuário) e pela lógica do backend.
->
-> **Por que não foi corrigido nesta sprint.** A correção definitiva exige alterar a modelagem física e, por consequência, atualizar os diagramas MER (3.6.1) e DER (3.6.2), o que não foi possível dentro da janela desta sprint. O erro foi **identificado, registrado e priorizado** para correção, evitando que ele se propague para as próximas entregas.
->
-> **Plano de implementação (sprint 4):**
-> 1. **Unificar a identidade de usuário.** Criar uma tabela-pai `users` (com `id`, `email`, `password`, `role`) e tornar `managers` e `auditors` especializações que referenciam `users(id)`, eliminando a ambiguidade do vínculo polimórfico.
-> 2. **Adicionar a `FOREIGN KEY`.** Com a identidade unificada, substituir o par `(user_id, user_role)` por uma única `FK` `refresh_tokens.user_id → users(id) ON DELETE CASCADE`, garantindo remoção automática dos tokens quando o usuário é excluído e impedindo tokens órfãos.
-> 3. **Migration dedicada.** Implementar a mudança em uma nova migration versionada (`005_*`), preservando a ordem de dependências, e *backfillar* os dados existentes antes de aplicar a constraint.
-> 4. **Atualizar diagramas e rastreabilidade.** Refletir a nova estrutura no MER, no DER e no Diagrama de Classes do Domínio, mantendo a coerência entre modelagem, código e documentação.
->
-> Essa mitigação assume o débito técnico de forma explícita e estabelece o caminho de correção, em vez de mascarar a inconsistência.
+> **Nota sobre integridade referencial de `refresh_tokens`:** o PostgreSQL não permite uma única `FOREIGN KEY` apontando para duas tabelas distintas. Por isso, a relação token↔usuário foi modelada de forma polimórfica nesta migration (par `user_id` + `user_role`, sem FK real), o que deixava o banco sem garantia de que o dono do token existia. Essa limitação foi corrigida na **migration 006** (ver adiante), que substituiu esse par por duas colunas FK nullable mutuamente exclusivas (`manager_id` e `auditor_id`), com `ON DELETE CASCADE` e `CHECK` garantindo que exatamente uma delas esteja preenchida.
 
 ##### Índices secundários
 
 O PostgreSQL cria índices automaticamente apenas sobre `PRIMARY KEY` e `UNIQUE`, mas **não** sobre colunas de `FOREIGN KEY`. Como praticamente toda consulta operacional do sistema usa essas colunas (listar turnos de um atleta, checkpoints de um turno, logs de uma sessão, equipes de um evento, tokens de um usuário), os nove `CREATE INDEX` abaixo são criados explicitamente após todas as tabelas. Isso garante que essas consultas sejam atendidas por busca indexada em vez de _sequential scan_, diferença importante de desempenho à medida que a base cresce ao longo das edições.
 
 ```sql
-CREATE INDEX idx_events_manager_id      ON events(manager_id);
-CREATE INDEX idx_teams_event_id         ON teams(event_id);
-CREATE INDEX idx_athletes_team_id       ON athletes(team_id);
-CREATE INDEX idx_shifts_athlete_id      ON shifts(athlete_id);
-CREATE INDEX idx_shifts_auditor_id      ON shifts(auditor_id);
-CREATE INDEX idx_treadmills_shift_id    ON treadmills(shift_id);
-CREATE INDEX idx_logs_shift_id          ON logs(shift_id);
-CREATE INDEX idx_checkpoints_shift_id   ON checkpoints(shift_id);
-CREATE INDEX idx_refresh_tokens_user    ON refresh_tokens(user_id, user_role);
+CREATE INDEX IF NOT EXISTS idx_events_manager_id      ON events(manager_id);
+CREATE INDEX IF NOT EXISTS idx_teams_event_id         ON teams(event_id);
+CREATE INDEX IF NOT EXISTS idx_athletes_team_id       ON athletes(team_id);
+CREATE INDEX IF NOT EXISTS idx_shifts_athlete_id      ON shifts(athlete_id);
+CREATE INDEX IF NOT EXISTS idx_shifts_auditor_id      ON shifts(auditor_id);
+CREATE INDEX IF NOT EXISTS idx_treadmills_shift_id    ON treadmills(shift_id);
+CREATE INDEX IF NOT EXISTS idx_logs_shift_id          ON logs(shift_id);
+CREATE INDEX IF NOT EXISTS idx_checkpoints_shift_id   ON checkpoints(shift_id);
+CREATE INDEX IF NOT EXISTS idx_refresh_tokens_user    ON refresh_tokens(user_id, user_role);
 ```
 
 <div align="center">
@@ -3268,7 +3269,7 @@ CREATE INDEX idx_refresh_tokens_user    ON refresh_tokens(user_id, user_role);
 A migration `002_managerEventRelation.sql` revisa a modelagem inicial ao perceber que um mesmo gerente pode ser responsável por mais de um evento e que um evento pode ter mais de um gerente — uma relação **muitos-para-muitos** que a coluna `manager_id` em `events` (1:N) não comportava. A migration remove essa coluna e introduz a tabela associativa `manager_events`, cuja chave primária composta (`manager_id`, `event_id`) impede vínculos duplicados. Ambas as `FOREIGN KEY` usam `ON DELETE CASCADE`, de modo que remover um gerente ou um evento elimina automaticamente apenas os vínculos correspondentes, sem afetar as entidades remanescentes. Os dois índices criados aceleram as consultas nos dois sentidos da relação (eventos de um gerente e gerentes de um evento).
 
 ```sql
-ALTER TABLE events DROP COLUMN manager_id;
+ALTER TABLE events DROP COLUMN IF EXISTS manager_id;
 
 CREATE TABLE IF NOT EXISTS manager_events (
 	manager_id INT NOT NULL,
@@ -3289,9 +3290,9 @@ CREATE INDEX IF NOT EXISTS idx_manager_events_event_id   ON manager_events(event
 A migration `003_softDelete.sql` adiciona a coluna `deleted_at` (`TIMESTAMP DEFAULT NULL`) às tabelas `events`, `teams` e `athletes`. A estratégia de *soft delete* permite que um registro seja marcado como excluído (preenchendo `deleted_at` com o instante da exclusão) sem ser removido fisicamente do banco, preservando o histórico operacional e a rastreabilidade exigida pela auditoria pós-evento. Registros com `deleted_at IS NOT NULL` são tratados como inativos pela camada de aplicação (RN37), enquanto `deleted_at IS NULL` indica um registro ativo.
 
 ```sql
-ALTER TABLE events   ADD COLUMN deleted_at TIMESTAMP DEFAULT NULL;
-ALTER TABLE teams    ADD COLUMN deleted_at TIMESTAMP DEFAULT NULL;
-ALTER TABLE athletes ADD COLUMN deleted_at TIMESTAMP DEFAULT NULL;
+ALTER TABLE events   ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMP DEFAULT NULL;
+ALTER TABLE teams    ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMP DEFAULT NULL;
+ALTER TABLE athletes ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMP DEFAULT NULL;
 ```
 
 #### Migration 004: Vínculo direto turno → esteira
@@ -3299,12 +3300,226 @@ ALTER TABLE athletes ADD COLUMN deleted_at TIMESTAMP DEFAULT NULL;
 A migration `004_shiftTreadmill.sql` adiciona a coluna `treadmill_id` à tabela `shifts`, criando uma `FOREIGN KEY` direta de cada turno para a esteira em que ele ocorre. Embora a migration 001 já vinculasse esteira e turno por meio de `treadmills.shift_id`, a referência inversa em `shifts.treadmill_id` simplifica as consultas que partem do turno (fluxo predominante da operação: ao registrar início, checkpoint ou encerramento, o sistema parte sempre do turno) e dá suporte ao fluxo de turnos implementado na sprint 3. A política `ON DELETE RESTRICT` protege a integridade histórica: uma esteira referenciada por algum turno não pode ser removida.
 
 ```sql
-ALTER TABLE shifts ADD COLUMN treadmill_id INT REFERENCES treadmills(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+ALTER TABLE shifts ADD COLUMN IF NOT EXISTS treadmill_id INT REFERENCES treadmills(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+```
+
+#### Migration 005: Correção retroativa de checkpoints (RF031)
+
+A migration `005_checkpointCorrection.sql` enriquece duas tabelas para suportar o fluxo de correção retroativa de checkpoints (RF031), que permite que auditores corrijam valores inconsistentes após o registro, com justificativa e trilha imutável de auditoria.
+
+A tabela `checkpoints` recebe seis novas colunas (todas com `ADD COLUMN IF NOT EXISTS`): `reviewed BOOLEAN DEFAULT FALSE` sinaliza se o registro foi revisado; `justification TEXT` e `reviewed_at TIMESTAMP` registram o motivo e o instante da correção; `reviewed_by_id INT` e `reviewed_by_role VARCHAR(20)` identificam o autor da revisão; e `old_distance INT` preserva o valor original antes da correção, garantindo rastreabilidade do dado substituído.
+
+A tabela `logs` recebe seis colunas adicionais que transformam cada entrada de log em um diff auditável: `checkpoint_id INT` com `REFERENCES checkpoints(id) ON DELETE CASCADE` vincula o log ao checkpoint corrigido (quando aplicável); `old_value INT` e `new_value INT` registram os valores anterior e posterior; `author_id INT` e `author_role VARCHAR(20)` identificam quem executou a ação; e `justification TEXT` replica o motivo. Os logs seguem sendo imutáveis (apenas INSERT, nunca UPDATE/DELETE), conforme RN23.
+
+```sql
+ALTER TABLE checkpoints
+  ADD COLUMN IF NOT EXISTS reviewed         BOOLEAN   DEFAULT FALSE,
+  ADD COLUMN IF NOT EXISTS justification    TEXT,
+  ADD COLUMN IF NOT EXISTS reviewed_at      TIMESTAMP,
+  ADD COLUMN IF NOT EXISTS reviewed_by_id   INT,
+  ADD COLUMN IF NOT EXISTS reviewed_by_role VARCHAR(20),
+  ADD COLUMN IF NOT EXISTS old_distance     INT;
+
+ALTER TABLE logs
+  ADD COLUMN IF NOT EXISTS checkpoint_id    INT  REFERENCES checkpoints(id) ON DELETE CASCADE,
+  ADD COLUMN IF NOT EXISTS old_value        INT,
+  ADD COLUMN IF NOT EXISTS new_value        INT,
+  ADD COLUMN IF NOT EXISTS author_id        INT,
+  ADD COLUMN IF NOT EXISTS author_role      VARCHAR(20),
+  ADD COLUMN IF NOT EXISTS justification    TEXT;
+```
+
+#### Migration 006: Integridade referencial de `refresh_tokens` (abordagem B)
+
+A migration `006_refreshTokenUserLink.sql` corrige a limitação estrutural da migration 001, onde `refresh_tokens` usava o par polimórfico `(user_id, user_role)` sem `FOREIGN KEY` real — o banco não impedia tokens apontando para usuários inexistentes, e a exclusão de um gerente ou auditor não removia os tokens associados em cascata.
+
+A solução adotada (**abordagem B — duas FKs nullable + CHECK**) evita a criação de uma supertabela `users` (que exigiria refatorar todo o domínio de autenticação) e garante integridade referencial real com impacto mínimo: dois passos de `ADD COLUMN` criam `manager_id INT` e `auditor_id INT` como colunas FK nullable com `ON DELETE CASCADE`; um bloco `DO $$...$$` faz o backfill dos registros existentes a partir de `user_id`/`user_role` (guardados condicionalmente, pois a migration é idempotente); em seguida, a constraint antiga `chk_refresh_tokens_role`, o índice `idx_refresh_tokens_user` e as colunas `user_id`/`user_role` são removidos; por fim, o `CHECK chk_refresh_tokens_owner` garante que `num_nonnulls(manager_id, auditor_id) = 1` — exatamente um dono por token. Dois índices novos substituem o removido.
+
+```sql
+-- 1. Novas colunas FK
+ALTER TABLE refresh_tokens
+  ADD COLUMN IF NOT EXISTS manager_id INT REFERENCES managers(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  ADD COLUMN IF NOT EXISTS auditor_id INT REFERENCES auditors(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+-- 2. Backfill a partir das colunas polimórficas (se ainda existirem)
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_name = 'refresh_tokens' AND column_name = 'user_role'
+  ) THEN
+    UPDATE refresh_tokens SET manager_id = user_id WHERE user_role = 'manager' AND manager_id IS NULL;
+    UPDATE refresh_tokens SET auditor_id = user_id WHERE user_role = 'auditor' AND auditor_id IS NULL;
+  END IF;
+END $$;
+
+-- 3. Remove o polimorfismo antigo (constraint, índice e colunas)
+ALTER TABLE refresh_tokens DROP CONSTRAINT IF EXISTS chk_refresh_tokens_role;
+DROP INDEX IF EXISTS idx_refresh_tokens_user;
+ALTER TABLE refresh_tokens DROP COLUMN IF EXISTS user_id;
+ALTER TABLE refresh_tokens DROP COLUMN IF EXISTS user_role;
+
+-- 4. Garante: exatamente um dono (manager OU auditor)
+ALTER TABLE refresh_tokens DROP CONSTRAINT IF EXISTS chk_refresh_tokens_owner;
+ALTER TABLE refresh_tokens
+  ADD CONSTRAINT chk_refresh_tokens_owner CHECK (num_nonnulls(manager_id, auditor_id) = 1);
+
+-- 5. Índices nas novas FKs
+CREATE INDEX IF NOT EXISTS idx_refresh_tokens_manager_id ON refresh_tokens(manager_id);
+CREATE INDEX IF NOT EXISTS idx_refresh_tokens_auditor_id ON refresh_tokens(auditor_id);
+```
+
+> **Nota de coerência:** após esta migration, as colunas `user_id` e `user_role` e o índice `idx_refresh_tokens_user`, descritos na migration 001, deixam de existir; o vínculo token↔usuário passa a ser feito exclusivamente pelas colunas `manager_id` e `auditor_id`.
+
+#### Migration 007: `sync_id` em checkpoints (RF026)
+
+A migration `007_checkpointSyncId.sql` habilita a sincronização offline idempotente de checkpoints (RF026). O frontend gera um identificador determinístico `sync_id = SHA256(shift_id|distance|checkpoint_type|timestamp)` (hex de 64 caracteres) antes de armazenar o checkpoint localmente. Ao reconectar, o backend tenta inserir cada checkpoint com o `sync_id` original: o índice único parcial garante que uma segunda tentativa com o mesmo `sync_id` seja silenciosamente descartada (`DO NOTHING`), sem erro e sem duplicata, preservando a ordem cronológica original dos registros.
+
+O índice é **parcial** (`WHERE sync_id IS NOT NULL`) para não afetar checkpoints registrados online, que não possuem `sync_id`.
+
+```sql
+ALTER TABLE checkpoints ADD COLUMN IF NOT EXISTS sync_id VARCHAR(64);
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_checkpoints_sync_id
+  ON checkpoints(sync_id)
+  WHERE sync_id IS NOT NULL;
+```
+
+#### Migration 008: Gerente como operador de turno
+
+A migration `008_managerAsAuditor.sql` estende o modelo operacional ao permitir que gerentes também registrem turnos, papel que até então era exclusivo dos auditores. A mudança reflete uma decisão de produto da sprint 4: em situações de campo, um gerente presente pode iniciar ou encerrar um turno sem depender de um auditor disponível.
+
+A coluna `auditor_id` em `shifts` tem o `NOT NULL` removido, tornando-se opcional. Em paralelo, é adicionada a coluna `manager_id` (`INT`, nullable) com `FOREIGN KEY` para `managers(id)`. A constraint antiga `fk_shifts_auditor` é removida e recriada implicitamente pelo `REFERENCES`. Para garantir a integridade do vínculo operador↔turno sem abrir a possibilidade de um turno sem operador ou com dois operadores simultâneos, a migration adiciona o `CHECK` `chk_shifts_operator` — baseado em `num_nonnulls(auditor_id, manager_id) = 1` — que impõe que exatamente um dos dois campos esteja preenchido. O índice `idx_shifts_manager_id` é criado para acelerar as consultas que listam turnos por gerente.
+
+```sql
+ALTER TABLE shifts
+    DROP CONSTRAINT IF EXISTS fk_shifts_auditor,
+    ADD COLUMN IF NOT EXISTS manager_id INT REFERENCES managers(id),
+    ALTER COLUMN auditor_id DROP NOT NULL;
+
+ALTER TABLE shifts
+    DROP CONSTRAINT IF EXISTS chk_shifts_operator,
+    ADD CONSTRAINT chk_shifts_operator
+        CHECK (num_nonnulls(auditor_id, manager_id) = 1);
+
+CREATE INDEX IF NOT EXISTS idx_shifts_manager_id ON shifts(manager_id);
+```
+
+#### Migration 009: Vínculo direto esteira → equipe
+
+A migration `009_treadmillTeamRelation.sql` vincula cada esteira à equipe que a utiliza durante o evento. Antes desta migration, `treadmills` não tinha relação direta com `teams`: o elo era inferido indiretamente via `shifts → athlete → team`. Com o crescimento do modelo operacional (duas equipes, cada uma com seu conjunto de esteiras numeradas de 1 a N), passou a ser necessário registrar explicitamente a qual equipe cada esteira pertence, para que a alocação e o monitoramento sejam feitos de forma direta.
+
+A coluna `team_id` é adicionada como `INT` com `FOREIGN KEY` para `teams(id)` e política `ON DELETE SET NULL`: ao remover uma equipe, as esteiras não são apagadas, apenas ficam desvinculadas (`team_id = NULL`), preservando o histórico de existência do equipamento. O índice `idx_treadmills_team_id` acelera as consultas que listam esteiras por equipe.
+
+```sql
+ALTER TABLE treadmills
+    ADD COLUMN IF NOT EXISTS team_id INT REFERENCES teams(id) ON DELETE SET NULL;
+
+CREATE INDEX IF NOT EXISTS idx_treadmills_team_id ON treadmills(team_id);
+```
+
+#### Migration 010: Expansão dos tipos de log
+
+A migration `010_logTypes.sql` amplia o vocabulário de eventos auditáveis em um turno. A constraint `chk_logs_type`, criada na migration 001 com três valores (`created`, `updated`, `finished`), é substituída por uma nova que adiciona dois tipos: `abandoned` (turno encerrado por saída voluntária do atleta antes do tempo previsto) e `force_closed` (encerramento manual realizado por gerente ou operador, por exemplo em caso de desistência ou incidente). Essa distinção é necessária para a auditoria pós-evento: saber se um turno foi concluído normalmente, abandonado pelo atleta ou encerrado à força pelo staff tem impacto direto na apuração de resultados e nas estatísticas de competição.
+
+```sql
+ALTER TABLE logs DROP CONSTRAINT IF EXISTS chk_logs_type;
+ALTER TABLE logs ADD CONSTRAINT chk_logs_type
+    CHECK (type IN ('created', 'updated', 'finished', 'abandoned', 'force_closed'));
+```
+
+#### Migration 011: Remoção da coluna legada `treadmills.shift_id`
+
+A migration `011_dropTreadmillShiftLegacy.sql` elimina o vínculo inverso legado entre esteiras e turnos introduzido na migration 001. Naquele schema inicial, `treadmills.shift_id` apontava para o turno em execução na esteira, com `ON DELETE CASCADE`: ao apagar um turno, a esteira associada era removida em cascata, o que gerava perda involuntária de registros de equipamento durante operações de limpeza ou reset de turnos. A migration 004 já havia introduzido a referência no sentido oposto (`shifts.treadmill_id`), tornando `treadmills.shift_id` redundante. Esta migration concretiza a remoção definitiva: a constraint `fk_treadmills_shift` é descartada e a coluna `shift_id` é removida da tabela.
+
+```sql
+ALTER TABLE treadmills DROP CONSTRAINT IF EXISTS fk_treadmills_shift;
+ALTER TABLE treadmills DROP COLUMN IF EXISTS shift_id;
+```
+
+> **Nota de coerência:** após esta migration, a coluna `shift_id` e a constraint `fk_treadmills_shift` descritas na migration 001 deixam de existir. O vínculo esteira↔turno passa a ser feito exclusivamente por `shifts.treadmill_id` (migration 004).
+
+#### Migration 012: Ciclo de vida do evento (três estados)
+
+A migration `012_eventStatus.sql` introduz um ciclo de vida formal para os eventos, modelando o fluxo operacional real do Red Bull 24 Horas: o evento começa como `pending` (cadastrado mas não iniciado), avança para `in_progress` quando o gerente dá a largada e transita para `finished` ao encerramento. Antes desta migration, `events` não possuía campo de estado próprio — o controle de abertura era inferido por presença ou ausência de `start_at`.
+
+Três colunas são adicionadas: `status` (`VARCHAR(20) NOT NULL DEFAULT 'pending'`) com `CHECK` `chk_events_status` restringindo aos três valores do ciclo; `started_at` (`TIMESTAMP`, nullable) registrando o instante em que o gerente iniciou o evento; e `finished_at` (`TIMESTAMP`, nullable) registrando o encerramento. Essa separação entre `status` e os timestamps permite consultas diretas sobre o estado atual sem precisar inferir estado por presença de datas, e suporta a regra de negócio que impede auditores de operarem turnos fora do estado `in_progress`.
+
+```sql
+ALTER TABLE events ADD COLUMN IF NOT EXISTS status      VARCHAR(20) NOT NULL DEFAULT 'pending';
+ALTER TABLE events ADD COLUMN IF NOT EXISTS started_at  TIMESTAMP;
+ALTER TABLE events ADD COLUMN IF NOT EXISTS finished_at TIMESTAMP;
+
+ALTER TABLE events DROP CONSTRAINT IF EXISTS chk_events_status;
+ALTER TABLE events ADD  CONSTRAINT chk_events_status
+    CHECK (status IN ('pending', 'in_progress', 'finished'));
+```
+
+#### Migration 013: Normalização retroativa do status do evento
+
+A migration `013_eventStatusFix.sql` é idempotente e corretiva: garante que bancos onde a migration 012 foi aplicada com o modelo antigo de dois estados (`open`/`closed`) sejam migrados para o modelo de três estados (`pending`/`in_progress`/`finished`) sem inconsistências. O cenário ocorre quando a migration 012 foi aplicada antes de seu rewrite, deixando registros com valores de `status` que a nova constraint não aceita.
+
+A migration reconstrói as colunas com `ADD COLUMN IF NOT EXISTS` (no-op se já existirem), remove a constraint antes de remapear os dados — evitando violação durante o `UPDATE` — e então reclassifica: eventos `open` tornam-se `in_progress` (com `started_at` preenchido pelo `NOW()` se ainda nulo) e eventos `closed` tornam-se `finished` (com `finished_at` preenchido analogamente). Após o remap, o `DEFAULT` e a constraint do modelo de três estados são aplicados definitivamente.
+
+```sql
+ALTER TABLE events ADD COLUMN IF NOT EXISTS status      VARCHAR(20) NOT NULL DEFAULT 'pending';
+ALTER TABLE events ADD COLUMN IF NOT EXISTS started_at  TIMESTAMP;
+ALTER TABLE events ADD COLUMN IF NOT EXISTS finished_at TIMESTAMP;
+
+ALTER TABLE events DROP CONSTRAINT IF EXISTS chk_events_status;
+
+UPDATE events SET status = 'in_progress', started_at = COALESCE(started_at, NOW())
+ WHERE status = 'open';
+UPDATE events SET status = 'finished', finished_at = COALESCE(finished_at, NOW())
+ WHERE status = 'closed';
+
+ALTER TABLE events ALTER COLUMN status SET DEFAULT 'pending';
+ALTER TABLE events ADD CONSTRAINT chk_events_status
+    CHECK (status IN ('pending', 'in_progress', 'finished'));
+```
+
+#### Migration 014: Distância decimal em checkpoints e turnos
+
+A migration `014_checkpointDistanceDecimal.sql` converte a coluna `distance` de `INT` para `NUMERIC(8,2)` tanto em `checkpoints` quanto em `shifts`. A mudança habilita o registro de quilometragens com precisão de centésimos (por exemplo, 12,75 km), necessária porque as esteiras Technogym reportam distância com casas decimais e arredondar para inteiro introduzia erro acumulado mensurável ao longo das 24 horas de competição. O `USING distance::NUMERIC(8,2)` converte os valores inteiros existentes sem perda de dados.
+
+```sql
+ALTER TABLE checkpoints
+    ALTER COLUMN distance TYPE NUMERIC(8,2) USING distance::NUMERIC(8,2);
+
+ALTER TABLE shifts
+    ALTER COLUMN distance TYPE NUMERIC(8,2) USING distance::NUMERIC(8,2);
+```
+
+#### Migration 015: Remoção da unicidade do número de esteira
+
+A migration `015_treadmillNumberNotUnique.sql` remove a constraint `UNIQUE` sobre `treadmills.number`, criada na migration 001. A unicidade global do número de esteira fazia sentido no modelo inicial, onde havia um único conjunto de esteiras por banco. Com a introdução do vínculo `treadmills.team_id` (migration 009), o número da esteira passou a ser relativo ao contexto evento/equipe: cada equipe numera suas próprias esteiras de 1 a N, de modo que o número 1 pode existir simultaneamente para duas equipes diferentes. A unicidade global deixou de ser uma invariante válida e passou a bloquear inserções legítimas.
+
+```sql
+ALTER TABLE treadmills DROP CONSTRAINT IF EXISTS treadmills_number_key;
+```
+
+#### Migration 016: Valores numéricos decimais nos logs
+
+A migration `016_logsValueNumeric.sql` converte as colunas `old_value` e `new_value` da tabela `logs` de `INT` para `NUMERIC(8,2)`. Essas colunas armazenam, respectivamente, o valor anterior e o novo valor quando um campo numérico de um turno é alterado. Com a migração de `checkpoints.distance` e `shifts.distance` para `NUMERIC(8,2)` (migration 014), os logs que registram alterações nesses campos precisam ser capazes de armazenar valores decimais — do contrário, a trilha de auditoria truncaria as casas decimais e perderia precisão.
+
+```sql
+ALTER TABLE logs
+    ALTER COLUMN old_value TYPE NUMERIC(8,2) USING old_value::numeric,
+    ALTER COLUMN new_value TYPE NUMERIC(8,2) USING new_value::numeric;
+```
+
+#### Migration 017: `old_distance` decimal em checkpoints
+
+A migration `017_checkpointOldDistanceNumeric.sql` converte a coluna `old_distance` da tabela `checkpoints` de `INT` para `NUMERIC(8,2)`, completando o conjunto de alterações de tipo iniciado na migration 014. A coluna `old_distance` armazena o valor anterior de `distance` quando um checkpoint é atualizado (trilha de auditoria imutável introduzida na migration 005). Com `checkpoints.distance` já sendo `NUMERIC(8,2)`, manter `old_distance` como `INT` criaria assimetria de tipo entre o valor atual e o valor histórico do mesmo campo, comprometendo comparações e relatórios de auditoria.
+
+```sql
+ALTER TABLE checkpoints
+    ALTER COLUMN old_distance TYPE NUMERIC(8,2) USING old_distance::numeric;
 ```
 
 **Síntese do modelo físico**
 
-O modelo físico é entregue em **quatro migrations versionadas e reproduzíveis**, aplicadas em ordem sequencial. A migration 001 estabelece o schema-base com integridade referencial e regras de domínio garantidas no próprio banco; as migrations 002, 003 e 004 evoluem esse schema conforme o desenvolvimento avançou na sprint 3 — N:N entre gerentes e eventos, exclusão lógica e vínculo direto turno→esteira. As políticas `ON DELETE` diferenciadas (`CASCADE` ao longo das entidades temporárias do evento, `RESTRICT` para entidades de carreira como gerentes, auditores e atletas), os `CHECK` sobre estados e quilometragem, e os índices secundários sobre todas as FKs traduzem as regras operacionais do Red Bull 24 Horas em estrutura física do PostgreSQL, apoiando tanto a operação em tempo real durante o evento quanto a auditoria formal posterior.
+O modelo físico é entregue em **dezessete migrations versionadas e reproduzíveis** — todas idempotentes com `IF NOT EXISTS` e `IF EXISTS` — aplicadas em ordem sequencial. A migration 001 estabelece o schema-base com integridade referencial e regras de domínio garantidas no próprio banco; as migrations 002, 003 e 004 evoluem esse schema na sprint 3 — N:N entre gerentes e eventos, exclusão lógica e vínculo direto turno→esteira. As migrations 005, 006 e 007, desenvolvidas na sprint 4, adicionam: metadados de correção retroativa de checkpoints com trilha de auditoria imutável; integridade referencial real em `refresh_tokens` via duas FKs nullable mutuamente exclusivas; e suporte à sincronização offline idempotente por `sync_id`. As migrations 008 a 017 consolidam as evoluções operacionais da sprint 4: permissão de gerentes como operadores de turno com constraint de operador único (008); vínculo direto esteira→equipe (009); expansão dos tipos de log com `abandoned` e `force_closed` (010); remoção da coluna legada `treadmills.shift_id` cujo cascade causava perda acidental de registros (011); ciclo de vida formal do evento em três estados — `pending`, `in_progress`, `finished` — com normalização retroativa de dados legados (012 e 013); conversão de distâncias de `INT` para `NUMERIC(8,2)` em `checkpoints` e `shifts` para suportar precisão decimal das esteiras Technogym (014); remoção da unicidade global do número de esteira, tornando-o relativo à equipe (015); e propagação do tipo decimal para as colunas de auditoria `logs.old_value`/`new_value` e `checkpoints.old_distance` (016 e 017). As políticas `ON DELETE` diferenciadas (`CASCADE` ao longo das entidades temporárias do evento, `RESTRICT` para entidades de carreira como gerentes, auditores e atletas), os `CHECK` sobre estados e quilometragem, e os índices secundários sobre todas as FKs traduzem as regras operacionais do Red Bull 24 Horas em estrutura física do PostgreSQL, apoiando tanto a operação em tempo real durante o evento quanto a auditoria formal posterior.
 
 ### 3.6.4. Consultas SQL e lógica proposicional
  
@@ -3337,102 +3552,75 @@ Entre os principais conectivos lógicos utilizados, temos:
 
 Dentro do banco de dados foram implementadas as seguintes consultas:
 
-#### Consulta 1: *Sync offline* - inserir ou atualizar por conflito de versão
+#### Consulta 1: *Sync offline* — inserção idempotente de checkpoint por `sync_id`
 
-&nbsp;&nbsp;&nbsp;&nbsp;Ao tentar sincronizar a inserção dos dados capturados *offline*, o registro só é inserido se não existe no banco. Caso o registro já exista mas o timestamp local for mais recente e o novo km estiver dentro do intervalo físico delimitado pelos checkpoints vizinhos na linha do tempo (considerando a ordem cronológica do turno), o banco é atualizado. Se o banco tiver versão mais recente ou o dado violar a cronologia física, o registro é ignorado.
- 
+&nbsp;&nbsp;&nbsp;&nbsp;Ao reconectar após um período offline, o frontend envia cada checkpoint com um `sync_id` gerado localmente como `SHA256(shift_id|distance|checkpoint_type|timestamp)`. O banco tenta inserir o registro com o timestamp original (preservando a cronologia do evento); se o `sync_id` já existir no índice único parcial, o conflito é descartado silenciosamente com `DO NOTHING`, sem retornar erro e sem duplicar o registro. Checkpoints registrados online não possuem `sync_id` (valor `NULL`) e não são afetados pelo índice parcial.
+
 **Consulta SQL:**
 ```sql
-INSERT INTO checkpoints (id, shift_id, distance, type, timestamp)
-VALUES (:id, :shift_id, :distance, :type, :timestamp)
-ON CONFLICT (id) DO UPDATE
-SET distance  = EXCLUDED.distance,
-    type      = EXCLUDED.type,
-    timestamp = EXCLUDED.timestamp
-WHERE checkpoints.timestamp < EXCLUDED.timestamp
-  -- Garante que a nova distância é MAIOR ou igual à distância do ponto imediatamente anterior no tempo
-  AND EXCLUDED.distance >= COALESCE(
-      (SELECT distance FROM checkpoints 
-       WHERE shift_id = EXCLUDED.shift_id AND timestamp < EXCLUDED.timestamp
-       ORDER BY timestamp DESC LIMIT 1), 
-      0
-  )
-  -- Garante que a nova distância é MENOR ou igual à distância do ponto imediatamente posterior no tempo
-  AND EXCLUDED.distance <= COALESCE(
-      (SELECT distance FROM checkpoints 
-       WHERE shift_id = EXCLUDED.shift_id AND timestamp > EXCLUDED.timestamp
-       ORDER BY timestamp ASC LIMIT 1), 
-      EXCLUDED.distance
-  );
+INSERT INTO checkpoints (shift_id, distance, type, timestamp, sync_id)
+VALUES ($1, $2, $3, $4::timestamptz, $5)
+ON CONFLICT (sync_id) WHERE sync_id IS NOT NULL DO NOTHING
 ```
- 
+
 <br>
 <div align="center">
   <sub> Quadro 26 - Lógica Proposicional: 1 </sub><br>
 
 | | |
 | :--- | :--- |
-| **Proposições lógicas** | **$A$**: O registro não existe no banco (NOT EXISTS)<br><br>**$B$**: O registro existe e o timestamp local é mais recente (`checkpoints.timestamp < :timestamp`)<br><br>**$C$**: O novo valor de distância está dentro do intervalo entre a distância do checkpoint cronologicamente anterior e a do cronologicamente posterior no mesmo turno.<br>*(:distance BETWEEN (SELECT distance... WHERE timestamp < :timestamp ORDER BY timestamp DESC LIMIT 1) AND (SELECT distance... WHERE timestamp > :timestamp ORDER BY timestamp ASC LIMIT 1))* |
-| **Expressão lógica proposicional** | $A \lor (B \land C)$ |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$B \land C$</th><th>$A \lor (B \land C)$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
- 
+| **Proposições lógicas** | **$A$**: O `sync_id` informado já existe no banco (`ON CONFLICT (sync_id) WHERE sync_id IS NOT NULL`) |
+| **Expressão lógica proposicional** | $A \rightarrow \neg\text{INSERT}$ |
+| **Interpretação** | Se o `sync_id` já existe (A é verdadeiro), o `INSERT` é suprimido; se não existe (A é falso), o registro é inserido normalmente. A condicional garante exatamente uma inserção por `sync_id`, tornando o endpoint de sync idempotente independentemente de quantas vezes o mesmo batch seja reenviado. |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$\neg A$ (INSERT ocorre)</th></tr></thead><tbody><tr><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td></tr></tbody></table> |
+
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
-#### Consulta 2: *Ranking final* — corredores com mais de 25 km corridos ao fim do evento
+#### Consulta 2: *Ranking por equipe* — distância total acumulada por equipe em um evento
 
-&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar o evento, a consulta recupera o nome de todos os corredores que acumularam mais de 25 km percorridos no total, considerando ambas as equipes. Os corredores são listados em ordem decrescente de distância percorrida — do que mais correu para o que menos correu — sendo exibidos apenas aqueles que ultrapassaram o limite mínimo estabelecido. 
+&nbsp;&nbsp;&nbsp;&nbsp;A consulta retorna todas as equipes de um evento com a soma dos quilômetros percorridos em turnos concluídos, ordenadas do maior para o menor total. O `LEFT JOIN` com `shifts` garantido pelo filtro `status = 'completed'` assegura que equipes sem nenhum turno encerrado apareçam com `total_km = 0` em vez de serem omitidas. O filtro `deleted_at IS NULL` em ambas as entidades exclui equipes e atletas que tenham sido desativados via *soft delete*.
 
 **Consulta SQL:**
 ```sql
-SELECT    
-    athletes.name             AS corredor,    
-    teams.name                AS equipe,    
-    SUM(shifts.distance)      AS total_km
-FROM shifts
-JOIN athletes ON athletes.id   = shifts.athlete_id
-JOIN teams    ON teams.id      = athletes.team_id
-JOIN events   ON events.id     = teams.event_id
-WHERE shifts.end_at IS NOT NULL  
-  AND events.end_at IS NOT NULL
-  AND teams.event_id = :event_id
-GROUP BY athletes.id, athletes.name, teams.name
-HAVING SUM(shifts.distance) > 25
-ORDER BY total_km DESC; 
+SELECT t.id, t.name,
+       COALESCE(SUM(s.distance), 0) AS total_km
+FROM teams t
+LEFT JOIN athletes a ON a.team_id = t.id AND a.deleted_at IS NULL
+LEFT JOIN shifts s   ON s.athlete_id = a.id AND s.status = 'completed'
+WHERE t.event_id = $1 AND t.deleted_at IS NULL
+GROUP BY t.id, t.name
+ORDER BY total_km DESC
 ```
- 
+
 <br>
 <div align="center">
   <sub> Quadro 27 - Lógica Proposicional: 2 </sub><br>
 
 | | |
 |---|---|
-| **Proposições lógicas** | $A$: O turno está encerrado (`shifts.end_at IS NOT NULL`) <br> $B$: O evento foi encerrado (`events.end_at IS NOT NULL`) <br> $C$: A soma dos turnos do corredor ultrapassa 25 km (`SUM(shifts.distance) > 25`) |
-| **Expressão lógica proposicional** | $A \land B \land C$ |
-| **Interpretação** | Um corredor só é exibido no ranking quando, simultaneamente: o turno está encerrado, o evento foi encerrado **e** a distância total acumulada ultrapassa 25 km |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$A \land B \land C$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
- 
+| **Proposições lógicas** | $A$: A equipe está ativa (`t.deleted_at IS NULL`) <br> $B$: O atleta está ativo (`a.deleted_at IS NULL`) <br> $C$: O turno foi concluído (`s.status = 'completed'`) |
+| **Expressão lógica proposicional** | $A \land (B \land C)$ para contabilizar distância; $A$ sozinho para listar a equipe |
+| **Interpretação** | Uma equipe só aparece no resultado se estiver ativa ($A$). Sua distância acumulada considera apenas turnos de atletas ativos cujos turnos foram concluídos ($B \land C$). O uso de `LEFT JOIN` garante que equipes sem nenhum turno concluído apareçam com `total_km = 0`, em vez de serem omitidas. |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$B \land C$</th><th>equipe listada</th><th>distância contada</th></tr></thead><tbody><tr><td>F</td><td>*</td><td>*</td><td>*</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>*</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
-#### Consulta 3: *Auditores mais ativos* — auditores que registraram mais de um turno encerrado durante o evento
+#### Consulta 3: *Dashboard do evento* — contagem de turnos ativos, encerrados e distância total
 
-&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar o evento (`events.end_at IS NOT NULL`), a consulta recupera o nome de todos os auditores que supervisionaram mais de um turno concluído durante as 24 horas de competição. Os auditores são listados em ordem decrescente pela quantidade de turnos auditados — do que supervisionou mais para o que supervisionou menos — sendo exibidos apenas aqueles que ultrapassaram o mínimo de um turno encerrado.
+&nbsp;&nbsp;&nbsp;&nbsp;A consulta agrega, em uma única varredura sobre `shifts`, três métricas simultâneas do evento: quantidade de turnos em andamento, quantidade de turnos concluídos e quilometragem total percorrida. O uso de `COUNT(*) FILTER (WHERE ...)` permite calcular contagens condicionais distintas sem subconsultas separadas, tornando a consulta eficiente para exibição em tempo real no dashboard.
 
 **Consulta SQL:**
 ```sql
 SELECT
-    auditors.name                  AS auditor,
-    COUNT(shifts.id)               AS total_turnos_auditados
-FROM shifts
-JOIN auditors  ON auditors.id  = shifts.auditor_id
-JOIN events    ON events.id    = shifts.event_id
-WHERE shifts.status        = 'completed'
-  AND auditors.is_active   = TRUE
-  AND events.end_at        IS NOT NULL
-GROUP BY auditors.id, auditors.name
-HAVING COUNT(shifts.id) > 1
-ORDER BY total_turnos_auditados DESC;
+    COUNT(*) FILTER (WHERE s.status = 'in_progress') AS active_shifts,
+    COUNT(*) FILTER (WHERE s.status = 'completed')   AS completed_shifts,
+    COALESCE(SUM(s.distance) FILTER (WHERE s.status = 'completed'), 0) AS total_km
+FROM shifts s
+JOIN athletes a ON a.id = s.athlete_id
+JOIN teams t    ON t.id = a.team_id
+WHERE t.event_id = $1
 ```
 
 <br>
@@ -3441,34 +3629,50 @@ ORDER BY total_turnos_auditados DESC;
 
 | | |
 |---|---|
-| **Proposições lógicas** | $A$: O turno está encerrado (`shifts.status = 'completed'`) <br> $B$: O auditor está ativo no sistema (`auditors.is_active = TRUE`) <br> $C$: O evento foi encerrado (`events.end_at IS NOT NULL`) <br> $D$: O auditor supervisionou mais de um turno encerrado (`COUNT(shifts.id) > 1`) |
-| **Expressão lógica proposicional** | $A \land B \land C \land D$ |
-| **Interpretação** | Um auditor só é listado quando, simultaneamente: o turno está encerrado, o auditor não foi desativado no sistema, o evento foi encerrado **e** sua contagem de turnos ultrapassa um |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$D$</th><th>$A \land B \land C \land D$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+| **Proposições lógicas** | $A$: O turno está em andamento (`s.status = 'in_progress'`) <br> $B$: O turno foi concluído (`s.status = 'completed'`) |
+| **Expressão lógica proposicional** | $A \lor B$ (cada turno contribui para exatamente um dos dois contadores) |
+| **Interpretação** | $A$ e $B$ são mutuamente exclusivos: um mesmo turno jamais satisfaz as duas condições ao mesmo tempo ($A \land B$ é sempre falso). Cada turno é contado uma única vez, no contador correspondente ao seu estado atual. Turnos `pending` não satisfazem nem $A$ nem $B$ e, portanto, não aparecem em nenhum dos agregados. |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th><th>$A \lor B$</th><th>contado em</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>nenhum</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td><td>completed_shifts</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td><td>active_shifts</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>impossível</td></tr></tbody></table> |
 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
 #### Consulta 4: *Encerramento de turno* — finalizar apenas turnos em andamento
 
-&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar um turno, o sistema atualiza o registro para `completed`, gravando o horário de fim (`end_at`), a quilometragem final, e calculando automaticamente a distância, a duração total e a velocidade média. A atualização só é aplicada quando o `id` informado corresponde a um turno **e** esse turno ainda está `in_progress` — o que impede reencerrar um turno já finalizado ou alterar um turno inexistente (nenhuma linha é afetada nesses casos). É uma consulta de escrita do tipo `UPDATE`, em contraste com as anteriores, demonstrando uma combinação distinta de condições.
+&nbsp;&nbsp;&nbsp;&nbsp;Ao encerrar um turno, o sistema atualiza o registro para `completed`, gravando o horário de fim, a quilometragem final informada pelo auditor, e calculando automaticamente a distância percorrida, a duração total e a velocidade média. A atualização só é aplicada quando o `id` informado corresponde a um turno **e** esse turno ainda está `in_progress`, impedindo reencerrar um turno já finalizado ou alterar um inexistente. O `CASE` na velocidade evita divisão por zero quando o tempo decorrido é nulo. O encerramento tem duas variantes: por padrão o horário de fim é gerado pelo banco (`NOW()`) e a duração é o intervalo decorrido desde o início; quando o auditor informa uma duração manual (correção operacional), o `end_at` passa a ser calculado como `start_at + duração` e tanto a duração quanto a velocidade derivam desse valor. Ambas as variantes compartilham a mesma cláusula `WHERE id = $2 AND status = 'in_progress'`, de modo que a lógica proposicional abaixo vale para as duas.
 
-**Consulta SQL:**
+**Consulta SQL (variante padrão, horário gerado pelo banco):**
 ```sql
 UPDATE shifts
 SET status     = 'completed',
     end_at     = NOW(),
-    km_end     = :km_end,
-    distance   = :km_end - km_start,
+    km_end     = $1,
+    distance   = $1 - km_start,
     total_time = NOW() - start_at,
     speed      = CASE
                    WHEN EXTRACT(EPOCH FROM (NOW() - start_at)) > 0
-                   THEN ROUND((:km_end - km_start) / (EXTRACT(EPOCH FROM (NOW() - start_at)) / 3600.0))
+                   THEN ROUND(($1 - km_start) / (EXTRACT(EPOCH FROM (NOW() - start_at)) / 3600.0))
                    ELSE 0
                  END
-WHERE id = :id
-  AND status = 'in_progress'
-RETURNING *;
+WHERE id = $2 AND status = 'in_progress'
+RETURNING *
+```
+
+**Consulta SQL (variante com duração editada pelo auditor):**
+```sql
+UPDATE shifts
+SET status     = 'completed',
+    end_at     = start_at + ($3 * interval '1 second'),
+    km_end     = $1,
+    distance   = $1 - km_start,
+    total_time = $3 * interval '1 second',
+    speed      = CASE
+                   WHEN $3 > 0
+                   THEN ROUND(($1 - km_start) / ($3 / 3600.0))
+                   ELSE 0
+                 END
+WHERE id = $2 AND status = 'in_progress'
+RETURNING *
 ```
 
 <br>
@@ -3477,9 +3681,9 @@ RETURNING *;
 
 | | |
 | :--- | :--- |
-| **Proposições lógicas** | **$A$**: Existe um turno com o identificador informado (`id = :id`)<br><br>**$B$**: O turno está em andamento (`status = 'in_progress'`) |
+| **Proposições lógicas** | **$A$**: Existe um turno com o identificador informado (`id = $2`)<br><br>**$B$**: O turno está em andamento (`status = 'in_progress'`) |
 | **Expressão lógica proposicional** | $A \land B$ |
-| **Interpretação** | O `UPDATE` só efetiva o encerramento quando ambas as condições são verdadeiras: o `id` corresponde a um turno existente **e** esse turno está em andamento. Turnos já encerrados (`completed`) ou inexistentes não satisfazem a cláusula `WHERE` e, portanto, não são alterados. |
+| **Interpretação** | O `UPDATE` só efetiva o encerramento quando ambas as condições são verdadeiras: o `id` corresponde a um turno existente **e** esse turno está em andamento. Turnos já encerrados (`completed`) ou inexistentes não satisfazem a cláusula `WHERE` e não são alterados — o `RETURNING *` retorna zero linhas nesses casos, sinal que o serviço usa para retornar 404. |
 | **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
@@ -3749,25 +3953,19 @@ O sistema de login foi implementado e está funcionando. Só auditores com acess
 
 **Consultas SQL e lógica proposicional**
 
-As quatro consultas SQL principais do sistema foram implementadas e documentadas, cada uma acompanhada da sua tabela verdade em lógica proposicional, conforme detalhado na seção 3.6.4. A seguir, apresentamos como exemplo a Consulta 2, que gera o ranking final dos corredores com mais de 25 km percorridos ao fim do evento.
+As quatro consultas SQL principais do sistema foram implementadas e documentadas, cada uma acompanhada da sua tabela verdade em lógica proposicional, conforme detalhado na seção 3.6.4. A seguir, apresentamos como exemplo a Consulta 2, que retorna o ranking de distância acumulada por equipe em um evento.
 
-Ao encerrar o evento, a consulta recupera o nome de todos os corredores que acumularam mais de 25 km no total, considerando ambas as equipes. Os corredores são listados em ordem decrescente de distância percorrida, sendo exibidos apenas os que ultrapassaram o limite mínimo estabelecido.
+A consulta retorna todas as equipes de um evento com a soma dos quilômetros percorridos em turnos concluídos, em ordem decrescente. O `LEFT JOIN` com `shifts` garante que equipes sem nenhum turno encerrado apareçam com `total_km = 0`, e o filtro `deleted_at IS NULL` exclui equipes e atletas desativados via *soft delete*.
 
 ```sql
-SELECT    
-    athletes.name             AS corredor,    
-    teams.name                AS equipe,    
-    SUM(shifts.distance)      AS total_km
-FROM shifts
-JOIN athletes ON athletes.id   = shifts.athlete_id
-JOIN teams    ON teams.id      = athletes.team_id
-JOIN events   ON events.id     = teams.event_id
-WHERE shifts.end_at IS NOT NULL  
-  AND events.end_at IS NOT NULL
-  AND teams.event_id = :event_id
-GROUP BY athletes.id, athletes.name, teams.name
-HAVING SUM(shifts.distance) > 25
-ORDER BY total_km DESC; 
+SELECT t.id, t.name,
+       COALESCE(SUM(s.distance), 0) AS total_km
+FROM teams t
+LEFT JOIN athletes a ON a.team_id = t.id AND a.deleted_at IS NULL
+LEFT JOIN shifts s   ON s.athlete_id = a.id AND s.status = 'completed'
+WHERE t.event_id = $1 AND t.deleted_at IS NULL
+GROUP BY t.id, t.name
+ORDER BY total_km DESC
 ```
 
 <div align="center">
@@ -3775,10 +3973,10 @@ ORDER BY total_km DESC;
 
 | | |
 |---|---|
-| **Proposições lógicas** | $A$: O turno está encerrado (`shifts.end_at IS NOT NULL`) <br> $B$: O evento foi encerrado (`events.end_at IS NOT NULL`) <br> $C$: A soma dos turnos do corredor ultrapassa 25 km (`SUM(shifts.distance) > 25`) |
-| **Expressão lógica proposicional** | $A \land B \land C$ |
-| **Interpretação** | Um corredor só é exibido no ranking quando, simultaneamente: o turno está encerrado, o evento foi encerrado e a distância total acumulada ultrapassa 25 km |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$A \land B \land C$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+| **Proposições lógicas** | $A$: A equipe está ativa (`t.deleted_at IS NULL`) <br> $B$: O atleta está ativo (`a.deleted_at IS NULL`) <br> $C$: O turno foi concluído (`s.status = 'completed'`) |
+| **Expressão lógica proposicional** | $A \land (B \land C)$ para contabilizar distância; $A$ sozinho para listar a equipe |
+| **Interpretação** | Uma equipe só aparece se estiver ativa ($A$). Sua distância acumulada considera apenas turnos de atletas ativos cujos turnos foram concluídos ($B \land C$). |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$B \land C$</th><th>equipe listada</th><th>distância contada</th></tr></thead><tbody><tr><td>F</td><td>*</td><td>*</td><td>*</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>*</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
 
 <sup>Fonte: Desenvolvido pelo próprio grupo, 2026.</sup>
 </div>
