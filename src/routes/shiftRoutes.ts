@@ -1,5 +1,6 @@
 import express, { Router } from "express";
 import { shiftController } from "../controllers/shiftController";
+import authMiddleware from "../middlewares/authMiddleware";
 
 const router: Router = express.Router();
 
