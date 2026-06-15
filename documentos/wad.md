@@ -8,19 +8,19 @@
 
 ## Nome dos integrantes do grupo
 
-#### Fernanda Helena Leitão Bezerra
+#### [Fernanda Helena Leitão Bezerra](http://www.linkedin.com/in/nandahelena)
 
-#### Gabriel Simões Marques
+#### [Gabriel Simões Marques](https://www.linkedin.com/in/gabrielmarquesinteli)
 
-#### Giovanna Scharlau Carettoni
+#### [Giovanna Scharlau Carettoni](https://www.linkedin.com/in/giovannascharlaucarettoni)
 
-#### Laura Faria Damasceno
+#### [Laura Faria Damasceno](http://www.linkedin.com/in/laura-faria-damasceno)
 
-#### Miguel Vinícius da Silva
+#### [Miguel Vinícius da Silva](http://www.linkedin.com/in/miguelvvinicius)
 
-#### Nicoly Mendes Adesanmi
+#### [Nicoly Mendes Adesanmi](http://www.linkedin.com/in/nicoly-mendes-adesanmi-b260052b2)
 
-#### Pietro Sansão Lucas
+#### [Pietro Sansão Lucas](https://www.linkedin.com/in/pietrosansao)
 
 ## Sumário
 
