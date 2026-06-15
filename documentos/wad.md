@@ -1,4 +1,4 @@
-<img src="../assets/logointeli.png">
+<img src="../documentos/assets/logointeli.png">
 
 # WAD - Web Application Document - Módulo 2 - Inteli
 
@@ -24,23 +24,23 @@
 
 ## Sumário
 
-[1. Introdução](#c1)
+[1. Introdução](#1-introdução-sprints-1-a-5)
 
-[2. Visão Geral da Aplicação Web](#c2)
+[2. Visão Geral da Aplicação Web](#2-visão-geral-da-aplicação-web)
 
-[3. Projeto Técnico da Aplicação Web](#c3)
+[3. Projeto Técnico da Aplicação Web](#3-projeto-da-aplicação-web-sprints-1-a-5)
 
-[4. Desenvolvimento da Aplicação Web](#c4)
+[4. Desenvolvimento da Aplicação Web](#4-desenvolvimento-da-aplicação-web-sprints-1-a-5)
 
-[5. Testes da Aplicação Web](#c5)
+[5. Testes da Aplicação Web](#5-testes)
 
-[6. Estudo de Mercado e Plano de Marketing](#c6)
+[6. Estudo de Mercado e Plano de Marketing](#6-estudo-de-mercado-e-plano-de-marketing-sprint-4)
 
-[7. Conclusões e trabalhos futuros](#c7)
+[7. Conclusões e trabalhos futuros](#7-conclusões-e-trabalhos-futuros-sprint-5)
 
 [8. Referências](#8-referências)
 
-[Anexos](#c9)
+[Anexos](#anexos)
 
 <br>
 
@@ -4313,6 +4313,8 @@ Com a integração ponta a ponta realizada na sprint 4, todos os endpoints da RT
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
+
+# <a name="c4"></a>4. Desenvolvimento da Aplicação Web (sprints 1 a 5)
 
 ## 4.1. Primeira versão da aplicação web 
 
