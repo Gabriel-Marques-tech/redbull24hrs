@@ -126,64 +126,64 @@ function buildWorksheet(
 
 function transformShift(r: Record<string, unknown>): Record<string, unknown> {
 	return {
-		id:         r.id,
-		status:     fmtStatus(r.status),
-		start_at:   fmtDate(r.start_at),
-		end_at:     fmtDate(r.end_at),
-		total_time: fmtInterval(r.total_time),
+		athlete:    r.athlete_name,
+		team:       r.team_name,
+		treadmill:  r.treadmill_number,
 		km_start:   r.km_start,
 		km_end:     r.km_end,
 		distance:   r.distance,
 		speed:      fmtSpeed(r.speed),
-		athlete:    r.athlete_name,
+		status:     fmtStatus(r.status),
+		start_at:   fmtDate(r.start_at),
+		end_at:     fmtDate(r.end_at),
+		total_time: fmtInterval(r.total_time),
 		cpf:        r.athlete_cpf,
-		team:       r.team_name,
-		treadmill:  r.treadmill_number,
 		auditor:    r.auditor_name,
+		id:         r.id,
 	};
 }
 
 function transformCheckpoint(r: Record<string, unknown>): Record<string, unknown> {
 	return {
-		id:        r.id,
-		timestamp: fmtDate(r.timestamp),
-		distance:  r.distance,
-		type:      r.type,
-		shift_id:  r.shift_id,
 		athlete:   r.athlete_name,
 		team:      r.team_name,
 		treadmill: r.treadmill_number,
+		distance:  r.distance,
+		shift_id:  r.shift_id,
+		timestamp: fmtDate(r.timestamp),
+		type:      r.type,
+		id:        r.id,
 	};
 }
 
 // ── colunas ───────────────────────────────────────────────────────────────────
 
 const SHIFT_COLUMNS = [
-	{ header: "ID",                  key: "id",         width: 10 },
-	{ header: "Status",              key: "status",     width: 16 },
-	{ header: "Início",              key: "start_at",   width: 20 },
-	{ header: "Fim",                 key: "end_at",     width: 20 },
-	{ header: "Duração (hh:mm:ss)", key: "total_time", width: 18 },
+	{ header: "Atleta",              key: "athlete",    width: 24 },
+	{ header: "Equipe",              key: "team",       width: 20 },
+	{ header: "Esteira",             key: "treadmill",  width: 12 },
 	{ header: "Km início",           key: "km_start",   width: 12 },
 	{ header: "Km fim",              key: "km_end",     width: 12 },
 	{ header: "Distância (km)",      key: "distance",   width: 15 },
 	{ header: "Velocidade",          key: "speed",      width: 16 },
-	{ header: "Atleta",              key: "athlete",    width: 24 },
+	{ header: "Status",              key: "status",     width: 16 },
+	{ header: "Início",              key: "start_at",   width: 20 },
+	{ header: "Fim",                 key: "end_at",     width: 20 },
+	{ header: "Duração (hh:mm:ss)", key: "total_time", width: 18 },
 	{ header: "CPF",                 key: "cpf",        width: 16 },
-	{ header: "Equipe",              key: "team",       width: 20 },
-	{ header: "Esteira",             key: "treadmill",  width: 12 },
 	{ header: "Auditor",             key: "auditor",    width: 20 },
+	{ header: "ID",                  key: "id",         width: 10 },
 ];
 
 const CHECKPOINT_COLUMNS = [
-	{ header: "ID",             key: "id",        width: 10 },
-	{ header: "Horário",        key: "timestamp", width: 20 },
-	{ header: "Distância (km)", key: "distance",  width: 15 },
-	{ header: "Tipo",           key: "type",      width: 14 },
-	{ header: "Turno ID",       key: "shift_id",  width: 12 },
 	{ header: "Atleta",         key: "athlete",   width: 24 },
 	{ header: "Equipe",         key: "team",      width: 20 },
 	{ header: "Esteira",        key: "treadmill", width: 12 },
+	{ header: "Distância (km)", key: "distance",  width: 15 },
+	{ header: "Turno ID",       key: "shift_id",  width: 12 },
+	{ header: "Horário",        key: "timestamp", width: 20 },
+	{ header: "Tipo",           key: "type",      width: 14 },
+	{ header: "ID",             key: "id",        width: 10 },
 ];
 
 // ── service público ───────────────────────────────────────────────────────────
