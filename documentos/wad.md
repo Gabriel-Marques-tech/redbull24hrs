@@ -1748,25 +1748,34 @@ Na sprint 4, com a integração ponta a ponta dos fluxos de auditoria, gerência
 ---
 A seção de Arquitetura apresenta a estrutura organizacional e a modelagem dos principais componentes do sistema desenvolvidos ao longo das sprints 1 a 5. Por meio dos diagramas arquiteturais, diagramas de classes e diagramas de casos de uso, é possível compreender como os módulos da aplicação se relacionam, quais são as responsabilidades de cada camada e como ocorre o fluxo de dados entre os componentes. Esses artefatos auxiliam na documentação técnica do projeto, facilitando o entendimento da solução, a manutenção do software e a evolução contínua da arquitetura proposta.
 
-### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
+### 3.2.1. Diagramas de Arquitetura 
 
 ---
 Os diagramas de arquitetura representam a estrutura organizacional do sistema, demonstrando como os componentes, camadas e módulos da aplicação se relacionam entre si. Eles auxiliam na visualização do fluxo de dados, das responsabilidades de cada camada e da comunicação entre os elementos da arquitetura, facilitando o entendimento, manutenção e evolução do software.
 
-DASHBOARD 
+ALERTAS
 
 <div align="center">
-  <sub>Imagem 9 - Diagrama de Arquitetura - DASHBOARD </sub><br>
-  <img src= "./assets/diagramas_arquitetura/dashboard.svg" width="100%" alt="Diagrama de Arquitetura - 1"><br>
+  <sub>Imagem X - Diagrama de Arquitetura - ALERTAS </sub><br>
+  <img src= "../assets/diagramas_arquitetura/alertas.svg" width="100%" alt="Diagrama de Arquitetura - 1"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
-EVENTOS 
+AUTENTICAÇÃO
 
 <div align="center">
-  <sub>Imagem 10 - Diagrama de Arquitetura - EVENTOS </sub><br>
-  <img src= "./assets/diagramas_arquitetura/eventos.svg" width="100%" alt="Diagrama de Arquitetura - 2"><br>
+  <sub>Imagem X - Diagrama de Arquitetura - AUTENTICAÇÃO </sub><br>
+  <img src= "../assets/diagramas_arquitetura/auth.svg" width="100%" alt="Diagrama de Arquitetura - 2"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+DASHBOARD 
+
+<div align="center">
+  <sub>Imagem X - Diagrama de Arquitetura - DASHBOARD </sub><br>
+  <img src= "../assets/diagramas_arquitetura/dashboard.svg" width="100%" alt="Diagrama de Arquitetura - 3"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1774,35 +1783,17 @@ EVENTOS
 EVENTO HISTÓRICO
 
 <div align="center">
-  <sub>Imagem 11 - Diagrama de Arquitetura - EVENTO HISTÓRICO </sub><br>
-  <img src= "./assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de Arquitetura - 3"><br>
+  <sub>Imagem X - Diagrama de Arquitetura - EVENTO HISTÓRICO </sub><br>
+  <img src= "../assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de Arquitetura - 4"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
-LOGS
+EVENTOS
 
 <div align="center">
-  <sub>Imagem 12 - Diagrama de Arquitetura - LOGS </sub><br>
-  <img src= "./assets/diagramas_arquitetura/logs.svg" width="100%" alt="Diagrama de Arquitetura - 4"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-TEAMS
-
-<div align="center">
-  <sub>Imagem 13 - Diagrama de Arquitetura - TEAMS </sub><br>
-  <img src= "./assets/diagramas_arquitetura/teams.svg" width="100%" alt="Diagrama de Arquitetura - 5"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-TURNOS
-
-<div align="center">
-  <sub>Imagem 14 - Diagrama de Arquitetura - TURNOS </sub><br>
-  <img src= "./assets/diagramas_arquitetura/turnos.svg" width="100%" alt="Diagrama de Arquitetura - 6"><br>
+  <sub>Imagem X - Diagrama de Arquitetura - EVENTOS </sub><br>
+  <img src= "../assets/diagramas_arquitetura/eventos.svg" width="100%" alt="Diagrama de Arquitetura - 5"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
