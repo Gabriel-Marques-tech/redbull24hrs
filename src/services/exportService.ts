@@ -1,7 +1,7 @@
 import ExcelJS from "exceljs";
 import { exportRepository } from "../repositories/exportRepository";
 
-// ── helpers de formatação (iguais aos originais) ──────────────────────────────
+// ── helpers de formatação ─────────────────────────────────────────────────────
 
 function fmtDate(v: unknown): string {
 	if (!v) return "";
@@ -24,12 +24,31 @@ function fmtInterval(v: unknown): string {
 	return String(v);
 }
 
+const STATUS_MAP: Record<string, string> = {
+	completed:   "Concluído",
+	in_progress: "Em andamento",
+	cancelled:   "Cancelado",
+	pending:     "Pendente",
+};
+
+function fmtStatus(v: unknown): string {
+	const s = String(v ?? "");
+	return STATUS_MAP[s] ?? s;
+}
+
+function fmtSpeed(v: unknown): string {
+	if (v == null || v === "") return "";
+	const n = Number(v);
+	if (isNaN(n)) return String(v);
+	return `${n.toFixed(1)} km/h`;
+}
+
 // ── estilos ───────────────────────────────────────────────────────────────────
 
 const HEADER_FILL: ExcelJS.Fill = {
 	type: "pattern",
 	pattern: "solid",
-	fgColor: { argb: "FFD4001E" }, // vermelho Red Bull
+	fgColor: { argb: "FFD4001E" },
 };
 
 const HEADER_FONT: Partial<ExcelJS.Font> = {
@@ -54,7 +73,7 @@ const BORDER: Partial<ExcelJS.Borders> = {
 const ZEBRA_FILL: ExcelJS.Fill = {
 	type: "pattern",
 	pattern: "solid",
-	fgColor: { argb: "FFF5F5F5" }, // cinza clarinho para linhas pares
+	fgColor: { argb: "FFF5F5F5" },
 };
 
 // ── função que cria e estiliza a planilha ─────────────────────────────────────
@@ -67,40 +86,34 @@ function buildWorksheet(
 ): ExcelJS.Worksheet {
 	const ws = wb.addWorksheet(sheetName);
 
-	// define colunas (isso cria o cabeçalho automaticamente)
 	ws.columns = columns.map((c) => ({
 		header: c.header,
 		key:    c.key,
 		width:  c.width ?? 18,
 	}));
 
-	// estiliza linha de cabeçalho
 	const headerRow = ws.getRow(1);
 	headerRow.height = 22;
 	headerRow.eachCell((cell) => {
-		cell.fill   = HEADER_FILL;
-		cell.font   = HEADER_FONT;
-		cell.border = BORDER;
+		cell.fill      = HEADER_FILL;
+		cell.font      = HEADER_FONT;
+		cell.border    = BORDER;
 		cell.alignment = { vertical: "middle", horizontal: "center" };
 	});
 
-	// adiciona as linhas de dados
 	rows.forEach((row, i) => {
 		const dataRow = ws.addRow(row);
 		dataRow.height = 18;
 		dataRow.eachCell({ includeEmpty: true }, (cell) => {
-			cell.font   = CELL_FONT;
-			cell.border = BORDER;
+			cell.font      = CELL_FONT;
+			cell.border    = BORDER;
 			cell.alignment = { vertical: "middle" };
-			// zebra: linhas pares recebem fundo levemente cinza
 			if (i % 2 === 1) cell.fill = ZEBRA_FILL;
 		});
 	});
 
-	// freeze na primeira linha (cabeçalho fixo ao rolar)
 	ws.views = [{ state: "frozen", ySplit: 1 }];
 
-	// filtro automático no cabeçalho
 	ws.autoFilter = {
 		from: { row: 1, column: 1 },
 		to:   { row: 1, column: columns.length },
@@ -109,19 +122,19 @@ function buildWorksheet(
 	return ws;
 }
 
-// ── transforms (igual ao original, mas retorna Record<string, unknown>) ───────
+// ── transforms ────────────────────────────────────────────────────────────────
 
 function transformShift(r: Record<string, unknown>): Record<string, unknown> {
 	return {
 		id:         r.id,
-		status:     r.status,
+		status:     fmtStatus(r.status),
 		start_at:   fmtDate(r.start_at),
 		end_at:     fmtDate(r.end_at),
 		total_time: fmtInterval(r.total_time),
 		km_start:   r.km_start,
 		km_end:     r.km_end,
 		distance:   r.distance,
-		speed:      r.speed,
+		speed:      fmtSpeed(r.speed),
 		athlete:    r.athlete_name,
 		cpf:        r.athlete_cpf,
 		team:       r.team_name,
@@ -143,18 +156,18 @@ function transformCheckpoint(r: Record<string, unknown>): Record<string, unknown
 	};
 }
 
-// ── colunas de cada aba ───────────────────────────────────────────────────────
+// ── colunas ───────────────────────────────────────────────────────────────────
 
 const SHIFT_COLUMNS = [
 	{ header: "ID",                  key: "id",         width: 10 },
-	{ header: "Status",              key: "status",     width: 14 },
+	{ header: "Status",              key: "status",     width: 16 },
 	{ header: "Início",              key: "start_at",   width: 20 },
 	{ header: "Fim",                 key: "end_at",     width: 20 },
 	{ header: "Duração (hh:mm:ss)", key: "total_time", width: 18 },
 	{ header: "Km início",           key: "km_start",   width: 12 },
 	{ header: "Km fim",              key: "km_end",     width: 12 },
 	{ header: "Distância (km)",      key: "distance",   width: 15 },
-	{ header: "Velocidade (km/h)",   key: "speed",      width: 18 },
+	{ header: "Velocidade",          key: "speed",      width: 16 },
 	{ header: "Atleta",              key: "athlete",    width: 24 },
 	{ header: "CPF",                 key: "cpf",        width: 16 },
 	{ header: "Equipe",              key: "team",       width: 20 },
