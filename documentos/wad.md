@@ -1756,8 +1756,8 @@ Os diagramas de arquitetura representam a estrutura organizacional do sistema, d
 ALERTAS
 
 <div align="center">
-  <sub>Imagem X - Diagrama de Arquitetura - ALERTAS </sub><br>
-  <img src= "../assets/diagramas_arquitetura/alertas.svg" width="100%" alt="Diagrama de Arquitetura - 1"><br>
+  <sub>Imagem 9 - Diagrama de Arquitetura - ALERTAS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/alertas.svg" width="100%" alt="Diagrama de Arquitetura - 1"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1765,8 +1765,8 @@ ALERTAS
 AUTENTICAÇÃO
 
 <div align="center">
-  <sub>Imagem X - Diagrama de Arquitetura - AUTENTICAÇÃO </sub><br>
-  <img src= "../assets/diagramas_arquitetura/auth.svg" width="100%" alt="Diagrama de Arquitetura - 2"><br>
+  <sub>Imagem 10 - Diagrama de Arquitetura - AUTENTICAÇÃO </sub><br>
+  <img src= "./assets/diagramas_arquitetura/auth.svg" width="100%" alt="Diagrama de Arquitetura - 2"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1774,8 +1774,8 @@ AUTENTICAÇÃO
 DASHBOARD 
 
 <div align="center">
-  <sub>Imagem X - Diagrama de Arquitetura - DASHBOARD </sub><br>
-  <img src= "../assets/diagramas_arquitetura/dashboard.svg" width="100%" alt="Diagrama de Arquitetura - 3"><br>
+  <sub>Imagem 11 - Diagrama de Arquitetura - DASHBOARD </sub><br>
+  <img src= "./assets/diagramas_arquitetura/dashboard.svg" width="100%" alt="Diagrama de Arquitetura - 3"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1783,8 +1783,8 @@ DASHBOARD
 EVENTO HISTÓRICO
 
 <div align="center">
-  <sub>Imagem X - Diagrama de Arquitetura - EVENTO HISTÓRICO </sub><br>
-  <img src= "../assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de Arquitetura - 4"><br>
+  <sub>Imagem 12 - Diagrama de Arquitetura - EVENTO HISTÓRICO </sub><br>
+  <img src= "./assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de Arquitetura - 4"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1792,8 +1792,8 @@ EVENTO HISTÓRICO
 EVENTOS
 
 <div align="center">
-  <sub>Imagem X - Diagrama de Arquitetura - EVENTOS </sub><br>
-  <img src= "../assets/diagramas_arquitetura/eventos.svg" width="100%" alt="Diagrama de Arquitetura - 5"><br>
+  <sub>Imagem 13 - Diagrama de Arquitetura - EVENTOS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/eventos.svg" width="100%" alt="Diagrama de Arquitetura - 5"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>

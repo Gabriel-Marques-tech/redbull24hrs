@@ -12,60 +12,69 @@ flowchart TB
 
     subgraph L1["Cliente"]
         direction TB
-        C["Web Admin<br/>API Client"]:::client
+        C["Browser / API Client"]:::client
     end
 
-    subgraph L2["Rotas do fluxo"]
+    subgraph L2["Rotas públicas/protegidas"]
         direction TB
-        R1["POST /events"]:::route
-        R2["PATCH /events/:id/start"]:::route
-        R3["PATCH /events/:id/finish"]:::route
+        R1["POST /auth/register/manager"]:::route
+        R2["POST /auth/register/auditor"]:::route
+        R3["POST /auth/login"]:::route
+        R4["POST /auth/logout"]:::route
+        R5["requireAuth / requirePageAuth"]:::route
     end
 
-    subgraph L3["Controller"]
+    subgraph L3["Controller / Middleware"]
         direction TB
-        EC["EventController"]:::controller
+        AC["AuthController"]:::controller
+        AM["AuthMiddleware"]:::controller
     end
 
     subgraph L4["Service"]
         direction TB
-        ES["EventService<br/>ciclo de vida do evento"]:::service
-        RN["RF025 · RF051<br/>RN22 status do evento"]:::note
+        AS["AuthService<br/>hash + JWT + refresh"]:::service
+        RN["RF027<br/>RN38 · RN39 · RN40 · RN41"]:::note
     end
 
     subgraph L5["Repository"]
         direction TB
-        ER["EventRepository"]:::repository
-        Q1["create"]:::repository
-        Q2["startEvent"]:::repository
-        Q3["finishEvent"]:::repository
+        AR["AuthRepository"]:::repository
+        Q1["createManager / createAuditor"]:::repository
+        Q2["findByEmail"]:::repository
+        Q3["save/revoke refresh token"]:::repository
     end
 
     subgraph L6["Banco de Dados"]
         direction TB
         DB["PostgreSQL"]:::db
-        E["events"]:::db
         M["managers"]:::db
+        AU["auditors"]:::db
+        RT["refresh_tokens"]:::db
     end
 
     subgraph L7["Saídas"]
         direction TB
-        O1["201 evento criado"]:::output
-        O2["200 evento iniciado"]:::output
-        O3["200 evento finalizado"]:::output
+        O1["201 usuário cadastrado"]:::output
+        O2["200 cookies HttpOnly"]:::output
+        O3["401 / 409 tratados"]:::output
+        O4["redirect /login se token inválido"]:::output
     end
 
-    C --> R1 --> EC --> ES --> ER
-    C --> R2 --> EC
-    C --> R3 --> EC
-    ES -.-> RN
-    ER --> Q1 --> E
-    Q1 --> M
-    ER --> Q2 --> E
-    ER --> Q3 --> E
-    E --> DB
+    C --> R1 --> AC --> AS --> AR
+    C --> R2 --> AC
+    C --> R3 --> AC
+    C --> R4 --> AC
+    C --> R5 --> AM --> AS
+    AS -.-> RN
+    AR --> Q1 --> M
+    Q1 --> AU
+    AR --> Q2 --> M
+    Q2 --> AU
+    AR --> Q3 --> RT
     M --> DB
-    DB --> ER --> ES --> EC
-    EC --> O1 --> C
-    EC --> O2 --> C
-    EC --> O3 --> C
+    AU --> DB
+    RT --> DB
+    DB --> AR --> AS --> AC --> O1 --> C
+    AC --> O2 --> C
+    AC --> O3 --> C
+    AM --> O4 --> C

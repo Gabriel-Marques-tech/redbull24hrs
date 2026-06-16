@@ -18,9 +18,10 @@ flowchart TB
     subgraph L2["Rotas"]
         direction TB
         R1["POST /teams"]:::route
-        R2["POST /teams/:id/athletes"]:::route
-        R3["GET /teams/:id<br/>GET athletes"]:::route
-        R4["GET /metrics/events/:id/teams"]:::route
+        R2["POST /teams/:teamId/athletes"]:::route
+        R3["GET /teams/:id"]:::route
+        R4["GET /teams/:teamId/athletes"]:::route
+        R5["GET /metrics/events/:eventId/teams"]:::route
     end
 
     subgraph L3["Controllers"]
@@ -55,14 +56,15 @@ flowchart TB
         direction TB
         O1["201 equipe"]:::output
         O2["201 atleta"]:::output
-        O3["200 consulta"]:::output
+        O3["200 equipe / atletas"]:::output
         O4["200 ranking KM"]:::output
     end
 
     C --> R1 --> TC --> TS --> TR
     C --> R2 --> TC
     C --> R3 --> TC
-    C --> R4 --> MC --> MS --> MR
+    C --> R4 --> TC
+    C --> R5 --> MC --> MS --> MR
     TS -.-> RN
     MS -.-> RN
     TR --> EV

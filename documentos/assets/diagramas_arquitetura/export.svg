@@ -1,64 +1,65 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1869" height="440" viewBox="0 0 1869 440">
+<svg xmlns="http://www.w3.org/2000/svg" width="1869" height="584" viewBox="0 0 1869 584">
 <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#0F0069"/></marker></defs>
 <rect width="100%" height="100%" fill="#ffffff"/>
-<text x="145.5" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#0F0069">Clientes</text>
+<text x="145.5" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#0F0069">Cliente</text>
 <rect x="20" y="43" width="251" height="76" rx="14" fill="#F5F5FA" stroke="#0F0069" stroke-width="1" opacity="0.42"/>
 <rect x="28" y="57" width="235" height="54" rx="10" fill="#FFFFFF" stroke="#0F0069" stroke-width="2"/>
-<text x="145.5" y="75" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">Gerente</text>
-<text x="145.5" y="91" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">trilha de auditoria</text>
-<text x="408.5" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#0F0069">Rotas do fluxo</text>
+<text x="145.5" y="79" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">Gerente</text>
+<text x="408.5" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#0F0069">Rotas protegidas</text>
 <rect x="283" y="43" width="251" height="220" rx="14" fill="#F5F5FA" stroke="#0F0069" stroke-width="1" opacity="0.42"/>
 <rect x="291" y="57" width="235" height="54" rx="10" fill="#FFF7CC" stroke="#D6A700" stroke-width="2"/>
-<text x="408.5" y="75" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">GET /audit/logs</text>
-<text x="408.5" y="91" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">event_id · shift_id · page</text>
+<text x="408.5" y="79" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">GET /export/events/:eventId/shifts</text>
 <rect x="291" y="129" width="235" height="54" rx="10" fill="#FFF7CC" stroke="#D6A700" stroke-width="2"/>
-<text x="408.5" y="151" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">PATCH /audit/checkpoints/:id</text>
+<text x="408.5" y="151" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">GET /export/events/:eventId/checkpoints</text>
 <rect x="291" y="201" width="235" height="54" rx="10" fill="#FFF7CC" stroke="#D6A700" stroke-width="2"/>
 <text x="408.5" y="223" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">JWT obrigatório</text>
 <text x="671.5" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#0F0069">Controller</text>
 <rect x="546" y="43" width="251" height="76" rx="14" fill="#F5F5FA" stroke="#0F0069" stroke-width="1" opacity="0.42"/>
 <rect x="554" y="57" width="235" height="54" rx="10" fill="#E8E8F5" stroke="#0F0069" stroke-width="2"/>
-<text x="671.5" y="79" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">LogsController</text>
+<text x="671.5" y="79" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">ExportController</text>
 <text x="934.5" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#0F0069">Service</text>
 <rect x="809" y="43" width="251" height="148" rx="14" fill="#F5F5FA" stroke="#0F0069" stroke-width="1" opacity="0.42"/>
 <rect x="817" y="57" width="235" height="54" rx="10" fill="#E7F5E8" stroke="#2E7D32" stroke-width="2"/>
-<text x="934.5" y="79" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">LogsService</text>
+<text x="934.5" y="75" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">ExportService</text>
+<text x="934.5" y="91" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">gera CSV</text>
 <rect x="817" y="129" width="235" height="54" rx="10" fill="#FFFFFF" stroke="#D2003C" stroke-width="2" stroke-dasharray="6 4"/>
-<text x="934.5" y="147" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">RF022 · RF024</text>
-<text x="934.5" y="163" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">RN23 log imutável</text>
-<text x="934.5" y="179" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">RN24 justificativa</text>
+<text x="934.5" y="147" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">RF047 · RF048</text>
+<text x="934.5" y="163" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">RN26 exportação</text>
 <text x="1197.5" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#0F0069">Repository</text>
 <rect x="1072" y="43" width="251" height="220" rx="14" fill="#F5F5FA" stroke="#0F0069" stroke-width="1" opacity="0.42"/>
 <rect x="1080" y="57" width="235" height="54" rx="10" fill="#FFF0D6" stroke="#EF6C00" stroke-width="2"/>
-<text x="1197.5" y="79" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">LogsRepository</text>
+<text x="1197.5" y="79" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">ExportRepository</text>
 <rect x="1080" y="129" width="235" height="54" rx="10" fill="#FFF0D6" stroke="#EF6C00" stroke-width="2"/>
-<text x="1197.5" y="151" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">findLogs(filters)</text>
+<text x="1197.5" y="151" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">queryShiftsCsv</text>
 <rect x="1080" y="201" width="235" height="54" rx="10" fill="#FFF0D6" stroke="#EF6C00" stroke-width="2"/>
-<text x="1197.5" y="223" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">correctCheckpoint + insertLog</text>
+<text x="1197.5" y="223" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">queryCheckpointsCsv</text>
 <text x="1460.5" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#0F0069">Banco de Dados</text>
-<rect x="1335" y="43" width="251" height="292" rx="14" fill="#F5F5FA" stroke="#0F0069" stroke-width="1" opacity="0.42"/>
+<rect x="1335" y="43" width="251" height="436" rx="14" fill="#F5F5FA" stroke="#0F0069" stroke-width="1" opacity="0.42"/>
 <rect x="1343" y="57" width="235" height="54" rx="10" fill="#ECEFF1" stroke="#37474F" stroke-width="2"/>
 <text x="1460.5" y="79" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">PostgreSQL</text>
 <rect x="1343" y="129" width="235" height="54" rx="10" fill="#ECEFF1" stroke="#37474F" stroke-width="2"/>
-<text x="1460.5" y="151" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">logs</text>
+<text x="1460.5" y="151" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">shifts</text>
 <rect x="1343" y="201" width="235" height="54" rx="10" fill="#ECEFF1" stroke="#37474F" stroke-width="2"/>
 <text x="1460.5" y="223" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">checkpoints</text>
 <rect x="1343" y="273" width="235" height="54" rx="10" fill="#ECEFF1" stroke="#37474F" stroke-width="2"/>
-<text x="1460.5" y="295" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">shifts</text>
+<text x="1460.5" y="295" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">athletes</text>
+<rect x="1343" y="345" width="235" height="54" rx="10" fill="#ECEFF1" stroke="#37474F" stroke-width="2"/>
+<text x="1460.5" y="367" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">teams</text>
+<rect x="1343" y="417" width="235" height="54" rx="10" fill="#ECEFF1" stroke="#37474F" stroke-width="2"/>
+<text x="1460.5" y="439" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">treadmills</text>
 <text x="1723.5" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#0F0069">Saídas</text>
 <rect x="1598" y="43" width="251" height="220" rx="14" fill="#F5F5FA" stroke="#0F0069" stroke-width="1" opacity="0.42"/>
 <rect x="1606" y="57" width="235" height="54" rx="10" fill="#FDE7EF" stroke="#D2003C" stroke-width="2"/>
-<text x="1723.5" y="79" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">200 logs[] + total + page</text>
+<text x="1723.5" y="79" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">200 text/csv turnos</text>
 <rect x="1606" y="129" width="235" height="54" rx="10" fill="#FDE7EF" stroke="#D2003C" stroke-width="2"/>
-<text x="1723.5" y="147" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">200 checkpoint corrigido</text>
-<text x="1723.5" y="163" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">log gerado</text>
+<text x="1723.5" y="151" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">200 text/csv checkpoints</text>
 <rect x="1606" y="201" width="235" height="54" rx="10" fill="#FDE7EF" stroke="#D2003C" stroke-width="2"/>
-<text x="1723.5" y="223" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">200 logs: []</text>
+<text x="1723.5" y="223" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">200 CSV vazio</text>
 <path d="M263.0,84.0 C303.0,84.0 251.0,84.0 291.0,84.0" fill="none" stroke="#0F0069" stroke-width="2" marker-end="url(#arrow)"/>
 <path d="M526.0,84.0 C566.0,84.0 514.0,84.0 554.0,84.0" fill="none" stroke="#0F0069" stroke-width="2" marker-end="url(#arrow)"/>
 <path d="M789.0,84.0 C829.0,84.0 777.0,84.0 817.0,84.0" fill="none" stroke="#0F0069" stroke-width="2" marker-end="url(#arrow)"/>
 <path d="M1052.0,84.0 C1092.0,84.0 1040.0,84.0 1080.0,84.0" fill="none" stroke="#0F0069" stroke-width="2" marker-end="url(#arrow)"/>
 <path d="M1315.0,84.0 C1355.0,84.0 1303.0,84.0 1343.0,84.0" fill="none" stroke="#0F0069" stroke-width="2" marker-end="url(#arrow)"/>
 <path d="M1578.0,84.0 C1618.0,84.0 1566.0,84.0 1606.0,84.0" fill="none" stroke="#0F0069" stroke-width="2" marker-end="url(#arrow)"/>
-<text x="18" y="422" font-family="Arial" font-size="11" fill="#0F0069">Atualizado a partir dos Diagramas de Sequência UML</text>
+<text x="18" y="566" font-family="Arial" font-size="11" fill="#0F0069">Atualizado a partir dos Diagramas de Sequência UML</text>
 </svg>
