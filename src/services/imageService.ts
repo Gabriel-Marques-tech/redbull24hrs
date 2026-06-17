@@ -1,7 +1,7 @@
 import { supabase } from "./supabaseClient";
 import { imageRepository } from "../repositories/imageRepository";
 
-const BUCKET = "shift-media";
+const BUCKET = "photos";
 
 async function uploadToStorage(buffer: Buffer, mimetype: string, folder: string, id: number): Promise<string> {
 	const ext = mimetype.split("/")[1];
