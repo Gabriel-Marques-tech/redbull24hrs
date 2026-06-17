@@ -1798,6 +1798,59 @@ EVENTOS
   <br><br><br>
 </div>
 
+EXPORTAÇÃO
+
+<div align="center">
+  <sub>Imagem X - Diagrama de Arquitetura - EXPORTAÇÃO </sub><br>
+  <img src= "./assets/diagramas_arquitetura/export.svg" width="100%" alt="Diagrama de Arquitetura - 6"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+HISTÓRICO
+
+<div align="center">
+  <sub>Imagem X - Diagrama de Arquitetura - HISTÓRICO </sub><br>
+  <img src= "./assets/diagramas_arquitetura/history.svg" width="100%" alt="Diagrama de Arquitetura - 7"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+LOGS
+
+<div align="center">
+  <sub>Imagem X - Diagrama de Arquitetura - LOGS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/logs.svg" width="100%" alt="Diagrama de Arquitetura - 8"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+MÉTRICAS
+
+<div align="center">
+  <sub>Imagem X - Diagrama de Arquitetura - MÉTRICAS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/metrics.svg" width="100%" alt="Diagrama de Arquitetura - 9"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+EQUIPES
+
+<div align="center">
+  <sub>Imagem X - Diagrama de Arquitetura - EQUIPES </sub><br>
+  <img src= "./assets/diagramas_arquitetura/teams.svg" width="100%" alt="Diagrama de Arquitetura - 10"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+TURNOS
+
+<div align="center">
+  <sub>Imagem X - Diagrama de Arquitetura - TURNOS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/turnos.svg" width="100%" alt="Diagrama de Arquitetura - 11"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
 
 #### 3.2.1.1. Diagrama de Classes Arquiteturais 
 
