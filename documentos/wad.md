@@ -8,7 +8,7 @@
 
 ## Nome dos integrantes do grupo
 
-#### [Fernanda Helena Leitão Bezerra](http://www.linkedin.com/in/nandahelena)
+#### [Fernanda Helena Bezerra](http://www.linkedin.com/in/nandahelena)
 
 #### [Gabriel Simões Marques](https://www.linkedin.com/in/gabrielmarquesinteli)
 
