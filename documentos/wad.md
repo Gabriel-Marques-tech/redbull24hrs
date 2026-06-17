@@ -5035,9 +5035,65 @@ Esse mapeamento garante que as 41 Regras de Negócio estejam ligadas aos RFs cor
 
 ### 5.2.1. Relatório de testes de guerrilha
 
----
-
 _Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização)._
+
+Os testes de guerrilha são uma técnica de avaliação de usabilidade informal e de baixo custo, na qual o sistema é apresentado a usuários reais recrutados de forma espontânea, sem agendamento prévio ou laboratório controlado. O objetivo é identificar rapidamente problemas de usabilidade com base em tarefas específicas, enquanto um facilitador observa e registra dificuldades e sugestões sem interferir no processo.
+
+#### Descrição dos Testes e das Etapas
+
+| # | Teste | Enunciado da Tarefa |
+|---|-------|---------------------|
+| T1 | Login e Criação de Evento | "Como gerente, você deve fazer login e criar um evento." |
+| T2 | Criação de Equipes e Início do Evento | "Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado." |
+| T3 | Auditoria de Equipe | "Como auditor, você deve auditar uma equipe no evento criado." |
+
+| Teste | Etapa | Descrição da Etapa |
+|-------|-------|--------------------|
+| T1 | Etapa 1 | Adicionar as credenciais de gerente e realizar o login |
+| T1 | Etapa 2 | Iniciar a criação de um evento |
+| T1 | Etapa 3 | Adicionar as informações do evento |
+| T1 | Etapa 4 | Concluir a criação do evento e realizar o logout |
+| T2 | Etapa 1 | Durante a criação do evento, criar duas equipes |
+| T2 | Etapa 2 | Durante a criação do evento, adicionar atletas às duas equipes |
+| T2 | Etapa 3 | Concluir a criação do evento e iniciá-lo |
+| T3 | Etapa 1 | Adicionar as credenciais de auditor e realizar o login |
+| T3 | Etapa 2 | Selecionar o evento criado |
+| T3 | Etapa 3 | Realizar a auditoria de um período de 2 minutos |
+| T3 | Etapa 4 | Concluir a auditoria e realizar o logout |
+
+#### Resultados dos Testes de Guerrilha
+
+**Testador:** Enzo Braga  
+**Perfil:** Estudante de Ciência da Computação / Produzindo um projeto para a Defesa Civil de Santo André
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*  
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência |
+|-------|--------------------|------------|
+| Etapa 1 | Adicionar as credenciais de gerente e realizar o login | Nenhuma ocorrência |
+| Etapa 2 | Iniciar a criação de um evento | Nenhuma ocorrência |
+| Etapa 3 | Adicionar as informações do evento | Enzo sentiu dificuldade em inserir o nome da cidade, e sugeriu que o formulário de escolha do nome aceitasse nomes sem acento, facilitando a seleção da cidade do evento |
+| Etapa 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*  
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência |
+|-------|--------------------|------------|
+| Etapa 1 | Durante a criação do evento, criar duas equipes | Enzo sentiu dificuldade de encontrar o botão de criar a segunda equipe |
+| Etapa 2 | Durante a criação do evento, adicionar atletas às duas equipes | Nenhuma ocorrência |
+| Etapa 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência |
+
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*  
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência |
+|-------|--------------------|------------|
+| Etapa 1 | Adicionar as credenciais de auditor e realizar o login | Nenhuma ocorrência |
+| Etapa 2 | Selecionar o evento criado | Enzo sentiu dificuldade em iniciar a auditoria, clicando diretamente no evento criado ao invés do botão "iniciar auditoria" |
+| Etapa 3 | Realizar a auditoria de um período de 2 minutos | Enzo sentiu muita dificuldade em realizar a auditoria; mesmo com as explicações fornecidas no início do teste, ele não soube como realizar um checkpoint, nem como inserir o quilômetro inicial ou registrar o quilômetro final |
+| Etapa 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência |
 
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
