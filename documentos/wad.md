@@ -3979,7 +3979,7 @@ Os Services lançam `new Error("<mensagem>")` com textos padronizados. Os Contro
 
 A tabela abaixo lista todos os 49 endpoints organizados por grupo, com método HTTP, path completo, requisitos funcionais atendidos e requisito de autenticação. Para o contrato completo de cada endpoint — headers, body com campos e validações, exemplos de payload JSON e tabela de status codes (200, 201, 204, 400, 401, 403, 404, 409, 422 e 500) — consulte a documentação navegável em [`docs/api/index.html`](../docs/api/index.html) ou o endereço público [https://g02-73a453.pages.git.inteli.edu.br/api/](https://g02-73a453.pages.git.inteli.edu.br/api/).
 
-**Legenda de Auth:** `—` = público; `JWT` = cookie `accessToken` obrigatório; `[manager]` = restrito ao perfil gerente; `[mgr|aud]` = ambos os perfis.
+**Legenda de Auth:** `—` = público; `JWT` = cookie `accessToken` obrigatório; `(manager)` = restrito ao perfil gerente; `[mgr|aud]` = ambos os perfis.
 
 #### Autenticação — 7 endpoints
 
@@ -3991,19 +3991,19 @@ A tabela abaixo lista todos os 49 endpoints organizados por grupo, com método H
 | `POST` | `/auth/refresh` | RF027 | cookie `refreshToken` |
 | `POST` | `/auth/logout` | RF027 | cookie `refreshToken` |
 | `GET` | `/auth/me` | RF027 | JWT |
-| `GET` | `/auth/auditors` | RF027 | JWT [manager] |
+| `GET` | `/auth/auditors` | RF027 | JWT (manager) |
 
 #### Eventos — 7 endpoints
 
 | Método | Path | RF | Auth |
 |--------|------|----|------|
-| `POST` | `/events` | RF051 | JWT [manager] |
+| `POST` | `/events` | RF051 | JWT (manager) |
 | `GET` | `/events` | RF051 | JWT |
 | `GET` | `/events/:id` | RF051 | JWT |
-| `PATCH` | `/events/:id` | RF051 | JWT [manager] |
-| `DELETE` | `/events/:id` | RF051 | JWT [manager] |
-| `PATCH` | `/events/:id/start` | RF010, RF051 | JWT [manager] |
-| `PATCH` | `/events/:id/finish` | RF011, RF051 | JWT [manager] |
+| `PATCH` | `/events/:id` | RF051 | JWT (manager) |
+| `DELETE` | `/events/:id` | RF051 | JWT (manager) |
+| `PATCH` | `/events/:id/start` | RF010, RF051 | JWT (manager) |
+| `PATCH` | `/events/:id/finish` | RF011, RF051 | JWT (manager) |
 
 #### Esteiras — 4 endpoints
 
@@ -4021,8 +4021,8 @@ A tabela abaixo lista todos os 49 endpoints organizados por grupo, com método H
 | `POST` | `/teams` | RF001, RF015 | JWT |
 | `GET` | `/teams` | RF005 | JWT |
 | `GET` | `/teams/:id` | RF005 | JWT |
-| `PATCH` | `/teams/:id` | RF023 | JWT [manager] |
-| `DELETE` | `/teams/:id` | RF001 | JWT [manager] |
+| `PATCH` | `/teams/:id` | RF023 | JWT (manager) |
+| `DELETE` | `/teams/:id` | RF001 | JWT (manager) |
 
 #### Atletas — 5 endpoints
 
@@ -4031,21 +4031,21 @@ A tabela abaixo lista todos os 49 endpoints organizados por grupo, com método H
 | `POST` | `/teams/:teamId/athletes` | RF002, RF006 | JWT |
 | `GET` | `/teams/:teamId/athletes` | RF006, RF005 | JWT |
 | `GET` | `/teams/:teamId/athletes/:id` | RF006 | JWT |
-| `PATCH` | `/teams/:teamId/athletes/:id` | RF023 | JWT [manager] |
-| `DELETE` | `/teams/:teamId/athletes/:id` | RF002 | JWT [manager] |
+| `PATCH` | `/teams/:teamId/athletes/:id` | RF023 | JWT (manager) |
+| `DELETE` | `/teams/:teamId/athletes/:id` | RF002 | JWT (manager) |
 
 #### Turnos — 8 endpoints
 
 | Método | Path | RF | Auth |
 |--------|------|----|------|
-| `POST` | `/audit/shifts/start` | RF007–RF011, RF034, RF046 | JWT [mgr\|aud] |
+| `POST` | `/audit/shifts/start` | RF007–RF011, RF034, RF046 | JWT (mgr\|aud) |
 | `GET` | `/audit/shifts/:id/status` | RF014 | JWT |
 | `GET` | `/audit/shifts/:id/checkpoints` | RF012, RF025 | JWT |
 | `POST` | `/audit/shifts/:id/checkpoints` | RF012, RF013, RF032, RF033, RF045 | JWT |
 | `PATCH` | `/audit/shifts/:id/finish` | RF014–RF019, RF044 | JWT |
 | `PATCH` | `/audit/shifts/:id/abandon` | RF014 | JWT |
-| `PATCH` | `/audit/shifts/:id` | RF031 | JWT [manager] |
-| `PATCH` | `/audit/checkpoints/:id` | RF031 | JWT [manager] |
+| `PATCH` | `/audit/shifts/:id` | RF031 | JWT (manager) |
+| `PATCH` | `/audit/checkpoints/:id` | RF031 | JWT (manager) |
 
 #### Histórico — 1 endpoint
 
@@ -4095,8 +4095,8 @@ A tabela abaixo lista todos os 49 endpoints organizados por grupo, com método H
 
 | Método | Path | RF | Auth |
 |--------|------|----|------|
-| `GET` | `/export/events/:eventId/shifts` | RF047 | JWT [manager] |
-| `GET` | `/export/events/:eventId/checkpoints` | RF048 | JWT [manager] |
+| `GET` | `/export/events/:eventId/shifts` | RF047 | JWT (manager) |
+| `GET` | `/export/events/:eventId/checkpoints` | RF048 | JWT (manager) |
 
 > Resposta: `Content-Type: text/csv`. Arquivo com cabeçalho sempre presente; corpo vazio se não houver dados.
 
