@@ -33,6 +33,12 @@
                 <label class="campo-data-atleta">Data de nascimento:<input id="nascimentoAtleta" type="date"></label>
                 <label>CPF:<input id="cpfAtleta" type="text" placeholder="000.000.000-00"></label>
 
+                <div class="campo-foto-atleta">
+                    <span>Foto do atleta (opcional):</span>
+                    <img id="previewFotoAtleta" alt="Pré-visualização da foto" hidden>
+                    <input id="fotoAtleta" type="file" accept="image/*">
+                </div>
+
                 <div class="seletores-atleta">
                     <select id="generoAtleta" required>
                         <option value="">Gênero:</option>
@@ -53,6 +59,7 @@
         </section>
     </main>
 
+    <script src="/js/imageUtils.js"></script>
     <script src="/js/informacoes-atleta.js"></script>
 </body>
 </html>
