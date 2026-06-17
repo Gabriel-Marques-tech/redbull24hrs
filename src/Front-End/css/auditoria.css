@@ -1197,29 +1197,269 @@ img {
 }
 
 /* Variante do modal para checkpoint */
+.modal-checkpoint-conteudo {
+    align-items: stretch;
+    justify-content: flex-start;
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
 .modal-checkpoint-conteudo::before {
-    content: "Registrar checkpoint";
+    content: none;
 }
 
-.modal-checkpoint-conteudo #kmCheckpointModal {
+.checkpoint-corredor {
+    width: 260px;
+}
+
+.checkpoint-corredor label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 18px;
+    color: #171717;
+}
+
+.checkpoint-corredor select {
     width: 100%;
-    padding: 0 16px;
+    height: 46px;
+    padding: 0 40px 0 18px;
+    border: 0;
+    border-radius: 4px;
+    background-color: var(--vermelho);
+    color: var(--branco);
+    font: inherit;
+    font-size: 17px;
+    appearance: none;
+    opacity: 1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
 }
 
-.modal-checkpoint-conteudo .acoes-modal-turno {
-    justify-content: center;
+.checkpoint-divisor {
+    height: 1px;
+    margin-top: 10px;
+    background: #cfcfcf;
+}
+
+.checkpoint-conteudo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 235px;
+    padding-top: 12px;
+    padding-bottom: 16px;
+}
+
+.checkpoint-foto,
+.checkpoint-dados {
+    min-width: 0;
+}
+
+.checkpoint-foto {
+    padding-right: 28px;
+}
+
+.checkpoint-dados {
+    padding-left: 28px;
+    border-left: 1px solid #cfcfcf;
+}
+
+.checkpoint-secao-titulo {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    min-height: 44px;
+}
+
+.checkpoint-icone {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    border-radius: 50%;
+    background: #ffdce7;
+    color: var(--vermelho);
+}
+
+.checkpoint-icone svg {
+    width: 26px;
+    height: 26px;
+    margin: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+}
+
+.checkpoint-icone-dados svg {
+    fill: none;
+}
+
+.checkpoint-secao-titulo strong,
+.checkpoint-secao-titulo small {
+    display: block;
+}
+
+.checkpoint-secao-titulo strong {
+    margin-top: 2px;
+    font-size: 15px;
+    line-height: 1.2;
+}
+
+.checkpoint-secao-titulo small {
+    margin-top: 4px;
+    color: #777;
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+.checkpoint-foto-preview {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 160px;
+    margin-top: 10px;
+    overflow: hidden;
+    border-radius: 5px;
+    background: #e8e8e8;
+    color: #b8b8b8;
+}
+
+.checkpoint-foto-preview svg {
+    width: 42px;
+    height: 42px;
+    margin: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.2;
+}
+
+.checkpoint-foto-preview img {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    object-fit: cover;
+}
+
+.modal-checkpoint-conteudo #checkpointFotoInput {
+    display: none;
+}
+
+.btn-checkpoint-foto {
+    display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 14px;
+    width: 220px;
+    height: 42px;
+    margin: 8px auto 0;
+    border: 2px solid var(--vermelho);
+    border-radius: 2px;
+    background: var(--branco);
+    color: var(--vermelho);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-checkpoint-foto svg {
+    width: 26px;
+    height: 26px;
+    margin: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+}
+
+.checkpoint-campos {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-top: 14px;
+}
+
+.checkpoint-campo label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.checkpoint-input-linha {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 34px;
+    gap: 12px;
+    align-items: center;
+}
+
+.checkpoint-input-linha input {
+    width: 100%;
+    height: 38px;
+    padding: 0 14px;
+    border: 1px solid #c8c8c8;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font: inherit;
+    font-size: 15px;
+}
+
+.checkpoint-input-linha input::placeholder {
+    color: #8a8a8a;
+}
+
+.checkpoint-input-linha input[readonly] {
+    cursor: default;
+}
+
+.btn-editar-checkpoint {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 38px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--vermelho);
+    cursor: pointer;
+}
+
+.btn-editar-checkpoint svg {
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.modal-checkpoint-conteudo .checkpoint-acoes {
+    justify-content: center;
+    gap: 28px;
+    margin-top: 12px;
 }
 
 .modal-checkpoint-conteudo .btn-cancelar-turno,
 .modal-checkpoint-conteudo .btn-registrar-turno {
-    width: 180px;
-    height: 56px;
+    width: 160px;
+    height: 48px;
     margin: 0;
-    padding: 0 20px;
-    flex: 0 0 180px;
-    align-self: auto;
+    padding: 0 22px;
+    flex: 0 0 160px;
+    border-radius: 8px;
+    font-size: 16px;
     transform: none;
+}
+
+.modal-checkpoint-conteudo .btn-cancelar-turno {
+    order: 2;
+    border: 2px solid var(--vermelho);
+    color: var(--vermelho);
+}
+
+.modal-checkpoint-conteudo .btn-registrar-turno {
+    order: 1;
 }
 
 .campo-cps-sessao {
