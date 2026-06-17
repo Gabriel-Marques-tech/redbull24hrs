@@ -92,10 +92,36 @@
     background-repeat: no-repeat;
 }
 
+.campo-foto-atleta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    color: var(--vermelho);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.campo-foto-atleta input[type="file"] {
+    flex: 1;
+    min-width: 0;
+    margin-left: 0;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+#previewFotoAtleta {
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #777;
+}
+
 #formAtleta button {
     width: 180px;
     height: 60px;
-    margin: 42px auto 0;
+    margin: 24px auto 0;
     border: none;
     border-radius: 6px;
     background-color: var(--vermelho);
