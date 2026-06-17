@@ -5035,8 +5035,6 @@ Esse mapeamento garante que as 41 Regras de Negócio estejam ligadas aos RFs cor
 
 ### 5.2.1. Relatório de testes de guerrilha
 
-_Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização)._
-
 Os testes de guerrilha são uma técnica de avaliação de usabilidade informal e de baixo custo, na qual o sistema é apresentado a usuários reais recrutados de forma espontânea, sem agendamento prévio ou laboratório controlado. O objetivo é identificar rapidamente problemas de usabilidade com base em tarefas específicas, enquanto um facilitador observa e registra dificuldades e sugestões sem interferir no processo.
 
 #### Descrição dos Testes e das Etapas
@@ -5049,17 +5047,17 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 
 | Teste | Etapa | Descrição da Etapa |
 |-------|-------|--------------------|
-| T1 | Etapa 1 | Adicionar as credenciais de gerente e realizar o login |
-| T1 | Etapa 2 | Iniciar a criação de um evento |
-| T1 | Etapa 3 | Adicionar as informações do evento |
-| T1 | Etapa 4 | Concluir a criação do evento e realizar o logout |
-| T2 | Etapa 1 | Durante a criação do evento, criar duas equipes |
-| T2 | Etapa 2 | Durante a criação do evento, adicionar atletas às duas equipes |
-| T2 | Etapa 3 | Concluir a criação do evento e iniciá-lo |
-| T3 | Etapa 1 | Adicionar as credenciais de auditor e realizar o login |
-| T3 | Etapa 2 | Selecionar o evento criado |
-| T3 | Etapa 3 | Realizar a auditoria de um período de 2 minutos |
-| T3 | Etapa 4 | Concluir a auditoria e realizar o logout |
+| T1 | Etapa #1 | Adicionar as credenciais de gerente e realizar o login |
+| T1 | Etapa #2 | Iniciar a criação de um evento |
+| T1 | Etapa #3 | Adicionar as informações do evento |
+| T1 | Etapa #4 | Concluir a criação do evento e realizar o logout |
+| T2 | Etapa #1 | Durante a criação do evento, criar duas equipes |
+| T2 | Etapa #2 | Durante a criação do evento, adicionar atletas às duas equipes |
+| T2 | Etapa #3 | Concluir a criação do evento e iniciá-lo |
+| T3 | Etapa #1 | Adicionar as credenciais de auditor e realizar o login |
+| T3 | Etapa #2 | Selecionar o evento criado |
+| T3 | Etapa #3 | Realizar a auditoria de um período de 2 minutos |
+| T3 | Etapa #4 | Concluir a auditoria e realizar o logout |
 
 #### Resultados dos Testes de Guerrilha
 
