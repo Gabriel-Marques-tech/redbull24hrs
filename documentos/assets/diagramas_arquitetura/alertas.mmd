@@ -12,73 +12,55 @@ flowchart TB
 
     subgraph L1["Cliente"]
         direction TB
-        C["Gestor<br/>consulta e exportação"]:::client
+        C["Auditor<br/>em turno"]:::client
     end
 
-    subgraph L2["Rotas do fluxo"]
+    subgraph L2["Rota protegida"]
         direction TB
-        R1["GET /metrics/events/:id/dashboard"]:::route
-        R2["GET /metrics/events/:id/teams"]:::route
-        R3["GET /export/events/:id/shifts"]:::route
-        R4["GET /export/events/:id/checkpoints"]:::route
+        R["GET /audit/alerts?event_id=:id<br/>polling periódico"]:::route
+        AUTH["JWT obrigatório"]:::route
     end
 
-    subgraph L3["Controllers"]
+    subgraph L3["Controller"]
         direction TB
-        MC["MetricsController"]:::controller
-        EXC["ExportController"]:::controller
+        AC["AlertsController"]:::controller
     end
 
-    subgraph L4["Services"]
+    subgraph L4["Service"]
         direction TB
-        MS["MetricsService"]:::service
-        EXS["ExportService"]:::service
-        RN["RF019 · RF024<br/>RF047 · RF048 · RN26"]:::note
+        AS["AlertsService<br/>classify(alertsData)"]:::service
+        RN["RF028 · RF029 · RF039<br/>RN11 · RN12 · RN25"]:::note
     end
 
-    subgraph L5["Repositories"]
+    subgraph L5["Repository"]
         direction TB
-        MR["MetricsRepository"]:::repository
-        EXR["ExportRepository"]:::repository
+        AR["AlertsRepository"]:::repository
+        Q1["findAlerts(event_id)"]:::repository
     end
 
     subgraph L6["Banco de Dados"]
         direction TB
         DB["PostgreSQL"]:::db
-        TE["teams"]:::db
-        A["athletes"]:::db
-        S["shifts"]:::db
+        SH["shifts"]:::db
         CP["checkpoints"]:::db
-        TR["treadmills"]:::db
+        AT["athletes"]:::db
     end
 
     subgraph L7["Saídas"]
         direction TB
-        O1["200 dashboard/ranking"]:::output
-        O2["200 CSV turnos"]:::output
-        O3["200 CSV checkpoints"]:::output
+        O1["200 alerts[]"]:::output
+        O2["200 alerts: []"]:::output
+        O3["400 event_id obrigatório"]:::output
     end
 
-    C --> R1 --> MC --> MS --> MR
-    C --> R2 --> MC
-    C --> R3 --> EXC --> EXS --> EXR
-    C --> R4 --> EXC
-    MS -.-> RN
-    EXS -.-> RN
-    MR --> TE
-    MR --> A
-    MR --> S
-    MR --> TR
-    EXR --> S
-    EXR --> CP
-    EXR --> A
-    EXR --> TE
-    EXR --> TR
-    TE --> DB
-    A --> DB
-    S --> DB
+    C --> R --> AUTH --> AC --> AS --> AR
+    AS -.-> RN
+    AR --> Q1 --> SH
+    Q1 --> CP
+    Q1 --> AT
+    SH --> DB
     CP --> DB
-    TR --> DB
-    DB --> MR --> MS --> MC --> O1 --> C
-    DB --> EXR --> EXS --> EXC --> O2 --> C
-    EXC --> O3 --> C
+    AT --> DB
+    DB --> AR --> AS --> AC --> O1 --> C
+    AC --> O2 --> C
+    AC -. event_id ausente .-> O3 --> C
