@@ -1,9 +1,10 @@
 import { eventRepository } from "../repositories/eventRepository";
 import { treadmillRepository } from "../repositories/treadmillRepository";
+import { removeFromStorage } from "../utils/supabaseStorage";
 
 export const eventService = {
-	async registerEvent(manager_id: number, title: string, local: string, date: string) {
-		return eventRepository.createWithManager(title, local, date, manager_id);
+	async registerEvent(manager_id: number, title: string, local: string, date: string, photo_url: string | null = null) {
+		return eventRepository.createWithManager(title, local, date, manager_id, photo_url ?? null);
 	},
 
 	async listEvents() {
@@ -16,9 +17,16 @@ export const eventService = {
 		return event;
 	},
 
-	async updateEvent(id: number, fields: { title?: string; local?: string; date?: string }) {
+	async updateEvent(id: number, fields: { title?: string; local?: string; date?: string; photo_url?: string | null }) {
+		const trocandoFoto = fields.photo_url !== undefined;
+		const atual = trocandoFoto ? await eventRepository.findById(id) : null;
+
 		const event = await eventRepository.update(id, fields);
 		if (!event) throw new Error("Evento não encontrado");
+
+		if (trocandoFoto && atual?.photo_url && atual.photo_url !== fields.photo_url) {
+			await removeFromStorage(atual.photo_url);
+		}
 		return event;
 	},
 
