@@ -126,40 +126,28 @@ describe("POST /audit/shifts/start", () => {
 		expect(res.body.error).toMatch(/RN28/);
 	});
 
-	it("422 – RN17: equipe com menos de 16 corredores", async () => {
+	it("422 – equipe sem corredores ativos (count 0)", async () => {
 		happyStart();
 		(shiftRepository.validateTeamsForAthlete as jest.Mock).mockResolvedValue([
-			{ team_id: 1, name: "Alpha", count: 14 },
-			{ team_id: 2, name: "Beta",  count: 16 },
+			{ team_id: 1, name: "Alpha", count: 0 },
+			{ team_id: 2, name: "Beta",  count: 5 },
 		]);
 		const res = await request(app).post("/audit/shifts/start").send(validStart);
 		expect(res.status).toBe(422);
-		expect(res.body.error).toMatch(/RN17/);
+		expect(res.body.error).toMatch(/sem corredores/);
 		expect(res.body.error).toMatch(/Alpha/);
-		expect(res.body.error).toMatch(/14\/16/);
 	});
 
-	it("422 – RN17: ambas equipes sem 16 corredores", async () => {
+	it("201 – inicia turno com qualquer quantidade de corredores > 0", async () => {
 		happyStart();
 		(shiftRepository.validateTeamsForAthlete as jest.Mock).mockResolvedValue([
-			{ team_id: 1, name: "Alpha", count: 10 },
-			{ team_id: 2, name: "Beta",  count: 8 },
+			{ team_id: 1, name: "Alpha", count: 3 },
+			{ team_id: 2, name: "Beta",  count: 20 },
 		]);
+		(shiftRepository.start as jest.Mock).mockResolvedValue(openShift);
 		const res = await request(app).post("/audit/shifts/start").send(validStart);
-		expect(res.status).toBe(422);
-		expect(res.body.error).toMatch(/Alpha/);
-		expect(res.body.error).toMatch(/Beta/);
-	});
-
-	it("422 – RN17: equipe com mais de 16 corredores", async () => {
-		happyStart();
-		(shiftRepository.validateTeamsForAthlete as jest.Mock).mockResolvedValue([
-			{ team_id: 1, name: "Alpha", count: 17 },
-			{ team_id: 2, name: "Beta",  count: 16 },
-		]);
-		const res = await request(app).post("/audit/shifts/start").send(validStart);
-		expect(res.status).toBe(422);
-		expect(res.body.error).toMatch(/RN17/);
+		expect(res.status).toBe(201);
+		expect(res.body).toMatchObject({ id: 10, status: "in_progress" });
 	});
 });
 
