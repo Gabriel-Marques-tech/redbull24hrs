@@ -1,7 +1,9 @@
 // ---- authFetch (necessário no modo event-edit) ----
 async function authFetch(url, options = {}) {
     const token = localStorage.getItem("accessToken");
-    const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
+    // FormData define seu próprio Content-Type (com boundary); não sobrescrever.
+    const ehFormData = options.body instanceof FormData;
+    const headers = { ...(ehFormData ? {} : { "Content-Type": "application/json" }), ...(options.headers || {}) };
     if (token) headers["Authorization"] = `Bearer ${token}`;
     let res = await fetch(url, { ...options, headers, credentials: "include" });
     if (res.status === 401) {
@@ -22,7 +24,31 @@ const nascimento = document.getElementById("nascimentoAtleta");
 const cpf        = document.getElementById("cpfAtleta");
 const genero     = document.getElementById("generoAtleta");
 const cargo      = document.getElementById("cargoAtleta");
+const foto       = document.getElementById("fotoAtleta");
+const previewFoto = document.getElementById("previewFotoAtleta");
 const linkCancelar = document.getElementById("linkCancelar");
+
+// dataURL da foto recém-selecionada nesta tela (null = nenhuma nova escolhida)
+let fotoDataUrl = null;
+
+function mostrarPreview(src) {
+    if (!src) { previewFoto.hidden = true; previewFoto.removeAttribute("src"); return; }
+    previewFoto.src = src;
+    previewFoto.hidden = false;
+}
+
+foto.addEventListener("change", async () => {
+    const arquivo = foto.files[0];
+    if (!arquivo) return;
+    try {
+        fotoDataUrl = await lerImagemRedimensionada(arquivo);
+        mostrarPreview(fotoDataUrl);
+    } catch (e) {
+        alert(e.message || "Não foi possível processar a imagem.");
+        foto.value = "";
+        fotoDataUrl = null;
+    }
+});
 
 const modoEventEdit = edicao?.modoEdicao === "event-edit";
 const urlRetorno = modoEventEdit
@@ -41,6 +67,7 @@ if (!edicao) {
             nome.value  = d.name   || "";
             cpf.value   = d.cpf    || "";
             if (d.gender) genero.value = d.gender;
+            if (d.photo_url) mostrarPreview(d.photo_url); // foto atual do DB
         }
         // cargo não existe no modelo athlete do DB, ocultar select se quiser
     } else {
@@ -53,6 +80,7 @@ if (!edicao) {
             cpf.value        = atletaSalvo.cpf        || "";
             if (atletaSalvo.genero) genero.value = atletaSalvo.genero;
             if (atletaSalvo.cargo)  cargo.value  = atletaSalvo.cargo;
+            if (atletaSalvo.foto) { fotoDataUrl = atletaSalvo.foto; mostrarPreview(atletaSalvo.foto); }
         }
         if (edicao.indice === 0) cargo.value = "Líder";
     }
@@ -83,12 +111,14 @@ formulario.addEventListener("submit", async (evento) => {
     }
 
     if (modoEventEdit) {
-        // ---- salva direto na API ----
-        const body = JSON.stringify({
-            name:   nome.value.trim(),
-            gender: genero.value,
-            cpf:    cpfDigitos || null
-        });
+        // ---- salva direto na API (multipart: campos texto + foto opcional) ----
+        const body = new FormData();
+        body.append("name", nome.value.trim());
+        body.append("gender", genero.value);
+        if (cpfDigitos) body.append("cpf", cpfDigitos);
+        // só envia foto se o usuário escolheu uma nova nesta tela
+        if (fotoDataUrl) body.append("photo", dataURLparaBlob(fotoDataUrl), "foto.jpg");
+
         const url = edicao.atletaId
             ? `/teams/${edicao.teamId}/athletes/${edicao.atletaId}`
             : `/teams/${edicao.teamId}/athletes`;
@@ -127,7 +157,8 @@ formulario.addEventListener("submit", async (evento) => {
             nascimento: nascimento.value,
             cpf:        cpfDigitos,
             genero:     genero.value,
-            cargo:      cargo.value
+            cargo:      cargo.value,
+            foto:       fotoDataUrl || null
         };
 
         localStorage.setItem("cadastroEquipesGerente", JSON.stringify(estado));
