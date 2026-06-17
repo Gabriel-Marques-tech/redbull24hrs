@@ -1726,7 +1726,7 @@ Na sprint 4, com a integração ponta a ponta dos fluxos de auditoria, gerência
 | **RNF011** | DES | `metricsRepository.ts` usa consultas SQL agregadas (`SUM`, `AVG`, `COUNT`) sobre colunas indexadas para calcular km total, velocidade média e snapshots por evento. | Renderização de métricas consolidadas ≤ 1s | Medir com DevTools (Network → tempo de resposta) ou `curl -w "%{time_total}"` em `GET /metrics/events/:id/teams`. Meta: ≤ 1s. | `metricsRepository.ts`; `metricsService.ts`; `metrics.test.ts` |
 | **RNF012** | SEG | Autenticação completa integrada ao frontend: JWT (15 min) + refresh rotativo (7 dias) em cookies `HttpOnly`, middleware `authMiddleware` bloqueando 100% das rotas protegidas sem token válido. Endpoint público RF050 não passa pelo middleware. | 100% de rejeições com 401 em rotas protegidas sem token; endpoint público RF050 acessível sem autenticação | Executar `auth.service.test.ts` e `auth.routes.test.ts`. Confirmar cobertura de: (a) 401 para token ausente, (b) 401 para token expirado, (c) 403 para perfil incorreto, (d) 200 para RF050 sem token. | `authMiddleware.ts`; `auth.service.test.ts`; `auth.routes.test.ts` |
 | **RNF013** | SEG | `GET /audit/logs` implementado (sprint 4): expõe trilha imutável com `user`, `timestamp`, `old_value`, `new_value` e `type` em ordem decrescente de timestamp. | 100% das edições registradas com usuário, timestamp e dado anterior; consultáveis em ordem decrescente | Executar `logs.test.ts`. Verificar que toda edição via `PATCH` gera entrada em `logs` com os três campos obrigatórios e que a consulta retorna em ordem decrescente. | `logsController.ts`, `logsRepository.ts`; `logs.test.ts` |
-| **RNF015** | SUP | Cobertura de testes atualizada após expansão da suíte na sprint 4 (issue #235): **96,02% em statements, 89,88% em branches, 100% em functions, 99,56% em lines** na camada Service. | Cobertura ≥ 75% global na camada Service, aferida por `npm test -- --coverage` | Executar `npm test -- --coverage`. Verificar coluna "%" no relatório por arquivo em `src/services/`. Meta: ≥ 75% em statements em todos os services. | Evidência em §5.1.5 (Quadro de cobertura); comando: `npm test -- --coverage` |
+| **RNF015** | SUP | Cobertura de testes atualizada após expansão da suíte na sprint 4 (issue #235): **95,45% em statements, 90,74% em branches, 96,87% em functions, 98,29% em lines** na camada Service. | Cobertura ≥ 75% global na camada Service, aferida por `npm test -- --coverage` | Executar `npm test -- --coverage`. Verificar coluna "%" no relatório por arquivo em `src/services/`. Meta: ≥ 75% em statements em todos os services. | Evidência em §5.1.5 (Quadro de cobertura); comando: `npm test -- --coverage` |
 | **RNF016** | CAP | Pool configurado (`max: 15`). Teste de carga com 50 usuários simultâneos a realizar antes da sprint 5. | 50 usuários simultâneos com tempo de resposta < 500ms | Executar `autocannon -c 50 -d 30 http://localhost:3000/metrics/events/1/dashboard`. Coletar p99. Meta: < 500ms. | `connection.ts` — `max: 15`; teste de carga previsto sprint 5 |
 | **RNF017** | CAP | Consultas de histórico e exportação CSV aceleradas por índices sobre FKs (`shift_id`, `event_id`, `team_id`, `athlete_id`, `treadmill_id`). Aferição com volume real a realizar. | Consultas filtradas e exportações de ≤ 10.000 registros em < 3s | Inserir 10.000 registros de teste via script SQL. Executar `curl -w "%{time_total}"` em `GET /audit/history?event_id=1` e `GET /export/events/1/shifts`. Meta: < 3s. | `001_initialSchema.sql` — índices secundários; `historyRepository.ts`, `exportService.ts` |
 | **RNF006** | CONF | Integridade transacional garantida por constraints de PK, FK e `UNIQUE` no PostgreSQL — violações são bloqueadas antes de qualquer persistência. A sprint 4 reforçou com `ON CONFLICT DO NOTHING` no sync (idempotência) e corrigi tipos das colunas `old_value`/`new_value` de `INT` para `NUMERIC` (issue #230), eliminando rejeições silenciosas de km decimais. | 100% das tentativas de persistência de dados inválidos (FK inexistente, duplicata) bloqueadas com erro 4xx | Tentar `POST /audit/checkpoints` com `shift_id` inexistente e confirmar 404; executar `sync.test.ts` com sync_id duplicado e confirmar que apenas 1 registro é criado. | `001_initialSchema.sql` — constraints PK/FK/UNIQUE; `016_alter_old_new_values_to_numeric.sql`; `sync.test.ts` |
@@ -4634,7 +4634,7 @@ Dez novas migrations corrigiram e expandiram o schema para suportar os fluxos da
 
 **Suíte de testes expandida**
 
-A suíte de testes automatizados foi expandida com novas suítes (`pageController.test.ts`, `auth.routes.test.ts`) e correção de falhas em dez arquivos existentes (`auth.controller.test.ts`, `shift.test.ts`, `alerts.test.ts`, `event.test.ts`, `history.test.ts`, `export.test.ts`, `metrics.test.ts`), resultando em 180 testes passando com cobertura de 96,02% em statements e 100% em funções na camada Service. Fechamento: issue #235.
+A suíte de testes automatizados foi expandida com novas suítes (`pageController.test.ts`, `auth.routes.test.ts`) e correção de falhas em dez arquivos existentes (`auth.controller.test.ts`, `shift.test.ts`, `alerts.test.ts`, `event.test.ts`, `history.test.ts`, `export.test.ts`, `metrics.test.ts`), resultando em 301 testes passando em 18 suítes com cobertura de 95,45% em statements e 96,87% em funções na camada Service. Fechamento: issue #235.
 
 ---
 
@@ -4876,20 +4876,22 @@ A tabela a seguir apresenta a finalidade de cada conjunto de testes automatizado
 
 #### Resumo Quantitativo dos Testes
 
-| Módulo               | Quantidade de Cenários         |
-| -------------------- | ------------------------------ |
-| Auth Service         | 18                             |
-| Auth Controller      | 17                             |
-| Auth Middleware      | 7                              |
-| Eventos              | 18                             |
-| Equipes e Atletas    | 23                             |
-| Turnos e Checkpoints | 36                             |
-| Alertas              | 7                              |
-| Histórico            | 8                              |
-| Logs                 | 15                             |
-| Métricas             | 20                             |
-| Exportação CSV       | 11                             |
-| **Total**            | **180 cenários automatizados** |
+| Módulo                    | Quantidade de Cenários         |
+| ------------------------- | ------------------------------ |
+| Auth Service              | 18                             |
+| Auth Controller           | 17                             |
+| Auth Middleware e Rotas   | 13                             |
+| Eventos                   | 36                             |
+| Equipes e Atletas         | 31                             |
+| Turnos e Checkpoints      | 78                             |
+| Sincronização             | 16                             |
+| Alertas                   | 7                              |
+| Histórico                 | 11                             |
+| Logs                      | 15                             |
+| Métricas                  | 20                             |
+| Exportação CSV            | 15                             |
+| Pages / Interface         | 24                             |
+| **Total**                 | **301 cenários automatizados** |
 
 A implementação desses testes automatizados garante a validação das principais regras de negócio da plataforma RedRun, reduzindo riscos de regressão e aumentando a confiabilidade dos fluxos críticos da operação do evento.
 
@@ -4906,10 +4908,10 @@ npm test
 Resultado obtido:
 
 ```bash
-Test Suites: 11 passed, 11 total
-Tests: 180 passed, 180 total
-Snapshots: 0 total
-Time: 28.261 s
+Test Suites: 18 passed, 18 total
+Tests:       301 passed, 301 total
+Snapshots:   0 total
+Time:        8.216 s
 ```
 
 As Figuras 1 a 5 apresentam a execução completa da suíte automatizada, evidenciando que todos os testes foram aprovados com sucesso.
@@ -4969,10 +4971,10 @@ A figura a seguir apresenta o relatório de cobertura gerado pelo Jest, incluind
 A execução do relatório de cobertura demonstrou que a camada Service atingiu os requisitos mínimos definidos para o projeto, apresentando:
 
 ```bash
-Statements: 96,02%
-Branches: 89,88%
-Functions: 100%
-Lines: 99,56%
+Statements: 95,45%
+Branches:   90,74%
+Functions:  96,87%
+Lines:      98,29%
 ```
 
 Os resultados evidenciam ampla cobertura das regras de negócio implementadas na camada de serviços, superando a cobertura mínima de 80% definida para esta entrega.
