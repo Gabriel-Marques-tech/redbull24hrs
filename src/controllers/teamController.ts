@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { teamService } from "../services/teamService";
+import { uploadToStorage } from "../utils/supabaseStorage";
 
 export const teamController = {
 	async getTeams(req: Request, res: Response) {
@@ -80,7 +81,11 @@ export const teamController = {
 			return;
 		}
 		try {
-			const athlete = await teamService.registerAthlete(team_id, name, gender, cpf ?? null);
+			let photo_url: string | null = null;
+			if (req.file) {
+				photo_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos");
+			}
+			const athlete = await teamService.registerAthlete(team_id, name, gender, cpf ?? null, photo_url);
 			res.status(201).json(athlete);
 		} catch (error: any) {
 			if (error.code === "23505") {
@@ -111,11 +116,16 @@ export const teamController = {
 		const team_id = Number(req.params.teamId);
 		const id = Number(req.params.id);
 		const { name, gender, cpf } = req.body;
+		const fields: { name?: string; gender?: string; cpf?: string | null; photo_url?: string | null } = { name, gender, cpf };
 		try {
-			const athlete = await teamService.updateAthlete(team_id, id, { name, gender, cpf });
+			if (req.file) {
+				fields.photo_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos");
+			}
+			const athlete = await teamService.updateAthlete(team_id, id, fields);
 			res.status(200).json(athlete);
 		} catch (error: any) {
-			res.status(404).json({ error: error.message });
+			const status = error.message.includes("não encontrad") ? 404 : 500;
+			res.status(status).json({ error: error.message });
 		}
 	},
 
