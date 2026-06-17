@@ -1,7 +1,9 @@
 // authFetch: fetch com Bearer token + refresh automático
 async function authFetch(url, options = {}) {
     const token = localStorage.getItem("accessToken");
-    const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
+    // FormData define seu próprio Content-Type (com boundary); não sobrescrever.
+    const ehFormData = options.body instanceof FormData;
+    const headers = { ...(ehFormData ? {} : { "Content-Type": "application/json" }), ...(options.headers || {}) };
     if (token) headers["Authorization"] = `Bearer ${token}`;
     let res = await fetch(url, { ...options, headers, credentials: "include" });
     if (res.status === 401) {
@@ -13,6 +15,17 @@ async function authFetch(url, options = {}) {
         res = await fetch(url, { ...options, headers, credentials: "include" });
     }
     return res;
+}
+
+// Monta o corpo da requisição: multipart (FormData) quando há foto, JSON quando não.
+function montarCorpo(campos, fotoDataUrl) {
+    if (!fotoDataUrl) return JSON.stringify(campos);
+    const fd = new FormData();
+    Object.entries(campos).forEach(([chave, valor]) => {
+        if (valor !== null && valor !== undefined) fd.append(chave, valor);
+    });
+    fd.append("photo", dataURLparaBlob(fotoDataUrl), "foto.jpg");
+    return fd;
 }
 
 const inputNomePrimeiraEquipe = document.getElementById("nomePrimeiraEquipe");
@@ -39,14 +52,13 @@ function obterCamposAtletas(tipo) {
 function atualizarContadorAtletas(tipo) {
     const lista    = obterListaAtletas(tipo);
     const contador = lista.querySelector(".contador-atletas");
-    contador.textContent = `${obterCamposAtletas(tipo).length}/${totalAtletas}`;
+    contador.textContent = `${obterCamposAtletas(tipo).length} atleta(s)`;
 }
 
 // ---- adicionar slot de atleta ----
 function adicionarCampoAtleta(tipo) {
     const lista   = obterListaAtletas(tipo);
     const qtd     = obterCamposAtletas(tipo).length;
-    if (qtd >= totalAtletas) return null;
 
     const idx   = qtd; // 0-based
     const campo = document.createElement("div");
@@ -193,15 +205,15 @@ async function submeterCadastro() {
             ? `${dataHorario.data}T${dataHorario.horario || "00:00"}:00`
             : new Date().toISOString();
 
-        // 1. Criar evento
+        // 1. Criar evento (multipart se houver foto, senão JSON)
         const eventoRes = await authFetch("/events", {
             method: "POST",
-            body: JSON.stringify({
+            body: montarCorpo({
                 title: localidade.nome || "Red Bull 24h Corrida",
                 local,
                 date,
                 manager_id: window.MANAGER_ID
-            })
+            }, localidade.foto)
         });
         if (!eventoRes || !eventoRes.ok) {
             const err = await eventoRes?.json().catch(() => ({}));
@@ -231,11 +243,11 @@ async function submeterCadastro() {
                 if (!atleta?.nome) continue;
                 const atletaRes = await authFetch(`/teams/${equipe.id}/athletes`, {
                     method: "POST",
-                    body: JSON.stringify({
+                    body: montarCorpo({
                         name:   atleta.nome,
                         gender: atleta.genero || "Outro",
                         cpf:    atleta.cpf    || null
-                    })
+                    }, atleta.foto)
                 });
                 if (!atletaRes || !atletaRes.ok) {
                     const err = await atletaRes?.json().catch(() => ({}));
