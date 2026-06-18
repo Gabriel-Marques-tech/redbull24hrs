@@ -25,7 +25,7 @@ const passosEquipes     = document.querySelectorAll(".passo-equipe");
 const btnAnteriorEquipes = document.getElementById("btnAnteriorEquipes");
 const btnProximoEquipes  = document.getElementById("btnProximoEquipes");
 const botoesAdicionarAtleta = document.querySelectorAll("[data-adicionar-atleta]");
-
+const botoesAbrirCadastro = [];
 const totalAtletas = 16;
 let passoAtual = (window.PASSO_INICIAL && window.PASSO_INICIAL > 1) ? window.PASSO_INICIAL : 1;
 
@@ -42,6 +42,14 @@ function atualizarContadorAtletas(tipo) {
     contador.textContent = `${obterCamposAtletas(tipo).length}/${totalAtletas}`;
 }
 
+function obterEstado() {
+    return JSON.parse(localStorage.getItem("cadastroEquipesGerente") || "{}");
+}
+
+function salvarEstadoCompleto(estado) {
+    localStorage.setItem("cadastroEquipesGerente", JSON.stringify(estado));
+}
+
 // ---- adicionar slot de atleta ----
 function adicionarCampoAtleta(tipo) {
     const lista   = obterListaAtletas(tipo);
@@ -53,7 +61,7 @@ function adicionarCampoAtleta(tipo) {
     campo.className = "campo-atleta";
     campo.innerHTML = `
         <span>${qtd + 1}</span>
-        <input type="text" readonly placeholder="Clique para preencher"
+        <input type="text" readonly placeholder="Clique para cadastrar atleta"
                data-atleta-indice="${idx}" data-atleta-tipo="${tipo}"
                aria-label="Atleta ${qtd + 1} da equipe ${tipo}">
         <small></small>
@@ -70,7 +78,18 @@ function adicionarCampoAtleta(tipo) {
 // ---- navegar para informacoes-atleta ----
 function abrirFormAtleta(tipo, indice) {
     const passo = (tipo === "primeira") ? 2 : 4;
-    localStorage.setItem("atletaEmEdicao", JSON.stringify({ tipo, indice, passo }));
+    localStorage.setItem("atletaEmEdicao", JSON.stringify({ tipo, indice, passo, tipoCadastro: "atleta" }));
+    window.location.href = "/manager/create-event/athlete";
+}
+
+function abrirFormApoio(tipoCadastro, indice = null) {
+    salvarEstado();
+    localStorage.setItem("atletaEmEdicao", JSON.stringify({
+        tipoCadastro,
+        indice,
+        passo: 0,
+        apoio: true
+    }));
     window.location.href = "/manager/create-event/athlete";
 }
 
@@ -81,6 +100,9 @@ function popularInputAtleta(input, tipo, indice) {
     if (atleta?.nome) {
         input.value = atleta.nome;
         input.closest(".campo-atleta").querySelector("small").textContent = atleta.cargo || "";
+    } else {
+        input.value = "";
+        input.closest(".campo-atleta").querySelector("small").textContent = "";
     }
 }
 
@@ -94,7 +116,7 @@ function popularTodosAtletas() {
 }
 
 function restaurarCamposAtletas() {
-    const estado = JSON.parse(localStorage.getItem("cadastroEquipesGerente") || "{}");
+    const estado = obterEstado();
 
     ["primeira", "segunda"].forEach((tipo) => {
         const totalSalvo = estado.atletas?.[tipo]?.length || 0;
@@ -106,19 +128,46 @@ function restaurarCamposAtletas() {
 
 // ---- preencher nomes de equipe salvos ----
 function restaurarNomesEquipes() {
-    const estado = JSON.parse(localStorage.getItem("cadastroEquipesGerente") || "{}");
+    const estado = obterEstado();
     if (estado.nomeEquipes?.primeira) inputNomePrimeiraEquipe.value = estado.nomeEquipes.primeira;
     if (estado.nomeEquipes?.segunda)  inputNomeSegundaEquipe.value  = estado.nomeEquipes.segunda;
 }
 
 // ---- salvar estado parcial ----
 function salvarEstado() {
-    const estado = JSON.parse(localStorage.getItem("cadastroEquipesGerente") || "{}");
+    const estado = obterEstado();
     estado.nomeEquipes = {
         primeira: inputNomePrimeiraEquipe.value.trim(),
         segunda:  inputNomeSegundaEquipe.value.trim()
     };
-    localStorage.setItem("cadastroEquipesGerente", JSON.stringify(estado));
+    salvarEstadoCompleto(estado);
+}
+
+function renderizarCadastrosApoio() {
+    const estado = obterEstado();
+    const pessoas = [
+        ...(estado.cadastrosApoio?.gerente || []).map((pessoa, indice) => ({ ...pessoa, tipoCadastro: "gerente", indice })),
+        ...(estado.cadastrosApoio?.auditor || []).map((pessoa, indice) => ({ ...pessoa, tipoCadastro: "auditor", indice }))
+    ];
+
+    document.querySelectorAll("[data-lista-apoio]").forEach((lista) => {
+        lista.innerHTML = "";
+        pessoas.forEach((pessoa) => {
+            const card = document.createElement("button");
+            card.type = "button";
+            card.className = "cadastro-apoio-card";
+            const avatar = pessoa.fotoPerfil
+                ? `<img src="${pessoa.fotoPerfil}" alt="">`
+                : `<span class="cadastro-apoio-avatar"></span>`;
+            card.innerHTML = `
+                ${avatar}
+                <span>${pessoa.nome}</span>
+                <strong>${rotulosCadastro[pessoa.tipoCadastro]}</strong>
+            `;
+            card.addEventListener("click", () => abrirFormApoio(pessoa.tipoCadastro, pessoa.indice));
+            lista.appendChild(card);
+        });
+    });
 }
 
 // ---- títulos dinâmicos ----
@@ -163,7 +212,8 @@ function validarCadastro(estado) {
         if (!eq.nome || !eq.nome.trim()) {
             return `Dê um nome para a ${eq.rotulo}.`;
         }
-        const atletas = (estado.atletas?.[eq.chave] || []).filter((a) => a?.nome?.trim());
+        const atletas = (estado.atletas?.[eq.chave] || [])
+            .filter((a) => (!a?.tipoCadastro || a.tipoCadastro === "atleta") && a?.nome?.trim());
         if (atletas.length === 0) {
             return `Adicione ao menos um atleta na equipe "${eq.nome}".`;
         }
@@ -228,7 +278,7 @@ async function submeterCadastro() {
 
             const atletasEquipe = estado.atletas?.[eq.chave] || [];
             for (const atleta of atletasEquipe) {
-                if (!atleta?.nome) continue;
+                if (!atleta?.nome || (atleta.tipoCadastro && atleta.tipoCadastro !== "atleta")) continue;
                 const atletaRes = await authFetch(`/teams/${equipe.id}/athletes`, {
                     method: "POST",
                     body: JSON.stringify({
@@ -273,6 +323,18 @@ botoesAdicionarAtleta.forEach((botao) => {
     botao.addEventListener("click", () => {
         const input = adicionarCampoAtleta(botao.dataset.adicionarAtleta);
         if (input) abrirFormAtleta(botao.dataset.adicionarAtleta, Number(input.dataset.atletaIndice));
+    });
+});
+
+botoesAbrirCadastro.forEach((botao) => {
+    botao.addEventListener("click", () => {
+        const tipo = botao.dataset.abrirCadastro;
+        if (tipo === "equipes") {
+            passoAtual = 1;
+            atualizarPasso();
+            return;
+        }
+        abrirFormApoio(tipo);
     });
 });
 
