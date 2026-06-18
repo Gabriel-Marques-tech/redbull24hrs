@@ -4364,8 +4364,8 @@ O foco dessa sprint foi a implementação do backend da aplicação. Todos os fl
 Implementamos a camada responsável pelo gerenciamento dos eventos da competição. Por ele, é possível criar um evento, validar data, local e esteiras, acompanhar métricas como quilometragem total por equipe e velocidade média, além de exportar os dados coletados durante o evento ao fim da competição. Abaixo temos os diagramas realizados durante a sprint 3, que são os diagramas de arquitetura e classe arquitetural. 
 
 <div align="center">
-  <sub>Imagem 69 – Diagrama de arquitetura do fluxo de Eventos e Histórico</sub><br>
-  <img src="./assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de arquitetura - Eventos e Histórico"><br>
+  <sub>Imagem 69 – Diagrama de arquitetura do fluxo de Eventos </sub><br>
+  <img src="./assets/diagramas_arquitetura/eventos.svg" width="100%" alt="Diagrama de arquitetura - Eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
