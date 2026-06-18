@@ -1857,56 +1857,47 @@ TURNOS
 ---
 A seção de Diagramas de Classes Arquiteturais apresenta a modelagem estrutural dos principais módulos do sistema, evidenciando as classes, responsabilidades e relacionamentos existentes entre os componentes da aplicação. Esses diagramas auxiliam na compreensão da organização interna do software, demonstrando como entidades, serviços, controladores e repositórios interagem para garantir o funcionamento adequado das funcionalidades implementadas.
 
+ALERTAS
+
+<div align="center">
+  <sub>Imagem X - Diagrama de Classes Arquiteturais - ALERTAS </sub><br>
+  <img src= "../assets/diagramas_arquiteturais/ALERTS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 1"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+AUDITORIA
+
+<div align="center">
+  <sub>Imagem X - Diagrama de Classes Arquiteturais - AUTENTICAÇÃO </sub><br>
+  <img src= "../assets/diagramas_arquiteturais/AUDIT_LOGS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 2"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+AUTENTICAÇÃO
+
+<div align="center">
+  <sub>Imagem X - Diagrama de Classes Arquiteturais - AUTENTICAÇÃO </sub><br>
+  <img src= "../assets/diagramas_arquiteturais/AUTH_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 3"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
 DASHBOARD
 
 <div align="center">
-  <sub>Imagem 20 - Diagrama de Classes Arquiteturais - DASHBOARD </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Imagem X - Diagrama de Classes Arquiteturais - DASHBOARD </sub><br>
+  <img src= "../assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png de Classes Arquiteturais - 4"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
-EVENTS
+EVENTOS
 
 <div align="center">
-  <sub>Imagem 21 - Diagrama de Classes Arquiteturais - EVENTS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/EVENTS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-HISTORY
-
-<div align="center">
-  <sub>Imagem 22 - Diagrama de Classes Arquiteturais - HISTORY </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/HISTORY_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-LOGS
-
-<div align="center">
-  <sub>Imagem 23 - Diagrama de Classes Arquiteturais - LOGS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/LOGS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-TEAMS
-
-<div align="center">
-  <sub>Imagem 24 - Diagrama de Classes Arquiteturais - TEAMS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/TEAMS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-TURNS
-
-<div align="center">
-  <sub>Imagem 25 - Diagrama de Classes Arquiteturais - TURNS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/TURNS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Imagem X - Diagrama de Classes Arquiteturais - EVENTOS </sub><br>
+  <img src= "../assets/diagramas_arquiteturais/EVENTS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 5"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
