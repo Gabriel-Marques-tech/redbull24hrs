@@ -1860,8 +1860,8 @@ A seção de Diagramas de Classes Arquiteturais apresenta a modelagem estrutural
 ALERTAS
 
 <div align="center">
-  <sub>Imagem X - Diagrama de Classes Arquiteturais - ALERTAS </sub><br>
-  <img src= "../assets/diagramas_arquiteturais/ALERTS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 1"><br>
+  <sub>Imagem 20 - Diagrama de Classes Arquiteturais - ALERTAS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/ALERTS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 1"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1869,8 +1869,8 @@ ALERTAS
 AUDITORIA
 
 <div align="center">
-  <sub>Imagem X - Diagrama de Classes Arquiteturais - AUTENTICAÇÃO </sub><br>
-  <img src= "../assets/diagramas_arquiteturais/AUDIT_LOGS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 2"><br>
+  <sub>Imagem 21 - Diagrama de Classes Arquiteturais - AUDITORIA </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/AUDIT_LOGS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 2"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1878,8 +1878,8 @@ AUDITORIA
 AUTENTICAÇÃO
 
 <div align="center">
-  <sub>Imagem X - Diagrama de Classes Arquiteturais - AUTENTICAÇÃO </sub><br>
-  <img src= "../assets/diagramas_arquiteturais/AUTH_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 3"><br>
+  <sub>Imagem 22 - Diagrama de Classes Arquiteturais - AUTENTICAÇÃO </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/AUTH_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 3"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1887,8 +1887,8 @@ AUTENTICAÇÃO
 DASHBOARD
 
 <div align="center">
-  <sub>Imagem X - Diagrama de Classes Arquiteturais - DASHBOARD </sub><br>
-  <img src= "../assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png de Classes Arquiteturais - 4"><br>
+  <sub>Imagem 23 - Diagrama de Classes Arquiteturais - DASHBOARD </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 4"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1896,8 +1896,17 @@ DASHBOARD
 EVENTOS
 
 <div align="center">
-  <sub>Imagem X - Diagrama de Classes Arquiteturais - EVENTOS </sub><br>
-  <img src= "../assets/diagramas_arquiteturais/EVENTS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 5"><br>
+  <sub>Imagem 24 - Diagrama de Classes Arquiteturais - EVENTOS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/EVENTS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 5"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+EXPORTAÇÃO
+
+<div align="center">
+  <sub>Imagem 25 - Diagrama de Classes Arquiteturais - EXPORTAÇÃO </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/EXPORT_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 6"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
