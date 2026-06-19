@@ -1911,6 +1911,51 @@ EXPORTAÇÃO
   <br><br><br>
 </div>
 
+HISTÓRICO
+
+<div align="center">
+  <sub>Imagem X - Diagrama de Classes Arquiteturais - HISTÓRICO </sub><br>
+  <img src= "../assets/diagramas_arquiteturais/HISTORY_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 7"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+LOGS
+
+<div align="center">
+  <sub>Imagem X - Diagrama de Classes Arquiteturais - LOGS </sub><br>
+  <img src= "../assets/diagramas_arquiteturais/LOGS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 8"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+MÉTRICAS
+
+<div align="center">
+  <sub>Imagem X - Diagrama de Classes Arquiteturais - MÉTRICAS </sub><br>
+  <img src= "../assets/diagramas_arquiteturais/METRICS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 9"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+EQUIPES
+
+<div align="center">
+  <sub>Imagem X - Diagrama de Classes Arquiteturais - TEAMS </sub><br>
+  <img src= "../assets/diagramas_arquiteturais/TEAMS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 10"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+TURNOS
+
+<div align="center">
+  <sub>Imagem X - Diagrama de Classes Arquiteturais - TURNOS </sub><br>
+  <img src= "../assets/diagramas_arquiteturais/TURNS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 11"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
 ### 3.2.2. Diagrama de Casos de Uso 
 ---
 
