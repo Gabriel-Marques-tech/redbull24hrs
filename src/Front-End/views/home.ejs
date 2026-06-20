@@ -9,6 +9,11 @@
     <script type="module" src="/js/home.js"></script>
 </head>
 <body>
+    <%
+        const eventoAoVivo = Array.isArray(events)
+            ? events.find(evento => evento.status === 'in_progress')
+            : null;
+    %>
 
     <!-- Aviso: competições agendadas são exclusivas de managers -->
     <script>
@@ -63,7 +68,22 @@
                 font-size:26px; font-weight:700; margin-bottom:16px; letter-spacing:1px;
                 font-family:'Inter', sans-serif;
             "><%= user ? user.name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase() : '?' %></div>
-            <p style="font-size:20px; font-weight:700; margin-bottom:4px; font-family:'Inter',sans-serif;"><%= user ? user.name : '—' %></p>
+            <div class="drawer-identidade-linha">
+                <p style="font-size:20px; font-weight:700; margin-bottom:4px; font-family:'Inter',sans-serif;"><%= user ? user.name : '—' %></p>
+                <% if (user && user.role === 'manager') { %>
+                    <% if (eventoAoVivo) { %>
+                    <a class="drawer-modo-tv" href="/manager/event/<%= eventoAoVivo.id %>?modoTv=config" title="Configurar Exibição Pública">
+                        <span class="drawer-modo-tv-icone" aria-hidden="true"></span>
+                        <strong>Modo TV</strong>
+                    </a>
+                    <% } else { %>
+                    <span class="drawer-modo-tv drawer-modo-tv-inativo" title="Disponível durante um evento em andamento">
+                        <span class="drawer-modo-tv-icone" aria-hidden="true"></span>
+                        <strong>Modo TV</strong>
+                    </span>
+                    <% } %>
+                <% } %>
+            </div>
             <p style="font-size:13px; opacity:0.7; font-family:'Inter',sans-serif;"><%= user ? user.email : '' %></p>
         </div>
 
