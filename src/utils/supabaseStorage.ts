@@ -4,7 +4,8 @@ export async function uploadToStorage(
 	buffer: Buffer,
 	mimetype: string,
 	originalName: string,
-	bucket: string
+	bucket: string,
+	folder?: string
 ): Promise<string> {
 	const SUPABASE_URL = process.env.SUPABASE_URL;
 	const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -13,8 +14,8 @@ export async function uploadToStorage(
 	}
 
 	const ext = originalName.split(".").pop() ?? "bin";
-	const fileName = `${randomUUID()}.${ext}`;
-	const uploadUrl = `${SUPABASE_URL}/storage/v1/object/${bucket}/${fileName}`;
+	const objectPath = folder ? `${folder}/${randomUUID()}.${ext}` : `${randomUUID()}.${ext}`;
+	const uploadUrl = `${SUPABASE_URL}/storage/v1/object/${bucket}/${objectPath}`;
 
 	const response = await fetch(uploadUrl, {
 		method: "POST",
@@ -30,7 +31,7 @@ export async function uploadToStorage(
 		throw new Error(`Falha no upload de imagem: ${text}`);
 	}
 
-	return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${fileName}`;
+	return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${objectPath}`;
 }
 
 // Remove arquivo do bucket a partir da URL pública. Melhor esforço: nunca lança,
