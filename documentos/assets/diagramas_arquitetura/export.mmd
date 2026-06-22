@@ -12,73 +12,66 @@ flowchart TB
 
     subgraph L1["Cliente"]
         direction TB
-        C["Gestor<br/>consulta e exportação"]:::client
+        C["Gerente"]:::client
     end
 
-    subgraph L2["Rotas do fluxo"]
+    subgraph L2["Rotas protegidas"]
         direction TB
-        R1["GET /metrics/events/:id/dashboard"]:::route
-        R2["GET /metrics/events/:id/teams"]:::route
-        R3["GET /export/events/:id/shifts"]:::route
-        R4["GET /export/events/:id/checkpoints"]:::route
+        R1["GET /export/events/:eventId/shifts"]:::route
+        R2["GET /export/events/:eventId/checkpoints"]:::route
+        AUTH["JWT obrigatório"]:::route
     end
 
-    subgraph L3["Controllers"]
+    subgraph L3["Controller"]
         direction TB
-        MC["MetricsController"]:::controller
-        EXC["ExportController"]:::controller
+        EC["ExportController"]:::controller
     end
 
-    subgraph L4["Services"]
+    subgraph L4["Service"]
         direction TB
-        MS["MetricsService"]:::service
-        EXS["ExportService"]:::service
-        RN["RF019 · RF024<br/>RF047 · RF048 · RN26"]:::note
+        ES["ExportService<br/>gera CSV"]:::service
+        RN["RF047 · RF048<br/>RN26 exportação"]:::note
     end
 
-    subgraph L5["Repositories"]
+    subgraph L5["Repository"]
         direction TB
-        MR["MetricsRepository"]:::repository
-        EXR["ExportRepository"]:::repository
+        ER["ExportRepository"]:::repository
+        Q1["queryShiftsCsv"]:::repository
+        Q2["queryCheckpointsCsv"]:::repository
     end
 
     subgraph L6["Banco de Dados"]
         direction TB
         DB["PostgreSQL"]:::db
-        TE["teams"]:::db
-        A["athletes"]:::db
-        S["shifts"]:::db
+        SH["shifts"]:::db
         CP["checkpoints"]:::db
-        TR["treadmills"]:::db
+        AT["athletes"]:::db
+        TE["teams"]:::db
+        TM["treadmills"]:::db
     end
 
     subgraph L7["Saídas"]
         direction TB
-        O1["200 dashboard/ranking"]:::output
-        O2["200 CSV turnos"]:::output
-        O3["200 CSV checkpoints"]:::output
+        O1["200 text/csv turnos"]:::output
+        O2["200 text/csv checkpoints"]:::output
+        O3["200 CSV vazio"]:::output
     end
 
-    C --> R1 --> MC --> MS --> MR
-    C --> R2 --> MC
-    C --> R3 --> EXC --> EXS --> EXR
-    C --> R4 --> EXC
-    MS -.-> RN
-    EXS -.-> RN
-    MR --> TE
-    MR --> A
-    MR --> S
-    MR --> TR
-    EXR --> S
-    EXR --> CP
-    EXR --> A
-    EXR --> TE
-    EXR --> TR
-    TE --> DB
-    A --> DB
-    S --> DB
+    C --> R1 --> AUTH --> EC --> ES --> ER
+    C --> R2 --> AUTH --> EC
+    ES -.-> RN
+    ER --> Q1 --> SH
+    Q1 --> AT
+    Q1 --> TE
+    Q1 --> TM
+    ER --> Q2 --> CP
+    Q2 --> SH
+    Q2 --> AT
+    SH --> DB
     CP --> DB
-    TR --> DB
-    DB --> MR --> MS --> MC --> O1 --> C
-    DB --> EXR --> EXS --> EXC --> O2 --> C
-    EXC --> O3 --> C
+    AT --> DB
+    TE --> DB
+    TM --> DB
+    DB --> ER --> ES --> EC --> O1 --> C
+    EC --> O2 --> C
+    EC --> O3 --> C

@@ -3,13 +3,14 @@
 }
 
 .conteudo-atleta {
+    position: relative;
     width: 470px;
     margin-left: 120px;
     margin-top: -35px;
 }
 
 .subetapa-atleta {
-    display: block;
+    display: none;
     color: #8d8d8d;
     font-size: 18px;
     font-weight: 700;
@@ -21,10 +22,20 @@
     margin-bottom: 30px;
 }
 
+.cabecalho-cadastro-pessoa {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cabecalho-cadastro-pessoa h1 {
+    margin-bottom: 30px;
+}
+
 #formAtleta {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
 }
 
 #formAtleta label {
@@ -49,6 +60,96 @@
     border: none;
     outline: none;
     font-size: 18px;
+}
+
+.campo-tipo-cadastro select {
+    flex: 1;
+    height: 100%;
+    margin-left: 12px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #1c1c1c;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.campo-foto-perfil {
+    width: 470px;
+    min-height: 78px;
+    padding: 10px 14px;
+    border: 1px dashed #bdbdbd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.foto-perfil-preview {
+    width: 58px;
+    height: 58px;
+    flex: 0 0 58px;
+    border-radius: 50%;
+    background-color: #eeeeee;
+    color: #999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.foto-perfil-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.campo-foto-perfil strong {
+    display: block;
+    color: var(--vermelho);
+    font-size: 18px;
+}
+
+.campo-foto-perfil p {
+    margin: 2px 0 8px;
+    color: #777777;
+    font-size: 14px;
+}
+
+.campo-foto-perfil button {
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 6px 14px;
+    border: 1px solid var(--vermelho);
+    border-radius: 5px;
+    background-color: var(--branco);
+    color: var(--vermelho);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#fotoPerfilPessoa {
+    display: none;
+}
+
+.campos-atleta,
+.campos-acesso {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.campos-atleta.escondido,
+.campos-acesso {
+    display: none;
+}
+
+.campos-acesso.ativo {
+    display: flex;
 }
 
 .campo-data-atleta {
@@ -92,36 +193,10 @@
     background-repeat: no-repeat;
 }
 
-.campo-foto-atleta {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex-wrap: wrap;
-    color: var(--vermelho);
-    font-size: 18px;
-    font-weight: 700;
-}
-
-.campo-foto-atleta input[type="file"] {
-    flex: 1;
-    min-width: 0;
-    margin-left: 0;
-    font-weight: 400;
-    cursor: pointer;
-}
-
-#previewFotoAtleta {
-    width: 72px;
-    height: 72px;
-    object-fit: cover;
-    border-radius: 6px;
-    border: 1px solid #777;
-}
-
-#formAtleta button {
+#formAtleta > button[type="submit"] {
     width: 180px;
     height: 60px;
-    margin: 24px auto 0;
+    margin: 16px auto 0;
     border: none;
     border-radius: 6px;
     background-color: var(--vermelho);
@@ -131,8 +206,27 @@
     cursor: pointer;
 }
 
+body:not(.cadastro-pelo-drawer) .conteudo-atleta {
+    margin-top: -55px;
+}
 
 
 
 
+.cadastro-pelo-drawer .etapas {
+    display: none;
+}
 
+.cadastro-pelo-drawer main {
+    justify-content: center;
+}
+
+.cadastro-pelo-drawer .conteudo-atleta {
+    width: 470px;
+    margin-left: 0;
+    margin-top: -10px;
+}
+
+.cadastro-pelo-drawer .subetapa-atleta {
+    display: none;
+}

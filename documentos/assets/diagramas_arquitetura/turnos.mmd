@@ -20,6 +20,7 @@ flowchart TB
         R1["POST /audit/shifts/start"]:::route
         R2["POST /audit/shifts/:id/checkpoints"]:::route
         R3["PATCH /audit/shifts/:id/finish"]:::route
+        R4["PATCH /audit/shifts/:id/abandon"]:::route
     end
 
     subgraph L3["Controller"]
@@ -33,7 +34,8 @@ flowchart TB
         V1["atleta livre"]:::note
         V2["esteira livre"]:::note
         V3["KM crescente"]:::note
-        V4["cálculo de métricas"]:::note
+        V4["cálculo distância/velocidade"]:::note
+        V5["justificativa obrigatória"]:::note
     end
 
     subgraph L5["Repository"]
@@ -42,7 +44,8 @@ flowchart TB
         Q1["start"]:::repository
         Q2["addCheckpoint"]:::repository
         Q3["finish"]:::repository
-        Q4["findById"]:::repository
+        Q4["abandon"]:::repository
+        Q5["findById / open checks"]:::repository
     end
 
     subgraph L6["Banco de Dados"]
@@ -60,29 +63,34 @@ flowchart TB
         O1["201 turno iniciado"]:::output
         O2["201 checkpoint"]:::output
         O3["200 turno finalizado"]:::output
+        O4["200 turno abandonado"]:::output
     end
 
     C --> R1 --> SC --> SS
     C --> R2 --> SC
     C --> R3 --> SC
+    C --> R4 --> SC
     SS --> V1
     SS --> V2
     SS --> V3
     SS --> V4
+    SS --> V5
     SS --> SR
     SR --> Q1
     SR --> Q2
     SR --> Q3
     SR --> Q4
+    SR --> Q5
     Q1 --> SH
     Q1 --> AT
     Q1 --> TM
     Q1 --> AU
     Q2 --> CP
     Q2 --> SH
-    Q4 --> SH
-    Q4 --> CP
     Q3 --> SH
+    Q4 --> SH
+    Q5 --> SH
+    Q5 --> CP
     SH --> DB
     CP --> DB
     AT --> DB
@@ -92,3 +100,4 @@ flowchart TB
     SC --> O1 --> C
     SC --> O2 --> C
     SC --> O3 --> C
+    SC --> O4 --> C

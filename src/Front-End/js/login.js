@@ -1,32 +1,31 @@
-document.getElementById("login-form").addEventListener("submit", submitLogin)
+async function submitLogin(event) {
+	event.preventDefault();
 
-async function submitLogin(element) {
-	element.preventDefault()
+	const email = document.getElementById("email").value;
+	const password = document.getElementById("senha").value;
+	const role = document.querySelector('input[name="role"]:checked')?.value || "auditor";
+	const erro = document.getElementById("erro");
 
-	//--------------- get infos of front end -----------------------------------------------
-	const email = document.getElementById('email').value
-	const password = document.getElementById('senha').value
-	const role = document.querySelector('input[name="role"]:checked').value
+	erro.style.display = "none";
+	erro.textContent = "";
 
+	const res = await fetch("/auth/login", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ email, password, role }),
+	});
 
-	//--------------- fetch login endpoint -------------------------------------------------n
-	const res = await fetch('/auth/login', {
-		method: 'POST',
-		headers: {'Content-Type': 'application/json'},
-		body: JSON.stringify( {email, password, role})
-	})
-
-	const data = await res.json()
+	const data = await res.json();
 
 	if (!res.ok) {
-    	const erro = document.getElementById('erro')
-    	erro.textContent = data.error
-    	erro.style.display = 'block'
-		console.log("erro")
-    	return
-  	}
+		erro.textContent = data.error || "Erro ao entrar";
+		erro.style.display = "block";
+		return;
+	}
 
-  	localStorage.setItem('accessToken', data.accessToken)
-	localStorage.setItem('user', JSON.stringify(data.user))
-	window.location.href = '/home'
+	localStorage.setItem("accessToken", data.accessToken);
+	localStorage.setItem("user", JSON.stringify(data.user));
+	window.location.href = "/home";
 }
+
+document.getElementById("login-form")?.addEventListener("submit", submitLogin);
