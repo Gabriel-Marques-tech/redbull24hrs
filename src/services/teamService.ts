@@ -45,10 +45,10 @@ export const teamService = {
 		return team;
 	},
 
-	async registerAthlete(team_id: number, name: string, gender: string, cpf: string | null, photo_url: string | null = null) {
+	async registerAthlete(team_id: number, name: string, gender: string, cpf: string | null, image_url: string | null = null) {
 		const team = await teamRepository.findById(team_id);
 		if (!team) throw new Error("Equipe não encontrada");
-		return athleteRepository.create(name, gender, cpf ?? null, team_id, photo_url ?? null);
+		return athleteRepository.create(name, gender, cpf ?? null, team_id, image_url ?? null);
 	},
 
 	async listAthletes(team_id: number) {
@@ -65,19 +65,19 @@ export const teamService = {
 		return athlete;
 	},
 
-	async updateAthlete(team_id: number, id: number, fields: { name?: string; gender?: string; cpf?: string | null; photo_url?: string | null }) {
+	async updateAthlete(team_id: number, id: number, fields: { name?: string; gender?: string; cpf?: string | null; image_url?: string | null }) {
 		const team = await teamRepository.findById(team_id);
 		if (!team) throw new Error("Equipe não encontrada");
 
 		// captura foto antiga antes do update para limpar do bucket se for trocada
-		const trocandoFoto = fields.photo_url !== undefined;
+		const trocandoFoto = fields.image_url !== undefined;
 		const atual = trocandoFoto ? await athleteRepository.findById(id) : null;
 
 		const athlete = await athleteRepository.update(id, fields);
 		if (!athlete) throw new Error("Atleta não encontrado");
 
-		if (trocandoFoto && atual?.photo_url && atual.photo_url !== fields.photo_url) {
-			await removeFromStorage(atual.photo_url);
+		if (trocandoFoto && atual?.image_url && atual.image_url !== fields.image_url) {
+			await removeFromStorage(atual.image_url);
 		}
 		return athlete;
 	},
