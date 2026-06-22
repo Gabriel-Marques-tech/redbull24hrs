@@ -5043,7 +5043,110 @@ _Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de tes
 
 ---
 
-_Posicione aqui o relatório dos testes SUS realizados._
+O SUS é uma escala padronizada de 10 afirmações utilizada para medir a usabilidade percebida de um sistema. Cada afirmação é respondida em uma escala de 1 a 5 (sendo 1 = "Discordo totalmente" e 5 = "Concordo totalmente"), e o resultado final gera uma pontuação de 0 a 100 [²⁷](#8-referências).
+
+O formulário foi respondido por 6 participantes logo após a realização do teste de guerrilha, com base na experiência que acabaram de ter com o sistema. Os participantes eram alunos da própria instituição, sem vínculo com a Red Bull ou conhecimento prévio do contexto do evento.
+
+
+**Fórmula de cálculo:**
+
+Para cada resposta, aplica-se a seguinte lógica [²⁷](#8-referências):
+- Perguntas ímpares (1, 3, 5, 7 e 9): subtrai 1 do valor respondido
+- Perguntas pares (2, 4, 6, 8 e 10): subtrai o valor respondido de 5
+
+A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score final de cada participante. A média entre todos os participantes representa o score SUS do sistema.
+
+
+**Resultados individuais:**
+
+| Participante | Score SUS |
+|---|---|
+| 1 | 100,0 |
+| 2 | 75,0 |
+| 3 | 87,5 |
+| 4 | 85,0 |
+| 5 | 70,0 |
+| 6 | 82,5 |
+
+
+**Score médio: 83,3**
+
+<div align="center">
+  <sub>Imagem 81 - Gráfico SUS - Pergunta 1</sub><br>
+  <img src="./assets/teste-sus/grafico_pergunta_1.png" width="100%" alt="Gráfico SUS - Pergunta 1"><br>
+  <sub>Fonte: Google Forms, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 82 - Gráfico SUS - Pergunta 2</sub><br>
+  <img src="./assets/teste-sus/grafico_pergunta_2.png" width="100%" alt="Gráfico SUS - Pergunta 2"><br>
+  <sub>Fonte: Google Forms, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 83 - Gráfico SUS - Pergunta 3</sub><br>
+  <img src="./assets/teste-sus/grafico_pergunta_3.png" width="100%" alt="Gráfico SUS - Pergunta 3"><br>
+  <sub>Fonte: Google Forms, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 84 - Gráfico SUS - Pergunta 4</sub><br>
+  <img src="./assets/teste-sus/grafico_pergunta_4.png" width="100%" alt="Gráfico SUS - Pergunta 4"><br>
+  <sub>Fonte: Google Forms, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 85 - Gráfico SUS - Pergunta 5</sub><br>
+  <img src="./assets/teste-sus/grafico_pergunta_5.png" width="100%" alt="Gráfico SUS - Pergunta 5"><br>
+  <sub>Fonte: Google Forms, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 86 - Gráfico SUS - Pergunta 6</sub><br>
+  <img src="./assets/teste-sus/grafico_pergunta_6.png" width="100%" alt="Gráfico SUS - Pergunta 6"><br>
+  <sub>Fonte: Google Forms, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 87 - Gráfico SUS - Pergunta 7</sub><br>
+  <img src="./assets/teste-sus/grafico_pergunta_7.png" width="100%" alt="Gráfico SUS - Pergunta 7"><br>
+  <sub>Fonte: Google Forms, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 88 - Gráfico SUS - Pergunta 8</sub><br>
+  <img src="./assets/teste-sus/grafico_pergunta_8.png" width="100%" alt="Gráfico SUS - Pergunta 8"><br>
+  <sub>Fonte: Google Forms, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 89 - Gráfico SUS - Pergunta 9</sub><br>
+  <img src="./assets/teste-sus/grafico_pergunta_9.png" width="100%" alt="Gráfico SUS - Pergunta 9"><br>
+  <sub>Fonte: Google Forms, 2026.</sub>
+  <br><br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 90 - Gráfico SUS - Pergunta 10</sub><br>
+  <img src="./assets/teste-sus/grafico_pergunta_10.png" width="100%" alt="Gráfico SUS - Pergunta 10"><br>
+  <sub>Fonte: Google Forms, 2026.</sub>
+  <br><br><br>
+</div>
+
+**Análise dos resultados:**
+
+A média de 83,3 classifica o sistema como "bom" na escala SUS. De acordo com Barros (2022) [²⁷](#8-referências), pontuações acima de 80 já se enquadram na faixa "bom" e se aproximam do nível "excelente", que começa em 85,5. Os gráficos reforçam esse resultado: nas perguntas positivas, como a 1 (interesse em usar com frequência), a 5 (funções bem integradas) e a 7 (facilidade de aprendizado), as respostas se concentraram nos valores 4 e 5. Nas perguntas negativas, como a 2 (complexidade desnecessária), a 6 (inconsistência) e a 8 (sistema atrapalhado), a maioria dos participantes respondeu 1 ou 2, indicando discordância com essas afirmações.
+
+O único ponto de atenção está na pergunta 4, onde alguns participantes indicaram que precisariam de algum suporte técnico para usar o sistema. Isso pode ser explicado pelo perfil dos testadores: como nenhum deles tinha contexto prévio sobre o evento ou o fluxo de trabalho dos auditores da Red Bull, a curva de aprendizado percebida tende a ser maior do que a esperada para o público real do sistema.
+
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
 
@@ -5266,6 +5369,8 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 ---
 
 ¹⁷ ABRAMOV, Dan. **Presentational and Container Components.** Medium, 23 mar. 2015. Disponível em: https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0. Acesso em: 26 mai. 2026.
+
+²⁷ BARROS, Myrela. **Guia atualizado de como utilizar a escala SUS (System Usability Scale) no seu produto**. UX Collective, out. 2022. Disponível em: <https://brasil.uxdesign.cc/guia-atualizado-de-como-utilizar-a-escala-sus-system-usability-scale-no-seu-produto-ab773f29c522>. Acesso em: 22 jun. 2026.
 
 ⁸ BUSINESS RULES GROUP. **Business Rules Manifesto:** the principles of rule independence. Version 2.0. S. l.: Business Rules Group, 2003. Disponível em: <https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf>. Acesso em: 27 abr. 2026.
 
