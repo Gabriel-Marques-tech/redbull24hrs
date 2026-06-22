@@ -19,11 +19,11 @@ export const eventController = {
 			return;
 		}
 		try {
-			let photo_url: string | null = null;
+			let image_url: string | null = null;
 			if (req.file) {
-				photo_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos");
+				image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos");
 			}
-			const event = await eventService.registerEvent(Number(manager_id), title, local, date, photo_url);
+			const event = await eventService.registerEvent(Number(manager_id), title, local, date, image_url);
 			res.status(201).json(event);
 		} catch (error: any) {
 			res.status(500).json({ error: error.message });
@@ -43,13 +43,13 @@ export const eventController = {
 	async updateEvent(req: Request, res: Response) {
 		const id = Number(req.params.id);
 		const { title, local, date } = req.body;
-		const fields: { title?: string; local?: string; date?: string; photo_url?: string | null } = { title, local, date };
+		const fields: { title?: string; local?: string; date?: string; image_url?: string | null } = { title, local, date };
 		try {
 			if (req.file) {
-				fields.photo_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos");
+				fields.image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos");
 			} else if (req.body.remove_photo === "true" || req.body.remove_photo === true) {
 				// remoção explícita: zera a coluna; o service apaga a foto antiga do Storage
-				fields.photo_url = null;
+				fields.image_url = null;
 			}
 			const event = await eventService.updateEvent(id, fields);
 			res.status(200).json(event);
