@@ -803,6 +803,42 @@ const tempoPercorridoTurno = document.getElementById('tempoPercorridoTurno')
 const quilometragemTurno = document.getElementById('quilometragemTurno')
 const btnRegistrarTurno  = document.getElementById('btnRegistrarTurno')
 const btnCancelarTurno   = document.getElementById('btnCancelarTurno')
+const finalizarTurnoFotoInput = document.getElementById('finalizarTurnoFotoInput')
+const finalizarTurnoFotoPreview = document.getElementById('finalizarTurnoFotoPreview')
+const btnFinalizarTurnoFoto = document.getElementById('btnFinalizarTurnoFoto')
+let finalizarTurnoFotoUrl = null
+
+function limparFotoFinalizarTurno() {
+    if (finalizarTurnoFotoUrl) {
+        URL.revokeObjectURL(finalizarTurnoFotoUrl)
+        finalizarTurnoFotoUrl = null
+    }
+    if (finalizarTurnoFotoInput) finalizarTurnoFotoInput.value = ''
+    if (btnFinalizarTurnoFoto) btnFinalizarTurnoFoto.textContent = 'Tirar foto'
+    if (finalizarTurnoFotoPreview) {
+        finalizarTurnoFotoPreview.innerHTML = `
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7h3l1.5-2h7L17 7h3v12H4z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+            </svg>`
+    }
+}
+
+if (btnFinalizarTurnoFoto && finalizarTurnoFotoInput) {
+    btnFinalizarTurnoFoto.addEventListener('click', () => finalizarTurnoFotoInput.click())
+}
+
+if (finalizarTurnoFotoInput && finalizarTurnoFotoPreview) {
+    finalizarTurnoFotoInput.addEventListener('change', () => {
+        const arquivo = finalizarTurnoFotoInput.files?.[0]
+        if (!arquivo) return
+        if (finalizarTurnoFotoUrl) URL.revokeObjectURL(finalizarTurnoFotoUrl)
+        finalizarTurnoFotoUrl = URL.createObjectURL(arquivo)
+        finalizarTurnoFotoPreview.innerHTML =
+            `<img src="${finalizarTurnoFotoUrl}" alt="Foto da finalização do turno">`
+        if (btnFinalizarTurnoFoto) btnFinalizarTurnoFoto.textContent = 'Tirar nova foto'
+    })
+}
 
 function abrirModalTurno() {
     if (!modalTurno) return
@@ -849,6 +885,7 @@ function abrirModalTurno() {
 
 function fecharModalTurno() {
     if (modalTurno) modalTurno.classList.add('escondido')
+    limparFotoFinalizarTurno()
 }
 
 if (modalTurno) {

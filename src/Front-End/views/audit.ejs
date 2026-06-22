@@ -307,6 +307,23 @@
     <!-- Modal finalizar turno -->
     <div class="modal-turno escondido" id="modalTurno">
         <div class="modal-turno-conteudo">
+            <div class="finalizar-turno-foto">
+                <div class="finalizar-turno-foto-preview" id="finalizarTurnoFotoPreview">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 7h3l1.5-2h7L17 7h3v12H4z"></path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                </div>
+                <div class="finalizar-turno-foto-info">
+                    <strong>Foto da finalização</strong>
+                    <small>Registre uma imagem do encerramento do turno.</small>
+                    <input id="finalizarTurnoFotoInput" type="file" accept="image/*" capture="environment">
+                    <button class="btn-finalizar-turno-foto" id="btnFinalizarTurnoFoto" type="button">
+                        Tirar foto
+                    </button>
+                </div>
+            </div>
+
             <div class="campos-turno">
                 <div class="campo-turno campo-corredor">
                     <label for="selectCorredor">Corredor</label>
