@@ -77,7 +77,7 @@ function mostrarPreview(src) {
 }
 
 // prefill com a foto já salva, se houver
-if (EVENTO.photo_url) mostrarPreview(EVENTO.photo_url);
+if (EVENTO.image_url) mostrarPreview(EVENTO.image_url);
 
 editFoto.addEventListener("change", async () => {
     const arquivo = editFoto.files[0];
@@ -107,7 +107,7 @@ function abrirFormAtleta(teamId, atleta = null) {
         eventId:    EVENTO.id,
         teamId,
         atletaId:   atleta?.id   || null,
-        atletaData: atleta ? { name: atleta.name, gender: atleta.gender, cpf: atleta.cpf || "", photo_url: atleta.photo_url || null } : null
+        atletaData: atleta ? { name: atleta.name, gender: atleta.gender, cpf: atleta.cpf || "", image_url: atleta.image_url || null } : null
     }));
     window.location.href = "/manager/create-event/athlete";
 }
