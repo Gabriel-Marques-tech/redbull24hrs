@@ -67,7 +67,7 @@ if (!edicao) {
             nome.value  = d.name   || "";
             cpf.value   = d.cpf    || "";
             if (d.gender) genero.value = d.gender;
-            if (d.photo_url) mostrarPreview(d.photo_url); // foto atual do DB
+            if (d.image_url) mostrarPreview(d.image_url); // foto atual do DB
         }
         // cargo não existe no modelo athlete do DB, ocultar select se quiser
     } else {
