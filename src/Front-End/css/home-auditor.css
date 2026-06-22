@@ -39,6 +39,67 @@ header img{
   position: absolute;
   z-index: 2;
 }
+
+.drawer-identidade-linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.drawer-modo-tv {
+  padding: 7px 9px;
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.13);
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.drawer-modo-tv:hover {
+  background: rgba(255,255,255,0.22);
+  transform: translateY(-1px);
+}
+
+.drawer-modo-tv-icone {
+  position: relative;
+  width: 21px;
+  height: 15px;
+  flex: 0 0 21px;
+  border: 1.5px solid #fff;
+  border-radius: 3px;
+}
+
+.drawer-modo-tv-icone::after {
+  content: "";
+  position: absolute;
+  right: 5px;
+  bottom: -5px;
+  left: 5px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: #fff;
+}
+
+.drawer-modo-tv strong {
+  display: block;
+  font-family: 'Inter', sans-serif;
+}
+
+.drawer-modo-tv strong {
+  font-size: 11px;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.drawer-modo-tv-inativo {
+  opacity: 0.55;
+}
+
 .Bem-vindo{
   width: 500px;
   flex-direction: column;
