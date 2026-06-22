@@ -53,6 +53,7 @@ export const historyRepository = {
 				s.km_start,
 				s.km_end,
 				s.end_at,
+				s.pace,
 				COALESCE(au.name, mg.name) AS auditor_name
 			FROM shifts s
 			JOIN athletes a    ON a.id = s.athlete_id
