@@ -75,7 +75,7 @@ export const historyRepository = {
 				tr.id, tr.number,
 				c.distance,
 				c.type,
-				NULL, NULL, NULL,
+				NULL, NULL, NULL, NULL,
 				COALESCE(au.name, mg.name)
 			FROM checkpoints c
 			JOIN shifts s      ON s.id = c.shift_id
