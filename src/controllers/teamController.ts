@@ -83,7 +83,7 @@ export const teamController = {
 		try {
 			let image_url: string | null = null;
 			if (req.file) {
-				image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos");
+				image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos", "athletes");
 			}
 			const athlete = await teamService.registerAthlete(team_id, name, gender, cpf ?? null, image_url);
 			res.status(201).json(athlete);
@@ -119,7 +119,7 @@ export const teamController = {
 		const fields: { name?: string; gender?: string; cpf?: string | null; image_url?: string | null } = { name, gender, cpf };
 		try {
 			if (req.file) {
-				fields.image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos");
+				fields.image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos", "athletes");
 			}
 			const athlete = await teamService.updateAthlete(team_id, id, fields);
 			res.status(200).json(athlete);
