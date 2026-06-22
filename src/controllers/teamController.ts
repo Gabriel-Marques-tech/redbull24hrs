@@ -81,11 +81,11 @@ export const teamController = {
 			return;
 		}
 		try {
-			let photo_url: string | null = null;
+			let image_url: string | null = null;
 			if (req.file) {
-				photo_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos");
+				image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos");
 			}
-			const athlete = await teamService.registerAthlete(team_id, name, gender, cpf ?? null, photo_url);
+			const athlete = await teamService.registerAthlete(team_id, name, gender, cpf ?? null, image_url);
 			res.status(201).json(athlete);
 		} catch (error: any) {
 			if (error.code === "23505") {
@@ -116,10 +116,10 @@ export const teamController = {
 		const team_id = Number(req.params.teamId);
 		const id = Number(req.params.id);
 		const { name, gender, cpf } = req.body;
-		const fields: { name?: string; gender?: string; cpf?: string | null; photo_url?: string | null } = { name, gender, cpf };
+		const fields: { name?: string; gender?: string; cpf?: string | null; image_url?: string | null } = { name, gender, cpf };
 		try {
 			if (req.file) {
-				fields.photo_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos");
+				fields.image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos");
 			}
 			const athlete = await teamService.updateAthlete(team_id, id, fields);
 			res.status(200).json(athlete);
