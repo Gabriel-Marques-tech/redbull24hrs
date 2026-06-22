@@ -5067,31 +5067,133 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 **Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*  
 **Panorama Geral:** ✅ Sucesso
 
-| Etapa | Descrição da Etapa | Ocorrência |
-|-------|--------------------|------------|
-| 1 | Adicionar as credenciais de gerente e realizar o login | Nenhuma ocorrência |
-| 2 | Iniciar a criação de um evento | Nenhuma ocorrência |
-| 3 | Adicionar as informações do evento | Enzo sentiu dificuldade em inserir o nome da cidade, e sugeriu que o formulário de escolha do nome aceitasse nomes sem acento, facilitando a seleção da cidade do evento |
-| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência |
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Nenhuma ocorrência | — |
+| 2 | Iniciar a criação de um evento | Nenhuma ocorrência | — |
+| 3 | Adicionar as informações do evento | Enzo sentiu dificuldade em inserir o nome da cidade, e sugeriu que o formulário de escolha do nome aceitasse nomes sem acento, facilitando a seleção da cidade do evento | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrões |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
 
 **Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*  
 **Panorama Geral:** ✅ Sucesso
 
-| Etapa | Descrição da Etapa | Ocorrência |
-|-------|--------------------|------------|
-| 1 | Durante a criação do evento, criar duas equipes | Enzo sentiu dificuldade de encontrar o botão de criar a segunda equipe |
-| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Nenhuma ocorrência |
-| 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência |
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Enzo sentiu dificuldade de encontrar o botão de criar a segunda equipe | H6 – Reconhecimento em vez de lembrança |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Nenhuma ocorrência | — |
+| 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
 
 **Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*  
 **Panorama Geral:** ✅ Sucesso
 
-| Etapa | Descrição da Etapa | Ocorrência |
-|-------|--------------------|------------|
-| 1 | Adicionar as credenciais de auditor e realizar o login | Nenhuma ocorrência |
-| 2 | Selecionar o evento criado | Enzo sentiu dificuldade em iniciar a auditoria, clicando diretamente no evento criado ao invés do botão "iniciar auditoria" |
-| 3 | Realizar a auditoria de um período de 2 minutos | Enzo sentiu muita dificuldade em realizar a auditoria; mesmo com as explicações fornecidas no início do teste, ele não soube como realizar um checkpoint, nem como inserir o quilômetro inicial ou registrar o quilômetro final |
-| 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência |
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Nenhuma ocorrência | — |
+| 2 | Selecionar o evento criado | Enzo sentiu dificuldade em iniciar a auditoria, clicando diretamente no evento criado ao invés do botão "iniciar auditoria" | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrões |
+| 3 | Realizar a auditoria de um período de 2 minutos | Enzo sentiu muita dificuldade em realizar a auditoria; mesmo com as explicações fornecidas no início do teste, ele não soube como realizar um checkpoint, nem como inserir o quilômetro inicial ou registrar o quilômetro final | H6 – Reconhecimento em vez de lembrança; H10 – Ajuda e documentação; H2 – Correspondência entre o sistema e o mundo real |
+| 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
+
+---
+
+**Testador:** Lucas Levi  
+**Perfil:** Estudante de Engenharia da Computação / Produzindo um projeto para a Defesa Civil de Santo André
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*  
+**Panorama Geral:** ❌ Não conseguiu
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Nenhuma ocorrência | — |
+| 2 | Iniciar a criação de um evento | Lucas não compreendeu a instrução "defina a data e horário de início", travando nessa etapa | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrões |
+| 3 | Adicionar as informações do evento | Nenhuma ocorrência | — |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*  
+**Panorama Geral:** ❌ Não conseguiu
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Nenhuma ocorrência | — |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Lucas achou a tela de adição de atletas confusa; o botão de adicionar em cinza gerou ambiguidade, e sugeriu que o botão deixasse claro se é para adicionar atleta ou líder | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões; H8 – Design estético e minimalista |
+| 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
+
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*  
+**Panorama Geral:** ❌ Não conseguiu
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Nenhuma ocorrência | — |
+| 2 | Selecionar o evento criado | Lucas sentiu dificuldade para iniciar a auditoria, clicando diretamente no evento ao invés do botão "iniciar auditoria"; também teve dificuldade na seleção da equipe; o botão "próximo" em cinza não sinalizava que era clicável | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões; H6 – Reconhecimento em vez de lembrança |
+| 3 | Realizar a auditoria de um período de 2 minutos | Lucas teve muita dificuldade para iniciar e finalizar a auditoria, incluindo o preenchimento de km inicial e final; também não compreendeu o fluxo de saída de checkpoints | H6 – Reconhecimento em vez de lembrança; H10 – Ajuda e documentação; H2 – Correspondência entre o sistema e o mundo real |
+| 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
+
+---
+
+**Testador:** Paulo Roberto  
+**Perfil:** Estudante de Engenharia da Computação / Produzindo um projeto para a Defesa Civil de Santo André
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*  
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Paulo não percebeu que precisava clicar no perfil "gerente" além de inserir as credenciais | H6 – Reconhecimento em vez de lembrança; H3 – Controle e liberdade do usuário |
+| 2 | Iniciar a criação de um evento | Paulo teve dificuldade em compreender como prosseguir após inserir as credenciais do evento; ao retornar à tela, as informações não eram salvas | H1 – Visibilidade do status do sistema; H5 – Prevenção de erros; H9 – Ajudar os usuários a reconhecer, diagnosticar e recuperar erros |
+| 3 | Adicionar as informações do evento | Paulo criou o evento com data anterior à atual; o sistema também permitia registrar corredores com data de nascimento no futuro; Paulo elogiou a validação do CPF | H5 – Prevenção de erros; H9 – Ajudar os usuários a reconhecer, diagnosticar e recuperar erros |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*  
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Paulo novamente não percebeu que precisava clicar no perfil "gerente" além de inserir as credenciais | H6 – Reconhecimento em vez de lembrança |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | O sistema permitia cadastrar corredores com data de nascimento no futuro; Paulo elogiou a validação do CPF | H5 – Prevenção de erros |
+| 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
+
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*  
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Paulo novamente teve dificuldade em perceber que precisava clicar no perfil além de inserir as credenciais | H6 – Reconhecimento em vez de lembrança |
+| 2 | Selecionar o evento criado | Paulo teve dificuldade em selecionar a equipe no momento de iniciar a auditoria, e também ao selecionar o próximo corredor | H1 – Visibilidade do status do sistema; H6 – Reconhecimento em vez de lembrança |
+| 3 | Realizar a auditoria de um período de 2 minutos | Paulo teve dificuldade para finalizar a auditoria | H1 – Visibilidade do status do sistema; H10 – Ajuda e documentação |
+| 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
+
+---
+
+**Testadora:** Laís Victoria  
+**Perfil:** Estudante de Ciência da Computação / Produzindo um projeto para a Defesa Civil de Santo André
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*  
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Nenhuma ocorrência | — |
+| 2 | Iniciar a criação de um evento | Laís criou o evento com data anterior à atual, sem que o sistema impedisse | H5 – Prevenção de erros; H9 – Ajudar os usuários a reconhecer, diagnosticar e recuperar erros |
+| 3 | Adicionar as informações do evento | Nenhuma ocorrência | — |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*  
+**Panorama Geral:** *(não registrado)*
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Nenhuma ocorrência | — |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Laís criou o evento com data anterior à atual | H5 – Prevenção de erros |
+| 3 | Concluir a criação do evento e iniciá-lo | Laís teve dificuldade em encontrar a opção de logout | H4 – Consistência e padrões; H6 – Reconhecimento em vez de lembrança |
+
+**Teste 3 (T3):** *"Como auditora, você deve auditar uma equipe no evento criado."*  
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Laís teve dificuldade em encontrar a opção de logout da sessão anterior | H4 – Consistência e padrões; H6 – Reconhecimento em vez de lembrança |
+| 2 | Selecionar o evento criado | Laís teve dificuldade ao adicionar um checkpoint, não compreendendo o layout; também não identificou claramente qual era o corredor atual sendo auditado | H1 – Visibilidade do status do sistema; H2 – Correspondência entre o sistema e o mundo real; H8 – Design estético e minimalista |
+| 3 | Realizar a auditoria de um período de 2 minutos | Nenhuma dificuldade em encerrar as auditorias | — |
+| 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
 
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
