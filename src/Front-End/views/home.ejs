@@ -9,6 +9,11 @@
     <script type="module" src="/js/home.js"></script>
 </head>
 <body>
+    <%
+        const eventoAoVivo = Array.isArray(events)
+            ? events.find(evento => evento.status === 'in_progress')
+            : null;
+    %>
 
     <!-- Aviso: competições agendadas são exclusivas de managers -->
     <script>
@@ -40,6 +45,41 @@
     <!-- Overlay do drawer -->
     <div id="drawerOverlay" onclick="fecharDrawer()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:1000;"></div>
 
+    <% if (user && user.role === 'manager') { %>
+    <div id="confirmacaoCadastroOverlay" style="
+        display:none; position:fixed; inset:0; z-index:1200;
+        background:rgba(0,0,0,0.5); align-items:center; justify-content:center;
+    ">
+        <div style="
+            width:min(460px, calc(100vw - 32px)); padding:34px;
+            background:#fff; border-radius:16px; text-align:center;
+            box-shadow:0 10px 40px rgba(0,0,0,0.25);
+            font-family:'Inter',sans-serif;
+        ">
+            <div style="
+                width:58px; height:58px; margin:0 auto 18px;
+                border-radius:50%; background:#fce5ec; color:var(--vermelho);
+                display:flex; align-items:center; justify-content:center;
+                font-size:30px; font-weight:700;
+            ">✓</div>
+            <h2 id="confirmacaoCadastroTitulo" style="font-size:24px; margin-bottom:10px;">Cadastro concluído</h2>
+            <p id="confirmacaoCadastroTexto" style="color:#666; font-size:16px; line-height:1.5; margin-bottom:26px;"></p>
+            <div style="display:flex; gap:12px;">
+                <button type="button" onclick="concluirCadastroUsuario()" style="
+                    flex:1; height:50px; border:1.5px solid var(--vermelho);
+                    border-radius:8px; background:#fff; color:var(--vermelho);
+                    font-size:15px; font-weight:700; cursor:pointer;
+                ">Concluir</button>
+                <button type="button" onclick="cadastrarOutroUsuario()" style="
+                    flex:1; height:50px; border:none; border-radius:8px;
+                    background:var(--vermelho); color:#fff;
+                    font-size:15px; font-weight:700; cursor:pointer;
+                ">Cadastrar outro</button>
+            </div>
+        </div>
+    </div>
+    <% } %>
+
     <!-- Drawer lateral -->
     <div id="userDrawer" style="
         position:fixed; top:0; right:-340px; width:320px; height:100vh;
@@ -63,7 +103,22 @@
                 font-size:26px; font-weight:700; margin-bottom:16px; letter-spacing:1px;
                 font-family:'Inter', sans-serif;
             "><%= user ? user.name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase() : '?' %></div>
-            <p style="font-size:20px; font-weight:700; margin-bottom:4px; font-family:'Inter',sans-serif;"><%= user ? user.name : '—' %></p>
+            <div class="drawer-identidade-linha">
+                <p style="font-size:20px; font-weight:700; margin-bottom:4px; font-family:'Inter',sans-serif;"><%= user ? user.name : '—' %></p>
+                <% if (user && user.role === 'manager') { %>
+                    <% if (eventoAoVivo) { %>
+                    <a class="drawer-modo-tv" href="/manager/event/<%= eventoAoVivo.id %>?modoTv=config" title="Configurar Exibição Pública">
+                        <span class="drawer-modo-tv-icone" aria-hidden="true"></span>
+                        <strong>Modo TV</strong>
+                    </a>
+                    <% } else { %>
+                    <span class="drawer-modo-tv drawer-modo-tv-inativo" title="Disponível durante um evento em andamento">
+                        <span class="drawer-modo-tv-icone" aria-hidden="true"></span>
+                        <strong>Modo TV</strong>
+                    </span>
+                    <% } %>
+                <% } %>
+            </div>
             <p style="font-size:13px; opacity:0.7; font-family:'Inter',sans-serif;"><%= user ? user.email : '' %></p>
         </div>
 
@@ -76,6 +131,30 @@
             </div>
 
             <% if (user && user.role === 'manager') { %>
+            <button type="button" onclick="abrirCadastroUsuario('gerente')" style="
+                width:100%; display:flex; align-items:center; justify-content:space-between;
+                padding:14px 16px; background:var(--vermelho);
+                border:none; border-radius:8px;
+                color:#fff; font-family:'Inter',sans-serif;
+                font-size:15px; font-weight:700; cursor:pointer;
+            " onmouseover="this.style.background='#b10033'"
+               onmouseout="this.style.background='var(--vermelho)'">
+                Cadastrar gerente
+                <span style="font-size:18px; font-weight:300;">+</span>
+            </button>
+
+            <button type="button" onclick="abrirCadastroUsuario('auditor')" style="
+                width:100%; display:flex; align-items:center; justify-content:space-between;
+                padding:14px 16px; background:#fff;
+                border:1.5px solid var(--vermelho); border-radius:8px;
+                color:var(--vermelho); font-family:'Inter',sans-serif;
+                font-size:15px; font-weight:700; cursor:pointer;
+            " onmouseover="this.style.background='#fff3f6'"
+               onmouseout="this.style.background='#fff'">
+                Cadastrar auditor
+                <span style="font-size:18px; font-weight:300;">+</span>
+            </button>
+
             <!-- Navegação — outlined com seta -->
             <a href="/manager/shifts" style="
                 display:flex; align-items:center; justify-content:space-between;
@@ -198,6 +277,24 @@ function fecharDrawer() {
     document.getElementById('userDrawer').style.right = '-340px'
     document.getElementById('drawerOverlay').style.display = 'none'
 }
+function abrirCadastroUsuario(tipoCadastro) {
+    localStorage.removeItem('cadastrosUsuariosGerente')
+    localStorage.setItem('atletaEmEdicao', JSON.stringify({
+        tipoCadastro,
+        apoio: true,
+        origem: 'drawer'
+    }))
+    window.location.href = '/manager/create-event/athlete'
+}
+function concluirCadastroUsuario() {
+    document.getElementById('confirmacaoCadastroOverlay').style.display = 'none'
+    sessionStorage.removeItem('cadastroUsuarioConcluido')
+}
+function cadastrarOutroUsuario() {
+    const cadastro = JSON.parse(sessionStorage.getItem('cadastroUsuarioConcluido') || '{}')
+    sessionStorage.removeItem('cadastroUsuarioConcluido')
+    abrirCadastroUsuario(cadastro.tipoCadastro || 'auditor')
+}
 async function fazerLogout() {
     try {
         const accessToken = localStorage.getItem('accessToken')
@@ -209,6 +306,17 @@ async function fazerLogout() {
     } catch(e) {}
     localStorage.clear()
     window.location.href = '/login'
+}
+
+localStorage.removeItem('cadastrosUsuariosGerente')
+localStorage.removeItem('cadastroUsuarioConcluido')
+const cadastroConcluido = JSON.parse(sessionStorage.getItem('cadastroUsuarioConcluido') || 'null')
+if (cadastroConcluido && document.getElementById('confirmacaoCadastroOverlay')) {
+    const tipo = cadastroConcluido.tipoCadastro === 'gerente' ? 'Gerente' : 'Auditor'
+    document.getElementById('confirmacaoCadastroTitulo').textContent = `${tipo} cadastrado`
+    document.getElementById('confirmacaoCadastroTexto').textContent =
+        `${cadastroConcluido.nome || tipo} foi cadastrado com sucesso. Deseja cadastrar outro ${tipo.toLowerCase()}?`
+    document.getElementById('confirmacaoCadastroOverlay').style.display = 'flex'
 }
 </script>
 
