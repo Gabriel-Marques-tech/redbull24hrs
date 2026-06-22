@@ -50,18 +50,39 @@ body{
 
 /* ---------------- BOTÃO DE CANCELAR TELAS AUDITOR ---------------- */
 
-.cancelar{
+.cancelar {
     display: flex;
     align-items: center;
-    gap: 8px;
+    width: 50px;
+    height: 50px;
+    padding: 0 16px;
+    gap: 13px;
     margin-top: 40px;
     margin-left: 30px;
+    border-radius: 999px;
+    background-color: var(--vermelho);
     text-decoration: none;
-    color: #B5B5B5;
-    font-size: 28px;
+    color: transparent;
+    font-size: 0;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
+    transition: width 0.28s ease, color 0.2s ease, background-color 0.2s ease;
 }
-.cancelar img{
-    width: 15px;
+
+.cancelar img {
+    width: 16px;
+    flex: 0 0 16px;
+    filter: brightness(0) invert(1);
+}
+
+.cancelar:hover,
+.cancelar:focus-visible {
+    width: 152px;
+    color: var(--branco);
+    font-size: 18px;
+    background-color: #b10033;
 }
 
 /* ---------------- ETAPAS TELA AUDITOR ---------------- */
