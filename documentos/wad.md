@@ -5143,9 +5143,9 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 **Análise dos resultados:**
 
-A média de 83,3 classifica o sistema como "bom" na escala SUS. De acordo com Barros (2022) [²⁷](#8-referências), pontuações acima de 80 já se enquadram na faixa "bom" e se aproximam do nível "excelente", que começa em 85,5. Os gráficos reforçam esse resultado: nas perguntas positivas, como a 1 (interesse em usar com frequência), a 5 (funções bem integradas) e a 7 (facilidade de aprendizado), as respostas se concentraram nos valores 4 e 5. Nas perguntas negativas, como a 2 (complexidade desnecessária), a 6 (inconsistência) e a 8 (sistema atrapalhado), a maioria dos participantes respondeu 1 ou 2, indicando discordância com essas afirmações.
+A média de 83,3 classifica o sistema como "bom" na escala SUS. De acordo com Barros (2022) [²⁷](#8-referências), pontuações acima de 80 já se enquadram na faixa "bom" e se aproximam do nível "excelente", que começa em 85,5. Os gráficos reforçam esse resultado: nas perguntas positivas, como a 1 (interesse em usar com frequência), a 5 (funções bem integradas) e a 7 (facilidade de aprendizado), as respostas se concentraram nos valores 4 e 5. Nas perguntas negativas, como a 2 (complexidade desnecessária), a 6 (inconsistência) e a 8 (sistema atrapalhado), a maioria dos participantes respondeu 1 ou 2, discordando com as afirmações.
 
-O único ponto de atenção está na pergunta 4, onde alguns participantes indicaram que precisariam de algum suporte técnico para usar o sistema. Isso pode ser explicado pelo perfil dos testadores: como nenhum deles tinha contexto prévio sobre o evento ou o fluxo de trabalho dos auditores da Red Bull, a curva de aprendizado percebida tende a ser maior do que a esperada para o público real do sistema.
+Vale destacar que, na pergunta 4, alguns participantes indicaram que precisariam de ajuda técnica para usar o sistema. Esse resultado faz sentido considerando o perfil de quem foi testado: nenhum deles tinha familiaridade com o evento ou com o dia a dia de um auditor da Red Bull, então a sensação de precisar de suporte é esperada. Para os usuários reais do sistema, que já conhecem o contexto da corrida, essa percepção tende a ser bem diferente.
 
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
