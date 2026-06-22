@@ -19,41 +19,107 @@ async function authFetch(url, options = {}) {
 
 const edicao = JSON.parse(localStorage.getItem("atletaEmEdicao") || "null");
 const formulario = document.getElementById("formAtleta");
+const subetapaCadastro = document.getElementById("subetapaCadastro");
+const tituloCadastroPessoa = document.getElementById("tituloCadastroPessoa");
+const camposAtleta = document.getElementById("camposAtleta");
+const camposAcesso = document.getElementById("camposAcesso");
+const fotoPerfil = document.getElementById("fotoPerfilPessoa");
+const fotoPerfilPreview = document.getElementById("fotoPerfilPreview");
+const btnFotoPerfil = document.getElementById("btnFotoPerfil");
 const nome       = document.getElementById("nomeAtleta");
 const nascimento = document.getElementById("nascimentoAtleta");
 const cpf        = document.getElementById("cpfAtleta");
 const genero     = document.getElementById("generoAtleta");
 const cargo      = document.getElementById("cargoAtleta");
-const foto       = document.getElementById("fotoAtleta");
-const previewFoto = document.getElementById("previewFotoAtleta");
+const emailPessoa = document.getElementById("emailPessoa");
+const senhaPessoa = document.getElementById("senhaPessoa");
 const linkCancelar = document.getElementById("linkCancelar");
-
-// dataURL da foto recém-selecionada nesta tela (null = nenhuma nova escolhida)
-let fotoDataUrl = null;
-
-function mostrarPreview(src) {
-    if (!src) { previewFoto.hidden = true; previewFoto.removeAttribute("src"); return; }
-    previewFoto.src = src;
-    previewFoto.hidden = false;
-}
-
-foto.addEventListener("change", async () => {
-    const arquivo = foto.files[0];
-    if (!arquivo) return;
-    try {
-        fotoDataUrl = await lerImagemRedimensionada(arquivo);
-        mostrarPreview(fotoDataUrl);
-    } catch (e) {
-        alert(e.message || "Não foi possível processar a imagem.");
-        foto.value = "";
-        fotoDataUrl = null;
-    }
-});
+let fotoPerfilData = "";
+// true quando o usuário escolhe uma nova imagem nesta tela (diferencia de uma image_url já salva no DB)
+let novaFotoSelecionada = false;
 
 const modoEventEdit = edicao?.modoEdicao === "event-edit";
+const modoDrawer = edicao?.origem === "drawer";
+const passoRetorno = edicao?.passo ?? 0;
+
+if (modoDrawer) {
+    document.body.classList.add("cadastro-pelo-drawer");
+}
+
 const urlRetorno = modoEventEdit
     ? `/manager/event/${edicao.eventId}/edit?secao=equipes`
-    : `/manager/create-event/teams?passo=${edicao?.passo || 1}`;
+    : modoDrawer
+        ? "/home"
+    : `/manager/create-event/teams?passo=${passoRetorno}`;
+
+const rotulosCadastro = {
+    atleta: "atleta",
+    auditor: "auditor",
+    gerente: "gerente"
+};
+
+const tipoCadastroInicial = edicao?.tipoCadastro || "atleta";
+
+function obterRotuloTipo(tipo) {
+    return rotulosCadastro[tipo] || "atleta";
+}
+
+function atualizarPreviewFoto() {
+    if (!fotoPerfilData) {
+        fotoPerfilPreview.innerHTML = "<span>+</span>";
+        return;
+    }
+    fotoPerfilPreview.innerHTML = `<img src="${fotoPerfilData}" alt="Foto de perfil">`;
+}
+
+function atualizarTipoCadastro() {
+    const tipo = tipoCadastroInicial;
+    const ehAtleta = tipo === "atleta";
+
+    subetapaCadastro.textContent = `Cadastro de ${obterRotuloTipo(tipo)}`;
+    tituloCadastroPessoa.textContent = `Informações do ${obterRotuloTipo(tipo)}`;
+
+    camposAtleta.classList.toggle("escondido", !ehAtleta);
+    camposAcesso.classList.toggle("ativo", !ehAtleta);
+
+    genero.required = ehAtleta;
+    emailPessoa.required = !ehAtleta;
+    senhaPessoa.required = !ehAtleta;
+
+    if (!ehAtleta) {
+        genero.value = "";
+        cargo.value = "";
+    } else if (edicao?.indice === 0 && !cargo.value) {
+        cargo.value = "Líder";
+    }
+}
+
+function compactarImagemPerfil(arquivo) {
+    return new Promise((resolve, reject) => {
+        const leitor = new FileReader();
+        leitor.onerror = reject;
+        leitor.onload = () => {
+            const imagem = new Image();
+            imagem.onerror = reject;
+            imagem.onload = () => {
+                const tamanhoMaximo = 320;
+                const escala = Math.min(1, tamanhoMaximo / Math.max(imagem.width, imagem.height));
+                const largura = Math.max(1, Math.round(imagem.width * escala));
+                const altura = Math.max(1, Math.round(imagem.height * escala));
+                const canvas = document.createElement("canvas");
+                canvas.width = largura;
+                canvas.height = altura;
+                const contexto = canvas.getContext("2d");
+                contexto.fillStyle = "#ffffff";
+                contexto.fillRect(0, 0, largura, altura);
+                contexto.drawImage(imagem, 0, 0, largura, altura);
+                resolve(canvas.toDataURL("image/jpeg", 0.78));
+            };
+            imagem.src = String(leitor.result || "");
+        };
+        leitor.readAsDataURL(arquivo);
+    });
+}
 
 if (!edicao) {
     window.location.href = "/manager/create-event/teams";
@@ -67,24 +133,58 @@ if (!edicao) {
             nome.value  = d.name   || "";
             cpf.value   = d.cpf    || "";
             if (d.gender) genero.value = d.gender;
-            if (d.image_url) mostrarPreview(d.image_url); // foto atual do DB
+            if (d.image_url) fotoPerfilData = d.image_url; // foto atual do DB (URL pública do Storage)
         }
         // cargo não existe no modelo athlete do DB, ocultar select se quiser
     } else {
         // pré-preencher dados já salvos em localStorage (fluxo criação)
-        const estado = JSON.parse(localStorage.getItem("cadastroEquipesGerente") || "{}");
-        const atletaSalvo = estado.atletas?.[edicao.tipo]?.[edicao.indice];
-        if (atletaSalvo) {
-            nome.value       = atletaSalvo.nome       || "";
-            nascimento.value = atletaSalvo.nascimento || "";
-            cpf.value        = atletaSalvo.cpf        || "";
-            if (atletaSalvo.genero) genero.value = atletaSalvo.genero;
-            if (atletaSalvo.cargo)  cargo.value  = atletaSalvo.cargo;
-            if (atletaSalvo.foto) { fotoDataUrl = atletaSalvo.foto; mostrarPreview(atletaSalvo.foto); }
+        const estadoEquipes = JSON.parse(localStorage.getItem("cadastroEquipesGerente") || "{}");
+        const cadastroSalvo = modoDrawer
+            ? null
+            : edicao.apoio
+                ? estadoEquipes.cadastrosApoio?.[tipoCadastroInicial]?.[edicao.indice]
+                : estadoEquipes.atletas?.[edicao.tipo]?.[edicao.indice];
+        if (cadastroSalvo) {
+            nome.value       = cadastroSalvo.nome       || "";
+            nascimento.value = cadastroSalvo.nascimento || "";
+            cpf.value        = cadastroSalvo.cpf        || "";
+            emailPessoa.value = cadastroSalvo.email     || "";
+            senhaPessoa.value = cadastroSalvo.senha     || "";
+            fotoPerfilData    = cadastroSalvo.fotoPerfil || "";
+            if (cadastroSalvo.genero) genero.value = cadastroSalvo.genero;
+            if (cadastroSalvo.cargo)  cargo.value  = cadastroSalvo.cargo;
         }
-        if (edicao.indice === 0) cargo.value = "Líder";
+        if (!edicao.apoio && !modoDrawer && edicao.indice === 0 && tipoCadastroInicial === "atleta") cargo.value = "Líder";
     }
+    atualizarTipoCadastro();
+    atualizarPreviewFoto();
 }
+
+btnFotoPerfil.addEventListener("click", () => fotoPerfil.click());
+
+fotoPerfil.addEventListener("change", async () => {
+    const arquivo = fotoPerfil.files?.[0];
+    if (!arquivo) return;
+    if (!arquivo.type.startsWith("image/")) {
+        alert("Escolha um arquivo de imagem.");
+        fotoPerfil.value = "";
+        return;
+    }
+    if (arquivo.size > 2 * 1024 * 1024) {
+        alert("Escolha uma imagem de até 2 MB.");
+        fotoPerfil.value = "";
+        return;
+    }
+
+    try {
+        fotoPerfilData = await compactarImagemPerfil(arquivo);
+        novaFotoSelecionada = true;
+        atualizarPreviewFoto();
+    } catch {
+        alert("Não foi possível carregar a imagem. Tente outro arquivo.");
+        fotoPerfil.value = "";
+    }
+});
 
 // ---- validação de CPF (dígitos verificadores) ----
 function cpfValido(digitos) {
@@ -103,21 +203,31 @@ function cpfValido(digitos) {
 formulario.addEventListener("submit", async (evento) => {
     evento.preventDefault();
 
-    if (!genero.value) { alert("Selecione o gênero do atleta."); return; }
+    const tipoCadastroAtual = tipoCadastroInicial;
+    const ehAtleta = tipoCadastroAtual === "atleta";
 
-    const cpfDigitos = cpf.value.replace(/\D/g, "");
+    if (!fotoPerfilData && !modoEventEdit) {
+        alert("Envie uma imagem de perfil para este cadastro.");
+        return;
+    }
+
+    if (ehAtleta && !genero.value) { alert("Selecione o gênero do atleta."); return; }
+
+    const cpfDigitos = ehAtleta ? cpf.value.replace(/\D/g, "") : "";
     if (cpfDigitos && !cpfValido(cpfDigitos)) {
         alert("CPF inválido. Confira os números digitados."); return;
     }
 
     if (modoEventEdit) {
         // ---- salva direto na API (multipart: campos texto + foto opcional) ----
-        const body = new FormData();
-        body.append("name", nome.value.trim());
-        body.append("gender", genero.value);
-        if (cpfDigitos) body.append("cpf", cpfDigitos);
-        // só envia foto se o usuário escolheu uma nova nesta tela
-        if (fotoDataUrl) body.append("photo", dataURLparaBlob(fotoDataUrl), "foto.jpg");
+        const corpo = new FormData();
+        corpo.append("name", nome.value.trim());
+        corpo.append("gender", genero.value);
+        if (cpfDigitos) corpo.append("cpf", cpfDigitos);
+        // só envia foto se o usuário escolheu uma nova nesta tela (a image_url existente fica como está)
+        if (novaFotoSelecionada && fotoPerfilData) {
+            corpo.append("photo", dataURLparaBlob(fotoPerfilData), "foto.jpg");
+        }
 
         const url = edicao.atletaId
             ? `/teams/${edicao.teamId}/athletes/${edicao.atletaId}`
@@ -127,7 +237,7 @@ formulario.addEventListener("submit", async (evento) => {
         const btn = formulario.querySelector("button[type=submit]");
         btn.disabled = true; btn.textContent = "Salvando...";
 
-        const res = await authFetch(url, { method, body });
+        const res = await authFetch(url, { method, body: corpo });
         if (!res || !res.ok) {
             const err = await res?.json().catch(() => ({}));
             alert(err?.error || "Erro ao salvar atleta.");
@@ -139,29 +249,71 @@ formulario.addEventListener("submit", async (evento) => {
 
     } else {
         // ---- fluxo criação: salva em localStorage ----
-        const estado = JSON.parse(localStorage.getItem("cadastroEquipesGerente") || "{}");
-        estado.atletas           ||= { primeira: [], segunda: [] };
-        estado.atletas[edicao.tipo] ||= [];
+        if (modoDrawer) {
+            sessionStorage.setItem("cadastroUsuarioConcluido", JSON.stringify({
+                tipoCadastro: tipoCadastroAtual,
+                nome: nome.value.trim()
+            }));
+            localStorage.removeItem("atletaEmEdicao");
+            window.location.href = urlRetorno;
+            return;
+        }
 
-        if (cpfDigitos) {
+        const chaveEstado = "cadastroEquipesGerente";
+        const estado = JSON.parse(localStorage.getItem(chaveEstado) || "{}");
+        estado.atletas           ||= { primeira: [], segunda: [] };
+        estado.cadastrosApoio    ||= { auditor: [], gerente: [] };
+        if (!edicao.apoio) estado.atletas[edicao.tipo] ||= [];
+        if (edicao.apoio) estado.cadastrosApoio[tipoCadastroAtual] ||= [];
+
+        if (ehAtleta && cpfDigitos) {
             const duplicado = ["primeira", "segunda"].some((tipo) =>
                 (estado.atletas[tipo] || []).some((a, i) =>
-                    a?.cpf === cpfDigitos && !(tipo === edicao.tipo && i === edicao.indice)
+                    (!a?.tipoCadastro || a.tipoCadastro === "atleta") &&
+                    a?.cpf === cpfDigitos &&
+                    !(tipo === edicao.tipo && i === edicao.indice)
                 )
             );
             if (duplicado) { alert("Este CPF já foi cadastrado em outro atleta."); return; }
         }
 
-        estado.atletas[edicao.tipo][edicao.indice] = {
+        const emailValor = emailPessoa.value.trim();
+        if (!ehAtleta) {
+            const duplicadoEmail = ["auditor", "gerente"].some((tipo) =>
+                (estado.cadastrosApoio[tipo] || []).some((pessoa, i) =>
+                    pessoa?.email === emailValor && !(tipo === tipoCadastroAtual && i === edicao.indice)
+                )
+            );
+            if (duplicadoEmail) { alert("Este e-mail já foi cadastrado."); return; }
+        }
+
+        const cadastro = {
+            tipoCadastro: tipoCadastroAtual,
             nome:       nome.value.trim(),
-            nascimento: nascimento.value,
-            cpf:        cpfDigitos,
-            genero:     genero.value,
-            cargo:      cargo.value,
-            foto:       fotoDataUrl || null
+            fotoPerfil: fotoPerfilData
         };
 
-        localStorage.setItem("cadastroEquipesGerente", JSON.stringify(estado));
+        if (ehAtleta) {
+            cadastro.nascimento = nascimento.value;
+            cadastro.cpf        = cpfDigitos;
+            cadastro.genero     = genero.value;
+            cadastro.cargo      = cargo.value || "Atleta";
+        } else {
+            cadastro.email = emailValor;
+            cadastro.senha = senhaPessoa.value;
+            cadastro.cargo = tipoCadastroAtual === "auditor" ? "Auditor" : "Gerente";
+        }
+
+        if (edicao.apoio) {
+            const indice = Number.isInteger(edicao.indice)
+                ? edicao.indice
+                : estado.cadastrosApoio[tipoCadastroAtual].length;
+            estado.cadastrosApoio[tipoCadastroAtual][indice] = cadastro;
+        } else {
+            estado.atletas[edicao.tipo][edicao.indice] = cadastro;
+        }
+
+        localStorage.setItem(chaveEstado, JSON.stringify(estado));
         localStorage.removeItem("atletaEmEdicao");
         window.location.href = urlRetorno;
     }

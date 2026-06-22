@@ -148,3 +148,41 @@ describe("GET /export/events/:eventId/checkpoints", () => {
 		expect(res.text).toBe("");
 	});
 });
+
+// ─── fmtInterval – ramo objeto (cobertura de linhas 33-40) ───────────────────
+
+describe("exportService – fmtInterval ramo objeto", () => {
+	it("200 – total_time como objeto {hours,minutes,seconds} é formatado HH:MM:SS", async () => {
+		const rowObj = [{ ...mockShiftRows[0], total_time: { hours: 1, minutes: 30, seconds: 45 } }];
+		(exportRepository.shiftsByEvent as jest.Mock).mockResolvedValue(rowObj);
+		const res = await request(app).get("/export/events/1/shifts");
+		expect(res.status).toBe(200);
+		expect(res.text).toContain("01:30:45");
+	});
+
+	it("200 – total_time como objeto com valores parciais usa 0 como fallback", async () => {
+		const rowObj = [{ ...mockShiftRows[0], total_time: { hours: 2 } }];
+		(exportRepository.shiftsByEvent as jest.Mock).mockResolvedValue(rowObj);
+		const res = await request(app).get("/export/events/1/shifts");
+		expect(res.status).toBe(200);
+		expect(res.text).toContain("02:00:00");
+	});
+
+	it("200 – total_time null resulta em célula vazia no CSV", async () => {
+		const rowNull = [{ ...mockShiftRows[0], total_time: null }];
+		(exportRepository.shiftsByEvent as jest.Mock).mockResolvedValue(rowNull);
+		const res = await request(app).get("/export/events/1/shifts");
+		expect(res.status).toBe(200);
+		const lines = res.text.split("\n");
+		expect(lines).toHaveLength(2);
+	});
+
+	it("200 – start_at null resulta em célula de data vazia", async () => {
+		const rowNoDate = [{ ...mockShiftRows[0], start_at: null }];
+		(exportRepository.shiftsByEvent as jest.Mock).mockResolvedValue(rowNoDate);
+		const res = await request(app).get("/export/events/1/shifts");
+		expect(res.status).toBe(200);
+		const lines = res.text.split("\n");
+		expect(lines).toHaveLength(2);
+	});
+});

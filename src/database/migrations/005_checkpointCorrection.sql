@@ -1,3 +1,4 @@
+-- RF031: suporte a correção retroativa de checkpoints
 ALTER TABLE checkpoints
   ADD COLUMN IF NOT EXISTS reviewed         BOOLEAN   DEFAULT FALSE,
   ADD COLUMN IF NOT EXISTS justification    TEXT,

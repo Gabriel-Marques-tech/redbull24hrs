@@ -1,8 +1,8 @@
 body {
   min-height: 100vh;
-  padding: 72px 20px 32px;
+  padding: 24px 20px 18px;
   background:
-    linear-gradient(rgba(76, 48, 190, 0.48), rgba(210, 0, 60, 0.48)),
+    linear-gradient(rgba(82, 45, 204, 0.62), rgba(210, 0, 60, 0.55)),
     url("../assets/Login/img1.avif") center / cover no-repeat;
   display: flex;
   align-items: center;
@@ -11,11 +11,10 @@ body {
 
 .login {
   position: relative;
-  width: min(720px, calc(100vw - 40px));
-  min-height: 0;
-  padding: 96px 102px 30px;
+  width: min(556px, calc(100vw - 40px));
+  padding: 92px 91px 19px;
   background-color: var(--branco);
-  border-radius: 18px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -23,11 +22,12 @@ body {
 
 .login > img {
   position: absolute;
-  top: 0;
+  top: -58px;
   left: 50%;
-  width: 104px;
-  height: auto;
-  transform: translate(-50%, -50%);
+  width: auto;
+  height: 116px;
+  object-fit: contain;
+  transform: translateX(-50%);
   z-index: 1;
 }
 
@@ -36,19 +36,15 @@ body {
 }
 
 .titulo h1 {
-  font-size: 36px;
-  line-height: 1.15;
+  font-size: 25px;
+  line-height: 1.18;
   font-weight: 700;
 }
 
-.titulo br {
-  display: none;
-}
-
 .titulo p {
-  margin-top: 6px;
-  font-size: 17px;
-  line-height: 1.25;
+  margin-top: 3px;
+  font-size: 13px;
+  line-height: 1.15;
 }
 
 .form {
@@ -61,49 +57,48 @@ form {
   flex-direction: column;
 }
 
-.role-selector {
+.perfil-login {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 24px;
-  margin-bottom: 10px;
+  gap: 42px;
+  margin: 4px 0 16px;
 }
 
-.role-selector label {
-  margin: 0;
+.perfil-login label {
   display: flex;
   align-items: center;
-  gap: 7px;
-  font-size: 14px;
-  cursor: pointer;
+  gap: 12px;
+  font-size: 16px;
 }
 
-.role-selector input[type="radio"] {
-  width: 15px;
-  height: 15px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
+.perfil-login input {
+  width: 18px;
+  height: 18px;
   accent-color: var(--vermelho);
 }
 
 form > label {
-  margin: 0 0 5px 8px;
-  font-size: 16px;
+  margin: 0 0 4px 7px;
+  font-size: 14px;
 }
 
 form > label.l1 {
-  margin-top: 12px;
+  margin-top: 11px;
 }
 
 form > input {
   width: 100%;
-  height: 58px;
-  padding: 0 16px;
-  border: 1px solid #555;
-  border-radius: 12px;
+  height: 44px;
+  padding: 0 13px;
+  border: 1px solid #777;
+  border-radius: 8px;
   background-color: var(--branco);
-  font-size: 16px;
+  color: #111;
+  font-size: 14px;
+}
+
+form > input::placeholder {
+  color: #808080;
 }
 
 form > input:focus {
@@ -120,21 +115,22 @@ form > input:-webkit-autofill:focus {
 }
 
 #erro {
-  min-height: 18px;
+  min-height: 17px;
   margin-top: 6px !important;
   font-size: 13px;
+  text-align: center;
 }
 
 button {
-  width: 212px;
-  height: 64px;
-  margin-top: 10px;
+  width: 153px;
+  height: 42px;
+  margin-top: 14px;
   border: none;
-  border-radius: 11px;
+  border-radius: 8px;
   background-color: var(--vermelho);
   align-self: center;
   color: var(--branco);
-  font-size: 25px;
+  font-size: 20px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25);
 }
 
@@ -150,28 +146,23 @@ a {
 
 @media (max-width: 700px) {
   body {
-    padding: 68px 16px 20px;
+    padding: 54px 16px 20px;
   }
 
   .login {
     width: 100%;
-    min-height: auto;
-    padding: 86px 28px 28px;
+    padding: 112px 28px 28px;
   }
 
   .login > img {
-    width: 96px;
+    height: 86px;
   }
 
   .titulo h1 {
-    font-size: 32px;
+    font-size: 24px;
   }
 
   .titulo p {
-    font-size: 16px;
-  }
-
-  button {
-    height: 58px;
+    font-size: 13px;
   }
 }
