@@ -21,7 +21,7 @@ export const eventController = {
 		try {
 			let image_url: string | null = null;
 			if (req.file) {
-				image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos");
+				image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos", "events");
 			}
 			const event = await eventService.registerEvent(Number(manager_id), title, local, date, image_url);
 			res.status(201).json(event);
@@ -46,7 +46,7 @@ export const eventController = {
 		const fields: { title?: string; local?: string; date?: string; image_url?: string | null } = { title, local, date };
 		try {
 			if (req.file) {
-				fields.image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos");
+				fields.image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos", "events");
 			} else if (req.body.remove_photo === "true" || req.body.remove_photo === true) {
 				// remoção explícita: zera a coluna; o service apaga a foto antiga do Storage
 				fields.image_url = null;
