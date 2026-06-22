@@ -1746,7 +1746,9 @@ Na sprint 4, com a integração ponta a ponta dos fluxos de auditoria, gerência
 ## 3.2. Arquitetura (sprints 1 a 5)
 
 ---
-A seção de Arquitetura apresenta a estrutura organizacional e a modelagem dos principais componentes do sistema desenvolvidos ao longo das sprints 1 a 5. Por meio dos diagramas arquiteturais, diagramas de classes e diagramas de casos de uso, é possível compreender como os módulos da aplicação se relacionam, quais são as responsabilidades de cada camada e como ocorre o fluxo de dados entre os componentes. Esses artefatos auxiliam na documentação técnica do projeto, facilitando o entendimento da solução, a manutenção do software e a evolução contínua da arquitetura proposta.
+A seção de Arquitetura apresenta os principais artefatos utilizados para representar a estrutura e o funcionamento da solução desenvolvida ao longo das sprints 1 a 5. Por meio dos diagramas de arquitetura, diagramas de classes arquiteturais e diagramas de casos de uso, é possível compreender a organização dos módulos da aplicação, as responsabilidades atribuídas a cada componente e as interações estabelecidas entre as diferentes camadas do sistema.
+
+Esses diagramas documentam tanto a visão estrutural quanto a visão funcional da solução, evidenciando o fluxo de processamento das requisições, a aplicação das regras de negócio e os mecanismos de persistência de dados. Dessa forma, os artefatos apresentados contribuem para a validação da arquitetura implementada, facilitam a comunicação entre os membros da equipe e servem como referência para futuras atividades de manutenção e evolução do software.
 
 ### 3.2.1. Diagramas de Arquitetura 
 
