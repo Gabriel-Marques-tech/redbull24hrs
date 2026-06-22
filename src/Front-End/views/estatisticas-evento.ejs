@@ -31,6 +31,8 @@
                     : '—';
                 const startedAtIso = evento.started_at ? new Date(evento.started_at).toISOString() : '';
                 const pausedAtIso = evento.paused_at ? new Date(evento.paused_at).toISOString() : '';
+                const tvTotalKm = Number(dashboardStats.totalKm || 0);
+                const tvParticipantCount = Array.isArray(athleteStats) ? athleteStats.length : 0;
             %>
 
             <div class="stats-topo">
@@ -40,10 +42,12 @@
                     </span>
                     <div class="stats-titulo-linha">
                         <h1><%= evento.title %></h1>
-                        <button type="button" class="btn-exportar" onclick="exportarPlanilha(<%= evento.id %>)">
-                            <img src="/assets/estatisticas/compartilhar.svg" alt="" class="btn-exportar-icone">
-                            Compartilhar como planilha
-                        </button>
+                        <div class="stats-acoes-topo">
+                            <button type="button" class="btn-exportar" onclick="exportarPlanilha(<%= evento.id %>)">
+                                <img src="/assets/estatisticas/compartilhar.svg" alt="" class="btn-exportar-icone">
+                                Compartilhar como planilha
+                            </button>
+                        </div>
                     </div>
                     <div class="stats-meta">
                         <span><img src="/assets/estatisticas/mapa.svg" alt="" class="meta-icone"> <%= evento.local %></span>
@@ -494,6 +498,197 @@
     </main>
 
     <% if (user_role === 'manager') { %>
+    <div class="tv-config-overlay" id="tvConfigOverlay"></div>
+    <aside class="tv-config-drawer" id="tvConfigDrawer" aria-hidden="true">
+        <div class="tv-config-topo">
+            <div>
+                <span class="tv-config-etiqueta">Experiência pública</span>
+                <h2>Conteúdo para o público</h2>
+                <p>Monte uma apresentação envolvente sem revelar o desempenho das equipes.</p>
+            </div>
+            <button type="button" class="tv-config-fechar" id="btnFecharModoTv" aria-label="Fechar">&times;</button>
+        </div>
+
+        <div class="tv-config-preview">
+            <div class="tv-preview-tela">
+                <span class="tv-preview-status">AO VIVO</span>
+                <strong><%= evento.title %></strong>
+                <div class="tv-preview-numeros">
+                    <span><%= tvParticipantCount %> participantes</span>
+                    <span><%= tvTotalKm.toFixed(1) %> km juntos</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="tv-config-opcoes">
+            <label class="tv-config-opcao">
+                <span><strong>1. Abertura do evento</strong><small>Marca, local e tempo restante</small></span>
+                <input type="checkbox" data-tv-opcao="abertura" checked>
+                <i></i>
+            </label>
+            <label class="tv-config-opcao">
+                <span><strong>2. Quilômetros juntos</strong><small>Total ao vivo, participantes e equivalência</small></span>
+                <input type="checkbox" data-tv-opcao="coletivo" checked>
+                <i></i>
+            </label>
+            <label class="tv-config-opcao">
+                <span><strong>3. Mulheres e homens</strong><small>Prévia do total coletivo por gênero</small></span>
+                <input type="checkbox" data-tv-opcao="genero" checked>
+                <i></i>
+            </label>
+            <label class="tv-config-opcao">
+                <span><strong>4. Pace médio</strong><small>Atualização coletiva a cada seis horas</small></span>
+                <input type="checkbox" data-tv-opcao="pace" checked>
+                <i></i>
+            </label>
+            <label class="tv-config-opcao">
+                <span><strong>5. Energia Red Bull 24h</strong><small>Mensagem institucional para o público</small></span>
+                <input type="checkbox" data-tv-opcao="mensagem" checked>
+                <i></i>
+            </label>
+        </div>
+
+        <label class="tv-config-tempo">
+            <span><strong>Tempo de cada tela</strong><small>A apresentação troca automaticamente.</small></span>
+            <select id="tvTempoTela">
+                <option value="8">8 segundos</option>
+                <option value="12" selected>12 segundos</option>
+                <option value="18">18 segundos</option>
+            </select>
+        </label>
+
+        <div class="tv-config-seguranca">
+            O conteúdo público nunca mostra nomes, equipes, posições, esteiras, auditores ou históricos operacionais.
+        </div>
+
+        <button type="button" class="tv-config-iniciar" id="btnIniciarModoTv">
+            Iniciar apresentação
+        </button>
+    </aside>
+
+    <section class="modo-tv" id="modoTv" aria-hidden="true">
+        <div class="modo-tv-gradiente"></div>
+        <div class="modo-tv-marca">
+            <span class="modo-tv-ao-vivo"><i></i> AO VIVO</span>
+            <strong>Red Bull 24h</strong>
+        </div>
+        <button type="button" class="modo-tv-sair" id="btnSairModoTv">Encerrar exibição</button>
+
+        <div class="modo-tv-palco">
+            <article class="modo-tv-tela modo-tv-tela-abertura" data-tv-tela="abertura">
+                <div class="modo-tv-tela-conteudo">
+                    <span class="modo-tv-sobretitulo">24 horas conectando pessoas</span>
+                    <h1><%= evento.title %></h1>
+                    <p class="modo-tv-chamada">Energia, movimento e uma experiência construída por todos.</p>
+                    <div class="modo-tv-abertura-rodape">
+                        <div>
+                            <span>Tempo restante</span>
+                            <strong id="tvCountdown">--:--:--</strong>
+                        </div>
+                        <div class="modo-tv-local">
+                            <strong><%= evento.local %></strong>
+                            <span><%= dataFmt %></span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="modo-tv-tela modo-tv-tela-coletivo" data-tv-tela="coletivo">
+                <div class="modo-tv-tela-conteudo">
+                    <span class="modo-tv-sobretitulo">O número que importa</span>
+                    <h2 class="modo-tv-total-titulo">Juntos, já percorremos <strong><%= tvTotalKm.toFixed(1) %><small> km</small></strong></h2>
+                    <p class="modo-tv-chamada">É a soma de cada turno, cada passo e cada pessoa que entrou nessa corrida.</p>
+                    <div class="modo-tv-dados-coletivos">
+                        <div><strong><%= tvParticipantCount %></strong><span>pessoas correndo</span></div>
+                        <div><strong>2</strong><span>equipes mantendo o desafio vivo</span></div>
+                        <div><strong>24h</strong><span>de corrida sem parar</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="modo-tv-tela modo-tv-tela-genero" data-tv-tela="genero">
+                <div class="modo-tv-tela-conteudo">
+                    <span class="modo-tv-sobretitulo">A corrida também é delas</span>
+                    <h2 id="tvTituloGenero">Mulheres e homens fazem essa energia acontecer.</h2>
+                    <div class="modo-tv-genero-experiencia">
+                        <div class="modo-tv-genero-destaque modo-tv-genero-mulheres">
+                            <div class="modo-tv-genero-topo">
+                                <span class="modo-tv-genero-icone modo-tv-genero-icone-mulheres" aria-hidden="true">
+                                    <img src="/assets/esteira/Esteira-feminina-branca.svg" alt="">
+                                </span>
+                                <span class="modo-tv-genero-etiqueta">Mulheres</span>
+                            </div>
+                            <div class="modo-tv-genero-valor">
+                                <strong id="tvKmMulheres">—<small> km</small></strong>
+                                <span id="tvPctMulheres">—%</span>
+                            </div>
+                            <p>quilômetros construídos por todas as mulheres</p>
+                            <div class="modo-tv-genero-barra">
+                                <i id="tvBarraMulheres" style="width:50%"></i>
+                            </div>
+                        </div>
+
+                        <div class="modo-tv-genero-destaque modo-tv-genero-homens">
+                            <div class="modo-tv-genero-topo">
+                                <span class="modo-tv-genero-icone modo-tv-genero-icone-homens" aria-hidden="true">
+                                    <img src="/assets/esteira/esteira-branca.svg" alt="">
+                                </span>
+                                <span class="modo-tv-genero-etiqueta">Homens</span>
+                            </div>
+                            <div class="modo-tv-genero-valor">
+                                <strong id="tvKmHomens">—<small> km</small></strong>
+                                <span id="tvPctHomensNumero">—%</span>
+                            </div>
+                            <p>quilômetros construídos por todos os homens</p>
+                            <div class="modo-tv-genero-barra">
+                                <i id="tvBarraHomens" style="width:50%"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </article>
+
+            <article class="modo-tv-tela modo-tv-tela-pace" data-tv-tela="pace">
+                <div class="modo-tv-tela-conteudo">
+                    <span class="modo-tv-sobretitulo">Para quem entende de corrida</span>
+                    <h2>Qual é o ritmo do parque agora?</h2>
+                    <div class="modo-tv-pace-card">
+                        <div>
+                            <span>Pace médio da competição</span>
+                            <strong id="tvPaceMedio">—<small> min/km</small></strong>
+                            <p id="tvPacePeriodo">Atualizado a cada ciclo de seis horas</p>
+                        </div>
+                        <div class="modo-tv-pace-explicacao">
+                            <strong>O que isso significa?</strong>
+                            <p>É o tempo médio necessário para percorrer um quilômetro, considerando toda a corrida.</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="modo-tv-tela modo-tv-tela-mensagem" data-tv-tela="mensagem">
+                <div class="modo-tv-tela-conteudo">
+                    <span class="modo-tv-sobretitulo">Red Bull 24h</span>
+                    <h2>O parque virou palco para uma experiência que não para.</h2>
+                    <p class="modo-tv-chamada">Chegue mais perto. Acompanhe. Torça pela energia de todo mundo.</p>
+                    <div class="modo-tv-assinatura">
+                        <strong>24</strong>
+                        <span>horas conectando ideias,<br>energias e pessoas.</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <div class="modo-tv-controles">
+            <button type="button" id="tvAnterior" aria-label="Tela anterior">‹</button>
+            <div class="modo-tv-indicadores" id="tvIndicadores"></div>
+            <button type="button" id="tvPausar" aria-label="Pausar apresentação">Pausar</button>
+            <button type="button" id="tvProxima" aria-label="Próxima tela">›</button>
+        </div>
+        <div class="modo-tv-progresso"><i id="tvProgresso"></i></div>
+    </section>
+
     <!-- Modal: editar turno (manager) -->
     <div id="modalEditarTurno" class="modal-editar-overlay" style="display:none;">
         <div class="modal-editar-conteudo">
@@ -542,6 +737,8 @@
     window.TOP_BY_GENDER  = <%- JSON.stringify(dashboardStats.topByGender) %>;
     window.TEAM_STATS     = <%- JSON.stringify(teamStats) %>;
     window.ATHLETE_STATS  = <%- JSON.stringify(athleteStats) %>;
+    window.TV_GENDER_TOTALS = window.TV_GENDER_TOTALS || null;
+    window.TV_PACE_6H = window.TV_PACE_6H || null;
     </script>
     <script>
     async function authFetch(url, options = {}) {
@@ -762,6 +959,264 @@
 
     <% if (user_role === 'manager') { %>
     <script>
+    (function configurarModoTv() {
+        const drawer = document.getElementById('tvConfigDrawer');
+        const overlay = document.getElementById('tvConfigOverlay');
+        const modoTv = document.getElementById('modoTv');
+        const btnAbrir = document.getElementById('btnAbrirModoTv');
+        const btnFechar = document.getElementById('btnFecharModoTv');
+        const btnIniciar = document.getElementById('btnIniciarModoTv');
+        const btnSair = document.getElementById('btnSairModoTv');
+        const opcoes = [...document.querySelectorAll('[data-tv-opcao]')];
+        const tempoTela = document.getElementById('tvTempoTela');
+        const btnAnterior = document.getElementById('tvAnterior');
+        const btnProxima = document.getElementById('tvProxima');
+        const btnPausar = document.getElementById('tvPausar');
+        const indicadores = document.getElementById('tvIndicadores');
+        const progresso = document.getElementById('tvProgresso');
+        const chave = `modoTv:${window.EVENTO_ID}`;
+        let telasAtivas = [];
+        let telaAtual = 0;
+        let temporizador = null;
+        let pausado = false;
+
+        if (!drawer || !overlay || !modoTv) return;
+
+        function preferenciasAtuais() {
+            return {
+                telas: Object.fromEntries(opcoes.map(input => [input.dataset.tvOpcao, input.checked])),
+                duracao: Number(tempoTela?.value || 12),
+            };
+        }
+
+        function salvarPreferencias() {
+            localStorage.setItem(chave, JSON.stringify(preferenciasAtuais()));
+        }
+
+        function carregarPreferencias() {
+            const salvas = JSON.parse(localStorage.getItem(chave) || '{}');
+            const telasSalvas = salvas.telas || salvas;
+            opcoes.forEach(input => {
+                if (typeof telasSalvas[input.dataset.tvOpcao] === 'boolean') {
+                    input.checked = telasSalvas[input.dataset.tvOpcao];
+                }
+            });
+            if (tempoTela && salvas.duracao) tempoTela.value = String(salvas.duracao);
+        }
+
+        function abrirConfiguracao() {
+            drawer.classList.add('aberto');
+            overlay.classList.add('aberto');
+            drawer.setAttribute('aria-hidden', 'false');
+        }
+
+        function fecharConfiguracao() {
+            drawer.classList.remove('aberto');
+            overlay.classList.remove('aberto');
+            drawer.setAttribute('aria-hidden', 'true');
+        }
+
+        function prepararTelas() {
+            const preferencias = preferenciasAtuais();
+            telasAtivas = [...modoTv.querySelectorAll('[data-tv-tela]')].filter(tela => {
+                const ativa = preferencias.telas[tela.dataset.tvTela] !== false;
+                tela.classList.toggle('tv-desativada', !ativa);
+                return ativa;
+            });
+
+            if (telasAtivas.length === 0) {
+                const abertura = modoTv.querySelector('[data-tv-tela="abertura"]');
+                if (abertura) {
+                    abertura.classList.remove('tv-desativada');
+                    telasAtivas = [abertura];
+                }
+            }
+
+            indicadores.innerHTML = telasAtivas
+                .map((_, index) => `<button type="button" data-tv-indice="${index}" aria-label="Ir para tela ${index + 1}"></button>`)
+                .join('');
+            indicadores.querySelectorAll('button').forEach(botao => {
+                botao.addEventListener('click', () => mostrarTela(Number(botao.dataset.tvIndice), true));
+            });
+        }
+
+        function atualizarGenero() {
+            const totais = window.TV_GENDER_TOTALS;
+            if (!totais) return;
+
+            const mulheres = Number(totais.mulheres);
+            const homens = Number(totais.homens);
+            const campoMulheres = document.getElementById('tvKmMulheres');
+            const campoHomens = document.getElementById('tvKmHomens');
+            const titulo = document.getElementById('tvTituloGenero');
+            const pctMulheres = document.getElementById('tvPctMulheres');
+            const pctHomensNumero = document.getElementById('tvPctHomensNumero');
+            const barraMulheres = document.getElementById('tvBarraMulheres');
+            const barraHomens = document.getElementById('tvBarraHomens');
+
+            if (Number.isFinite(mulheres) && campoMulheres) {
+                campoMulheres.innerHTML = `${mulheres.toFixed(1)} <small>km</small>`;
+            }
+            if (Number.isFinite(homens) && campoHomens) {
+                campoHomens.innerHTML = `${homens.toFixed(1)} <small>km</small>`;
+            }
+            if (Number.isFinite(mulheres) && Number.isFinite(homens)) {
+                const total = mulheres + homens;
+                const percentualMulheres = total > 0 ? (mulheres / total) * 100 : 0;
+                const percentualHomens = total > 0 ? (homens / total) * 100 : 0;
+                if (pctMulheres) pctMulheres.textContent = `${percentualMulheres.toFixed(0)}%`;
+                if (pctHomensNumero) pctHomensNumero.textContent = `${percentualHomens.toFixed(0)}%`;
+                if (barraMulheres) barraMulheres.style.width = `${percentualMulheres}%`;
+                if (barraHomens) barraHomens.style.width = `${percentualHomens}%`;
+                if (titulo) {
+                    const diferenca = Math.abs(mulheres - homens);
+                    if (diferenca < 0.1) {
+                        titulo.textContent = 'Lado a lado, a energia não para.';
+                    } else if (mulheres > homens) {
+                        titulo.textContent = 'Hoje, elas estão levando essa energia ainda mais longe.';
+                    } else {
+                        titulo.textContent = 'Mulheres e homens fazem essa energia acontecer.';
+                    }
+                }
+            }
+        }
+
+        function atualizarPace() {
+            const pace = window.TV_PACE_6H;
+            if (!pace) return;
+
+            const valor = document.getElementById('tvPaceMedio');
+            const periodo = document.getElementById('tvPacePeriodo');
+
+            if (pace.valor && valor) {
+                valor.innerHTML = `${pace.valor}<small> min/km</small>`;
+            }
+            if (pace.periodo && periodo) {
+                periodo.textContent = `Média coletiva do período ${pace.periodo}`;
+            }
+        }
+
+        // Integração:
+        // atualizarDadosModoTv({
+        //   genero: { mulheres: 82.4, homens: 91 },
+        //   pace: { valor: '05:42', periodo: '12h às 18h' }
+        // });
+        window.atualizarDadosModoTv = function atualizarDadosModoTv(dados = {}) {
+            if (dados.genero) window.TV_GENDER_TOTALS = dados.genero;
+            if (dados.pace) window.TV_PACE_6H = dados.pace;
+            atualizarGenero();
+            atualizarPace();
+        };
+
+        function reiniciarProgresso() {
+            if (!progresso) return;
+            progresso.style.animation = 'none';
+            void progresso.offsetWidth;
+            if (!pausado) {
+                progresso.style.animation = `tvProgresso ${preferenciasAtuais().duracao}s linear forwards`;
+            }
+        }
+
+        function agendarProxima() {
+            clearTimeout(temporizador);
+            if (pausado || telasAtivas.length < 2) return;
+            temporizador = setTimeout(() => mostrarTela(telaAtual + 1), preferenciasAtuais().duracao * 1000);
+        }
+
+        function mostrarTela(indice, interacaoManual = false) {
+            if (!telasAtivas.length) return;
+            telaAtual = (indice + telasAtivas.length) % telasAtivas.length;
+            modoTv.querySelectorAll('[data-tv-tela]').forEach(tela => tela.classList.remove('tv-ativa'));
+            telasAtivas[telaAtual].classList.add('tv-ativa');
+            indicadores.querySelectorAll('button').forEach((botao, index) => {
+                botao.classList.toggle('ativo', index === telaAtual);
+            });
+            if (interacaoManual && pausado) {
+                clearTimeout(temporizador);
+            } else {
+                reiniciarProgresso();
+                agendarProxima();
+            }
+        }
+
+        function alternarPausa() {
+            pausado = !pausado;
+            btnPausar.textContent = pausado ? 'Continuar' : 'Pausar';
+            modoTv.classList.toggle('tv-pausado', pausado);
+            if (pausado) {
+                clearTimeout(temporizador);
+                progresso.style.animationPlayState = 'paused';
+            } else {
+                reiniciarProgresso();
+                agendarProxima();
+            }
+        }
+
+        function sincronizarCronometroTv() {
+            const origem = document.getElementById('countdown');
+            const destino = document.getElementById('tvCountdown');
+            if (origem && destino) destino.textContent = origem.textContent;
+        }
+
+        async function iniciarModoTv() {
+            salvarPreferencias();
+            prepararTelas();
+            atualizarGenero();
+            atualizarPace();
+            sincronizarCronometroTv();
+            fecharConfiguracao();
+            modoTv.classList.add('ativo');
+            modoTv.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            pausado = false;
+            btnPausar.textContent = 'Pausar';
+            mostrarTela(0);
+
+            try {
+                if (modoTv.requestFullscreen && !document.fullscreenElement) {
+                    await modoTv.requestFullscreen();
+                }
+            } catch (_) {}
+        }
+
+        async function sairModoTv() {
+            clearTimeout(temporizador);
+            modoTv.classList.remove('ativo');
+            modoTv.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            if (document.fullscreenElement) {
+                try { await document.exitFullscreen(); } catch (_) {}
+            }
+        }
+
+        carregarPreferencias();
+        btnAbrir?.addEventListener('click', abrirConfiguracao);
+        btnFechar.addEventListener('click', fecharConfiguracao);
+        overlay.addEventListener('click', fecharConfiguracao);
+        btnIniciar.addEventListener('click', iniciarModoTv);
+        btnSair.addEventListener('click', sairModoTv);
+        opcoes.forEach(input => input.addEventListener('change', salvarPreferencias));
+        tempoTela?.addEventListener('change', salvarPreferencias);
+        btnAnterior.addEventListener('click', () => mostrarTela(telaAtual - 1, true));
+        btnProxima.addEventListener('click', () => mostrarTela(telaAtual + 1, true));
+        btnPausar.addEventListener('click', alternarPausa);
+        setInterval(sincronizarCronometroTv, 1000);
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && modoTv.classList.contains('ativo')) sairModoTv();
+        });
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement && modoTv.classList.contains('ativo')) sairModoTv();
+        });
+
+        const parametros = new URLSearchParams(window.location.search);
+        if (parametros.get('modoTv') === 'config') {
+            abrirConfiguracao();
+            parametros.delete('modoTv');
+            const novaBusca = parametros.toString();
+            history.replaceState(null, '', window.location.pathname + (novaBusca ? `?${novaBusca}` : ''));
+        }
+    })();
+
     (function () {
         const overlay   = document.getElementById('modalEditarTurno');
         if (!overlay) return;
