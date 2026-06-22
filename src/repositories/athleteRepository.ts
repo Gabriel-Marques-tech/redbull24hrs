@@ -1,10 +1,10 @@
 import { pool } from "../database/connection";
 
 export const athleteRepository = {
-	async create(name: string, gender: string, cpf: string | null, team_id: number, photo_url: string | null = null) {
+	async create(name: string, gender: string, cpf: string | null, team_id: number, image_url: string | null = null) {
 		const result = await pool.query(
-			`INSERT INTO athletes (name, gender, cpf, team_id, photo_url) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-			[name, gender, cpf ?? null, team_id, photo_url ?? null]
+			`INSERT INTO athletes (name, gender, cpf, team_id, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+			[name, gender, cpf ?? null, team_id, image_url ?? null]
 		);
 		return result.rows[0];
 	},
@@ -25,7 +25,7 @@ export const athleteRepository = {
 		return result.rows[0] ?? null;
 	},
 
-	async update(id: number, fields: { name?: string; gender?: string; cpf?: string | null; photo_url?: string | null }) {
+	async update(id: number, fields: { name?: string; gender?: string; cpf?: string | null; image_url?: string | null }) {
 		const entries = Object.entries(fields).filter(([, v]) => v !== undefined);
 		if (entries.length === 0) return null;
 
