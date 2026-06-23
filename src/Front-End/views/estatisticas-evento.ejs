@@ -495,17 +495,27 @@
                 <i></i>
             </label>
             <label class="tv-config-opcao">
-                <span><strong>3. Mulheres e homens</strong><small>Prévia do total coletivo por gênero</small></span>
+                <span><strong>3. Ritmo e projeção</strong><small>Projeção de km ao fim, ritmo coletivo e progresso</small></span>
+                <input type="checkbox" data-tv-opcao="ritmo" checked>
+                <i></i>
+            </label>
+            <label class="tv-config-opcao">
+                <span><strong>4. Mulheres e homens</strong><small>Prévia do total coletivo por gênero</small></span>
                 <input type="checkbox" data-tv-opcao="genero" checked>
                 <i></i>
             </label>
             <label class="tv-config-opcao">
-                <span><strong>4. Pace médio</strong><small>Pace do período de 6h, atualizado a cada turno concluído</small></span>
+                <span><strong>5. Pace médio</strong><small>Pace do período de 6h, atualizado a cada turno concluído</small></span>
                 <input type="checkbox" data-tv-opcao="pace" checked>
                 <i></i>
             </label>
             <label class="tv-config-opcao">
-                <span><strong>5. Energia Red Bull 24h</strong><small>Mensagem institucional para o público</small></span>
+                <span><strong>6. Marca do dia</strong><small>Maior turno da competição, sem identificar atletas</small></span>
+                <input type="checkbox" data-tv-opcao="recorde" checked>
+                <i></i>
+            </label>
+            <label class="tv-config-opcao">
+                <span><strong>7. Energia Red Bull 24h</strong><small>Mensagem institucional para o público</small></span>
                 <input type="checkbox" data-tv-opcao="mensagem" checked>
                 <i></i>
             </label>
@@ -569,6 +579,24 @@
                 </div>
             </article>
 
+            <article class="modo-tv-tela modo-tv-tela-ritmo" data-tv-tela="ritmo">
+                <div class="modo-tv-tela-conteudo">
+                    <span class="modo-tv-sobretitulo">No ritmo de agora</span>
+                    <% if (evento.status === 'finished') { %>
+                    <h2 class="modo-tv-total-titulo">A competição percorreu <strong><%= Number(dashboardStats.totalKm).toFixed(0) %><small> km</small></strong></h2>
+                    <p class="modo-tv-chamada">Vinte e quatro horas de movimento contínuo, do primeiro ao último passo.</p>
+                    <% } else { %>
+                    <h2 class="modo-tv-total-titulo">Nesse ritmo, vamos cruzar <strong><%= dashboardStats.projectedKm != null ? dashboardStats.projectedKm : '—' %><small> km</small></strong></h2>
+                    <p class="modo-tv-chamada">Uma projeção viva, que cresce a cada turno que entra na pista.</p>
+                    <% } %>
+                    <div class="modo-tv-dados-coletivos">
+                        <div><strong><%= dashboardStats.rateKmH != null ? dashboardStats.rateKmH : '—' %></strong><span>km/h de ritmo coletivo</span></div>
+                        <div><strong><%= dashboardStats.elapsedHours != null ? Math.min(100, Math.round((dashboardStats.elapsedHours / 24) * 100)) : 0 %>%</strong><span>da competição concluída</span></div>
+                        <div><strong><%= Number(dashboardStats.totalKm).toFixed(0) %></strong><span>km percorridos até agora</span></div>
+                    </div>
+                </div>
+            </article>
+
             <article class="modo-tv-tela modo-tv-tela-genero" data-tv-tela="genero">
                 <div class="modo-tv-tela-conteudo">
                     <span class="modo-tv-sobretitulo">A corrida também é delas</span>
@@ -625,6 +653,30 @@
                         <div class="modo-tv-pace-explicacao">
                             <strong>O que isso significa?</strong>
                             <p>É o tempo médio necessário para percorrer um quilômetro, considerando toda a corrida.</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="modo-tv-tela modo-tv-tela-recorde" data-tv-tela="recorde">
+                <div class="modo-tv-tela-conteudo">
+                    <span class="modo-tv-sobretitulo">A marca do dia</span>
+                    <h2>O maior turno até agora</h2>
+                    <%
+                        const tvMelhorTurno = (dashboardStats.topShifts && dashboardStats.topShifts.length) ? dashboardStats.topShifts[0] : null;
+                        const tvDurRecorde = tvMelhorTurno && tvMelhorTurno.duration_seconds
+                            ? Math.floor(tvMelhorTurno.duration_seconds / 3600) + 'h ' + Math.floor((tvMelhorTurno.duration_seconds % 3600) / 60) + 'min'
+                            : '—';
+                    %>
+                    <div class="modo-tv-pace-card">
+                        <div>
+                            <span>Maior distância em um único turno</span>
+                            <strong><%= tvMelhorTurno ? Number(tvMelhorTurno.distance).toFixed(1) : '—' %><small> km</small></strong>
+                            <p><%= tvMelhorTurno ? 'Conquistados em ' + tvDurRecorde + ' de pista' : 'Aguardando o primeiro turno concluído' %></p>
+                        </div>
+                        <div class="modo-tv-pace-explicacao">
+                            <strong>Por que isso importa?</strong>
+                            <p>Mostra a entrega de quem segura o ritmo por mais tempo sem deixar a energia cair.</p>
                         </div>
                     </div>
                 </div>
