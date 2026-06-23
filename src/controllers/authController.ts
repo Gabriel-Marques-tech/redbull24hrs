@@ -77,7 +77,7 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
       sameSite: "strict",
       maxAge: 15 * 60 * 1000
     })
-    res.status(200).json({user} );
+    res.status(200).json({ user, accessToken });
   } catch {
     res.status(500).json({ error: "Erro ao autenticar usuário" });
   }
@@ -91,6 +91,18 @@ const refreshToken = async (req: Request, res: Response): Promise<void> => {
       res.status(401).json({ error: "Refresh token inválido ou expirado" });
       return;
     }
+    res.cookie('accessToken', tokens.accessToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000,
+    });
+    res.cookie('refreshToken', tokens.refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
     res.status(200).json(tokens);
   } catch {
     res.status(500).json({ error: "Erro ao renovar token" });
@@ -98,9 +110,11 @@ const refreshToken = async (req: Request, res: Response): Promise<void> => {
 };
 
 const logout = async (req: Request, res: Response): Promise<void> => {
-  const { refreshToken } = req.body ?? {};
+  const refreshToken = req.cookies.refreshToken ?? req.body?.refreshToken;
   try {
     await AuthService.logout(refreshToken);
+    res.clearCookie('accessToken');
+    res.clearCookie('refreshToken');
     res.status(204).send();
   } catch {
     res.status(500).json({ error: "Erro ao encerrar sessão" });
