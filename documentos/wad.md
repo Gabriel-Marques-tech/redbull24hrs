@@ -2229,7 +2229,7 @@ O Diagrama de Sequência do Dashboard cobre dois fluxos: o polling automático d
 
 <div align="center">
   <sub>Imagem 38 - Diagrama de Sequência: Dashboard</sub><br>
-  <img src="assets/diagrama_sequencia/Dashboard_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do painel de controle (dashboard)"><br>
+  <img src="./assets/diagrama_sequencia/Dashboard_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do painel de controle (dashboard)"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
