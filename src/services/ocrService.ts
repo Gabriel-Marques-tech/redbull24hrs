@@ -11,24 +11,25 @@ export interface TreadmillData {
 }
 
 const PROMPT = `
-You are reading a treadmill LCD/LED display with 7-segment digit characters.
+You are reading a treadmill display (may be LCD, LED, OLED, or any screen type).
 
 TASK: Extract exactly these 4 fields from the display:
-- speed: current speed in km/h (typical range: 1.0 to 25.0, always a decimal like 2.5 or 10.0)
-- distance: distance covered in km (typical range: 0.00 to 50.0, decimal)
-- pace: pace per km in "MM:SS" format (typical range: 02:00 to 30:00)
-- time: elapsed time in "HH:MM:SS" format (e.g. 00:05:23)
+- speed: current speed in km/h (decimal number, e.g. 2.5 or 10.0)
+- distance: distance covered in km (decimal number, e.g. 0.42)
+- pace: pace per km in "MM:SS" format (e.g. "05:30")
+- time: elapsed time in "HH:MM:SS" format (e.g. "00:05:23")
 
-IMPORTANT RULES:
-1. Read each 7-segment digit carefully. Common mistakes to AVOID:
-   - Do NOT confuse 5 with 6, or 6 with 5
-   - Do NOT confuse 1 with 7
-   - Do NOT confuse 0 with 8
-   - Do NOT confuse 9 with 8
-2. Speed is usually the LARGEST or most prominent number on the display
-3. Speed on a treadmill is ALWAYS between 0.5 and 25.0 km/h — if you read something outside this range, it is NOT speed
-4. If a field is not visible or unreadable, return null
-5. Respond ONLY with valid JSON, no markdown, no explanation:
+CONSTRAINTS (physical limits of any treadmill):
+- speed: always between 0.5 and 25.0 km/h
+- distance: always between 0 and 500 km
+- pace: format MM:SS only
+- time: format HH:MM:SS only
+
+RULES:
+1. Read digits carefully — look for labels on the display (SPEED, KM/H, DIST, TIME, PACE) to identify each value
+2. If a field label is not visible or the value is unreadable, return null for that field
+3. Do NOT guess — only return values you can clearly see
+4. Respond ONLY with valid JSON, no markdown, no explanation:
 {"speed": <number or null>, "distance": <number or null>, "pace": "<string or null>", "time": "<string or null>"}
 `.trim();
 
