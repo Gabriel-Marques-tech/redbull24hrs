@@ -4747,7 +4747,6 @@ A suíte também busca garantir determinismo, evitando dependência de ordem de 
 
 Os testes unitários de Service validam diretamente as regras internas do sistema. Os casos apresentados foram selecionados por representarem os fluxos mais críticos da operação da plataforma, abrangendo autenticação, início de turno, registro de checkpoint e finalização de turno. A escolha desses cenários busca demonstrar a validação das principais regras de negócio implementadas na camada de serviços, responsáveis pela integridade dos dados, controle operacional e segurança da aplicação.
 
-
 A cobertura mínima esperada para a camada Service é de **80%**, evidenciada pelo relatório gerado com:
 
 ```bash
@@ -4943,25 +4942,30 @@ A tabela a seguir apresenta a finalidade de cada conjunto de testes automatizado
 | `sync.test.ts` | Validar sincronização offline | Garante a consistência do processo de sincronização entre dados locais e persistidos. |
 | `pageController.test.ts` | Validar renderização das páginas | Garante o correto carregamento das páginas e a integração dos controladores responsáveis pela interface web. |
 
-
 #### Resumo Quantitativo dos Testes
 
-| Módulo                    | Quantidade de Cenários         |
-| ------------------------- | ------------------------------ |
-| Auth Service              | 18                             |
-| Auth Controller           | 17                             |
-| Auth Middleware e Rotas   | 13                             |
-| Eventos                   | 36                             |
-| Equipes e Atletas         | 31                             |
-| Turnos e Checkpoints      | 78                             |
-| Sincronização             | 16                             |
-| Alertas                   | 7                              |
-| Histórico                 | 11                             |
-| Logs                      | 15                             |
-| Métricas                  | 20                             |
-| Exportação CSV            | 15                             |
-| Pages / Interface         | 24                             |
-| **Total**                 | **301 cenários automatizados** |
+Atualmente, a suíte automatizada é composta por **18 arquivos de teste**, contemplando testes unitários de Service, testes de integração de endpoints, testes de middleware, rotas, controladores e componentes auxiliares da aplicação.
+
+| Categoria            | Arquivos de Teste                                                                           |
+| -------------------- | ------------------------------------------------------------------------------------------- |
+| Auth                 | auth.service.test.ts, auth.controller.test.ts, auth.middleware.test.ts, auth.routes.test.ts |
+| Eventos              | event.test.ts, event.service.test.ts                                                        |
+| Equipes              | team.test.ts, team.service.test.ts                                                          |
+| Turnos e Checkpoints | shift.test.ts, shift.service.test.ts                                                        |
+| Histórico            | history.test.ts, history.service.test.ts                                                    |
+| Alertas              | alerts.test.ts                                                                              |
+| Logs                 | logs.test.ts                                                                                |
+| Métricas             | metrics.test.ts                                                                             |
+| Exportação           | export.test.ts                                                                              |
+| Sincronização        | sync.test.ts                                                                                |
+| Interface            | pageController.test.ts                                                                      |
+
+| Indicador           | Resultado |
+| ------------------- | --------- |
+| Suítes de Teste     | 18        |
+| Cenários Executados | 301       |
+| Cenários Aprovados  | 301       |
+| Taxa de Sucesso     | 100%      |
 
 A implementação desses testes automatizados garante a validação das principais regras de negócio da plataforma RedRun, reduzindo riscos de regressão e aumentando a confiabilidade dos fluxos críticos da operação do evento.
 
@@ -4979,12 +4983,14 @@ Resultado obtido:
 
 ```bash
 Test Suites: 18 passed, 18 total
-Tests:       301 passed, 301 total
-Snapshots:   0 total
-Time:        8.216 s
+Tests: 301 passed, 301 total
+Snapshots: 0 total
+Time: 26.61 s
 ```
 
-As Figuras 1 a 5 apresentam a execução completa da suíte automatizada, evidenciando que todos os testes foram aprovados com sucesso.
+As Figuras 95 a 99 apresentam a execução completa da suíte automatizada, evidenciando que todos os testes foram aprovados com sucesso.
+
+A execução da suíte demonstrou a aprovação de 18 suítes de teste e 301 cenários automatizados, cobrindo os principais fluxos da aplicação, incluindo autenticação, gerenciamento de eventos, equipes, atletas, turnos, checkpoints, sincronização, histórico, métricas, exportação e auditoria.
 
 <div align="center">
   <sub>Imagem 95 - Print dos teste - 1 </sub><br>
@@ -5026,10 +5032,7 @@ A cobertura deve ser evidenciada com:
 ```bash
 npm test -- --coverage
 ```
-
-O relatório apresenta os percentuais de cobertura da camada Service, responsável pela implementação das principais regras de negócio da aplicação.
-
-A figura a seguir apresenta o relatório de cobertura gerado pelo Jest, incluindo os percentuais obtidos pela camada Service.
+O relatório apresenta os percentuais de cobertura da camada Service, responsável pela implementação das principais regras de negócio da aplicação. A medição foi realizada por meio da configuração do Jest direcionada aos arquivos presentes em `src/services`, permitindo avaliar diretamente a cobertura das validações e regras operacionais do sistema.
 
 <div align="center">
   <sub>Imagem 100 - Relatório de cobertura do jest - 1 </sub><br>
@@ -5038,16 +5041,25 @@ A figura a seguir apresenta o relatório de cobertura gerado pelo Jest, incluind
   <br><br><br>
 </div>
 
-A execução do relatório de cobertura demonstrou que a camada Service atingiu os requisitos mínimos definidos para o projeto, apresentando:
+A execução do relatório de cobertura demonstrou que a camada Service atingiu os requisitos mínimos definidos para o projeto, apresentando os seguintes resultados consolidados:
 
 ```bash
 Statements: 95,45%
-Branches:   90,74%
-Functions:  96,87%
-Lines:      98,29%
+Branches: 90,74%
+Functions: 96,87%
+Lines: 98,29%
 ```
 
-Os resultados evidenciam ampla cobertura das regras de negócio implementadas na camada de serviços, superando a cobertura mínima de 80% definida para esta entrega.
+Além da cobertura consolidada, os serviços individuais apresentaram resultados elevados de validação, destacando-se:
+
+* alertsService.ts: 100% de cobertura em Statements, Branches, Functions e Lines;
+* historyService.ts: 100% de cobertura em Statements, Branches, Functions e Lines;
+* logsService.ts: 100% de cobertura em Statements, Branches, Functions e Lines;
+* syncService.ts: 97,29% de Statements e 97,14% de Branches;
+* shiftService.ts: 95,34% de Statements e 91,66% de Branches;
+* authService.ts: 96,77% de Statements e 97,05% de Branches.
+
+Os resultados evidenciam ampla cobertura das regras de negócio implementadas na camada de serviços, superando significativamente a cobertura mínima de 80% estabelecida para a entrega.
 
 #### Mapeamento de Regras de Negócio para Fluxos Testados
 
