@@ -5254,6 +5254,16 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 2 | Durante a criação do evento, adicionar atletas às duas equipes | Pedro também identificou o botão de adicionar atleta em cinza como pouco intuitivo, reforçando a observação feita anteriormente por Lucas Levi; sugeriu que o botão indicasse explicitamente "Adicionar atleta" ou "Adicionar líder" | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões |
 | 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
 
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Nenhuma ocorrência | — |
+| 2 | Selecionar o evento criado | Pedro notou que, ao selecionar a equipe para iniciar a auditoria, o botão "próximo" aparecia na cor vermelha, o que pode causar confusão visual já que essa cor costuma ser associada a erros ou ações destrutivas | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões |
+| 3 | Realizar a auditoria de um período de 2 minutos | Nenhuma ocorrência registrada | — |
+| 4 | Concluir a auditoria e realizar o logout | Pedro considerou a usabilidade geral tranquila, mas sugeriu melhorar a diferenciação visual entre o botão de "finalizar turno" (concluir a auditoria) e o botão de logout, já que ambos pareciam semelhantes | H4 – Consistência e padrões; H8 – Design estético e minimalista |
+
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
 ---
