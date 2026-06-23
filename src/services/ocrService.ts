@@ -23,24 +23,18 @@ Responda SOMENTE com JSON válido, sem markdown, sem explicação:
 Se um valor não estiver visível ou legível, use null.
 `.trim();
 
-export const ocrService = {
-	async extractFromImage(imageBuffer: Buffer, mimetype: string): Promise<TreadmillData> {
-		const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+const MODELS = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash-latest"];
 
-		const imagePart = {
-			inlineData: {
-				data: imageBuffer.toString("base64"),
-				mimeType: mimetype,
-			},
-		};
+async function tryExtract(imageBuffer: Buffer, mimetype: string): Promise<TreadmillData> {
+	const imagePart = {
+		inlineData: { data: imageBuffer.toString("base64"), mimeType: mimetype },
+	};
 
-		const result = await model.generateContent([PROMPT, imagePart]);
-		const text = result.response.text().trim();
-
-		// Remove markdown code fences if present
-		const clean = text.replace(/```json\n?|\n?```/g, "").trim();
-
+	for (const modelName of MODELS) {
 		try {
+			const model = genAI.getGenerativeModel({ model: modelName });
+			const result = await model.generateContent([PROMPT, imagePart]);
+			const clean = result.response.text().trim().replace(/```json\n?|\n?```/g, "").trim();
 			const parsed = JSON.parse(clean) as TreadmillData;
 			return {
 				speed:    typeof parsed.speed    === "number" ? parsed.speed    : null,
@@ -48,6 +42,18 @@ export const ocrService = {
 				pace:     typeof parsed.pace     === "string" ? parsed.pace     : null,
 				time:     typeof parsed.time     === "string" ? parsed.time     : null,
 			};
+		} catch (err: any) {
+			const isRetryable = err?.message?.includes("503") || err?.message?.includes("429") || err?.message?.includes("overloaded");
+			if (!isRetryable || modelName === MODELS[MODELS.length - 1]) throw err;
+		}
+	}
+	return { speed: null, distance: null, pace: null, time: null };
+}
+
+export const ocrService = {
+	async extractFromImage(imageBuffer: Buffer, mimetype: string): Promise<TreadmillData> {
+		try {
+			return await tryExtract(imageBuffer, mimetype);
 		} catch {
 			return { speed: null, distance: null, pace: null, time: null };
 		}
