@@ -5290,6 +5290,16 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 2 | Durante a criação do evento, adicionar atletas às duas equipes | Demonstrou insegurança ao utilizar o botão de adição de participantes, pois não ficou claro se o cadastro estava sendo realizado para atleta ou líder da equipe | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões |
 | 3 | Concluir a criação do evento e iniciá-lo | Valter procurou uma tela de revisão antes de iniciar o evento, esperando validar todas as informações cadastradas | H3 – Controle e liberdade do usuário; H5 – Prevenção de erros |
 
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Nenhuma ocorrência | — |
+| 2 | Selecionar o evento criado | Valter clicou inicialmente no card do evento esperando iniciar automaticamente a auditoria, sem perceber a necessidade de utilizar o botão específico para essa ação | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrõess |
+| 3 | Realizar a auditoria de um período de 2 minutos | Valter compreendeu o conceito geral da auditoria, porém apresentou dificuldade para identificar a sequência correta entre registrar quilometragem inicial, checkpoints e quilometragem final. Também sugeriu que o sistema apresentasse orientações contextuais durante a execução da auditoria | H10 – Ajuda e documentação; H2 – Correspondência entre o sistema e o mundo real; H6 – Reconhecimento em vez de lembrança |
+| 4 | Concluir a auditoria e realizar o logout | Após finalizar a auditoria, Valter não teve certeza se os dados haviam sido efetivamente salvos, procurando uma confirmação visual mais evidente | H1 – Visibilidade do status do sistema |
+
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
 ---
