@@ -2121,7 +2121,7 @@ O Diagrama de Sequência de Equipes cobre quatro fluxos: cadastro de equipe, cad
 
 <div align="center">
   <sub>Imagem 34 - Diagrama de Sequência: Equipes</sub><br>
-  <img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.png" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
+  <img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026 </sub>
   <br><br><br>
 </div>
