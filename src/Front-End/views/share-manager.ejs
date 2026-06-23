@@ -3,183 +3,201 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Compartilhar desempenhos · <%= event.name %></title>
+  <title>Compartilhar desempenhos · <%= event.title %></title>
   <link rel="stylesheet" href="/css/global.css"/>
   <style>
-    body { background: #0a0a0a; color: #fff; font-family: Inter, system-ui, sans-serif; padding: 24px 16px; }
-    h1 { font-size: 20px; font-weight: 800; margin: 0 0 4px; }
-    .subtitle { font-size: 13px; color: #666; margin-bottom: 28px; }
-    .search-bar { width: 100%; max-width: 480px; padding: 10px 14px; background: #1a1a1a;
-      border: 1px solid #2a2a2a; border-radius: 10px; color: #fff; font-size: 14px;
-      margin-bottom: 20px; outline: none; }
+    body { background: #fff; padding: 40px; color: #1a1a1a; }
+
+    .barra-topo {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 32px; flex-wrap: wrap; gap: 12px;
+    }
+    .btn-voltar {
+      padding: 8px 20px; background: #fff; border: 1px solid #ccc;
+      border-radius: 6px; cursor: pointer; font-size: 14px;
+      text-decoration: none; color: #1a1a1a; display: inline-block;
+    }
+    .btn-voltar:hover { border-color: var(--vermelho); color: var(--vermelho); }
+
+    .btn-send-all {
+      padding: 8px 20px; background: var(--vermelho); border: none; color: #fff;
+      border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 700;
+    }
+    .btn-send-all:hover { opacity: 0.85; }
+    .btn-send-all:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+    .subtitulo { color: #666; font-size: 15px; margin-bottom: 28px; }
+
+    .search-bar {
+      width: 100%; max-width: 400px; padding: 9px 14px;
+      border: 1px solid #ddd; border-radius: 6px; font-size: 14px;
+      margin-bottom: 20px; outline: none;
+    }
+    .search-bar:focus { border-color: var(--vermelho); }
+
     table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    th { text-align: left; color: #555; font-size: 12px; text-transform: uppercase;
-         letter-spacing: 0.05em; padding: 8px 12px; border-bottom: 1px solid #1e1e1e; }
-    td { padding: 12px; border-bottom: 1px solid #161616; vertical-align: middle; }
-    tr:hover td { background: #111; }
-    .badge-email { font-size: 11px; color: #888; }
-    .badge-no-email { font-size: 11px; color: #444; font-style: italic; }
-    .link-cell { font-size: 11px; color: #555; max-width: 200px; overflow: hidden;
-                 text-overflow: ellipsis; white-space: nowrap; }
-    .link-cell a { color: #be0000; text-decoration: none; }
-    .btn-copy { background: #1e1e1e; border: 1px solid #2a2a2a; color: #aaa;
-                padding: 5px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; }
-    .btn-copy:hover { background: #2a2a2a; }
-    .btn-send { background: #be0000; border: none; color: #fff;
-                padding: 6px 14px; border-radius: 6px; font-size: 12px;
-                cursor: pointer; font-weight: 600; }
+    th {
+      text-align: left; padding: 10px 14px;
+      background: #f5f5f5; border-bottom: 2px solid #ddd; font-weight: 600;
+    }
+    td { padding: 10px 14px; border-bottom: 1px solid #eee; vertical-align: middle; }
+    tr:hover td { background: #fafafa; }
+
+    .badge-email { font-size: 12px; color: #888; }
+    .badge-no-email { font-size: 12px; color: #bbb; font-style: italic; }
+    .link-cell a { color: var(--vermelho); text-decoration: none; font-size: 13px; }
+    .link-cell a:hover { text-decoration: underline; }
+    .no-token { font-size: 12px; color: #bbb; font-style: italic; }
+
+    .btn-copy {
+      padding: 5px 12px; background: #fff; border: 1px solid #ccc;
+      border-radius: 6px; font-size: 12px; cursor: pointer; color: #444;
+    }
+    .btn-copy:hover { border-color: #999; }
+
+    .btn-send {
+      padding: 5px 14px; background: var(--vermelho); border: none; color: #fff;
+      border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600;
+    }
     .btn-send:hover { opacity: 0.85; }
     .btn-send:disabled { opacity: 0.4; cursor: not-allowed; }
-    .status-ok  { font-size: 11px; color: #22c55e; margin-left: 6px; }
-    .status-err { font-size: 11px; color: #ef4444; margin-left: 6px; }
-    .no-token { font-size: 12px; color: #444; font-style: italic; }
-    .actions-top { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
-    .btn-back { background: none; border: 1px solid #2a2a2a; color: #aaa;
-                padding: 8px 16px; border-radius: 8px; font-size: 13px; cursor: pointer; text-decoration: none; }
-    .btn-send-all { background: #be0000; border: none; color: #fff;
-                    padding: 8px 18px; border-radius: 8px; font-size: 13px;
-                    cursor: pointer; font-weight: 700; }
-    .btn-send-all:hover { opacity: 0.85; }
-    .btn-send-all:disabled { opacity: 0.4; cursor: not-allowed; }
-    .count { font-size: 13px; color: #555; }
+
+    .status-ok  { font-size: 11px; color: #2e7d32; margin-left: 6px; }
+    .status-err { font-size: 11px; color: #c62828; margin-left: 6px; }
+    .contador { font-size: 14px; color: #666; }
   </style>
 </head>
 <body>
 
-  <div class="actions-top">
-    <a class="btn-back" href="/manager/event/<%= event.id %>">← Voltar ao evento</a>
-    <button class="btn-send-all" id="btnEnviarTodos" onclick="enviarParaTodos()">Enviar link para todos</button>
-    <span class="count" id="count-label"></span>
+<div class="barra-gradiente"></div>
+
+<div class="barra-topo">
+  <div>
+    <h1>Compartilhar desempenhos</h1>
+    <p class="subtitulo"><%= event.title %></p>
   </div>
+  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+    <span class="contador" id="count-label"></span>
+    <button class="btn-send-all" id="btnEnviarTodos" onclick="enviarParaTodos()">Enviar link para todos</button>
+    <a class="btn-voltar" href="/manager/event/<%= event.id %>">← Voltar ao evento</a>
+  </div>
+</div>
 
-  <h1>Compartilhar desempenhos</h1>
-  <p class="subtitle"><%= event.name %></p>
+<input class="search-bar" type="search" placeholder="Buscar atleta ou equipe…" id="busca"/>
 
-  <input class="search-bar" type="search" placeholder="Buscar atleta ou equipe…" id="busca"/>
+<table id="tabela">
+  <thead>
+    <tr>
+      <th>Atleta</th>
+      <th>Equipe</th>
+      <th>Link</th>
+      <th>Ação</th>
+    </tr>
+  </thead>
+  <tbody id="corpo"></tbody>
+</table>
 
-  <table id="tabela">
-    <thead>
-      <tr>
-        <th>Atleta</th>
-        <th>Equipe</th>
-        <th>Link</th>
-        <th>Ação</th>
-      </tr>
-    </thead>
-    <tbody id="corpo"></tbody>
-  </table>
+<script>
+  const BASE = '<%= baseUrl %>';
+  const athletes = <%- JSON.stringify(athletes) %>;
+  const tbody = document.getElementById('corpo');
+  const countLabel = document.getElementById('count-label');
 
-  <script>
-    const BASE = '<%= baseUrl %>';
-    const athletes = <%- JSON.stringify(athletes) %>;
-    const tbody = document.getElementById('corpo');
-    const busca = document.getElementById('busca');
-    const countLabel = document.getElementById('count-label');
+  function render(lista) {
+    tbody.innerHTML = '';
+    countLabel.textContent = `${lista.length} atleta${lista.length !== 1 ? 's' : ''}`;
+    lista.forEach(a => {
+      const tr = document.createElement('tr');
+      tr.dataset.nome = a.name.toLowerCase();
+      tr.dataset.equipe = (a.team_name || '').toLowerCase();
 
-    function render(lista) {
-      tbody.innerHTML = '';
-      countLabel.textContent = `${lista.length} atleta${lista.length !== 1 ? 's' : ''}`;
-      lista.forEach(a => {
-        const tr = document.createElement('tr');
-        tr.dataset.nome = a.name.toLowerCase();
-        tr.dataset.equipe = (a.team_name || '').toLowerCase();
+      const link = a.share_token ? `${BASE}/share/athlete/${a.share_token}` : null;
 
-        const link = a.share_token ? `${BASE}/share/athlete/${a.share_token}` : null;
+      tr.innerHTML = `
+        <td>
+          <strong>${a.name}</strong><br/>
+          ${a.email
+            ? `<span class="badge-email">${a.email}</span>`
+            : `<span class="badge-no-email">sem email</span>`}
+        </td>
+        <td>${a.team_name || '—'}</td>
+        <td class="link-cell">
+          ${link
+            ? `<a href="${link}" target="_blank">abrir card</a>`
+            : `<span class="no-token">evento não finalizado</span>`}
+        </td>
+        <td style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          ${link ? `<button class="btn-copy" onclick="copiar(this, '${link}')">Copiar</button>` : ''}
+          ${link && a.email ? `
+            <button class="btn-send" onclick="enviarEmail(this, '${a.share_token}')">Enviar</button>
+            <span class="status-msg"></span>
+          ` : ''}
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
 
-        tr.innerHTML = `
-          <td>
-            <strong>${a.name}</strong><br/>
-            ${a.email
-              ? `<span class="badge-email">${a.email}</span>`
-              : `<span class="badge-no-email">sem email</span>`}
-          </td>
-          <td>${a.team_name || '—'}</td>
-          <td class="link-cell">
-            ${link
-              ? `<a href="${link}" target="_blank">abrir card</a>`
-              : `<span class="no-token">evento não finalizado</span>`}
-          </td>
-          <td>
-            ${link ? `
-              <button class="btn-copy" onclick="copiar(this, '${link}')">Copiar</button>
-              ${a.email ? `
-                <button class="btn-send" onclick="enviarEmail(this, '${a.share_token}')">Enviar</button>
-                <span class="status-msg"></span>
-              ` : ''}
-            ` : ''}
-          </td>
-        `;
-        tbody.appendChild(tr);
+  async function copiar(btn, link) {
+    await navigator.clipboard.writeText(link);
+    const orig = btn.textContent;
+    btn.textContent = 'Copiado!';
+    setTimeout(() => btn.textContent = orig, 1500);
+  }
+
+  async function enviarEmail(btn, token) {
+    btn.disabled = true;
+    btn.textContent = 'Enviando…';
+    const msg = btn.nextElementSibling;
+    try {
+      const res = await fetch(`/share/athlete/${token}/send-email`, {
+        method: 'POST', credentials: 'include',
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
       });
-    }
-
-    async function copiar(btn, link) {
-      await navigator.clipboard.writeText(link);
-      const orig = btn.textContent;
-      btn.textContent = 'Copiado!';
-      setTimeout(() => btn.textContent = orig, 1500);
-    }
-
-    async function enviarEmail(btn, token) {
-      btn.disabled = true;
-      btn.textContent = 'Enviando…';
-      const msg = btn.nextElementSibling;
-      try {
-        const res = await fetch(`/share/athlete/${token}/send-email`, {
-          method: 'POST',
-          credentials: 'include',
-          headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
-        });
-        const data = await res.json();
-        if (res.ok) {
-          msg.className = 'status-ok'; msg.textContent = '✓ Enviado';
-          btn.textContent = 'Reenviar'; btn.disabled = false;
-        } else {
-          msg.className = 'status-err'; msg.textContent = data.error || 'Erro';
-          btn.textContent = 'Enviar'; btn.disabled = false;
-        }
-      } catch {
-        msg.className = 'status-err'; msg.textContent = 'Falha';
+      const data = await res.json();
+      if (res.ok) {
+        msg.className = 'status-ok'; msg.textContent = '✓ Enviado';
+        btn.textContent = 'Reenviar'; btn.disabled = false;
+      } else {
+        msg.className = 'status-err'; msg.textContent = data.error || 'Erro';
         btn.textContent = 'Enviar'; btn.disabled = false;
       }
+    } catch {
+      msg.className = 'status-err'; msg.textContent = 'Falha';
+      btn.textContent = 'Enviar'; btn.disabled = false;
     }
+  }
 
-    busca.addEventListener('input', () => {
-      const q = busca.value.toLowerCase();
-      const filtrados = athletes.filter(a =>
-        a.name.toLowerCase().includes(q) || (a.team_name || '').toLowerCase().includes(q)
-      );
-      render(filtrados);
-    });
-
-    render(athletes);
-
-    async function enviarParaTodos() {
-      const comEmail = athletes.filter(a => a.email && a.share_token);
-      if (!comEmail.length) {
-        alert('Nenhum atleta com email e link gerado.');
-        return;
-      }
-      const btn = document.getElementById('btnEnviarTodos');
-      btn.disabled = true;
-      btn.textContent = `Enviando 0/${comEmail.length}…`;
-
-      let ok = 0, err = 0;
-      for (const a of comEmail) {
-        try {
-          const res = await fetch(`/share/athlete/${a.share_token}/send-email`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
-          });
-          if (res.ok) ok++; else err++;
-        } catch { err++; }
-        btn.textContent = `Enviando ${ok + err}/${comEmail.length}…`;
-      }
-
-      btn.textContent = `✓ ${ok} enviado${ok !== 1 ? 's' : ''}${err ? ` · ${err} erro${err !== 1 ? 's' : ''}` : ''}`;
-      btn.disabled = false;
+  async function enviarParaTodos() {
+    const comEmail = athletes.filter(a => a.email && a.share_token);
+    if (!comEmail.length) { alert('Nenhum atleta com email e link gerado.'); return; }
+    const btn = document.getElementById('btnEnviarTodos');
+    btn.disabled = true;
+    btn.textContent = `Enviando 0/${comEmail.length}…`;
+    let ok = 0, err = 0;
+    for (const a of comEmail) {
+      try {
+        const res = await fetch(`/share/athlete/${a.share_token}/send-email`, {
+          method: 'POST', credentials: 'include',
+          headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
+        });
+        if (res.ok) ok++; else err++;
+      } catch { err++; }
+      btn.textContent = `Enviando ${ok + err}/${comEmail.length}…`;
     }
-  </script>
+    btn.textContent = `✓ ${ok} enviado${ok !== 1 ? 's' : ''}${err ? ` · ${err} erro${err !== 1 ? 's' : ''}` : ''}`;
+    btn.disabled = false;
+  }
+
+  document.getElementById('busca').addEventListener('input', e => {
+    const q = e.target.value.toLowerCase();
+    render(athletes.filter(a =>
+      a.name.toLowerCase().includes(q) || (a.team_name || '').toLowerCase().includes(q)
+    ));
+  });
+
+  render(athletes);
+</script>
 </body>
 </html>
