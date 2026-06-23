@@ -186,7 +186,7 @@ async function forcarEncerramento(conflictId) {
 async function uploadFotoParaEntidade(tipo, id, arquivo) {
     const form = new FormData()
     form.append('image', arquivo)
-    await authFetch(`/audit/${tipo}/${id}/image`, { method: 'PATCH', body: form })
+    return authFetch(`/audit/${tipo}/${id}/image`, { method: 'PATCH', body: form })
 }
 
 async function registrarCheckpoint(kmDistance) {
@@ -486,13 +486,6 @@ async function finalizarCorrida(kmEnd, athleteIdOverride = null, durationSeconds
     }
 
     const shift = await res.json()
-
-    const arquivoFotoTurno = finalizarTurnoFotoInput?.files?.[0]
-    if (arquivoFotoTurno) {
-        await uploadFotoParaEntidade('shifts', shift.id, arquivoFotoTurno)
-        if (finalizarTurnoFotoInput) finalizarTurnoFotoInput.value = ''
-    }
-
     pararTimer()
 
     // Nome do corredor a registrar (respeita a troca, se houve)
@@ -849,8 +842,24 @@ if (btnFinalizarTurnoFoto && finalizarTurnoFotoInput) {
     btnFinalizarTurnoFoto.addEventListener('click', () => finalizarTurnoFotoInput.click())
 }
 
+const ocrResultadoTurno = document.getElementById('ocrResultadoTurno')
+const ocrSpeedEl        = document.getElementById('ocrSpeed')
+const ocrDistanceEl     = document.getElementById('ocrDistance')
+const ocrPaceEl         = document.getElementById('ocrPace')
+const ocrTimeEl         = document.getElementById('ocrTime')
+
+function exibirOcrTurno(ocr) {
+    if (!ocrResultadoTurno) return
+    if (!ocr) { ocrResultadoTurno.classList.add('escondido'); return }
+    if (ocrSpeedEl)    ocrSpeedEl.textContent    = ocr.speed    != null ? `${ocr.speed} km/h` : '—'
+    if (ocrDistanceEl) ocrDistanceEl.textContent = ocr.distance != null ? `${ocr.distance} km` : '—'
+    if (ocrPaceEl)     ocrPaceEl.textContent     = ocr.pace     ?? '—'
+    if (ocrTimeEl)     ocrTimeEl.textContent     = ocr.time     ?? '—'
+    ocrResultadoTurno.classList.remove('escondido')
+}
+
 if (finalizarTurnoFotoInput && finalizarTurnoFotoPreview) {
-    finalizarTurnoFotoInput.addEventListener('change', () => {
+    finalizarTurnoFotoInput.addEventListener('change', async () => {
         const arquivo = finalizarTurnoFotoInput.files?.[0]
         if (!arquivo) return
         if (finalizarTurnoFotoUrl) URL.revokeObjectURL(finalizarTurnoFotoUrl)
@@ -858,6 +867,18 @@ if (finalizarTurnoFotoInput && finalizarTurnoFotoPreview) {
         finalizarTurnoFotoPreview.innerHTML =
             `<img src="${finalizarTurnoFotoUrl}" alt="Foto da finalização do turno">`
         if (btnFinalizarTurnoFoto) btnFinalizarTurnoFoto.textContent = 'Tirar nova foto'
+
+        if (!shiftId) return
+        if (btnFinalizarTurnoFoto) btnFinalizarTurnoFoto.disabled = true
+        try {
+            const res = await uploadFotoParaEntidade('shifts', shiftId, arquivo)
+            if (res && res.ok) {
+                const data = await res.json()
+                exibirOcrTurno(data.ocr)
+            }
+        } finally {
+            if (btnFinalizarTurnoFoto) btnFinalizarTurnoFoto.disabled = false
+        }
     })
 }
 
@@ -907,6 +928,7 @@ function abrirModalTurno() {
 function fecharModalTurno() {
     if (modalTurno) modalTurno.classList.add('escondido')
     limparFotoFinalizarTurno()
+    exibirOcrTurno(null)
 }
 
 if (modalTurno) {
