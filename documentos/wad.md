@@ -5072,8 +5072,6 @@ Os resultados evidenciam ampla cobertura das regras de negócio implementadas na
 
 Esse mapeamento garante que as 41 Regras de Negócio estejam ligadas aos RFs correspondentes e aos principais fluxos testáveis da WebAPI.
 
----
-
 ## 5.2. Testes de usabilidade (sprint 5)
 
 ### 5.2.1. Relatório de testes de guerrilha
