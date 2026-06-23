@@ -74,13 +74,13 @@ export const teamController = {
 
 	async createAthlete(req: Request, res: Response) {
 		const team_id = Number(req.params.teamId);
-		const { name, gender, cpf } = req.body;
+		const { name, gender, cpf, email } = req.body;
 		if (!name || !gender) {
 			res.status(400).json({ error: "Campos obrigatórios: name, gender" });
 			return;
 		}
 		try {
-			const athlete = await teamService.registerAthlete(team_id, name, gender, cpf ?? null);
+			const athlete = await teamService.registerAthlete(team_id, name, gender, cpf ?? null, email ?? null);
 			res.status(201).json(athlete);
 		} catch (error: any) {
 			if (error.code === "23505") {
@@ -110,9 +110,9 @@ export const teamController = {
 	async updateAthlete(req: Request, res: Response) {
 		const team_id = Number(req.params.teamId);
 		const id = Number(req.params.id);
-		const { name, gender, cpf } = req.body;
+		const { name, gender, cpf, email } = req.body;
 		try {
-			const athlete = await teamService.updateAthlete(team_id, id, { name, gender, cpf });
+			const athlete = await teamService.updateAthlete(team_id, id, { name, gender, cpf, email });
 			res.status(200).json(athlete);
 		} catch (error: any) {
 			res.status(404).json({ error: error.message });
