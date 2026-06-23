@@ -5300,6 +5300,29 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 3 | Realizar a auditoria de um período de 2 minutos | Valter compreendeu o conceito geral da auditoria, porém apresentou dificuldade para identificar a sequência correta entre registrar quilometragem inicial, checkpoints e quilometragem final. Também sugeriu que o sistema apresentasse orientações contextuais durante a execução da auditoria | H10 – Ajuda e documentação; H2 – Correspondência entre o sistema e o mundo real; H6 – Reconhecimento em vez de lembrança |
 | 4 | Concluir a auditoria e realizar o logout | Após finalizar a auditoria, Valter não teve certeza se os dados haviam sido efetivamente salvos, procurando uma confirmação visual mais evidente | H1 – Visibilidade do status do sistema |
 
+#### Pontos de Melhoria Identificados
+
+Os problemas observados durante os testes de guerrilha foram consolidados e priorizados conforme a escala de severidade proposta por Nielsen, variando de 0 (Sem Importância) a 4 (Catastrófico). A classificação considerou a frequência com que o problema ocorreu, o impacto na execução das tarefas e o risco de impedir a conclusão dos fluxos principais do sistema.
+
+| Prioridade | Problema Identificado | Evidências Observadas | Recomendação |
+| :--- | :--- | :--- | :--- |
+| **4 – Catastrófico** | Fluxo de auditoria pouco intuitivo, dificultando o registro de quilometragem inicial, checkpoints e quilometragem final | Identificado por Enzo Braga, Lucas Levi, Paulo Roberto e Valter Lima. Em alguns casos impediu ou comprometeu a conclusão da tarefa T3. | Reestruturar o fluxo de auditoria com orientação passo a passo, indicadores visuais de progresso e instruções contextuais durante a execução. |
+| **4 – Catastrófico** | Ausência de auxílio ou documentação contextual para realização da auditoria | Usuários não compreenderam o significado de checkpoints, quilometragem inicial e final, mesmo após explicação prévia. | Adicionar tutoriais rápidos, tooltips e mensagens de ajuda diretamente na interface de auditoria. |
+| **3 – Grave** | Sistema permite cadastrar eventos com datas anteriores à data atual | Identificado por Paulo Roberto e Laís Victoria. Possibilita o registro de dados inconsistentes. | Implementar validação de datas para impedir eventos em períodos inválidos. |
+| **3 – Grave** | Sistema permite cadastrar corredores com data de nascimento futura | Identificado por Paulo Roberto durante a criação de equipes. | Implementar validação de data de nascimento compatível com a realidade do usuário. |
+| **3 – Grave** | Usuários não percebem que precisam selecionar o perfil (Gerente ou Auditor) antes do login | Problema recorrente identificado por Paulo Roberto e Valter Lima. | Tornar a seleção de perfil mais evidente ou automatizar a identificação do perfil após autenticação. |
+| **3 – Grave** | Dificuldade para iniciar a auditoria devido à expectativa de clicar diretamente no evento | Observado por Enzo Braga, Lucas Levi e Valter Lima. | Transformar o card do evento em elemento clicável ou destacar visualmente o botão de início da auditoria. |
+| **2 – Simples** | Botão de adicionar atleta/líder possui significado ambíguo | Relatado por Lucas Levi, Pedro Negri e Valter Lima. | Alterar os rótulos dos botões para ações explícitas, como "Adicionar Atleta" e "Adicionar Líder". |
+| **2 – Simples** | Dificuldade para criar uma segunda equipe durante a configuração do evento | Relatada por Enzo Braga e Valter Lima. | Destacar visualmente a funcionalidade de criação de novas equipes e apresentar feedback após a criação da primeira. |
+| **2 – Simples** | Campo de seleção de cidade exige acentuação correta para localização dos resultados | Relatado por Enzo Braga. | Implementar busca tolerante a acentos e variações ortográficas. |
+| **2 – Simples** | Usuários têm dificuldade em identificar a equipe ou corredor atualmente auditado | Relatado por Laís Victoria e Paulo Roberto. | Destacar visualmente o corredor ativo e a equipe selecionada durante a auditoria. |
+| **2 – Simples** | Ausência de tela de revisão antes da inicialização do evento | Relatado por Valter Lima. | Adicionar uma etapa de confirmação contendo resumo das informações cadastradas. |
+| **1 – Cosmético** | Botão "Próximo" utiliza cor vermelha, associada normalmente a erros ou exclusões | Observado por Pedro Negri. | Utilizar cores compatíveis com a ação executada, seguindo padrões de interface. |
+| **1 – Cosmético** | Dificuldade para localizar a opção de logout | Relatada por Laís Victoria. | Reposicionar ou destacar visualmente a funcionalidade de logout. |
+| **1 – Cosmético** | Ausência de confirmação visual clara após criação de eventos ou finalização de auditorias | Relatada por Valter Lima. | Exibir mensagens de sucesso e indicadores visuais de conclusão da operação. |
+| **1 – Cosmético** | Ausência de indicação clara dos campos obrigatórios nos formulários | Relatada por Valter Lima. | Utilizar marcações visuais padronizadas para diferenciar campos obrigatórios dos opcionais. |
+| **0 – Sem Importância** | Validação correta do CPF durante o cadastro de participantes | Elogiada por Paulo Roberto e Pedro Negri. Não representa problema de usabilidade. | Manter a implementação atual. |
+
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
 ---
