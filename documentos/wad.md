@@ -4753,7 +4753,7 @@ A cobertura mínima esperada para a camada Service é de **80%**, evidenciada pe
 npm test -- --coverage
 ```
 
-#### Casos prioritários de Service
+#### Casos de Teste da Camada Service
 
 | CT   | RN coberta          | RF associado            | Camada  | Objetivo |
 | ---- | ------------------- | ----------------------- | ------- | -------- |
@@ -5027,6 +5027,13 @@ A execução da suíte demonstrou a aprovação de 18 suítes de teste e 301 cen
   <br><br><br>
 </div>
 
+<div align="center">
+  <sub>Imagem 100 - Print dos teste - 6 </sub><br>
+  <img src= "./assets/testes/teste_6.png" width="100%" alt="testes 6"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
 A cobertura deve ser evidenciada com:
 
 ```bash
@@ -5035,7 +5042,7 @@ npm test -- --coverage
 O relatório apresenta os percentuais de cobertura da camada Service, responsável pela implementação das principais regras de negócio da aplicação. A medição foi realizada por meio da configuração do Jest direcionada aos arquivos presentes em `src/services`, permitindo avaliar diretamente a cobertura das validações e regras operacionais do sistema.
 
 <div align="center">
-  <sub>Imagem 100 - Relatório de cobertura do jest - 1 </sub><br>
+  <sub>Imagem 101 - Relatório de cobertura do jest - 1 </sub><br>
   <img src= "./assets/testes/tabela_1.png" width="100%" alt="jest 1"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
