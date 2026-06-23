@@ -189,6 +189,22 @@ async function uploadFotoParaEntidade(tipo, id, arquivo) {
     return authFetch(`/audit/${tipo}/${id}/image`, { method: 'PATCH', body: form })
 }
 
+function abrirLightbox(src) {
+    const lb = document.createElement('div')
+    lb.className = 'ocr-lightbox'
+    lb.innerHTML = `
+        <button class="ocr-lightbox-fechar" aria-label="Fechar">&times;</button>
+        <img src="${src}" alt="Foto ampliada">
+    `
+    const fechar = () => document.body.removeChild(lb)
+    lb.addEventListener('click', e => { if (e.target === lb) fechar() })
+    lb.querySelector('.ocr-lightbox-fechar').addEventListener('click', fechar)
+    document.addEventListener('keydown', function esc(e) {
+        if (e.key === 'Escape') { fechar(); document.removeEventListener('keydown', esc) }
+    })
+    document.body.appendChild(lb)
+}
+
 async function registrarCheckpoint(kmDistance) {
     const res = await authFetch(`/audit/shifts/${shiftId}/checkpoints`, {
         method: 'POST',
@@ -388,6 +404,7 @@ if (checkpointFotoInput && checkpointFotoPreview) {
         if (checkpointFotoUrl) URL.revokeObjectURL(checkpointFotoUrl)
         checkpointFotoUrl = URL.createObjectURL(arquivo)
         checkpointFotoPreview.innerHTML = `<img src="${checkpointFotoUrl}" alt="Foto do checkpoint">`
+        checkpointFotoPreview.querySelector('img').addEventListener('click', () => abrirLightbox(checkpointFotoUrl))
 
         if (btnCheckpointFoto) btnCheckpointFoto.disabled = true
         checkpointFotoPreview.classList.add('ocr-loading')
@@ -884,6 +901,7 @@ if (finalizarTurnoFotoInput && finalizarTurnoFotoPreview) {
         finalizarTurnoFotoUrl = URL.createObjectURL(arquivo)
         finalizarTurnoFotoPreview.innerHTML =
             `<img src="${finalizarTurnoFotoUrl}" alt="Foto da finalização do turno">`
+        finalizarTurnoFotoPreview.querySelector('img').addEventListener('click', () => abrirLightbox(finalizarTurnoFotoUrl))
         if (btnFinalizarTurnoFoto) btnFinalizarTurnoFoto.textContent = 'Tirar nova foto'
 
         if (!shiftId) return
