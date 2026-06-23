@@ -2120,8 +2120,8 @@ Não há fluxos alternativos explícitos neste diagrama. Falhas de validação n
 O Diagrama de Sequência de Equipes cobre quatro fluxos: cadastro de equipe, cadastro individual de atletas, consulta de equipe com seus atletas e consulta de quilometragem acumulada por equipe.
 
 <div align="center">
-  <sub>Imagem 34 - Diagrama de Sequência: Equipes</sub>
-    <br><img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
+  <sub>Imagem 34 - Diagrama de Sequência: Equipes</sub><br>
+  <img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026 </sub>
   <br><br><br>
 </div>
