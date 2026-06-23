@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Compartilhar desempenhos · <%= event.name %></title>
+  <link rel="stylesheet" href="/css/global.css"/>
+  <style>
+    body { background: #0a0a0a; color: #fff; font-family: Inter, system-ui, sans-serif; padding: 24px 16px; }
+    h1 { font-size: 20px; font-weight: 800; margin: 0 0 4px; }
+    .subtitle { font-size: 13px; color: #666; margin-bottom: 28px; }
+    .search-bar { width: 100%; max-width: 480px; padding: 10px 14px; background: #1a1a1a;
+      border: 1px solid #2a2a2a; border-radius: 10px; color: #fff; font-size: 14px;
+      margin-bottom: 20px; outline: none; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th { text-align: left; color: #555; font-size: 12px; text-transform: uppercase;
+         letter-spacing: 0.05em; padding: 8px 12px; border-bottom: 1px solid #1e1e1e; }
+    td { padding: 12px; border-bottom: 1px solid #161616; vertical-align: middle; }
+    tr:hover td { background: #111; }
+    .badge-email { font-size: 11px; color: #888; }
+    .badge-no-email { font-size: 11px; color: #444; font-style: italic; }
+    .link-cell { font-size: 11px; color: #555; max-width: 200px; overflow: hidden;
+                 text-overflow: ellipsis; white-space: nowrap; }
+    .link-cell a { color: #be0000; text-decoration: none; }
+    .btn-copy { background: #1e1e1e; border: 1px solid #2a2a2a; color: #aaa;
+                padding: 5px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; }
+    .btn-copy:hover { background: #2a2a2a; }
+    .btn-send { background: #be0000; border: none; color: #fff;
+                padding: 6px 14px; border-radius: 6px; font-size: 12px;
+                cursor: pointer; font-weight: 600; }
+    .btn-send:hover { opacity: 0.85; }
+    .btn-send:disabled { opacity: 0.4; cursor: not-allowed; }
+    .status-ok  { font-size: 11px; color: #22c55e; margin-left: 6px; }
+    .status-err { font-size: 11px; color: #ef4444; margin-left: 6px; }
+    .no-token { font-size: 12px; color: #444; font-style: italic; }
+    .actions-top { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+    .btn-back { background: none; border: 1px solid #2a2a2a; color: #aaa;
+                padding: 8px 16px; border-radius: 8px; font-size: 13px; cursor: pointer; text-decoration: none; }
+    .count { font-size: 13px; color: #555; }
+  </style>
+</head>
+<body>
+
+  <div class="actions-top">
+    <a class="btn-back" href="/manager/event/<%= event.id %>">← Voltar ao evento</a>
+    <span class="count" id="count-label"></span>
+  </div>
+
+  <h1>Compartilhar desempenhos</h1>
+  <p class="subtitle"><%= event.name %></p>
+
+  <input class="search-bar" type="search" placeholder="Buscar atleta ou equipe…" id="busca"/>
+
+  <table id="tabela">
+    <thead>
+      <tr>
+        <th>Atleta</th>
+        <th>Equipe</th>
+        <th>Link</th>
+        <th>Ação</th>
+      </tr>
+    </thead>
+    <tbody id="corpo"></tbody>
+  </table>
+
+  <script>
+    const BASE = '<%= baseUrl %>';
+    const athletes = <%- JSON.stringify(athletes) %>;
+    const tbody = document.getElementById('corpo');
+    const busca = document.getElementById('busca');
+    const countLabel = document.getElementById('count-label');
+
+    function render(lista) {
+      tbody.innerHTML = '';
+      countLabel.textContent = `${lista.length} atleta${lista.length !== 1 ? 's' : ''}`;
+      lista.forEach(a => {
+        const tr = document.createElement('tr');
+        tr.dataset.nome = a.name.toLowerCase();
+        tr.dataset.equipe = (a.team_name || '').toLowerCase();
+
+        const link = a.share_token ? `${BASE}/share/athlete/${a.share_token}` : null;
+
+        tr.innerHTML = `
+          <td>
+            <strong>${a.name}</strong><br/>
+            ${a.email
+              ? `<span class="badge-email">${a.email}</span>`
+              : `<span class="badge-no-email">sem email</span>`}
+          </td>
+          <td>${a.team_name || '—'}</td>
+          <td class="link-cell">
+            ${link
+              ? `<a href="${link}" target="_blank">abrir card</a>`
+              : `<span class="no-token">evento não finalizado</span>`}
+          </td>
+          <td>
+            ${link ? `
+              <button class="btn-copy" onclick="copiar(this, '${link}')">Copiar</button>
+              ${a.email ? `
+                <button class="btn-send" onclick="enviarEmail(this, '${a.share_token}')">Enviar</button>
+                <span class="status-msg"></span>
+              ` : ''}
+            ` : ''}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function copiar(btn, link) {
+      await navigator.clipboard.writeText(link);
+      const orig = btn.textContent;
+      btn.textContent = 'Copiado!';
+      setTimeout(() => btn.textContent = orig, 1500);
+    }
+
+    async function enviarEmail(btn, token) {
+      btn.disabled = true;
+      btn.textContent = 'Enviando…';
+      const msg = btn.nextElementSibling;
+      try {
+        const res = await fetch(`/share/athlete/${token}/send-email`, {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
+        });
+        const data = await res.json();
+        if (res.ok) {
+          msg.className = 'status-ok'; msg.textContent = '✓ Enviado';
+          btn.textContent = 'Reenviar'; btn.disabled = false;
+        } else {
+          msg.className = 'status-err'; msg.textContent = data.error || 'Erro';
+          btn.textContent = 'Enviar'; btn.disabled = false;
+        }
+      } catch {
+        msg.className = 'status-err'; msg.textContent = 'Falha';
+        btn.textContent = 'Enviar'; btn.disabled = false;
+      }
+    }
+
+    busca.addEventListener('input', () => {
+      const q = busca.value.toLowerCase();
+      const filtrados = athletes.filter(a =>
+        a.name.toLowerCase().includes(q) || (a.team_name || '').toLowerCase().includes(q)
+      );
+      render(filtrados);
+    });
+
+    render(athletes);
+  </script>
+</body>
+</html>
