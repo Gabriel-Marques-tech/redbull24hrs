@@ -1,5 +1,6 @@
 import { supabase } from "./supabaseClient";
 import { imageRepository } from "../repositories/imageRepository";
+import { ocrService } from "./ocrService";
 
 const BUCKET = "photos";
 
@@ -23,17 +24,29 @@ export const imageService = {
 		const exists = await imageRepository.shiftExists(shift_id);
 		if (!exists) throw new Error("Turno não encontrado");
 
-		const url = await uploadToStorage(buffer, mimetype, "shifts", shift_id);
+		const [url, ocr] = await Promise.all([
+			uploadToStorage(buffer, mimetype, "shifts", shift_id),
+			ocrService.extractFromImage(buffer, mimetype).catch(() => null),
+		]);
+
 		const shift = await imageRepository.setShiftImage(shift_id, url);
-		return { image_url: shift.image_url };
+		if (ocr) await imageRepository.setShiftOcr(shift_id, ocr);
+
+		return { image_url: shift.image_url, ocr };
 	},
 
 	async uploadCheckpointImage(checkpoint_id: number, buffer: Buffer, mimetype: string) {
 		const exists = await imageRepository.checkpointExists(checkpoint_id);
 		if (!exists) throw new Error("Checkpoint não encontrado");
 
-		const url = await uploadToStorage(buffer, mimetype, "checkpoints", checkpoint_id);
+		const [url, ocr] = await Promise.all([
+			uploadToStorage(buffer, mimetype, "checkpoints", checkpoint_id),
+			ocrService.extractFromImage(buffer, mimetype).catch(() => null),
+		]);
+
 		const checkpoint = await imageRepository.setCheckpointImage(checkpoint_id, url);
-		return { image_url: checkpoint.image_url };
+		if (ocr) await imageRepository.setCheckpointOcr(checkpoint_id, ocr);
+
+		return { image_url: checkpoint.image_url, ocr };
 	},
 };

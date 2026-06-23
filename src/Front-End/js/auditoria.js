@@ -1,11 +1,12 @@
 // ─── Auth fetch com refresh automático ───────────────────────
 async function authFetch(url, options = {}) {
     const token = localStorage.getItem('accessToken')
+    const isFormData = options.body instanceof FormData
     const makeReq = (t) => fetch(url, {
         credentials: 'include',
         ...options,
         headers: {
-            'Content-Type': 'application/json',
+            ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
             'Authorization': `Bearer ${t}`,
             ...options.headers
         }
@@ -182,6 +183,12 @@ async function forcarEncerramento(conflictId) {
     })
 }
 
+async function uploadFotoParaEntidade(tipo, id, arquivo) {
+    const form = new FormData()
+    form.append('image', arquivo)
+    await authFetch(`/audit/${tipo}/${id}/image`, { method: 'PATCH', body: form })
+}
+
 async function registrarCheckpoint(kmDistance) {
     const res = await authFetch(`/audit/shifts/${shiftId}/checkpoints`, {
         method: 'POST',
@@ -195,6 +202,13 @@ async function registrarCheckpoint(kmDistance) {
     }
 
     const cp = await res.json()
+
+    const arquivoFoto = checkpointFotoInput?.files?.[0]
+    if (arquivoFoto) {
+        await uploadFotoParaEntidade('checkpoints', cp.id, arquivoFoto)
+        if (checkpointFotoInput) checkpointFotoInput.value = ''
+    }
+
     const nomeOperadorAtual = document.getElementById('nomeOperador')?.textContent?.trim() || '—'
     checkpointsSessao.push({ id: cp.id, km: cp.distance, ts: new Date(cp.timestamp).getTime(), hora: new Date(cp.timestamp).toLocaleTimeString('pt-BR'), auditor: nomeOperadorAtual })
     inputKm.value = ''
@@ -472,6 +486,13 @@ async function finalizarCorrida(kmEnd, athleteIdOverride = null, durationSeconds
     }
 
     const shift = await res.json()
+
+    const arquivoFotoTurno = finalizarTurnoFotoInput?.files?.[0]
+    if (arquivoFotoTurno) {
+        await uploadFotoParaEntidade('shifts', shift.id, arquivoFotoTurno)
+        if (finalizarTurnoFotoInput) finalizarTurnoFotoInput.value = ''
+    }
+
     pararTimer()
 
     // Nome do corredor a registrar (respeita a troca, se houve)
