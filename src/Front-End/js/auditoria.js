@@ -390,6 +390,7 @@ if (checkpointFotoInput && checkpointFotoPreview) {
         checkpointFotoPreview.innerHTML = `<img src="${checkpointFotoUrl}" alt="Foto do checkpoint">`
 
         if (btnCheckpointFoto) btnCheckpointFoto.disabled = true
+        checkpointFotoPreview.classList.add('ocr-loading')
         try {
             const form = new FormData()
             form.append('image', arquivo)
@@ -397,11 +398,12 @@ if (checkpointFotoInput && checkpointFotoPreview) {
             if (res && res.ok) {
                 const { ocr } = await res.json()
                 if (ocr) {
-                    if (ocr.distance != null && kmCheckpointModal)       kmCheckpointModal.value = ocr.distance
+                    if (ocr.distance != null && kmCheckpointModal)        kmCheckpointModal.value = ocr.distance
                     if (ocr.speed    != null && velocidadeCheckpointModal) velocidadeCheckpointModal.value = ocr.speed
                 }
             }
         } finally {
+            checkpointFotoPreview.classList.remove('ocr-loading')
             if (btnCheckpointFoto) btnCheckpointFoto.disabled = false
         }
     })
@@ -886,6 +888,7 @@ if (finalizarTurnoFotoInput && finalizarTurnoFotoPreview) {
 
         if (!shiftId) return
         if (btnFinalizarTurnoFoto) btnFinalizarTurnoFoto.disabled = true
+        finalizarTurnoFotoPreview.classList.add('ocr-loading')
         try {
             const res = await uploadFotoParaEntidade('shifts', shiftId, arquivo)
             if (res && res.ok) {
@@ -893,6 +896,7 @@ if (finalizarTurnoFotoInput && finalizarTurnoFotoPreview) {
                 exibirOcrTurno(data.ocr)
             }
         } finally {
+            finalizarTurnoFotoPreview.classList.remove('ocr-loading')
             if (btnFinalizarTurnoFoto) btnFinalizarTurnoFoto.disabled = false
         }
     })
