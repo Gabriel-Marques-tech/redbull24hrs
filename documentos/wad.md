@@ -5105,6 +5105,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 #### Resultados dos Testes de Guerrilha
 
 **Testador:** Enzo Braga
+
 **Perfil:** Estudante de Ciência da Computação / Produzindo um projeto para a Defesa Civil de Santo André
 
 **Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
@@ -5137,6 +5138,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
 
 **Testador:** Lucas Levi
+
 **Perfil:** Estudante de Engenharia da Computação / Produzindo um projeto para a Defesa Civil de Santo André
 
 **Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
@@ -5169,6 +5171,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
 
 **Testador:** Paulo Roberto
+
 **Perfil:** Estudante de Engenharia da Computação / Produzindo um projeto para a Defesa Civil de Santo André
 
 **Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
@@ -5201,6 +5204,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
 
 **Testadora:** Laís Victoria
+
 **Perfil:** Estudante de Ciência da Computação / Produzindo um projeto para a Defesa Civil de Santo André
 
 **Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
@@ -5233,6 +5237,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
 
 **Testador:** Pedro Negri
+
 **Perfil:** Estudante de Engenharia de Software
 
 **Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
