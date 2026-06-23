@@ -11,25 +11,24 @@ export interface TreadmillData {
 }
 
 const PROMPT = `
-You are reading a treadmill display (may be LCD, LED, OLED, or any screen type).
+You are reading a treadmill display (LCD, LED, OLED or any screen type).
+The photo may be taken at an angle or tilted — compensate for perspective when reading digits.
 
-TASK: Extract exactly these 4 fields from the display:
-- speed: current speed in km/h (decimal number, e.g. 2.5 or 10.0)
-- distance: distance covered in km (decimal number, e.g. 0.42)
-- pace: pace per km in "MM:SS" format (e.g. "05:30")
-- time: elapsed time in "HH:MM:SS" format (e.g. "00:05:23")
+TASK: Find and extract these 4 fields. Each value has a visible label on the display:
+- speed: labeled "SPEED" or "KM/H" — decimal number like 2.5 or 10.0
+- distance: labeled "DISTANCE" or "DIST" or "KM" — decimal number like 0.50
+- pace: labeled "PACE" — format "MM:SS" like "05:30"
+- time: labeled "TIME" or shown as the largest clock on screen — format "HH:MM:SS" like "00:03:37"
 
-CONSTRAINTS (physical limits of any treadmill):
-- speed: always between 0.5 and 25.0 km/h
-- distance: always between 0 and 500 km
-- pace: format MM:SS only
-- time: format HH:MM:SS only
+CRITICAL DIGIT READING RULES:
+1. Always read digits LEFT TO RIGHT even if the display appears tilted or rotated in the photo
+2. Speed on a treadmill is physically limited to 0.5–25.0 km/h. If you read something outside this range, you made a digit error — try again
+3. Walking/jogging speed is usually 2–8 km/h. Running is 8–18 km/h. Above 20 km/h is rare
+4. Do NOT confuse digit order: "2.5" is NOT the same as "5.2"
+5. For time format HH:MM:SS — hours are almost always "00", minutes 00–59, seconds 00–59
+6. If a label is not visible or value is unreadable, return null
 
-RULES:
-1. Read digits carefully — look for labels on the display (SPEED, KM/H, DIST, TIME, PACE) to identify each value
-2. If a field label is not visible or the value is unreadable, return null for that field
-3. Do NOT guess — only return values you can clearly see
-4. Respond ONLY with valid JSON, no markdown, no explanation:
+Respond ONLY with valid JSON, no markdown, no explanation:
 {"speed": <number or null>, "distance": <number or null>, "pace": "<string or null>", "time": "<string or null>"}
 `.trim();
 
