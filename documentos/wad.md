@@ -5104,7 +5104,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 
 **Testador:** Enzo Braga
 
-**Perfil:** Estudante de Ciência da Computação / Produzindo um projeto para a Defesa Civil de Santo André
+**Perfil:** Estudante de Ciência da Computação / Produzindo um projeto para a BrPec Agropecuária
 
 **Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
 **Panorama Geral:** ✅ Sucesso
@@ -5203,7 +5203,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 
 **Testadora:** Laís Victoria
 
-**Perfil:** Estudante de Ciência da Computação / Produzindo um projeto para a Defesa Civil de Santo André
+**Perfil:** Estudante de Ciência da Computação / Produzindo um projeto para a BrPec Agropecuária
 
 **Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
 **Panorama Geral:** ✅ Sucesso
@@ -5234,9 +5234,9 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 3 | Realizar a auditoria de um período de 2 minutos | Nenhuma dificuldade em encerrar as auditorias | — |
 | 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
 
-**Testador:** Pedro Negri
+**Testador:** Pedro Negri 
 
-**Perfil:** Estudante de Engenharia de Software
+**Perfil:** Estudante de Engenharia de Software / Produzindo um projeto para a BrPec Agropecuária
 
 **Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
 **Panorama Geral:** ✅ Sucesso
