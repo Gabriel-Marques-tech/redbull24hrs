@@ -63,12 +63,16 @@ function parseTempo(str) {
     return h * 3600 + m * 60 + s
 }
 
+const cronometroModal = document.getElementById('cronometroModal')
+
 function iniciarTimer(inicial = 0) {
     segundos = inicial
     cronometro.textContent = formatarTempo(segundos)
+    if (cronometroModal) cronometroModal.textContent = formatarTempo(segundos)
     timerInterval = setInterval(() => {
         segundos++
         cronometro.textContent = formatarTempo(segundos)
+        if (cronometroModal) cronometroModal.textContent = formatarTempo(segundos)
     }, 1000)
 }
 
@@ -414,10 +418,15 @@ if (checkpointFotoInput && checkpointFotoPreview) {
             const res = await authFetch('/audit/ocr', { method: 'POST', body: form })
             if (res && res.ok) {
                 const { ocr } = await res.json()
-                if (ocr) {
+                if (ocr && (ocr.distance != null || ocr.speed != null || ocr.time != null)) {
                     if (ocr.distance != null && kmCheckpointModal)        kmCheckpointModal.value = ocr.distance
                     if (ocr.speed    != null && velocidadeCheckpointModal) velocidadeCheckpointModal.value = ocr.speed
+                    if (ocr.time     != null && tempoCheckpointModal)      tempoCheckpointModal.value = ocr.time
+                } else {
+                    console.warn('[OCR] Valores não identificados — preencha manualmente')
                 }
+            } else {
+                console.warn('[OCR] API indisponível (status', res?.status, ') — preencha manualmente')
             }
         } finally {
             checkpointFotoPreview.classList.remove('ocr-loading')
