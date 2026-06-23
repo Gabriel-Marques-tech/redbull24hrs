@@ -137,7 +137,6 @@ function transformShift(r: Record<string, unknown>): Record<string, unknown> {
 		start_at:   fmtDate(r.start_at),
 		end_at:     fmtDate(r.end_at),
 		total_time: fmtInterval(r.total_time),
-		cpf:        r.athlete_cpf,
 		auditor:    r.auditor_name,
 		id:         r.id,
 	};
@@ -170,7 +169,6 @@ const SHIFT_COLUMNS = [
 	{ header: "Início",              key: "start_at",   width: 20 },
 	{ header: "Fim",                 key: "end_at",     width: 20 },
 	{ header: "Duração (hh:mm:ss)", key: "total_time", width: 18 },
-	{ header: "CPF",                 key: "cpf",        width: 16 },
 	{ header: "Auditor",             key: "auditor",    width: 20 },
 	{ header: "ID",                  key: "id",         width: 10 },
 ];
