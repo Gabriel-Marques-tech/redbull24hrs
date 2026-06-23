@@ -8,6 +8,7 @@ export const metricsController = {
 			const data = await metricsService.getDashboard(eventId);
 			res.status(200).json(data);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
@@ -18,6 +19,7 @@ export const metricsController = {
 			const data = await metricsService.getTeamKm(eventId);
 			res.status(200).json(data);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
@@ -28,6 +30,7 @@ export const metricsController = {
 			const data = await metricsService.getAthleteKm(eventId);
 			res.status(200).json(data);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
@@ -38,6 +41,7 @@ export const metricsController = {
 			const data = await metricsService.getAvgDistancePerShift(athleteId);
 			res.status(200).json(data);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
@@ -53,6 +57,7 @@ export const metricsController = {
 			const data = await metricsService.getKmSnapshots(athleteId, eventId);
 			res.status(200).json(data);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
@@ -64,6 +69,7 @@ export const metricsController = {
 			const data = await metricsService.getAthletePerformance(athleteId, eventId);
 			res.status(200).json(data);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
@@ -79,6 +85,7 @@ export const metricsController = {
 			const data = await metricsService.getAthletePerformance(athleteId);
 			res.status(200).json(data);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},

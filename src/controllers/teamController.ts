@@ -8,6 +8,7 @@ export const teamController = {
 			const teams = await teamService.listTeams(event_id);
 			res.status(200).json(teams);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
@@ -22,6 +23,7 @@ export const teamController = {
 			const team = await teamService.registerTeam(Number(event_id), name);
 			res.status(201).json(team);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			const status = error.message.includes("não encontrado") ? 404 : 500;
 			res.status(status).json({ error: error.message });
 		}
@@ -33,6 +35,7 @@ export const teamController = {
 			const team = await teamService.getTeam(id);
 			res.status(200).json(team);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(404).json({ error: error.message });
 		}
 	},
@@ -48,6 +51,7 @@ export const teamController = {
 			const team = await teamService.updateTeam(id, name);
 			res.status(200).json(team);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(404).json({ error: error.message });
 		}
 	},
@@ -58,6 +62,7 @@ export const teamController = {
 			const team = await teamService.deleteTeam(id);
 			res.status(200).json(team);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(404).json({ error: error.message });
 		}
 	},
@@ -68,6 +73,7 @@ export const teamController = {
 			const athletes = await teamService.listAthletes(team_id);
 			res.status(200).json(athletes);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(404).json({ error: error.message });
 		}
 	},
@@ -83,6 +89,7 @@ export const teamController = {
 			const athlete = await teamService.registerAthlete(team_id, name, gender, cpf ?? null, email ?? null);
 			res.status(201).json(athlete);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			if (error.code === "23505") {
 				res.status(409).json({ error: "CPF já cadastrado" });
 				return;
@@ -103,6 +110,7 @@ export const teamController = {
 			const athlete = await teamService.getAthlete(team_id, id);
 			res.status(200).json(athlete);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(404).json({ error: error.message });
 		}
 	},
@@ -115,6 +123,7 @@ export const teamController = {
 			const athlete = await teamService.updateAthlete(team_id, id, { name, gender, cpf, email });
 			res.status(200).json(athlete);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(404).json({ error: error.message });
 		}
 	},
@@ -126,6 +135,7 @@ export const teamController = {
 			const athlete = await teamService.deleteAthlete(team_id, id);
 			res.status(200).json(athlete);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(404).json({ error: error.message });
 		}
 	},
