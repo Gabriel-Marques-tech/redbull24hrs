@@ -557,6 +557,61 @@ main { height: auto !important; }
     background: #fff5f5;
 }
 
+/* Modal exportação — estrutura base */
+.modal-export-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal-export-overlay.escondido { display: none; }
+
+.modal-export-conteudo {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px 30px;
+    width: 480px;
+    max-width: 92vw;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+}
+
+.modal-export-barra {
+    width: 48px;
+    height: 4px;
+    background: var(--vermelho);
+    border-radius: 2px;
+    margin: 0 auto 18px;
+}
+
+.modal-export-conteudo h2 {
+    font-size: 21px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 6px;
+    color: #1a1a1a;
+}
+
+.modal-export-desc {
+    font-size: 13px;
+    color: #888;
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.modal-export-secao { margin-bottom: 18px; }
+
+.modal-export-grupo-titulo {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #aaa;
+    margin-bottom: 10px;
+}
+
 /* Modal editar turno */
 .modal-editar-overlay {
     position: fixed;
