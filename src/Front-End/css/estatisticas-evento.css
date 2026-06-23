@@ -657,6 +657,39 @@ main { height: auto !important; }
     cursor: pointer;
 }
 
+.modal-export-acoes {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.modal-export-btn-cancelar,
+.modal-export-btn-confirmar {
+    flex: 1;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.modal-export-btn-cancelar {
+    background: #f3f3f3;
+    color: #555;
+}
+
+.modal-export-btn-cancelar:hover { background: #e8e8e8; }
+
+.modal-export-btn-confirmar {
+    background: var(--vermelho);
+    color: #fff;
+}
+
+.modal-export-btn-confirmar:hover { background: #b10033; }
+.modal-export-btn-confirmar:disabled { opacity: 0.6; cursor: default; }
+
 /* Modal editar turno */
 .modal-editar-overlay {
     position: fixed;
