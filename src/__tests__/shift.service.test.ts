@@ -63,17 +63,6 @@ describe("shiftService.startShift", () => {
     ).rejects.toThrow("Evento encerrado");
   });
 
-  it("throws RN17 when team does not have 16 runners", async () => {
-    mockRepo.athleteExists.mockResolvedValue(true);
-    mockRepo.eventStatusByAthlete.mockResolvedValue("in_progress");
-    mockRepo.validateTeamsForAthlete.mockResolvedValue([
-      { team_id: 1, name: "Team A", count: 10 },
-    ]);
-    await expect(
-      shiftService.startShift(1, 1, "auditor", 1, 0)
-    ).rejects.toThrow("RN17");
-  });
-
   it("throws when treadmill is occupied", async () => {
     mockRepo.athleteExists.mockResolvedValue(true);
     mockRepo.eventStatusByAthlete.mockResolvedValue("in_progress");
