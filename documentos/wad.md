@@ -5099,19 +5099,19 @@ Para cada resposta, é aplicada a seguinte lógica [²⁷](#8-referências):
 - Perguntas ímpares (1, 3, 5, 7 e 9): será subtraido 1 do valor respondido
 - Perguntas pares (2, 4, 6, 8 e 10): será subtraido o valor respondido de 5
 
-A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score final de cada participante. A média entre todos os participantes representa o score SUS do sistema.
+A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score final de cada participante. A média entre todos os participantes representa o score SUS do sistema. A pontuação média do SUS é 68, fazendo com que uma pontuação acima ou abaixo da média forneça uma visão imediata da usabilidade geral da solução de design do projeto. [²⁷](#8-referências).
 
 
 **Resultados individuais:**
 
 | Participante | Score SUS |
 |---|---|
-| 1 | 100,0 |
-| 2 | 75,0 |
-| 3 | 87,5 |
-| 4 | 85,0 |
-| 5 | 70,0 |
-| 6 | 82,5 |
+| 1- Enzo Braga | 100,0 |
+| 2- Lucas Levi | 75,0 |
+| 3- Paulo Roberto | 87,5 |
+| 4- Lais Victoria | 85,0 |
+| 5- Pedro Negri | 70,0 |
+| 6- Valter Lima | 82,5 |
 
 
 **Score médio: 83,3**
