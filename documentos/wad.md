@@ -4745,7 +4745,8 @@ A suíte também busca garantir determinismo, evitando dependência de ordem de 
 
 ### 5.1.2 Testes Unitários de Service (White-Box)
 
-Os testes unitários de Service validam diretamente as regras internas do sistema. A prioridade foi dada às regras de autenticação, cadastro, início de turno, registro de checkpoint e finalização de turno, pois esses fluxos concentram as principais validações operacionais da aplicação.
+Os testes unitários de Service validam diretamente as regras internas do sistema. Os casos apresentados foram selecionados por representarem os fluxos mais críticos da operação da plataforma, abrangendo autenticação, início de turno, registro de checkpoint e finalização de turno. A escolha desses cenários busca demonstrar a validação das principais regras de negócio implementadas na camada de serviços, responsáveis pela integridade dos dados, controle operacional e segurança da aplicação.
+
 
 A cobertura mínima esperada para a camada Service é de **80%**, evidenciada pelo relatório gerado com:
 
@@ -4856,6 +4857,23 @@ Os testes de integração validam a API a partir de requisições HTTP simuladas
 | Regra de negócio violada | 409 ou equivalente |
 | Recurso não encontrado   | 404                |
 
+#### Evidência de Cobertura dos Cenários por Endpoint
+
+A tabela a seguir apresenta exemplos dos principais endpoints testados e os cenários efetivamente cobertos pela suíte de integração automatizada.
+
+| Endpoint                           | 200/201 | 400/422 | 404 | 409 |
+| ---------------------------------- | ------- | ------- | --- | --- |
+| POST /audit/shifts/start           | ✓       | ✓       | ✓   | ✓   |
+| PATCH /audit/shifts/:id/finish     | ✓       | ✓       | ✓   | ✓   |
+| POST /audit/shifts/:id/checkpoints | ✓       | ✓       | ✓   | ✓   |
+| POST /auth/login                   | ✓       | ✓       | ✓   | —   |
+| POST /teams                        | ✓       | ✓       | ✓   | ✓   |
+| GET /teams/:id                     | ✓       | —       | ✓   | —   |
+| PATCH /teams/:id                   | ✓       | ✓       | ✓   | ✓   |
+| DELETE /teams/:id                  | ✓       | —       | ✓   | ✓   |
+
+A cobertura desses cenários é implementada por meio dos testes automatizados da aplicação, garantindo a validação de fluxos de sucesso, erros de validação, recursos inexistentes e violações de regras de negócio.
+
 #### Mapeamento por fluxo da aplicação
 
 | Fluxo                         | Endpoint Principal                                     | RNs Relacionadas                               | RFs Associados                                  |
@@ -4918,6 +4936,13 @@ A tabela a seguir apresenta a finalidade de cada conjunto de testes automatizado
 | `metrics.test.ts`         | Validar métricas e dashboard                    | Garante cálculo correto de quilometragem, ranking, estatísticas por equipe e desempenho individual.                                                                         |
 | `export.test.ts`          | Validar exportação CSV                          | Garante geração correta dos relatórios exportados e compatibilidade com ferramentas externas.                                                                               |
 | `logs.test.ts`            | Validar rastreabilidade e auditoria             | Garante consulta correta dos logs operacionais e preservação do histórico de alterações.                                                                                    |
+| `auth.routes.test.ts` | Validar rotas de autenticação | Garante o correto encaminhamento das requisições e a integração entre rotas, controladores e middlewares de autenticação. |
+| `event.service.test.ts` | Validar regras de negócio dos eventos | Garante as validações internas relacionadas à criação, atualização e gerenciamento de eventos. |
+| `team.service.test.ts` | Validar regras de negócio das equipes | Garante a integridade das validações de equipes e atletas implementadas na camada de serviços. |
+| `shift.service.test.ts` | Validar regras de negócio dos turnos | Garante a correta aplicação das regras operacionais relacionadas ao início, acompanhamento e finalização dos turnos. |
+| `sync.test.ts` | Validar sincronização offline | Garante a consistência do processo de sincronização entre dados locais e persistidos. |
+| `pageController.test.ts` | Validar renderização das páginas | Garante o correto carregamento das páginas e a integração dos controladores responsáveis pela interface web. |
+
 
 #### Resumo Quantitativo dos Testes
 
@@ -5002,7 +5027,7 @@ A cobertura deve ser evidenciada com:
 npm test -- --coverage
 ```
 
-O relatório deve apresentar os percentuais de cobertura por camada, especialmente para a camada Service.
+O relatório apresenta os percentuais de cobertura da camada Service, responsável pela implementação das principais regras de negócio da aplicação.
 
 A figura a seguir apresenta o relatório de cobertura gerado pelo Jest, incluindo os percentuais obtidos pela camada Service.
 
