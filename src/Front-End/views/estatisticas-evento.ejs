@@ -454,6 +454,69 @@
         </section>
     </main>
 
+    <!-- Modal seleção de colunas para exportação -->
+    <div class="modal-export-overlay escondido" id="modalExportColunas">
+        <div class="modal-export-conteudo">
+            <div class="modal-export-barra"></div>
+            <h2>Exportar planilha</h2>
+            <p class="modal-export-desc">Escolha as colunas que deseja incluir na exportação.</p>
+
+            <div class="modal-export-secao">
+                <p class="modal-export-grupo-titulo">Sempre incluídas</p>
+                <div class="modal-export-fixas">
+                    <span>Atleta</span>
+                    <span>Equipe</span>
+                    <span>Início</span>
+                    <span>Fim</span>
+                    <span>Status</span>
+                </div>
+            </div>
+
+            <div class="modal-export-secao">
+                <p class="modal-export-grupo-titulo">Opcionais</p>
+                <div class="modal-export-opcoes">
+                    <label class="modal-export-opcao">
+                        <input type="checkbox" value="treadmill" checked>
+                        <span>Esteira</span>
+                    </label>
+                    <label class="modal-export-opcao">
+                        <input type="checkbox" value="km_start" checked>
+                        <span>Km início</span>
+                    </label>
+                    <label class="modal-export-opcao">
+                        <input type="checkbox" value="km_end" checked>
+                        <span>Km fim</span>
+                    </label>
+                    <label class="modal-export-opcao">
+                        <input type="checkbox" value="distance" checked>
+                        <span>Distância (km)</span>
+                    </label>
+                    <label class="modal-export-opcao">
+                        <input type="checkbox" value="speed" checked>
+                        <span>Velocidade</span>
+                    </label>
+                    <label class="modal-export-opcao">
+                        <input type="checkbox" value="total_time" checked>
+                        <span>Duração</span>
+                    </label>
+                    <label class="modal-export-opcao">
+                        <input type="checkbox" value="auditor" checked>
+                        <span>Auditor</span>
+                    </label>
+                    <label class="modal-export-opcao">
+                        <input type="checkbox" value="id" checked>
+                        <span>ID</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="modal-export-acoes">
+                <button class="modal-export-btn-cancelar" id="btnCancelarExport" type="button">Cancelar</button>
+                <button class="modal-export-btn-confirmar" id="btnConfirmarExport" type="button">Exportar</button>
+            </div>
+        </div>
+    </div>
+
     <% if (user_role === 'manager') { %>
     <div class="tv-config-overlay" id="tvConfigOverlay"></div>
     <aside class="tv-config-drawer" id="tvConfigDrawer" aria-hidden="true">
