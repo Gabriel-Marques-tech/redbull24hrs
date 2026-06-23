@@ -5107,6 +5107,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 **Perfil:** Estudante de Ciência da Computação / Produzindo um projeto para a BrPec Agropecuária
 
 **Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
 **Panorama Geral:** ✅ Sucesso
 
 | Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
@@ -5117,6 +5118,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
 
 **Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
 **Panorama Geral:** ✅ Sucesso
 
 | Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
@@ -5126,6 +5128,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
 
 **Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
 **Panorama Geral:** ✅ Sucesso
 
 | Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
@@ -5140,6 +5143,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 **Perfil:** Estudante de Engenharia da Computação / Produzindo um projeto para a Defesa Civil de Santo André
 
 **Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
 **Panorama Geral:** ❌ Não conseguiu
 
 | Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
@@ -5150,6 +5154,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
 
 **Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
 **Panorama Geral:** ❌ Não conseguiu
 
 | Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
@@ -5159,6 +5164,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
 
 **Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
 **Panorama Geral:** ❌ Não conseguiu
 
 | Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
@@ -5173,6 +5179,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 **Perfil:** Estudante de Engenharia da Computação / Produzindo um projeto para a Defesa Civil de Santo André
 
 **Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
 **Panorama Geral:** ⚠️ Conseguiu com dificuldade
 
 | Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
@@ -5183,6 +5190,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
 
 **Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
 **Panorama Geral:** ✅ Sucesso
 
 | Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
@@ -5192,6 +5200,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
 
 **Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
 **Panorama Geral:** ✅ Sucesso
 
 | Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
@@ -5206,6 +5215,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 **Perfil:** Estudante de Ciência da Computação / Produzindo um projeto para a BrPec Agropecuária
 
 **Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
 **Panorama Geral:** ✅ Sucesso
 
 | Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
@@ -5216,6 +5226,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
 
 **Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
 **Panorama Geral:** *(não registrado)*
 
 | Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
@@ -5225,6 +5236,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 3 | Concluir a criação do evento e iniciá-lo | Laís teve dificuldade em encontrar a opção de logout | H4 – Consistência e padrões; H6 – Reconhecimento em vez de lembrança |
 
 **Teste 3 (T3):** *"Como auditora, você deve auditar uma equipe no evento criado."*
+
 **Panorama Geral:** ✅ Sucesso
 
 | Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
@@ -5239,6 +5251,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 **Perfil:** Estudante de Engenharia de Software / Produzindo um projeto para a BrPec Agropecuária
 
 **Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
 **Panorama Geral:** ✅ Sucesso
 
 | Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
@@ -5249,6 +5262,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
 
 **Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
 **Panorama Geral:** ⚠️ Conseguiu com dificuldade
 
 | Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
@@ -5258,6 +5272,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
 
 **Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
 **Panorama Geral:** ✅ Sucesso
 
 | Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
@@ -5272,6 +5287,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 **Perfil:** Estudante de Sistemas da Informação / Produzindo um projeto para a Defesa Civil de Santo André
 
 **Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
 **Panorama Geral:** ⚠️ Conseguiu com dificuldade
 
 | Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
@@ -5282,6 +5298,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 4 | Concluir a criação do evento e realizar o logout | Após finalizar o cadastro, Valter procurou uma confirmação mais explícita de que o evento havia sido criado com sucesso | H1 – Visibilidade do status do sistema |
 
 **Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
 **Panorama Geral:** ⚠️ Conseguiu com dificuldade
 
 | Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
@@ -5291,6 +5308,7 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 3 | Concluir a criação do evento e iniciá-lo | Valter procurou uma tela de revisão antes de iniciar o evento, esperando validar todas as informações cadastradas | H3 – Controle e liberdade do usuário; H5 – Prevenção de erros |
 
 **Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
 **Panorama Geral:** ⚠️ Conseguiu com dificuldade
 
 | Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
