@@ -187,11 +187,14 @@ const CHECKPOINT_COLUMNS = [
 // ── service público ───────────────────────────────────────────────────────────
 
 export const exportService = {
-	async shiftsXlsx(eventId: number): Promise<Buffer> {
+	async shiftsXlsx(eventId: number, selectedColumns?: string[]): Promise<Buffer> {
 		const rows = await exportRepository.shiftsByEvent(eventId);
 		const wb = new ExcelJS.Workbook();
 		wb.creator = "RedRun";
-		buildWorksheet(wb, "Turnos", SHIFT_COLUMNS, rows.map(transformShift));
+		const cols = selectedColumns?.length
+			? SHIFT_COLUMNS.filter(c => selectedColumns.includes(c.key))
+			: SHIFT_COLUMNS;
+		buildWorksheet(wb, "Turnos", cols, rows.map(transformShift));
 		return Buffer.from(await wb.xlsx.writeBuffer());
 	},
 
