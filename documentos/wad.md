@@ -5267,6 +5267,20 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 3 | Realizar a auditoria de um período de 2 minutos | Nenhuma ocorrência registrada | — |
 | 4 | Concluir a auditoria e realizar o logout | Pedro considerou a usabilidade geral tranquila, mas sugeriu melhorar a diferenciação visual entre o botão de "finalizar turno" (concluir a auditoria) e o botão de logout, já que ambos pareciam semelhantes | H4 – Consistência e padrões; H8 – Design estético e minimalista |
 
+**Testador:** Valter Lima
+
+**Perfil:** Estudante de Sistemas da Informação / Produzindo um projeto para a Defesa Civil de Santo André
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Valter inseriu corretamente as credenciais, porém inicialmente não percebeu que deveria selecionar o perfil "gerente" antes de prosseguir | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrões |
+| 2 | Iniciar a criação de um evento | Nenhuma ocorrência | — |
+| 3 | Adicionar as informações do evento | Valter teve dificuldade para identificar quais campos eram obrigatórios, pois não havia diferenciação visual clara entre campos obrigatórios e opcionais | H1 – Visibilidade do status do sistema; H5 – Prevenção de erros |
+| 4 | Concluir a criação do evento e realizar o logout | Após finalizar o cadastro, Valter procurou uma confirmação mais explícita de que o evento havia sido criado com sucesso | H1 – Visibilidade do status do sistema |
+
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
 ---
