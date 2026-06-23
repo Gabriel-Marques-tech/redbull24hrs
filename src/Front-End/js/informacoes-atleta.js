@@ -217,7 +217,8 @@ formulario.addEventListener("submit", async (evento) => {
         const body = JSON.stringify({
             name:   nome.value.trim(),
             gender: genero.value,
-            cpf:    cpfDigitos || null
+            cpf:    cpfDigitos || null,
+            email:  emailPessoa.value.trim() || null
         });
         const url = edicao.atletaId
             ? `/teams/${edicao.teamId}/athletes/${edicao.atletaId}`

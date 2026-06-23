@@ -44,10 +44,10 @@ export const teamService = {
 		return team;
 	},
 
-	async registerAthlete(team_id: number, name: string, gender: string, cpf: string | null) {
+	async registerAthlete(team_id: number, name: string, gender: string, cpf: string | null, email?: string | null) {
 		const team = await teamRepository.findById(team_id);
 		if (!team) throw new Error("Equipe não encontrada");
-		return athleteRepository.create(name, gender, cpf ?? null, team_id);
+		return athleteRepository.create(name, gender, cpf ?? null, team_id, email ?? null);
 	},
 
 	async listAthletes(team_id: number) {
@@ -64,7 +64,7 @@ export const teamService = {
 		return athlete;
 	},
 
-	async updateAthlete(team_id: number, id: number, fields: { name?: string; gender?: string; cpf?: string | null }) {
+	async updateAthlete(team_id: number, id: number, fields: { name?: string; gender?: string; cpf?: string | null; email?: string | null }) {
 		const team = await teamRepository.findById(team_id);
 		if (!team) throw new Error("Equipe não encontrada");
 		const athlete = await athleteRepository.update(id, fields);

@@ -13,6 +13,7 @@ import ExportRoutes from "./routes/exportRoutes";
 import SyncRoutes from "./routes/syncRoutes";
 import LogsRoutes from "./routes/logsRoutes";
 import PageRoutes from "./routes/pageRoutes";
+import ShareRoutes from "./routes/shareRoutes";
 
 
 config();
@@ -46,6 +47,7 @@ app.use("/audit", SyncRoutes);
 app.use("/audit", LogsRoutes);
 app.use("/metrics", MetricsRoutes);
 app.use("/export", ExportRoutes);
+app.use("/share", ShareRoutes);
 app.use("/", PageRoutes);
 
 export default app;
