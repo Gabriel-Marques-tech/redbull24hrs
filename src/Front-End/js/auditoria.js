@@ -382,12 +382,28 @@ if (btnCheckpointFoto && checkpointFotoInput) {
 }
 
 if (checkpointFotoInput && checkpointFotoPreview) {
-    checkpointFotoInput.addEventListener('change', () => {
+    checkpointFotoInput.addEventListener('change', async () => {
         const arquivo = checkpointFotoInput.files?.[0]
         if (!arquivo) return
         if (checkpointFotoUrl) URL.revokeObjectURL(checkpointFotoUrl)
         checkpointFotoUrl = URL.createObjectURL(arquivo)
         checkpointFotoPreview.innerHTML = `<img src="${checkpointFotoUrl}" alt="Foto do checkpoint">`
+
+        if (btnCheckpointFoto) btnCheckpointFoto.disabled = true
+        try {
+            const form = new FormData()
+            form.append('image', arquivo)
+            const res = await authFetch('/audit/ocr', { method: 'POST', body: form })
+            if (res && res.ok) {
+                const { ocr } = await res.json()
+                if (ocr) {
+                    if (ocr.distance != null && kmCheckpointModal)       kmCheckpointModal.value = ocr.distance
+                    if (ocr.speed    != null && velocidadeCheckpointModal) velocidadeCheckpointModal.value = ocr.speed
+                }
+            }
+        } finally {
+            if (btnCheckpointFoto) btnCheckpointFoto.disabled = false
+        }
     })
 }
 
