@@ -1,4 +1,4 @@
-import express, { Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
 import { config } from "dotenv";
@@ -49,5 +49,11 @@ app.use("/metrics", MetricsRoutes);
 app.use("/export", ExportRoutes);
 app.use("/share", ShareRoutes);
 app.use("/", PageRoutes);
+
+app.use((err: any, req: Request, res: Response, _next: NextFunction) => {
+	console.error(`[ERROR] ${req.method} ${req.path} —`, err?.message ?? err);
+	if (err?.stack) console.error(err.stack);
+	if (!res.headersSent) res.status(500).json({ error: "Erro interno do servidor" });
+});
 
 export default app;

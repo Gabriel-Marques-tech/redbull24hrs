@@ -10,6 +10,7 @@ export const exportController = {
 			res.setHeader("Content-Disposition", `attachment; filename="turnos-${eventId}.xlsx"`);
 			res.status(200).send(buffer);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
@@ -22,6 +23,7 @@ export const exportController = {
 			res.setHeader("Content-Disposition", `attachment; filename="checkpoints-${eventId}.xlsx"`);
 			res.status(200).send(buffer);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},

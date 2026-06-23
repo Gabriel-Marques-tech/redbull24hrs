@@ -7,6 +7,7 @@ export const eventController = {
 			const events = await eventService.listEvents();
 			res.status(200).json(events);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
@@ -21,6 +22,7 @@ export const eventController = {
 			const event = await eventService.registerEvent(Number(manager_id), title, local, date);
 			res.status(201).json(event);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
@@ -31,6 +33,7 @@ export const eventController = {
 			const event = await eventService.getEvent(id);
 			res.status(200).json(event);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(404).json({ error: error.message });
 		}
 	},
@@ -42,6 +45,7 @@ export const eventController = {
 			const event = await eventService.updateEvent(id, { title, local, date });
 			res.status(200).json(event);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(404).json({ error: error.message });
 		}
 	},
@@ -52,6 +56,7 @@ export const eventController = {
 			const event = await eventService.deleteEvent(id);
 			res.status(200).json(event);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(404).json({ error: error.message });
 		}
 	},
@@ -66,6 +71,7 @@ export const eventController = {
 			const event = await eventService.startEvent(id);
 			res.status(200).json(event);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			const status = error.message.includes("não encontrad")
 				? 404
 				: error.message.includes("já está")
@@ -85,6 +91,7 @@ export const eventController = {
 			const event = await eventService.finishEvent(id);
 			res.status(200).json(event);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			const status = error.message.includes("não encontrad")
 				? 404
 				: error.message.includes("já está") || error.message.includes("ainda não foi iniciado")
@@ -99,6 +106,7 @@ export const eventController = {
 			const treadmills = await eventService.listTreadmills();
 			res.status(200).json(treadmills);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
@@ -113,6 +121,7 @@ export const eventController = {
 			const treadmill = await eventService.registerTreadmill(Number(number));
 			res.status(201).json(treadmill);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
@@ -128,6 +137,7 @@ export const eventController = {
 			const treadmill = await eventService.updateTreadmill(id, Number(number));
 			res.status(200).json(treadmill);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(404).json({ error: error.message });
 		}
 	},
@@ -138,6 +148,7 @@ export const eventController = {
 			const treadmill = await eventService.deleteTreadmill(id);
 			res.status(200).json(treadmill);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(404).json({ error: error.message });
 		}
 	},
