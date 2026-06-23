@@ -2080,3 +2080,104 @@ img {
     background-color: var(--vermelho);
     color: var(--branco);
 }
+
+/* ── OCR loading spinner ──────────────────────────────────────── */
+@keyframes ocr-spin {
+    to { transform: rotate(360deg); }
+}
+
+.ocr-analisando {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #888;
+    margin-top: 6px;
+}
+
+.ocr-analisando::before {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #ddd;
+    border-top-color: var(--vermelho);
+    border-radius: 50%;
+    animation: ocr-spin 0.7s linear infinite;
+    flex-shrink: 0;
+}
+
+.ocr-analisando.escondido { display: none; }
+
+/* ── OCR resultado turno ─────────────────────────────────────── */
+.ocr-resultado {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 12px;
+    background: #f5f5f5;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+.ocr-resultado.escondido { display: none; }
+
+.ocr-label {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.ocr-campos {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.ocr-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.ocr-campo label {
+    font-size: 10px;
+    color: #aaa;
+    text-transform: uppercase;
+}
+
+.ocr-campo strong {
+    font-size: 14px;
+    color: #222;
+}
+
+/* spinner no preview do checkpoint durante OCR */
+.checkpoint-foto-preview.ocr-loading,
+.finalizar-turno-foto-preview.ocr-loading {
+    position: relative;
+}
+
+.checkpoint-foto-preview.ocr-loading::after,
+.finalizar-turno-foto-preview.ocr-loading::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    border-radius: inherit;
+    display: grid;
+    place-items: center;
+}
+
+.checkpoint-foto-preview.ocr-loading::before,
+.finalizar-turno-foto-preview.ocr-loading::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    width: 28px;
+    height: 28px;
+    border: 3px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: ocr-spin 0.7s linear infinite;
+}
