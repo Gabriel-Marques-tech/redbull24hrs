@@ -176,6 +176,47 @@ main { height: auto !important; }
 .btn-finalizar:hover:not(:disabled) { background: #b10033; }
 .btn-finalizar:disabled { opacity: 0.6; cursor: default; }
 
+/* grupo de botões à direita da barra de ação (Modo TV + Finalizar) */
+.stats-barra-botoes { display: flex; align-items: center; gap: 12px; }
+
+/* Modo TV: mesma altura do Finalizar, largura levemente menor */
+.btn-modo-tv {
+    width: 180px;
+    box-sizing: border-box;
+    padding: 13px 22px;
+    background: #0f0069;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background 0.15s;
+}
+.btn-modo-tv:hover { background: #1a0a99; }
+.btn-modo-tv-icone {
+    position: relative;
+    width: 21px;
+    height: 15px;
+    flex: 0 0 21px;
+    border: 1.5px solid #fff;
+    border-radius: 3px;
+}
+.btn-modo-tv-icone::after {
+    content: "";
+    position: absolute;
+    right: 5px;
+    bottom: -5px;
+    left: 5px;
+    height: 1.5px;
+    border-radius: 2px;
+    background: #fff;
+}
+
 /* tabs */
 .stats-tabs {
     display: flex;
