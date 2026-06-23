@@ -8,7 +8,7 @@ export const emailService = {
 	async sendShareLink(to: string, athleteName: string, shareToken: string): Promise<void> {
 		const link = `${BASE_URL}/share/athlete/${shareToken}`;
 
-		await resend.emails.send({
+		const { error } = await resend.emails.send({
 			from: FROM,
 			to,
 			subject: `${athleteName}, seu desempenho no Red Bull 24H está disponível!`,
@@ -40,5 +40,6 @@ export const emailService = {
 </html>
 			`.trim(),
 		});
+		if (error) throw new Error(error.message);
 	},
 };
