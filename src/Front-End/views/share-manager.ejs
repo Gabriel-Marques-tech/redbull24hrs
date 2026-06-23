@@ -36,6 +36,11 @@
     .actions-top { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
     .btn-back { background: none; border: 1px solid #2a2a2a; color: #aaa;
                 padding: 8px 16px; border-radius: 8px; font-size: 13px; cursor: pointer; text-decoration: none; }
+    .btn-send-all { background: #be0000; border: none; color: #fff;
+                    padding: 8px 18px; border-radius: 8px; font-size: 13px;
+                    cursor: pointer; font-weight: 700; }
+    .btn-send-all:hover { opacity: 0.85; }
+    .btn-send-all:disabled { opacity: 0.4; cursor: not-allowed; }
     .count { font-size: 13px; color: #555; }
   </style>
 </head>
@@ -43,6 +48,7 @@
 
   <div class="actions-top">
     <a class="btn-back" href="/manager/event/<%= event.id %>">← Voltar ao evento</a>
+    <button class="btn-send-all" id="btnEnviarTodos" onclick="enviarParaTodos()">Enviar link para todos</button>
     <span class="count" id="count-label"></span>
   </div>
 
@@ -147,6 +153,33 @@
     });
 
     render(athletes);
+
+    async function enviarParaTodos() {
+      const comEmail = athletes.filter(a => a.email && a.share_token);
+      if (!comEmail.length) {
+        alert('Nenhum atleta com email e link gerado.');
+        return;
+      }
+      const btn = document.getElementById('btnEnviarTodos');
+      btn.disabled = true;
+      btn.textContent = `Enviando 0/${comEmail.length}…`;
+
+      let ok = 0, err = 0;
+      for (const a of comEmail) {
+        try {
+          const res = await fetch(`/share/athlete/${a.share_token}/send-email`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
+          });
+          if (res.ok) ok++; else err++;
+        } catch { err++; }
+        btn.textContent = `Enviando ${ok + err}/${comEmail.length}…`;
+      }
+
+      btn.textContent = `✓ ${ok} enviado${ok !== 1 ? 's' : ''}${err ? ` · ${err} erro${err !== 1 ? 's' : ''}` : ''}`;
+      btn.disabled = false;
+    }
   </script>
 </body>
 </html>

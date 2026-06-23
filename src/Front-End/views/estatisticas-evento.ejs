@@ -46,6 +46,12 @@
                                 <img src="/assets/estatisticas/compartilhar.svg" alt="" class="btn-exportar-icone">
                                 Compartilhar como planilha
                             </button>
+                            <% if (evento.status === 'finished' && user_role === 'manager') { %>
+                            <a href="/manager/event/<%= evento.id %>/share" class="btn-exportar" style="text-decoration:none;">
+                                <img src="/assets/estatisticas/compartilhar.svg" alt="" class="btn-exportar-icone">
+                                Compartilhar desempenhos
+                            </a>
+                            <% } %>
                         </div>
                     </div>
                     <div class="stats-meta">
