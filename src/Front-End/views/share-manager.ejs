@@ -153,7 +153,7 @@
     try {
       const res = await fetch(`/share/athlete/${token}/send-email`, {
         method: 'POST', credentials: 'include',
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
+        headers: { 'Content-Type': 'application/json' }
       });
       const data = await res.json();
       if (res.ok) {
@@ -180,7 +180,7 @@
       try {
         const res = await fetch(`/share/athlete/${a.share_token}/send-email`, {
           method: 'POST', credentials: 'include',
-          headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
+          headers: { 'Content-Type': 'application/json' }
         });
         if (res.ok) ok++; else err++;
       } catch { err++; }
