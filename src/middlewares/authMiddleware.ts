@@ -5,12 +5,15 @@ import AuthService from "../services/authService";
 
 const requireAuth = (req: Request, res: Response, next: NextFunction): void => {
   const header = req.headers.authorization;
-  if (!header || !header.startsWith("Bearer ")) {
+  const token = header?.startsWith("Bearer ")
+    ? header.slice("Bearer ".length).trim()
+    : req.cookies?.accessToken;
+
+  if (!token) {
     res.status(401).json({ error: "Token de acesso ausente" });
     return;
   }
 
-  const token = header.slice("Bearer ".length).trim();
   try {
     const payload = verifyAccessToken(token);
     req.user = {
