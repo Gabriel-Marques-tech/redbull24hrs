@@ -62,9 +62,15 @@
                     <span class="countdown-timer" id="countdown">--:--:--</span>
                 </div>
                 <% if (user_role === 'manager') { %>
-                <button type="button" class="btn-finalizar" onclick="finalizarCompetição(<%= evento.id %>)">
-                    Finalizar competição
-                </button>
+                <div class="stats-barra-botoes">
+                    <button type="button" class="btn-modo-tv" id="btnAbrirModoTv" title="Configurar Exibição Pública">
+                        <span class="btn-modo-tv-icone" aria-hidden="true"></span>
+                        Modo TV
+                    </button>
+                    <button type="button" class="btn-finalizar" onclick="finalizarCompetição(<%= evento.id %>)">
+                        Finalizar competição
+                    </button>
+                </div>
                 <% } %>
             </div>
             <% } %>
@@ -494,7 +500,7 @@
                 <i></i>
             </label>
             <label class="tv-config-opcao">
-                <span><strong>4. Pace médio</strong><small>Atualização coletiva a cada seis horas</small></span>
+                <span><strong>4. Pace médio</strong><small>Pace do período de 6h, atualizado a cada turno concluído</small></span>
                 <input type="checkbox" data-tv-opcao="pace" checked>
                 <i></i>
             </label>
@@ -553,7 +559,7 @@
             <article class="modo-tv-tela modo-tv-tela-coletivo" data-tv-tela="coletivo">
                 <div class="modo-tv-tela-conteudo">
                     <span class="modo-tv-sobretitulo">O número que importa</span>
-                    <h2 class="modo-tv-total-titulo">Juntos, já percorremos <strong><%= tvTotalKm.toFixed(1) %><small> km</small></strong></h2>
+                    <h2 class="modo-tv-total-titulo">Juntos, já percorremos <strong id="tvTotalKm"><%= tvTotalKm.toFixed(1) %><small> km</small></strong></h2>
                     <p class="modo-tv-chamada">É a soma de cada turno, cada passo e cada pessoa que entrou nessa corrida.</p>
                     <div class="modo-tv-dados-coletivos">
                         <div><strong><%= tvParticipantCount %></strong><span>pessoas correndo</span></div>
@@ -609,12 +615,12 @@
             <article class="modo-tv-tela modo-tv-tela-pace" data-tv-tela="pace">
                 <div class="modo-tv-tela-conteudo">
                     <span class="modo-tv-sobretitulo">Para quem entende de corrida</span>
-                    <h2>Qual é o ritmo do parque agora?</h2>
+                    <h2>Qual é o ritmo da competição agora?</h2>
                     <div class="modo-tv-pace-card">
                         <div>
                             <span>Pace médio da competição</span>
                             <strong id="tvPaceMedio">—<small> min/km</small></strong>
-                            <p id="tvPacePeriodo">Atualizado a cada ciclo de seis horas</p>
+                            <p id="tvPacePeriodo">Atualizado a cada turno concluído</p>
                         </div>
                         <div class="modo-tv-pace-explicacao">
                             <strong>O que isso significa?</strong>
@@ -627,7 +633,7 @@
             <article class="modo-tv-tela modo-tv-tela-mensagem" data-tv-tela="mensagem">
                 <div class="modo-tv-tela-conteudo">
                     <span class="modo-tv-sobretitulo">Red Bull 24h</span>
-                    <h2>O parque virou palco para uma experiência que não para.</h2>
+                    <h2>A competição virou palco para uma experiência que não para.</h2>
                     <p class="modo-tv-chamada">Chegue mais perto. Acompanhe. Torça pela energia de todo mundo.</p>
                     <div class="modo-tv-assinatura">
                         <strong>24</strong>
@@ -694,6 +700,7 @@
     window.ATHLETE_STATS  = <%- JSON.stringify(athleteStats) %>;
     window.TV_GENDER_TOTALS = window.TV_GENDER_TOTALS || null;
     window.TV_PACE_6H = window.TV_PACE_6H || null;
+    window.TV_TOTAL_KM = <%= tvTotalKm %>;
     </script>
     <script>
     async function authFetch(url, options = {}) {
@@ -1025,12 +1032,44 @@
         //   genero: { mulheres: 82.4, homens: 91 },
         //   pace: { valor: '05:42', periodo: '12h às 18h' }
         // });
+        // Atualiza o total coletivo de km (tela "coletivo").
+        function atualizarColetivo() {
+            const total = window.TV_TOTAL_KM;
+            const campo = document.getElementById('tvTotalKm');
+            if (campo && Number.isFinite(Number(total))) {
+                campo.innerHTML = `${Number(total).toFixed(1)} <small>km</small>`;
+            }
+        }
+
         window.atualizarDadosModoTv = function atualizarDadosModoTv(dados = {}) {
             if (dados.genero) window.TV_GENDER_TOTALS = dados.genero;
             if (dados.pace) window.TV_PACE_6H = dados.pace;
+            if (dados.total_km != null) window.TV_TOTAL_KM = dados.total_km;
+            atualizarColetivo();
             atualizarGenero();
             atualizarPace();
         };
+
+        // Busca o resumo dinâmico do modo TV (total, gênero, pace) e aplica nas telas.
+        // Em caso de falha de conexão, mantém os valores anteriores (não sobrescreve).
+        async function carregarResumoTv() {
+            try {
+                const res = await authFetch(`/metrics/events/${window.EVENTO_ID}/tv`);
+                if (!res || !res.ok) return;
+                const dados = await res.json();
+                window.atualizarDadosModoTv({
+                    total_km: dados.total_km,
+                    genero: dados.genero,
+                    pace: dados.pace && dados.pace.valor ? dados.pace : undefined,
+                });
+            } catch (_) {
+                // conexão perdida: mantém os últimos valores recebidos
+            }
+        }
+
+        // Carrega ao montar e verifica a cada 60s se há novo turno concluído.
+        carregarResumoTv();
+        setInterval(carregarResumoTv, 60 * 1000);
 
         function reiniciarProgresso() {
             if (!progresso) return;
@@ -1085,6 +1124,8 @@
         async function iniciarModoTv() {
             salvarPreferencias();
             prepararTelas();
+            carregarResumoTv();
+            atualizarColetivo();
             atualizarGenero();
             atualizarPace();
             sincronizarCronometroTv();
