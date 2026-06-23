@@ -819,13 +819,25 @@
     document.getElementById('btnCancelarExport').addEventListener('click', fecharModalExport);
     modalExport.addEventListener('click', (e) => { if (e.target === modalExport) fecharModalExport(); });
 
-    async function exportarPlanilha(eventId) {
+    const COLUNAS_FIXAS = ['athlete', 'team', 'start_at', 'end_at', 'status'];
+
+    document.getElementById('btnConfirmarExport').addEventListener('click', async () => {
+        const eventId = Number(modalExport.dataset.eventId);
+        const opcionais = [...modalExport.querySelectorAll('.modal-export-opcao input:checked')]
+            .map(cb => cb.value);
+        const colunas = [...COLUNAS_FIXAS, ...opcionais];
+        fecharModalExport();
+        await exportarPlanilha(eventId, colunas);
+    });
+
+    async function exportarPlanilha(eventId, columns) {
         const btn = document.querySelector('.btn-exportar');
         const original = btn.innerHTML;
         btn.disabled = true;
         btn.innerHTML = '<img src="/assets/estatisticas/compartilhar.svg" alt="" class="btn-exportar-icone"> Gerando...';
+        const qs = columns?.length ? `?columns=${columns.join(',')}` : '';
         try {
-            const res = await authFetch(`/export/events/${eventId}/shifts`);
+            const res = await authFetch(`/export/events/${eventId}/shifts${qs}`);
             if (!res || !res.ok) {
                 const err = await res?.json().catch(() => ({}));
                 alert(err?.error || 'Erro ao exportar.');
