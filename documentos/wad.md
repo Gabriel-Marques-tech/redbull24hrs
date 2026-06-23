@@ -5245,6 +5245,15 @@ Os testes de guerrilha são uma técnica de avaliação de usabilidade informal 
 | 3 | Adicionar as informações do evento | Nenhuma ocorrência; Pedro também elogiou a validação do CPF, assim como outros testadores | — |
 | 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
 
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Nenhuma ocorrência | — |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Pedro também identificou o botão de adicionar atleta em cinza como pouco intuitivo, reforçando a observação feita anteriormente por Lucas Levi; sugeriu que o botão indicasse explicitamente "Adicionar atleta" ou "Adicionar líder" | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões |
+| 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
+
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
 ---
