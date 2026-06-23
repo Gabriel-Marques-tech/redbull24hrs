@@ -2204,9 +2204,11 @@ img {
 }
 
 .ocr-lightbox img {
+    display: block;
+    width: auto;
+    height: auto;
     max-width: 92vw;
     max-height: 88vh;
-    object-fit: contain;
     border-radius: 4px;
     box-shadow: 0 8px 40px rgba(0,0,0,0.6);
     margin: 0;
