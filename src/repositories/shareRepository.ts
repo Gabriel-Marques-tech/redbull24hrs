@@ -37,6 +37,7 @@ export const shareRepository = {
 			`SELECT
 			   a.id,
 			   a.name,
+			   a.email,
 			   a.gender,
 			   a.share_token,
 			   t.name AS team_name,
@@ -51,7 +52,7 @@ export const shareRepository = {
 			 JOIN events e ON e.id  = t.event_id
 			 LEFT JOIN shifts s ON s.athlete_id = a.id
 			 WHERE a.share_token = $1 AND a.deleted_at IS NULL
-			 GROUP BY a.id, a.name, a.gender, a.share_token, t.name, e.id, e.title`,
+			 GROUP BY a.id, a.name, a.email, a.gender, a.share_token, t.name, e.id, e.title`,
 			[shareToken]
 		);
 		return result.rows[0] ?? null;
