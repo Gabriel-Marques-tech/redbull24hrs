@@ -612,6 +612,51 @@ main { height: auto !important; }
     margin-bottom: 10px;
 }
 
+.modal-export-fixas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.modal-export-fixas span {
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: #f0f0f0;
+    color: #888;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.modal-export-opcoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.modal-export-opcao {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.modal-export-opcao:hover { border-color: var(--vermelho); background: #fff5f8; }
+
+.modal-export-opcao input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--vermelho);
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
 /* Modal editar turno */
 .modal-editar-overlay {
     position: fixed;
