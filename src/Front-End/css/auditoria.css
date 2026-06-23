@@ -2227,3 +2227,30 @@ img {
 }
 
 .ocr-lightbox-fechar:hover { opacity: 1; }
+
+/* ── Cronômetro no topo do modal checkpoint ──────────────────── */
+.checkpoint-cronometro-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: #f5f5f5;
+    border-bottom: 1px solid #e8e8e8;
+    border-radius: 8px 8px 0 0;
+    margin: -20px -20px 16px;
+}
+
+.checkpoint-cronometro-label {
+    font-size: 12px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.checkpoint-cronometro-valor {
+    font-size: 22px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #111;
+    letter-spacing: 0.04em;
+}
