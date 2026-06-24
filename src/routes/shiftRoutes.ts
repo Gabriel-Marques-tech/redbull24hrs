@@ -1,6 +1,8 @@
 import express, { Router } from "express";
 import { shiftController } from "../controllers/shiftController";
+import { imageController } from "../controllers/imageController";
 import authMiddleware from "../middlewares/authMiddleware";
+import { upload } from "../middlewares/uploadMiddleware";
 
 const router: Router = express.Router();
 
@@ -12,5 +14,8 @@ router.patch("/shifts/:id/finish", shiftController.finishShift);
 router.patch("/shifts/:id/abandon", shiftController.abandonShift);
 router.patch("/shifts/:id", authMiddleware.requireAuth, shiftController.updateShift);
 router.patch("/checkpoints/:id", authMiddleware.requireAuth, shiftController.correctCheckpoint);
+router.post("/ocr", authMiddleware.requireAuth, upload.single("image"), imageController.analyzeImage);
+router.patch("/shifts/:id/image", authMiddleware.requireAuth, upload.single("image"), imageController.uploadShiftImage);
+router.patch("/checkpoints/:id/image", authMiddleware.requireAuth, upload.single("image"), imageController.uploadCheckpointImage);
 
 export default router;
