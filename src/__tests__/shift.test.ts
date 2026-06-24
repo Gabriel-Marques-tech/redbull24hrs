@@ -61,8 +61,8 @@ beforeEach(() => jest.clearAllMocks());
 // Defaults para guardas de status de evento (RF: evento deve estar em andamento).
 // Registrado após o clearAllMocks acima para reaplicar a cada teste.
 beforeEach(() => {
-	(shiftRepository.eventStatusByAthlete as jest.Mock).mockResolvedValue("in_progress");
-	(shiftRepository.eventStatusByShift as jest.Mock).mockResolvedValue("in_progress");
+	(shiftRepository.eventStatusByAthlete as jest.Mock).mockResolvedValue({ status: "in_progress", paused_at: null });
+	(shiftRepository.eventStatusByShift as jest.Mock).mockResolvedValue({ status: "in_progress", paused_at: null });
 	(shiftRepository.findOpenByTeamWithDetails as jest.Mock).mockResolvedValue(null);
 });
 
