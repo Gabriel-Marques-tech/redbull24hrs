@@ -1050,6 +1050,10 @@ html[data-theme="dark"] .tv-config-opcao i {
     background: #555563;
 }
 
+html[data-theme="dark"] .tv-config-opcao input:checked + i {
+    background: var(--vermelho);
+}
+
 html[data-theme="dark"] .tv-config-tempo select {
     background: var(--fundo-superficie);
     border-color: var(--borda);
