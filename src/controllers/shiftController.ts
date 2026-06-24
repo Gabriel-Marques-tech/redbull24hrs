@@ -113,7 +113,7 @@ export const shiftController = {
 
 	async finishShift(req: Request, res: Response) {
 		const shift_id = Number(req.params.id);
-		const { km_end, athlete_id, duration_seconds } = req.body;
+		const { km_end, athlete_id, duration_seconds, pace } = req.body;
 		if (km_end == null) {
 			res.status(400).json({ error: "Campos obrigatórios: km_end" });
 			return;
@@ -123,7 +123,8 @@ export const shiftController = {
 				shift_id,
 				Number(km_end),
 				athlete_id != null ? Number(athlete_id) : undefined,
-				duration_seconds != null ? Number(duration_seconds) : undefined
+				duration_seconds != null ? Number(duration_seconds) : undefined,
+				pace != null ? String(pace) : undefined
 			);
 			res.status(200).json(shift);
 		} catch (error: any) {
