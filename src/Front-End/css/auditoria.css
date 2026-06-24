@@ -2332,3 +2332,66 @@ img {
     height: 48px;
     font-size: 16px;
 }
+
+/* Cronometro e controles da fila. */
+.cronometro {
+    background-color: var(--branco);
+    border-color: #bdbdc4;
+    color: #1c1c1c;
+}
+
+.fila-resumo {
+    width: 100%;
+}
+
+.btn-organizar-fila {
+    width: 100%;
+    min-height: 42px;
+    border: 1px solid var(--vermelho);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--vermelho);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.btn-organizar-fila:hover,
+.btn-organizar-fila:focus-visible {
+    background: var(--vermelho);
+    color: #fff;
+}
+
+.fila-resumo.fila-aberta .btn-organizar-fila {
+    background: var(--vermelho);
+    color: #fff;
+}
+
+.instrucao-fila {
+    margin: 8px 0 10px;
+    color: #666670;
+    font-size: 14px;
+}
+
+html[data-theme="dark"] .cronometro {
+    background: var(--fundo-superficie);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .btn-organizar-fila {
+    border-color: var(--vermelho);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .btn-organizar-fila:hover,
+html[data-theme="dark"] .btn-organizar-fila:focus-visible,
+html[data-theme="dark"] .fila-resumo.fila-aberta .btn-organizar-fila {
+    background: var(--vermelho);
+    color: #fff;
+}
+
+html[data-theme="dark"] .instrucao-fila {
+    color: var(--texto-secundario);
+}
