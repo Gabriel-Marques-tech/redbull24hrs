@@ -43,6 +43,11 @@ const inputKm            = document.getElementById('inputKm')
 const cronometro         = document.getElementById('cronometro')
 const corredorAtual      = document.getElementById('corredorAtual')
 const tabela             = document.getElementById('tabelaRegistros')
+const filaEl             = document.getElementById('fila')
+const filaResumoEl       = document.getElementById('filaResumo')
+const filaProximoNomeEl  = document.getElementById('filaProximoNome')
+const filaTotalEl        = document.getElementById('filaTotal')
+const btnOrganizarFila   = document.getElementById('btnOrganizarFila')
 
 // ─── Cronômetro ───────────────────────────────────────────────
 function formatarTempo(s) {
@@ -65,6 +70,7 @@ function parseTempo(str) {
 function iniciarTimer(inicial = 0) {
     segundos = inicial
     cronometro.textContent = formatarTempo(segundos)
+    document.body.classList.add('corrida-ativa')
     timerInterval = setInterval(() => {
         segundos++
         cronometro.textContent = formatarTempo(segundos)
@@ -74,6 +80,7 @@ function iniciarTimer(inicial = 0) {
 function pararTimer() {
     clearInterval(timerInterval)
     timerInterval = null
+    document.body.classList.remove('corrida-ativa')
 }
 
 // ─── Ação principal (Iniciar / Registrar checkpoint) ──────────
@@ -519,7 +526,7 @@ function adicionarLinhaTabela(shift, nomeAtleta, checkpoints, auditor) {
     const rowId  = `cps-${++_rowCounter}`
 
     const tr = document.createElement('tr')
-    tr.className = 'linha-turno'
+    tr.className = 'linha-turno registro-novo'
     tr.innerHTML = `
         <td>
             ${temCps ? `<button class="btn-toggle-cp" data-target="${rowId}" onclick="toggleCheckpoints(this)">▶</button>` : ''}
@@ -620,6 +627,7 @@ function criarItemFila(athlete) {
     div.className = 'corredor-fila'
     div.draggable = true
     div.dataset.id = athlete.id
+    div.title = 'Arraste para reorganizar a fila'
     div.innerHTML = `
         <span class="avatar"></span>
         <p>${athlete.name}</p>
@@ -629,11 +637,28 @@ function criarItemFila(athlete) {
     return div
 }
 
+function atualizarResumoFila() {
+    if (!filaProximoNomeEl || !filaTotalEl) return
+    const proximos = ATHLETES.slice(atletaIndex + 1)
+    filaProximoNomeEl.textContent = proximos[0] ? proximos[0].name : 'Fim da fila'
+    filaTotalEl.textContent = `${proximos.length} na fila`
+}
+
 function atualizarFila() {
-    const fila = document.getElementById('fila')
+    const fila = filaEl || document.getElementById('fila')
+    if (!fila) return
     fila.innerHTML = ''
     ATHLETES.slice(atletaIndex + 1).forEach(athlete => {
         fila.appendChild(criarItemFila(athlete))
+    })
+    atualizarResumoFila()
+}
+
+if (btnOrganizarFila && filaResumoEl && filaEl) {
+    btnOrganizarFila.addEventListener('click', () => {
+        const aberta = filaResumoEl.classList.toggle('fila-aberta')
+        filaEl.classList.toggle('fila-aberta', aberta)
+        btnOrganizarFila.textContent = aberta ? 'Fechar fila' : 'Organizar fila'
     })
 }
 
@@ -650,18 +675,19 @@ function ativarDrag(el) {
         dragging = null
         el.classList.remove('arrastando')
         // Sincroniza ATHLETES com nova ordem visual
-        const fila = document.getElementById('fila')
+        const fila = filaEl || document.getElementById('fila')
         const novaOrdem = [...fila.querySelectorAll('.corredor-fila')].map(d => {
             return ATHLETES.find(a => String(a.id) === d.dataset.id)
         }).filter(Boolean)
         // Substitui a fatia restante do array
         novaOrdem.forEach((a, i) => { ATHLETES[atletaIndex + 1 + i] = a })
+        atualizarResumoFila()
     })
 
     el.addEventListener('dragover', (e) => {
         e.preventDefault()
         if (!dragging || dragging === el) return
-        const fila = document.getElementById('fila')
+        const fila = filaEl || document.getElementById('fila')
         const items = [...fila.querySelectorAll('.corredor-fila')]
         const indexDragging = items.indexOf(dragging)
         const indexTarget   = items.indexOf(el)
@@ -675,6 +701,7 @@ function ativarDrag(el) {
 
 // Ativa drag nos itens do SSR (renderizados pelo EJS)
 document.querySelectorAll('#fila .corredor-fila').forEach(el => ativarDrag(el))
+atualizarResumoFila()
 
 // ─── Turno aberto ao carregar: RETOMA (não encerra) ───────────
 if (OPEN_SHIFT) {

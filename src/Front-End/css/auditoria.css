@@ -1,4 +1,4 @@
-﻿/* ---------------- TOPO ---------------- */
+/* ---------------- TOPO ---------------- */
 
 .topo {
     height: 90px;
@@ -149,6 +149,17 @@
     gap: 7px;
 }
 
+.acoes-corrida:has(.btn-proximo-corredor:not(.escondido)) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 180px;
+    width: 100%;
+    gap: 14px;
+}
+
+.acoes-corrida:has(.btn-proximo-corredor:not(.escondido)) .btn-iniciar {
+    width: 100%;
+}
+
 .btn-iniciar {
     width: 254px;
     height: 64px;
@@ -218,6 +229,10 @@
     cursor: not-allowed;
 }
 
+.acoes-corrida:has(.btn-proximo-corredor:not(.escondido)) .btn-esteira.inativa {
+    display: none;
+}
+
 .btn-proximo-corredor {
     width: 63px;
     height: 64px;
@@ -267,7 +282,7 @@
 .modal-esteira {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.78);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -328,6 +343,7 @@
 .opcao-esteira .icone-esteira {
     width: 130px;
     margin: 0;
+    filter: none;
 }
 
 .opcao-esteira .icone-branco {
@@ -339,6 +355,15 @@
 }
 
 .opcao-esteira.selecionada .icone-preto {
+    display: none;
+}
+
+.opcao-esteira:not(.selecionada) .icone-preto {
+    display: block;
+    filter: none;
+}
+
+.opcao-esteira:not(.selecionada) .icone-branco {
     display: none;
 }
 
@@ -400,7 +425,7 @@
 .modal-finalizar-competicao {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.42);
+    background-color: rgba(0, 0, 0, 0.78);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -471,6 +496,196 @@
     color: var(--branco);
 }
 
+/* ---------------- AJUSTES DO TEMA ESCURO ---------------- */
+
+html[data-theme="dark"] .topo,
+html[data-theme="dark"] .conteudo-auditoria {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .operador p,
+html[data-theme="dark"] .tempo-restante,
+html[data-theme="dark"] .corredor-atual p,
+html[data-theme="dark"] .ultimos-registros h2,
+html[data-theme="dark"] .proximos-corredores h2 {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .operador small,
+html[data-theme="dark"] .corredor-atual small,
+html[data-theme="dark"] .seta-bandeja {
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] .cronometro {
+    background-color: var(--fundo-superficie);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] :is(
+    .modal-turno-conteudo,
+    .modal-conteudo,
+    .modal-finalizar-conteudo,
+    .modal-operador,
+    .bandeja-corredores,
+    .modal-lembrete-conteudo,
+    .modal-km-menor-conteudo
+) {
+    background: var(--fundo-superficie);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] :is(
+    .modal-op-header,
+    .modal-op-senha,
+    .bandeja-header,
+    .checkpoint-divisor,
+    .checkpoint-rodape
+) {
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] :is(
+    .modal-conteudo h2,
+    .modal-finalizar-conteudo h2,
+    .modal-finalizar-conteudo p,
+    .modal-lembrete-conteudo h2,
+    .modal-lembrete-conteudo p,
+    .modal-km-menor-conteudo h2,
+    .modal-km-menor-conteudo p,
+    .checkpoint-secao-titulo strong,
+    .checkpoint-campo label,
+    .checkpoint-corredor label
+) {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] :is(
+    .checkpoint-secao-titulo small,
+    .modal-op-senha p
+) {
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] :is(
+    .perfil-card,
+    .opcao-esteira,
+    .bandeja-item
+) {
+    color: var(--texto-principal);
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] :is(
+    .perfil-card:hover,
+    .bandeja-item:hover,
+    .corredor-atual:hover
+) {
+    background-color: var(--fundo-suave);
+}
+
+html[data-theme="dark"] .perfil-card.selecionado,
+html[data-theme="dark"] .bandeja-item.selecionado {
+    background-color: #3b1826;
+    border-color: var(--vermelho);
+}
+
+html[data-theme="dark"] :is(
+    .btn-cancelar-modal,
+    .btn-cancelar-finalizar,
+    .btn-cancelar-turno,
+    .btn-cancelar-km-menor
+) {
+    background-color: transparent;
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .resumo-km-menor {
+    background-color: var(--fundo-suave);
+}
+
+html[data-theme="dark"] .modal-turno-conteudo::before {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .checkpoint-foto-preview,
+html[data-theme="dark"] .btn-checkpoint-foto {
+    background-color: var(--fundo-superficie);
+}
+
+html[data-theme="dark"] .checkpoint-foto-preview {
+    border: 1px solid var(--borda);
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] .btn-checkpoint-foto {
+    color: var(--vermelho);
+    border-color: var(--vermelho);
+}
+
+html[data-theme="dark"] :is(
+    .campo-turno label,
+    .relacao-horario,
+    .cp-hora,
+    .cp-velocidade,
+    .cps-vazio,
+    .ultimos-registros h2,
+    .proximos-corredores h2,
+    .operador small,
+    .corredor-atual small,
+    .checkpoint-secao-titulo small
+) {
+    color: var(--texto-secundario) !important;
+}
+
+html[data-theme="dark"] .relacao-horario span {
+    color: var(--texto-principal) !important;
+}
+
+html[data-theme="dark"] .instrucao-fila {
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] .corredor-fila:hover {
+    background-color: #272732;
+    border-color: #41414f;
+}
+
+html[data-theme="dark"] .corredor-atual:hover {
+    background-color: #272732;
+}
+
+html[data-theme="dark"] .btn-iniciar,
+html[data-theme="dark"] .btn-iniciar:disabled {
+    color: #fff !important;
+}
+
+html[data-theme="dark"] .opcao-esteira.selecionada {
+    background-color: var(--vermelho);
+    border-color: var(--vermelho);
+    color: #fff;
+}
+
+html[data-theme="dark"] .opcao-esteira .icone-branco {
+    display: block;
+}
+
+html[data-theme="dark"] .opcao-esteira .icone-preto {
+    display: none;
+}
+
+html[data-theme="dark"] :is(
+    .btn-sair,
+    .btn-trocar,
+    .btn-fechar-bandeja,
+    .seta-bandeja
+) {
+    color: #c2c2cc;
+}
+
 .btn-esteira img {
     width: 25px;
 }
@@ -485,7 +700,7 @@
 .modal-esteira {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.78);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -546,6 +761,7 @@
 .opcao-esteira .icone-esteira {
     width: 130px;
     margin: 0;
+    filter: none;
 }
 
 .opcao-esteira .icone-branco {
@@ -557,6 +773,15 @@
 }
 
 .opcao-esteira.selecionada .icone-preto {
+    display: none;
+}
+
+.opcao-esteira:not(.selecionada) .icone-preto {
+    display: block;
+    filter: none;
+}
+
+.opcao-esteira:not(.selecionada) .icone-branco {
     display: none;
 }
 
@@ -593,7 +818,7 @@
 .modal-finalizar-competicao {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.42);
+    background-color: rgba(0, 0, 0, 0.78);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -669,7 +894,7 @@
 .modal-turno {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.58);
+    background-color: rgba(0, 0, 0, 0.78);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -793,6 +1018,12 @@
     margin-bottom: 8px;
 }
 
+.instrucao-fila {
+    margin: -2px 0 10px;
+    color: #777;
+    font-size: 13px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -876,7 +1107,8 @@ tbody tr:hover td {
 /* ---------------- FILA DE CORREDORES ---------------- */
 
 .proximos-corredores {
-    width: 250px;
+    width: 255px;
+    padding-top: 32px;
 }
 
 .lista-corredores {
@@ -888,17 +1120,19 @@ tbody tr:hover td {
 .corredor-fila {
     display: flex;
     align-items: center;
-    gap: 14px;
-    height: 46px;
+    gap: 10px;
+    height: 44px;
     cursor: grab;
     user-select: none;
-    border-radius: 6px;
-    padding: 0 6px;
-    transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 0 10px;
+    transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .corredor-fila:hover {
     background-color: #f3f3f3;
+    border-color: #ddd;
 }
 
 .corredor-fila:active {
@@ -917,7 +1151,12 @@ tbody tr:hover td {
 
 .corredor-fila p {
     flex: 1;
-    font-size: 18px;
+    min-width: 0;
+    font-size: 16px;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     pointer-events: none;
 }
 
@@ -929,12 +1168,134 @@ tbody tr:hover td {
     pointer-events: none;
 }
 
+/* Ajuste guerrilha: deixa o encerramento explicito e a fila menos dominante. */
+.acoes-wrapper {
+    width: min(100%, 520px);
+}
+
+.btn-proximo-corredor {
+    width: 100%;
+    height: 64px;
+    padding: 0 16px;
+    border: none;
+    background: var(--azul);
+    color: var(--branco);
+    font-size: 16px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.btn-proximo-corredor:hover,
+.btn-proximo-corredor:focus-visible {
+    background: #1d0a8f;
+}
+
+.btn-proximo-corredor .icone-proximo {
+    display: none;
+}
+
+.texto-finalizar-turno {
+    pointer-events: none;
+}
+
+.fila-resumo {
+    border: none;
+    border-radius: 8px;
+    padding: 0;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.fila-resumo small,
+.fila-resumo span {
+    color: #777;
+    font-size: 12px;
+}
+
+.fila-resumo strong {
+    color: #1a1a1a;
+    font-size: 18px;
+    line-height: 1.2;
+}
+
+.btn-organizar-fila {
+    height: 40px;
+    width: 100%;
+    border: 2px solid var(--vermelho);
+    border-radius: 8px;
+    background: var(--branco);
+    color: var(--vermelho);
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-organizar-fila span {
+    color: inherit;
+}
+
+.fila-lista,
+.proximos-corredores .instrucao-fila {
+    display: none;
+}
+
+.fila-lista.fila-aberta,
+.fila-resumo.fila-aberta + .instrucao-fila {
+    display: flex;
+}
+
+.fila-resumo.fila-aberta + .instrucao-fila {
+    margin: 10px 0 14px;
+    color: #626262;
+    font-size: 12px;
+    line-height: 1.25;
+    justify-content: center;
+    text-align: center;
+}
+
+.fila-lista.fila-aberta {
+    flex-direction: column;
+    gap: 8px;
+}
+
+html[data-theme="dark"] .fila-resumo {
+    background: transparent;
+    border-color: transparent;
+}
+
+html[data-theme="dark"] .fila-resumo strong {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .proximos-corredores .instrucao-fila {
+    color: #d7d7df;
+}
+
+html[data-theme="dark"] .proximos-corredores .avatar {
+    background-color: #f1f1f5;
+}
+
+html[data-theme="dark"] .proximos-corredores .drag {
+    color: #d0d0d8;
+}
+
+html[data-theme="dark"] .btn-organizar-fila {
+    background: transparent;
+    color: #fff;
+    border-color: var(--vermelho);
+}
+
 /* ---------------- MODAL OPERADOR ---------------- */
 
 .modal-overlay {
     position: fixed;
     inset: 0;
-    background-color: rgba(0,0,0,0.45);
+    background-color: rgba(0, 0, 0, 0.78);
     z-index: 30;
 }
 
@@ -1045,15 +1406,50 @@ tbody tr:hover td {
 /* ---------------- BANDEJA CORREDOR ---------------- */
 
 .corredor-atual {
-    cursor: pointer;
-    user-select: none;
     padding: 6px 12px;
     border-radius: 8px;
-    transition: background-color 0.15s;
 }
 
-.corredor-atual:hover {
-    background-color: #f3f3f3;
+.corredor-atual p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px 0 7px;
+}
+
+.acao-corredor {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 11px;
+    border: 1px solid var(--vermelho);
+    border-radius: 999px;
+    background: rgba(224, 0, 58, 0.08);
+    color: var(--vermelho);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    transition: background-color 0.15s, color 0.15s, transform 0.15s;
+}
+
+.acao-corredor .seta-bandeja {
+    color: inherit;
+    font-size: 17px;
+    line-height: 1;
+    margin-left: 6px;
+}
+
+.acao-corredor:hover,
+.acao-corredor:focus-visible {
+    background: var(--vermelho);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.acao-corredor:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(224, 0, 58, 0.16);
 }
 
 .seta-bandeja {
@@ -1062,10 +1458,15 @@ tbody tr:hover td {
     margin-left: 4px;
 }
 
+.corredor-atual:hover,
+html[data-theme="dark"] .corredor-atual:hover {
+    background-color: transparent;
+}
+
 .bandeja-overlay {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(0, 0, 0, 0.78);
     z-index: 20;
 }
 
@@ -1164,7 +1565,7 @@ img {
 .modal-turno {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.58);
+    background-color: rgba(0, 0, 0, 0.78);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1520,12 +1921,18 @@ img {
 .km-row {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 16px;
     width: 100%;
 }
 
 .km-row .input-km {
     flex-shrink: 0;
+    margin: 0 auto;
+}
+
+.km-row:has(.ultimo-cp-info:not(.escondido)) .input-km {
+    margin: 0;
 }
 
 .ultimo-cp-info {
@@ -1711,7 +2118,7 @@ img {
 .modal-lembrete-cp {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.42);
+    background-color: rgba(0, 0, 0, 0.78);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1787,7 +2194,7 @@ img {
 .modal-km-menor {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.42);
+    background-color: rgba(0, 0, 0, 0.78);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1902,6 +2309,70 @@ img {
     color: #fff;
 }
 
+/* Modal de esteira no mesmo porte dos avisos operacionais. */
+.modal-esteira .modal-conteudo {
+    width: 665px;
+    max-width: 90vw;
+    height: auto;
+    min-height: 340px;
+    padding: 36px 42px 34px;
+    border-radius: 6px;
+    justify-content: center;
+}
+
+.modal-esteira .modal-conteudo h2 {
+    margin-bottom: 24px;
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.modal-esteira .opcoes-esteira {
+    width: 100%;
+    justify-content: center;
+    gap: 16px;
+}
+
+.modal-esteira .opcao-esteira {
+    width: 180px;
+    height: 142px;
+    gap: 10px;
+    font-size: 17px;
+}
+
+.modal-esteira .opcao-esteira .icone-esteira {
+    width: 72px;
+}
+
+.modal-esteira .acoes-modal {
+    margin-top: 24px;
+}
+
+.modal-esteira .btn-cancelar-modal,
+.modal-esteira .btn-selecionar-modal {
+    width: 146px;
+    height: 48px;
+    border-radius: 8px;
+    font-size: 17px;
+}
+
+@media (max-width: 720px) {
+    .modal-esteira .modal-conteudo {
+        width: min(92vw, 420px);
+        padding: 28px 22px;
+    }
+
+    .modal-esteira .opcoes-esteira {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .modal-esteira .opcao-esteira {
+        width: 100%;
+        height: 108px;
+        flex-direction: row;
+    }
+}
+
 .modal-finalizar-competicao.escondido {
     display: none;
 }
@@ -1964,4 +2435,82 @@ img {
     border: none;
     background-color: var(--vermelho);
     color: var(--branco);
+}
+/* Ajustes finais do modal de sair da auditoria. */
+.btn-sair {
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    color: inherit;
+}
+
+.icone-sair-svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.modal-finalizar-competicao .modal-finalizar-conteudo {
+    width: 560px;
+    max-width: 90vw;
+    height: auto;
+    min-height: 320px;
+    padding: 34px 42px 32px;
+    border-radius: 6px;
+}
+
+.modal-finalizar-competicao .icone-finalizar {
+    display: grid;
+    place-items: center;
+    width: 74px;
+    height: 74px;
+    margin-bottom: 22px;
+    border-radius: 50%;
+    background: var(--vermelho);
+    color: #fff;
+}
+
+.modal-finalizar-competicao .icone-finalizar .icone-sair-svg {
+    width: 36px;
+    height: 36px;
+}
+
+.modal-finalizar-competicao .modal-finalizar-conteudo h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.modal-finalizar-competicao .modal-finalizar-conteudo p {
+    font-size: 19px;
+    line-height: 1.25;
+    margin-bottom: 26px;
+}
+
+.modal-finalizar-competicao .btn-cancelar-finalizar,
+.modal-finalizar-competicao .btn-confirmar-finalizar {
+    width: 132px;
+    height: 48px;
+    font-size: 16px;
+}
+
+.btn-sair {
+    border-radius: 8px;
+    transition: background-color 0.15s, color 0.15s, transform 0.15s;
+}
+
+.btn-sair:hover,
+.btn-sair:focus-visible {
+    background: var(--vermelho);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.btn-sair:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(224, 0, 58, 0.16);
 }
