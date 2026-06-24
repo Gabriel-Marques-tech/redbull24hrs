@@ -16,13 +16,16 @@ export const shiftService = {
 			throw new Error("Atleta não encontrado");
 
 		// Auditor só opera com evento em andamento (pending = não iniciado, finished = encerrado)
-		const eventStatus = await shiftRepository.eventStatusByAthlete(athlete_id);
+		const eventInfo = await shiftRepository.eventStatusByAthlete(athlete_id);
+		const eventStatus = eventInfo?.status ?? null;
 		if (eventStatus !== "in_progress")
 			throw new Error(
 				eventStatus === "finished"
 					? "Evento encerrado: não é possível iniciar novos turnos"
 					: "Evento não está em andamento: aguarde o início da competição"
 			);
+		if (eventInfo?.paused_at)
+			throw new Error("Competição pausada: não é possível iniciar turnos durante a pausa");
 
 		// RF003 / RN28: evento deve ter equipes cadastradas
 		// RF003 / RN17: cada equipe deve ter exatamente 16 corredores ativos
@@ -81,9 +84,11 @@ export const shiftService = {
 		if (!shift) throw new Error("Turno não encontrado");
 		if (shift.status !== "in_progress") throw new Error("Turno não está em andamento");
 
-		const eventStatus = await shiftRepository.eventStatusByShift(shift_id);
-		if (eventStatus !== "in_progress")
+		const eventInfo = await shiftRepository.eventStatusByShift(shift_id);
+		if (eventInfo?.status !== "in_progress")
 			throw new Error("Evento não está em andamento: operação não permitida");
+		if (eventInfo?.paused_at)
+			throw new Error("Competição pausada: não é possível registrar checkpoints durante a pausa");
 
 		const lastKm = await shiftRepository.lastCheckpointKm(shift_id);
 		const floor = lastKm !== null ? lastKm : shift.km_start;
@@ -106,8 +111,8 @@ export const shiftService = {
 		const shift = await shiftRepository.findById(checkpoint.shift_id);
 		if (!shift) throw new Error("Turno não encontrado");
 
-		const eventStatus = await shiftRepository.eventStatusByShift(checkpoint.shift_id);
-		if (eventStatus !== "in_progress")
+		const eventInfo = await shiftRepository.eventStatusByShift(checkpoint.shift_id);
+		if (eventInfo?.status !== "in_progress")
 			throw new Error("Evento não está em andamento: operação não permitida");
 
 		if (new_distance < 0)
@@ -150,8 +155,8 @@ export const shiftService = {
 		if (!shift) throw new Error("Turno não encontrado");
 		if (shift.status !== "in_progress") throw new Error("Turno não está em andamento");
 
-		const eventStatus = await shiftRepository.eventStatusByShift(shift_id);
-		if (eventStatus !== "in_progress")
+		const eventInfo = await shiftRepository.eventStatusByShift(shift_id);
+		if (eventInfo?.status !== "in_progress")
 			throw new Error("Evento não está em andamento: operação não permitida");
 
 		if (km_end < shift.km_start)
