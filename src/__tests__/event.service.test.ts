@@ -104,7 +104,8 @@ describe("eventService.registerEvent", () => {
       "Race",
       "SP",
       "2026-01-01",
-      1
+      1,
+      null
     );
     expect(result).toEqual(mockEvent);
   });

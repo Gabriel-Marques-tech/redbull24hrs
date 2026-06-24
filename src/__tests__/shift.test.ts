@@ -133,15 +133,29 @@ describe("POST /audit/shifts/start", () => {
 		expect(res.body.error).toMatch(/RN28/);
 	});
 
-	it("201 – equipe com número de corredores diferente de 16 não bloqueia", async () => {
+	it("422 – equipe sem corredores ativos (count 0)", async () => {
 		happyStart();
 		(shiftRepository.start as jest.Mock).mockResolvedValue(openShift);
 		(shiftRepository.validateTeamsForAthlete as jest.Mock).mockResolvedValue([
-			{ team_id: 1, name: "Alpha", count: 14 },
-			{ team_id: 2, name: "Beta",  count: 16 },
+			{ team_id: 1, name: "Alpha", count: 0 },
+			{ team_id: 2, name: "Beta",  count: 5 },
 		]);
 		const res = await request(app).post("/audit/shifts/start").send(validStart);
+		expect(res.status).toBe(422);
+		expect(res.body.error).toMatch(/sem corredores/);
+		expect(res.body.error).toMatch(/Alpha/);
+	});
+
+	it("201 – inicia turno com qualquer quantidade de corredores > 0", async () => {
+		happyStart();
+		(shiftRepository.validateTeamsForAthlete as jest.Mock).mockResolvedValue([
+			{ team_id: 1, name: "Alpha", count: 3 },
+			{ team_id: 2, name: "Beta",  count: 20 },
+		]);
+		(shiftRepository.start as jest.Mock).mockResolvedValue(openShift);
+		const res = await request(app).post("/audit/shifts/start").send(validStart);
 		expect(res.status).toBe(201);
+		expect(res.body).toMatchObject({ id: 10, status: "in_progress" });
 	});
 });
 

@@ -160,6 +160,32 @@ main { height: auto !important; }
 .countdown-label { font-size: 12px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
 .countdown-timer { font-size: 30px; font-weight: 800; color: var(--vermelho); font-variant-numeric: tabular-nums; letter-spacing: 2px; }
 
+.stats-acoes { display: flex; align-items: center; gap: 12px; }
+
+.btn-pausar {
+    width: 220px;
+    box-sizing: border-box;
+    padding: 13px 28px;
+    background: #fff;
+    border: 2px solid var(--vermelho);
+    border-radius: 8px;
+    color: var(--vermelho);
+    font-size: 16px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn-pausar:hover:not(:disabled) { background: #fdecef; }
+.btn-pausar:disabled { opacity: 0.6; cursor: default; }
+/* estado retomar: destaca que a competição está pausada */
+.btn-pausar-retomar {
+    background: var(--vermelho);
+    border-color: var(--vermelho);
+    color: #fff;
+}
+.btn-pausar-retomar:hover:not(:disabled) { background: #b10033; }
+
 .btn-finalizar {
     width: 220px;
     box-sizing: border-box;
@@ -170,6 +196,7 @@ main { height: auto !important; }
     color: #fff;
     font-size: 16px;
     font-weight: 700;
+    white-space: nowrap;
     cursor: pointer;
     transition: background 0.15s;
 }
@@ -597,6 +624,139 @@ main { height: auto !important; }
     color: var(--vermelho);
     background: #fff5f5;
 }
+
+/* Modal exportação — estrutura base */
+.modal-export-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal-export-overlay.escondido { display: none; }
+
+.modal-export-conteudo {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px 30px;
+    width: 480px;
+    max-width: 92vw;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+}
+
+.modal-export-barra {
+    width: 48px;
+    height: 4px;
+    background: var(--vermelho);
+    border-radius: 2px;
+    margin: 0 auto 18px;
+}
+
+.modal-export-conteudo h2 {
+    font-size: 21px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 6px;
+    color: #1a1a1a;
+}
+
+.modal-export-desc {
+    font-size: 13px;
+    color: #888;
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.modal-export-secao { margin-bottom: 18px; }
+
+.modal-export-grupo-titulo {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #aaa;
+    margin-bottom: 10px;
+}
+
+.modal-export-fixas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.modal-export-fixas span {
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: #f0f0f0;
+    color: #888;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.modal-export-opcoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.modal-export-opcao {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.modal-export-opcao:hover { border-color: var(--vermelho); background: #fff5f8; }
+
+.modal-export-opcao input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--vermelho);
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.modal-export-acoes {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.modal-export-btn-cancelar,
+.modal-export-btn-confirmar {
+    flex: 1;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.modal-export-btn-cancelar {
+    background: #f3f3f3;
+    color: #555;
+}
+
+.modal-export-btn-cancelar:hover { background: #e8e8e8; }
+
+.modal-export-btn-confirmar {
+    background: var(--vermelho);
+    color: #fff;
+}
+
+.modal-export-btn-confirmar:hover { background: #b10033; }
+.modal-export-btn-confirmar:disabled { opacity: 0.6; cursor: default; }
 
 /* Modal editar turno */
 .modal-editar-overlay {

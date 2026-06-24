@@ -1,11 +1,12 @@
 // ─── Auth fetch com refresh automático ───────────────────────
 async function authFetch(url, options = {}) {
     const token = localStorage.getItem('accessToken')
+    const isFormData = options.body instanceof FormData
     const makeReq = (t) => fetch(url, {
         credentials: 'include',
         ...options,
         headers: {
-            'Content-Type': 'application/json',
+            ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
             'Authorization': `Bearer ${t}`,
             ...options.headers
         }
@@ -62,12 +63,16 @@ function parseTempo(str) {
     return h * 3600 + m * 60 + s
 }
 
+const cronometroModal = document.getElementById('cronometroModal')
+
 function iniciarTimer(inicial = 0) {
     segundos = inicial
     cronometro.textContent = formatarTempo(segundos)
+    if (cronometroModal) cronometroModal.textContent = formatarTempo(segundos)
     timerInterval = setInterval(() => {
         segundos++
         cronometro.textContent = formatarTempo(segundos)
+        if (cronometroModal) cronometroModal.textContent = formatarTempo(segundos)
     }, 1000)
 }
 
@@ -182,6 +187,28 @@ async function forcarEncerramento(conflictId) {
     })
 }
 
+async function uploadFotoParaEntidade(tipo, id, arquivo) {
+    const form = new FormData()
+    form.append('image', arquivo)
+    return authFetch(`/audit/${tipo}/${id}/image`, { method: 'PATCH', body: form })
+}
+
+function abrirLightbox(src) {
+    const lb = document.createElement('div')
+    lb.className = 'ocr-lightbox'
+    lb.innerHTML = `
+        <button class="ocr-lightbox-fechar" aria-label="Fechar">&times;</button>
+        <img src="${src}" alt="Foto ampliada">
+    `
+    const fechar = () => document.body.removeChild(lb)
+    lb.addEventListener('click', e => { if (e.target === lb) fechar() })
+    lb.querySelector('.ocr-lightbox-fechar').addEventListener('click', fechar)
+    document.addEventListener('keydown', function esc(e) {
+        if (e.key === 'Escape') { fechar(); document.removeEventListener('keydown', esc) }
+    })
+    document.body.appendChild(lb)
+}
+
 async function registrarCheckpoint(kmDistance) {
     const res = await authFetch(`/audit/shifts/${shiftId}/checkpoints`, {
         method: 'POST',
@@ -195,6 +222,13 @@ async function registrarCheckpoint(kmDistance) {
     }
 
     const cp = await res.json()
+
+    const arquivoFoto = checkpointFotoInput?.files?.[0]
+    if (arquivoFoto) {
+        await uploadFotoParaEntidade('checkpoints', cp.id, arquivoFoto)
+        if (checkpointFotoInput) checkpointFotoInput.value = ''
+    }
+
     const nomeOperadorAtual = document.getElementById('nomeOperador')?.textContent?.trim() || '—'
     checkpointsSessao.push({ id: cp.id, km: cp.distance, ts: new Date(cp.timestamp).getTime(), hora: new Date(cp.timestamp).toLocaleTimeString('pt-BR'), auditor: nomeOperadorAtual })
     inputKm.value = ''
@@ -368,12 +402,36 @@ if (btnCheckpointFoto && checkpointFotoInput) {
 }
 
 if (checkpointFotoInput && checkpointFotoPreview) {
-    checkpointFotoInput.addEventListener('change', () => {
+    checkpointFotoInput.addEventListener('change', async () => {
         const arquivo = checkpointFotoInput.files?.[0]
         if (!arquivo) return
         if (checkpointFotoUrl) URL.revokeObjectURL(checkpointFotoUrl)
         checkpointFotoUrl = URL.createObjectURL(arquivo)
         checkpointFotoPreview.innerHTML = `<img src="${checkpointFotoUrl}" alt="Foto do checkpoint">`
+        checkpointFotoPreview.querySelector('img')?.addEventListener('click', () => abrirLightbox(checkpointFotoUrl))
+
+        if (btnCheckpointFoto) btnCheckpointFoto.disabled = true
+        checkpointFotoPreview.classList.add('ocr-loading')
+        try {
+            const form = new FormData()
+            form.append('image', arquivo)
+            const res = await authFetch('/audit/ocr', { method: 'POST', body: form })
+            if (res && res.ok) {
+                const { ocr } = await res.json()
+                if (ocr && (ocr.distance != null || ocr.speed != null || ocr.time != null)) {
+                    if (ocr.distance != null && kmCheckpointModal)        kmCheckpointModal.value = ocr.distance
+                    if (ocr.speed    != null && velocidadeCheckpointModal) velocidadeCheckpointModal.value = ocr.speed
+                    if (ocr.time     != null && tempoCheckpointModal)      tempoCheckpointModal.value = ocr.time
+                } else {
+                    console.warn('[OCR] Valores não identificados — preencha manualmente')
+                }
+            } else {
+                console.warn('[OCR] API indisponível (status', res?.status, ') — preencha manualmente')
+            }
+        } finally {
+            checkpointFotoPreview.classList.remove('ocr-loading')
+            if (btnCheckpointFoto) btnCheckpointFoto.disabled = false
+        }
     })
 }
 
@@ -828,15 +886,46 @@ if (btnFinalizarTurnoFoto && finalizarTurnoFotoInput) {
     btnFinalizarTurnoFoto.addEventListener('click', () => finalizarTurnoFotoInput.click())
 }
 
+const ocrResultadoTurno = document.getElementById('ocrResultadoTurno')
+const ocrSpeedEl        = document.getElementById('ocrSpeed')
+const ocrDistanceEl     = document.getElementById('ocrDistance')
+const ocrPaceEl         = document.getElementById('ocrPace')
+const ocrTimeEl         = document.getElementById('ocrTime')
+
+function exibirOcrTurno(ocr) {
+    if (!ocrResultadoTurno) return
+    if (!ocr) { ocrResultadoTurno.classList.add('escondido'); return }
+    if (ocrSpeedEl)    ocrSpeedEl.textContent    = ocr.speed    != null ? `${ocr.speed} km/h` : '—'
+    if (ocrDistanceEl) ocrDistanceEl.textContent = ocr.distance != null ? `${ocr.distance} km` : '—'
+    if (ocrPaceEl)     ocrPaceEl.textContent     = ocr.pace     ?? '—'
+    if (ocrTimeEl)     ocrTimeEl.textContent     = ocr.time     ?? '—'
+    ocrResultadoTurno.classList.remove('escondido')
+}
+
 if (finalizarTurnoFotoInput && finalizarTurnoFotoPreview) {
-    finalizarTurnoFotoInput.addEventListener('change', () => {
+    finalizarTurnoFotoInput.addEventListener('change', async () => {
         const arquivo = finalizarTurnoFotoInput.files?.[0]
         if (!arquivo) return
         if (finalizarTurnoFotoUrl) URL.revokeObjectURL(finalizarTurnoFotoUrl)
         finalizarTurnoFotoUrl = URL.createObjectURL(arquivo)
         finalizarTurnoFotoPreview.innerHTML =
             `<img src="${finalizarTurnoFotoUrl}" alt="Foto da finalização do turno">`
+        finalizarTurnoFotoPreview.querySelector('img')?.addEventListener('click', () => abrirLightbox(finalizarTurnoFotoUrl))
         if (btnFinalizarTurnoFoto) btnFinalizarTurnoFoto.textContent = 'Tirar nova foto'
+
+        if (!shiftId) return
+        if (btnFinalizarTurnoFoto) btnFinalizarTurnoFoto.disabled = true
+        finalizarTurnoFotoPreview.classList.add('ocr-loading')
+        try {
+            const res = await uploadFotoParaEntidade('shifts', shiftId, arquivo)
+            if (res && res.ok) {
+                const data = await res.json()
+                exibirOcrTurno(data.ocr)
+            }
+        } finally {
+            finalizarTurnoFotoPreview.classList.remove('ocr-loading')
+            if (btnFinalizarTurnoFoto) btnFinalizarTurnoFoto.disabled = false
+        }
     })
 }
 
@@ -886,6 +975,7 @@ function abrirModalTurno() {
 function fecharModalTurno() {
     if (modalTurno) modalTurno.classList.add('escondido')
     limparFotoFinalizarTurno()
+    exibirOcrTurno(null)
 }
 
 if (modalTurno) {
