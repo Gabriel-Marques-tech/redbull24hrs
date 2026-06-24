@@ -1744,14 +1744,20 @@ Na sprint 4, com a integração ponta a ponta dos fluxos de auditoria, gerência
 ## 3.2. Arquitetura (sprints 1 a 5)
 
 ---
-A seção de Arquitetura apresenta a estrutura organizacional e a modelagem dos principais componentes do sistema desenvolvidos ao longo das sprints 1 a 5. Por meio dos diagramas arquiteturais, diagramas de classes e diagramas de casos de uso, é possível compreender como os módulos da aplicação se relacionam, quais são as responsabilidades de cada camada e como ocorre o fluxo de dados entre os componentes. Esses artefatos auxiliam na documentação técnica do projeto, facilitando o entendimento da solução, a manutenção do software e a evolução contínua da arquitetura proposta.
+A seção de Arquitetura apresenta os principais artefatos utilizados para representar a estrutura e o funcionamento da solução desenvolvida ao longo das sprints 1 a 5. Por meio dos diagramas de arquitetura, diagramas de classes arquiteturais e diagramas de casos de uso, é possível compreender a organização dos módulos da aplicação, as responsabilidades atribuídas a cada componente e as interações estabelecidas entre as diferentes camadas do sistema.
+
+Esses diagramas documentam tanto a visão estrutural quanto a visão funcional da solução, evidenciando o fluxo de processamento das requisições, a aplicação das regras de negócio e os mecanismos de persistência de dados. Dessa forma, os artefatos apresentados contribuem para a validação da arquitetura implementada, facilitam a comunicação entre os membros da equipe e servem como referência para futuras atividades de manutenção e evolução do software.
 
 ### 3.2.1. Diagramas de Arquitetura 
 
 ---
-Os diagramas de arquitetura representam a estrutura organizacional do sistema, demonstrando como os componentes, camadas e módulos da aplicação se relacionam entre si. Eles auxiliam na visualização do fluxo de dados, das responsabilidades de cada camada e da comunicação entre os elementos da arquitetura, facilitando o entendimento, manutenção e evolução do software.
+Os diagramas de arquitetura apresentados nesta seção detalham a organização dos principais módulos da aplicação, evidenciando a comunicação entre controladores, serviços, repositórios e banco de dados em cada funcionalidade do sistema. Cada diagrama representa um contexto específico da solução, permitindo visualizar o fluxo das requisições, o processamento das regras de negócio e a persistência das informações.
+
+A divisão por módulos facilita a compreensão da arquitetura implementada, destacando as responsabilidades de cada componente e as dependências existentes entre as camadas da aplicação. Dessa forma, os diagramas servem como apoio para a manutenção, evolução e validação da estrutura arquitetural do sistema, além de demonstrar a aderência ao padrão de separação de responsabilidades adotado durante o desenvolvimento.
 
 ALERTAS
+
+O diagrama de arquitetura do módulo de Alertas apresenta o fluxo responsável pela geração, consulta e gerenciamento de notificações do sistema. A arquitetura evidencia a comunicação entre as camadas de controle, serviço e persistência, garantindo que eventos relevantes sejam identificados, processados e disponibilizados aos usuários de forma organizada e rastreável.
 
 <div align="center">
   <sub>Imagem 9 - Diagrama de Arquitetura - ALERTAS </sub><br>
@@ -1762,6 +1768,8 @@ ALERTAS
 
 AUTENTICAÇÃO
 
+O diagrama de Autenticação demonstra o fluxo de validação de credenciais e controle de acesso à aplicação. A estrutura apresentada evidencia a interação entre controlador, serviço de autenticação e camada de persistência, assegurando que apenas usuários autorizados possam acessar as funcionalidades administrativas do sistema.
+
 <div align="center">
   <sub>Imagem 10 - Diagrama de Arquitetura - AUTENTICAÇÃO </sub><br>
   <img src= "./assets/diagramas_arquitetura/auth.svg" width="100%" alt="Diagrama de Arquitetura - 2"><br>
@@ -1770,6 +1778,8 @@ AUTENTICAÇÃO
 </div>
 
 DASHBOARD 
+
+O diagrama de Dashboard representa a arquitetura responsável pela consolidação e disponibilização das principais informações da competição. Por meio da integração entre diferentes serviços e repositórios, o módulo centraliza indicadores e dados operacionais, fornecendo uma visão geral atualizada para os administradores da plataforma.
 
 <div align="center">
   <sub>Imagem 11 - Diagrama de Arquitetura - DASHBOARD </sub><br>
@@ -1780,6 +1790,8 @@ DASHBOARD
 
 EVENTO HISTÓRICO
 
+O diagrama de Evento Histórico apresenta a arquitetura utilizada para armazenar e consultar registros históricos relacionados às operações do sistema. Essa estrutura possibilita a rastreabilidade de ações e eventos ocorridos durante a execução da aplicação, contribuindo para auditorias e análises posteriores.
+
 <div align="center">
   <sub>Imagem 12 - Diagrama de Arquitetura - EVENTO HISTÓRICO </sub><br>
   <img src= "./assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de Arquitetura - 4"><br>
@@ -1788,6 +1800,8 @@ EVENTO HISTÓRICO
 </div>
 
 EVENTOS
+
+O diagrama de Eventos demonstra o fluxo responsável pelo gerenciamento dos eventos cadastrados na plataforma. A arquitetura contempla operações de criação, consulta, atualização e remoção, garantindo o tratamento adequado das regras de negócio associadas às competições e atividades monitoradas pelo sistema.
 
 <div align="center">
   <sub>Imagem 13 - Diagrama de Arquitetura - EVENTOS </sub><br>
@@ -1798,6 +1812,8 @@ EVENTOS
 
 EXPORTAÇÃO
 
+O diagrama de Exportação representa a arquitetura utilizada para geração e disponibilização de relatórios e arquivos de saída. O fluxo demonstra como os dados são coletados, processados e convertidos em formatos adequados para compartilhamento e análise externa, preservando a consistência das informações exportadas.
+
 <div align="center">
   <sub>Imagem 14 - Diagrama de Arquitetura - EXPORTAÇÃO </sub><br>
   <img src= "./assets/diagramas_arquitetura/export.svg" width="100%" alt="Diagrama de Arquitetura - 6"><br>
@@ -1806,6 +1822,8 @@ EXPORTAÇÃO
 </div>
 
 HISTÓRICO
+
+O diagrama de Histórico evidencia a estrutura responsável pela consulta e recuperação de registros armazenados ao longo da utilização da plataforma. Esse módulo permite a visualização de informações passadas, contribuindo para análises operacionais e acompanhamento da evolução dos dados da competição.
 
 <div align="center">
   <sub>Imagem 15 - Diagrama de Arquitetura - HISTÓRICO </sub><br>
@@ -1816,6 +1834,8 @@ HISTÓRICO
 
 LOGS
 
+O diagrama de Logs apresenta a arquitetura destinada ao registro e monitoramento das operações executadas pelo sistema. A estrutura permite o armazenamento de informações relacionadas a ações, sincronizações e eventos relevantes, auxiliando processos de auditoria, rastreabilidade e diagnóstico de problemas.
+
 <div align="center">
   <sub>Imagem 16 - Diagrama de Arquitetura - LOGS </sub><br>
   <img src= "./assets/diagramas_arquitetura/logs.svg" width="100%" alt="Diagrama de Arquitetura - 8"><br>
@@ -1824,6 +1844,8 @@ LOGS
 </div>
 
 MÉTRICAS
+
+O diagrama de Métricas demonstra o fluxo de coleta, processamento e disponibilização de indicadores utilizados para acompanhamento do desempenho da competição. A arquitetura integra diferentes fontes de dados para fornecer informações quantitativas que apoiam a tomada de decisão e o monitoramento operacional.
 
 <div align="center">
   <sub>Imagem 17 - Diagrama de Arquitetura - MÉTRICAS </sub><br>
@@ -1834,6 +1856,8 @@ MÉTRICAS
 
 EQUIPES
 
+O diagrama de Equipes representa a arquitetura responsável pelo gerenciamento das equipes participantes da competição. O fluxo contempla operações de cadastro, consulta e manutenção dos dados das equipes, garantindo a correta associação entre competições, atletas e demais informações relacionadas.
+
 <div align="center">
   <sub>Imagem 18 - Diagrama de Arquitetura - EQUIPES </sub><br>
   <img src= "./assets/diagramas_arquitetura/teams.svg" width="100%" alt="Diagrama de Arquitetura - 10"><br>
@@ -1842,6 +1866,8 @@ EQUIPES
 </div>
 
 TURNOS
+
+O diagrama de Turnos apresenta a estrutura utilizada para administrar os períodos de participação dos atletas durante a competição. A arquitetura assegura o controle das informações relacionadas à escala, organização e acompanhamento dos turnos, contribuindo para a correta gestão operacional do evento.
 
 <div align="center">
   <sub>Imagem 19 - Diagrama de Arquitetura - TURNOS </sub><br>
@@ -1853,7 +1879,9 @@ TURNOS
 #### 3.2.1.1. Diagrama de Classes Arquiteturais 
 
 ---
-A seção de Diagramas de Classes Arquiteturais apresenta a modelagem estrutural dos principais módulos do sistema, evidenciando as classes, responsabilidades e relacionamentos existentes entre os componentes da aplicação. Esses diagramas auxiliam na compreensão da organização interna do software, demonstrando como entidades, serviços, controladores e repositórios interagem para garantir o funcionamento adequado das funcionalidades implementadas.
+Os Diagramas de Classes Arquiteturais apresentados nesta seção descrevem a estrutura interna dos principais módulos da aplicação, evidenciando as classes que compõem cada funcionalidade, suas responsabilidades e os relacionamentos estabelecidos entre os componentes do sistema. Os diagramas foram organizados de acordo com os módulos implementados, permitindo visualizar a separação das camadas de controle, serviço e persistência adotada pela arquitetura da solução.
+
+Por meio dessa representação, é possível compreender como as requisições são processadas, como as regras de negócio são executadas e como ocorre o acesso aos dados da aplicação. Além disso, os diagramas auxiliam na identificação das dependências entre os componentes, contribuindo para a manutenção, evolução e validação da arquitetura implementada.
 
 ALERTAS
 
@@ -1884,6 +1912,8 @@ AUTENTICAÇÃO
 
 DASHBOARD
 
+O diagrama de classes arquiteturais do módulo Dashboard apresenta os principais componentes responsáveis pela consolidação e exibição das informações da competição. O modelo evidencia a interação entre controladores, serviços e repositórios utilizados para coletar, processar e disponibilizar métricas e indicadores relevantes aos usuários administrativos da plataforma.
+
 <div align="center">
   <sub>Imagem 23 - Diagrama de Classes Arquiteturais - DASHBOARD </sub><br>
   <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 4"><br>
@@ -1893,6 +1923,8 @@ DASHBOARD
 
 EVENTOS
 
+O diagrama de classes arquiteturais do módulo Events representa a estrutura responsável pelo gerenciamento dos eventos da aplicação. São demonstradas as relações entre as classes que realizam o tratamento das regras de negócio, acesso aos dados e manipulação das entidades relacionadas às competições, esteiras e demais elementos vinculados aos eventos monitorados pelo sistema.
+
 <div align="center">
   <sub>Imagem 24 - Diagrama de Classes Arquiteturais - EVENTOS </sub><br>
   <img src= "./assets/diagramas_arquiteturais/EVENTS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 5"><br>
@@ -1901,6 +1933,8 @@ EVENTOS
 </div>
 
 EXPORTAÇÃO
+
+O diagrama de classes arquiteturais do módulo History apresenta a organização das classes envolvidas na consulta e recuperação de registros históricos. A modelagem evidencia como os componentes colaboram para disponibilizar informações armazenadas anteriormente, garantindo rastreabilidade e suporte às análises operacionais realizadas pelos usuários.
 
 <div align="center">
   <sub>Imagem 25 - Diagrama de Classes Arquiteturais - EXPORTAÇÃO </sub><br>
@@ -1920,6 +1954,8 @@ HISTÓRICO
 
 LOGS
 
+O diagrama de classes arquiteturais do módulo Logs demonstra a estrutura responsável pelo registro e gerenciamento dos logs da aplicação. As relações entre controladores, serviços e repositórios evidenciam o fluxo utilizado para armazenar, consultar e sincronizar informações de auditoria, contribuindo para a rastreabilidade das operações executadas no sistema.
+
 <div align="center">
   <sub>Imagem 27 - Diagrama de Classes Arquiteturais - LOGS </sub><br>
   <img src= "./assets/diagramas_arquiteturais/LOGS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 8"><br>
@@ -1929,6 +1965,8 @@ LOGS
 
 MÉTRICAS
 
+O diagrama de classes arquiteturais do módulo Teams representa os componentes responsáveis pelo gerenciamento das equipes e atletas participantes da competição. A modelagem destaca as relações entre as entidades e os mecanismos de persistência utilizados para garantir a integridade das informações e o correto funcionamento das operações de cadastro e consulta.
+
 <div align="center">
   <sub>Imagem 28 - Diagrama de Classes Arquiteturais - MÉTRICAS </sub><br>
   <img src= "./assets/diagramas_arquiteturais/METRICS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 9"><br>
@@ -1937,6 +1975,8 @@ MÉTRICAS
 </div>
 
 EQUIPES
+
+O diagrama de classes arquiteturais do módulo Turns apresenta a estrutura utilizada para controlar os turnos dos atletas durante a competição. O modelo evidencia as classes responsáveis pelo gerenciamento das escalas, regras de negócio e persistência dos dados, assegurando a correta organização e acompanhamento dos períodos de participação dos corredores.
 
 <div align="center">
   <sub>Imagem 29 - Diagrama de Classes Arquiteturais - TEAMS </sub><br>
@@ -2078,8 +2118,8 @@ Não há fluxos alternativos explícitos neste diagrama. Falhas de validação n
 O Diagrama de Sequência de Equipes cobre quatro fluxos: cadastro de equipe, cadastro individual de atletas, consulta de equipe com seus atletas e consulta de quilometragem acumulada por equipe.
 
 <div align="center">
-  <sub>Imagem 34 - Diagrama de Sequência: Equipes</sub>
-    <br><img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
+  <sub>Imagem 34 - Diagrama de Sequência: Equipes</sub><br>
+  <img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026 </sub>
   <br><br><br>
 </div>
@@ -2187,7 +2227,7 @@ O Diagrama de Sequência do Dashboard cobre dois fluxos: o polling automático d
 
 <div align="center">
   <sub>Imagem 38 - Diagrama de Sequência: Dashboard</sub><br>
-  <img src="assets/diagrama_sequencia/Dashboard_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do painel de controle (dashboard)"><br>
+  <img src="./assets/diagrama_sequencia/Dashboard_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do painel de controle (dashboard)"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
