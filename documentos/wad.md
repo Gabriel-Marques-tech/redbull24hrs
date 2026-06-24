@@ -5168,7 +5168,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 <div align="center">
   <sub>Imagem 88 - Gráfico SUS - Pergunta 8</sub><br>
   <img src="./assets/teste-sus/grafico_pergunta_8.png" width="100%" alt="Gráfico SUS - Pergunta 8"><br>
-  <sub>Fonte: Teste feito e aplicado pelo grupo utilizando a plataforma Google Forms, 2026.</sub>
+  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
   <br><br><br>
 </div>
 
