@@ -5154,14 +5154,14 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 <div align="center">
   <sub>Imagem 86 - Gráfico SUS - Pergunta 6</sub><br>
   <img src="./assets/teste-sus/grafico_pergunta_6.png" width="100%" alt="Gráfico SUS - Pergunta 6"><br>
-  <sub>Fonte:Elaborado pelo grupo, 2026.</sub>
+  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
   <sub>Imagem 87 - Gráfico SUS - Pergunta 7</sub><br>
   <img src="./assets/teste-sus/grafico_pergunta_7.png" width="100%" alt="Gráfico SUS - Pergunta 7"><br>
-  <sub>Fonte: Teste feito e aplicado pelo grupo utilizando a plataforma Google Forms, 2026.</sub>
+  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
   <br><br><br>
 </div>
 
