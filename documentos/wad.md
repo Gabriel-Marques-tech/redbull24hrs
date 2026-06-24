@@ -1676,7 +1676,7 @@ Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo
 Na sprint 1, os RNFs foram definidos em nível conceitual, com critérios mensuráveis (SMART). Nesta sprint, com a implementação do backend, cada eixo da ISO/IEC 25010 evoluiu para **decisões técnicas concretas e verificáveis no código**. O quadro a seguir registra, por RNF, a decisão de implementação adotada e a evidência correspondente no repositório. Os RNFs ligados predominantemente ao frontend ou a processos organizacionais têm sua evolução estrutural indicada e a verificação final prevista para as próximas sprints, mantendo a rastreabilidade.
 
 <div align = "center">
-  <sub> Quadro 16.1 - Evolução dos RNFs para decisões técnicas </sub><br>
+  <sub> Quadro 17 - Evolução dos RNFs para decisões técnicas </sub><br>
 
 | RNF | Eixo | Decisão técnica concreta nesta sprint | Evidência no código |
 | :-- | :--- | :------------------------------------ | :------------------ |
@@ -1711,7 +1711,7 @@ Na sprint 1, os RNFs foram definidos em nível conceitual, com critérios mensur
 Na sprint 4, com a integração ponta a ponta dos fluxos de auditoria, gerência e estatísticas, os RNFs pendentes de aferição foram atualizados. O quadro a seguir apresenta, para cada RNF com evolução nesta sprint, a atualização técnica realizada, a **métrica de verificação** com valor-alvo concreto e o **procedimento de verificação** — forma objetiva de atestar o cumprimento do critério — mantendo formato uniforme entre todos os eixos.
 
 <div align = "center">
-  <sub> Quadro 16.2 - Evolução dos RNFs: Sprint 4 — métricas e procedimentos de verificação </sub><br>
+  <sub> Quadro 18 - Evolução dos RNFs: Sprint 4 — métricas e procedimentos de verificação </sub><br>
 
 | RNF | Eixo | Atualização Sprint 4 | Métrica de Verificação | Procedimento de Verificação | Evidência |
 | :-- | :--- | :------------------- | :--------------------- | :-------------------------- | :-------- |
@@ -1971,7 +1971,7 @@ O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 H
 ---
 
 <div align = "center">
-  <sub> Quadro 17 - Atores de Casos de Uso </sub><br>
+  <sub> Quadro 19 - Atores de Casos de Uso </sub><br>
 
 | Ator                      | Tipo                                | Descrição                                                                                                                                                                                                                                                                                                                                          |
 | ------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1987,7 +1987,7 @@ O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 H
 Os casos de uso foram identificados a partir dos requisitos funcionais da seção 3.1.1 e do escopo do MVP descrito no TAPI. Cada caso representa um caminho até um valor concreto entregue ao usuário, conforme orientação do guia: _"a use case is all the ways of using a system to achieve a goal of a particular user"_.
 
 <div align = "center">
-  <sub> Quadro 18 - Casos de Uso </sub><br>
+  <sub> Quadro 20 - Casos de Uso </sub><br>
 
 | Caso de uso                       | Ator primário                   | Objetivo                                                                                                                                                                                | Pré-requisitos                                                                      | Atores secundários                                                          | Pós-requisitos                                                                                           |
 | --------------------------------- | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
@@ -2012,7 +2012,7 @@ Como a esteira é zerada a cada troca de corredor (dinâmica do evento), a quilo
 Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: **`<<include>>`** representa comportamento _obrigatório_ e reutilizável que sempre é executado pelo caso-base; **`<<extend>>`** representa comportamento _opcional_ que ocorre apenas em condições específicas, sem que o caso-base precise ter conhecimento do caso estensor. Como recomenda Jacobson et al.[⁹](#8-referências) na prática _Structured Use-Case Modeling_, esses recursos foram usados com parcimônia — apenas onde tornam o modelo mais claro, e não para fragmentar o diagrama em micro-fluxos.
 
 <div align = "center">
-  <sub> Quadro 19 - Relacionamentos include e extend </sub><br>
+  <sub> Quadro 21 - Relacionamentos include e extend </sub><br>
 
 | Relacionamento | Caso-base                 | Caso relacionado                           | Justificativa                                                                                                                                                                                                                                                                                                              |
 | -------------- | ------------------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -3787,7 +3787,7 @@ O schema resultante possui constraints de estado, período, quilometragem e prop
 Entre os principais conectivos lógicos utilizados, temos:
  
 <div align="center">
-  <sub> Quadro 25 - Conectivos Lógicos </sub><br>
+  <sub> Quadro 22 - Conectivos Lógicos </sub><br>
 
 | Tipos de conectivos lógicos | Representação     |
 | ---------------------------- | ------------------- |
@@ -3824,7 +3824,7 @@ ON CONFLICT (sync_id) WHERE sync_id IS NOT NULL DO NOTHING
 
 <br>
 <div align="center">
-  <sub> Quadro 26 - Lógica Proposicional: 1 </sub><br>
+  <sub> Quadro 23 - Lógica Proposicional: 1 </sub><br>
 
 | | |
 | :--- | :--- |
@@ -3854,7 +3854,7 @@ ORDER BY total_km DESC
 
 <br>
 <div align="center">
-  <sub> Quadro 27 - Lógica Proposicional: 2 </sub><br>
+  <sub> Quadro 24 - Lógica Proposicional: 2 </sub><br>
 
 | | |
 |---|---|
@@ -3884,7 +3884,7 @@ WHERE t.event_id = $1
 
 <br>
 <div align="center">
-  <sub> Quadro 28 - Lógica Proposicional: 3 </sub><br>
+  <sub> Quadro 25 - Lógica Proposicional: 3 </sub><br>
 
 | | |
 |---|---|
@@ -3936,7 +3936,7 @@ RETURNING *
 
 <br>
 <div align="center">
-  <sub> Quadro 29 - Lógica Proposicional: 4 </sub><br>
+  <sub> Quadro 26 - Lógica Proposicional: 4 </sub><br>
 
 | | |
 | :--- | :--- |
@@ -4215,7 +4215,7 @@ O frontend nunca é fonte de verdade para autorização: cada tela EJS renderiza
 O quadro abaixo mapeia os grupos de rotas ao nível de autorização exigido:
 
 <div align = "center">
-  <sub> Quadro 34 - Mapeamento de autorização por grupo de rota </sub><br>
+  <sub> Quadro 27 - Mapeamento de autorização por grupo de rota </sub><br>
 
 | Nível de Acesso | Rotas / Endpoints | Middleware |
 | :-------------- | :---------------- | :--------- |
@@ -4311,7 +4311,7 @@ Os endpoints mapeados nesta matriz estão implementados e cobertos por testes au
 > - **Sprint 5** — contrato definido (método, path, RN), implementação planejada para a sprint 5 (ver Quadro 31).
 
 <div align = "center">
-  <sub> Quadro 30 - Matriz de Rastreabilidade (RTM) </sub><br>
+  <sub> Quadro 28 - Matriz de Rastreabilidade (RTM) </sub><br>
 
 Linhas sem marcação na coluna *Status* = **Implementado** na sprint 4.
 
@@ -4380,7 +4380,7 @@ Linhas sem marcação na coluna *Status* = **Implementado** na sprint 4.
 Com a integração ponta a ponta realizada na sprint 4, todos os endpoints da RTM estão implementados e cobertos por testes, com exceção de **um único endpoint planejado para a sprint 5**: a validação de aptidão de equipe (RF003). O contrato (método, path e RN governante) já está definido para que a implementação seja uma evolução incremental, sem alterar os endpoints existentes.
 
 <div align = "center">
-  <sub> Quadro 31 - Endpoint planejado para a sprint 5 </sub><br>
+  <sub> Quadro 29 - Endpoint planejado para a sprint 5 </sub><br>
 
 | RF | Endpoint planejado | RN | Status | Descrição e plano de implementação |
 |----|--------------------|----|--------|------------------------------------|
@@ -5412,7 +5412,7 @@ A concorrência enfrentada pela RedRun não se concentra em um produto equivalen
 **Concorrentes indiretos.** Em uma camada distinta operam as **plataformas comerciais de gestão de eventos** (como Sympla, Even3 e Eventbrite) e as **soluções de cronometragem esportiva por chip RFID** (amplamente usadas em corridas de rua). As primeiras são maduras e escaláveis, mas resolvem inscrição, bilheteria e credenciamento — não o registro de desempenho em tempo real. As segundas pressupõem um percurso físico com pontos de captura, premissa que não se aplica a uma esteira estática, onde não há deslocamento espacial a ser cronometrado. Nenhuma das duas modela a semântica central do evento: a sessão de corrida em uma esteira zerada a cada troca de corredor.
  
 <div align="center">
-  <sub> Quadro 32 - Análise comparativa da concorrência </sub><br>
+  <sub> Quadro 30 - Análise comparativa da concorrência </sub><br>
 
 | Critério | Método manual (prancheta) | Dispositivos vestíveis | Plataformas genéricas / chip RFID | **RedRun** |
 | :--- | :---: | :---: | :---: | :---: |
