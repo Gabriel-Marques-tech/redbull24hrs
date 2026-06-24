@@ -7,6 +7,10 @@ main { height: auto !important; }
     padding-bottom: 60px;
 }
 
+.etapas-estatisticas {
+    display: none !important;
+}
+
 /* topo */
 .stats-topo {
     display: flex;
