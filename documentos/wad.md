@@ -5102,98 +5102,150 @@ Para cada resposta, é aplicada a seguinte lógica [²⁷](#8-referências):
 A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score final de cada participante. A média entre todos os participantes representa o score SUS do sistema. A pontuação média do SUS é 68, fazendo com que uma pontuação acima ou abaixo da média forneça uma visão imediata da usabilidade geral da solução de design do projeto. [²⁷](#8-referências).
 
 
-**Resultados individuais:**
-
+## Respostas por Participante
+ 
+### Testador: Enzo Braga
+**Perfil:** Estudante de Ciência da Computação
+ 
+| # | Afirmação | Nota |
+|---|-----------|------|
+| 1 | Eu acho que gostaria de usar esse sistema com frequência. | 4 |
+| 2 | Eu acho o sistema desnecessariamente complexo. | 2 |
+| 3 | Eu achei o sistema fácil de usar. | 3 |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema. | 3 |
+| 5 | Eu acho que as várias funções do sistema estão muito bem integradas. | 4 |
+| 6 | Eu acho que o sistema apresenta muita inconsistência. | 2 |
+| 7 | Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente. | 3 |
+| 8 | Eu achei o sistema atrapalhado de usar. | 2 |
+| 9 | Eu me senti confiante ao usar o sistema. | 4 |
+| 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 2 |
+ 
+**Score SUS: 72,5**
+ 
+---
+ 
+### Testador: Lucas Levi
+**Perfil:** Estudante de Engenharia da Computação
+ 
+| # | Afirmação | Nota |
+|---|-----------|------|
+| 1 | Eu acho que gostaria de usar esse sistema com frequência. | 2 |
+| 2 | Eu acho o sistema desnecessariamente complexo. | 4 |
+| 3 | Eu achei o sistema fácil de usar. | 2 |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema. | 4 |
+| 5 | Eu acho que as várias funções do sistema estão muito bem integradas. | 2 |
+| 6 | Eu acho que o sistema apresenta muita inconsistência. | 3 |
+| 7 | Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente. | 2 |
+| 8 | Eu achei o sistema atrapalhado de usar. | 4 |
+| 9 | Eu me senti confiante ao usar o sistema. | 2 |
+| 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 4 |
+ 
+**Score SUS: 27,5**
+ 
+---
+ 
+### Testador: Paulo Roberto
+**Perfil:** Estudante de Engenharia da Computação
+ 
+| # | Afirmação | Nota |
+|---|-----------|------|
+| 1 | Eu acho que gostaria de usar esse sistema com frequência. | 3 |
+| 2 | Eu acho o sistema desnecessariamente complexo. | 3 |
+| 3 | Eu achei o sistema fácil de usar. | 3 |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema. | 3 |
+| 5 | Eu acho que as várias funções do sistema estão muito bem integradas. | 3 |
+| 6 | Eu acho que o sistema apresenta muita inconsistência. | 3 |
+| 7 | Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente. | 3 |
+| 8 | Eu achei o sistema atrapalhado de usar. | 2 |
+| 9 | Eu me senti confiante ao usar o sistema. | 3 |
+| 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 3 |
+ 
+**Score SUS: 52,5**
+ 
+---
+ 
+### Testadora: Laís Victoria
+**Perfil:** Estudante de Ciência da Computação
+ 
+| # | Afirmação | Nota |
+|---|-----------|------|
+| 1 | Eu acho que gostaria de usar esse sistema com frequência. | 4 |
+| 2 | Eu acho o sistema desnecessariamente complexo. | 2 |
+| 3 | Eu achei o sistema fácil de usar. | 4 |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema. | 2 |
+| 5 | Eu acho que as várias funções do sistema estão muito bem integradas. | 4 |
+| 6 | Eu acho que o sistema apresenta muita inconsistência. | 2 |
+| 7 | Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente. | 3 |
+| 8 | Eu achei o sistema atrapalhado de usar. | 2 |
+| 9 | Eu me senti confiante ao usar o sistema. | 4 |
+| 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 2 |
+ 
+**Score SUS: 77,5**
+ 
+---
+ 
+### Testador: Pedro Negri
+**Perfil:** Estudante de Ciência da Computação
+ 
+| # | Afirmação | Nota |
+|---|-----------|------|
+| 1 | Eu acho que gostaria de usar esse sistema com frequência. | 4 |
+| 2 | Eu acho o sistema desnecessariamente complexo. | 2 |
+| 3 | Eu achei o sistema fácil de usar. | 4 |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema. | 2 |
+| 5 | Eu acho que as várias funções do sistema estão muito bem integradas. | 4 |
+| 6 | Eu acho que o sistema apresenta muita inconsistência. | 2 |
+| 7 | Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente. | 4 |
+| 8 | Eu achei o sistema atrapalhado de usar. | 2 |
+| 9 | Eu me senti confiante ao usar o sistema. | 4 |
+| 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 2 |
+ 
+**Score SUS: 75,0**
+ 
+---
+ 
+### Testador: Valter Lima
+**Perfil:** Estudante de Sistemas da Informação
+ 
+| # | Afirmação | Nota |
+|---|-----------|------|
+| 1 | Eu acho que gostaria de usar esse sistema com frequência. | 3 |
+| 2 | Eu acho o sistema desnecessariamente complexo. | 3 |
+| 3 | Eu achei o sistema fácil de usar. | 2 |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema. | 4 |
+| 5 | Eu acho que as várias funções do sistema estão muito bem integradas. | 3 |
+| 6 | Eu acho que o sistema apresenta muita inconsistência. | 3 |
+| 7 | Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente. | 2 |
+| 8 | Eu achei o sistema atrapalhado de usar. | 3 |
+| 9 | Eu me senti confiante ao usar o sistema. | 2 |
+| 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 4 |
+ 
+**Score SUS: 37,5**
+ 
+---
+ 
+## Consolidação dos Resultados
+ 
 | Participante | Score SUS | Classificação |
 |---|---|---|
-| 1- Enzo Braga | 100,0 | Melhor imaginável |
-| 2- Lucas Levi | 75,0 | Bom |
-| 3- Paulo Roberto | 87,5 | Excelente |
-| 4- Lais Victoria | 85,0 | Excelente |
-| 5- Pedro Negri | 70,0 | Bom |
-| 6- Valter Lima | 82,5 | Bom |
+| Enzo Braga | 72,5 | Bom |
+| Lucas Levi | 27,5 | Inaceitável |
+| Paulo Roberto | 52,5 | OK / Marginal |
+| Laís Victoria | 77,5 | Bom |
+| Pedro Negri | 75,0 | Bom |
+| Valter Lima | 37,5 | Ruim |
+| **Média final** | **57,1** | **OK / Marginal** |
+ 
+---
+ 
+## Análise dos Resultados
+ 
+O score médio de **57,1** posiciona o RedRun abaixo da média de referência do SUS (68) [²⁸](#8-referências), o que é coerente com os problemas identificados durante o teste de guerrilha. A variação entre os scores de 27,5 a 77,5,  indica que a experiência do usuário é bastante assimétrica: participantes que navegaram com mais naturalidade pelo fluxo de gerente, como Laís Victoria (77,5) e Pedro Negri (75,0), avaliaram o sistema de forma positiva; já os que enfrentaram barreiras no fluxo de auditoria ou na seleção de perfil, como Lucas Levi (27,5) e Valter Lima (37,5), reportaram dificuldades significativas que impactaram diretamente sua percepção de usabilidade.
+ 
+Os dois problemas classificados como **catastróficos** no teste de guerrilha — o fluxo de auditoria pouco intuitivo e a ausência de documentação contextual são os principais responsáveis pela queda do score médio abaixo de 68. Eles afetaram diretamente quatro dos seis participantes (Enzo, Lucas, Paulo Roberto e Valter Lima), impactando a dimensão mais crítica do sistema: o registro da quilometragem durante o evento.
+ 
+Por outro lado, o sistema apresenta aspectos bem avaliados de forma consistente, como a integração das funcionalidades de gerente, a validação de CPF elogiada por dois testadores e a estabilidade geral da aplicação. Esses pontos são refletidos nos scores mais altos e indicam que a base do sistema é funcional e os ajustes necessários são localizados, porém estratégicos.
 
-
-**Score médio: 83,3**
-
-<div align="center">
-  <sub>Imagem 81 - Gráfico SUS - Pergunta 1</sub><br>
-  <img src="./assets/teste-sus/grafico_pergunta_1.png" width="100%" alt="Gráfico SUS - Pergunta 1"><br>
-  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-<div align="center">
-  <sub>Imagem 82 - Gráfico SUS - Pergunta 2</sub><br>
-  <img src="./assets/teste-sus/grafico_pergunta_2.png" width="100%" alt="Gráfico SUS - Pergunta 2"><br>
-  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-<div align="center">
-  <sub>Imagem 83 - Gráfico SUS - Pergunta 3</sub><br>
-  <img src="./assets/teste-sus/grafico_pergunta_3.png" width="100%" alt="Gráfico SUS - Pergunta 3"><br>
-  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-<div align="center">
-  <sub>Imagem 84 - Gráfico SUS - Pergunta 4</sub><br>
-  <img src="./assets/teste-sus/grafico_pergunta_4.png" width="100%" alt="Gráfico SUS - Pergunta 4"><br>
-  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-<div align="center">
-  <sub>Imagem 85 - Gráfico SUS - Pergunta 5</sub><br>
-  <img src="./assets/teste-sus/grafico_pergunta_5.png" width="100%" alt="Gráfico SUS - Pergunta 5"><br>
-  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-<div align="center">
-  <sub>Imagem 86 - Gráfico SUS - Pergunta 6</sub><br>
-  <img src="./assets/teste-sus/grafico_pergunta_6.png" width="100%" alt="Gráfico SUS - Pergunta 6"><br>
-  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-<div align="center">
-  <sub>Imagem 87 - Gráfico SUS - Pergunta 7</sub><br>
-  <img src="./assets/teste-sus/grafico_pergunta_7.png" width="100%" alt="Gráfico SUS - Pergunta 7"><br>
-  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-<div align="center">
-  <sub>Imagem 88 - Gráfico SUS - Pergunta 8</sub><br>
-  <img src="./assets/teste-sus/grafico_pergunta_8.png" width="100%" alt="Gráfico SUS - Pergunta 8"><br>
-  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-<div align="center">
-  <sub>Imagem 89 - Gráfico SUS - Pergunta 9</sub><br>
-  <img src="./assets/teste-sus/grafico_pergunta_9.png" width="100%" alt="Gráfico SUS - Pergunta 9"><br>
-  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-<div align="center">
-  <sub>Imagem 90 - Gráfico SUS - Pergunta 10</sub><br>
-  <img src="./assets/teste-sus/grafico_pergunta_10.png" width="100%" alt="Gráfico SUS - Pergunta 10"><br>
-  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-**Análise dos resultados:**
-
-A média de 83,3 classifica o sistema como "bom" na escala SUS, acima da média global de referência de 68 ²⁷. Os scores individuais variaram entre 70,0 e 100,0, uma amplitude que reflete diferenças na familiaridade dos participantes com sistemas digitais e no nível de atenção durante o preenchimento, e não necessariamente inconsistências no sistema em si.
-
-Nas perguntas positivas, os resultados foram expressivos: a pergunta 1 ("gostaria de usar esse sistema com frequência") e a pergunta 7 ("as pessoas aprenderão a usar rapidamente") concentraram respostas nos valores 4 e 5, com 100% dos participantes respondendo acima do neutro na pergunta 7. A pergunta 5 ("as funções estão bem integradas") também teve desempenho positivo, com 83,3% das respostas entre 4 e 5.
-Nas perguntas negativas, o padrão foi igualmente favorável: a pergunta 6 ("o sistema apresenta muita inconsistência") teve 100% das respostas em 1 ou 2, indicando que nenhum participante percebeu inconsistência no sistema. A pergunta 2 ("o sistema é desnecessariamente complexo") teve 83,3% das respostas em 1 ou 2, e a pergunta 8 ("o sistema é atrapalhado de usar") ficou concentrada nos valores mais baixos.
-
-Vale destacar que, na pergunta 4, alguns participantes indicaram que precisariam de ajuda técnica para usar o sistema. Esse resultado converge com os achados do teste de guerrilha: ambos os métodos apontam para um sistema com boa usabilidade percebida, fluxo compreensível e baixa percepção de complexidade. Como limitação, vale registrar que o perfil dos participantes difere do público real do sistema, auditores com contexto operacional do evento, o que pode ter influenciado os scores mais baixos, especialmente na pergunta 4. Para uma avaliação mais precisa, recomenda-se reaplicar o teste com usuários do perfil real em edições futuras do projeto.
 
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
@@ -5417,6 +5469,8 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 ---
 
 ¹⁷ ABRAMOV, Dan. **Presentational and Container Components.** Medium, 23 mar. 2015. Disponível em: https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0. Acesso em: 26 mai. 2026.
+
+²⁸ BANGOR, Aaron; KORTUM, Philip T.; MILLER, James T. An empirical evaluation of the System Usability Scale. **International Journal of Human-Computer Interaction**, v. 24, n. 6, p. 574–594, 2008. Disponível em: https://www.tandfonline.com/doi/abs/10.1080/10447310802205776. Acesso em: 24 jun. 2026.
 
 ²⁷ BARROS, Myrela. **Guia atualizado de como utilizar a escala SUS (System Usability Scale) no seu produto**. UX Collective, out. 2022. Disponível em: <https://brasil.uxdesign.cc/guia-atualizado-de-como-utilizar-a-escala-sus-system-usability-scale-no-seu-produto-ab773f29c522>. Acesso em: 22 jun. 2026.
 
