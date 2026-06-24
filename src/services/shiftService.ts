@@ -25,14 +25,14 @@ export const shiftService = {
 			);
 
 		// RF003 / RN28: evento deve ter equipes cadastradas
-		// RF003 / RN17: cada equipe deve ter exatamente 16 corredores ativos
+		// Cada equipe precisa de pelo menos um corredor ativo (qualquer quantidade > 0)
 		const teams = await shiftRepository.validateTeamsForAthlete(athlete_id);
 		if (teams.length === 0)
 			throw new Error("RN28: nenhuma equipe cadastrada no evento do atleta");
-		const invalid = teams.filter((t) => t.count !== 16);
+		const invalid = teams.filter((t) => t.count < 1);
 		if (invalid.length > 0) {
-			const detail = invalid.map((t) => `"${t.name}" (${t.count}/16)`).join(", ");
-			throw new Error(`RN17: equipe(s) sem 16 corredores ativos: ${detail}`);
+			const detail = invalid.map((t) => `"${t.name}" (${t.count})`).join(", ");
+			throw new Error(`RN17: equipe(s) sem corredores ativos: ${detail}`);
 		}
 
 		if (!(await shiftRepository.treadmillExists(treadmill_id)))

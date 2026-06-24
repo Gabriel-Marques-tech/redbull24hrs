@@ -1,13 +1,13 @@
 import { pool } from "../database/connection";
 
 export const eventRepository = {
-	async createWithManager(title: string, local: string, date: string, manager_id: number) {
+	async createWithManager(title: string, local: string, date: string, manager_id: number, image_url: string | null = null) {
 		const client = await pool.connect();
 		try {
 			await client.query("BEGIN");
 			const eventResult = await client.query(
-				`INSERT INTO events (title, local, date) VALUES ($1, $2, $3) RETURNING *`,
-				[title, local, date]
+				`INSERT INTO events (title, local, date, image_url) VALUES ($1, $2, $3, $4) RETURNING *`,
+				[title, local, date, image_url ?? null]
 			);
 			const event = eventResult.rows[0];
 			await client.query(
@@ -39,7 +39,7 @@ export const eventRepository = {
 		return result.rows[0] ?? null;
 	},
 
-	async update(id: number, fields: { title?: string; local?: string; date?: string }) {
+	async update(id: number, fields: { title?: string; local?: string; date?: string; image_url?: string | null }) {
 		const entries = Object.entries(fields).filter(([, v]) => v !== undefined);
 		if (entries.length === 0) return null;
 

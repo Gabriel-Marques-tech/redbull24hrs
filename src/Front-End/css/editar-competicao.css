@@ -234,3 +234,40 @@ main { height: auto !important; }
     cursor: pointer;
 }
 .btn-voltar-secao:hover { background: #f5f5f5; }
+
+/* ---- foto da competição ---- */
+.label-foto-editar {
+    display: block;
+    margin-top: 16px;
+    font-size: 14px;
+    color: #555;
+}
+.campo-foto-editar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 8px;
+}
+.campo-foto-editar input[type="file"] {
+    flex: 1;
+    min-width: 0;
+    cursor: pointer;
+}
+#editPreviewFoto {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #8d8d8d;
+}
+.btn-remover-foto {
+    padding: 8px 14px;
+    background: #fff;
+    border: 1px solid var(--vermelho);
+    border-radius: 8px;
+    color: var(--vermelho);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.btn-remover-foto:hover { background: #fff0f1; }
