@@ -29,21 +29,21 @@ export const shiftRepository = {
 		return result.rows;
 	},
 
-	async eventStatusByAthlete(athlete_id: number): Promise<string | null> {
+	async eventStatusByAthlete(athlete_id: number): Promise<{ status: string; paused_at: string | null } | null> {
 		const result = await pool.query(
-			`SELECT e.status
+			`SELECT e.status, e.paused_at
 			 FROM athletes a
 			 JOIN teams t  ON t.id = a.team_id
 			 JOIN events e ON e.id = t.event_id
 			 WHERE a.id = $1`,
 			[athlete_id]
 		);
-		return result.rows[0]?.status ?? null;
+		return result.rows[0] ?? null;
 	},
 
-	async eventStatusByShift(shift_id: number): Promise<string | null> {
+	async eventStatusByShift(shift_id: number): Promise<{ status: string; paused_at: string | null } | null> {
 		const result = await pool.query(
-			`SELECT e.status
+			`SELECT e.status, e.paused_at
 			 FROM shifts s
 			 JOIN athletes a ON a.id = s.athlete_id
 			 JOIN teams t    ON t.id = a.team_id
@@ -51,7 +51,7 @@ export const shiftRepository = {
 			 WHERE s.id = $1`,
 			[shift_id]
 		);
-		return result.rows[0]?.status ?? null;
+		return result.rows[0] ?? null;
 	},
 
 	async treadmillExists(treadmill_id: number): Promise<boolean> {
