@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informações do cadastro</title>
     <link rel="stylesheet" href="/css/global.css">
+    <script src="/js/tema.js"></script>
     <link rel="stylesheet" href="/css/equipe.css">
     <link rel="stylesheet" href="/css/informacoes-atleta.css">
 </head>
@@ -36,29 +37,51 @@
                         <span>+</span>
                     </div>
                     <div>
-                        <strong>Imagem de perfil</strong>
+                        <strong>Imagem de perfil <span class="asterisco-obrigatorio">*</span></strong>
                         <p>Envie uma foto para identificar este cadastro.</p>
                         <button type="button" id="btnFotoPerfil">Escolher imagem</button>
                     </div>
                     <input id="fotoPerfilPessoa" type="file" accept="image/*">
                 </div>
 
-                <label>Nome:<input id="nomeAtleta" type="text" required></label>
+                <div class="grid-cadastro-pessoa">
+                    <label class="campo-cadastro-pessoa campo-cadastro-duplo">
+                        <span>Nome <strong>*</strong></span>
+                        <input id="nomeAtleta" type="text" required>
+                    </label>
+
+                    <label class="campo-cadastro-pessoa campo-cadastro-duplo" id="campoEmailPessoa">
+                        <span>E-mail <strong>*</strong></span>
+                        <input id="emailPessoa" type="email" placeholder="email@exemplo.com" required>
+                    </label>
+
+                    <label class="campo-cadastro-pessoa campo-cadastro-duplo campo-cpf-apoio" id="campoCpfApoio">
+                        <span>CPF <strong>*</strong></span>
+                        <input id="cpfApoio" type="text" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00">
+                    </label>
+                </div>
 
                 <div class="campos-atleta" id="camposAtleta">
-                    <label class="campo-data-atleta">Data de nascimento:<input id="nascimentoAtleta" type="date"></label>
-                    <label>CPF:<input id="cpfAtleta" type="text" placeholder="000.000.000-00"></label>
+                    <label class="campo-cadastro-pessoa campo-data-atleta">
+                        <span>Nascimento <strong>*</strong></span>
+                        <input id="nascimentoAtleta" type="date" required>
+                    </label>
+
+                    <label class="campo-cadastro-pessoa">
+                        <span>CPF</span>
+                        <input id="cpfAtleta" type="text" placeholder="000.000.000-00">
+                    </label>
 
                     <div class="seletores-atleta">
-                        <select id="generoAtleta">
-                            <option value="">Gênero:</option>
+                        <select id="generoAtleta" required>
+                            <option value="">Gênero *</option>
                             <option value="Feminino">Feminino</option>
                             <option value="Masculino">Masculino</option>
                             <option value="Outro">Outro</option>
                         </select>
 
-                        <select id="cargoAtleta">
-                            <option value="">Cargo:</option>
+                        <select id="cargoAtleta" required>
+                            <option value="">Cargo *</option>
                             <option value="Atleta">Atleta</option>
                             <option value="Líder">Líder</option>
                         </select>
@@ -66,8 +89,10 @@
                 </div>
 
                 <div class="campos-acesso" id="camposAcesso">
-                    <label>E-mail:<input id="emailPessoa" type="email" placeholder="email@exemplo.com"></label>
-                    <label>Senha:<input id="senhaPessoa" type="password" placeholder="Senha de acesso"></label>
+                    <label class="campo-cadastro-pessoa">
+                        <span>Senha <strong>*</strong></span>
+                        <input id="senhaPessoa" type="password" placeholder="Senha de acesso">
+                    </label>
                 </div>
 
                 <button type="submit">Concluir</button>
