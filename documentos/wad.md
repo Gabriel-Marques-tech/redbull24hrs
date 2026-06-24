@@ -3149,15 +3149,15 @@ As entidades foram derivadas do domínio e revisadas conforme o schema resultant
 
 | Entidade | Descrição | Atributos principais | Chave |
 | :--- | :--- | :--- | :--- |
-| **Manager** | Gerente que administra eventos e também pode operar turnos. | `id`, `name`, `cpf`, `email`, `password` | `id` |
-| **Event** | Edição da competição, incluindo seu ciclo de vida operacional. | `id`, `title`, `local`, `date`, `status`, `started_at`, `finished_at`, `deleted_at` | `id` |
-| **Team** | Equipe vinculada a uma edição específica. | `id`, `name`, `deleted_at` | `id` |
-| **Athlete** | Atleta pertencente a uma equipe. | `id`, `name`, `gender`, `cpf`, `deleted_at` | `id` |
-| **Auditor** | Operador responsável pelo registro dos turnos e checkpoints. | `id`, `name`, `cpf`, `registration_number`, `is_active`, `email`, `password` | `id` |
-| **Shift** | Sessão individual de corrida de um atleta em uma esteira. | `id`, `status`, `start_at`, `end_at`, `total_time`, `speed`, `km_start`, `km_end`, `distance` | `id` |
-| **Treadmill** | Esteira numerada e vinculada à equipe que a utiliza. | `id`, `number` | `id` |
-| **Checkpoint** | Leitura parcial do turno, com suporte a revisão e sincronização offline. | `id`, `timestamp`, `distance`, `type`, `reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`, `sync_id` | `id` |
-| **Log** | Registro imutável de ações e alterações relacionadas a um turno. | `id`, `timestamp`, `type`, `old_value`, `new_value`, `author_id`, `author_role`, `justification` | `id` |
+| **Managers** | Gerentes que administram eventos e também podem operar turnos. | `id`, `name`, `cpf`, `email`, `password` | `id` |
+| **Events** | Edições da competição, incluindo seu ciclo de vida operacional. | `id`, `title`, `local`, `date`, `status`, `started_at`, `finished_at`, `deleted_at` | `id` |
+| **Teams** | Equipes vinculadas a uma edição específica. | `id`, `name`, `deleted_at` | `id` |
+| **Athletes** | Atletas pertencentes a uma equipe. | `id`, `name`, `gender`, `cpf`, `deleted_at` | `id` |
+| **Auditors** | Operadores responsáveis pelo registro dos turnos e checkpoints. | `id`, `name`, `cpf`, `registration_number`, `is_active`, `email`, `password` | `id` |
+| **Shifts** | Sessões individuais de corrida de um atleta em uma esteira. | `id`, `status`, `start_at`, `end_at`, `total_time`, `speed`, `km_start`, `km_end`, `distance` | `id` |
+| **Treadmills** | Esteiras numeradas e vinculadas à equipe que as utiliza. | `id`, `number` | `id` |
+| **Checkpoints** | Leituras parciais do turno, com suporte a revisão e sincronização offline. | `id`, `timestamp`, `distance`, `type`, `reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`, `sync_id` | `id` |
+| **Logs** | Registros imutáveis de ações e alterações relacionadas a um turno. | `id`, `timestamp`, `type`, `old_value`, `new_value`, `author_id`, `author_role`, `justification` | `id` |
 | **RefreshToken** | Sessão renovável pertencente exclusivamente a um gerente ou auditor. | `id`, `token_hash`, `expires_at`, `revoked_at`, `created_at` | `id` |
 
 <div align="center">
@@ -3167,7 +3167,7 @@ As entidades foram derivadas do domínio e revisadas conforme o schema resultant
 
 #### Relacionamentos e cardinalidades
 
-Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui atletas e esteiras; um turno aponta para a esteira utilizada; e o operador do turno pode ser um gerente ou um auditor, mas nunca os dois simultaneamente.
+Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui atletas e esteiras; um turno aponta para a esteira utilizada; e o operador do turno pode ser um gerente ou um auditor, mas nunca os dois simultaneamente. A posse de sessões de autenticação (refresh tokens) é modelada por dois relacionamentos independentes e mutuamente exclusivos: um para gerentes e outro para auditores.
 
 <div align="center">
   <sub>Quadro 21 - Relacionamentos e cardinalidades do MER</sub>
@@ -3175,19 +3175,19 @@ Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui
 
 | Relacionamento | Entidade A | Cardinalidade | Entidade B | Descrição |
 | :--- | :--- | :--- | :--- | :--- |
-| **Manages** | Manager | N:N | Event | Gerentes podem administrar vários eventos e eventos podem possuir vários gerentes. |
-| **Has** | Event | 1:N | Team | Cada equipe pertence a um único evento. |
-| **Rosters** | Team | 1:N | Athlete | Cada atleta pertence a uma única equipe. |
-| **Owns** | Team | 1:N | Treadmill | Uma equipe pode possuir várias esteiras; uma esteira pode ficar temporariamente sem equipe. |
-| **Performs** | Athlete | 1:N | Shift | Um atleta pode realizar vários turnos; cada turno possui um atleta. |
-| **Operates** | Manager | 1:N | Shift | Um gerente pode operar turnos quando atua na função operacional. |
-| **Audits** | Auditor | 1:N | Shift | Um auditor pode operar vários turnos. |
-| **Operator XOR** | Manager/Auditor | 1:N | Shift | Cada turno possui exatamente um operador: gerente ou auditor. |
-| **Occurs on** | Treadmill | 1:N | Shift | Uma esteira recebe vários turnos e cada turno referencia no máximo uma esteira. |
-| **Records** | Shift | 1:N | Checkpoint | Todo checkpoint pertence a um turno. |
-| **Generates** | Shift | 1:N | Log | Todo log pertence a um turno. |
-| **References** | Checkpoint | 1:N opcional | Log | Um log pode apontar para um checkpoint; vários logs podem referenciar o mesmo checkpoint. |
-| **Owns session** | Manager/Auditor | 1:N | RefreshToken | Cada token pertence exatamente a um dos dois tipos de usuário. |
+| **Manages** | Managers | N:N | Events | Gerentes podem administrar vários eventos e eventos podem possuir vários gerentes. |
+| **Has** | Events | 1:N | Teams | Cada equipe pertence a um único evento. |
+| **Rosters** | Teams | 1:N | Athletes | Cada atleta pertence a uma única equipe. |
+| **Has** | Teams | 1:N | Treadmills | Uma equipe pode possuir várias esteiras; uma esteira pode ficar temporariamente sem equipe. |
+| **Performs** | Athletes | 1:N | Shifts | Um atleta pode realizar vários turnos; cada turno possui um atleta. |
+| **Operates** | Managers | 1:N | Shifts | Um gerente pode operar turnos quando atua na função operacional. |
+| **Audits** | Auditors | 1:N | Shifts | Um auditor pode operar vários turnos. |
+| **Hosts** | Treadmills | 1:N | Shifts | Uma esteira recebe vários turnos e cada turno referencia no máximo uma esteira. |
+| **Records** | Shifts | 1:N | Checkpoints | Todo checkpoint pertence a um turno. |
+| **Generates** | Shifts | 1:N | Logs | Todo log pertence a um turno. |
+| **References** | Checkpoints | 1:N opcional | Logs | Um log pode apontar para um checkpoint; vários logs podem referenciar o mesmo checkpoint. |
+| **Owns Session** | Managers | 1:N | RefreshToken | Cada refresh token de gerente pertence exatamente a um gerente. |
+| **Has Session** | Auditors | 1:N | RefreshToken | Cada refresh token de auditor pertence exatamente a um auditor. |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -3197,11 +3197,11 @@ Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui
 #### Decisões de modelagem
 
 - **Shift como entidade central:** cada entrada de um atleta em uma esteira gera um turno próprio. Os totais do evento são calculados pela agregação dos turnos finalizados.
-- **Operador exclusivo:** a constraint `chk_shifts_operator` exige exatamente um responsável por turno, usando `auditor_id` ou `manager_id`.
-- **Esteira vinculada à equipe:** `treadmills.team_id` registra diretamente qual equipe utiliza o equipamento, enquanto `shifts.treadmill_id` preserva o histórico de uso por turno.
+- **Operador exclusivo:** a constraint `chk_shifts_operator` exige exatamente um responsável por turno, usando `auditor_id` ou `manager_id`. No MER, isso é refletido pelos relacionamentos independentes **Operates** e **Audits**, ambos direcionados a Shifts.
+- **Esteira vinculada à equipe:** o relacionamento **Has** liga Teams a Treadmills (`treadmills.team_id`), enquanto o relacionamento **Hosts** liga Treadmills a Shifts (`shifts.treadmill_id`), preservando o histórico de uso por turno.
 - **Auditoria de checkpoints:** checkpoints guardam dados de revisão e `sync_id`; logs registram valores anteriores e novos, autoria, justificativa e vínculo opcional ao checkpoint.
 - **Ciclo de vida do evento:** `status`, `started_at` e `finished_at` distinguem eventos pendentes, em andamento e finalizados.
-- **Autenticação com integridade:** refresh tokens possuem duas FKs mutuamente exclusivas, garantindo que cada token pertença a um gerente ou a um auditor existente.
+- **Autenticação com integridade:** refresh tokens são modelados por dois relacionamentos mutuamente exclusivos — **Owns Session** (Manager–RefreshToken) e **Has Session** (Auditor–RefreshToken) — garantindo que cada token pertença a exatamente um gerente ou a um auditor existente, nunca aos dois simultaneamente.
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER)
 
