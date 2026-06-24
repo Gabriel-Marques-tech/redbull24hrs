@@ -5318,7 +5318,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 ## Análise dos Resultados
 
-O score médio de 57,1 posiciona o RedRun abaixo da média de referência do SUS (68) [²⁷](#8-referências), com scores individuais variando entre 27,5 e 77,5 — uma amplitude de 50 pontos que revela experiências bastante assimétricas entre os participantes. Essa dispersão não é aleatória: ela acompanha diretamente o desempenho observado no teste de guerrilha. Participantes que navegaram com mais naturalidade pelo fluxo de gerente, como Laís Victoria (77,5) e Pedro Negri (75,0), avaliaram o sistema de forma positiva. Já os que enfrentaram barreiras no fluxo de auditoria, como Lucas Levi (27,5) e Valter Lima (37,5), reportaram dificuldades que impactaram diretamente sua percepção de usabilidade.
+O score médio de 57,1 posiciona o RedRun abaixo da média de referência do SUS (68) [²⁸](#8-referências), com scores individuais variando entre 27,5 e 77,5 — uma amplitude de 50 pontos que revela experiências bastante assimétricas entre os participantes. Essa dispersão não é aleatória: ela acompanha diretamente o desempenho observado no teste de guerrilha. Participantes que navegaram com mais naturalidade pelo fluxo de gerente, como Laís Victoria (77,5) e Pedro Negri (75,0), avaliaram o sistema de forma positiva. Já os que enfrentaram barreiras no fluxo de auditoria, como Lucas Levi (27,5) e Valter Lima (37,5), reportaram dificuldades que impactaram diretamente sua percepção de usabilidade.
 
 Vale destacar um caso específico: Lucas Levi foi o único participante que não concluiu nenhuma das três tarefas do teste de guerrilha (T1, T2 e T3), e seu score de 27,5 é o mais baixo da amostra, o que reforça a coerência entre desempenho objetivo e percepção subjetiva. Esse caso ilustra bem como o SUS, quando analisado junto ao guerrilha, oferece uma leitura mais completa da experiência do usuário.
 
@@ -5326,8 +5326,9 @@ Os dois problemas classificados como catastróficos no teste de guerrilha — o 
 
 Por outro lado, o sistema apresenta aspectos avaliados de forma consistente e positiva, como a integração das funcionalidades de gerente, a validação de CPF elogiada por dois testadores e a estabilidade geral da aplicação. Esses pontos são refletidos nos scores mais altos e indicam que a base do sistema é funcional — os ajustes necessários são localizados, porém estratégicos.
 
-Como limitação, vale registrar que a amostra é pequena (n=6), não probabilística e composta por participantes sem contexto operacional do evento, o que pode ter introduzido viés de cortesia nas respostas e amplificado a percepção de dificuldade em tarefas que um auditor real executaria com mais familiaridade. Recomenda-se reaplicar o SUS após a correção dos problemas de severidade 3 e 4, preferencialmente com usuários do perfil real, para uma avaliação mais precisa da evolução da usabilidade do sistema.
+Com base nos resultados do SUS e nos achados do teste de guerrilha, o grupo realizou melhorias direcionadas ao fluxo de auditoria e à interface do sistema, priorizando os problemas de severidade 3 e 4 identificados. As correções incluíram reestruturação do fluxo de auditoria, adição de instruções contextuais e melhorias na seleção de perfil. Por limitações de tempo e disponibilidade dos participantes, não foi possível reaplicar o SUS após as refatorações para mensurar o impacto das mudanças.
 
+Como limitação, vale registrar que a amostra é pequena (n=6), não probabilística e composta por participantes sem contexto operacional do evento, o que pode ter introduzido viés de cortesia nas respostas e amplificado a percepção de dificuldade em tarefas que um auditor real executaria com mais familiaridade.
 
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
