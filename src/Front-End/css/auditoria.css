@@ -1791,6 +1791,7 @@ img {
     max-height: calc(100vh - 48px);
     padding: 22px 40px 24px;
     overflow-y: auto;
+    justify-content: flex-start;
 }
 
 #modalTurno .modal-turno-conteudo::before {
