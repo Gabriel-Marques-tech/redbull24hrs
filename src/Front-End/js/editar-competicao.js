@@ -1,7 +1,9 @@
 // ---- authFetch ----
 async function authFetch(url, options = {}) {
     const token = localStorage.getItem("accessToken");
-    const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
+    const headers = { ...(options.headers || {}) };
+    // FormData define o próprio Content-Type (com boundary); só forçamos JSON nos demais casos
+    if (!(options.body instanceof FormData)) headers["Content-Type"] = "application/json";
     if (token) headers["Authorization"] = `Bearer ${token}`;
     let res = await fetch(url, { ...options, headers, credentials: "include" });
     if (res.status === 401) {
@@ -45,6 +47,9 @@ const editNome  = document.getElementById("editNome");
 const editLocal = document.getElementById("editLocal");
 const editData  = document.getElementById("editData");
 const editHora  = document.getElementById("editHora");
+const editFoto       = document.getElementById("editFoto");
+const editPreviewFoto = document.getElementById("editPreviewFoto");
+const btnRemoverFoto  = document.getElementById("btnRemoverFoto");
 const listaEquipes = document.getElementById("listaEquipes");
 const btnSalvar  = document.getElementById("btnSalvar");
 const btnExcluir = document.getElementById("btnExcluir");
@@ -58,7 +63,42 @@ if (EVENTO.date) {
     editHora.value = iso.slice(11, 16) || "";
 }
 
-const TOTAL_ATLETAS = 16;
+// ---- foto da competição ----
+// novaFotoDataUrl: dataURL de uma foto recém-escolhida (envia multipart).
+// removerFoto: usuário pediu para apagar a foto atual sem substituir (envia remove_photo).
+let novaFotoDataUrl = null;
+let removerFoto = false;
+
+function mostrarPreview(src) {
+    if (!src) { editPreviewFoto.hidden = true; editPreviewFoto.removeAttribute("src"); btnRemoverFoto.hidden = true; return; }
+    editPreviewFoto.src = src;
+    editPreviewFoto.hidden = false;
+    btnRemoverFoto.hidden = false;
+}
+
+// prefill com a foto já salva, se houver
+if (EVENTO.image_url) mostrarPreview(EVENTO.image_url);
+
+editFoto.addEventListener("change", async () => {
+    const arquivo = editFoto.files[0];
+    if (!arquivo) return;
+    try {
+        novaFotoDataUrl = await lerImagemRedimensionada(arquivo);
+        removerFoto = false;
+        mostrarPreview(novaFotoDataUrl);
+    } catch (e) {
+        alert(e.message || "Falha ao processar a imagem.");
+        editFoto.value = "";
+        novaFotoDataUrl = null;
+    }
+});
+
+btnRemoverFoto.addEventListener("click", () => {
+    novaFotoDataUrl = null;
+    removerFoto = true;
+    editFoto.value = "";
+    mostrarPreview(null);
+});
 
 // ---- navegar para form atleta ----
 function abrirFormAtleta(teamId, atleta = null) {
@@ -67,7 +107,7 @@ function abrirFormAtleta(teamId, atleta = null) {
         eventId:    EVENTO.id,
         teamId,
         atletaId:   atleta?.id   || null,
-        atletaData: atleta ? { name: atleta.name, gender: atleta.gender, cpf: atleta.cpf || "" } : null
+        atletaData: atleta ? { name: atleta.name, gender: atleta.gender, cpf: atleta.cpf || "", image_url: atleta.image_url || null } : null
     }));
     window.location.href = "/manager/create-event/athlete";
 }
@@ -75,13 +115,8 @@ function abrirFormAtleta(teamId, atleta = null) {
 // ---- atualizar estado botão adicionar ----
 function atualizarBtnAdicionar(bloco) {
     const lista = bloco.querySelector(".lista-atletas-edit");
-    const btn   = bloco.querySelector(".btn-add-atleta-edit");
     const qtd   = lista.querySelectorAll(".campo-atleta").length;
-    const cheio = qtd >= TOTAL_ATLETAS;
-    btn.disabled = cheio;
-    btn.style.background = cheio ? "#9e9e9e" : "var(--vermelho)";
-    btn.style.cursor     = cheio ? "default"  : "pointer";
-    lista.querySelector(".contador-atletas-edit").textContent = `${qtd}/${TOTAL_ATLETAS}`;
+    lista.querySelector(".contador-atletas-edit").textContent = `${qtd} atleta(s)`;
 }
 
 // ---- slot com lápis + X ----
@@ -132,8 +167,7 @@ function renderEquipes() {
         });
         atualizarBtnAdicionar(bloco);
         bloco.querySelector(".btn-add-atleta-edit").addEventListener("click", () => {
-            if (lista.querySelectorAll(".campo-atleta").length < TOTAL_ATLETAS)
-                abrirFormAtleta(eq.id, null);
+            abrirFormAtleta(eq.id, null);
         });
         listaEquipes.appendChild(bloco);
     });
@@ -164,10 +198,22 @@ async function salvar() {
 
     try {
         const date = `${editData.value}T${editHora.value || "00:00"}:00`;
-        const evRes = await authFetch(`/events/${EVENTO.id}`, {
-            method: "PATCH",
-            body: JSON.stringify({ title: nome, local, date })
-        });
+        let evReqOptions;
+        if (novaFotoDataUrl) {
+            // foto nova: envia multipart; o backend faz upload e apaga a anterior
+            const fd = new FormData();
+            fd.append("title", nome);
+            fd.append("local", local);
+            fd.append("date", date);
+            fd.append("photo", dataURLparaBlob(novaFotoDataUrl), "competicao.jpg");
+            evReqOptions = { method: "PATCH", body: fd };
+        } else {
+            // sem foto nova: JSON; remove_photo zera a coluna e apaga a foto antiga
+            const corpo = { title: nome, local, date };
+            if (removerFoto) corpo.remove_photo = true;
+            evReqOptions = { method: "PATCH", body: JSON.stringify(corpo) };
+        }
+        const evRes = await authFetch(`/events/${EVENTO.id}`, evReqOptions);
         if (!evRes || !evRes.ok) throw new Error("Erro ao salvar dados da competição");
 
         for (const bloco of listaEquipes.querySelectorAll(".equipe-edit")) {
