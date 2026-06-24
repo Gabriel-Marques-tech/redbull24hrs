@@ -5182,7 +5182,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 <div align="center">
   <sub>Imagem 90 - Gráfico SUS - Pergunta 10</sub><br>
   <img src="./assets/teste-sus/grafico_pergunta_10.png" width="100%" alt="Gráfico SUS - Pergunta 10"><br>
-  <sub>Fonte: Teste feito e aplicado pelo grupo utilizando a plataforma Google Forms, 2026.</sub>
+  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
   <br><br><br>
 </div>
 
