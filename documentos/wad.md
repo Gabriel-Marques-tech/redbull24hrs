@@ -5163,7 +5163,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 ---
 
-### Testadora: Laís Victoria
+### Testadora: Lais Victoria
 **Perfil:** Estudante de Ciência da Computação
 
 | # | Afirmação | Nota |
@@ -5230,7 +5230,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 | Enzo Braga | 72,5 | Bom |
 | Lucas Levi | 27,5 | Inaceitável |
 | Paulo Roberto | 52,5 | OK / Marginal |
-| Laís Victoria | 77,5 | Bom |
+| Lais Victoria | 77,5 | Bom |
 | Pedro Negri | 75,0 | Bom |
 | Valter Lima | 37,5 | Ruim |
 | **Média final** | **57,1** | **OK / Marginal** |
@@ -5318,13 +5318,17 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 ## Análise dos Resultados
 
-O score médio de 57,1 posiciona o RedRun abaixo da média de referência do SUS (68) [²⁸](#8-referências), com scores individuais variando entre 27,5 e 77,5 — uma amplitude de 50 pontos que revela experiências bastante assimétricas entre os participantes. Essa dispersão não é aleatória: ela acompanha diretamente o desempenho observado no teste de guerrilha. Participantes que navegaram com mais naturalidade pelo fluxo de gerente, como Laís Victoria (77,5) e Pedro Negri (75,0), avaliaram o sistema de forma positiva. Já os que enfrentaram barreiras no fluxo de auditoria, como Lucas Levi (27,5) e Valter Lima (37,5), reportaram dificuldades que impactaram diretamente sua percepção de usabilidade.
+O score médio de 57,1 posiciona o RedRun abaixo da média de referência do SUS (68) [²⁸](#8-referências), com scores individuais variando entre 27,5 e 77,5, uma amplitude de 50 pontos que revela experiências bastante assimétricas entre os participantes. Essa dispersão não é aleatória: ela acompanha diretamente o desempenho observado no teste de guerrilha. Participantes que navegaram com mais naturalidade pelo fluxo de gerente, como Lais Victoria (77,5) e Pedro Negri (75,0), avaliaram o sistema de forma positiva. Já os que enfrentaram barreiras no fluxo de auditoria, como Lucas Levi (27,5) e Valter Lima (37,5), reportaram dificuldades que impactaram diretamente sua percepção de usabilidade.
 
 Vale destacar um caso específico: Lucas Levi foi o único participante que não concluiu nenhuma das três tarefas do teste de guerrilha (T1, T2 e T3), e seu score de 27,5 é o mais baixo da amostra, o que reforça a coerência entre desempenho objetivo e percepção subjetiva. Esse caso ilustra bem como o SUS, quando analisado junto ao guerrilha, oferece uma leitura mais completa da experiência do usuário.
 
-Os dois problemas classificados como catastróficos no teste de guerrilha — o fluxo de auditoria pouco intuitivo e a ausência de documentação contextual — são os principais responsáveis pela queda do score médio abaixo de 68. Eles afetaram diretamente quatro dos seis participantes (Enzo, Lucas, Paulo Roberto e Valter Lima) e impactaram a dimensão mais crítica do sistema: o registro da quilometragem durante o evento. Isso se reflete diretamente na pergunta 4 ("Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema"), que é uma afirmação negativa — concordância alta nela indica problema de usabilidade. Os participantes que mais tiveram dificuldade no T3 foram justamente os que deram notas mais altas nessa pergunta, confirmando o achado catastrófico número 2 do guerrilha: a ausência de documentação contextual.
+Nas perguntas positivas, os resultados mostram uma percepção moderada: na pergunta 1 ("gostaria de usar o sistema com frequência"), 3 de 6 participantes (50%) responderam 4 e 2 responderam 3, sem nenhuma resposta acima de 4. Na pergunta 3 ("achei o sistema fácil de usar"), as respostas ficaram distribuídas igualmente entre 2, 3 e 4, cada uma com 33,3%, sem nenhum 5. Na pergunta 5 ("funções bem integradas"), 3 de 6 (50%) responderam 4, resultado positivo mas contido. Na pergunta 7 ("as pessoas aprenderão rapidamente"), metade dos participantes (50%) respondeu 3 e 33,3% responderam 2, indicando baixa confiança na curva de aprendizado. Na pergunta 9 ("me senti confiante"), 3 de 6 responderam 4, mas 2 responderam 2.
 
-Por outro lado, o sistema apresenta aspectos avaliados de forma consistente e positiva, como a integração das funcionalidades de gerente, a validação de CPF elogiada por dois testadores e a estabilidade geral da aplicação. Esses pontos são refletidos nos scores mais altos e indicam que a base do sistema é funcional — os ajustes necessários são localizados, porém estratégicos.
+Nas perguntas negativas, os dados são mais preocupantes do que o esperado: na pergunta 2 ("o sistema é desnecessariamente complexo"), 50% responderam 2 e 33,3% responderam 3, ou seja, apenas 1 participante discordou fortemente. Na pergunta 4 ("precisaria de ajuda técnica"), as respostas ficaram divididas igualmente entre 2, 3 e 4 (33,3% cada), o que confirma o achado catastrófico número 2 do guerrilha: a ausência de documentação contextual. Como essa é uma afirmação negativa, concordância alta nela indica problema de usabilidade. Na pergunta 6 ("o sistema apresenta muita inconsistência"), as respostas se dividiram entre 2 e 3 (50% cada), sem nenhuma nota 1, indicando que parte dos participantes percebeu algum grau de inconsistência. Na pergunta 8 ("o sistema é atrapalhado de usar"), 4 de 6 participantes (66,7%) responderam 2, o que é positivo, mas 1 respondeu 3 e 1 respondeu 4. Na pergunta 10 ("precisei aprender coisas novas"), 50% responderam 2, mas 33,3% responderam 4, reforçando a dificuldade de onboarding identificada no guerrilha.
+
+Os dois problemas classificados como catastróficos no teste de guerrilha, o fluxo de auditoria pouco intuitivo e a ausência de documentação contextual, são os principais responsáveis pela queda do score médio abaixo de 68. Eles afetaram diretamente quatro dos seis participantes (Enzo, Lucas, Paulo Roberto e Valter Lima) e impactaram a dimensão mais crítica do sistema: o registro da quilometragem durante o evento.
+
+Por outro lado, o sistema apresenta aspectos avaliados de forma consistente e positiva, como a integração das funcionalidades de gerente, a validação de CPF elogiada por dois testadores e a estabilidade geral da aplicação. Esses pontos são refletidos nos scores mais altos e indicam que a base do sistema é funcional, sendo os ajustes necessários localizados, porém estratégicos.
 
 Com base nos resultados do SUS e nos achados do teste de guerrilha, o grupo realizou melhorias direcionadas ao fluxo de auditoria e à interface do sistema, priorizando os problemas de severidade 3 e 4 identificados. As correções incluíram reestruturação do fluxo de auditoria, adição de instruções contextuais e melhorias na seleção de perfil. Por limitações de tempo e disponibilidade dos participantes, não foi possível reaplicar o SUS após as refatorações para mensurar o impacto das mudanças.
 
