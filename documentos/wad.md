@@ -5090,7 +5090,7 @@ _Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de tes
 
 Como complemento ao teste de guerrilha documentado na seção anterior, foi aplicada a escala SUS (System Usability Scale) para medir de forma padronizada a usabilidade percebida do sistema. Enquanto o teste de guerrilha captura comportamentos e dificuldades observadas durante o uso, o SUS quantifica a percepção subjetiva dos participantes após a experiência, permitindo comparar o resultado com benchmarks consolidados da área [²⁷](#8-referências). O SUS é composto por 10 afirmações respondidas em uma escala de 1 a 5 (sendo 1 = "Discordo totalmente" e 5 = "Concordo totalmente"), e o resultado final gera uma pontuação de 0 a 100.
 
-O formulário foi respondido por 6 participantes logo após a realização do teste de guerrilha, com base na experiência que acabaram de ter com o sistema. Os participantes eram alunos da própria instituição, sem vínculo com a Red Bull ou conhecimento prévio do contexto do evento.
+O formulário foi respondido por 6 participantes logo após a realização do teste de guerrilha, com base na experiência que acabaram de ter com o sistema. Os participantes eram alunos da própria instituição, sem vínculo com a Red Bull ou conhecimento prévio do contexto do evento. Vale destacar que as afirmações do SUS alternam entre positivas e negativas: as perguntas de número ímpar (1, 3, 5, 7 e 9) são formuladas de forma positiva, enquanto as de número par (2, 4, 6, 8 e 10) são formuladas de forma negativa. Essa alternância é intencional e serve para reduzir vieses nas respostas [²⁷](#8-referências).
 
 
 **Fórmula de cálculo:**
