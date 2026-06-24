@@ -5101,12 +5101,11 @@ Para cada resposta, é aplicada a seguinte lógica [²⁷](#8-referências):
 
 A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score final de cada participante. A média entre todos os participantes representa o score SUS do sistema. A pontuação média do SUS é 68, fazendo com que uma pontuação acima ou abaixo da média forneça uma visão imediata da usabilidade geral da solução de design do projeto. [²⁷](#8-referências).
 
-
 ## Respostas por Participante
- 
+
 ### Testador: Enzo Braga
 **Perfil:** Estudante de Ciência da Computação
- 
+
 | # | Afirmação | Nota |
 |---|-----------|------|
 | 1 | Eu acho que gostaria de usar esse sistema com frequência. | 4 |
@@ -5119,14 +5118,14 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 | 8 | Eu achei o sistema atrapalhado de usar. | 2 |
 | 9 | Eu me senti confiante ao usar o sistema. | 4 |
 | 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 2 |
- 
+
 **Score SUS: 72,5**
- 
+
 ---
- 
+
 ### Testador: Lucas Levi
 **Perfil:** Estudante de Engenharia da Computação
- 
+
 | # | Afirmação | Nota |
 |---|-----------|------|
 | 1 | Eu acho que gostaria de usar esse sistema com frequência. | 2 |
@@ -5139,14 +5138,14 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 | 8 | Eu achei o sistema atrapalhado de usar. | 4 |
 | 9 | Eu me senti confiante ao usar o sistema. | 2 |
 | 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 4 |
- 
+
 **Score SUS: 27,5**
- 
+
 ---
- 
+
 ### Testador: Paulo Roberto
 **Perfil:** Estudante de Engenharia da Computação
- 
+
 | # | Afirmação | Nota |
 |---|-----------|------|
 | 1 | Eu acho que gostaria de usar esse sistema com frequência. | 3 |
@@ -5159,14 +5158,14 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 | 8 | Eu achei o sistema atrapalhado de usar. | 2 |
 | 9 | Eu me senti confiante ao usar o sistema. | 3 |
 | 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 3 |
- 
+
 **Score SUS: 52,5**
- 
+
 ---
- 
+
 ### Testadora: Laís Victoria
 **Perfil:** Estudante de Ciência da Computação
- 
+
 | # | Afirmação | Nota |
 |---|-----------|------|
 | 1 | Eu acho que gostaria de usar esse sistema com frequência. | 4 |
@@ -5179,14 +5178,14 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 | 8 | Eu achei o sistema atrapalhado de usar. | 2 |
 | 9 | Eu me senti confiante ao usar o sistema. | 4 |
 | 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 2 |
- 
+
 **Score SUS: 77,5**
- 
+
 ---
- 
+
 ### Testador: Pedro Negri
 **Perfil:** Estudante de Ciência da Computação
- 
+
 | # | Afirmação | Nota |
 |---|-----------|------|
 | 1 | Eu acho que gostaria de usar esse sistema com frequência. | 4 |
@@ -5199,14 +5198,14 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 | 8 | Eu achei o sistema atrapalhado de usar. | 2 |
 | 9 | Eu me senti confiante ao usar o sistema. | 4 |
 | 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 2 |
- 
+
 **Score SUS: 75,0**
- 
+
 ---
- 
+
 ### Testador: Valter Lima
 **Perfil:** Estudante de Sistemas da Informação
- 
+
 | # | Afirmação | Nota |
 |---|-----------|------|
 | 1 | Eu acho que gostaria de usar esse sistema com frequência. | 3 |
@@ -5219,13 +5218,13 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 | 8 | Eu achei o sistema atrapalhado de usar. | 3 |
 | 9 | Eu me senti confiante ao usar o sistema. | 2 |
 | 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 4 |
- 
+
 **Score SUS: 37,5**
- 
+
 ---
- 
+
 ## Consolidação dos Resultados
- 
+
 | Participante | Score SUS | Classificação |
 |---|---|---|
 | Enzo Braga | 72,5 | Bom |
@@ -5235,16 +5234,21 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 | Pedro Negri | 75,0 | Bom |
 | Valter Lima | 37,5 | Ruim |
 | **Média final** | **57,1** | **OK / Marginal** |
- 
----
- 
+
+[INSERIR AQUI os gráficos do Google Forms — imagens 81 a 90]
+
+
 ## Análise dos Resultados
- 
-O score médio de **57,1** posiciona o RedRun abaixo da média de referência do SUS (68) [²⁸](#8-referências), o que é coerente com os problemas identificados durante o teste de guerrilha. A variação entre os scores de 27,5 a 77,5,  indica que a experiência do usuário é bastante assimétrica: participantes que navegaram com mais naturalidade pelo fluxo de gerente, como Laís Victoria (77,5) e Pedro Negri (75,0), avaliaram o sistema de forma positiva; já os que enfrentaram barreiras no fluxo de auditoria ou na seleção de perfil, como Lucas Levi (27,5) e Valter Lima (37,5), reportaram dificuldades significativas que impactaram diretamente sua percepção de usabilidade.
- 
-Os dois problemas classificados como **catastróficos** no teste de guerrilha — o fluxo de auditoria pouco intuitivo e a ausência de documentação contextual são os principais responsáveis pela queda do score médio abaixo de 68. Eles afetaram diretamente quatro dos seis participantes (Enzo, Lucas, Paulo Roberto e Valter Lima), impactando a dimensão mais crítica do sistema: o registro da quilometragem durante o evento.
- 
-Por outro lado, o sistema apresenta aspectos bem avaliados de forma consistente, como a integração das funcionalidades de gerente, a validação de CPF elogiada por dois testadores e a estabilidade geral da aplicação. Esses pontos são refletidos nos scores mais altos e indicam que a base do sistema é funcional e os ajustes necessários são localizados, porém estratégicos.
+
+O score médio de 57,1 posiciona o RedRun abaixo da média de referência do SUS (68) [²⁷](#8-referências), com scores individuais variando entre 27,5 e 77,5 — uma amplitude de 50 pontos que revela experiências bastante assimétricas entre os participantes. Essa dispersão não é aleatória: ela acompanha diretamente o desempenho observado no teste de guerrilha. Participantes que navegaram com mais naturalidade pelo fluxo de gerente, como Laís Victoria (77,5) e Pedro Negri (75,0), avaliaram o sistema de forma positiva. Já os que enfrentaram barreiras no fluxo de auditoria, como Lucas Levi (27,5) e Valter Lima (37,5), reportaram dificuldades que impactaram diretamente sua percepção de usabilidade.
+
+Vale destacar um caso específico: Lucas Levi foi o único participante que não concluiu nenhuma das três tarefas do teste de guerrilha (T1, T2 e T3), e seu score de 27,5 é o mais baixo da amostra, o que reforça a coerência entre desempenho objetivo e percepção subjetiva. Esse caso ilustra bem como o SUS, quando analisado junto ao guerrilha, oferece uma leitura mais completa da experiência do usuário.
+
+Os dois problemas classificados como catastróficos no teste de guerrilha — o fluxo de auditoria pouco intuitivo e a ausência de documentação contextual — são os principais responsáveis pela queda do score médio abaixo de 68. Eles afetaram diretamente quatro dos seis participantes (Enzo, Lucas, Paulo Roberto e Valter Lima) e impactaram a dimensão mais crítica do sistema: o registro da quilometragem durante o evento. Isso se reflete diretamente na pergunta 4 ("Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema"), que é uma afirmação negativa — concordância alta nela indica problema de usabilidade. Os participantes que mais tiveram dificuldade no T3 foram justamente os que deram notas mais altas nessa pergunta, confirmando o achado catastrófico número 2 do guerrilha: a ausência de documentação contextual.
+
+Por outro lado, o sistema apresenta aspectos avaliados de forma consistente e positiva, como a integração das funcionalidades de gerente, a validação de CPF elogiada por dois testadores e a estabilidade geral da aplicação. Esses pontos são refletidos nos scores mais altos e indicam que a base do sistema é funcional — os ajustes necessários são localizados, porém estratégicos.
+
+Como limitação, vale registrar que a amostra é pequena (n=6), não probabilística e composta por participantes sem contexto operacional do evento, o que pode ter introduzido viés de cortesia nas respostas e amplificado a percepção de dificuldade em tarefas que um auditor real executaria com mais familiaridade. Recomenda-se reaplicar o SUS após a correção dos problemas de severidade 3 e 4, preferencialmente com usuários do perfil real, para uma avaliação mais precisa da evolução da usabilidade do sistema.
 
 
 
