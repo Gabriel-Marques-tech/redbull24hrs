@@ -160,6 +160,32 @@ main { height: auto !important; }
 .countdown-label { font-size: 12px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
 .countdown-timer { font-size: 30px; font-weight: 800; color: var(--vermelho); font-variant-numeric: tabular-nums; letter-spacing: 2px; }
 
+.stats-acoes { display: flex; align-items: center; gap: 12px; }
+
+.btn-pausar {
+    width: 220px;
+    box-sizing: border-box;
+    padding: 13px 28px;
+    background: #fff;
+    border: 2px solid var(--vermelho);
+    border-radius: 8px;
+    color: var(--vermelho);
+    font-size: 16px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn-pausar:hover:not(:disabled) { background: #fdecef; }
+.btn-pausar:disabled { opacity: 0.6; cursor: default; }
+/* estado retomar: destaca que a competição está pausada */
+.btn-pausar-retomar {
+    background: var(--vermelho);
+    border-color: var(--vermelho);
+    color: #fff;
+}
+.btn-pausar-retomar:hover:not(:disabled) { background: #b10033; }
+
 .btn-finalizar {
     width: 220px;
     box-sizing: border-box;
@@ -170,6 +196,7 @@ main { height: auto !important; }
     color: #fff;
     font-size: 16px;
     font-weight: 700;
+    white-space: nowrap;
     cursor: pointer;
     transition: background 0.15s;
 }
