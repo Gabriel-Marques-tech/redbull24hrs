@@ -5565,41 +5565,40 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ---
 
-⁸ BUSINESS RULES GROUP. **Business Rules Manifesto:** the principles of rule independence. Version 2.0. S. l.: Business Rules Group, 2003. Disponível em: https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf. Acesso em: 27 abr. 2026.
-
-¹ ESPM. **Runaholic Club: lifestyle e comunidade de wellness para a Geração Z**. Disponível em: https://www.espm.br/blog/runaholic-club-lifestyle-e-comunidade-de-wellness-para-a-geracao-z/. Acesso em: 28 abr. 2026.
-
-¹⁰ FIELDING, Roy Thomas. **Architectural Styles and the Design of Network-based Software Architectures**. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: https://ics.uci.edu/~fielding/pubs/dissertation/top.htm. Acesso em: 27 abr. 2026.
-
-³ H.PRIME SAÚDE. **A revolução da geração wellness: por que a saúde se tornou o novo símbolo de sucesso**. Disponível em: https://hprimesaude.com.br/blog/a-revolucao-da-geracao-wellness-por-que-a-saude-se-tornou-o-novo-simbolo-de-sucesso/. Acesso em: 28 abr. 2026.
-
-⁹ JACOBSON, Ivar; SPENCE, Ian; BITTNER, Kurt. **Use-Case 3.0 — The Definitive Guide**. S. l.: Ivar Jacobson International, 2024.
-
-¹¹ MONTGOMERY, Cynthia A.; PORTER, Michael E. (org.). **Estratégia:** a busca da vantagem competitiva. Rio de Janeiro: Elsevier, 1998.
-
-⁴ MUNDO DO MARKETING. **Baly Brasil ultrapassa Red Bull e assume vice-liderança no mercado de energéticos**. Disponível em: https://mundodomarketing.com.br/baly-brasil-ultrapassa-red-bull-e-assume-vice-lideranca-no-mercado-de-energeticos. Acesso em: 28 abr. 2026.
-
-⁶ OSTERWALDER, Alexander; PIGNEUR, Yves. **Value Proposition Design:** how to create products and services customers want. Hoboken: Wiley, 2014.
-
-⁵ PORTER, Michael E. **Estratégia competitiva:** técnicas para análise de indústrias e da concorrência. 2. ed. Rio de Janeiro: Elsevier, 2004.
-
-⁷ PROJECT MANAGEMENT INSTITUTE. **Um guia do conhecimento em gerenciamento de projetos (Guia PMBOK®)**. 7. ed. Newtown Square: PMI, 2021.
-
-² TIMES BRASIL. **Red Bull e marcas para a Geração Z**. Disponível em: https://timesbrasil.com.br/empresas-e-negocios/red-bull-marcas-geracao-z/. Acesso em: 28 abr. 2026.
+¹⁵ ABEOC BRASIL; SEBRAE; FIEC. **III Dimensionamento Econômico do Setor de Eventos no Brasil 2024/2025**. 2026. Disponível em: https://abeoc.org.br/wp-content/uploads/2026/05/III-Dimensionamento-setor-eventos-digital.pdf. Acesso em: 6 jun. 2026.
 
 ¹² ABRAPE. **Setor de eventos segue em crescimento e registra, em 2024, nível de emprego 60,8% superior ao período pré-pandemia**. Associação Brasileira dos Promotores de Eventos, 2024. Disponível em: https://www.abrape.com.br/setor-de-eventos-segue-em-crescimento-e-registra-em-2024-nivel-de-emprego-608-superior-ao-periodo-pre-pandemia/. Acesso em: 1 jun. 2026.
 
-¹³ GRAND VIEW RESEARCH. **Event Management Software Market Size, Share & Trends Analysis Report**. Grand View Research, 2024. Disponível em: https://www.grandviewresearch.com/industry-analysis/event-management-software-market-report. Acesso em: 1 jun. 2026.
+¹⁹ AEGIS AI. **Quanto custa desenvolver software sob medida em 2026? Preços reais + guia**. Aegis AI, 2026. Disponível em: https://www.aegisai.com.br/blog/preco-desenvolvimento-software-sob-medida-2026. Acesso em: 6 jun. 2026.
 
 ¹⁴ BRASIL. Lei nº 13.709, de 14 de agosto de 2018. Lei Geral de Proteção de Dados Pessoais (LGPD). Brasília, DF: Presidência da República, 2018. Disponível em: https://www.gov.br/pt-br/lgpd/lei-geral-de-protecao-de-dados-lgpd. Acesso em: 1 jun. 2026.
 
-¹⁹ AEGIS AI. **Quanto custa desenvolver software sob medida em 2026? Preços reais + guia**. Aegis AI, 2026. Disponível em: https://www.aegisai.com.br/blog/preco-desenvolvimento-software-sob-medida-2026. Acesso em: 6 jun. 2026.
+⁸ BUSINESS RULES GROUP. **Business Rules Manifesto: the principles of rule independence**. Version 2.0. S. l.: Business Rules Group, 2003. Disponível em: https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf. Acesso em: 27 abr. 2026.
 
-¹⁵ ABEOC BRASIL; SEBRAE; FIEC. **III Dimensionamento Econômico do Setor de Eventos no Brasil 2024/2025**. 2026. Disponível em: https://abeoc.org.br/wp-content/uploads/2026/05/III-Dimensionamento-setor-eventos-digital.pdf. Acesso em: 6 jun. 2026.
+¹⁸ DELOITTE INSIGHTS. **2025 Sports Industry Outlook**. Deloitte Insights, 2025. Disponível em: https://www2.deloitte.com/us/en/insights/industry/technology/technology-media-and-telecom-predictions.html. Acesso em: 12 jun. 2026.
+
+¹ ESPM. **Runaholic Club: lifestyle e comunidade de wellness para a Geração Z**. 9 abr. 2026. Disponível em: https://www.espm.br/blog/runaholic-club-lifestyle-e-comunidade-de-wellness-para-a-geracao-z/. Acesso em: 28 abr. 2026.
+
+¹⁰ FIELDING, Roy Thomas. **Architectural Styles and the Design of Network-based Software Architectures**. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: https://ics.uci.edu/~fielding/pubs/dissertation/top.htm. Acesso em: 27 abr. 2026.
 
 ¹⁶ GLOBAL MARKET INSIGHTS. **Event Management Software Market Share, Size and Forecast 2024-2032**. Global Market Insights, 2024. Disponível em: https://www.gminsights.com/industry-analysis/event-management-software-market. Acesso em: 6 jun. 2026.
 
-¹⁷ GRAND VIEW RESEARCH. Latin America Event Management Software Market Size & Outlook, 2030. Grand View Research, 2024. Disponível em: https://www.grandviewresearch.com/horizon/outlook/event-management-software-market/latin-america. Acesso em: 12 jun. 2026.
+¹³ GRAND VIEW RESEARCH. **Event Management Software Market Size, Share & Trends Analysis Report**. Grand View Research, 2024. Disponível em: https://www.grandviewresearch.com/industry-analysis/event-management-software-market-report. Acesso em: 1 jun. 2026.
 
-¹⁸ DELOITTE INSIGHTS. 2025 Sports Industry Outlook. Deloitte Insights, 2025. Disponível em: https://www2.deloitte.com/us/en/insights/industry/technology/technology-media-and-telecom-predictions.html. Acesso em: 12 jun. 2026.
+¹⁷ GRAND VIEW RESEARCH. **Latin America Event Management Software Market Size & Outlook, 2030**. Grand View Research, 2024. Disponível em: https://www.grandviewresearch.com/horizon/outlook/event-management-software-market/latin-america. Acesso em: 12 jun. 2026.
 
+³ H.PRIME SAÚDE. **A revolução da geração wellness: por que a saúde se tornou o novo símbolo de sucesso**. 20 ago. 2025. Disponível em: https://hprimesaude.com.br/blog/a-revolucao-da-geracao-wellness-por-que-a-saude-se-tornou-o-novo-simbolo-de-sucesso/. Acesso em: 28 abr. 2026.
+
+⁹ JACOBSON, Ivar; SPENCE, Ian; BITTNER, Kurt. **Use-Case 3.0 — The Definitive Guide**. S. l.: Ivar Jacobson International, 2024.
+
+¹¹ MONTGOMERY, Cynthia A.; PORTER, Michael E. (org.). **Estratégia: a busca da vantagem competitiva**. Rio de Janeiro: Elsevier, 1998.
+
+⁴ MUNDO DO MARKETING. **Baly Brasil ultrapassa Red Bull e assume vice-liderança no mercado de energéticos**. 23 mai. 2025. Disponível em: https://mundodomarketing.com.br/baly-brasil-ultrapassa-red-bull-e-assume-vice-lideranca-no-mercado-de-energeticos. Acesso em: 28 abr. 2026.
+
+⁶ OSTERWALDER, Alexander; PIGNEUR, Yves. **Value Proposition Design: how to create products and services customers want**. Hoboken: Wiley, 2014.
+
+⁵ PORTER, Michael E. **Estratégia competitiva: técnicas para análise de indústrias e da concorrência**. 2. ed. Rio de Janeiro: Elsevier, 2004.
+
+⁷ PROJECT MANAGEMENT INSTITUTE. **Um guia do conhecimento em gerenciamento de projetos (Guia PMBOK®)**. 7. ed. Newtown Square: PMI, 2021.
+
+² TIMES BRASIL. **Saiba quais são as marcas favoritas pela Geração Z**. 19 fev. 2025. Disponível em: https://timesbrasil.com.br/empresas-e-negocios/red-bull-marcas-geracao-z/. Acesso em: 28 abr. 2026.
