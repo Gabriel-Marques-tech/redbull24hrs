@@ -1819,19 +1819,32 @@ img {
     font-size: 24px;
 }
 
-#modalTurno .campo-pace {
+#modalTurno .campos-km {
+    display: flex;
+    gap: 16px;
     width: 100%;
     margin-top: 10px;
+}
+
+#modalTurno .campo-pace {
+    flex: 1 1 140px;
 }
 
 #modalTurno .campo-pace input {
     width: 100%;
-    padding: 0 20px;
+    padding: 0 16px;
     box-sizing: border-box;
 }
 
 #modalTurno .campo-quilometragem {
-    margin-top: 10px;
+    flex: 1 1 200px;
+    margin-top: 0;
+}
+
+#modalTurno .campo-quilometragem input {
+    width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
 }
 
 #modalTurno .acoes-modal-turno {
