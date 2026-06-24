@@ -197,6 +197,14 @@ export const metricsRepository = {
 				   JOIN teams t2    ON t2.id = a2.team_id
 				   WHERE t2.event_id = $1
 				 ),
+				 pause_tot AS (
+				   -- soma das pausas: intervalos fechados usam duration_seconds;
+				   -- pausa em aberto é calculada ao vivo (NOW() - paused_at)
+				   SELECT COALESCE(SUM(
+				              COALESCE(duration_seconds, EXTRACT(EPOCH FROM (NOW() - paused_at)))
+				          ), 0) AS paused_seconds
+				   FROM pause_log WHERE event_id = $1
+				 ),
 				 ref AS (
 				   SELECT e.status, e.finished_at,
 				          LEAST(
@@ -208,13 +216,14 @@ export const metricsRepository = {
 				 )
 				 SELECT
 				   COALESCE(SUM(s.distance) FILTER (WHERE s.status = 'completed'), 0) AS total_km,
-				   EXTRACT(EPOCH FROM (COALESCE(r.finished_at, NOW()) - r.t0)) / 3600.0 AS elapsed_hours,
+				   GREATEST(0, EXTRACT(EPOCH FROM (COALESCE(r.finished_at, NOW()) - r.t0)) - p.paused_seconds) / 3600.0 AS elapsed_hours,
 				   r.status AS event_status
 				 FROM ref r
+				 CROSS JOIN pause_tot p
 				 LEFT JOIN teams t    ON t.event_id = $1 AND t.deleted_at IS NULL
 				 LEFT JOIN athletes a ON a.team_id = t.id AND a.deleted_at IS NULL
 				 LEFT JOIN shifts s   ON s.athlete_id = a.id
-				 GROUP BY r.t0, r.finished_at, r.status`,
+				 GROUP BY r.t0, r.finished_at, r.status, p.paused_seconds`,
 				[eventId]
 			),
 		]);
