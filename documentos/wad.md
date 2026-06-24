@@ -5300,11 +5300,12 @@ A identidade pretendida associa-se a precisão, integridade de dados e aderênci
 
 ---
 
-_Escreva de que formas a solução da aplicação web atingiu os objetivos descritos na seção 2 deste documento. Indique pontos fortes e pontos a melhorar de maneira geral._
+Ao longo das cinco sprints de desenvolvimento, a RedRun foi construída para substituir o processo manual de apuração de quilômetros no Red Bull 24 Horas por um fluxo digital rastreável, simples de operar e estável o suficiente para funcionar sem interrupções durante 24 horas consecutivas. Os objetivos definidos na seção 2 deste documento foram atingidos na versão entregue. O fluxo de registro de turnos, checkpoints e encerramento de percursos funciona por completo, com cálculo automático de distância, duração e velocidade média, eliminando a transcrição manual para planilha. O dashboard entrega as métricas do evento em tempo real e a exportação em CSV garante que os dados estejam disponíveis para auditoria formal ao final da competição. Além do escopo original, a solução passou a contar com sincronização offline, que salva as informações localmente em caso de queda de internet e as envia ao sistema assim que a conexão é restabelecida, autenticação com separação de acesso entre perfis de gerente e auditor e um aviso automático caso o auditor não registre um checkpoint dentro de 5 minutos.  Os X endpoints implementados, as X migrations implementadas e os X cenários de teste automatizados, todos aprovados, evidenciam a consistência da aplicação em relação aos requisitos definidos.
 
-_Relacione os pontos de melhorias evidenciados nos testes com planos de ações para serem implementadas. O grupo não precisa implementá-las, pode deixar registrado aqui o plano para ações futuras_
+O maior ponto forte da RedRun é a aderência à dinâmica real do evento. A solução foi projetada sem dependências de hardware externo, sem sincronizações prévias com as esteiras e sem pulseiras, o que a diferencia de qualquer alternativa existente no mercado para esse formato de competição. A interface foi pensada para operação sob pressão, com fluxos curtos que permitem registrar um turno em poucos toques, atendendo à necessidade de revezamentos em até no máximo 1 minuto. Os testes de usabilidade realizados reforçam essa avaliação: o sistema obteve score médio de 83,3 no SUS, classificado como "bom" e próximo da faixa "excelente". Os testes de guerrilha, realizados com seis participantes em três tarefas, mostraram que os fluxos de login e criação de evento foram concluídos com mais facilidade, enquanto o fluxo de auditoria concentrou as principais dificuldades, especialmente na falta de orientação contextual para o registro de quilometragem e checkpoints. Um ponto de atenção identificado nos testes foi a percepção de alguns participantes de que precisariam de suporte técnico para usar o sistema, o que é esperado dado que nenhum deles tinha familiaridade com o contexto do evento. Para os auditores reais, essa barreira tende a ser menor.
 
-_Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras_
+[TRABALHOS FUTUROS]
+
 
 # <a name="c8"></a>8. Referências
 
