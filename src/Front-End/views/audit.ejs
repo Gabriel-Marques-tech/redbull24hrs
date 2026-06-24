@@ -163,6 +163,11 @@
     <!-- Modal registrar checkpoint -->
     <div class="modal-turno escondido" id="modalCheckpoint">
         <div class="modal-turno-conteudo modal-checkpoint-conteudo">
+            <div class="checkpoint-cronometro-topo">
+                <span class="checkpoint-cronometro-label">Tempo em curso</span>
+                <span class="checkpoint-cronometro-valor" id="cronometroModal">00:00:00</span>
+            </div>
+
             <div class="checkpoint-corredor">
                 <label for="corredorCheckpointModal">Corredor</label>
                 <select id="corredorCheckpointModal" disabled>
@@ -321,6 +326,16 @@
                     <button class="btn-finalizar-turno-foto" id="btnFinalizarTurnoFoto" type="button">
                         Tirar foto
                     </button>
+                </div>
+            </div>
+
+            <div class="ocr-resultado escondido" id="ocrResultadoTurno">
+                <small class="ocr-label">Leitura da esteira (OCR)</small>
+                <div class="ocr-campos">
+                    <span class="ocr-campo"><label>Velocidade</label><strong id="ocrSpeed">—</strong></span>
+                    <span class="ocr-campo"><label>Distância</label><strong id="ocrDistance">—</strong></span>
+                    <span class="ocr-campo"><label>Pace</label><strong id="ocrPace">—</strong></span>
+                    <span class="ocr-campo"><label>Tempo</label><strong id="ocrTime">—</strong></span>
                 </div>
             </div>
 
