@@ -1794,34 +1794,70 @@ img {
     width: min(720px, calc(100vw - 48px));
     max-height: calc(100vh - 48px);
     padding: 22px 40px 24px;
-    overflow: hidden;
+    overflow-y: auto;
+    justify-content: flex-start;
 }
 
 #modalTurno .modal-turno-conteudo::before {
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     padding-bottom: 8px;
 }
 
 #modalTurno .finalizar-turno-foto {
-    margin-bottom: 14px;
+    margin-bottom: 8px;
+    min-height: 64px;
+}
+
+#modalTurno .finalizar-turno-foto-preview {
+    width: 80px;
+    height: 50px;
+    flex: 0 0 80px;
 }
 
 #modalTurno .campo-turno select,
 #modalTurno .campo-turno input {
-    height: 46px;
+    height: 38px;
+}
+
+#modalTurno .tempo-percorrido {
+    font-size: 24px;
+}
+
+#modalTurno .campos-km {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+#modalTurno .campo-pace {
+    flex: 1 1 140px;
+}
+
+#modalTurno .campo-pace input {
+    width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
 }
 
 #modalTurno .campo-quilometragem {
-    margin-top: 18px;
+    flex: 1 1 200px;
+    margin-top: 0;
+}
+
+#modalTurno .campo-quilometragem input {
+    width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
 }
 
 #modalTurno .acoes-modal-turno {
-    margin-top: 20px;
+    margin-top: 12px;
 }
 
 #modalTurno .modal-turno-conteudo .btn-cancelar-turno,
 #modalTurno .modal-turno-conteudo .btn-registrar-turno {
-    height: 50px;
+    height: 44px;
 }
 
 /* ---------------- MODAL FINALIZAR COMPETICAO (PR #219) ---------------- */
