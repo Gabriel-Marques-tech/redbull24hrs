@@ -77,14 +77,14 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
       sameSite: "strict",
       maxAge: 15 * 60 * 1000
     })
-    res.status(200).json({ user, accessToken });
+    res.status(200).json({ user });
   } catch {
     res.status(500).json({ error: "Erro ao autenticar usuário" });
   }
 };
 
 const refreshToken = async (req: Request, res: Response): Promise<void> => {
-  const  refreshToken  = req.cookies.refreshToken;
+  const  refreshToken  = req.cookies?.refreshToken;
   try {
     const tokens = await AuthService.refresh(refreshToken);
     if (!tokens) {
@@ -110,7 +110,7 @@ const refreshToken = async (req: Request, res: Response): Promise<void> => {
 };
 
 const logout = async (req: Request, res: Response): Promise<void> => {
-  const refreshToken = req.cookies.refreshToken ?? req.body?.refreshToken;
+  const refreshToken = req.cookies?.refreshToken ?? req.body?.refreshToken;
   try {
     await AuthService.logout(refreshToken);
     res.clearCookie('accessToken');
