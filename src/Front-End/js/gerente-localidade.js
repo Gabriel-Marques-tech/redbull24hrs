@@ -4,8 +4,32 @@ const inputCidade   = document.getElementById("cidade");
 const listaEstados  = document.getElementById("listaEstados");
 const listaCidades  = document.getElementById("listaCidades");
 const btnProximo    = document.querySelector(".btn-proximo-localidade");
+const inputFoto     = document.getElementById("fotoCompeticao");
+const previewFoto   = document.getElementById("previewFotoEvento");
 
 const IBGE = "https://servicodados.ibge.gov.br/api/v1/localidades";
+
+// dataURL da foto do evento (persistida em localStorage entre as etapas)
+let fotoDataUrl = null;
+
+function mostrarPreviewEvento(src) {
+    if (!src) { previewFoto.hidden = true; previewFoto.removeAttribute("src"); return; }
+    previewFoto.src = src;
+    previewFoto.hidden = false;
+}
+
+inputFoto.addEventListener("change", async () => {
+    const arquivo = inputFoto.files[0];
+    if (!arquivo) return;
+    try {
+        fotoDataUrl = await lerImagemRedimensionada(arquivo);
+        mostrarPreviewEvento(fotoDataUrl);
+    } catch (e) {
+        alert(e.message || "Não foi possível processar a imagem.");
+        inputFoto.value = "";
+        fotoDataUrl = null;
+    }
+});
 
 // nome do estado -> sigla (UF)
 const ufPorEstado = {};
@@ -109,7 +133,7 @@ btnProximo.addEventListener("click", () => {
         return;
     }
 
-    localStorage.setItem("localidadeCompeticao", JSON.stringify({ nome, estado, cidade, uf: ufPorEstado[estado] }));
+    localStorage.setItem("localidadeCompeticao", JSON.stringify({ nome, estado, cidade, uf: ufPorEstado[estado], foto: fotoDataUrl }));
     window.location.href = "/manager/create-event/schedule";
 });
 
@@ -118,6 +142,7 @@ async function init() {
     await carregarEstados();
     const salvo = JSON.parse(localStorage.getItem("localidadeCompeticao") || "null");
     if (salvo?.nome) inputNome.value = salvo.nome;
+    if (salvo?.foto) { fotoDataUrl = salvo.foto; mostrarPreviewEvento(salvo.foto); }
     if (salvo?.estado && ufPorEstado[salvo.estado]) {
         inputEstado.value = salvo.estado;
         await carregarCidades(ufPorEstado[salvo.estado]);
