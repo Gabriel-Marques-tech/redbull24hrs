@@ -1790,7 +1790,7 @@ img {
     width: min(720px, calc(100vw - 48px));
     max-height: calc(100vh - 48px);
     padding: 22px 40px 24px;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 #modalTurno .modal-turno-conteudo::before {
