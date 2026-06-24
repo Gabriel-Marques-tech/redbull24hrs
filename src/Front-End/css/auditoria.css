@@ -2610,3 +2610,160 @@ html[data-theme="dark"] .btn-cancelar-turno:hover {
     border-color: var(--texto-principal);
     background: rgba(255, 255, 255, 0.08);
 }
+
+html[data-theme="dark"] .corredor-fila:hover {
+    background: rgba(224, 0, 58, 0.12);
+}
+
+html[data-theme="dark"] .corredor-fila.arrastando {
+    background: rgba(224, 0, 58, 0.16);
+    opacity: 0.72;
+}
+
+html[data-theme="dark"] .corredor-fila.alvo {
+    background: rgba(224, 0, 58, 0.20);
+}
+
+/* Modal de checkpoint: composição própria para tablet. */
+html[data-theme="dark"] #modalCheckpoint .modal-checkpoint-conteudo,
+#modalCheckpoint .modal-checkpoint-conteudo {
+    width: min(940px, calc(100vw - 56px));
+    max-height: calc(100vh - 56px);
+    padding: 0 42px 32px;
+    overflow: auto;
+}
+
+#modalCheckpoint .checkpoint-cronometro-topo {
+    margin: 0 -42px 20px;
+    padding: 16px 32px;
+    border-radius: 12px 12px 0 0;
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-cronometro-topo {
+    background: rgba(255, 255, 255, 0.06);
+    border-bottom-color: var(--borda);
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-cronometro-label {
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-cronometro-valor {
+    color: var(--texto-principal);
+}
+
+#modalCheckpoint .checkpoint-corredor {
+    width: 360px;
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-corredor label,
+html[data-theme="dark"] #modalCheckpoint .checkpoint-campo label,
+html[data-theme="dark"] #modalCheckpoint .checkpoint-secao-titulo strong {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-secao-titulo small {
+    color: var(--texto-secundario);
+}
+
+#modalCheckpoint .checkpoint-conteudo {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 36px;
+    min-height: 0;
+    padding: 18px 0 24px;
+    align-items: start;
+}
+
+#modalCheckpoint .checkpoint-foto {
+    padding-right: 0;
+}
+
+#modalCheckpoint .checkpoint-dados {
+    padding-left: 36px;
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-dados {
+    border-left-color: var(--borda);
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-divisor {
+    background: var(--borda);
+}
+
+#modalCheckpoint .checkpoint-foto-preview {
+    height: 210px;
+    margin-top: 16px;
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-foto-preview {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--borda);
+    color: var(--texto-secundario);
+}
+
+#modalCheckpoint .btn-checkpoint-foto {
+    width: min(330px, 100%);
+    height: 48px;
+    margin-top: 16px;
+    border-radius: 8px;
+}
+
+html[data-theme="dark"] #modalCheckpoint .btn-checkpoint-foto {
+    background: transparent;
+    color: var(--vermelho);
+    border-color: var(--vermelho);
+}
+
+#modalCheckpoint .checkpoint-campos {
+    gap: 10px;
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-input-linha input {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-input-linha input::placeholder {
+    color: var(--texto-secundario);
+}
+
+#modalCheckpoint .checkpoint-divisor-inferior {
+    display: none;
+}
+
+#modalCheckpoint .modal-checkpoint-conteudo .checkpoint-acoes {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 8px;
+    padding-top: 20px;
+    border-top: 1px solid var(--borda);
+}
+
+#modalCheckpoint .modal-checkpoint-conteudo .btn-registrar-turno,
+#modalCheckpoint .modal-checkpoint-conteudo .btn-cancelar-turno {
+    position: static;
+    width: 178px;
+    flex: 0 0 178px;
+}
+
+#modalCheckpoint .modal-checkpoint-conteudo .btn-registrar-turno {
+    order: 2;
+}
+
+#modalCheckpoint .modal-checkpoint-conteudo .btn-cancelar-turno {
+    order: 1;
+}
+
+#modalCheckpoint .checkpoint-dados .checkpoint-input-linha {
+    grid-template-columns: minmax(0, 1fr) 44px;
+}
+
+#modalCheckpoint .btn-editar-checkpoint {
+    width: 44px;
+}
+
+.corredor-atual .acao-corredor {
+    margin-top: 10px;
+}
