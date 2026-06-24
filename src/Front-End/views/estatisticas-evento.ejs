@@ -30,6 +30,7 @@
                     ? new Date(evento.date).toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' })
                     : '—';
                 const startedAtIso = evento.started_at ? new Date(evento.started_at).toISOString() : '';
+                const pausedAtIso = evento.paused_at ? new Date(evento.paused_at).toISOString() : '';
                 const tvTotalKm = Number(dashboardStats.totalKm || 0);
                 const tvParticipantCount = Array.isArray(athleteStats) ? athleteStats.length : 0;
             %>
@@ -58,13 +59,18 @@
             <% if (evento.status === 'in_progress') { %>
             <div class="stats-barra-acao">
                 <div class="countdown-bloco">
-                    <span class="countdown-label">Tempo restante</span>
+                    <span class="countdown-label" id="countdownLabel">Tempo restante<%= evento.paused_at ? ' (pausado)' : '' %></span>
                     <span class="countdown-timer" id="countdown">--:--:--</span>
                 </div>
                 <% if (user_role === 'manager') { %>
-                <button type="button" class="btn-finalizar" onclick="finalizarCompetição(<%= evento.id %>)">
-                    Finalizar competição
-                </button>
+                <div class="stats-acoes">
+                    <button type="button" class="btn-pausar<%= evento.paused_at ? ' btn-pausar-retomar' : '' %>" onclick="togglePausa(<%= evento.id %>)">
+                        <%= evento.paused_at ? 'Retomar competição' : 'Pausar competição' %>
+                    </button>
+                    <button type="button" class="btn-finalizar" onclick="finalizarCompetição(<%= evento.id %>)">
+                        Finalizar Competição
+                    </button>
+                </div>
                 <% } %>
             </div>
             <% } %>
@@ -146,6 +152,11 @@
                     const periodos = ['Madrugada', 'Manhã', 'Tarde', 'Noite'];
                     const periodoIcone = { 'Madrugada': '🌙', 'Manhã': '🌅', 'Tarde': '☀️', 'Noite': '🌆' };
                     const kmByHourJson = JSON.stringify(ds.kmByHour);
+                    const fmtDur = (s) => {
+                        s = Math.max(0, Math.floor(Number(s) || 0));
+                        const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), ss = s % 60;
+                        return h > 0 ? `${h}h ${String(m).padStart(2,'0')}min` : `${m}min ${String(ss).padStart(2,'0')}s`;
+                    };
                 %>
 
                 <!-- KPIs de topo -->
@@ -174,6 +185,13 @@
                         <span class="dash-kpi-label">Maior turno</span>
                         <span class="dash-kpi-valor"><%= Number(best.distance).toFixed(1) %> <span class="dash-kpi-unit">km</span></span>
                         <span class="dash-kpi-sub"><%= best.athlete_name %> · <%= dur %></span>
+                    </div>
+                    <% } %>
+                    <% if (pauseInfo && pauseInfo.count > 0) { %>
+                    <div class="dash-kpi">
+                        <span class="dash-kpi-label">Tempo pausado</span>
+                        <span class="dash-kpi-valor"><%= fmtDur(pauseInfo.totalSeconds) %></span>
+                        <span class="dash-kpi-sub"><%= pauseInfo.count %> pausa<%= pauseInfo.count !== 1 ? 's' : '' %> · descontado da duração</span>
                     </div>
                     <% } %>
                 </div>
@@ -328,6 +346,31 @@
 
             <!-- TAB HISTÓRICO -->
             <div class="tab-conteudo tab-oculto" id="tab-historico">
+                <% if (pauseInfo && pauseInfo.count > 0) {
+                    const fmtTs = (v) => v ? new Date(v).toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit' }) : '—';
+                    const fmtDurH = (s) => { s = Math.max(0, Math.floor(Number(s) || 0)); const h = Math.floor(s/3600), m = Math.floor((s%3600)/60), ss = s%60; return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(ss).padStart(2,'0')}`; };
+                %>
+                <div class="historico-equipe-bloco">
+                <h3 class="historico-equipe-nome">Pausas da competição · total <%= fmtDurH(pauseInfo.totalSeconds) %></h3>
+                <div class="tabela-wrapper">
+                <table class="tabela-historico">
+                    <thead>
+                        <tr><th>#</th><th>Pausada em</th><th>Retomada em</th><th>Duração</th></tr>
+                    </thead>
+                    <tbody>
+                        <% pauseInfo.pauses.forEach((p, idx) => { %>
+                        <tr>
+                            <td class="col-num"><%= idx + 1 %></td>
+                            <td><%= fmtTs(p.paused_at) %></td>
+                            <td><%= p.ongoing ? 'Em andamento' : fmtTs(p.resumed_at) %></td>
+                            <td><%= fmtDurH(p.duration_seconds) %><%= p.ongoing ? ' (em curso)' : '' %></td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+                </div>
+                </div>
+                <% } %>
                 <% const shifts = historyEntries.filter(e => e.entry_type === 'shift_start'); %>
                 <% if (shifts.length === 0) { %>
                 <p class="stats-vazio">Nenhum turno registrado.</p>
@@ -748,6 +791,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <script>
     window.STARTED_AT    = '<%= startedAtIso %>';
+    window.PAUSED_AT     = '<%= pausedAtIso %>';
+    window.PAUSED_MS     = <%= Number(evento.paused_ms) || 0 %>;
     window.EVENTO_STATUS = '<%= evento.status %>';
     window.EVENTO_ID     = <%= evento.id %>;
     window.KM_BY_HOUR     = <%- JSON.stringify(dashboardStats.kmByHour) %>;
@@ -785,23 +830,54 @@
         });
     });
 
-    // Countdown
+    // Countdown — congela enquanto pausado e retoma de onde parou ao retomar.
+    // fim = início + 24h + tempo total já pausado. Pausado: usa paused_at como
+    // referência (congela); rodando: usa o relógio atual.
+    const DURACAO_MS = 24 * 60 * 60 * 1000; // 24h em ms
+    const pausaState = {
+        pausedAt: window.PAUSED_AT ? new Date(window.PAUSED_AT).getTime() : null,
+        pausedMs: Number(window.PAUSED_MS) || 0,
+    };
+
+    function atualizar() {
+        const el = document.getElementById('countdown');
+        if (!el || !window.STARTED_AT) return;
+        const fim = new Date(window.STARTED_AT).getTime() + DURACAO_MS + pausaState.pausedMs;
+        const ref = pausaState.pausedAt !== null ? pausaState.pausedAt : Date.now();
+        const diff = fim - ref;
+        if (diff <= 0) { el.textContent = '00:00:00'; return; }
+        const h = String(Math.floor(diff / 3600000)).padStart(2, '0');
+        const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+        const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+        el.textContent = `${h}:${m}:${s}`;
+    }
+
     if (window.EVENTO_STATUS === 'in_progress' && window.STARTED_AT) {
-        const duracao = 24 * 60 * 60 * 1000; // 24h em ms
-        function atualizar() {
-            const agora = Date.now();
-            const fim = new Date(window.STARTED_AT).getTime() + duracao;
-            const diff = fim - agora;
-            const el = document.getElementById('countdown');
-            if (!el) return;
-            if (diff <= 0) { el.textContent = '00:00:00'; return; }
-            const h = String(Math.floor(diff / 3600000)).padStart(2, '0');
-            const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
-            const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
-            el.textContent = `${h}:${m}:${s}`;
-        }
         atualizar();
         setInterval(atualizar, 1000);
+    }
+
+    // Pausar / retomar competição
+    async function togglePausa(eventId) {
+        const btn = document.querySelector('.btn-pausar');
+        const label = document.getElementById('countdownLabel');
+        const pausar = pausaState.pausedAt === null;
+        btn.disabled = true;
+        const res = await authFetch(`/events/${eventId}/${pausar ? 'pause' : 'resume'}`, { method: 'PATCH' });
+        if (res && res.ok) {
+            const ev = await res.json();
+            pausaState.pausedAt = ev.paused_at ? new Date(ev.paused_at).getTime() : null;
+            pausaState.pausedMs = Number(ev.paused_ms) || 0;
+            const pausado = pausaState.pausedAt !== null;
+            btn.textContent = pausado ? 'Retomar competição' : 'Pausar competição';
+            btn.classList.toggle('btn-pausar-retomar', pausado);
+            if (label) label.textContent = pausado ? 'Tempo restante (pausado)' : 'Tempo restante';
+            atualizar();
+        } else {
+            const err = await res?.json().catch(() => ({}));
+            alert(err?.error || 'Erro ao pausar/retomar competição.');
+        }
+        btn.disabled = false;
     }
 
     // Export — modal de seleção de colunas
@@ -965,7 +1041,7 @@
             const err = await res?.json().catch(() => ({}));
             alert(err?.error || 'Erro ao finalizar competição.');
             btn.disabled = false;
-            btn.textContent = 'Finalizar competição';
+            btn.textContent = 'Finalizar Competição';
         }
     }
     </script>
