@@ -1045,7 +1045,7 @@ tbody tr:hover td {
 /* ---------------- BANDEJA CORREDOR ---------------- */
 
 .corredor-atual {
-    cursor: pointer;
+    cursor: default;
     user-select: none;
     padding: 6px 12px;
     border-radius: 8px;
@@ -1053,7 +1053,7 @@ tbody tr:hover td {
 }
 
 .corredor-atual:hover {
-    background-color: #f3f3f3;
+    background-color: transparent;
 }
 
 .seta-bandeja {
@@ -1901,6 +1901,24 @@ img {
     background-color: #bd003a;
 }
 
+html[data-theme="dark"] .modal-lembrete-conteudo {
+    background: var(--fundo-superficie);
+    border: 1px solid var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .modal-lembrete-conteudo h2 {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .modal-lembrete-conteudo p {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .btn-fechar-lembrete {
+    color: var(--texto-principal);
+}
+
 /* ---------------- MODAL KM MENOR QUE ANTERIOR ---------------- */
 
 .modal-km-menor {
@@ -2425,6 +2443,10 @@ html[data-theme="dark"] .proximos-corredores .instrucao-fila {
 }
 
 .acoes-corrida:has(.btn-proximo-corredor:not(.escondido)) .btn-esteira.inativa {
+    display: none;
+}
+
+.btn-esteira.inativa {
     display: none;
 }
 
