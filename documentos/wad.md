@@ -5104,14 +5104,14 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 **Resultados individuais:**
 
-| Participante | Score SUS |
-|---|---|
-| 1- Enzo Braga | 100,0 |
-| 2- Lucas Levi | 75,0 |
-| 3- Paulo Roberto | 87,5 |
-| 4- Lais Victoria | 85,0 |
-| 5- Pedro Negri | 70,0 |
-| 6- Valter Lima | 82,5 |
+| Participante | Score SUS | Classificação |
+|---|---|---|
+| 1- Enzo Braga | 100,0 | Melhor imaginável |
+| 2- Lucas Levi | 75,0 | Bom |
+| 3- Paulo Roberto | 87,5 | Excelente |
+| 4- Lais Victoria | 85,0 | Excelente |
+| 5- Pedro Negri | 70,0 | Bom |
+| 6- Valter Lima | 82,5 | Bom |
 
 
 **Score médio: 83,3**
