@@ -5235,7 +5235,85 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 | Valter Lima | 37,5 | Ruim |
 | **Média final** | **57,1** | **OK / Marginal** |
 
-[INSERIR AQUI os gráficos do Google Forms — imagens 81 a 90]
+
+<div align="center">
+ <sub>Imagem 81 - Gráfico SUS - Pergunta 1</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_1.png" width="100%" alt="Gráfico SUS - Pergunta 1"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 82 - Gráfico SUS - Pergunta 2</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_2.png" width="100%" alt="Gráfico SUS - Pergunta 2"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 83 - Gráfico SUS - Pergunta 3</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_3.png" width="100%" alt="Gráfico SUS - Pergunta 3"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 84 - Gráfico SUS - Pergunta 4</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_4.png" width="100%" alt="Gráfico SUS - Pergunta 4"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 85 - Gráfico SUS - Pergunta 5</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_5.png" width="100%" alt="Gráfico SUS - Pergunta 5"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 86 - Gráfico SUS - Pergunta 6</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_6.png" width="100%" alt="Gráfico SUS - Pergunta 6"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 87 - Gráfico SUS - Pergunta 7</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_7.png" width="100%" alt="Gráfico SUS - Pergunta 7"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 88 - Gráfico SUS - Pergunta 8</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_8.png" width="100%" alt="Gráfico SUS - Pergunta 8"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 89 - Gráfico SUS - Pergunta 9</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_9.png" width="100%" alt="Gráfico SUS - Pergunta 9"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 90 - Gráfico SUS - Pergunta 10</sub><br>
+<img src="./assets/teste-sus/grafico_pergunta_10.png" width="100%" alt="Gráfico SUS - Pergunta 10"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
 
 
 ## Análise dos Resultados
