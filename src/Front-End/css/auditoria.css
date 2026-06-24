@@ -1807,6 +1807,17 @@ img {
     height: 46px;
 }
 
+#modalTurno .campo-pace {
+    width: 100%;
+    margin-top: 18px;
+}
+
+#modalTurno .campo-pace input {
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
 #modalTurno .campo-quilometragem {
     margin-top: 18px;
 }
