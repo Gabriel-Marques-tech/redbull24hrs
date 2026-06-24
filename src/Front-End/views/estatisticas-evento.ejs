@@ -1298,9 +1298,15 @@
 
         async function sairModoTv() {
             clearTimeout(temporizador);
+            temporizador = null;
+            pausado = false;
             modoTv.classList.remove('ativo');
+            modoTv.classList.remove('tv-pausado');
             modoTv.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
+            modoTv.querySelectorAll('[data-tv-tela]').forEach(tela => tela.classList.remove('tv-ativa'));
+            if (progresso) progresso.style.animation = 'none';
+            document.body.style.removeProperty('overflow');
+            btnPausar.textContent = 'Pausar';
             if (document.fullscreenElement) {
                 try { await document.exitFullscreen(); } catch (_) {}
             }

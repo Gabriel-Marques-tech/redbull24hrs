@@ -815,12 +815,14 @@ main { height: auto !important; }
     background: rgba(10, 7, 24, 0.48);
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
     transition: opacity 0.25s, visibility 0.25s;
 }
 
 .tv-config-overlay.aberto {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
 }
 
 .tv-config-drawer {
@@ -1071,12 +1073,14 @@ html[data-theme="dark"] .tv-config-tempo select {
     overflow: auto;
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
     transition: opacity 0.3s, visibility 0.3s;
 }
 
 .modo-tv.ativo {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
 }
 
 .modo-tv-gradiente {
