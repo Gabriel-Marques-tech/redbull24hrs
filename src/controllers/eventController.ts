@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { eventService } from "../services/eventService";
+import { uploadToStorage } from "../utils/supabaseStorage";
 
 export const eventController = {
 	async getEvents(_req: Request, res: Response) {
@@ -18,7 +19,11 @@ export const eventController = {
 			return;
 		}
 		try {
-			const event = await eventService.registerEvent(Number(manager_id), title, local, date);
+			let image_url: string | null = null;
+			if (req.file) {
+				image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos", "events");
+			}
+			const event = await eventService.registerEvent(Number(manager_id), title, local, date, image_url);
 			res.status(201).json(event);
 		} catch (error: any) {
 			res.status(500).json({ error: error.message });
@@ -38,11 +43,19 @@ export const eventController = {
 	async updateEvent(req: Request, res: Response) {
 		const id = Number(req.params.id);
 		const { title, local, date } = req.body;
+		const fields: { title?: string; local?: string; date?: string; image_url?: string | null } = { title, local, date };
 		try {
-			const event = await eventService.updateEvent(id, { title, local, date });
+			if (req.file) {
+				fields.image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos", "events");
+			} else if (req.body.remove_photo === "true" || req.body.remove_photo === true) {
+				// remoção explícita: zera a coluna; o service apaga a foto antiga do Storage
+				fields.image_url = null;
+			}
+			const event = await eventService.updateEvent(id, fields);
 			res.status(200).json(event);
 		} catch (error: any) {
-			res.status(404).json({ error: error.message });
+			const status = error.message.includes("não encontrad") ? 404 : 500;
+			res.status(status).json({ error: error.message });
 		}
 	},
 

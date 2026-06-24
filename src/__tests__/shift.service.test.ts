@@ -63,15 +63,32 @@ describe("shiftService.startShift", () => {
     ).rejects.toThrow("Evento encerrado");
   });
 
-  it("throws RN17 when team does not have 16 runners", async () => {
+  it("throws when a team has no active runners", async () => {
     mockRepo.athleteExists.mockResolvedValue(true);
     mockRepo.eventStatusByAthlete.mockResolvedValue("in_progress");
     mockRepo.validateTeamsForAthlete.mockResolvedValue([
-      { team_id: 1, name: "Team A", count: 10 },
+      { team_id: 1, name: "Team A", count: 0 },
     ]);
     await expect(
       shiftService.startShift(1, 1, "auditor", 1, 0)
-    ).rejects.toThrow("RN17");
+    ).rejects.toThrow("sem corredores");
+  });
+
+  it("allows starting with any number of runners greater than zero", async () => {
+    mockRepo.athleteExists.mockResolvedValue(true);
+    mockRepo.eventStatusByAthlete.mockResolvedValue("in_progress");
+    mockRepo.validateTeamsForAthlete.mockResolvedValue([
+      { team_id: 1, name: "Team A", count: 3 },
+    ]);
+    mockRepo.treadmillExists.mockResolvedValue(true);
+    mockRepo.auditorExists.mockResolvedValue(true);
+    mockRepo.findOpenByTeamWithDetails.mockResolvedValue(null);
+    mockRepo.findOpenByAthlete.mockResolvedValue(null);
+    mockRepo.findOpenByTreadmill.mockResolvedValue(null);
+    mockRepo.start.mockResolvedValue({ id: 1 });
+    await expect(
+      shiftService.startShift(1, 1, "auditor", 1, 0)
+    ).resolves.toBeDefined();
   });
 
   it("throws when treadmill is occupied", async () => {
