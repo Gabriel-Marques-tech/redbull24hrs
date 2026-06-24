@@ -26,4 +26,18 @@ export const imageRepository = {
 		const result = await pool.query(`SELECT 1 FROM checkpoints WHERE id = $1`, [checkpoint_id]);
 		return (result.rowCount ?? 0) > 0;
 	},
+
+	async setShiftOcr(shift_id: number, ocr: { speed: number | null; distance: number | null; pace: string | null; time: string | null }) {
+		await pool.query(
+			`UPDATE shifts SET ocr_speed=$1, ocr_distance=$2, ocr_pace=$3, ocr_time=$4 WHERE id=$5`,
+			[ocr.speed, ocr.distance, ocr.pace, ocr.time, shift_id]
+		);
+	},
+
+	async setCheckpointOcr(checkpoint_id: number, ocr: { speed: number | null; distance: number | null; pace: string | null; time: string | null }) {
+		await pool.query(
+			`UPDATE checkpoints SET ocr_speed=$1, ocr_distance=$2, ocr_pace=$3, ocr_time=$4 WHERE id=$5`,
+			[ocr.speed, ocr.distance, ocr.pace, ocr.time, checkpoint_id]
+		);
+	},
 };
