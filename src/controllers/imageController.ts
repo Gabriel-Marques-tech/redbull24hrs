@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { imageService } from "../services/imageService";
+import { ocrService } from "../services/ocrService";
 
 export const imageController = {
 	async uploadShiftImage(req: Request, res: Response) {
@@ -18,6 +19,19 @@ export const imageController = {
 		} catch (error: any) {
 			const status = error.message.includes("não encontrado") ? 404 : 500;
 			res.status(status).json({ error: error.message });
+		}
+	},
+
+	async analyzeImage(req: Request, res: Response) {
+		if (!req.file) {
+			res.status(400).json({ error: "Nenhuma imagem enviada" });
+			return;
+		}
+		try {
+			const ocr = await ocrService.extractFromImage(req.file.buffer, req.file.mimetype);
+			res.status(200).json({ ocr });
+		} catch (error: any) {
+			res.status(500).json({ error: error.message });
 		}
 	},
 
