@@ -1801,11 +1801,22 @@ img {
 
 #modalTurno .finalizar-turno-foto {
     margin-bottom: 8px;
+    min-height: 64px;
+}
+
+#modalTurno .finalizar-turno-foto-preview {
+    width: 80px;
+    height: 50px;
+    flex: 0 0 80px;
 }
 
 #modalTurno .campo-turno select,
 #modalTurno .campo-turno input {
-    height: 46px;
+    height: 38px;
+}
+
+#modalTurno .tempo-percorrido {
+    font-size: 24px;
 }
 
 #modalTurno .campo-pace {
@@ -1829,7 +1840,7 @@ img {
 
 #modalTurno .modal-turno-conteudo .btn-cancelar-turno,
 #modalTurno .modal-turno-conteudo .btn-registrar-turno {
-    height: 50px;
+    height: 44px;
 }
 
 /* ---------------- MODAL FINALIZAR COMPETICAO (PR #219) ---------------- */
