@@ -3220,17 +3220,17 @@ O DER traduz o MER para a estrutura relacional do PostgreSQL. A versão abaixo r
 
 | Tabela | Colunas consolidadas | Restrições e observações |
 | :--- | :--- | :--- |
-| **managers** | `id`, `cpf`, `name`, `password`, `email` | PK em `id`; CPF validado quando preenchido; `email` único e obrigatório. |
+| **managers** | `id`, `cpf`, `name`, `email`, `password` | PK em `id`; CPF único quando preenchido; `email` único (`VARCHAR(100)`). |
 | **manager_events** | `manager_id`, `event_id` | PK composta; ambas as colunas são FKs com `ON DELETE CASCADE`. |
-| **events** | `id`, `title`, `local`, `date`, `deleted_at`, `status`, `started_at`, `finished_at` | `title` único; `UNIQUE(date, local)`; status `pending`, `in_progress` ou `finished`. |
-| **teams** | `id`, `name`, `event_id`, `deleted_at` | FK obrigatória para `events`; `UNIQUE(event_id, name)`. |
+| **events** | `id`, `title`, `local`, `date`, `status`, `started_at`, `finished_at`, `deleted_at` | `title` e `local` únicos; status `pending`, `in_progress` ou `finished`. |
+| **teams** | `id`, `name`, `event_id`, `deleted_at` | FK obrigatória para `events`; `name` único (`NOT NULL UNIQUE`). |
 | **athletes** | `id`, `name`, `gender`, `cpf`, `team_id`, `deleted_at` | FK obrigatória para `teams`; CPF único quando preenchido. |
-| **auditors** | `id`, `name`, `cpf`, `registration_number`, `is_active`, `password`, `email` | Registro e e-mail únicos; CPF validado quando preenchido. |
-| **shifts** | `id`, `status`, `athlete_id`, `auditor_id`, `manager_id`, `treadmill_id`, `start_at`, `total_time`, `end_at`, `speed`, `km_start`, `km_end`, `distance` | `distance NUMERIC(8,2)`; exatamente um entre `auditor_id` e `manager_id`; FK de atleta e esteira. |
-| **treadmills** | `id`, `number`, `team_id` | `team_id` é FK nullable com `ON DELETE SET NULL`; `number` não possui unicidade no schema atual. |
-| **checkpoints** | `id`, `shift_id`, `timestamp`, `distance`, `type`, `reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`, `sync_id` | Distâncias em `NUMERIC(8,2)`; `sync_id` possui índice único parcial; campos de revisão são nullable. |
-| **logs** | `id`, `shift_id`, `timestamp`, `type`, `checkpoint_id`, `old_value`, `new_value`, `author_id`, `author_role`, `justification` | Tipos: `created`, `updated`, `finished`, `abandoned`, `force_closed`; valores em `NUMERIC(8,2)`; vínculo com checkpoint é opcional. |
-| **refresh_tokens** | `id`, `token_hash`, `manager_id`, `auditor_id`, `expires_at`, `revoked_at`, `created_at` | Exatamente um proprietário; FKs para gerente e auditor com `ON DELETE CASCADE`. |
+| **auditors** | `id`, `name`, `cpf`, `registration_number`, `is_active`, `email`, `password` | `registration_number` único (`INT NOT NULL UNIQUE`); `email` único (`VARCHAR(100)`); CPF único quando preenchido. |
+| **shifts** | `id`, `status`, `athlete_id`, `auditor_id`, `manager_id`, `treadmill_id`, `start_at`, `total_time`, `end_at`, `speed`, `km_start`, `km_end`, `distance` | Status: `pending`, `in_progress` ou `completed`; `speed`, `km_start`, `km_end`, `distance` são `INT NOT NULL`; FKs para atleta, auditor, gerente e esteira. |
+| **treadmills** | `id`, `shift_id`, `number` | `shift_id` é FK para `shifts`; `number` é `INT NOT NULL UNIQUE`. |
+| **checkpoints** | `id`, `shift_id`, `timestamp`, `distance`, `type`, `reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`, `sync_id` | `reviewed` é `BOOLEAN NOT NULL DEFAULT FALSE`; `distance` e `old_distance` são `INT NOT NULL`; `sync_id` é `VARCHAR(64)`; campos de revisão são nullable. |
+| **logs** | `id`, `shift_id`, `timestamp`, `type`, `checkpoint_id`, `old_value`, `new_value`, `author_id`, `author_role`, `justification` | Tipos: `created`, `updated`, `finished`; `old_value` e `new_value` são `INT NOT NULL`; `author_role` é `VARCHAR(20)`; `justification` é `VARCHAR(400)`; vínculo com checkpoint é opcional. |
+| **refresh_tokens** | `id`, `token_hash`, `manager_id`, `auditor_id`, `expires_at`, `revoked_at`, `created_at` | `token_hash` é `VARCHAR(255) UNIQUE NOT NULL`; `expires_at` é `TIMESTAMP NOT NULL`; `created_at` tem `DEFAULT CURRENT_TIMESTAMP`; exatamente um proprietário entre gerente e auditor. |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -3247,10 +3247,11 @@ O DER traduz o MER para a estrutura relacional do PostgreSQL. A versão abaixo r
 | **manager_events** | `event_id` | events | N:1 | `ON DELETE CASCADE` |
 | **teams** | `event_id` | events | N:1 | `ON DELETE CASCADE` |
 | **athletes** | `team_id` | teams | N:1 | `ON DELETE CASCADE` |
-| **treadmills** | `team_id` | teams | N:1 opcional | `ON DELETE SET NULL` |
+| **treadmills** | `shift_id` | shifts | N:1 | Padrão PostgreSQL (`NO ACTION`) |
 | **shifts** | `athlete_id` | athletes | N:1 | `ON DELETE RESTRICT` |
+| **shifts** | `auditor_id` | auditors | N:1 opcional | Padrão PostgreSQL (`NO ACTION`) |
 | **shifts** | `manager_id` | managers | N:1 opcional | Padrão PostgreSQL (`NO ACTION`) |
-| **shifts** | `treadmill_id` | treadmills | N:1 opcional | `ON DELETE RESTRICT` |
+| **shifts** | `treadmill_id` | treadmills | 1:1 | Padrão PostgreSQL (`NO ACTION`) |
 | **checkpoints** | `shift_id` | shifts | N:1 | `ON DELETE CASCADE` |
 | **logs** | `shift_id` | shifts | N:1 | `ON DELETE CASCADE` |
 | **logs** | `checkpoint_id` | checkpoints | N:1 opcional | `ON DELETE CASCADE` |
@@ -3261,15 +3262,6 @@ O DER traduz o MER para a estrutura relacional do PostgreSQL. A versão abaixo r
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
-
-#### Pendências de integridade identificadas
-
-A consolidação das migrations revelou dois pontos que devem ser tratados em migrations futuras. Eles são documentados aqui para que o DER não atribua ao banco garantias que ainda não existem:
-
-1. A migration `008_managerAsAuditor.sql` remove a constraint `fk_shifts_auditor` para tornar `auditor_id` opcional, mas não recria a FK para `auditors(id)`. Assim, no schema atual, `shifts.auditor_id` participa do `CHECK` de operador, porém não possui integridade referencial.
-2. A migration `015_treadmillNumberNotUnique.sql` remove a unicidade global de `treadmills.number`, mas não cria uma constraint composta como `UNIQUE(team_id, number)`. Portanto, o banco atualmente permite números repetidos inclusive dentro da mesma equipe.
-
-Essas pendências não alteram a estrutura visual principal do domínio, mas precisam ser consideradas em validações e em uma próxima evolução do modelo físico.
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
