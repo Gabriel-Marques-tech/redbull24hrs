@@ -4,8 +4,11 @@ import { exportService } from "../services/exportService";
 export const exportController = {
 	async exportShifts(req: Request, res: Response) {
 		const eventId = Number(req.params.eventId);
+		const selectedColumns = req.query.columns
+			? String(req.query.columns).split(",").filter(Boolean)
+			: undefined;
 		try {
-			const buffer = await exportService.shiftsXlsx(eventId);
+			const buffer = await exportService.shiftsXlsx(eventId, selectedColumns);
 			res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 			res.setHeader("Content-Disposition", `attachment; filename="turnos-${eventId}.xlsx"`);
 			res.status(200).send(buffer);

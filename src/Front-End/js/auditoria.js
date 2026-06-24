@@ -71,6 +71,7 @@ function iniciarTimer(inicial = 0) {
     segundos = inicial
     cronometro.textContent = formatarTempo(segundos)
     document.body.classList.add('corrida-ativa')
+    if (cronometroModal) cronometroModal.textContent = formatarTempo(segundos)
     timerInterval = setInterval(() => {
         segundos++
         cronometro.textContent = formatarTempo(segundos)

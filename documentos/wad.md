@@ -1857,29 +1857,65 @@ TURNOS
 ---
 A seção de Diagramas de Classes Arquiteturais apresenta a modelagem estrutural dos principais módulos do sistema, evidenciando as classes, responsabilidades e relacionamentos existentes entre os componentes da aplicação. Esses diagramas auxiliam na compreensão da organização interna do software, demonstrando como entidades, serviços, controladores e repositórios interagem para garantir o funcionamento adequado das funcionalidades implementadas.
 
+ALERTAS
+
+<div align="center">
+  <sub>Imagem 20 - Diagrama de Classes Arquiteturais - ALERTAS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/ALERTS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 1"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+AUDITORIA
+
+<div align="center">
+  <sub>Imagem 21 - Diagrama de Classes Arquiteturais - AUDITORIA </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/AUDIT_LOGS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 2"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+AUTENTICAÇÃO
+
+<div align="center">
+  <sub>Imagem 22 - Diagrama de Classes Arquiteturais - AUTENTICAÇÃO </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/AUTH_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 3"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
 DASHBOARD
 
 <div align="center">
-  <sub>Imagem 20 - Diagrama de Classes Arquiteturais - DASHBOARD </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Imagem 23 - Diagrama de Classes Arquiteturais - DASHBOARD </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 4"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
-EVENTS
+EVENTOS
 
 <div align="center">
-  <sub>Imagem 21 - Diagrama de Classes Arquiteturais - EVENTS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/EVENTS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Imagem 24 - Diagrama de Classes Arquiteturais - EVENTOS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/EVENTS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 5"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
-HISTORY
+EXPORTAÇÃO
 
 <div align="center">
-  <sub>Imagem 22 - Diagrama de Classes Arquiteturais - HISTORY </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/HISTORY_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Imagem 25 - Diagrama de Classes Arquiteturais - EXPORTAÇÃO </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/EXPORT_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 6"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+HISTÓRICO
+
+<div align="center">
+  <sub>Imagem 26 - Diagrama de Classes Arquiteturais - HISTÓRICO </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/HISTORY_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 7"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1887,26 +1923,35 @@ HISTORY
 LOGS
 
 <div align="center">
-  <sub>Imagem 23 - Diagrama de Classes Arquiteturais - LOGS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/LOGS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Imagem 27 - Diagrama de Classes Arquiteturais - LOGS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/LOGS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 8"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
-TEAMS
+MÉTRICAS
 
 <div align="center">
-  <sub>Imagem 24 - Diagrama de Classes Arquiteturais - TEAMS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/TEAMS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Imagem 28 - Diagrama de Classes Arquiteturais - MÉTRICAS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/METRICS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 9"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
-TURNS
+EQUIPES
 
 <div align="center">
-  <sub>Imagem 25 - Diagrama de Classes Arquiteturais - TURNS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/TURNS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Imagem 29 - Diagrama de Classes Arquiteturais - TEAMS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/TEAMS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 10"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+TURNOS
+
+<div align="center">
+  <sub>Imagem 30 - Diagrama de Classes Arquiteturais - TURNOS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/TURNS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 11"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1917,7 +1962,7 @@ TURNS
 O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 Horas a partir da prática **Light Use-Case Modeling** descrita em Jacobson et al.[⁹](#8-referências), evoluindo para o nível **System Boundary Established** ao incluir todos os atores e casos de uso planejados para o MVP. A notação adotada segue o guia _Use-Case 3.0 — The Definitive Guide_: atores são representados por bonecos-palito, casos de uso por elipses contidas dentro do retângulo do _System of Interest_, associações por linhas contínuas com setas indicando o iniciador da interação, `<<include>>` por seta tracejada apontando do caso-base para o caso obrigatoriamente incluído, e `<<extend>>` por seta tracejada apontando do caso opcional para o caso-base que ele estende.
 
 <div align="center">
-  <sub>Imagem 26 - Diagrama Casos de Uso</sub><br>
+  <sub>Imagem 31 - Diagrama Casos de Uso</sub><br>
   <img src= "./assets/use_case/use_case.jpeg" width="100%" alt="Casos de uso"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1987,7 +2032,7 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação UML, com o objetivo de representar a estrutura do sistema por meio de suas classes, atributos, relacionamentos e responsabilidades. A modelagem organiza logicamente os elementos do domínio do evento Red Bull 24h, facilitando a compreensão das dependências entre as entidades e da solução proposta pelo grupo.
 
 <div align = "center">
-  <sub>Imagem 27 - Diagrama de Classes de Domínio</sub><br>
+  <sub>Imagem 32 - Diagrama de Classes de Domínio</sub><br>
   <img src="./assets/classes_dominio/diagrama_classes.svg" width="100%" alt="Diagrama de Classes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2008,7 +2053,7 @@ A seguir, cada diagrama é apresentado com uma descrição detalhada de seus flu
 O Diagrama de Sequência de Eventos cobre quatro fluxos integrados: a criação do evento, o ciclo de vida (início e encerramento pelo gerente), a consulta de métricas e placar, e a exportação de dados para auditoria.
 
 <div align="center">
-  <sub>Imagem 28 - Diagrama de Sequencia: Eventos</sub><br>
+  <sub>Imagem 33 - Diagrama de Sequencia: Eventos</sub><br>
   <img src="./assets/diagrama_sequencia/Events_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2035,7 +2080,7 @@ Não há fluxos alternativos explícitos neste diagrama. Falhas de validação n
 O Diagrama de Sequência de Equipes cobre quatro fluxos: cadastro de equipe, cadastro individual de atletas, consulta de equipe com seus atletas e consulta de quilometragem acumulada por equipe.
 
 <div align="center">
-  <sub>Imagem 29 - Diagrama de Sequência: Equipes</sub>
+  <sub>Imagem 34 - Diagrama de Sequência: Equipes</sub>
     <br><img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026 </sub>
   <br><br><br>
@@ -2062,7 +2107,7 @@ Não há fluxos alternativos explícitos neste diagrama. Erros de validação, c
 O Diagrama de Sequência de Turnos mapeia cinco fluxos: inicialização do turno com verificação de disponibilidade, registro de checkpoints obrigatórios, registro de checkpoints voluntários, encerramento do turno com cálculo automático de métricas, e abandono de turno com justificativa obrigatória (RF014).
 
 <div align="center">
-  <sub>Imagem 30 - Diagrama de Sequência: Turnos</sub><br>
+  <sub>Imagem 35 - Diagrama de Sequência: Turnos</sub><br>
   <img src="./assets/diagrama_sequencia/Turns_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de turnos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2095,7 +2140,7 @@ O Diagrama de Sequência de Turnos mapeia cinco fluxos: inicialização do turno
 O Diagrama de Sequência de Histórico cobre dois fluxos: a listagem de registros históricos de um evento com filtros opcionais e a correção retroativa de um checkpoint com geração de trilha de auditoria imutável.
 
 <div align="center">
-  <sub>Imagem 31 - Diagrama de Sequência: Historico</sub><br>
+  <sub>Imagem 36 - Diagrama de Sequência: Historico</sub><br>
   <img src="./assets/diagrama_sequencia/History_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2118,7 +2163,7 @@ O Diagrama de Sequência de Histórico cobre dois fluxos: a listagem de registro
 O Diagrama de Registros e Sincronização cobre dois fluxos: a correção retroativa de checkpoints com trilha de auditoria imutável e a sincronização offline de checkpoints acumulados localmente, ambos implementados.
 
 <div align="center">
-  <sub>Imagem 32 - Diagrama de Sequência: Registros/Sync</sub><br>
+  <sub>Imagem 37 - Diagrama de Sequência: Registros/Sync</sub><br>
   <img src="./assets/diagrama_sequencia/Logs_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de registros e sync"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2143,7 +2188,7 @@ O Diagrama de Registros e Sincronização cobre dois fluxos: a correção retroa
 O Diagrama de Sequência do Dashboard cobre dois fluxos: o polling automático de métricas para atualização contínua da tela e o healthcheck de conectividade com o banco de dados (planejado, não implementado).
 
 <div align="center">
-  <sub>Imagem 33 - Diagrama de Sequência: Dashboard</sub><br>
+  <sub>Imagem 38 - Diagrama de Sequência: Dashboard</sub><br>
   <img src="assets/diagrama_sequencia/Dashboard_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do painel de controle (dashboard)"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2166,7 +2211,7 @@ O Diagrama de Sequência do Dashboard cobre dois fluxos: o polling automático d
 O Diagrama de Sequência de Autenticação cobre cinco fluxos integrados que formam o ciclo completo de identidade da aplicação: cadastro inicial de gerente e auditor, login com emissão de tokens, validação de requisição autenticada via `requireAuth`, renovação silenciosa de sessão via `requirePageAuth` e logout com revogação do refresh token. Atende RF027 (RN38, RN39, RN40, RN41).
 
 <div align="center">
-  <sub>Imagem 34 - Diagrama de Sequência: Autenticação</sub><br>
+  <sub>Imagem 39 - Diagrama de Sequência: Autenticação</sub><br>
   <img src="assets/diagrama_sequencia/Auth_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do fluxo de autenticação JWT com refresh token rotativo"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2199,7 +2244,7 @@ O Diagrama de Sequência de Autenticação cobre cinco fluxos integrados que for
 O Diagrama de Alertas cobre o fluxo de consulta periódica de inconsistências operacionais detectadas em tempo real: ausência de checkpoint prolongada, corredor sem rotação dentro do período configurado e quilometragem inválida. Atende RF028, RF029, RF039 (RN11, RN12).
 
 <div align="center">
-  <sub>Imagem 35 - Diagrama de Sequência: Alertas e Inconsistências</sub><br>
+  <sub>Imagem 40 - Diagrama de Sequência: Alertas e Inconsistências</sub><br>
   <img src="assets/diagrama_sequencia/Alerts_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do fluxo de alertas e inconsistências operacionais"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2222,7 +2267,7 @@ O auditor (ou sistema de monitoramento) dispara `GET /audit/alerts?event_id={id}
 O Diagrama de Logs de Auditoria cobre dois fluxos: a consulta paginada da trilha imutável de edições e a geração automática de registros quando um checkpoint é corrigido retroativamente. A tabela `logs` é append-only — nenhum registro pode ser alterado ou removido. Atende RF022, RF024 (RN23, RN24).
 
 <div align="center">
-  <sub>Imagem 36 - Diagrama de Sequência: Logs de Auditoria</sub><br>
+  <sub>Imagem 41 - Diagrama de Sequência: Logs de Auditoria</sub><br>
   <img src="assets/diagrama_sequencia/AuditLogs_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência dos logs de auditoria imutáveis"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2245,7 +2290,7 @@ O Diagrama de Logs de Auditoria cobre dois fluxos: a consulta paginada da trilha
 O Diagrama de Exportação cobre dois endpoints que serializam dados do evento em formato CSV para auditoria externa: exportação de turnos e exportação de checkpoints. Ambos requerem autenticação e retornam arquivo para download direto. Atende RF047, RF048 (RN26).
 
 <div align="center">
-  <sub>Imagem 37 - Diagrama de Sequência: Exportação CSV</sub><br>
+  <sub>Imagem 42 - Diagrama de Sequência: Exportação CSV</sub><br>
   <img src="assets/diagrama_sequencia/Export_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência da exportação de dados em CSV"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2268,7 +2313,7 @@ O Diagrama de Exportação cobre dois endpoints que serializam dados do evento e
 O Diagrama de Métricas de Atleta cobre cinco endpoints que expõem o desempenho individual: ranking por km, histórico de turnos, snapshots temporais, desempenho consolidado e link público de compartilhamento (RF050 — único endpoint público do sistema, sem autenticação). Atende RF035–RF037, RF049, RF050, RF052 (RN10, RN36).
 
 <div align="center">
-  <sub>Imagem 38 - Diagrama de Sequência: Métricas de Atleta</sub><br>
+  <sub>Imagem 43 - Diagrama de Sequência: Métricas de Atleta</sub><br>
   <img src="assets/diagrama_sequencia/Metrics_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência das métricas individuais de atletas e link de compartilhamento"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2311,7 +2356,7 @@ _Ao menos um fluxo relevante em UML ou BPMN. Use a notação da ferramenta escol
 O Diagrama de Implantação UML da RedRun descreve como os artefatos de software são distribuídos sobre os nós físicos e de execução que compõem o sistema, os protocolos de comunicação utilizados entre eles e as dependências de infraestrutura que sustentam a operação da aplicação durante o evento Red Bull 24 Horas.
 
 <div align="center">
-  <sub>Imagem 39 – Diagrama de Implantação (Sprint 4)</sub><br>
+  <sub>Imagem 44 – Diagrama de Implantação (Sprint 4)</sub><br>
   <img src="assets/diagrama_implantacao/implantacao.svg" width="100%" alt="Diagrama de Implantação RedRun — Sprint 4"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -2523,7 +2568,7 @@ A seguir, são apresentados os wireframes de baixa e média fidelidade desenvolv
 O wireframe de baixa fidelidade representa a estrutura inicial das telas, com foco na disposição dos elementos e nos fluxos principais de navegação. Nesta etapa, foram mapeadas as telas essenciais do sistema, desde o cadastro pré-evento até o acompanhamento das esteiras em tempo real, sem preocupação com detalhamento visual ou componentes definitivos.
 
 <div align="center">
-  <sub>Imagem 40 - Wireframe de Baixa Fidelidade</sub><br>
+  <sub>Imagem 45 - Wireframe de Baixa Fidelidade</sub><br>
   <img src="./assets/wireframes/wireframe-baixa-fidelidade.svg" width="900px" alt="Wireframe de baixa fidelidade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2577,7 +2622,7 @@ Os wireframes de média fidelidade foram desenvolvidos a partir da evolução di
 O conjunto de telas cobre todos os fluxos críticos do sistema: cadastro pré-evento, operação em tempo real (início, checkpoint e encerramento de turno), detecção de inconsistências e visualização de métricas consolidadas.
 
 <div align="center">
-  <sub>Imagem 41 - Wireframe de Média Fidelidade</sub><br>
+  <sub>Imagem 46 - Wireframe de Média Fidelidade</sub><br>
   <img src="./assets/wireframes/Wireframe-Média-Fidelidade.svg" width="900px" alt="Wireframe de média fidelidade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2725,7 +2770,7 @@ A paleta cromática da aplicação foi derivada diretamente das cores institucio
 As cores neutras complementam o sistema cromático com a função de sustentar legibilidade e organização hierárquica. O branco (#FFFFFF) é o fundo padrão de toda a aplicação, garantindo amplitude visual e contraste adequado com os demais elementos. O preto (#0D0D0D) é reservado ao texto de maior peso, como títulos e dados críticos de quilometragem. O cinza médio (#6B6B6B) atende textos secundários, rótulos e informações de suporte, reduzindo a densidade visual sem eliminar o conteúdo. Já o cinza claro (#D4D4D4) é empregado em bordas, linhas divisórias e planos de fundo de campos, delimitando espaços e organizando os blocos de informação de forma discreta.
 
 <div align="center">
-  <sub>Imagem 42 - Paleta de Cores da Aplicação</sub><br>
+  <sub>Imagem 47 - Paleta de Cores da Aplicação</sub><br>
   <img src="./assets/guia-de-estilos/paleta-de-cores.png" width="900px" alt="Paleta de Cores"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2743,7 +2788,7 @@ A tipografia de uma interface vai além da escolha de uma fonte: ela estrutura a
 Para a aplicação Red Bull 24 Horas, foi adotada exclusivamente a fonte Inter, aplicada em diferentes pesos e tamanhos para construir toda a hierarquia visual da interface. A Inter é uma família tipográfica de código aberto projetada especificamente para telas, com alta legibilidade em tamanhos reduzidos e excelente desempenho em displays de diferentes densidades. Sua geometria neutra e suas proporções equilibradas fazem dela uma escolha sólida para interfaces que precisam exibir dados numéricos com precisão, como registros de quilometragem e tempos de etapa, sem que a fonte concorra com o conteúdo. Os pesos utilizados variam do Regular (400) ao Black (900), cada um com uma função definida na escala tipográfica do projeto.
 
 <div align="center">
-  <sub>Imagem 43 - Tipografia da Aplicação</sub><br>
+  <sub>Imagem 48 - Tipografia da Aplicação</sub><br>
   <img src="./assets/guia-de-estilos/tipografia.png" width="900px" alt="Tipografia"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2762,7 +2807,7 @@ A nossa aplicação para a Red Bull 24 Horas utiliza ícones do Iconify, bibliot
 Cada ícone desempenha um papel funcional específico, seja representando métricas no dashboard, identificando campos nos formulários de registro ou sinalizando ações de navegação. 
 
 <div align="center">
-  <sub>Imagem 44 - Iconografia da Aplicação</sub><br>
+  <sub>Imagem 49 - Iconografia da Aplicação</sub><br>
   <img src="./assets/guia-de-estilos/iconografia.png" width="900px" alt="Iconografia da Cores"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2827,7 +2872,7 @@ As telas apresentadas a seguir representam os principais fluxos da solução des
 A tela de login representa o ponto de entrada da plataforma, permitindo a autenticação dos usuários por meio de suas credenciais. Embora gerentes e auditores utilizem a mesma interface de acesso, o sistema identifica automaticamente o perfil associado ao usuário informado e o direciona para o ambiente correspondente às suas responsabilidades. Dessa forma, cada usuário acessa apenas as funcionalidades necessárias para a execução de suas atividades.
 
 <div align="center">
-  <sub>Imagem 45 - Login</sub><br>
+  <sub>Imagem 50 - Login</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/tela-login.svg" width="900px" alt="Login"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2842,7 +2887,7 @@ Após a autenticação, os usuários com perfil de gerente são direcionados par
 Após realizar o login, o gerente é direcionado para a tela inicial da plataforma. Nessa interface, é possível visualizar as competições cadastradas e acessar rapidamente as principais funcionalidades do sistema. A partir dos cards das competições, o gerente pode selecionar um evento para acessar o [Histórico da Competição](#histórico-da-competição), onde são exibidos os registros realizados durante a corrida. Essa funcionalidade está relacionada às User Stories US04, US05 e US06, pois permite acompanhar os dados consolidados, consultar o histórico completo e visualizar os quilômetros acumulados por equipe. Além disso, o botão principal permite iniciar o processo de cadastro de uma nova competição.
 
 <div align="center">
-  <sub>Imagem 46 - Tela Inicial do Gerente</sub><br>
+  <sub>Imagem 51 - Tela Inicial do Gerente</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/tela-inicial-gerente.svg" width="900px" alt="Tela Inicial do Gerente"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2853,7 +2898,7 @@ Após realizar o login, o gerente é direcionado para a tela inicial da platafor
 A primeira etapa do cadastro permite ao gerente informar a localização da competição, selecionando o estado e a cidade em que o evento será realizado. Essas informações ajudam a identificar e organizar a competição dentro da plataforma, garantindo que o evento seja cadastrado com dados básicos suficientes para seu acompanhamento posterior.
 
 <div align="center">
-  <sub>Imagem 47 - Informações Gerais</sub><br>
+  <sub>Imagem 52 - Informações Gerais</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/configurar-competicao/tela-criar-competicao-1.svg" width="900px" alt="Informações Gerais"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2865,7 +2910,7 @@ A primeira etapa do cadastro permite ao gerente informar a localização da comp
 Nesta etapa, o gerente informa a data e o horário de realização da competição. Esses dados são utilizados pelo sistema para identificar o momento em que o evento ocorrerá, auxiliando na organização das atividades de auditoria e no gerenciamento dos participantes. Além disso, as informações definidas nessa etapa servem como referência para os registros e estatísticas gerados ao longo da competição.
 
 <div align="center">
-  <sub>Imagem 48 - Data e Horário da Competição</sub><br>
+  <sub>Imagem 53 - Data e Horário da Competição</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/configurar-competicao/tela-criar-competicao-2.svg" width="900px" alt="Data e Horário da Competição"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2876,7 +2921,7 @@ Nesta etapa, o gerente informa a data e o horário de realização da competiç�
 Nesta etapa, o gerente seleciona ou cadastra as equipes participantes da competição, garantindo que todos os grupos estejam devidamente vinculados ao evento antes de seu início. Essa definição permite que os registros realizados posteriormente sejam organizados por equipe, apoiando a visualização consolidada prevista nas User Stories US04 e US06.
 
 <div align="center">
-  <sub>Imagem 49 - Equipes Participantes</sub><br>
+  <sub>Imagem 54 - Equipes Participantes</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/configurar-competicao/tela-criar-competicao-3.svg" width="900px" alt="Equipes Participantes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2887,7 +2932,7 @@ Nesta etapa, o gerente seleciona ou cadastra as equipes participantes da competi
 Nesta etapa, o gerente vincula os atletas às equipes participantes da competição. Essa configuração contribui para a rastreabilidade individual dos participantes, permitindo que os registros da corrida sejam associados aos atletas corretos, conforme previsto na User Story US07. Após o preenchimento das informações necessárias, o usuário pode concluir o processo de criação do evento. Ao finalizar o cadastro, o sistema retorna automaticamente para a [tela inicial do gerente](#tela-inicial-do-gerente), onde a competição recém-criada passa a ser exibida em um card com suas principais informações.
 
 <div align="center">
-  <sub>Imagem 50 - Atletas Participantes</sub><br>
+  <sub>Imagem 55 - Atletas Participantes</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/configurar-competicao/tela-criar-competicao-4.svg" width="900px" alt="Atletas Participantes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2904,7 +2949,7 @@ Em algumas etapas do fluxo, são apresentadas duas imagens consecutivas da mesma
 Após realizar o [login](#tela-de-login-2), o auditor é direcionado para sua tela inicial. Nessa interface, são exibidas as competições disponíveis para acompanhamento, permitindo que o usuário identifique rapidamente os eventos em andamento ou aqueles que aguardam o início da auditoria. Ao clicar no botão de início da auditoria, o sistema direciona o usuário para o fluxo de configuração do acompanhamento, no qual serão selecionadas a competição, a equipe e a esteira. A partir dessa tela, o auditor também pode acessar ações relacionadas a cada competição, como consultar o [Histórico da Competição](#histórico-da-competição). A tela funciona como ponto central de acesso às atividades operacionais do auditor, facilitando a navegação para as competições sob sua responsabilidade.
 
 <div align="center">
-  <sub>Imagem 51 - Tela Inicial do Auditor</sub><br>
+  <sub>Imagem 56 - Tela Inicial do Auditor</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/tela-inicial-auditor.svg" width="900px" alt="Tela Inicial do Auditor"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2915,14 +2960,14 @@ Após realizar o [login](#tela-de-login-2), o auditor é direcionado para sua te
 Após iniciar a auditoria, o sistema apresenta as competições disponíveis para acompanhamento. Nessa etapa, o auditor seleciona o evento que deseja monitorar, garantindo que os registros realizados sejam vinculados à competição correta. As imagens demonstram o estado padrão da interface e o estado após a seleção de uma competição.
 
 <div align="center">
-  <sub>Imagem 52 - Seleção da Competição: estado padrão</sub><br>
+  <sub>Imagem 57 - Seleção da Competição: estado padrão</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-competicao-agendada-1.svg" width="900px" alt="Seleção da Competição em estado padrão"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 53 - Seleção da Competição: item selecionado</sub><br>
+  <sub>Imagem 58 - Seleção da Competição: item selecionado</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-competicao-agendada-2.svg" width="900px" alt="Seleção da Competição com item selecionado"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2933,14 +2978,14 @@ Após iniciar a auditoria, o sistema apresenta as competições disponíveis par
 Após selecionar a competição, o auditor define qual equipe participará do acompanhamento na esteira auditada. A tela apresenta campos de seleção que permitem associar a equipe ao processo de auditoria antes do início da corrida, atendendo ao critério de seleção de equipe previsto na US01. As imagens demonstram o estado padrão da interface e o estado após a seleção da equipe.
 
 <div align="center">
-  <sub>Imagem 54 - Seleção da Equipe: estado padrão</sub><br>
+  <sub>Imagem 59 - Seleção da Equipe: estado padrão</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-equipe-1.svg" width="900px" alt="Seleção da Equipe em estado padrão"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 55 - Seleção da Equipe: item selecionado</sub><br>
+  <sub>Imagem 60 - Seleção da Equipe: item selecionado</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-equipe-2.svg" width="900px" alt="Seleção da Equipe com item selecionado"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2952,14 +2997,14 @@ Após selecionar a competição, o auditor define qual equipe participará do ac
 Nesta etapa, o auditor seleciona a esteira que será utilizada durante a competição. Essa definição permite que os registros realizados posteriormente sejam vinculados ao equipamento correto, atendendo ao critério de seleção de esteira previsto na US01 e facilitando a organização dos dados coletados durante o evento. As imagens demonstram o estado padrão da interface e o estado após a seleção da esteira.
 
 <div align="center">
-  <sub>Imagem 56 - Seleção da Esteira: estado padrão</sub><br>
+  <sub>Imagem 61 - Seleção da Esteira: estado padrão</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-esteira-1.svg" width="900px" alt="Seleção da Esteira em estado padrão"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 57 - Seleção da Esteira: item selecionado</sub><br>
+  <sub>Imagem 62 - Seleção da Esteira: item selecionado</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-esteira-2.svg" width="900px" alt="Seleção da Esteira com item selecionado"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2970,7 +3015,7 @@ Nesta etapa, o auditor seleciona a esteira que será utilizada durante a competi
 Após a conclusão das etapas de seleção da competição, equipe e esteira, o sistema apresenta uma visão geral contendo todas as informações configuradas para a auditoria. Nessa tela, o auditor pode revisar os dados selecionados e verificar se estão corretos antes de iniciar a competição. O objetivo dessa etapa é reduzir erros de configuração e garantir que todos os registros realizados durante a prova sejam associados corretamente aos participantes e ao evento correspondente.
 
 <div align="center">
-  <sub>Imagem 58 - Visão Geral da Auditoria</sub><br>
+  <sub>Imagem 63 - Visão Geral da Auditoria</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/visao-geral-competicao.svg" width="900px" alt="Visão Geral da Auditoria"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2982,7 +3027,7 @@ Concluídas as etapas de configuração, o sistema apresenta uma tela com o cron
 
 
 <div align="center">
-  <sub>Imagem 59 - Início da Competição</sub><br>
+  <sub>Imagem 64 - Início da Competição</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/tela-auditoria-inicial.svg" width="900px" alt="Início da Competição"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2993,7 +3038,7 @@ Concluídas as etapas de configuração, o sistema apresenta uma tela com o cron
 Durante a competição, o auditor pode registrar os turnos realizados pelos corredores. Para isso, a tela disponibiliza campos para seleção do atleta, horários de início e término do turno e quilometragem percorrida. Essa etapa está relacionada às User Stories US02, US03 e US07, pois permite registrar informações da corrida, encerrar ciclos de participação e manter a rastreabilidade individual dos atletas.
 
 <div align="center">
-  <sub>Imagem 60 - Registro de Turno</sub><br>
+  <sub>Imagem 65 - Registro de Turno</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/tela-auditoria-registro-corrida.svg" width="900px" alt="Registro de Turno"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -3004,7 +3049,7 @@ Durante a competição, o auditor pode registrar os turnos realizados pelos corr
 Após o início da corrida, o cronômetro passa a contabilizar o tempo decorrido da competição. A tela exibe os últimos registros realizados, informações sobre os próximos corredores e o botão para finalização do evento, permitindo que o auditor acompanhe a operação em tempo real. Essa tela apoia o acompanhamento contínuo previsto nas US02 e US03.
 
 <div align="center">
-  <sub>Imagem 61 - Competição em Andamento</sub><br>
+  <sub>Imagem 66 - Competição em Andamento</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/tela-auditoria-corrida-iniciada.svg" width="900px" alt="Competição em Andamento"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -3016,7 +3061,7 @@ Após o início da corrida, o cronômetro passa a contabilizar o tempo decorrido
 Quando o sistema identifica que não houve registro de checkpoints por um período superior ao esperado, uma mensagem de alerta é exibida ao auditor. A tela informa a pendência e disponibiliza uma ação para realizar imediatamente o registro do checkpoint. Essa interface está relacionada à US09, pois auxilia o auditor a identificar possíveis falhas técnicas ou atrasos na troca de corredor.
 
 <div align="center">
-  <sub>Imagem 62 - Alerta de Checkpoint Não Registrado</sub><br>
+  <sub>Imagem 67 - Alerta de Checkpoint Não Registrado</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/aviso-de-checkpoint-não-registrado-auditor.svg" width="900px" alt="Alerta de Checkpoint Não Registrado"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -3027,7 +3072,7 @@ Quando o sistema identifica que não houve registro de checkpoints por um perío
 Caso a quilometragem informada apresente divergências em relação aos registros anteriores, o sistema exibe uma mensagem de inconsistência. A tela apresenta os valores registrados e permite que o auditor cancele ou corrija a informação antes de confirmar o registro. Essa interface está relacionada à US11, pois contribui para evitar erros humanos e falhas na inserção dos dados durante a operação.
 
 <div align="center">
-  <sub>Imagem 63 - Alerta de Inconsistência de Dados</sub><br>
+  <sub>Imagem 68 - Alerta de Inconsistência de Dados</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/aviso-de-Inconsistencia-de-dados-auditor.svg" width="900px" alt="Alerta de Inconsistência de Dados"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -3045,7 +3090,7 @@ A tela de histórico está relacionada principalmente às User Stories US04, US0
 A visão geral da competição apresenta um resumo dos principais dados do evento, permitindo que gerente e auditor acompanhem informações consolidadas sobre a corrida. Essa tela funciona como ponto de entrada para a análise dos registros, reunindo dados essenciais para conferência e acompanhamento da competição.
 
 <div align="center">
-  <sub>Imagem 64 - Visão Geral da Competição</sub><br>
+  <sub>Imagem 69 - Visão Geral da Competição</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/estatisticas-competicao/card-evento-geral.svg" width="900px" alt="Visão Geral da Competição"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -3058,7 +3103,7 @@ A tela de histórico da auditoria reúne os registros operacionais realizados du
 Além disso, a interface apresenta a opção de compartilhar os dados como planilha, funcionalidade relacionada à User Story US05. Essa ação representa a exportação dos registros em formato estruturado, como CSV, permitindo que o gerente realize auditorias pós-evento e reduza a dependência de conferências manuais.
 
 <div align="center">
-  <sub>Imagem 65 - Histórico da Auditoria</sub><br>
+  <sub>Imagem 70 - Histórico da Auditoria</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/estatisticas-competicao/card-evento-auditoria.svg" width="900px" alt="Histórico da Auditoria"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -3069,7 +3114,7 @@ Além disso, a interface apresenta a opção de compartilhar os dados como plani
 A tela de histórico por equipes apresenta os dados da competição organizados de acordo com as equipes participantes. Essa organização permite comparar o desempenho entre os grupos, acompanhar a quilometragem acumulada e verificar os registros vinculados a cada equipe, contribuindo diretamente para a visualização consolidada prevista nas User Stories US04, US05 e US06.
 
 <div align="center">
-  <sub>Imagem 66 - Histórico por Equipes</sub><br>
+  <sub>Imagem 71 - Histórico por Equipes</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/estatisticas-competicao/card-evento-equipes.png" width="900px" alt="Histórico por Equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -3088,7 +3133,7 @@ O protótipo completo pode ser acessado no Figma por meio do seguinte link: [Pro
 O Modelo Entidade-Relacionamento (MER) apresenta a visão conceitual consolidada do domínio do Red Bull 24 Horas após as evoluções realizadas nas sprints 2, 3 e 4. O modelo conecta a gestão dos eventos, a composição de equipes, a operação das esteiras e a trilha de auditoria dos turnos. Os nomes foram mantidos em inglês para conservar a correspondência com o código e com o modelo relacional.
 
 <div align="center">
-  <sub>Imagem 67 - Modelo Entidade-Relacionamento</sub><br>
+  <sub>Imagem 72 - Modelo Entidade-Relacionamento</sub><br>
   <img src="./assets/modelo_entidade_relacionamento/modelo_entidade_relacionamento.svg" width="95%" alt="Modelo Entidade-Relacionamento consolidado do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -3163,7 +3208,7 @@ Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui
 O DER traduz o MER para a estrutura relacional do PostgreSQL. A versão abaixo representa o estado efetivamente obtido após a execução sequencial das migrations `001` a `017`, e não apenas o schema inicial da migration `001`.
 
 <div align="center">
-  <sub>Imagem 68 - Diagrama Entidade-Relacionamento</sub><br>
+  <sub>Imagem 73 - Diagrama Entidade-Relacionamento</sub><br>
   <img src="./assets/diagrama_entidade_relacionamento/diagrama_entidade_relacionamento.svg" width="100%" alt="Diagrama Entidade-Relacionamento consolidado do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -4364,15 +4409,15 @@ O foco dessa sprint foi a implementação do backend da aplicação. Todos os fl
 Implementamos a camada responsável pelo gerenciamento dos eventos da competição. Por ele, é possível criar um evento, validar data, local e esteiras, acompanhar métricas como quilometragem total por equipe e velocidade média, além de exportar os dados coletados durante o evento ao fim da competição. Abaixo temos os diagramas realizados durante a sprint 3, que são os diagramas de arquitetura e classe arquitetural. 
 
 <div align="center">
-  <sub>Imagem 69 – Diagrama de arquitetura do fluxo de Eventos e Histórico</sub><br>
-  <img src="./assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de arquitetura - Eventos e Histórico"><br>
+  <sub>Imagem 74 – Diagrama de arquitetura do fluxo de Eventos </sub><br>
+  <img src="./assets/diagramas_arquitetura/eventos.svg" width="100%" alt="Diagrama de arquitetura - Eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 
 <div align="center">
-  <sub>Imagem 70 – Diagrama de classes arquiteturais do fluxo de Eventos</sub><br>
+  <sub>Imagem 75 – Diagrama de classes arquiteturais do fluxo de Eventos</sub><br>
   <img src="./assets/diagramas_arquiteturais/EVENTS_ClassDiagram.png" width="100%" alt="Diagrama de arquitetura - Eventos e Histórico"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -4385,7 +4430,7 @@ Implementamos o módulo de cadastro e gerenciamento das equipes e seus corredore
 
 
 <div align="center">
-  <sub>Imagem 71 – Diagrama de classes arquiteturais do fluxo de Equipes</sub><br>
+  <sub>Imagem 76 – Diagrama de classes arquiteturais do fluxo de Equipes</sub><br>
   <img src="./assets/diagramas_arquiteturais/TEAMS_ClassDiagram.png" width="100%" alt="Diagrama de classes - Teams"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -4396,14 +4441,14 @@ Implementamos o módulo de cadastro e gerenciamento das equipes e seus corredore
 Essa é a parte central do sistema. O auditor consegue registrar o início e o fim de cada turno de corrida, informando a esteira, o corredor e a quilometragem mostrada no display. Os checkpoints obrigatórios a cada 5 minutos e os voluntários também estão funcionando, com o horário registrado automaticamente pelo banco de dados. Abaixo temos os diagramas realizados durante a sprint 3, que são os diagramas de arquitetura e classe arquitetural. 
 
 <div align="center">
-  <sub>Imagem 72 – Diagrama de arquitetura do fluxo de Turnos</sub><br>
+  <sub>Imagem 77 – Diagrama de arquitetura do fluxo de Turnos</sub><br>
   <img src="./assets/diagramas_arquitetura/turnos.svg" width="100%" alt="Diagrama de arquitetura - Turnos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 73 – Diagrama de classes arquiteturais do fluxo de Turnos</sub><br>
+  <sub>Imagem 78 – Diagrama de classes arquiteturais do fluxo de Turnos</sub><br>
   <img src="./assets/diagramas_arquiteturais/TURNS_ClassDiagram.png" width="100%" alt="Diagrama de classes - Turns"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -4415,7 +4460,7 @@ Implementamos também o fluxo de histórico com todos os lançamentos realizados
 
 
 <div align="center">
-  <sub>Imagem 74 – Diagrama de classes arquiteturais do fluxo de Histórico</sub><br>
+  <sub>Imagem 79 – Diagrama de classes arquiteturais do fluxo de Histórico</sub><br>
   <img src="./assets/diagramas_arquiteturais/HISTORY_ClassDiagram.png" width="100%" alt="Diagrama de classes - History"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -4426,14 +4471,14 @@ Implementamos também o fluxo de histórico com todos os lançamentos realizados
 Implementamos o módulo de logs de auditoria e a lógica de sincronização offline. Em caso de queda de rede durante o evento, o sistema armazena os dados localmente e os envia ao servidor assim que a conexão é restabelecida, garantindo que nenhum registro seja perdido. Abaixo temos os diagramas realizados durante a sprint 3, que são os diagramas de arquitetura e classe arquitetural. 
 
 <div align="center">
-  <sub>Imagem 75 – Diagrama de arquitetura do fluxo de Logs</sub><br>
+  <sub>Imagem 80 – Diagrama de arquitetura do fluxo de Logs</sub><br>
   <img src="./assets/diagramas_arquitetura/logs.svg" width="100%" alt="Diagrama de arquitetura - Logs"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 76 – Diagrama de classes arquiteturais do fluxo de Logs</sub><br>
+  <sub>Imagem 81 – Diagrama de classes arquiteturais do fluxo de Logs</sub><br>
   <img src="./assets/diagramas_arquiteturais/LOGS_ClassDiagram.png" width="100%" alt="Diagrama de classes - Logs"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -4444,14 +4489,14 @@ Implementamos o módulo de logs de auditoria e a lógica de sincronização offl
 Desenvolvemos o módulo de acompanhamento em tempo real que mostra a quilometragem acumulada por cada equipe e os principais indicadores da competição. Qualquer pessoa da organização consegue acompanhar o andamento da disputa sem precisar intervir manualmente nos registros. Esse fluxo conta com diagrama de arquitetura, diagrama de classes arquiteturais e diagrama de sequência UML completos.
 
 <div align="center">
-  <sub>Imagem 77 – Diagrama de arquitetura do Dashboard</sub><br>
+  <sub>Imagem 82 – Diagrama de arquitetura do Dashboard</sub><br>
   <img src="./assets/diagramas_arquitetura/dashboard.svg" width="100%" alt="Diagrama de arquitetura - Dashboard"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 78 – Diagrama de classes arquiteturais do Dashboard</sub><br>
+  <sub>Imagem 83 – Diagrama de classes arquiteturais do Dashboard</sub><br>
   <img src="./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de classes - Dashboard"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -4504,7 +4549,7 @@ Desenvolvemos a Matriz de Rastreabilidade do projeto, consolidando os vínculos 
 Finalizamos 20 telas do protótipo de alta fidelidade, com guia completo de tipografia, iconografia e imagens, definindo a identidade visual da aplicação. A seguir, destacamos telas que cobrem o evento, principalmente por onde auditores e gerentes passam ao longo das 24 horas.
 
 <div align="center">
-  <sub>Imagem 79 – Tela de login</sub><br>
+  <sub>Imagem 84 – Tela de login</sub><br>
   <img src="./assets/relatorio_desenvolvimento/prototipo_login.png" width="100%" alt="Protótipo - Login"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -4512,35 +4557,35 @@ Finalizamos 20 telas do protótipo de alta fidelidade, com guia completo de tipo
 
 
 <div align="center">
-  <sub>Imagem 80 – Tela de histórico de auditoria (dashboard)</sub><br>
+  <sub>Imagem 85 – Tela de histórico de auditoria (dashboard)</sub><br>
   <img src="./assets/relatorio_desenvolvimento/prototipo_historico_auditoria.png" width="100%" alt="Protótipo - Histórico auditoria"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 81 – Tela de histórico de equipes (dashboard)</sub><br>
+  <sub>Imagem 86 – Tela de histórico de equipes (dashboard)</sub><br>
   <img src="./assets/relatorio_desenvolvimento/prototipo_historico_equipes.png" width="100%" alt="Protótipo - Histórico equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 82 – Tela de histórico geral (dashboard)</sub><br>
+  <sub>Imagem 87 – Tela de histórico geral (dashboard)</sub><br>
   <img src="./assets/relatorio_desenvolvimento/prototipo_historico_geral.png" width="100%" alt="Protótipo - Histórico geral"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 83 – Tela de inconsistência</sub><br>
+  <sub>Imagem 88 – Tela de inconsistência</sub><br>
   <img src="./assets/relatorio_desenvolvimento/prototipo_inconsistencia.png" width="100%" alt="Protótipo - inconsistencia"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 84 – Tela de registro de checkpoints</sub><br>
+  <sub>Imagem 89 – Tela de registro de checkpoints</sub><br>
   <img src="./assets/relatorio_desenvolvimento/prototipo_checkpoints.png" width="100%" alt="Protótipo - checkpoints"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -4586,14 +4631,14 @@ Substituiu-se a arquitetura de páginas estáticas por views EJS servidas direta
 Implementou-se o ciclo completo de registro de turno para auditores: seleção de esteira (`treadmill.ejs`), início de turno com seleção de atleta (`auditoria.ejs`), registro de checkpoints com validação de quilometragem (`audit.ejs`), cronômetro de tempo em pista, lembrete de inatividade e troca rápida de corredor. Sete bugs críticos identificados nos testes de integração foram corrigidos nesta sprint (issues #227–#233), incluindo falha de persistência do estado de esteira via `sessionStorage`, constante `AUDITOR_ID` impedindo reassignment no fluxo de troca de operador, modal de aviso de quilometragem menor que checkpoint anterior e crash no logout com `req.body` ausente. Fechamento: issues #208, #214, #215, #217, #227, #228, #229, #231.
 
 <div align="center">
-  <sub>Imagem 85 – Tela de seleção de esteira (treadmill.ejs)</sub><br>
+  <sub>Imagem 90 – Tela de seleção de esteira (treadmill.ejs)</sub><br>
   <img src="assets/relatorio_desenvolvimento/prototipo_checkpoints.png" width="100%" alt="Seleção de esteira"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 86 – Tela de auditoria em andamento (audit.ejs)</sub><br>
+  <sub>Imagem 91 – Tela de auditoria em andamento (audit.ejs)</sub><br>
   <img src="assets/relatorio_desenvolvimento/prototipo_historico_auditoria.png" width="100%" alt="Auditoria em andamento"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -4604,14 +4649,14 @@ Implementou-se o ciclo completo de registro de turno para auditores: seleção d
 Implementou-se o módulo completo do gerente de evento: criação e edição de competições (`competition.ejs`, `editar-competicao.ejs`), cadastro e listagem de equipes e atletas (`gerente-equipes.ejs`, `informacoes-atleta.ejs`, `teams.ejs`), configuração de datas e localidades (`gerente-data-horario.ejs`, `gerente-localidade.ejs`) e gestão de turnos (`manager-shifts.ejs`), incluindo edição retroativa de checkpoints com trilha de auditoria imutável. Fechamento: issues #126, #129, #219, #220, #221, #222, #223, #224.
 
 <div align="center">
-  <sub>Imagem 87 – Tela de gestão de equipes (gerente-equipes.ejs)</sub><br>
+  <sub>Imagem 92 – Tela de gestão de equipes (gerente-equipes.ejs)</sub><br>
   <img src="assets/relatorio_desenvolvimento/prototipo_historico_equipes.png" width="100%" alt="Gestão de equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 88 – Tela de turnos do gerente (manager-shifts.ejs)</sub><br>
+  <sub>Imagem 93 – Tela de turnos do gerente (manager-shifts.ejs)</sub><br>
   <img src="assets/relatorio_desenvolvimento/prototipo_historico_geral.png" width="100%" alt="Gestão de turnos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -4622,7 +4667,7 @@ Implementou-se o módulo completo do gerente de evento: criação e edição de 
 Implementou-se o módulo de acompanhamento em tempo real: placar por equipe com quilometragem acumulada e velocidade média (`estatisticas-evento.ejs`), visão geral do evento com atletas em pista e turnos ativos (`visao-evento.ejs`) e tela de overview para o gerente (`overview.ejs`). A correção do bug #232 garantiu que a velocidade seja recalculada corretamente ao editar apenas a quilometragem de um turno sem alterar o horário de encerramento. Fechamento: issues #197, #232.
 
 <div align="center">
-  <sub>Imagem 89 – Tela de estatísticas do evento (estatisticas-evento.ejs)</sub><br>
+  <sub>Imagem 94 – Tela de estatísticas do evento (estatisticas-evento.ejs)</sub><br>
   <img src="assets/relatorio_desenvolvimento/prototipo_inconsistencia.png" width="100%" alt="Estatísticas do evento"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -4917,35 +4962,35 @@ Time:        8.216 s
 As Figuras 1 a 5 apresentam a execução completa da suíte automatizada, evidenciando que todos os testes foram aprovados com sucesso.
 
 <div align="center">
-  <sub>Imagem 90 - Print dos teste - 1 </sub><br>
+  <sub>Imagem 95 - Print dos teste - 1 </sub><br>
   <img src= "./assets/testes/teste_1.png" width="100%" alt="testes 1"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 91 - Print dos teste - 2 </sub><br>
+  <sub>Imagem 96 - Print dos teste - 2 </sub><br>
   <img src= "./assets/testes/teste_2.png" width="100%" alt="testes 2"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 92 - Print dos teste - 3 </sub><br>
+  <sub>Imagem 97 - Print dos teste - 3 </sub><br>
   <img src= "./assets/testes/teste_3.png" width="100%" alt="testes 3"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 93 - Print dos teste - 4 </sub><br>
+  <sub>Imagem 98 - Print dos teste - 4 </sub><br>
   <img src= "./assets/testes/teste_4.png" width="100%" alt="testes 4"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 94 - Print dos teste - 5 </sub><br>
+  <sub>Imagem 99 - Print dos teste - 5 </sub><br>
   <img src= "./assets/testes/teste_5.png" width="100%" alt="testes 5"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -4962,7 +5007,7 @@ O relatório deve apresentar os percentuais de cobertura por camada, especialmen
 A figura a seguir apresenta o relatório de cobertura gerado pelo Jest, incluindo os percentuais obtidos pela camada Service.
 
 <div align="center">
-  <sub>Imagem 95 - Relatório de cobertura do jest - 1 </sub><br>
+  <sub>Imagem 100 - Relatório de cobertura do jest - 1 </sub><br>
   <img src= "./assets/testes/tabela_1.png" width="100%" alt="jest 1"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -5027,17 +5072,274 @@ Os resultados evidenciam ampla cobertura das regras de negócio implementadas na
 
 Esse mapeamento garante que as 41 Regras de Negócio estejam ligadas aos RFs correspondentes e aos principais fluxos testáveis da WebAPI.
 
----
-
 ## 5.2. Testes de usabilidade (sprint 5)
-
----
 
 ### 5.2.1. Relatório de testes de guerrilha
 
----
+Os testes de guerrilha são uma técnica de avaliação de usabilidade informal e de baixo custo, na qual o sistema é apresentado a usuários reais recrutados de forma espontânea, sem agendamento prévio ou laboratório controlado. O objetivo é identificar rapidamente problemas de usabilidade com base em tarefas específicas, enquanto um facilitador observa e registra dificuldades e sugestões sem interferir no processo.
 
-_Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização)._
+#### Descrição dos Testes e das Etapas
+
+| # | Teste | Enunciado da Tarefa |
+|---|-------|---------------------|
+| T1 | Login e Criação de Evento | "Como gerente, você deve fazer login e criar um evento." |
+| T2 | Criação de Equipes e Início do Evento | "Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado." |
+| T3 | Auditoria de Equipe | "Como auditor, você deve auditar uma equipe no evento criado." |
+
+| Teste | Etapa | Descrição da Etapa |
+|-------|-------|--------------------|
+| T1 | Etapa 1 | Adicionar as credenciais de gerente e realizar o login |
+| T1 | Etapa 2 | Iniciar a criação de um evento |
+| T1 | Etapa 3 | Adicionar as informações do evento |
+| T1 | Etapa 4 | Concluir a criação do evento e realizar o logout |
+| T2 | Etapa 1 | Durante a criação do evento, criar duas equipes |
+| T2 | Etapa 2 | Durante a criação do evento, adicionar atletas às duas equipes |
+| T2 | Etapa 3 | Concluir a criação do evento e iniciá-lo |
+| T3 | Etapa 1 | Adicionar as credenciais de auditor e realizar o login |
+| T3 | Etapa 2 | Selecionar o evento criado |
+| T3 | Etapa 3 | Realizar a auditoria de um período de 2 minutos |
+| T3 | Etapa 4 | Concluir a auditoria e realizar o logout |
+
+#### Resultados dos Testes de Guerrilha
+
+**Testador:** Enzo Braga
+
+**Perfil:** Estudante de Ciência da Computação / Produzindo um projeto para a BrPec Agropecuária
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Nenhuma ocorrência | — |
+| 2 | Iniciar a criação de um evento | Nenhuma ocorrência | — |
+| 3 | Adicionar as informações do evento | Enzo sentiu dificuldade em inserir o nome da cidade, e sugeriu que o formulário de escolha do nome aceitasse nomes sem acento, facilitando a seleção da cidade do evento | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrões |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Enzo sentiu dificuldade de encontrar o botão de criar a segunda equipe | H6 – Reconhecimento em vez de lembrança |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Nenhuma ocorrência | — |
+| 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
+
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Nenhuma ocorrência | — |
+| 2 | Selecionar o evento criado | Enzo sentiu dificuldade em iniciar a auditoria, clicando diretamente no evento criado ao invés do botão "iniciar auditoria" | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrões |
+| 3 | Realizar a auditoria de um período de 2 minutos | Enzo sentiu muita dificuldade em realizar a auditoria; mesmo com as explicações fornecidas no início do teste, ele não soube como realizar um checkpoint, nem como inserir o quilômetro inicial ou registrar o quilômetro final | H6 – Reconhecimento em vez de lembrança; H10 – Ajuda e documentação; H2 – Correspondência entre o sistema e o mundo real |
+| 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
+
+**Testador:** Lucas Levi
+
+**Perfil:** Estudante de Engenharia da Computação / Produzindo um projeto para a Defesa Civil de Santo André
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
+**Panorama Geral:** ❌ Não conseguiu
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Nenhuma ocorrência | — |
+| 2 | Iniciar a criação de um evento | Lucas não compreendeu a instrução "defina a data e horário de início", travando nessa etapa | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrões |
+| 3 | Adicionar as informações do evento | Nenhuma ocorrência | — |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
+**Panorama Geral:** ❌ Não conseguiu
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Nenhuma ocorrência | — |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Lucas achou a tela de adição de atletas confusa; o botão de adicionar em cinza gerou ambiguidade, e sugeriu que o botão deixasse claro se é para adicionar atleta ou líder | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões; H8 – Design estético e minimalista |
+| 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
+
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
+**Panorama Geral:** ❌ Não conseguiu
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Nenhuma ocorrência | — |
+| 2 | Selecionar o evento criado | Lucas sentiu dificuldade para iniciar a auditoria, clicando diretamente no evento ao invés do botão "iniciar auditoria"; também teve dificuldade na seleção da equipe; o botão "próximo" em cinza não sinalizava que era clicável | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões; H6 – Reconhecimento em vez de lembrança |
+| 3 | Realizar a auditoria de um período de 2 minutos | Lucas teve muita dificuldade para iniciar e finalizar a auditoria, incluindo o preenchimento de km inicial e final; também não compreendeu o fluxo de saída de checkpoints | H6 – Reconhecimento em vez de lembrança; H10 – Ajuda e documentação; H2 – Correspondência entre o sistema e o mundo real |
+| 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
+
+**Testador:** Paulo Roberto
+
+**Perfil:** Estudante de Engenharia da Computação / Produzindo um projeto para a Defesa Civil de Santo André
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Paulo não percebeu que precisava clicar no perfil "gerente" além de inserir as credenciais | H6 – Reconhecimento em vez de lembrança; H3 – Controle e liberdade do usuário |
+| 2 | Iniciar a criação de um evento | Paulo teve dificuldade em compreender como prosseguir após inserir as credenciais do evento; ao retornar à tela, as informações não eram salvas | H1 – Visibilidade do status do sistema; H5 – Prevenção de erros; H9 – Ajudar os usuários a reconhecer, diagnosticar e recuperar erros |
+| 3 | Adicionar as informações do evento | Paulo criou o evento com data anterior à atual; o sistema também permitia registrar corredores com data de nascimento no futuro; Paulo elogiou a validação do CPF | H5 – Prevenção de erros; H9 – Ajudar os usuários a reconhecer, diagnosticar e recuperar erros |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Paulo novamente não percebeu que precisava clicar no perfil "gerente" além de inserir as credenciais | H6 – Reconhecimento em vez de lembrança |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | O sistema permitia cadastrar corredores com data de nascimento no futuro; Paulo elogiou a validação do CPF | H5 – Prevenção de erros |
+| 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
+
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Paulo novamente teve dificuldade em perceber que precisava clicar no perfil além de inserir as credenciais | H6 – Reconhecimento em vez de lembrança |
+| 2 | Selecionar o evento criado | Paulo teve dificuldade em selecionar a equipe no momento de iniciar a auditoria, e também ao selecionar o próximo corredor | H1 – Visibilidade do status do sistema; H6 – Reconhecimento em vez de lembrança |
+| 3 | Realizar a auditoria de um período de 2 minutos | Paulo teve dificuldade para finalizar a auditoria | H1 – Visibilidade do status do sistema; H10 – Ajuda e documentação |
+| 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
+
+**Testadora:** Laís Victoria
+
+**Perfil:** Estudante de Ciência da Computação / Produzindo um projeto para a BrPec Agropecuária
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Nenhuma ocorrência | — |
+| 2 | Iniciar a criação de um evento | Laís criou o evento com data anterior à atual, sem que o sistema impedisse | H5 – Prevenção de erros; H9 – Ajudar os usuários a reconhecer, diagnosticar e recuperar erros |
+| 3 | Adicionar as informações do evento | Nenhuma ocorrência | — |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
+**Panorama Geral:** *(não registrado)*
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Nenhuma ocorrência | — |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Laís criou o evento com data anterior à atual | H5 – Prevenção de erros |
+| 3 | Concluir a criação do evento e iniciá-lo | Laís teve dificuldade em encontrar a opção de logout | H4 – Consistência e padrões; H6 – Reconhecimento em vez de lembrança |
+
+**Teste 3 (T3):** *"Como auditora, você deve auditar uma equipe no evento criado."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Laís teve dificuldade em encontrar a opção de logout da sessão anterior | H4 – Consistência e padrões; H6 – Reconhecimento em vez de lembrança |
+| 2 | Selecionar o evento criado | Laís teve dificuldade ao adicionar um checkpoint, não compreendendo o layout; também não identificou claramente qual era o corredor atual sendo auditado | H1 – Visibilidade do status do sistema; H2 – Correspondência entre o sistema e o mundo real; H8 – Design estético e minimalista |
+| 3 | Realizar a auditoria de um período de 2 minutos | Nenhuma dificuldade em encerrar as auditorias | — |
+| 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
+
+**Testador:** Pedro Negri 
+
+**Perfil:** Estudante de Engenharia de Software / Produzindo um projeto para a BrPec Agropecuária
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Nenhuma ocorrência; diferente de outros testadores, Pedro identificou de imediato a necessidade de selecionar o perfil "gerente" antes de inserir as credenciais | — |
+| 2 | Iniciar a criação de um evento | Pedro teve uma breve hesitação ao preencher o campo de data e horário de início, por não haver um exemplo de formato esperado (placeholder); conseguiu prosseguir por tentativa | H2 – Correspondência entre o sistema e o mundo real; H10 – Ajuda e documentação |
+| 3 | Adicionar as informações do evento | Nenhuma ocorrência; Pedro também elogiou a validação do CPF, assim como outros testadores | — |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Nenhuma ocorrência | — |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Pedro também identificou o botão de adicionar atleta em cinza como pouco intuitivo, reforçando a observação feita anteriormente por Lucas Levi; sugeriu que o botão indicasse explicitamente "Adicionar atleta" ou "Adicionar líder" | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões |
+| 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
+
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Nenhuma ocorrência | — |
+| 2 | Selecionar o evento criado | Pedro notou que, ao selecionar a equipe para iniciar a auditoria, o botão "próximo" aparecia na cor vermelha, o que pode causar confusão visual já que essa cor costuma ser associada a erros ou ações destrutivas | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões |
+| 3 | Realizar a auditoria de um período de 2 minutos | Nenhuma ocorrência registrada | — |
+| 4 | Concluir a auditoria e realizar o logout | Pedro considerou a usabilidade geral tranquila, mas sugeriu melhorar a diferenciação visual entre o botão de "finalizar turno" (concluir a auditoria) e o botão de logout, já que ambos pareciam semelhantes | H4 – Consistência e padrões; H8 – Design estético e minimalista |
+
+**Testador:** Valter Lima
+
+**Perfil:** Estudante de Sistemas da Informação / Produzindo um projeto para a Defesa Civil de Santo André
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Valter inseriu corretamente as credenciais, porém inicialmente não percebeu que deveria selecionar o perfil "gerente" antes de prosseguir | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrões |
+| 2 | Iniciar a criação de um evento | Nenhuma ocorrência | — |
+| 3 | Adicionar as informações do evento | Valter teve dificuldade para identificar quais campos eram obrigatórios, pois não havia diferenciação visual clara entre campos obrigatórios e opcionais | H1 – Visibilidade do status do sistema; H5 – Prevenção de erros |
+| 4 | Concluir a criação do evento e realizar o logout | Após finalizar o cadastro, Valter procurou uma confirmação mais explícita de que o evento havia sido criado com sucesso | H1 – Visibilidade do status do sistema |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Valter criou a primeira equipe sem dificuldades, porém não percebeu imediatamente como adicionar a segunda equipe | H6 – Reconhecimento em vez de lembrança |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Demonstrou insegurança ao utilizar o botão de adição de participantes, pois não ficou claro se o cadastro estava sendo realizado para atleta ou líder da equipe | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões |
+| 3 | Concluir a criação do evento e iniciá-lo | Valter procurou uma tela de revisão antes de iniciar o evento, esperando validar todas as informações cadastradas | H3 – Controle e liberdade do usuário; H5 – Prevenção de erros |
+
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Nenhuma ocorrência | — |
+| 2 | Selecionar o evento criado | Valter clicou inicialmente no card do evento esperando iniciar automaticamente a auditoria, sem perceber a necessidade de utilizar o botão específico para essa ação | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrõess |
+| 3 | Realizar a auditoria de um período de 2 minutos | Valter compreendeu o conceito geral da auditoria, porém apresentou dificuldade para identificar a sequência correta entre registrar quilometragem inicial, checkpoints e quilometragem final. Também sugeriu que o sistema apresentasse orientações contextuais durante a execução da auditoria | H10 – Ajuda e documentação; H2 – Correspondência entre o sistema e o mundo real; H6 – Reconhecimento em vez de lembrança |
+| 4 | Concluir a auditoria e realizar o logout | Após finalizar a auditoria, Valter não teve certeza se os dados haviam sido efetivamente salvos, procurando uma confirmação visual mais evidente | H1 – Visibilidade do status do sistema |
+
+#### Pontos de Melhoria Identificados
+
+Os problemas observados durante os testes de guerrilha foram consolidados e priorizados conforme a escala de severidade proposta por Nielsen, variando de 0 (Sem Importância) a 4 (Catastrófico). A classificação considerou a frequência com que o problema ocorreu, o impacto na execução das tarefas e o risco de impedir a conclusão dos fluxos principais do sistema.
+
+| Prioridade | Problema Identificado | Evidências Observadas | Recomendação |
+| :--- | :--- | :--- | :--- |
+| **4 – Catastrófico** | Fluxo de auditoria pouco intuitivo, dificultando o registro de quilometragem inicial, checkpoints e quilometragem final | Identificado por Enzo Braga, Lucas Levi, Paulo Roberto e Valter Lima. Em alguns casos impediu ou comprometeu a conclusão da tarefa T3. | Reestruturar o fluxo de auditoria com orientação passo a passo, indicadores visuais de progresso e instruções contextuais durante a execução. |
+| **4 – Catastrófico** | Ausência de auxílio ou documentação contextual para realização da auditoria | Usuários não compreenderam o significado de checkpoints, quilometragem inicial e final, mesmo após explicação prévia. | Adicionar tutoriais rápidos, tooltips e mensagens de ajuda diretamente na interface de auditoria. |
+| **3 – Grave** | Sistema permite cadastrar eventos com datas anteriores à data atual | Identificado por Paulo Roberto e Laís Victoria. Possibilita o registro de dados inconsistentes. | Implementar validação de datas para impedir eventos em períodos inválidos. |
+| **3 – Grave** | Sistema permite cadastrar corredores com data de nascimento futura | Identificado por Paulo Roberto durante a criação de equipes. | Implementar validação de data de nascimento compatível com a realidade do usuário. |
+| **3 – Grave** | Usuários não percebem que precisam selecionar o perfil (Gerente ou Auditor) antes do login | Problema recorrente identificado por Paulo Roberto e Valter Lima. | Tornar a seleção de perfil mais evidente ou automatizar a identificação do perfil após autenticação. |
+| **3 – Grave** | Dificuldade para iniciar a auditoria devido à expectativa de clicar diretamente no evento | Observado por Enzo Braga, Lucas Levi e Valter Lima. | Transformar o card do evento em elemento clicável ou destacar visualmente o botão de início da auditoria. |
+| **2 – Simples** | Botão de adicionar atleta/líder possui significado ambíguo | Relatado por Lucas Levi, Pedro Negri e Valter Lima. | Alterar os rótulos dos botões para ações explícitas, como "Adicionar Atleta" e "Adicionar Líder". |
+| **2 – Simples** | Dificuldade para criar uma segunda equipe durante a configuração do evento | Relatada por Enzo Braga e Valter Lima. | Destacar visualmente a funcionalidade de criação de novas equipes e apresentar feedback após a criação da primeira. |
+| **2 – Simples** | Campo de seleção de cidade exige acentuação correta para localização dos resultados | Relatado por Enzo Braga. | Implementar busca tolerante a acentos e variações ortográficas. |
+| **2 – Simples** | Usuários têm dificuldade em identificar a equipe ou corredor atualmente auditado | Relatado por Laís Victoria e Paulo Roberto. | Destacar visualmente o corredor ativo e a equipe selecionada durante a auditoria. |
+| **2 – Simples** | Ausência de tela de revisão antes da inicialização do evento | Relatado por Valter Lima. | Adicionar uma etapa de confirmação contendo resumo das informações cadastradas. |
+| **1 – Cosmético** | Botão "Próximo" utiliza cor vermelha, associada normalmente a erros ou exclusões | Observado por Pedro Negri. | Utilizar cores compatíveis com a ação executada, seguindo padrões de interface. |
+| **1 – Cosmético** | Dificuldade para localizar a opção de logout | Relatada por Laís Victoria. | Reposicionar ou destacar visualmente a funcionalidade de logout. |
+| **1 – Cosmético** | Ausência de confirmação visual clara após criação de eventos ou finalização de auditorias | Relatada por Valter Lima. | Exibir mensagens de sucesso e indicadores visuais de conclusão da operação. |
+| **1 – Cosmético** | Ausência de indicação clara dos campos obrigatórios nos formulários | Relatada por Valter Lima. | Utilizar marcações visuais padronizadas para diferenciar campos obrigatórios dos opcionais. |
+| **0 – Sem Importância** | Validação correta do CPF durante o cadastro de participantes | Elogiada por Paulo Roberto e Pedro Negri. Não representa problema de usabilidade. | Manter a implementação atual. |
 
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 

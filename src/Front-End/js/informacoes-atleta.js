@@ -1,7 +1,9 @@
 // ---- authFetch (necessário no modo event-edit) ----
 async function authFetch(url, options = {}) {
     const token = localStorage.getItem("accessToken");
-    const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
+    // FormData define seu próprio Content-Type (com boundary); não sobrescrever.
+    const ehFormData = options.body instanceof FormData;
+    const headers = { ...(ehFormData ? {} : { "Content-Type": "application/json" }), ...(options.headers || {}) };
     if (token) headers["Authorization"] = `Bearer ${token}`;
     let res = await fetch(url, { ...options, headers, credentials: "include" });
     if (res.status === 401) {
@@ -34,6 +36,8 @@ const senhaPessoa = document.getElementById("senhaPessoa");
 const cpfApoio = document.getElementById("cpfApoio");
 const linkCancelar = document.getElementById("linkCancelar");
 let fotoPerfilData = "";
+// true quando o usuário escolhe uma nova imagem nesta tela (diferencia de uma image_url já salva no DB)
+let novaFotoSelecionada = false;
 
 const modoEventEdit = edicao?.modoEdicao === "event-edit";
 const modoDrawer = edicao?.origem === "drawer";
@@ -136,6 +140,7 @@ if (!edicao) {
             nome.value  = d.name   || "";
             cpf.value   = formatarCpf(d.cpf || "");
             if (d.gender) genero.value = d.gender;
+            if (d.image_url) fotoPerfilData = d.image_url; // foto atual do DB (URL pública do Storage)
         }
         // cargo não existe no modelo athlete do DB, ocultar select se quiser
     } else {
@@ -181,6 +186,7 @@ fotoPerfil.addEventListener("change", async () => {
 
     try {
         fotoPerfilData = await compactarImagemPerfil(arquivo);
+        novaFotoSelecionada = true;
         atualizarPreviewFoto();
     } catch {
         alert("Não foi possível carregar a imagem. Tente outro arquivo.");
@@ -244,12 +250,16 @@ formulario.addEventListener("submit", async (evento) => {
     }
 
     if (modoEventEdit) {
-        // ---- salva direto na API ----
-        const body = JSON.stringify({
-            name:   nome.value.trim(),
-            gender: genero.value,
-            cpf:    cpfDigitos || null
-        });
+        // ---- salva direto na API (multipart: campos texto + foto opcional) ----
+        const corpo = new FormData();
+        corpo.append("name", nome.value.trim());
+        corpo.append("gender", genero.value);
+        if (cpfDigitos) corpo.append("cpf", cpfDigitos);
+        // só envia foto se o usuário escolheu uma nova nesta tela (a image_url existente fica como está)
+        if (novaFotoSelecionada && fotoPerfilData) {
+            corpo.append("photo", dataURLparaBlob(fotoPerfilData), "foto.jpg");
+        }
+
         const url = edicao.atletaId
             ? `/teams/${edicao.teamId}/athletes/${edicao.atletaId}`
             : `/teams/${edicao.teamId}/athletes`;
@@ -258,7 +268,7 @@ formulario.addEventListener("submit", async (evento) => {
         const btn = formulario.querySelector("button[type=submit]");
         btn.disabled = true; btn.textContent = "Salvando...";
 
-        const res = await authFetch(url, { method, body });
+        const res = await authFetch(url, { method, body: corpo });
         if (!res || !res.ok) {
             const err = await res?.json().catch(() => ({}));
             alert(err?.error || "Erro ao salvar atleta.");
