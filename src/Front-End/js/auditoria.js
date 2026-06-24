@@ -451,7 +451,7 @@ if (btnRegistrarCheckpoint) {
     modal.addEventListener('click', e => { if (e.target === modal) fechar() })
 })()
 
-async function finalizarCorrida(kmEnd, athleteIdOverride = null, durationSeconds = null) {
+async function finalizarCorrida(kmEnd, athleteIdOverride = null, durationSeconds = null, pace = null) {
     const body = { km_end: kmEnd }
     // Troca de corredor: só envia se diferir do atleta atual do turno
     if (athleteIdOverride && (!atletaAtual || athleteIdOverride !== atletaAtual.id)) {
@@ -459,6 +459,7 @@ async function finalizarCorrida(kmEnd, athleteIdOverride = null, durationSeconds
     }
     // Tempo editado: envia duração em segundos; backend faz end_at = start_at + duração no SQL
     if (durationSeconds != null) body.duration_seconds = durationSeconds
+    if (pace) body.pace = pace
 
     const res = await authFetch(`/audit/shifts/${shiftId}/finish`, {
         method: 'PATCH',
@@ -527,6 +528,7 @@ function adicionarLinhaTabela(shift, nomeAtleta, checkpoints, auditor) {
         </td>
         <td>${shift.km_start} km</td>
         <td>${shift.km_end} km</td>
+        <td>${shift.pace || '—'}</td>
         <td>${new Date(shift.start_at).toLocaleTimeString('pt-BR')}</td>
         <td>${new Date(shift.end_at).toLocaleTimeString('pt-BR')}</td>
         <td>${auditor || '—'}</td>
@@ -879,6 +881,9 @@ function abrirModalTurno() {
     const ultimoCp = checkpointsSessao[checkpointsSessao.length - 1] || null
     quilometragemTurno.value = ultimoCp ? ultimoCp.km : (inputKm.value || '')
 
+    const paceTurno = document.getElementById('paceTurno')
+    if (paceTurno) paceTurno.value = ''
+
     modalTurno.classList.remove('escondido')
     setTimeout(() => quilometragemTurno.focus(), 50)
 }
@@ -907,9 +912,12 @@ if (btnRegistrarTurno) {
         // Tempo editado → envia duração em segundos (backend calcula end_at = start_at + duração)
         const secsEditado = parseTempo(tempoPercorridoTurno.value)
 
+        const paceTurno = document.getElementById('paceTurno')
+        const paceValor = paceTurno?.value.trim() || null
+
         const athleteId = Number(selectCorredor.value) || null
         btnRegistrarTurno.disabled = true
-        await finalizarCorrida(kmValor, athleteId, secsEditado)
+        await finalizarCorrida(kmValor, athleteId, secsEditado, paceValor)
         btnRegistrarTurno.disabled = false
         fecharModalTurno()
     })

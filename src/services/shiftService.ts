@@ -143,7 +143,7 @@ export const shiftService = {
 		await shiftRepository.abandon(shift_id, forceClose);
 	},
 
-	async finishShift(shift_id: number, km_end: number, athlete_id?: number, duration_seconds?: number) {
+	async finishShift(shift_id: number, km_end: number, athlete_id?: number, duration_seconds?: number, pace?: string) {
 		if (km_end < 0) throw new Error("km final inválido: deve ser maior ou igual a zero");
 
 		const shift = await shiftRepository.findById(shift_id);
@@ -174,7 +174,7 @@ export const shiftService = {
 			safeDuration = undefined;
 		}
 
-		const finished = await shiftRepository.finish(shift_id, km_end, safeDuration);
+		const finished = await shiftRepository.finish(shift_id, km_end, safeDuration, pace);
 		if (!finished) throw new Error("Turno não está em andamento");
 		return finished;
 	},
