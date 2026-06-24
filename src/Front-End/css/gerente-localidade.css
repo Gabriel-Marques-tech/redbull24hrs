@@ -116,6 +116,28 @@ main {
     background: #f0f0f0;
 }
 
+.campo-foto-evento {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 700px;
+    margin-bottom: 16px;
+}
+
+.campo-foto-evento input[type="file"] {
+    flex: 1;
+    min-width: 0;
+    cursor: pointer;
+}
+
+#previewFotoEvento {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #8d8d8d;
+}
+
 .botoes-localidade {
     margin-top: 20px;
 }
