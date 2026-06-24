@@ -5096,8 +5096,8 @@ O formulário foi respondido por 6 participantes logo após a realização do te
 **Fórmula de cálculo:**
 
 Para cada resposta, é aplicada a seguinte lógica [²⁷](#8-referências):
-- Perguntas ímpares (1, 3, 5, 7 e 9): será subtraido 1 do valor respondido
-- Perguntas pares (2, 4, 6, 8 e 10): será subtraido o valor respondido de 5
+- Perguntas ímpares (1, 3, 5, 7 e 9): subtrai-se 1 do valor respondido
+- Perguntas pares (2, 4, 6, 8 e 10): subtrai-se o valor respondido de 5
 
 A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score final de cada participante. A média entre todos os participantes representa o score SUS do sistema. A pontuação média do SUS é 68, fazendo com que uma pontuação acima ou abaixo da média forneça uma visão imediata da usabilidade geral da solução de design do projeto. [²⁷](#8-referências).
 
