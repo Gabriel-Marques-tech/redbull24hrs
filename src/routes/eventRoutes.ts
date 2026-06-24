@@ -4,7 +4,7 @@ import { eventController } from "../controllers/eventController";
 import authMiddleware from "../middlewares/authMiddleware";
 
 const router: Router = express.Router();
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 } });
 
 // treadmills must come before /:id to avoid "treadmills" being parsed as an id
 router.get("/treadmills", eventController.getTreadmills);

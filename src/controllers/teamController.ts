@@ -120,6 +120,8 @@ export const teamController = {
 		try {
 			if (req.file) {
 				fields.image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos", "athletes");
+			} else if (req.body.remove_photo === "true" || req.body.remove_photo === true) {
+				fields.image_url = null;
 			}
 			const athlete = await teamService.updateAthlete(team_id, id, fields);
 			res.status(200).json(athlete);
