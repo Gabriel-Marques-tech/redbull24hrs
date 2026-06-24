@@ -45,6 +45,12 @@
                         <label>Data <input id="editData" type="date"></label>
                         <label>Horário <input id="editHora" type="time"></label>
                     </div>
+                    <label class="label-foto-editar">Foto da competição (opcional)</label>
+                    <div class="campo-foto-editar">
+                        <img id="editPreviewFoto" alt="Pré-visualização da foto" hidden>
+                        <input id="editFoto" type="file" accept="image/*">
+                        <button type="button" id="btnRemoverFoto" class="btn-remover-foto" hidden>Remover foto</button>
+                    </div>
                 </div>
                 <div class="botoes-secao">
                     <button type="button" class="btn-excluir" id="btnExcluir">Excluir competição</button>
@@ -72,6 +78,7 @@
         window.EVENTO  = <%- JSON.stringify(evento) %>;
         window.EQUIPES = <%- JSON.stringify(equipes) %>;
     </script>
+    <script src="/js/imageUtils.js"></script>
     <script src="/js/editar-competicao.js"></script>
 </body>
 </html>
