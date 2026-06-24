@@ -3,7 +3,7 @@ import multer from "multer";
 import { teamController } from "../controllers/teamController";
 
 const router: Router = express.Router();
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 } });
 
 router.get("/", teamController.getTeams);
 router.post("/", teamController.createTeam);
