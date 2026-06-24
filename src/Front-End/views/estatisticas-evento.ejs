@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/equipe.css">
     <link rel="stylesheet" href="/css/estatisticas-evento.css">
+    <script src="/js/tema.js"></script>
 </head>
 <body>
     <div class="barra-gradiente"></div>
@@ -583,6 +584,33 @@
 
         const kmByHour  = window.KM_BY_HOUR  || {};
         const teamStats = window.TEAM_STATS   || [];
+        const darkTheme = document.documentElement.dataset.theme === 'dark';
+        const chartTextColor = darkTheme ? '#c4c4ce' : '#666';
+        const chartGridColor = darkTheme ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)';
+        Chart.defaults.color = chartTextColor;
+        Chart.defaults.borderColor = chartGridColor;
+        const chartScaleOptions = (title) => ({
+            title: {
+                display: true,
+                text: title,
+                color: chartTextColor,
+            },
+            ticks: {
+                color: chartTextColor,
+            },
+            grid: {
+                color: chartGridColor,
+            },
+            border: {
+                color: chartGridColor,
+            },
+        });
+        const chartLegendOptions = {
+            position: 'top',
+            labels: {
+                color: chartTextColor,
+            },
+        };
 
         // --- Gráfico 1: km acumulado por equipe (linha) ---
         const teamIds = Object.keys(kmByHour);
@@ -617,10 +645,10 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: true,
-                plugins: { legend: { position: 'top' }, tooltip: { mode: 'index', intersect: false } },
+                plugins: { legend: chartLegendOptions, tooltip: { mode: 'index', intersect: false } },
                 scales: {
-                    x: { title: { display: true, text: 'Hora do evento' } },
-                    y: { title: { display: true, text: 'Km acumulado' }, beginAtZero: true },
+                    x: chartScaleOptions('Hora do evento'),
+                    y: { ...chartScaleOptions('Km acumulado'), beginAtZero: true },
                 },
             },
         });
@@ -650,7 +678,7 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: true,
-                plugins: { legend: { position: 'top' }, tooltip: { mode: 'index', intersect: false } },
+                plugins: { legend: chartLegendOptions, tooltip: { mode: 'index', intersect: false } },
                 scales: {
                     x: { title: { display: true, text: 'Período' } },
                     y: { title: { display: true, text: 'Km (destaque do período)' }, beginAtZero: true },

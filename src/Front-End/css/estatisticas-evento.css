@@ -594,3 +594,119 @@ main { height: auto !important; }
     color: #fff;
 }
 .modal-editar-acoes .btn-pri:disabled { opacity: 0.6; cursor: default; }
+
+html[data-theme="dark"] .stats-meta,
+html[data-theme="dark"] .countdown-label,
+html[data-theme="dark"] .dash-kpi-label,
+html[data-theme="dark"] .dash-kpi-sub,
+html[data-theme="dark"] .dash-kpi-unit,
+html[data-theme="dark"] .periodo-hora,
+html[data-theme="dark"] .periodo-equipe,
+html[data-theme="dark"] .periodo-stats,
+html[data-theme="dark"] .genero-equipe,
+html[data-theme="dark"] .stats-vazio {
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] .tab {
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] .tab:hover,
+html[data-theme="dark"] .tab-ativa {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .stats-barra-acao,
+html[data-theme="dark"] .team-stat-body,
+html[data-theme="dark"] .dash-kpi,
+html[data-theme="dark"] .dash-card,
+html[data-theme="dark"] .periodo-item,
+html[data-theme="dark"] .equipe-tab-bloco,
+html[data-theme="dark"] .historico-equipe-bloco,
+html[data-theme="dark"] .modal-editar-conteudo {
+    background: var(--fundo-superficie);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .dash-kpi-destaque {
+    background: linear-gradient(135deg, #311721, #1c1c24);
+    border-color: #8f183f;
+}
+
+html[data-theme="dark"] .stat-valor,
+html[data-theme="dark"] .stat-atleta,
+html[data-theme="dark"] .dash-kpi-valor,
+html[data-theme="dark"] .dash-card-titulo,
+html[data-theme="dark"] .periodo-nome,
+html[data-theme="dark"] .periodo-atleta-nome,
+html[data-theme="dark"] .dash-turno-atleta,
+html[data-theme="dark"] .genero-nome,
+html[data-theme="dark"] .equipe-tab-nome,
+html[data-theme="dark"] .historico-equipe-nome,
+html[data-theme="dark"] .modal-editar-conteudo h2,
+html[data-theme="dark"] .modal-editar-conteudo label,
+html[data-theme="dark"] .tabela-historico td,
+html[data-theme="dark"] .tabela-atletas td {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .dash-turno-pos,
+html[data-theme="dark"] .genero-pos,
+html[data-theme="dark"] .genero-barra-wrap,
+html[data-theme="dark"] .avatar-circle {
+    background: var(--fundo-suave);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .tabela-historico th,
+html[data-theme="dark"] .tabela-atletas th {
+    background: var(--fundo-suave);
+    color: var(--texto-secundario);
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] .tabela-historico td,
+html[data-theme="dark"] .tabela-atletas td,
+html[data-theme="dark"] .periodo-item,
+html[data-theme="dark"] .historico-equipe-bloco,
+html[data-theme="dark"] .equipe-tab-bloco {
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] .tabela-historico tr:hover td,
+html[data-theme="dark"] .tabela-atletas tr:hover td {
+    background: var(--fundo-suave);
+}
+
+html[data-theme="dark"] .modal-editar-conteudo input,
+html[data-theme="dark"] .modal-editar-conteudo select,
+html[data-theme="dark"] .btn-editar-turno {
+    background: var(--fundo-suave);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .stat-icone {
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+}
+
+html[data-theme="dark"] .stat-label,
+html[data-theme="dark"] .dash-turno-equipe,
+html[data-theme="dark"] .genero-titulo,
+html[data-theme="dark"] .periodo-hora,
+html[data-theme="dark"] .periodo-equipe,
+html[data-theme="dark"] .periodo-stats,
+html[data-theme="dark"] .periodo-sem-dados,
+html[data-theme="dark"] .genero-equipe,
+html[data-theme="dark"] .col-auditor {
+    color: #c4c4ce;
+}
+
+html[data-theme="dark"] .periodo-nome,
+html[data-theme="dark"] .dash-turno-atleta,
+html[data-theme="dark"] .genero-nome {
+    color: #f4f4f7;
+}
