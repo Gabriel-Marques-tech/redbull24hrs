@@ -1012,6 +1012,50 @@ main { height: auto !important; }
     cursor: pointer;
 }
 
+html[data-theme="dark"] .tv-config-drawer {
+    background: var(--fundo-superficie);
+    color: var(--texto-principal);
+    box-shadow: -12px 0 40px rgba(0, 0, 0, 0.42);
+}
+
+html[data-theme="dark"] .tv-config-topo h2,
+html[data-theme="dark"] .tv-config-opcao strong,
+html[data-theme="dark"] .tv-config-tempo strong {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .tv-config-topo p,
+html[data-theme="dark"] .tv-config-opcao small,
+html[data-theme="dark"] .tv-config-tempo small {
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] .tv-config-fechar {
+    background: var(--fundo-suave);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .tv-config-preview,
+html[data-theme="dark"] .tv-config-seguranca {
+    background: var(--fundo-suave);
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] .tv-config-opcao,
+html[data-theme="dark"] .tv-config-tempo {
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] .tv-config-opcao i {
+    background: #555563;
+}
+
+html[data-theme="dark"] .tv-config-tempo select {
+    background: var(--fundo-superficie);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
 .modo-tv {
     position: fixed;
     inset: 0;
