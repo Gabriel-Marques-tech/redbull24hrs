@@ -55,17 +55,18 @@ main {
 .lista-atletas {
     position: relative;
     width: 700px;
-    min-height: 230px;
-    max-height: 230px;
+    min-height: 205px;
+    max-height: 205px;
     padding: 0;
-    border: 1px solid #8d8d8d;
-    border-radius: 2px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    background-color: var(--fundo-superficie);
     overflow: hidden;
 }
 
 .lista-atletas-scroll {
-    height: 172px;
-    padding: 18px 44px 8px;
+    height: 143px;
+    padding: 18px 28px 8px;
     overflow-y: auto;
 }
 
@@ -74,10 +75,10 @@ main {
     left: 0;
     right: 0;
     bottom: 0;
-    height: 58px;
-    padding: 7px 44px;
-    background-color: var(--branco);
-    border-top: 1px solid #eeeeee;
+    height: 62px;
+    padding: 8px 28px;
+    background-color: var(--fundo-pagina);
+    border-top: 1px solid var(--borda);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -85,10 +86,15 @@ main {
 
 .campo-atleta {
     display: grid;
-    grid-template-columns: 20px 1fr 70px;
+    grid-template-columns: 34px 1fr 70px;
     align-items: center;
-    gap: 6px;
-    margin-bottom: 8px;
+    gap: 12px;
+    min-height: 52px;
+    margin-bottom: 10px;
+    padding: 0 12px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    background-color: var(--fundo-pagina);
 }
 
 .campo-atleta span {
@@ -99,14 +105,14 @@ main {
 
 .campo-atleta input {
     width: 100%;
-    height: 28px;
-    padding: 0 6px;
+    height: 40px;
+    padding: 0;
     border: none;
-    border-bottom: 1px solid transparent;
     background-color: transparent;
-    color: #000000;
+    color: var(--texto-principal);
     font-size: 20px;
     outline: none;
+    cursor: pointer;
 }
 
 .campo-atleta input:focus {
@@ -124,42 +130,57 @@ main {
 }
 
 .contador-atletas {
+    order: 1;
     position: static;
-    color: #a5a5a5;
-    font-size: 16px;
-    font-weight: 400;
+    color: var(--texto-secundario);
+    font-size: 18px;
+    font-weight: 700;
 }
 
 .btn-adicionar-atleta {
+    order: 2;
     position: static;
-    width: 140px;
+    width: 48px;
     height: 44px;
     margin-top: 0;
     margin-right: 0;
     margin-bottom: 0;
-    border: 1px solid #999999;
+    border: none;
     border-radius: 8px;
-    background-color: #b5b5b5;
+    background-color: var(--vermelho);
     color: var(--branco);
-    font-size: 18px;
-    font-weight: 700;
     cursor: pointer;
+    display: grid;
+    place-items: center;
+}
+
+.btn-adicionar-atleta span,
+.btn-adicionar-atleta span::before {
+    display: block;
+    width: 20px;
+    height: 3px;
+    border-radius: 999px;
+    background-color: currentColor;
+    content: "";
+}
+
+.btn-adicionar-atleta span::before {
+    transform: rotate(90deg);
 }
 
 .botoes-equipes-gerente {
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
+    position: static;
+    align-self: center;
+    transform: none;
     margin-top: 170px;
     padding-bottom: 0;
 }
 
 .conteudo-equipes-gerente.modo-atletas .botoes-equipes-gerente {
-    left: 50%;
-    right: auto;
-    bottom: 10px;
-    transform: translateX(-50%);
-    margin-top: 15px;
+    position: static;
+    align-self: center;
+    transform: none;
+    margin-top: 57px;
 }
 
 .conteudo-equipes-gerente .botoes button {
@@ -179,4 +200,35 @@ main {
 
 .btn-proximo-equipes:hover {
     background-color: #b10033;
+}
+
+/* tema escuro */
+html[data-theme="dark"] .formulario-equipes-gerente h2 {
+    color: var(--texto-principal);
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+html[data-theme="dark"] .lista-atletas {
+    background-color: var(--fundo-pagina);
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] .rodape-lista-atletas {
+    background-color: var(--fundo-superficie);
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] .campo-atleta input {
+    background-color: transparent;
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .contador-atletas {
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] .btn-adicionar-atleta {
+    background-color: var(--vermelho);
+    color: var(--branco);
 }
