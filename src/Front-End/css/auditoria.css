@@ -2342,36 +2342,58 @@ img {
 
 .fila-resumo {
     width: 100%;
+    border: none;
+    border-radius: 8px;
+    padding: 0;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .btn-organizar-fila {
     width: 100%;
-    min-height: 42px;
-    border: 1px solid var(--vermelho);
-    border-radius: 6px;
-    background: transparent;
+    height: 40px;
+    border: 2px solid var(--vermelho);
+    border-radius: 8px;
+    background: var(--branco);
     color: var(--vermelho);
-    font-size: 16px;
     font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
-}
-
-.btn-organizar-fila:hover,
-.btn-organizar-fila:focus-visible {
-    background: var(--vermelho);
-    color: #fff;
-}
-
-.fila-resumo.fila-aberta .btn-organizar-fila {
-    background: var(--vermelho);
-    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .instrucao-fila {
-    margin: 8px 0 10px;
-    color: #666670;
-    font-size: 14px;
+    margin: -2px 0 10px;
+    color: #777;
+    font-size: 13px;
+}
+
+.fila-lista,
+.proximos-corredores .instrucao-fila {
+    display: none;
+}
+
+.fila-lista.fila-aberta,
+.fila-resumo.fila-aberta + .instrucao-fila {
+    display: flex;
+}
+
+.fila-resumo.fila-aberta + .instrucao-fila {
+    margin: 10px 0 14px;
+    color: #626262;
+    font-size: 12px;
+    line-height: 1.25;
+    justify-content: center;
+    text-align: center;
+}
+
+.fila-lista.fila-aberta {
+    flex-direction: column;
+    gap: 8px;
 }
 
 html[data-theme="dark"] .cronometro {
@@ -2381,17 +2403,11 @@ html[data-theme="dark"] .cronometro {
 }
 
 html[data-theme="dark"] .btn-organizar-fila {
+    background: transparent;
     border-color: var(--vermelho);
-    color: var(--texto-principal);
-}
-
-html[data-theme="dark"] .btn-organizar-fila:hover,
-html[data-theme="dark"] .btn-organizar-fila:focus-visible,
-html[data-theme="dark"] .fila-resumo.fila-aberta .btn-organizar-fila {
-    background: var(--vermelho);
     color: #fff;
 }
 
-html[data-theme="dark"] .instrucao-fila {
-    color: var(--texto-secundario);
+html[data-theme="dark"] .proximos-corredores .instrucao-fila {
+    color: #d7d7df;
 }
