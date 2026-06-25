@@ -1,15 +1,11 @@
 // ─── Auth fetch com refresh automático ───────────────────────
 async function authFetch(url, options = {}) {
     const token = localStorage.getItem('accessToken')
-    const makeReq = (t) => fetch(url, {
-        credentials: 'include',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${t}`,
-            ...options.headers
-        }
-    })
+    const makeReq = (t) => {
+        const headers = { 'Authorization': `Bearer ${t}`, ...options.headers }
+        if (!(options.body instanceof FormData)) headers['Content-Type'] = 'application/json'
+        return fetch(url, { credentials: 'include', ...options, headers })
+    }
 
     const res = await makeReq(token)
     if (res.status !== 401) return res
