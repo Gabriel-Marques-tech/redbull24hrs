@@ -245,6 +245,18 @@ describe("refresh", () => {
   });
 });
 
+describe("listAuditors", () => {
+  it("Delega ao repositório e retorna a lista de auditores", async () => {
+    const auditores = [{ id: "1", name: "Aud", email: "a@a.com" }];
+    (mockRepo.listAuditors as jest.Mock).mockResolvedValue(auditores);
+
+    const result = await authService.listAuditors();
+
+    expect(mockRepo.listAuditors).toHaveBeenCalled();
+    expect(result).toEqual(auditores);
+  });
+});
+
 describe("logout", () => {
   it("Não faz nada se refresh token ausente", async () => {
     await authService.logout("");

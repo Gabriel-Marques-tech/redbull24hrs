@@ -1,0 +1,89 @@
+%%{init: {"theme":"base","flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":80,"rankSpacing":95,"padding":24},"themeVariables":{"fontFamily":"Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryTextColor":"#0F0069","primaryBorderColor":"#0F0069","lineColor":"#0F0069","tertiaryColor":"#F5F5FA","tertiaryTextColor":"#0F0069"}}}%%
+flowchart TB
+
+    classDef client fill:#FFFFFF,stroke:#0F0069,stroke-width:2px,color:#0F0069;
+    classDef route fill:#FFF7CC,stroke:#D6A700,stroke-width:2px,color:#0F0069;
+    classDef controller fill:#E8E8F5,stroke:#0F0069,stroke-width:2px,color:#0F0069;
+    classDef service fill:#E7F5E8,stroke:#2E7D32,stroke-width:2px,color:#0F0069;
+    classDef repository fill:#FFF0D6,stroke:#EF6C00,stroke-width:2px,color:#0F0069;
+    classDef db fill:#ECEFF1,stroke:#37474F,stroke-width:2px,color:#0F0069;
+    classDef output fill:#FDE7EF,stroke:#D2003C,stroke-width:2px,color:#0F0069;
+    classDef note fill:#FFFFFF,stroke:#D2003C,stroke-width:2px,stroke-dasharray: 6 4,color:#0F0069;
+
+    subgraph L1["Cliente"]
+        direction TB
+        C["Gestor / Tela de desempenho"]:::client
+    end
+
+    subgraph L2["Rotas protegidas e pública"]
+        direction TB
+        R1["GET /metrics/events/:eventId/athletes"]:::route
+        R2["GET /metrics/athletes/:athleteId/shifts"]:::route
+        R3["GET /metrics/athletes/:athleteId/snapshots?event_id="]:::route
+        R4["GET /metrics/athletes/:athleteId/performance"]:::route
+        R5["GET /metrics/athletes/:athleteId/share<br/>rota pública"]:::route
+    end
+
+    subgraph L3["Controller"]
+        direction TB
+        MC["MetricsController"]:::controller
+    end
+
+    subgraph L4["Service"]
+        direction TB
+        MS["MetricsService"]:::service
+        RN["RF035 · RF036 · RF037<br/>RF049 · RF050 · RF052"]:::note
+    end
+
+    subgraph L5["Repository"]
+        direction TB
+        MR["MetricsRepository"]:::repository
+        Q1["athleteKmByEvent"]:::repository
+        Q2["shiftsByAthlete"]:::repository
+        Q3["kmSnapshotsByAthlete"]:::repository
+        Q4["performanceByAthlete"]:::repository
+    end
+
+    subgraph L6["Banco de Dados"]
+        direction TB
+        DB["PostgreSQL"]:::db
+        AT["athletes"]:::db
+        TE["teams"]:::db
+        SH["shifts"]:::db
+        CP["checkpoints"]:::db
+    end
+
+    subgraph L7["Saídas"]
+        direction TB
+        O1["200 ranking atletas"]:::output
+        O2["200 histórico turnos"]:::output
+        O3["200 snapshots KM"]:::output
+        O4["200 performance/share"]:::output
+        O5["404 atleta não encontrado"]:::output
+    end
+
+    C --> R1 --> MC --> MS --> MR
+    C --> R2 --> MC
+    C --> R3 --> MC
+    C --> R4 --> MC
+    C --> R5 --> MC
+    MS -.-> RN
+    MR --> Q1 --> AT
+    Q1 --> SH
+    Q1 --> CP
+    MR --> Q2 --> SH
+    MR --> Q3 --> CP
+    Q3 --> SH
+    MR --> Q4 --> SH
+    Q4 --> CP
+    Q4 --> TE
+    AT --> DB
+    TE --> DB
+    SH --> DB
+    CP --> DB
+    DB --> MR --> MS --> MC
+    MC --> O1 --> C
+    MC --> O2 --> C
+    MC --> O3 --> C
+    MC --> O4 --> C
+    MC -. sem atleta .-> O5 --> C

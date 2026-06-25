@@ -12,44 +12,39 @@ flowchart TB
 
     subgraph L1["Cliente"]
         direction TB
-        C["Web Admin<br/>API Client"]:::client
+        C["Gestor<br/>consulta e exportação"]:::client
     end
 
     subgraph L2["Rotas do fluxo"]
         direction TB
-        R1["POST /events"]:::route
-        R2["GET /metrics/events/:id/dashboard"]:::route
-        R3["GET /metrics/events/:id/teams"]:::route
-        R4["GET /export/events/:id/..."]:::route
+        R1["GET /metrics/events/:id/dashboard"]:::route
+        R2["GET /metrics/events/:id/teams"]:::route
+        R3["GET /export/events/:id/shifts"]:::route
+        R4["GET /export/events/:id/checkpoints"]:::route
     end
 
     subgraph L3["Controllers"]
         direction TB
-        EC["EventController"]:::controller
         MC["MetricsController"]:::controller
         EXC["ExportController"]:::controller
     end
 
     subgraph L4["Services"]
         direction TB
-        ES["EventService"]:::service
         MS["MetricsService"]:::service
         EXS["ExportService"]:::service
-        RN["RF025 · RF019<br/>RF014 · RF024"]:::note
+        RN["RF019 · RF024<br/>RF047 · RF048 · RN26"]:::note
     end
 
     subgraph L5["Repositories"]
         direction TB
-        ER["EventRepository"]:::repository
         MR["MetricsRepository"]:::repository
-        EQ["Export queries"]:::repository
+        EXR["ExportRepository"]:::repository
     end
 
     subgraph L6["Banco de Dados"]
         direction TB
         DB["PostgreSQL"]:::db
-        E["events"]:::db
-        M["managers"]:::db
         TE["teams"]:::db
         A["athletes"]:::db
         S["shifts"]:::db
@@ -59,36 +54,31 @@ flowchart TB
 
     subgraph L7["Saídas"]
         direction TB
-        O1["201 evento criado"]:::output
-        O2["200 dashboard/ranking"]:::output
-        O3["200 CSV"]:::output
+        O1["200 dashboard/ranking"]:::output
+        O2["200 CSV turnos"]:::output
+        O3["200 CSV checkpoints"]:::output
     end
 
-    C --> R1 --> EC --> ES --> ER
-    C --> R2 --> MC --> MS --> MR
-    C --> R3 --> MC
-    C --> R4 --> EXC --> EXS --> EQ
-    ES -.-> RN
+    C --> R1 --> MC --> MS --> MR
+    C --> R2 --> MC
+    C --> R3 --> EXC --> EXS --> EXR
+    C --> R4 --> EXC
     MS -.-> RN
     EXS -.-> RN
-    ER --> E
-    ER --> M
     MR --> TE
     MR --> A
     MR --> S
     MR --> TR
-    EQ --> S
-    EQ --> CP
-    EQ --> A
-    EQ --> TE
-    EQ --> TR
-    E --> DB
-    M --> DB
+    EXR --> S
+    EXR --> CP
+    EXR --> A
+    EXR --> TE
+    EXR --> TR
     TE --> DB
     A --> DB
     S --> DB
     CP --> DB
     TR --> DB
-    DB --> ER --> ES --> EC --> O1 --> C
-    DB --> MR --> MS --> MC --> O2 --> C
-    DB --> EQ --> EXS --> EXC --> O3 --> C
+    DB --> MR --> MS --> MC --> O1 --> C
+    DB --> EXR --> EXS --> EXC --> O2 --> C
+    EXC --> O3 --> C

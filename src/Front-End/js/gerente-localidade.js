@@ -109,8 +109,13 @@ btnProximo.addEventListener("click", () => {
         return;
     }
 
-    localStorage.setItem("localidadeCompeticao", JSON.stringify({ nome, estado, cidade, uf: ufPorEstado[estado] }));
-    window.location.href = "/manager/create-event/schedule";
+    localStorage.setItem("localidadeCompeticao", JSON.stringify({
+        nome,
+        estado,
+        cidade,
+        uf: ufPorEstado[estado]
+    }));
+    window.location.href = "/manager/create-event/image";
 });
 
 // ---- restaurar seleção salva ----

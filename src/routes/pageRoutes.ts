@@ -16,6 +16,7 @@ router.get('/manager/shifts', authMiddleware.requirePageAuth, pageController.get
 
 // Wizard de criação de evento/equipes — apenas manager
 router.get('/manager/create-event/location', authMiddleware.requirePageAuth, authMiddleware.requireRole('manager'), pageController.getCreateEventLocation)
+router.get('/manager/create-event/image', authMiddleware.requirePageAuth, authMiddleware.requireRole('manager'), pageController.getCreateEventImage)
 router.get('/manager/create-event/schedule', authMiddleware.requirePageAuth, authMiddleware.requireRole('manager'), pageController.getCreateEventSchedule)
 router.get('/manager/create-event/teams', authMiddleware.requirePageAuth, authMiddleware.requireRole('manager'), pageController.getCreateEventTeams)
 router.get('/manager/create-event/athlete', authMiddleware.requirePageAuth, authMiddleware.requireRole('manager'), pageController.getCreateEventAthlete)

@@ -34,7 +34,7 @@ function salvarEstado() {
 function renderizarLista(tipo) {
     const lista = document.querySelector(`[data-lista-atletas="${tipo}"]`);
     const atletas = estado.atletas[tipo];
-    const quantidadeCampos = Math.min(Math.max(atletas.length + 1, 1), totalAtletas);
+    const quantidadeCampos = Math.max(atletas.length + 1, 1);
     lista.innerHTML = "";
 
     for (let indice = 0; indice < quantidadeCampos; indice += 1) {
@@ -51,7 +51,7 @@ function renderizarLista(tipo) {
 
     const contador = document.createElement("strong");
     contador.className = "contador-atletas";
-    contador.textContent = `${atletas.length}/${totalAtletas}`;
+    contador.textContent = `${atletas.length} atleta(s)`;
     lista.appendChild(contador);
 }
 

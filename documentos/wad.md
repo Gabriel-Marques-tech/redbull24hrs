@@ -1,4 +1,4 @@
-<img src="../assets/logointeli.png">
+<img src="../documentos/assets/logointeli.png">
 
 # WAD - Web Application Document - Módulo 2 - Inteli
 
@@ -8,39 +8,39 @@
 
 ## Nome dos integrantes do grupo
 
-#### Fernanda Helena Leitão Bezerra
+#### [Fernanda Helena Bezerra](http://www.linkedin.com/in/nandahelena)
 
-#### Gabriel Simões Marques
+#### [Gabriel Simões Marques](https://www.linkedin.com/in/gabrielmarquesinteli)
 
-#### Giovanna Scharlau Carettoni
+#### [Giovanna Scharlau Carettoni](https://www.linkedin.com/in/giovannascharlaucarettoni)
 
-#### Laura Faria Damasceno
+#### [Laura Faria Damasceno](http://www.linkedin.com/in/laura-faria-damasceno)
 
-#### Miguel Vinícius da Silva
+#### [Miguel Vinícius da Silva](http://www.linkedin.com/in/miguelvvinicius)
 
-#### Nicoly Mendes Adesanmi
+#### [Nicoly Mendes Adesanmi](http://www.linkedin.com/in/nicoly-mendes-adesanmi-b260052b2)
 
-#### Pietro Sansão Lucas
+#### [Pietro Sansão Lucas](https://www.linkedin.com/in/pietrosansao)
 
 ## Sumário
 
-[1. Introdução](#c1)
+[1. Introdução](#1-introdução-sprints-1-a-5)
 
-[2. Visão Geral da Aplicação Web](#c2)
+[2. Visão Geral da Aplicação Web](#2-visão-geral-da-aplicação-web)
 
-[3. Projeto Técnico da Aplicação Web](#c3)
+[3. Projeto Técnico da Aplicação Web](#3-projeto-da-aplicação-web-sprints-1-a-5)
 
-[4. Desenvolvimento da Aplicação Web](#c4)
+[4. Desenvolvimento da Aplicação Web](#4-desenvolvimento-da-aplicação-web-sprints-1-a-5)
 
-[5. Testes da Aplicação Web](#c5)
+[5. Testes da Aplicação Web](#5-testes)
 
-[6. Estudo de Mercado e Plano de Marketing](#c6)
+[6. Estudo de Mercado e Plano de Marketing](#6-estudo-de-mercado-e-plano-de-marketing-sprint-4)
 
-[7. Conclusões e trabalhos futuros](#c7)
+[7. Conclusões e trabalhos futuros](#7-conclusões-e-trabalhos-futuros-sprint-5)
 
 [8. Referências](#8-referências)
 
-[Anexos](#c9)
+[Anexos](#anexos)
 
 <br>
 
@@ -1569,14 +1569,14 @@ A coluna **Status** reflete o estado de implementação na WebAPI (seção 3.7):
 | RF011 | —                                   | `POST /audit/shifts/start`                                                                                                                       | POST                                   | Implementado                    |
 | RF012 | RN03, RN34                          | `POST /audit/shifts/:id/checkpoints`                                                                                                             | POST                                   | Implementado                    |
 | RF013 | RN04                                | `POST /audit/shifts/:id/checkpoints`                                                                                                             | POST                                   | Implementado                    |
-| RF014 | RN05, RN35                          | `PATCH /audit/shifts/:id/finish`                                                                                                                 | PATCH                                  | Implementado                    |
+| RF014 | RN05, RN35                          | `PATCH /audit/shifts/:id/finish`, `PATCH /audit/shifts/:id/abandon`                                                                             | PATCH / PATCH                          | Implementado                    |
 | RF015 | RN06                                | `PATCH /audit/shifts/:id/finish`                                                                                                                 | PATCH                                  | Implementado                    |
 | RF016 | RN33                                | `PATCH /audit/shifts/:id/finish`                                                                                                                 | PATCH                                  | Implementado                    |
 | RF017 | RN07, RN32                          | `PATCH /audit/shifts/:id/finish`                                                                                                                 | PATCH                                  | Implementado                    |
 | RF018 | RN07, RN33                          | `PATCH /audit/shifts/:id/finish`                                                                                                                 | PATCH                                  | Implementado                    |
 | RF019 | RN07                                | `PATCH /audit/shifts/:id/finish`                                                                                                                 | PATCH                                  | Implementado                    |
-| RF020 | RN09                                | `GET /metrics/:eventsId/teams`, `GET /metrics/:eventsId/dashboard`                                                                             | GET                                    | Implementado                    |
-| RF021 | RN11                                | `GET /metrics/:eventsId/dashboard`                                                                                                              | GET                                    | Implementado                    |
+| RF020 | RN09                                | `GET /metrics/events/:eventId/teams`, `GET /metrics/events/:eventId/dashboard`                                                                 | GET                                    | Implementado                    |
+| RF021 | RN11                                | `GET /metrics/events/:eventId/dashboard`                                                                                                       | GET                                    | Implementado                    |
 | RF022 | RN13                                | `GET /audit/history`                                                                                                                             | GET                                    | Implementado                    |
 | RF023 | RN24                                | `PATCH /teams/:teamId/athletes/:id`                                                                                                              | PATCH                                  | Implementado                    |
 | RF024 | RN23                                | `GET /audit/logs`                                                                                                                                | GET                                    | Implementado                    |
@@ -1587,26 +1587,26 @@ A coluna **Status** reflete o estado de implementação na WebAPI (seção 3.7):
 | RF029 | —                                   | `GET /audit/alerts`                                                                                                                              | GET                                    | Frontend (consome alertas)      |
 | RF030 | —                                   | `GET /audit/alerts`                                                                                                                              | GET                                    | Frontend (consome alertas)      |
 | RF031 | —                                   | `PATCH /audit/checkpoints/:id`                                                                                                                   | PATCH                                  | Implementado                    |
-| RF032 | RN34                                | `POST /audit/shifts/:eventsId/checkpoints`                                                                                                             | POST                                   | Implementado                    |
-| RF033 | —                                   | `POST /audit/shifts/:eventsId/checkpoints`                                                                                                             | POST                                   | Implementado                    |
+| RF032 | RN34                                | `POST /audit/shifts/:id/checkpoints`                                                                                                           | POST                                   | Implementado                    |
+| RF033 | —                                   | `POST /audit/shifts/:id/checkpoints`                                                                                                           | POST                                   | Implementado                    |
 | RF034 | RN08                                | `POST /audit/shifts/start`                                                                                                                       | POST                                   | Frontend (fluxo de UI)          |
-| RF035 | —                                   | `GET /metrics/events/:eventsId/athletes`                                                                                                               | GET                                    | Implementado                    |
-| RF036 | —                                   | `GET /metrics/athletes/:eventsId/shifts`                                                                                                               | GET                                    | Implementado                    |
-| RF037 | RN10                                | `GET /metrics/athletes/:eventsId/snapshots`                                                                                                            | GET                                    | Implementado                    |
-| RF038 | RN12                                | `GET /metrics/events/:eventsId/dashboard`                                                                                                              | GET                                    | Implementado                    |
+| RF035 | —                                   | `GET /metrics/events/:eventId/athletes`                                                                                                        | GET                                    | Implementado                    |
+| RF036 | —                                   | `GET /metrics/athletes/:athleteId/shifts`                                                                                                      | GET                                    | Implementado                    |
+| RF037 | RN10                                | `GET /metrics/athletes/:athleteId/snapshots`                                                                                                   | GET                                    | Implementado                    |
+| RF038 | RN12                                | `GET /metrics/events/:eventId/dashboard`                                                                                                       | GET                                    | Implementado                    |
 | RF039 | RN12                                | `GET /audit/alerts`                                                                                                                              | GET                                    | Implementado                    |
-| RF040 | RN14                                | `GET /metrics/events/:eventsId/dashboard`                                                                                                              | GET                                    | Frontend (Modo TV)              |
+| RF040 | RN14                                | `GET /metrics/events/:eventId/dashboard`                                                                                                       | GET                                    | Frontend (Modo TV)              |
 | RF041 | RN22                                | `GET /audit/history?team_id=`                                                                                                                    | GET                                    | Implementado                    |
 | RF042 | RN22                                | `GET /audit/history?treadmill_id=`                                                                                                               | GET                                    | Implementado                    |
 | RF043 | RN22                                | `GET /audit/history?athlete_id=`                                                                                                                 | GET                                    | Implementado                    |
-| RF044 | RN25                                | `PATCH /audit/shifts/:eventsId/finish`                                                                                                                 | PATCH                                  | Implementado                    |
-| RF045 | RN25                                | `POST /audit/shifts/:eventsId/checkpoints`                                                                                                             | POST                                   | Implementado                    |
+| RF044 | RN25                                | `PATCH /audit/shifts/:id/finish`                                                                                                               | PATCH                                  | Implementado                    |
+| RF045 | RN25                                | `POST /audit/shifts/:id/checkpoints`                                                                                                           | POST                                   | Implementado                    |
 | RF046 | RN25                                | `POST /audit/shifts/start`                                                                                                                       | POST                                   | Implementado                    |
-| RF047 | RN26                                | `GET /export/:eventsId/shifts`                                                                                                                  | GET                                    | Implementado                    |
-| RF048 | RN26                                | `GET /export/:eventsId/checkpoints`                                                                                                             | GET                                    | Implementado                    |
+| RF047 | RN26                                | `GET /export/events/:eventId/shifts`                                                                                                           | GET                                    | Implementado                    |
+| RF048 | RN26                                | `GET /export/events/:eventId/checkpoints`                                                                                                      | GET                                    | Implementado                    |
 | RF049 | —                                   | `GET /metrics/athletes/:id/performance`                                                                                                          | GET                                    | Implementado                    |
 | RF050 | RN36                                | `GET /metrics/athletes/:id/share`                                                                                                                | GET                                    | Implementado                    |
-| RF051 | RN18, RN29, RN37                    | `POST /events`, `PATCH /:eventsId`                                                                                                              | POST / PATCH                           | Implementado                    |
+| RF051 | RN18, RN29, RN37                    | `POST /events`, `PATCH /events/:id`, `PATCH /events/:id/start`, `PATCH /events/:id/finish`                                                     | POST / PATCH                           | Implementado                    |
 | RF052 | —                                   | `GET /metrics/athletes/:id/performance`                                                                                                          | GET                                    | Implementado                    |
 | RF053 | —                                   | `GET /audit/alerts`                                                                                                                              | GET                                    | Implementado                    |
 
@@ -1614,7 +1614,7 @@ A coluna **Status** reflete o estado de implementação na WebAPI (seção 3.7):
   <br><br>
 </div>
 
-Observa-se que os endpoints de cada RF pertencem aos dez fluxos consolidados na documentação da WebAPI (seção 3.7): Autenticação, Eventos, Esteiras, Equipes, Atletas, Turnos, Histórico, Alertas, Métricas e Exportação. O endpoint classificado como *Planejado (sprint 5)* — `GET /teams/:teamId/validation` (RF003) — já tem contrato definido e será implementado de forma incremental, sem alterar os endpoints existentes, conforme o Quadro 31 (seção 3.9). Os RF marcados como *Frontend* (RF029, RF030, RF034 e RF040) não demandam um endpoint próprio: sua execução ocorre na camada de interface, reutilizando endpoints de leitura já operantes no backend (notificação visual e sonora de alertas a partir de `GET /audit/alerts`, *hot swap* a partir de `POST /audit/shifts/start` e Modo TV a partir de `GET /metrics/events/:id/dashboard`).
+Observa-se que os endpoints de cada RF pertencem aos doze fluxos consolidados na documentação da WebAPI (seção 3.7): Autenticação, Eventos, Esteiras, Equipes, Atletas, Turnos, Histórico, Alertas, Sincronização, Logs de Auditoria, Métricas e Exportação. O endpoint classificado como *Planejado (sprint 5)* — `GET /teams/:teamId/validation` (RF003) — já tem contrato definido e será implementado de forma incremental, sem alterar os endpoints existentes, conforme o Quadro 31 (seção 3.9). Os RF marcados como *Frontend* (RF029, RF030, RF034 e RF040) não demandam um endpoint próprio: sua execução ocorre na camada de interface, reutilizando endpoints de leitura já operantes no backend (notificação visual e sonora de alertas a partir de `GET /audit/alerts`, *hot swap* a partir de `POST /audit/shifts/start` e Modo TV a partir de `GET /metrics/events/:id/dashboard`).
 
 ### 3.1.5. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
@@ -1708,57 +1708,281 @@ Na sprint 1, os RNFs foram definidos em nível conceitual, com critérios mensur
   <br><br>
 </div>
 
+#### Evolução dos RNFs: Sprint 4 — métricas de verificação e procedimentos
+
+Na sprint 4, com a integração ponta a ponta dos fluxos de auditoria, gerência e estatísticas, os RNFs pendentes de aferição foram atualizados. O quadro a seguir apresenta, para cada RNF com evolução nesta sprint, a atualização técnica realizada, a **métrica de verificação** com valor-alvo concreto e o **procedimento de verificação** — forma objetiva de atestar o cumprimento do critério — mantendo formato uniforme entre todos os eixos.
+
+<div align = "center">
+  <sub> Quadro 16.2 - Evolução dos RNFs: Sprint 4 — métricas e procedimentos de verificação </sub><br>
+
+| RNF | Eixo | Atualização Sprint 4 | Métrica de Verificação | Procedimento de Verificação | Evidência |
+| :-- | :--- | :------------------- | :--------------------- | :-------------------------- | :-------- |
+| **RNF001** | USAB | Fluxo completo de início/troca de corredor integrado ao backend via SSR — auditor seleciona esteira, escolhe atleta e inicia turno em tela única sem navegação intermediária. | 95% dos usuários concluem o fluxo em ≤ 3 min | Teste de usabilidade com ≥ 3 participantes: cronometrar o tempo do clique em "Iniciar Turno" até a confirmação do servidor. Meta: ≤ 3 min em 95% das tentativas. | `treadmill.ejs` → `auditoria.ejs` → `POST /audit/shifts/start`; testes de usabilidade previstos para sprint 5 |
+| **RNF002** | USAB | Views EJS do modo TV (`estatisticas-evento.ejs`, `visao-evento.ejs`) implementadas. Contraste da paleta principal (vermelho #D2003C / branco #FFFFFF) atende 5,9:1 (> 4,5:1 WCAG AA). | Contraste ≥ 4,5:1 em todos os elementos de texto; fonte ≥ 48px no modo TV | Inspecionar com Colour Contrast Analyser (ou DevTools) todos os pares texto/fundo das views EJS. Validar tamanho de fonte no CSS do modo TV (`estatisticas-evento.ejs`). | `estatisticas-evento.ejs`, `visao-evento.ejs`; paleta em §3.4.1 |
+| **RNF003** | USAB | 100% das mensagens de erro de validação retornadas pela API incluem descrição da correção esperada, padronizadas em §3.7.1 (Error Handling). | 100% das respostas de erro com campo `error` descritivo e acionável | Executar `npm test` e inspecionar as asserções de mensagem em `shift.test.ts`, `team.test.ts` e `auth.service.test.ts`. Confirmar que nenhuma mensagem retorna apenas código técnico ou stack trace. | `shiftService.ts` — mensagens dos `throw`; `shift.test.ts` |
+| **RNF004** | USAB | Ações críticas (início, checkpoint, encerramento) resolvidas em ≤ 3 cliques: (1) selecionar esteira, (2) confirmar atleta, (3) confirmar início. | Nenhuma ação operacional crítica exige > 3 cliques | Percorrer o fluxo completo em ambiente local contando cliques até a resposta do servidor. Repetir para checkpoint e encerramento. | `treadmill.ejs`, `auditoria.ejs`, `audit.ejs` |
+| **RNF005** | CONF | `POST /audit/sync` implementado na sprint 4: recebe checkpoints em lote com `sync_id` determinístico e os persiste com idempotência via índice único parcial (`ON CONFLICT ... DO NOTHING`). | 100% dos checkpoints offline sincronizados em ≤ 30s sem duplicatas | Executar `sync.test.ts` (`npm test -- --testPathPattern sync`). Verificar que registros com o mesmo `sync_id` não geram duplicata e que o endpoint responde em < 30s. | `syncController.ts`, `syncService.ts`; `sync.test.ts` — idempotência e batch |
+| **RNF008** | DES | Pool de conexões PostgreSQL configurado (`max: 15`, `idleTimeoutMillis: 30000`, `connectionTimeoutMillis: 5000`); índices sobre todas as FKs em `001_initialSchema.sql`. Aferição de p95 a realizar. | P95 de tempo de resposta < 200ms para endpoints operacionais | Executar carga com `autocannon -c 50 -d 10 http://localhost:3000/audit/shifts/start` (ou equivalente k6). Coletar p95 do relatório. Meta: < 200ms. | `connection.ts` — configuração do pool; `001_initialSchema.sql` — índices |
+| **RNF011** | DES | `metricsRepository.ts` usa consultas SQL agregadas (`SUM`, `AVG`, `COUNT`) sobre colunas indexadas para calcular km total, velocidade média e snapshots por evento. | Renderização de métricas consolidadas ≤ 1s | Medir com DevTools (Network → tempo de resposta) ou `curl -w "%{time_total}"` em `GET /metrics/events/:id/teams`. Meta: ≤ 1s. | `metricsRepository.ts`; `metricsService.ts`; `metrics.test.ts` |
+| **RNF012** | SEG | Autenticação completa integrada ao frontend: JWT (15 min) + refresh rotativo (7 dias) em cookies `HttpOnly`, middleware `authMiddleware` bloqueando 100% das rotas protegidas sem token válido. Endpoint público RF050 não passa pelo middleware. | 100% de rejeições com 401 em rotas protegidas sem token; endpoint público RF050 acessível sem autenticação | Executar `auth.service.test.ts` e `auth.routes.test.ts`. Confirmar cobertura de: (a) 401 para token ausente, (b) 401 para token expirado, (c) 403 para perfil incorreto, (d) 200 para RF050 sem token. | `authMiddleware.ts`; `auth.service.test.ts`; `auth.routes.test.ts` |
+| **RNF013** | SEG | `GET /audit/logs` implementado (sprint 4): expõe trilha imutável com `user`, `timestamp`, `old_value`, `new_value` e `type` em ordem decrescente de timestamp. | 100% das edições registradas com usuário, timestamp e dado anterior; consultáveis em ordem decrescente | Executar `logs.test.ts`. Verificar que toda edição via `PATCH` gera entrada em `logs` com os três campos obrigatórios e que a consulta retorna em ordem decrescente. | `logsController.ts`, `logsRepository.ts`; `logs.test.ts` |
+| **RNF015** | SUP | Cobertura de testes atualizada após expansão da suíte na sprint 4 (issue #235): **95,45% em statements, 90,74% em branches, 96,87% em functions, 98,29% em lines** na camada Service. | Cobertura ≥ 75% global na camada Service, aferida por `npm test -- --coverage` | Executar `npm test -- --coverage`. Verificar coluna "%" no relatório por arquivo em `src/services/`. Meta: ≥ 75% em statements em todos os services. | Evidência em §5.1.5 (Quadro de cobertura); comando: `npm test -- --coverage` |
+| **RNF016** | CAP | Pool configurado (`max: 15`). Teste de carga com 50 usuários simultâneos a realizar antes da sprint 5. | 50 usuários simultâneos com tempo de resposta < 500ms | Executar `autocannon -c 50 -d 30 http://localhost:3000/metrics/events/1/dashboard`. Coletar p99. Meta: < 500ms. | `connection.ts` — `max: 15`; teste de carga previsto sprint 5 |
+| **RNF017** | CAP | Consultas de histórico e exportação CSV aceleradas por índices sobre FKs (`shift_id`, `event_id`, `team_id`, `athlete_id`, `treadmill_id`). Aferição com volume real a realizar. | Consultas filtradas e exportações de ≤ 10.000 registros em < 3s | Inserir 10.000 registros de teste via script SQL. Executar `curl -w "%{time_total}"` em `GET /audit/history?event_id=1` e `GET /export/events/1/shifts`. Meta: < 3s. | `001_initialSchema.sql` — índices secundários; `historyRepository.ts`, `exportService.ts` |
+| **RNF006** | CONF | Integridade transacional garantida por constraints de PK, FK e `UNIQUE` no PostgreSQL — violações são bloqueadas antes de qualquer persistência. A sprint 4 reforçou com `ON CONFLICT DO NOTHING` no sync (idempotência) e corrigi tipos das colunas `old_value`/`new_value` de `INT` para `NUMERIC` (issue #230), eliminando rejeições silenciosas de km decimais. | 100% das tentativas de persistência de dados inválidos (FK inexistente, duplicata) bloqueadas com erro 4xx | Tentar `POST /audit/checkpoints` com `shift_id` inexistente e confirmar 404; executar `sync.test.ts` com sync_id duplicado e confirmar que apenas 1 registro é criado. | `001_initialSchema.sql` — constraints PK/FK/UNIQUE; `016_alter_old_new_values_to_numeric.sql`; `sync.test.ts` |
+| **RNF007** | CONF | Sistema de alertas de inconsistência implementado na sprint 4: frontend detecta km menor que checkpoint anterior (modal de aviso — issue #229), turno aberto sem atividade (lembrete de inatividade — issue #231); backend retorna erro descritivo ao receber km inválido. | 100% das inconsistências definidas em RF044/RF045/RF046 geram alerta visual em ≤ 100ms após a detecção | Inserir checkpoint com km inferior ao anterior na tela de auditoria e cronometrar aparição do modal (meta: ≤ 100ms via DevTools Performance). Manter turno aberto sem interação por 5 min e verificar exibição do lembrete. | `auditoria.ejs` — validação de km e `setInterval` de inatividade; issues #229 e #231 |
+| **RNF009** | DES | Feedback visual imediato implementado via JavaScript no cliente: toasts de confirmação, modais de aviso e validações de formulário são renderizados localmente sem round-trip ao servidor, garantindo latência desprezível. | Alertas de inconsistência e validações de campo exibidos em ≤ 100ms | Acionar validação de campo inválido (ex: km em branco) na tela de auditoria e medir com DevTools (Performance tab) o delta entre evento de input e renderização do alerta. Meta: ≤ 100ms. | `auditoria.ejs` e `audit.ejs` — event listeners de validação client-side |
+| **RNF010** | DES | Views `estatisticas-evento.ejs` e `visao-evento.ejs` implementam polling automático via `setInterval` (intervalo ≤ 10s) que re-consulta os endpoints de métricas e atualiza o DOM sem recarregamento manual da página. | Atualização automática de métricas e placares em ≤ 10s sem reload manual | Abrir modo TV (`/metrics/events/:id/dashboard`) e observar aba Network no DevTools: confirmar que requisições automáticas ocorrem em intervalos ≤ 10s. | `estatisticas-evento.ejs`, `visao-evento.ejs` — lógica de `setInterval`; `GET /metrics/events/:id/dashboard` |
+| **RNF014** | SUP | Arquitetura em camadas rigorosamente aplicada: routes → controller → service → repository → pool.query(). Nenhum cálculo (km acumulado, velocidade, alertas de inconsistência) reside nas views EJS. A sprint 4 expandiu a camada service com `metricsService.ts`, `logsService.ts`, `syncService.ts` e `exportService.ts`. | 100% dos cálculos estatísticos e validações de regras de negócio no backend; frontend sem lógica de negócio | Grep em `views/` por operações aritméticas ou condicionais de negócio (`velocity`, `km`, `distance`): resultado esperado: zero ocorrências de cálculo real. Confirmar que toda lógica está em `src/services/`. | `src/services/` — camada exclusiva de regras; views EJS — apenas interpolação de dados pré-calculados |
+| **RNF018** | REST | Sistema desenvolvido e validado em Chrome estável (desktop e Android). CSS responsivo utiliza apenas propriedades com suporte universal nos dois últimos Chrome/Firefox estáveis; sem dependência de APIs ou vendor-prefixes exclusivos de um único browser. | Funcionalidade completa verificada nas duas últimas versões estáveis de Chrome e Firefox no Android 10+ | Abrir fluxo completo (login → seleção de esteira → registro de checkpoint → encerramento) em Chrome e Firefox (versões estáveis) em tablet Android 10+ ou emulador. Confirmar ausência de erros de console. | Validação manual sprint 4; ausência de vendor-prefixes críticos no CSS (`public/styles/`) |
+| **RNF019** | REST | O sistema não integra APIs externas no fluxo crítico de registro. O banco Supabase (PostgreSQL) é acessado via pool TCP direto (`pg`), sem SDK proprietário. A sincronização offline (issue #226) permite registro de checkpoints mesmo sem conectividade, eliminando dependência de rede para operações primárias. | Nenhuma funcionalidade de registro de turno ou checkpoint falha por indisponibilidade de API externa | Simular ausência de rede (`chrome://network-conditions/`) durante registro de checkpoint: verificar que dados são mantidos localmente e sincronizados ao reconectar. Confirmar ausência de chamadas a APIs externas em `src/services/`. | `syncService.ts` — operação offline-first; ausência de imports de SDKs externos em `src/services/` |
+| **RNF020** | ORG | Design System Red Bull aplicado às novas telas da sprint 4 (histórico, logs, métricas, exportação): paleta (#D2003C, #FFFFFF, #000000), tipografia Inter/sans-serif e componentes tabelares validados visualmente antes da entrega. Validação formal do Design System documentada em §3.4. | 100% dos componentes de UI seguem o Design System aprovado (paleta, tipografia, componentes) | Auditar visualmente cada tela implementada na sprint 4 comparando com §3.4.1 (paleta), §3.4.2 (tipografia) e §3.4.3 (componentes). Verificar ausência de cores fora da paleta definida. | §3.4.1–§3.4.4; novas views sprint 4 (`history.ejs`, `logs.ejs`, `estatisticas-evento.ejs`) |
+| **RNF021** | ORG | Versão funcional sprint 4 entregue em branch dedicado (`release/sprint4-wad`) e integrada a `main`. Bloqueio formal de novas alterações de feature previsto ao início da sprint 5, garantindo ≥ 30 dias de estabilização antes do evento. | Versão final bloqueada ≥ 30 dias antes da data do evento | Verificar que branch `main` está com branch protection e sem PRs abertos de feature após o freeze; calcular diferença entre data de freeze (início sprint 5) e data do evento. Meta: ≥ 30 dias de margem. | Branch `release/sprint4-wad`; política de freeze a ser aplicada no início da sprint 5 |
+
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
 ## 3.2. Arquitetura (sprints 1 a 5)
 
 ---
-A seção de Arquitetura apresenta a estrutura organizacional e a modelagem dos principais componentes do sistema desenvolvidos ao longo das sprints 1 a 5. Por meio dos diagramas arquiteturais, diagramas de classes e diagramas de casos de uso, é possível compreender como os módulos da aplicação se relacionam, quais são as responsabilidades de cada camada e como ocorre o fluxo de dados entre os componentes. Esses artefatos auxiliam na documentação técnica do projeto, facilitando o entendimento da solução, a manutenção do software e a evolução contínua da arquitetura proposta.
+A seção de Arquitetura apresenta os principais artefatos utilizados para representar a estrutura e o funcionamento da solução desenvolvida ao longo das sprints 1 a 5. Por meio dos diagramas de arquitetura, diagramas de classes arquiteturais e diagramas de casos de uso, é possível compreender a organização dos módulos da aplicação, as responsabilidades atribuídas a cada componente e as interações estabelecidas entre as diferentes camadas do sistema.
 
-### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
+Esses diagramas documentam tanto a visão estrutural quanto a visão funcional da solução, evidenciando o fluxo de processamento das requisições, a aplicação das regras de negócio e os mecanismos de persistência de dados. Dessa forma, os artefatos apresentados contribuem para a validação da arquitetura implementada, facilitam a comunicação entre os membros da equipe e servem como referência para futuras atividades de manutenção e evolução do software.
+
+### 3.2.1. Diagramas de Arquitetura 
 
 ---
-Os diagramas de arquitetura representam a estrutura organizacional do sistema, demonstrando como os componentes, camadas e módulos da aplicação se relacionam entre si. Eles auxiliam na visualização do fluxo de dados, das responsabilidades de cada camada e da comunicação entre os elementos da arquitetura, facilitando o entendimento, manutenção e evolução do software.
+Os diagramas de arquitetura apresentados nesta seção detalham a organização dos principais módulos da aplicação, evidenciando a comunicação entre controladores, serviços, repositórios e banco de dados em cada funcionalidade do sistema. Cada diagrama representa um contexto específico da solução, permitindo visualizar o fluxo das requisições, o processamento das regras de negócio e a persistência das informações.
 
-DASHBOARD 
+A divisão por módulos facilita a compreensão da arquitetura implementada, destacando as responsabilidades de cada componente e as dependências existentes entre as camadas da aplicação. Dessa forma, os diagramas servem como apoio para a manutenção, evolução e validação da estrutura arquitetural do sistema, além de demonstrar a aderência ao padrão de separação de responsabilidades adotado durante o desenvolvimento.
+
+ALERTAS
+
+O diagrama de arquitetura do módulo de Alertas apresenta o fluxo responsável pela geração, consulta e gerenciamento de notificações do sistema. A arquitetura evidencia a comunicação entre as camadas de controle, serviço e persistência, garantindo que eventos relevantes sejam identificados, processados e disponibilizados aos usuários de forma organizada e rastreável.
 
 <div align="center">
-  <sub>Imagem 9 - Diagrama de Arquitetura - DASHBOARD </sub><br>
-  <img src= "./assets/diagramas_arquitetura/dashboard.svg" width="100%" alt="Diagrama de Arquitetura - 1"><br>
+  <sub>Imagem 9 - Diagrama de Arquitetura - ALERTAS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/alertas.svg" width="100%" alt="Diagrama de Arquitetura - 1"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
-EVENTOS 
+AUTENTICAÇÃO
+
+O diagrama de Autenticação demonstra o fluxo de validação de credenciais e controle de acesso à aplicação. A estrutura apresentada evidencia a interação entre controlador, serviço de autenticação e camada de persistência, assegurando que apenas usuários autorizados possam acessar as funcionalidades administrativas do sistema.
 
 <div align="center">
-  <sub>Imagem 10 - Diagrama de Arquitetura - EVENTOS </sub><br>
-  <img src= "./assets/diagramas_arquitetura/eventos.svg" width="100%" alt="Diagrama de Arquitetura - 2"><br>
+  <sub>Imagem 10 - Diagrama de Arquitetura - AUTENTICAÇÃO </sub><br>
+  <img src= "./assets/diagramas_arquitetura/auth.svg" width="100%" alt="Diagrama de Arquitetura - 2"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+DASHBOARD 
+
+O diagrama de Dashboard representa a arquitetura responsável pela consolidação e disponibilização das principais informações da competição. Por meio da integração entre diferentes serviços e repositórios, o módulo centraliza indicadores e dados operacionais, fornecendo uma visão geral atualizada para os administradores da plataforma.
+
+<div align="center">
+  <sub>Imagem 11 - Diagrama de Arquitetura - DASHBOARD </sub><br>
+  <img src= "./assets/diagramas_arquitetura/dashboard.svg" width="100%" alt="Diagrama de Arquitetura - 3"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 EVENTO HISTÓRICO
 
+O diagrama de Evento Histórico apresenta a arquitetura utilizada para armazenar e consultar registros históricos relacionados às operações do sistema. Essa estrutura possibilita a rastreabilidade de ações e eventos ocorridos durante a execução da aplicação, contribuindo para auditorias e análises posteriores.
+
 <div align="center">
-  <sub>Imagem 11 - Diagrama de Arquitetura - EVENTO HISTÓRICO </sub><br>
-  <img src= "./assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de Arquitetura - 3"><br>
+  <sub>Imagem 12 - Diagrama de Arquitetura - EVENTO HISTÓRICO </sub><br>
+  <img src= "./assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de Arquitetura - 4"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+EVENTOS
+
+O diagrama de Eventos demonstra o fluxo responsável pelo gerenciamento dos eventos cadastrados na plataforma. A arquitetura contempla operações de criação, consulta, atualização e remoção, garantindo o tratamento adequado das regras de negócio associadas às competições e atividades monitoradas pelo sistema.
+
+<div align="center">
+  <sub>Imagem 13 - Diagrama de Arquitetura - EVENTOS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/eventos.svg" width="100%" alt="Diagrama de Arquitetura - 5"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+EXPORTAÇÃO
+
+O diagrama de Exportação representa a arquitetura utilizada para geração e disponibilização de relatórios e arquivos de saída. O fluxo demonstra como os dados são coletados, processados e convertidos em formatos adequados para compartilhamento e análise externa, preservando a consistência das informações exportadas.
+
+<div align="center">
+  <sub>Imagem 14 - Diagrama de Arquitetura - EXPORTAÇÃO </sub><br>
+  <img src= "./assets/diagramas_arquitetura/export.svg" width="100%" alt="Diagrama de Arquitetura - 6"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+HISTÓRICO
+
+O diagrama de Histórico evidencia a estrutura responsável pela consulta e recuperação de registros armazenados ao longo da utilização da plataforma. Esse módulo permite a visualização de informações passadas, contribuindo para análises operacionais e acompanhamento da evolução dos dados da competição.
+
+<div align="center">
+  <sub>Imagem 15 - Diagrama de Arquitetura - HISTÓRICO </sub><br>
+  <img src= "./assets/diagramas_arquitetura/history.svg" width="100%" alt="Diagrama de Arquitetura - 7"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 LOGS
 
+O diagrama de Logs apresenta a arquitetura destinada ao registro e monitoramento das operações executadas pelo sistema. A estrutura permite o armazenamento de informações relacionadas a ações, sincronizações e eventos relevantes, auxiliando processos de auditoria, rastreabilidade e diagnóstico de problemas.
+
 <div align="center">
-  <sub>Imagem 12 - Diagrama de Arquitetura - LOGS </sub><br>
-  <img src= "./assets/diagramas_arquitetura/logs.svg" width="100%" alt="Diagrama de Arquitetura - 4"><br>
+  <sub>Imagem 16 - Diagrama de Arquitetura - LOGS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/logs.svg" width="100%" alt="Diagrama de Arquitetura - 8"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
-TEAMS
+MÉTRICAS
+
+O diagrama de Métricas demonstra o fluxo de coleta, processamento e disponibilização de indicadores utilizados para acompanhamento do desempenho da competição. A arquitetura integra diferentes fontes de dados para fornecer informações quantitativas que apoiam a tomada de decisão e o monitoramento operacional.
 
 <div align="center">
-  <sub>Imagem 13 - Diagrama de Arquitetura - TEAMS </sub><br>
-  <img src= "./assets/diagramas_arquitetura/teams.svg" width="100%" alt="Diagrama de Arquitetura - 5"><br>
+  <sub>Imagem 17 - Diagrama de Arquitetura - MÉTRICAS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/metrics.svg" width="100%" alt="Diagrama de Arquitetura - 9"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+EQUIPES
+
+O diagrama de Equipes representa a arquitetura responsável pelo gerenciamento das equipes participantes da competição. O fluxo contempla operações de cadastro, consulta e manutenção dos dados das equipes, garantindo a correta associação entre competições, atletas e demais informações relacionadas.
+
+<div align="center">
+  <sub>Imagem 18 - Diagrama de Arquitetura - EQUIPES </sub><br>
+  <img src= "./assets/diagramas_arquitetura/teams.svg" width="100%" alt="Diagrama de Arquitetura - 10"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+TURNOS
+
+O diagrama de Turnos apresenta a estrutura utilizada para administrar os períodos de participação dos atletas durante a competição. A arquitetura assegura o controle das informações relacionadas à escala, organização e acompanhamento dos turnos, contribuindo para a correta gestão operacional do evento.
+
+<div align="center">
+  <sub>Imagem 19 - Diagrama de Arquitetura - TURNOS </sub><br>
+  <img src= "./assets/diagramas_arquitetura/turnos.svg" width="100%" alt="Diagrama de Arquitetura - 11"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+#### 3.2.1.1. Diagrama de Classes Arquiteturais 
+
+---
+Os Diagramas de Classes Arquiteturais apresentados nesta seção descrevem a estrutura interna dos principais módulos da aplicação, evidenciando as classes que compõem cada funcionalidade, suas responsabilidades e os relacionamentos estabelecidos entre os componentes do sistema. Os diagramas foram organizados de acordo com os módulos implementados, permitindo visualizar a separação das camadas de controle, serviço e persistência adotada pela arquitetura da solução.
+
+Por meio dessa representação, é possível compreender como as requisições são processadas, como as regras de negócio são executadas e como ocorre o acesso aos dados da aplicação. Além disso, os diagramas auxiliam na identificação das dependências entre os componentes, contribuindo para a manutenção, evolução e validação da arquitetura implementada.
+
+ALERTAS
+
+<div align="center">
+  <sub>Imagem 20 - Diagrama de Classes Arquiteturais - ALERTAS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/ALERTS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 1"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+AUDITORIA
+
+<div align="center">
+  <sub>Imagem 21 - Diagrama de Classes Arquiteturais - AUDITORIA </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/AUDIT_LOGS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 2"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+AUTENTICAÇÃO
+
+<div align="center">
+  <sub>Imagem 22 - Diagrama de Classes Arquiteturais - AUTENTICAÇÃO </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/AUTH_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 3"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+DASHBOARD
+
+O diagrama de classes arquiteturais do módulo Dashboard apresenta os principais componentes responsáveis pela consolidação e exibição das informações da competição. O modelo evidencia a interação entre controladores, serviços e repositórios utilizados para coletar, processar e disponibilizar métricas e indicadores relevantes aos usuários administrativos da plataforma.
+
+<div align="center">
+  <sub>Imagem 23 - Diagrama de Classes Arquiteturais - DASHBOARD </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 4"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+EVENTOS
+
+O diagrama de classes arquiteturais do módulo Events representa a estrutura responsável pelo gerenciamento dos eventos da aplicação. São demonstradas as relações entre as classes que realizam o tratamento das regras de negócio, acesso aos dados e manipulação das entidades relacionadas às competições, esteiras e demais elementos vinculados aos eventos monitorados pelo sistema.
+
+<div align="center">
+  <sub>Imagem 24 - Diagrama de Classes Arquiteturais - EVENTOS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/EVENTS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 5"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+EXPORTAÇÃO
+
+O diagrama de classes arquiteturais do módulo History apresenta a organização das classes envolvidas na consulta e recuperação de registros históricos. A modelagem evidencia como os componentes colaboram para disponibilizar informações armazenadas anteriormente, garantindo rastreabilidade e suporte às análises operacionais realizadas pelos usuários.
+
+<div align="center">
+  <sub>Imagem 25 - Diagrama de Classes Arquiteturais - EXPORTAÇÃO </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/EXPORT_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 6"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+HISTÓRICO
+
+<div align="center">
+  <sub>Imagem 26 - Diagrama de Classes Arquiteturais - HISTÓRICO </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/HISTORY_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 7"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+LOGS
+
+O diagrama de classes arquiteturais do módulo Logs demonstra a estrutura responsável pelo registro e gerenciamento dos logs da aplicação. As relações entre controladores, serviços e repositórios evidenciam o fluxo utilizado para armazenar, consultar e sincronizar informações de auditoria, contribuindo para a rastreabilidade das operações executadas no sistema.
+
+<div align="center">
+  <sub>Imagem 27 - Diagrama de Classes Arquiteturais - LOGS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/LOGS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 8"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+MÉTRICAS
+
+O diagrama de classes arquiteturais do módulo Teams representa os componentes responsáveis pelo gerenciamento das equipes e atletas participantes da competição. A modelagem destaca as relações entre as entidades e os mecanismos de persistência utilizados para garantir a integridade das informações e o correto funcionamento das operações de cadastro e consulta.
+
+<div align="center">
+  <sub>Imagem 28 - Diagrama de Classes Arquiteturais - MÉTRICAS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/METRICS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 9"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+EQUIPES
+
+O diagrama de classes arquiteturais do módulo Turns apresenta a estrutura utilizada para controlar os turnos dos atletas durante a competição. O modelo evidencia as classes responsáveis pelo gerenciamento das escalas, regras de negócio e persistência dos dados, assegurando a correta organização e acompanhamento dos períodos de participação dos corredores.
+
+<div align="center">
+  <sub>Imagem 29 - Diagrama de Classes Arquiteturais - TEAMS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/TEAMS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 10"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1766,68 +1990,8 @@ TEAMS
 TURNOS
 
 <div align="center">
-  <sub>Imagem 14 - Diagrama de Arquitetura - TURNOS </sub><br>
-  <img src= "./assets/diagramas_arquitetura/turnos.svg" width="100%" alt="Diagrama de Arquitetura - 6"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-
-#### 3.2.1.1. Diagrama de Classes Arquiteturais 
-
----
-A seção de Diagramas de Classes Arquiteturais apresenta a modelagem estrutural dos principais módulos do sistema, evidenciando as classes, responsabilidades e relacionamentos existentes entre os componentes da aplicação. Esses diagramas auxiliam na compreensão da organização interna do software, demonstrando como entidades, serviços, controladores e repositórios interagem para garantir o funcionamento adequado das funcionalidades implementadas.
-
-DASHBOARD
-
-<div align="center">
-  <sub>Imagem 15 - Diagrama de Classes Arquiteturais - DASHBOARD </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-EVENTS
-
-<div align="center">
-  <sub>Imagem 16 - Diagrama de Classes Arquiteturais - EVENTS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-HISTORY
-
-<div align="center">
-  <sub>Imagem 17 - Diagrama de Classes Arquiteturais - HISTORY </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-LOGS
-
-<div align="center">
-  <sub>Imagem 18 - Diagrama de Classes Arquiteturais - LOGS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-TEAMS
-
-<div align="center">
-  <sub>Imagem 19 - Diagrama de Classes Arquiteturais - TEAMS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
-  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
-  <br><br><br>
-</div>
-
-TURNS
-
-<div align="center">
-  <sub>Imagem 20 - Diagrama de Classes Arquiteturais - TURNS </sub><br>
-  <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais"><br>
+  <sub>Imagem 30 - Diagrama de Classes Arquiteturais - TURNOS </sub><br>
+  <img src= "./assets/diagramas_arquiteturais/TURNS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 11"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -1838,7 +2002,7 @@ TURNS
 O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 Horas a partir da prática **Light Use-Case Modeling** descrita em Jacobson et al.[⁹](#8-referências), evoluindo para o nível **System Boundary Established** ao incluir todos os atores e casos de uso planejados para o MVP. A notação adotada segue o guia _Use-Case 3.0 — The Definitive Guide_: atores são representados por bonecos-palito, casos de uso por elipses contidas dentro do retângulo do _System of Interest_, associações por linhas contínuas com setas indicando o iniciador da interação, `<<include>>` por seta tracejada apontando do caso-base para o caso obrigatoriamente incluído, e `<<extend>>` por seta tracejada apontando do caso opcional para o caso-base que ele estende.
 
 <div align="center">
-  <sub>Imagem 21 - Diagrama Casos de Uso</sub><br>
+  <sub>Imagem 31 - Diagrama Casos de Uso</sub><br>
   <img src= "./assets/use_case/use_case.jpeg" width="100%" alt="Casos de uso"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1908,7 +2072,7 @@ Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: 
 Esta seção apresenta o Diagrama de Classes do Domínio, elaborado em notação UML, com o objetivo de representar a estrutura do sistema por meio de suas classes, atributos, relacionamentos e responsabilidades. A modelagem organiza logicamente os elementos do domínio do evento Red Bull 24h, facilitando a compreensão das dependências entre as entidades e da solução proposta pelo grupo.
 
 <div align = "center">
-  <sub>Imagem 22 - Diagrama de Classes de Domínio</sub><br>
+  <sub>Imagem 32 - Diagrama de Classes de Domínio</sub><br>
   <img src="./assets/classes_dominio/diagrama_classes.svg" width="100%" alt="Diagrama de Classes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1926,10 +2090,10 @@ A seguir, cada diagrama é apresentado com uma descrição detalhada de seus flu
 
 #### 3.2.4.1. Diagrama de Sequência: Eventos
 
-O Diagrama de Sequência de Eventos cobre três fluxos integrados: a criação do evento, a consulta de métricas e placar, e a exportação de dados para auditoria.
+O Diagrama de Sequência de Eventos cobre quatro fluxos integrados: a criação do evento, o ciclo de vida (início e encerramento pelo gerente), a consulta de métricas e placar, e a exportação de dados para auditoria.
 
 <div align="center">
-  <sub>Imagem 23 - Diagrama de Sequencia: Eventos</sub><br>
+  <sub>Imagem 33 - Diagrama de Sequencia: Eventos</sub><br>
   <img src="./assets/diagrama_sequencia/Events_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1939,9 +2103,11 @@ O Diagrama de Sequência de Eventos cobre três fluxos integrados: a criação d
 
 **1. Criação do Evento:** O cliente envia `POST /events { manager_id, title, local, date }`. O EventController repassa ao EventService, que aciona o EventRepository para persistir o registro via `INSERT INTO events`. O banco retorna o evento criado e a resposta ao cliente é `201 { id, title, local, date, status }`.
 
-**2. Métricas e Placar:** Para consultar o estado geral do evento, o cliente realiza `GET /metrics/events/{id}/dashboard`. O MetricsController aciona o MetricsService, que delega ao MetricsRepository a execução de três consultas paralelas (placar, estatísticas e atletas em pista), retornando `200 { scoreboard, active_shifts, completed_shifts, total_km, athletes_on_track }`. Adicionalmente, `GET /metrics/events/{id}/teams` retorna a quilometragem acumulada por equipe em `200 [ { id, name, total_km } ]`.
+**2. Ciclo de Vida do Evento:** O gerente envia `PATCH /events/{id}/start` para abrir o evento ao registro de turnos (`status: "in_progress"`, `started_at = NOW()`). Ao término, `PATCH /events/{id}/finish` encerra o evento (`status: "completed"`, `finished_at = NOW()`). Ambas as rotas exigem `requireRole(manager)`.
 
-**3. Exportação:** O cliente aciona `GET /export/events/{id}/shifts` e `GET /export/events/{id}/checkpoints`. O ExportController delega ao ExportService, que consulta o banco e serializa os dados em CSV, retornando `Content-Type: text/csv` com os arquivos `shifts-{id}.csv` e `checkpoints-{id}.csv`.
+**3. Métricas e Placar:** Para consultar o estado geral do evento, o cliente realiza `GET /metrics/events/{id}/dashboard`. O MetricsController aciona o MetricsService, que delega ao MetricsRepository a execução de três consultas paralelas (placar, estatísticas e atletas em pista), retornando `200 { scoreboard, active_shifts, completed_shifts, total_km, athletes_on_track }`. Adicionalmente, `GET /metrics/events/{id}/teams` retorna a quilometragem acumulada por equipe em `200 [ { id, name, total_km } ]`.
+
+**4. Exportação:** O cliente aciona `GET /export/events/{id}/shifts` e `GET /export/events/{id}/checkpoints`. O ExportController delega ao ExportService, que consulta o banco e serializa os dados em CSV, retornando `Content-Type: text/csv` com os arquivos `shifts-{id}.csv` e `checkpoints-{id}.csv`.
 
 **Fluxos Alternativos e Exceções**
 
@@ -1954,8 +2120,8 @@ Não há fluxos alternativos explícitos neste diagrama. Falhas de validação n
 O Diagrama de Sequência de Equipes cobre quatro fluxos: cadastro de equipe, cadastro individual de atletas, consulta de equipe com seus atletas e consulta de quilometragem acumulada por equipe.
 
 <div align="center">
-  <sub>Imagem 24 - Diagrama de Sequência: Equipes</sub>
-    <br><img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
+  <sub>Imagem 34 - Diagrama de Sequência: Equipes</sub><br>
+  <img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026 </sub>
   <br><br><br>
 </div>
@@ -1978,10 +2144,10 @@ Não há fluxos alternativos explícitos neste diagrama. Erros de validação, c
 
 #### 3.2.4.3. Diagrama de Sequência: Turnos
 
-O Diagrama de Sequência de Turnos mapeia quatro fluxos: inicialização do turno com verificação de disponibilidade, registro de checkpoints obrigatórios, registro de checkpoints voluntários e encerramento do turno com cálculo automático de métricas.
+O Diagrama de Sequência de Turnos mapeia cinco fluxos: inicialização do turno com verificação de disponibilidade, registro de checkpoints obrigatórios, registro de checkpoints voluntários, encerramento do turno com cálculo automático de métricas, e abandono de turno com justificativa obrigatória (RF014).
 
 <div align="center">
-  <sub>Imagem 25 - Diagrama de Sequência: Turnos</sub><br>
+  <sub>Imagem 35 - Diagrama de Sequência: Turnos</sub><br>
   <img src="./assets/diagrama_sequencia/Turns_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de turnos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -1997,11 +2163,15 @@ O Diagrama de Sequência de Turnos mapeia quatro fluxos: inicialização do turn
 
 **4. Encerramento do Turno:** O cliente envia `PATCH /audit/shifts/{id}/finish { km_end }`. O ShiftService recupera o turno (findById), valida `km_end >= km_start` e `km_end >= último checkpoint`, calcula `distance`, `speed` e `total_time`, e atualiza o banco com `UPDATE Shift SET status="completed"` → `200 { id, status: "completed", distance, speed, total_time }`.
 
+**5. Abandono de Turno:** Quando um turno não pode ser concluído normalmente, o auditor responsável envia `PATCH /audit/shifts/{id}/abandon { justification }`. O ShiftService valida que `shift.auditor_id === req.user.id`, garantindo que somente o auditor responsável pelo turno pode abandoná-lo, e que o campo `justification` foi informado. Persiste via `UPDATE shifts SET status="abandoned", justification, end_at=NOW()` → `200 { id, status: "abandoned", justification, end_at }`.
+
 **Fluxos Alternativos e Exceções**
 
 **1. Atleta ou Esteira com Turno em Aberto:** Se findOpenByAthlete ou findOpenByTreadmill retornar um turno ativo, o ShiftService interrompe a criação e retorna erro de conflito.
 
 **2. Quilometragem Inválida no Checkpoint:** Caso `distance < último checkpoint` registrado, o ShiftService rejeita a inserção para preservar a integridade sequencial dos registros.
+
+**3. Abandono sem Justificativa:** Se `justification` estiver ausente ou em branco, o ShiftService rejeita o abandono com erro de validação.
 
 ---
 
@@ -2010,7 +2180,7 @@ O Diagrama de Sequência de Turnos mapeia quatro fluxos: inicialização do turn
 O Diagrama de Sequência de Histórico cobre dois fluxos: a listagem de registros históricos de um evento com filtros opcionais e a correção retroativa de um checkpoint com geração de trilha de auditoria imutável.
 
 <div align="center">
-  <sub>Imagem 26 - Diagrama de Sequência: Historico</sub><br>
+  <sub>Imagem 36 - Diagrama de Sequência: Historico</sub><br>
   <img src="./assets/diagrama_sequencia/History_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2030,10 +2200,10 @@ O Diagrama de Sequência de Histórico cobre dois fluxos: a listagem de registro
 
 #### 3.2.4.5. Diagrama de Sequência: Registros e Sincronização (Sync)
 
-O Diagrama de Registros e Sincronização cobre dois fluxos: a correção retroativa de checkpoints com trilha de auditoria imutável e a sincronização offline de registros acumulados localmente (planejado, não implementado).
+O Diagrama de Registros e Sincronização cobre dois fluxos: a correção retroativa de checkpoints com trilha de auditoria imutável e a sincronização offline de checkpoints acumulados localmente, ambos implementados.
 
 <div align="center">
-  <sub>Imagem 27 - Diagrama de Sequência: Registros/Sync</sub><br>
+  <sub>Imagem 37 - Diagrama de Sequência: Registros/Sync</sub><br>
   <img src="./assets/diagrama_sequencia/Logs_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do processo de registros e sync"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2041,9 +2211,9 @@ O Diagrama de Registros e Sincronização cobre dois fluxos: a correção retroa
 
 **Fluxo Principal (Caminho Feliz)**
 
-**1. Correção Retroativa de Checkpoint:** O cliente envia `PATCH /audit/checkpoints/{id} { distance, justification? }` com autenticação JWT. O ShiftService recupera o checkpoint, o turno e os checkpoints vizinhos. A validação `validateKmRange(new_distance, prev, next)` garante que o novo valor esteja no intervalo `[prev, next]`. Em caso de sucesso, grava via `UPDATE Checkpoint SET distance` e registra a correção de forma imutável via `INSERT checkpoint_corrections` → `200 { id, shift_id, distance, timestamp, type, correction_id }`.
+**1. Correção Retroativa de Checkpoint:** O cliente envia `PATCH /audit/checkpoints/{id} { distance, justification? }` com autenticação JWT. O ShiftService recupera o checkpoint, o turno e os checkpoints vizinhos. A validação garante que o novo valor esteja no intervalo `[prev_checkpoint, next_checkpoint]`. Em caso de sucesso, executa `UPDATE checkpoints SET distance, old_distance, reviewed=true, reviewed_at, reviewed_by_id, reviewed_by_role, justification` e registra a alteração na trilha imutável via `INSERT INTO logs (shift_id, type, checkpoint_id, old_value, new_value, author_id, author_role, justification)` → `200 { id, shift_id, distance, timestamp, type, reviewed, old_distance }`.
 
-**2. Sincronização Offline (planejado, não implementado):** Quando o dispositivo opera sem conexão, os registros são persistidos localmente. Ao restaurar a conexão, o cliente envia `POST /sync (localRecords[])`. O ShiftService itera a fila, verifica duplicidade de cada entrada via `checkDuplicate(id, timestamp)` e, para registros inéditos, executa `saveRecord(data)` → `200 OK — Records synchronized`.
+**2. Sincronização Offline:** Quando o dispositivo opera sem conexão, os checkpoints são acumulados localmente com um `sync_id` (identificador único gerado no cliente). Ao restaurar a conexão, o cliente envia `POST /audit/sync` com a lista de registros pendentes. O SyncService itera a fila, valida cada registro (`sync_id` SHA256, `shift_id`, `distance`, `timestamp`, `checkpoint_type`) e executa o insert com idempotência via índice único em `sync_id` — registros já persistidos são silenciosamente contabilizados como `skipped` → `201 { inserted, skipped, errors[] }`.
 
 **Fluxos Alternativos e Exceções**
 
@@ -2058,8 +2228,8 @@ O Diagrama de Registros e Sincronização cobre dois fluxos: a correção retroa
 O Diagrama de Sequência do Dashboard cobre dois fluxos: o polling automático de métricas para atualização contínua da tela e o healthcheck de conectividade com o banco de dados (planejado, não implementado).
 
 <div align="center">
-  <sub>Imagem 28 - Diagrama de Sequência: Dashboard</sub><br>
-  <img src="assets/diagrama_sequencia/Dashboard_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do painel de controle (dashboard)"><br>
+  <sub>Imagem 38 - Diagrama de Sequência: Dashboard</sub><br>
+  <img src="./assets/diagrama_sequencia/Dashboard_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do painel de controle (dashboard)"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -2076,9 +2246,140 @@ O Diagrama de Sequência do Dashboard cobre dois fluxos: o polling automático d
 
 ---
 
-A modelagem da aplicação web do Red Bull 24 Horas por meio dos Diagramas de Sequência UML evidencia a arquitetura em camadas adotada no sistema, onde cada requisição percorre Controller, Service e Repository antes de alcançar o banco de dados. Os fluxos modelados refletem o estado atual da implementação e indicam explicitamente as funcionalidades planejadas que ainda não foram implementadas, como o healthcheck e a sincronização offline.
+#### 3.2.4.7. Diagrama de Sequência: Autenticação
 
-Cada diagrama cumpre um papel específico: a gestão de Eventos centraliza criação, métricas e exportação; o fluxo de Equipes organiza o cadastro incremental de atletas e o acompanhamento de quilometragem por time; o ciclo de Turnos controla início, checkpoints obrigatórios e voluntários e encerramento com cálculo automático de métricas; o Histórico oferece rastreabilidade completa com filtros e correção retroativa auditável; o diagrama de Registros e Sincronização detalha a edição retroativa e a resiliência offline; e o Dashboard expõe o placar em tempo real via polling contínuo.
+O Diagrama de Sequência de Autenticação cobre cinco fluxos integrados que formam o ciclo completo de identidade da aplicação: cadastro inicial de gerente e auditor, login com emissão de tokens, validação de requisição autenticada via `requireAuth`, renovação silenciosa de sessão via `requirePageAuth` e logout com revogação do refresh token. Atende RF027 (RN38, RN39, RN40, RN41).
+
+<div align="center">
+  <sub>Imagem 39 - Diagrama de Sequência: Autenticação</sub><br>
+  <img src="assets/diagrama_sequencia/Auth_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do fluxo de autenticação JWT com refresh token rotativo"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+**Fluxo Principal (Caminho Feliz)**
+
+**0. Cadastro Inicial:** `POST /auth/register/manager { name, email, password }` e `POST /auth/register/auditor { name, email, password }` são rotas públicas (sem `requireAuth`). O AuthService aplica `bcrypt.hash(password, 10)` e persiste na tabela correspondente (`managers` ou `auditors`) → `201 { id, name, email, role }`. Se o e-mail já estiver cadastrado → `409 { error: "Email já cadastrado" }`.
+
+**1. Login:** O cliente envia `POST /auth/login { email, password }`. O AuthController delega ao AuthService, que consulta a tabela correspondente ao perfil (`managers` ou `auditors`) via AuthRepository, compara a senha com `bcrypt.compare` e, em caso de sucesso, emite um `accessToken` (JWT, 15 min) e um `refreshToken` (opaco, 7 dias). O hash SHA-256 do `refreshToken` é persistido em `refresh_tokens` com FK para o usuário. Ambos os tokens são enviados como cookies `HttpOnly` → `200`.
+
+**2. Requisição autenticada (API — `requireAuth`):** Rotas de API recebem o `accessToken` via `Authorization: Bearer`. O middleware verifica a assinatura JWT e popula `req.user = { id, email, role, name }`. Se válido, a requisição prossegue ao Controller. Se ausente ou expirado → `401`.
+
+**3. Renovação de sessão (SSR — `requirePageAuth`):** Rotas de página leem o `accessToken` do cookie. Se expirado, o middleware tenta renovar via `refreshToken`: revoga o registro atual (preenche `revoked_at`), emite novo par de tokens, persiste o novo hash e seta novos cookies — tudo transparentemente, sem redirecionar o usuário. Se o `refreshToken` também estiver ausente ou revogado → `redirect /login`.
+
+**4. Logout:** `POST /auth/logout` recebe o `refreshToken` (via `req.body?.refreshToken` ou cookie), calcula seu hash e marca o registro como revogado. O `accessToken` expira naturalmente em até 15 minutos — comportamento documentado no contrato da API. Cookies são limpos → `200`.
+
+**Fluxos Alternativos e Exceções**
+
+**1. Credenciais inválidas (Login):** AuthService retorna `null` quando email não encontrado ou `bcrypt.compare` falha → `401 { error: "Credenciais inválidas" }`.
+
+**2. Token expirado sem refresh válido:** `requirePageAuth` não encontra `refreshToken` no cookie ou o registro está revogado no banco → `redirect /login`.
+
+**3. Perfil incorreto (`requireRole`):** Token válido mas `req.user.role` não está na lista de papéis permitidos → `403 { error: "Acesso negado para este perfil" }`.
+
+---
+
+#### 3.2.4.8. Diagrama de Sequência: Alertas e Inconsistências
+
+O Diagrama de Alertas cobre o fluxo de consulta periódica de inconsistências operacionais detectadas em tempo real: ausência de checkpoint prolongada, corredor sem rotação dentro do período configurado e quilometragem inválida. Atende RF028, RF029, RF039 (RN11, RN12).
+
+<div align="center">
+  <sub>Imagem 40 - Diagrama de Sequência: Alertas e Inconsistências</sub><br>
+  <img src="assets/diagrama_sequencia/Alerts_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do fluxo de alertas e inconsistências operacionais"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+**Fluxo Principal (Caminho Feliz)**
+
+O auditor (ou sistema de monitoramento) dispara `GET /audit/alerts?event_id={id}` periodicamente durante o evento. O AlertsController delega ao AlertsService, que aciona o AlertsRepository para executar consultas sobre turnos em aberto e seus checkpoints mais recentes. O service classifica as ocorrências por tipo e severidade e retorna a lista → `200 { alerts: [{ type, message, shift_id, athlete_name, since }] }`.
+
+**Fluxos Alternativos e Exceções**
+
+**1. Nenhum alerta:** Nenhum turno viola as regras configuradas → `200 { alerts: [] }`.
+
+**2. `event_id` ausente:** Parâmetro obrigatório não informado → `400 { error: "event_id obrigatório" }`.
+
+---
+
+#### 3.2.4.9. Diagrama de Sequência: Logs de Auditoria
+
+O Diagrama de Logs de Auditoria cobre dois fluxos: a consulta paginada da trilha imutável de edições e a geração automática de registros quando um checkpoint é corrigido retroativamente. A tabela `logs` é append-only — nenhum registro pode ser alterado ou removido. Atende RF022, RF024 (RN23, RN24).
+
+<div align="center">
+  <sub>Imagem 41 - Diagrama de Sequência: Logs de Auditoria</sub><br>
+  <img src="assets/diagrama_sequencia/AuditLogs_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência dos logs de auditoria imutáveis"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+**Fluxo Principal (Caminho Feliz)**
+
+**1. Consulta de logs:** O gerente envia `GET /audit/logs?event_id={id}&shift_id={id}&page={n}`. O LogsController delega ao LogsService, que consulta via LogsRepository a tabela `logs` com JOIN em `shifts`, ordenada por `timestamp DESC` com paginação → `200 { logs: [{ id, type, old_value, new_value, author, timestamp, justification }], total, page }`.
+
+**2. Geração de log via correção:** Quando `PATCH /audit/checkpoints/:id` é executado com sucesso, o ShiftRepository executa atomicamente `UPDATE checkpoints ... INSERT INTO logs`, garantindo que toda alteração gere um registro permanente de auditoria com `old_value`, `new_value`, `author_id`, `author_role` e `justification`.
+
+**Fluxos Alternativos e Exceções**
+
+**1. Filtro sem resultado:** `shift_id` não possui edições → `200 { logs: [], total: 0 }`.
+
+---
+
+#### 3.2.4.10. Diagrama de Sequência: Exportação CSV
+
+O Diagrama de Exportação cobre dois endpoints que serializam dados do evento em formato CSV para auditoria externa: exportação de turnos e exportação de checkpoints. Ambos requerem autenticação e retornam arquivo para download direto. Atende RF047, RF048 (RN26).
+
+<div align="center">
+  <sub>Imagem 42 - Diagrama de Sequência: Exportação CSV</sub><br>
+  <img src="assets/diagrama_sequencia/Export_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência da exportação de dados em CSV"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+**Fluxo Principal (Caminho Feliz)**
+
+**1. Turnos:** `GET /export/events/{eventId}/shifts` — ExportService consulta turnos com JOIN em atletas, equipes e esteiras via ExportRepository, serializa em CSV (`id,athlete,team,treadmill,started_at,finished_at,km,speed`) e retorna com `Content-Type: text/csv` e `Content-Disposition: attachment; filename="shifts-{eventId}.csv"`.
+
+**2. Checkpoints:** `GET /export/events/{eventId}/checkpoints` — mesma estrutura, consulta `checkpoints JOIN shifts JOIN athletes`, serializa campos `id,shift_id,athlete,type,distance,timestamp,sync_id`.
+
+**Fluxos Alternativos e Exceções**
+
+**1. Evento sem dados:** Consulta retorna lista vazia → arquivo CSV com apenas o cabeçalho, `200`.
+
+---
+
+#### 3.2.4.11. Diagrama de Sequência: Métricas de Atleta
+
+O Diagrama de Métricas de Atleta cobre cinco endpoints que expõem o desempenho individual: ranking por km, histórico de turnos, snapshots temporais, desempenho consolidado e link público de compartilhamento (RF050 — único endpoint público do sistema, sem autenticação). Atende RF035–RF037, RF049, RF050, RF052 (RN10, RN36).
+
+<div align="center">
+  <sub>Imagem 43 - Diagrama de Sequência: Métricas de Atleta</sub><br>
+  <img src="assets/diagrama_sequencia/Metrics_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência das métricas individuais de atletas e link de compartilhamento"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br><br>
+</div>
+
+**Fluxo Principal (Caminho Feliz)**
+
+**1. Ranking por km (`GET /metrics/events/:eventId/athletes`):** Agrega `SUM(distance)` por atleta em turnos finalizados, ordenado por `total_km DESC` → `200 [{ id, name, team_name, total_km, shift_count }]`.
+
+**2. Histórico de turnos (`GET /metrics/athletes/:athleteId/shifts`):** Retorna todos os turnos do atleta com distância, duração, velocidade média e `avg_distance` agregado → `200 { shifts[], avg_distance }`.
+
+**3. Snapshots temporais (`GET /metrics/athletes/:athleteId/snapshots?event_id=`):** Calcula km acumulado por hora ao longo do evento → `200 [{ hour, cumulative_km }]`.
+
+**4. Desempenho consolidado (`GET /metrics/athletes/:athleteId/performance`):** Agrega `total_km`, `total_shifts`, `avg_speed`, `best_shift_km` e `team_name` → `200 { total_km, total_shifts, avg_speed, best_shift_km, team_name }`. Requer `requireAuth`.
+
+**5. Link público (`GET /metrics/athletes/:athleteId/share`):** Rota declarada **antes** do `router.use(requireAuth)` — não exige autenticação. Retorna subconjunto de dados públicos sem informações sensíveis → `200 { name, team, total_km, avg_speed, total_shifts }`.
+
+**Fluxos Alternativos e Exceções**
+
+**1. Atleta não encontrado:** Qualquer endpoint com `athleteId` inexistente → `404 { error: "Atleta não encontrado" }`.
+
+---
+
+A modelagem da aplicação web do Red Bull 24 Horas por meio dos Diagramas de Sequência UML evidencia a arquitetura em camadas adotada no sistema, onde cada requisição percorre Controller, Service e Repository antes de alcançar o banco de dados. Os fluxos modelados cobrem integralmente os 49 endpoints implementados na sprint 4.
+
+Cada diagrama cumpre um papel específico: Autenticação (3.2.4.7) detalha o ciclo completo de identidade, abrangendo cadastro, login, renovação silenciosa e logout; Alertas (3.2.4.8) expõe a detecção de inconsistências em tempo real; Logs de Auditoria (3.2.4.9) garante a trilha imutável de edições; Exportação (3.2.4.10) cobre a geração de CSV para auditoria externa; Métricas de Atleta (3.2.4.11) abrange ranking, histórico, snapshots e compartilhamento público. Os fluxos anteriores cobrem Eventos (3.2.4.1), com o ciclo de vida de início e encerramento pelo gerente; Equipes (3.2.4.2); Turnos (3.2.4.3), incluindo o abandono de turno com justificativa; Histórico (3.2.4.4); Registros e Sincronização (3.2.4.5); e Dashboard (3.2.4.6).
 
 Em conjunto, esses fluxos garantem que a transição da apuração manual para o sistema digital ocorra de forma rastreável, íntegra e auditável, entregando aos parceiros da Red Bull uma ferramenta confiável para o controle do evento esportivo.
 
@@ -2092,7 +2393,22 @@ _Ao menos um fluxo relevante em UML ou BPMN. Use a notação da ferramenta escol
 
 ---
 
-_Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP._
+O Diagrama de Implantação UML da RedRun descreve como os artefatos de software são distribuídos sobre os nós físicos e de execução que compõem o sistema, os protocolos de comunicação utilizados entre eles e as dependências de infraestrutura que sustentam a operação da aplicação durante o evento Red Bull 24 Horas.
+
+<div align="center">
+  <sub>Imagem 44 – Diagrama de Implantação (Sprint 4)</sub><br>
+  <img src="assets/diagrama_implantacao/implantacao.svg" width="100%" alt="Diagrama de Implantação RedRun — Sprint 4"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+O sistema opera sobre quatro nós principais. O primeiro é o **dispositivo cliente** (`<<device>>`), composto por tablets Android 10+ ou PCs com Chrome/Firefox. Nesse nó residem dois artefatos: o browser, que consome as páginas EJS renderizadas pelo servidor, e o `localStorage`, utilizado como buffer persistente de checkpoints registrados em modo offline. Quando o dispositivo perde conectividade durante o evento, os checkpoints são armazenados localmente com um identificador determinístico (`sync_id = SHA256(shift_id|distance|type|timestamp)`); ao reconectar, o browser envia os registros em lote ao endpoint `POST /sync/checkpoints`, que os persiste de forma idempotente sem gerar duplicatas.
+
+O segundo nó é o **servidor de aplicação** (`<<executionEnvironment>>`), executado sobre Node.js 20+ com Express 5 e TypeScript compilado. Nele estão implantados cinco artefatos: (1) as rotas HTTP, cobrindo 49 endpoints distribuídos em 12 fluxos funcionais; (2) os middlewares de autenticação JWT, validação de corpo e tratamento centralizado de erros; (3) as views EJS, responsáveis pela renderização server-side das interfaces de auditoria, gerência e Modo TV; (4) a documentação estática da WebAPI servida em `/docs`; e (5) o arquivo `.env`, que concentra as variáveis de ambiente — `DATABASE_URL`, `JWT_SECRET`, `JWT_REFRESH_SECRET` e `PORT`. A comunicação entre cliente e servidor ocorre via HTTPS/HTTP 1.1, com tokens de acesso e de renovação transmitidos em cookies `HttpOnly` e `SameSite=Strict`, eliminando a exposição do token ao JavaScript da página.
+
+O terceiro nó é o **banco de dados** (`<<database>>`), PostgreSQL 15+, acessado pelo servidor de aplicação via TCP na porta 5432 por meio de um pool de conexões (`pg`, máximo de 10 conexões simultâneas). O schema é composto por 17 migrations DDL versionadas, aplicadas em ordem sequencial, cobrindo as tabelas `events`, `treadmills`, `teams`, `athletes`, `shifts`, `checkpoints`, `managers`, `auditors`, `refresh_tokens` e `audit_logs`. As migrations garantem reprodutibilidade do ambiente em qualquer máquina de desenvolvimento ou servidor de produção.
+
+O quarto nó é o **GitLab** (`<<cloud>>`), que hospeda o repositório do projeto (branches `main` e `develop`) e executa o pipeline de CI/CD. O pipeline publica automaticamente o arquivo `documentos/outros/WebAPI/index.html` no GitLab Pages, disponibilizando a documentação navegável da WebAPI publicamente em `g02-73a453.pages.git.inteli.edu.br/api/`. O deploy da aplicação em si é realizado manualmente via `npm run build` seguido de `npm start` no servidor de destino.
 
 ### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
@@ -2292,7 +2608,7 @@ A seguir, são apresentados os wireframes de baixa e média fidelidade desenvolv
 O wireframe de baixa fidelidade representa a estrutura inicial das telas, com foco na disposição dos elementos e nos fluxos principais de navegação. Nesta etapa, foram mapeadas as telas essenciais do sistema, desde o cadastro pré-evento até o acompanhamento das esteiras em tempo real, sem preocupação com detalhamento visual ou componentes definitivos.
 
 <div align="center">
-  <sub>Imagem 29 - Wireframe de Baixa Fidelidade</sub><br>
+  <sub>Imagem 45 - Wireframe de Baixa Fidelidade</sub><br>
   <img src="./assets/wireframes/wireframe-baixa-fidelidade.svg" width="900px" alt="Wireframe de baixa fidelidade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2346,7 +2662,7 @@ Os wireframes de média fidelidade foram desenvolvidos a partir da evolução di
 O conjunto de telas cobre todos os fluxos críticos do sistema: cadastro pré-evento, operação em tempo real (início, checkpoint e encerramento de turno), detecção de inconsistências e visualização de métricas consolidadas.
 
 <div align="center">
-  <sub>Imagem 30 - Wireframe de Média Fidelidade</sub><br>
+  <sub>Imagem 46 - Wireframe de Média Fidelidade</sub><br>
   <img src="./assets/wireframes/Wireframe-Média-Fidelidade.svg" width="900px" alt="Wireframe de média fidelidade"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2494,7 +2810,7 @@ A paleta cromática da aplicação foi derivada diretamente das cores institucio
 As cores neutras complementam o sistema cromático com a função de sustentar legibilidade e organização hierárquica. O branco (#FFFFFF) é o fundo padrão de toda a aplicação, garantindo amplitude visual e contraste adequado com os demais elementos. O preto (#0D0D0D) é reservado ao texto de maior peso, como títulos e dados críticos de quilometragem. O cinza médio (#6B6B6B) atende textos secundários, rótulos e informações de suporte, reduzindo a densidade visual sem eliminar o conteúdo. Já o cinza claro (#D4D4D4) é empregado em bordas, linhas divisórias e planos de fundo de campos, delimitando espaços e organizando os blocos de informação de forma discreta.
 
 <div align="center">
-  <sub>Imagem 31 - Paleta de Cores da Aplicação</sub><br>
+  <sub>Imagem 47 - Paleta de Cores da Aplicação</sub><br>
   <img src="./assets/guia-de-estilos/paleta-de-cores.png" width="900px" alt="Paleta de Cores"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2512,7 +2828,7 @@ A tipografia de uma interface vai além da escolha de uma fonte: ela estrutura a
 Para a aplicação Red Bull 24 Horas, foi adotada exclusivamente a fonte Inter, aplicada em diferentes pesos e tamanhos para construir toda a hierarquia visual da interface. A Inter é uma família tipográfica de código aberto projetada especificamente para telas, com alta legibilidade em tamanhos reduzidos e excelente desempenho em displays de diferentes densidades. Sua geometria neutra e suas proporções equilibradas fazem dela uma escolha sólida para interfaces que precisam exibir dados numéricos com precisão, como registros de quilometragem e tempos de etapa, sem que a fonte concorra com o conteúdo. Os pesos utilizados variam do Regular (400) ao Black (900), cada um com uma função definida na escala tipográfica do projeto.
 
 <div align="center">
-  <sub>Imagem 32 - Tipografia da Aplicação</sub><br>
+  <sub>Imagem 48 - Tipografia da Aplicação</sub><br>
   <img src="./assets/guia-de-estilos/tipografia.png" width="900px" alt="Tipografia"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2531,13 +2847,55 @@ A nossa aplicação para a Red Bull 24 Horas utiliza ícones do Iconify, bibliot
 Cada ícone desempenha um papel funcional específico, seja representando métricas no dashboard, identificando campos nos formulários de registro ou sinalizando ações de navegação. 
 
 <div align="center">
-  <sub>Imagem 33 - Iconografia da Aplicação</sub><br>
+  <sub>Imagem 49 - Iconografia da Aplicação</sub><br>
   <img src="./assets/guia-de-estilos/iconografia.png" width="900px" alt="Iconografia da Cores"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 A padronização desses ativos garante que todos os elementos visuais falem a mesma linguagem: os ícones seguem uma escala consistente de 16 a 32 px conforme seu papel na hierarquia da interface. Esse conjunto de diretrizes reduz decisões arbitrárias durante o desenvolvimento e preserva a identidade visual da Red Bull 24 Horas em cada detalhe da aplicação.
+
+### 3.4.4 Sistema de Grid
+
+---
+
+O sistema de grid é a estrutura invisível que organiza os elementos na tela, garantindo consistência no alinhamento, no espaçamento e na proporção entre componentes. Sua definição explícita evita decisões ad hoc durante o desenvolvimento e assegura que diferentes telas compartilhem a mesma base de composição, independentemente de quem implementou cada parte.
+
+A aplicação Red Bull 24 Horas adota um **grid de 12 colunas** com as seguintes especificações:
+
+<div align="center">
+  <sub>Quadro 33 - Sistema de Grid da Interface</sub><br>
+
+| Propriedade | Valor | Descrição |
+|---|---|---|
+| **Colunas** | 12 | Base flexível: permite layouts de 1, 2, 3, 4 e 6 colunas iguais sem quebra |
+| **Largura máxima do container** | 1 280 px | Evita linhas de conteúdo muito longas em telas grandes |
+| **Margem lateral (gutter externo)** | 24 px | Espaço entre a borda do viewport e o container de conteúdo |
+| **Espaço entre colunas (gutter interno)** | 16 px | Separação uniforme entre colunas adjacentes |
+| **Breakpoints responsivos** | 640 px / 768 px / 1024 px / 1280 px | sm / md / lg / xl (Tailwind CSS padrão) |
+
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+**Uso prático nas telas:**
+
+- **Tela de auditoria (registro de checkpoint):** formulário central ocupa 6 colunas (50 %), centralizado, com margens simétricas de 3 colunas em cada lado — foco total na ação principal sem distrações laterais.
+- **Dashboard do gerente:** sidebar de navegação ocupa 2 colunas; área de conteúdo principal ocupa 10 colunas, com cards de métricas internamente em grid de 4 colunas (3 col cada).
+- **Tela de histórico / listagem:** tabela em largura total de 12 colunas; filtros compactados em barra superior de 12 colunas dividida em 4 campos de 3 colunas cada.
+
+**Espaçamentos internos padronizados (escala de 4 px):**
+
+| Token | Valor | Uso típico |
+|---|---|---|
+| `spacing-1` | 4 px | Gap mínimo entre ícone e label |
+| `spacing-2` | 8 px | Padding interno de badges e chips |
+| `spacing-3` | 12 px | Gap entre campos de formulário inline |
+| `spacing-4` | 16 px | Padding interno de cards e células de tabela |
+| `spacing-6` | 24 px | Espaço entre seções dentro de uma tela |
+| `spacing-8` | 32 px | Margem entre blocos distintos de conteúdo |
+
+A escala de 4 px é compatível com o sistema de design do Tailwind CSS (utilizado na implementação), onde cada unidade de `space` corresponde a 4 px, eliminando a necessidade de conversão entre design e código.
 
 ## 3.5 Protótipo de alta fidelidade 
 
@@ -2554,7 +2912,7 @@ As telas apresentadas a seguir representam os principais fluxos da solução des
 A tela de login representa o ponto de entrada da plataforma, permitindo a autenticação dos usuários por meio de suas credenciais. Embora gerentes e auditores utilizem a mesma interface de acesso, o sistema identifica automaticamente o perfil associado ao usuário informado e o direciona para o ambiente correspondente às suas responsabilidades. Dessa forma, cada usuário acessa apenas as funcionalidades necessárias para a execução de suas atividades.
 
 <div align="center">
-  <sub>Imagem 34 - Login</sub><br>
+  <sub>Imagem 50 - Login</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/tela-login.svg" width="900px" alt="Login"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2569,7 +2927,7 @@ Após a autenticação, os usuários com perfil de gerente são direcionados par
 Após realizar o login, o gerente é direcionado para a tela inicial da plataforma. Nessa interface, é possível visualizar as competições cadastradas e acessar rapidamente as principais funcionalidades do sistema. A partir dos cards das competições, o gerente pode selecionar um evento para acessar o [Histórico da Competição](#histórico-da-competição), onde são exibidos os registros realizados durante a corrida. Essa funcionalidade está relacionada às User Stories US04, US05 e US06, pois permite acompanhar os dados consolidados, consultar o histórico completo e visualizar os quilômetros acumulados por equipe. Além disso, o botão principal permite iniciar o processo de cadastro de uma nova competição.
 
 <div align="center">
-  <sub>Imagem 35 - Tela Inicial do Gerente</sub><br>
+  <sub>Imagem 51 - Tela Inicial do Gerente</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/tela-inicial-gerente.svg" width="900px" alt="Tela Inicial do Gerente"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2580,7 +2938,7 @@ Após realizar o login, o gerente é direcionado para a tela inicial da platafor
 A primeira etapa do cadastro permite ao gerente informar a localização da competição, selecionando o estado e a cidade em que o evento será realizado. Essas informações ajudam a identificar e organizar a competição dentro da plataforma, garantindo que o evento seja cadastrado com dados básicos suficientes para seu acompanhamento posterior.
 
 <div align="center">
-  <sub>Imagem 36 - Informações Gerais</sub><br>
+  <sub>Imagem 52 - Informações Gerais</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/configurar-competicao/tela-criar-competicao-1.svg" width="900px" alt="Informações Gerais"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2592,7 +2950,7 @@ A primeira etapa do cadastro permite ao gerente informar a localização da comp
 Nesta etapa, o gerente informa a data e o horário de realização da competição. Esses dados são utilizados pelo sistema para identificar o momento em que o evento ocorrerá, auxiliando na organização das atividades de auditoria e no gerenciamento dos participantes. Além disso, as informações definidas nessa etapa servem como referência para os registros e estatísticas gerados ao longo da competição.
 
 <div align="center">
-  <sub>Imagem 37 - Data e Horário da Competição</sub><br>
+  <sub>Imagem 53 - Data e Horário da Competição</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/configurar-competicao/tela-criar-competicao-2.svg" width="900px" alt="Data e Horário da Competição"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2603,7 +2961,7 @@ Nesta etapa, o gerente informa a data e o horário de realização da competiç�
 Nesta etapa, o gerente seleciona ou cadastra as equipes participantes da competição, garantindo que todos os grupos estejam devidamente vinculados ao evento antes de seu início. Essa definição permite que os registros realizados posteriormente sejam organizados por equipe, apoiando a visualização consolidada prevista nas User Stories US04 e US06.
 
 <div align="center">
-  <sub>Imagem 38 - Equipes Participantes</sub><br>
+  <sub>Imagem 54 - Equipes Participantes</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/configurar-competicao/tela-criar-competicao-3.svg" width="900px" alt="Equipes Participantes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2614,7 +2972,7 @@ Nesta etapa, o gerente seleciona ou cadastra as equipes participantes da competi
 Nesta etapa, o gerente vincula os atletas às equipes participantes da competição. Essa configuração contribui para a rastreabilidade individual dos participantes, permitindo que os registros da corrida sejam associados aos atletas corretos, conforme previsto na User Story US07. Após o preenchimento das informações necessárias, o usuário pode concluir o processo de criação do evento. Ao finalizar o cadastro, o sistema retorna automaticamente para a [tela inicial do gerente](#tela-inicial-do-gerente), onde a competição recém-criada passa a ser exibida em um card com suas principais informações.
 
 <div align="center">
-  <sub>Imagem 39 - Atletas Participantes</sub><br>
+  <sub>Imagem 55 - Atletas Participantes</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/configurar-competicao/tela-criar-competicao-4.svg" width="900px" alt="Atletas Participantes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2631,7 +2989,7 @@ Em algumas etapas do fluxo, são apresentadas duas imagens consecutivas da mesma
 Após realizar o [login](#tela-de-login-2), o auditor é direcionado para sua tela inicial. Nessa interface, são exibidas as competições disponíveis para acompanhamento, permitindo que o usuário identifique rapidamente os eventos em andamento ou aqueles que aguardam o início da auditoria. Ao clicar no botão de início da auditoria, o sistema direciona o usuário para o fluxo de configuração do acompanhamento, no qual serão selecionadas a competição, a equipe e a esteira. A partir dessa tela, o auditor também pode acessar ações relacionadas a cada competição, como consultar o [Histórico da Competição](#histórico-da-competição). A tela funciona como ponto central de acesso às atividades operacionais do auditor, facilitando a navegação para as competições sob sua responsabilidade.
 
 <div align="center">
-  <sub>Imagem 40 - Tela Inicial do Auditor</sub><br>
+  <sub>Imagem 56 - Tela Inicial do Auditor</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/tela-inicial-auditor.svg" width="900px" alt="Tela Inicial do Auditor"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2642,14 +3000,14 @@ Após realizar o [login](#tela-de-login-2), o auditor é direcionado para sua te
 Após iniciar a auditoria, o sistema apresenta as competições disponíveis para acompanhamento. Nessa etapa, o auditor seleciona o evento que deseja monitorar, garantindo que os registros realizados sejam vinculados à competição correta. As imagens demonstram o estado padrão da interface e o estado após a seleção de uma competição.
 
 <div align="center">
-  <sub>Imagem 41 - Seleção da Competição: estado padrão</sub><br>
+  <sub>Imagem 57 - Seleção da Competição: estado padrão</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-competicao-agendada-1.svg" width="900px" alt="Seleção da Competição em estado padrão"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 42 - Seleção da Competição: item selecionado</sub><br>
+  <sub>Imagem 58 - Seleção da Competição: item selecionado</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-competicao-agendada-2.svg" width="900px" alt="Seleção da Competição com item selecionado"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2660,14 +3018,14 @@ Após iniciar a auditoria, o sistema apresenta as competições disponíveis par
 Após selecionar a competição, o auditor define qual equipe participará do acompanhamento na esteira auditada. A tela apresenta campos de seleção que permitem associar a equipe ao processo de auditoria antes do início da corrida, atendendo ao critério de seleção de equipe previsto na US01. As imagens demonstram o estado padrão da interface e o estado após a seleção da equipe.
 
 <div align="center">
-  <sub>Imagem 43 - Seleção da Equipe: estado padrão</sub><br>
+  <sub>Imagem 59 - Seleção da Equipe: estado padrão</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-equipe-1.svg" width="900px" alt="Seleção da Equipe em estado padrão"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 44 - Seleção da Equipe: item selecionado</sub><br>
+  <sub>Imagem 60 - Seleção da Equipe: item selecionado</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-equipe-2.svg" width="900px" alt="Seleção da Equipe com item selecionado"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2679,14 +3037,14 @@ Após selecionar a competição, o auditor define qual equipe participará do ac
 Nesta etapa, o auditor seleciona a esteira que será utilizada durante a competição. Essa definição permite que os registros realizados posteriormente sejam vinculados ao equipamento correto, atendendo ao critério de seleção de esteira previsto na US01 e facilitando a organização dos dados coletados durante o evento. As imagens demonstram o estado padrão da interface e o estado após a seleção da esteira.
 
 <div align="center">
-  <sub>Imagem 45 - Seleção da Esteira: estado padrão</sub><br>
+  <sub>Imagem 61 - Seleção da Esteira: estado padrão</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-esteira-1.svg" width="900px" alt="Seleção da Esteira em estado padrão"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 46 - Seleção da Esteira: item selecionado</sub><br>
+  <sub>Imagem 62 - Seleção da Esteira: item selecionado</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/selecao-esteira-2.svg" width="900px" alt="Seleção da Esteira com item selecionado"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2697,7 +3055,7 @@ Nesta etapa, o auditor seleciona a esteira que será utilizada durante a competi
 Após a conclusão das etapas de seleção da competição, equipe e esteira, o sistema apresenta uma visão geral contendo todas as informações configuradas para a auditoria. Nessa tela, o auditor pode revisar os dados selecionados e verificar se estão corretos antes de iniciar a competição. O objetivo dessa etapa é reduzir erros de configuração e garantir que todos os registros realizados durante a prova sejam associados corretamente aos participantes e ao evento correspondente.
 
 <div align="center">
-  <sub>Imagem 47 - Visão Geral da Auditoria</sub><br>
+  <sub>Imagem 63 - Visão Geral da Auditoria</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-iniciar-competicao/visao-geral-competicao.svg" width="900px" alt="Visão Geral da Auditoria"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2709,7 +3067,7 @@ Concluídas as etapas de configuração, o sistema apresenta uma tela com o cron
 
 
 <div align="center">
-  <sub>Imagem 48 - Início da Competição</sub><br>
+  <sub>Imagem 64 - Início da Competição</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/tela-auditoria-inicial.svg" width="900px" alt="Início da Competição"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2720,7 +3078,7 @@ Concluídas as etapas de configuração, o sistema apresenta uma tela com o cron
 Durante a competição, o auditor pode registrar os turnos realizados pelos corredores. Para isso, a tela disponibiliza campos para seleção do atleta, horários de início e término do turno e quilometragem percorrida. Essa etapa está relacionada às User Stories US02, US03 e US07, pois permite registrar informações da corrida, encerrar ciclos de participação e manter a rastreabilidade individual dos atletas.
 
 <div align="center">
-  <sub>Imagem 49 - Registro de Turno</sub><br>
+  <sub>Imagem 65 - Registro de Turno</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/tela-auditoria-registro-corrida.svg" width="900px" alt="Registro de Turno"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2731,7 +3089,7 @@ Durante a competição, o auditor pode registrar os turnos realizados pelos corr
 Após o início da corrida, o cronômetro passa a contabilizar o tempo decorrido da competição. A tela exibe os últimos registros realizados, informações sobre os próximos corredores e o botão para finalização do evento, permitindo que o auditor acompanhe a operação em tempo real. Essa tela apoia o acompanhamento contínuo previsto nas US02 e US03.
 
 <div align="center">
-  <sub>Imagem 50 - Competição em Andamento</sub><br>
+  <sub>Imagem 66 - Competição em Andamento</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/tela-auditoria-corrida-iniciada.svg" width="900px" alt="Competição em Andamento"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2743,7 +3101,7 @@ Após o início da corrida, o cronômetro passa a contabilizar o tempo decorrido
 Quando o sistema identifica que não houve registro de checkpoints por um período superior ao esperado, uma mensagem de alerta é exibida ao auditor. A tela informa a pendência e disponibiliza uma ação para realizar imediatamente o registro do checkpoint. Essa interface está relacionada à US09, pois auxilia o auditor a identificar possíveis falhas técnicas ou atrasos na troca de corredor.
 
 <div align="center">
-  <sub>Imagem 51 - Alerta de Checkpoint Não Registrado</sub><br>
+  <sub>Imagem 67 - Alerta de Checkpoint Não Registrado</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/aviso-de-checkpoint-não-registrado-auditor.svg" width="900px" alt="Alerta de Checkpoint Não Registrado"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2754,7 +3112,7 @@ Quando o sistema identifica que não houve registro de checkpoints por um perío
 Caso a quilometragem informada apresente divergências em relação aos registros anteriores, o sistema exibe uma mensagem de inconsistência. A tela apresenta os valores registrados e permite que o auditor cancele ou corrija a informação antes de confirmar o registro. Essa interface está relacionada à US11, pois contribui para evitar erros humanos e falhas na inserção dos dados durante a operação.
 
 <div align="center">
-  <sub>Imagem 52 - Alerta de Inconsistência de Dados</sub><br>
+  <sub>Imagem 68 - Alerta de Inconsistência de Dados</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-auditor/telas-auditoria/aviso-de-Inconsistencia-de-dados-auditor.svg" width="900px" alt="Alerta de Inconsistência de Dados"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2772,7 +3130,7 @@ A tela de histórico está relacionada principalmente às User Stories US04, US0
 A visão geral da competição apresenta um resumo dos principais dados do evento, permitindo que gerente e auditor acompanhem informações consolidadas sobre a corrida. Essa tela funciona como ponto de entrada para a análise dos registros, reunindo dados essenciais para conferência e acompanhamento da competição.
 
 <div align="center">
-  <sub>Imagem 53 - Visão Geral da Competição</sub><br>
+  <sub>Imagem 69 - Visão Geral da Competição</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/estatisticas-competicao/card-evento-geral.svg" width="900px" alt="Visão Geral da Competição"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2785,7 +3143,7 @@ A tela de histórico da auditoria reúne os registros operacionais realizados du
 Além disso, a interface apresenta a opção de compartilhar os dados como planilha, funcionalidade relacionada à User Story US05. Essa ação representa a exportação dos registros em formato estruturado, como CSV, permitindo que o gerente realize auditorias pós-evento e reduza a dependência de conferências manuais.
 
 <div align="center">
-  <sub>Imagem 54 - Histórico da Auditoria</sub><br>
+  <sub>Imagem 70 - Histórico da Auditoria</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/estatisticas-competicao/card-evento-auditoria.svg" width="900px" alt="Histórico da Auditoria"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2796,7 +3154,7 @@ Além disso, a interface apresenta a opção de compartilhar os dados como plani
 A tela de histórico por equipes apresenta os dados da competição organizados de acordo com as equipes participantes. Essa organização permite comparar o desempenho entre os grupos, acompanhar a quilometragem acumulada e verificar os registros vinculados a cada equipe, contribuindo diretamente para a visualização consolidada prevista nas User Stories US04, US05 e US06.
 
 <div align="center">
-  <sub>Imagem 55 - Histórico por Equipes</sub><br>
+  <sub>Imagem 71 - Histórico por Equipes</sub><br>
   <img src="./assets/prototipos-alta-fidelidade/fluxo-gerente/estatisticas-competicao/card-evento-equipes.png" width="900px" alt="Histórico por Equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -2812,34 +3170,35 @@ O protótipo completo pode ser acessado no Figma por meio do seguinte link: [Pro
 
 ### 3.6.1. Modelo Entidade-Relacionamento (MER)
 
-O Modelo Entidade-Relacionamento (MER) é a representação conceitual do banco de dados, na qual se descrevem as entidades do domínio, seus atributos e os relacionamentos que as conectam, abstraindo decisões de implementação física como tipos de dados, índices ou chaves estrangeiras. Para este projeto, o MER traduz em linguagem de dados o domínio do Red Bull 24 Horas modelado nas seções anteriores: o evento operado por gerentes (Managers), suas equipes (Teams) e atletas (Athletes), e o registro de cada sessão de corrida (Shift) auditada à beira da esteira (Treadmill), com os checkpoints periódicos e logs que sustentam a apuração oficial da competição. A notação adotada é a de **Peter Chen**, na qual entidades são representadas por retângulos, atributos por elipses (com elipses preenchidas indicando chave primária e atributos compostos/derivados com ramificações), relacionamentos por losangos e a cardinalidade explicitada nas extremidades de cada relacionamento com a razão (1) e (N). Os nomes de entidades, atributos e relacionamentos foram padronizados em inglês para garantir consistência com a nomenclatura técnica adotada no modelo relacional e no código-fonte da aplicação.
+O Modelo Entidade-Relacionamento (MER) apresenta a visão conceitual consolidada do domínio do Red Bull 24 Horas após as evoluções realizadas nas sprints 2, 3 e 4. O modelo conecta a gestão dos eventos, a composição de equipes, a operação das esteiras e a trilha de auditoria dos turnos. Os nomes foram mantidos em inglês para conservar a correspondência com o código e com o modelo relacional.
 
 <div align="center">
-  <sub>Imagem 56 - Modelo Entidade-Relacionamento</sub><br>
-  <img src="./assets/modelo_entidade_relacionamento/modelo_entidade_relacionamento.png" width="80%" alt="Modelo Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
+  <sub>Imagem 72 - Modelo Entidade-Relacionamento</sub><br>
+  <img src="./assets/modelo_entidade_relacionamento/mer.png" width="95%" alt="Modelo Entidade-Relacionamento consolidado do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 #### Entidades e atributos
 
-As entidades foram derivadas diretamente do domínio descrito no TAPI e dos casos de uso da seção 3.2.2, garantindo coerência entre o modelo conceitual de dados e o modelo comportamental do sistema. Cada entidade representa um concept do mundo real que precisa ser persistido para sustentar a apuração e a auditoria das 24 horas de competição.
+As entidades foram derivadas do domínio e revisadas conforme o schema resultante das migrations `001` a `017`. O MER inclui as entidades de autenticação porque seus vínculos possuem integridade referencial no banco e fazem parte da responsabilidade operacional dos usuários.
 
 <div align="center">
   <sub>Quadro 20 - Entidades e atributos do MER</sub>
 </div>
 
-| Entidade | Descrição | Atributos | Chave primária |
+| Entidade | Descrição | Atributos principais | Chave |
 | :--- | :--- | :--- | :--- |
-| **Managers** | Gerente regional do time de Field Marketing da Red Bull, responsável por instanciar e gerir os eventos sob sua regional. | `ID`, `NAME`, `EMAIL`, `CPF`, `PASSWORD` | `ID` |
-| **Events** | Instância de uma etapa do Red Bull 24 Horas (regional ou final nacional), identificada por local, título da edição e data de realização. | `ID`, `TITLE`, `LOCAL`, `DATE`, `DELETED_AT` | `ID` |
-| **Teams** | Uma das duas equipes que competem no evento (tradicionalmente "azul" e "vermelha"), à qual os atletas são vinculados antes do início da competição. | `ID`, `NAME`, `DELETED_AT` | `ID` |
-| **Athletes** | Corredor inscrito que reveza com seu time durante as 24 horas, identificado pessoalmente por CPF para fins de auditoria pós-evento. | `ID`, `NAME`, `GENDER`, `CPF`, `DELETED_AT` | `ID` |
-| **Auditors** | Operador do sistema (substituindo a operação atual da prancheta) que registra os turnos e seus checkpoints à beira da esteira. | `ID`, `NAME`, `CPF`, `REGISTRATION_NUMBER`, `IS_ACTIVE`, `EMAIL`, `PASSWORD` | `ID` |
-| **Shifts** | Sessão individual de corrida — um único atleta em uma única esteira, do play até o stop, antes da próxima zeragem. É a entidade central do registro operacional do evento. | `ID`, `STATUS`, `START_AT`, `END_AT`, `TOTAL_TIME`, `SPEED`, `KM_START`, `KM_END`, `DISTANCE` | `ID` |
-| **Treadmills** | Equipamento físico (Technogym) onde os turnos ocorrem. Cada equipe opera duas esteiras simultaneamente durante o evento. | `ID`, `NUMBER` | `ID` |
-| **Checkpoints** | Marcação periódica de segurança que registra a quilometragem parcial dentro de um turno. Contém atributos robustos para gerenciar revisões manuais e sincronização offline. | `ID`, `TIMESTAMP`, `DISTANCE`, `TYPE` (`MANDATORY` / `VOLUNTARY`), `REVIEWED`, `JUSTIFICATION`, `REVIEWED_AT`, `REVIEWED_BY_ID`, `REVIEWED_BY_ROLE`, `OLD_DISTANCE`, `SYNC_ID` | `ID` |
-| **Logs** | Registro auditável das modificações e estados de um turno (criação, edição e finalização), garantindo rastreabilidade completa e armazenamento de históricos para a auditoria. | `ID`, `TIMESTAMP`, `TYPE` (`CREATED` / `UPDATED` / `FINISHED`), `OLD_VALUE`, `NEW_VALUE`, `AUTHOR_ID`, `AUTHOR_ROLE`, `JUSTIFICATION` | `ID` |
+| **Managers** | Gerentes que administram eventos e também podem operar turnos. | `id`, `name`, `cpf`, `email`, `password` | `id` |
+| **Events** | Edições da competição, incluindo seu ciclo de vida operacional. | `id`, `title`, `local`, `date`, `status`, `started_at`, `finished_at`, `deleted_at` | `id` |
+| **Teams** | Equipes vinculadas a uma edição específica. | `id`, `name`, `deleted_at` | `id` |
+| **Athletes** | Atletas pertencentes a uma equipe. | `id`, `name`, `gender`, `cpf`, `deleted_at` | `id` |
+| **Auditors** | Operadores responsáveis pelo registro dos turnos e checkpoints. | `id`, `name`, `cpf`, `registration_number`, `is_active`, `email`, `password` | `id` |
+| **Shifts** | Sessões individuais de corrida de um atleta em uma esteira. | `id`, `status`, `start_at`, `end_at`, `total_time`, `speed`, `km_start`, `km_end`, `distance` | `id` |
+| **Treadmills** | Esteiras numeradas e vinculadas à equipe que as utiliza. | `id`, `number` | `id` |
+| **Checkpoints** | Leituras parciais do turno, com suporte a revisão e sincronização offline. | `id`, `timestamp`, `distance`, `type`, `reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`, `sync_id` | `id` |
+| **Logs** | Registros imutáveis de ações e alterações relacionadas a um turno. | `id`, `timestamp`, `type`, `old_value`, `new_value`, `author_id`, `author_role`, `justification` | `id` |
+| **RefreshToken** | Sessão renovável pertencente exclusivamente a um gerente ou auditor. | `id`, `token_hash`, `expires_at`, `revoked_at`, `created_at` | `id` |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -2848,7 +3207,7 @@ As entidades foram derivadas diretamente do domínio descrito no TAPI e dos caso
 
 #### Relacionamentos e cardinalidades
 
-Os relacionamentos foram modelados a partir das regras de negócio levantadas na seção 3.1 e da dinâmica operacional descrita pelo parceiro: gerentes regionais gerem múltiplos eventos ao longo da temporada e um mesmo evento pode ser co-gerenciado por mais de um gerente; cada evento conta com exatamente duas equipes; cada equipe escala vários atletas que se revezam continuamente; cada atleta realiza diversos turnos ao longo das 24 horas; e cada turno é monitorado por um auditor e produz uma sequência de checkpoints e múltiplos logs de ações.
+Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui atletas e esteiras; um turno aponta para a esteira utilizada; e o operador do turno pode ser um gerente ou um auditor, mas nunca os dois simultaneamente. A posse de sessões de autenticação (refresh tokens) é modelada por dois relacionamentos independentes e mutuamente exclusivos: um para gerentes e outro para auditores.
 
 <div align="center">
   <sub>Quadro 21 - Relacionamentos e cardinalidades do MER</sub>
@@ -2856,14 +3215,19 @@ Os relacionamentos foram modelados a partir das regras de negócio levantadas na
 
 | Relacionamento | Entidade A | Cardinalidade | Entidade B | Descrição |
 | :--- | :--- | :--- | :--- | :--- |
-| **Menages** | Manager | (N, N) | Event | Um gerente regional pode gerir vários eventos (etapas regionais distintas ao longo da temporada) e um mesmo evento pode ser co-gerenciado por mais de um gerente, tornando a relação muitos-para-muitos. |
-| **Has** | Event | (1, N) | Team | Cada evento possui duas equipes, e cada uma pertence a um único evento. A entidade Team é instanciada por edição, refletindo a natureza efêmera da competição. |
-| **Rosters** | Team | (1, N) | Athlete | Uma equipe escala vários atletas (tipicamente 16 por equipe, conforme briefing), e cada atleta pertence a uma única equipe dentro de um mesmo evento. |
-| **Performs** | Athlete | (1, N) | Shift | Um atleta realiza vários turnos durante as 24 horas (cada entrada na esteira é um turno distinto), e cada turno é realizado por exatamente um atleta, refletindo a regra de que a esteira é zerada a cada troca de corredor. |
-| **Audits** | Auditor | (1, N) | Shift | Um auditor é responsável por auditar diversos turnos ao longo do seu plantão na operação, e cada turno é auditado por exatamente um auditor, garantindo responsabilidade unívoca sobre cada registro. |
-| **Occurs On** | Shift | (N, 1) | Treadmill | Vários turnos ocorrem ao longo das 24 horas em uma mesma esteira (que é zerada entre eles), enquanto cada turno acontece em uma única esteira específica. |
-| **Records** | Shift | (1, N) | Checkpoint | Cada turno guarda múltiplos checkpoints periódicos (a marcação de 5 em 5 minutos descrita pelo parceiro), enquanto cada checkpoint pertence a exatamente um turno, não existe checkpoint isolado fora de uma sessão de corrida ativa. |
-| **Has** | Shift | (1, N) | Log | Cada turno pode gerar múltiplos logs de ações, que armazenam cronologicamente as mutações de estado daquela sessão, sustentando a trilha de auditoria pós-evento. |
+| **Manages** | Managers | N:N | Events | Gerentes podem administrar vários eventos e eventos podem possuir vários gerentes. |
+| **Has** | Events | 1:N | Teams | Cada equipe pertence a um único evento. |
+| **Rosters** | Teams | 1:N | Athletes | Cada atleta pertence a uma única equipe. |
+| **Has** | Teams | 1:N | Treadmills | Uma equipe pode possuir várias esteiras; uma esteira pode ficar temporariamente sem equipe. |
+| **Performs** | Athletes | 1:N | Shifts | Um atleta pode realizar vários turnos; cada turno possui um atleta. |
+| **Operates** | Managers | 1:N | Shifts | Um gerente pode operar turnos quando atua na função operacional. |
+| **Audits** | Auditors | 1:N | Shifts | Um auditor pode operar vários turnos. |
+| **Hosts** | Treadmills | 1:N | Shifts | Uma esteira recebe vários turnos e cada turno referencia no máximo uma esteira. |
+| **Records** | Shifts | 1:N | Checkpoints | Todo checkpoint pertence a um turno. |
+| **Generates** | Shifts | 1:N | Logs | Todo log pertence a um turno. |
+| **References** | Checkpoints | 1:N opcional | Logs | Um log pode apontar para um checkpoint; vários logs podem referenciar o mesmo checkpoint. |
+| **Owns Session** | Managers | 1:N | RefreshToken | Cada refresh token de gerente pertence exatamente a um gerente. |
+| **Has Session** | Auditors | 1:N | RefreshToken | Cada refresh token de auditor pertence exatamente a um auditor. |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -2872,25 +3236,20 @@ Os relacionamentos foram modelados a partir das regras de negócio levantadas na
 
 #### Decisões de modelagem
 
-Três decisões merecem destaque por traduzirem diretamente as regras de negócio do Red Bull 24 Horas para o modelo de dados:
-
-- **Shift como entidade central:** a quilometragem do evento não é monotônica em relação à esteira nem à equipe, pois a esteira é zerada a cada troca de corredor (dinâmica detalhada no Modelo de Sessão de Corrida da seção 3.2.2). Por isso, o **Shift** foi modelado como entidade de primeira classe, com `KM_START`, `KM_END`, `START_AT` e `END_AT` próprios, e não como um simples registro derivado da esteira ou da equipe. O total acumulado de uma equipe é, portanto, sempre uma função agregada sobre os turnos finalizados de seus atletas, e não um atributo persistido diretamente.
-
-- **Checkpoint estruturado para Contingência e Revisão:** o atributo `TYPE` do Checkpoint distingue as marcações automáticas obrigatórias (`MANDATORY`, geradas de 5 em 5 minutos) das voluntárias (`VOLUNTARY`, disparadas pelo auditor). Além disso, visando mitigar falhas operacionais e inconsistências, foram introduzidos os atributos de revisão (`REVIEWED`, `JUSTIFICATION`, `REVIEWED_AT`, `REVIEWED_BY_ID`, `REVIEWED_BY_ROLE` e `OLD_DISTANCE`), permitindo que a arbitragem corrija com total transparência e segurança distorções de digitação na quilometragem parcial, sem quebrar o vínculo com o `SYNC_ID` usado para controle da sincronização de dados locais.
-
-- **Log especializado com histórico completo de modificações:** para isolar completamente o fluxo de auditoria e garantir conformidade com o risco "Erro humano na leitura e digitação da quilometragem" (seção 2.1.5), a entidade **Log** foi expandida. Em vez de registrar apenas eventos simples, ela mapeia transições de ciclo de vida cruciais (`CREATED`, `UPDATED` e `FINISHED`) e armazena os valores antes e depois da modificação (`OLD_VALUE` e `NEW_VALUE`). O vínculo explícito com o autor do ajuste (`AUTHOR_ID`, `AUTHOR_ROLE`) e sua respectiva `JUSTIFICATION` viabiliza o pleno atendimento ao caso de uso "Editar registro" (seção 3.2.2) com total rastreabilidade.
-
-**Síntese do Modelo Entidade-Relacionamento**
-
-O MER traduz o domínio do Red Bull 24 Horas em um modelo conceitual de dados rastreável, no qual cada entidade tem propósito claro dentro do fluxo operacional (cadastro pré-evento -> registro de turnos -> checkpoints periódicos -> encerramento -> auditoria). A escolha do Shift como entidade central refletindo o conceito de **sessão de corrida**, somada às entidades Checkpoint e Log que sustentam a confiabilidade e a rastreabilidade dos dados, alinha o modelo de dados às prioridades de mitigação de risco da seção 2.1.5 e aos casos de uso da seção 3.2.2. A relação N:N entre Manager e Event, resolvida pela entidade associativa Manager_events no DER, reflete a flexibilidade operacional da gestão regional da Red Bull. Esse alinhamento garante que o banco de dados forneça base sólida tanto para a operação em tempo real durante as 24h quanto para a auditoria formal pós-evento e para as análises estatísticas inéditas identificadas como oportunidades do projeto.
+- **Shift como entidade central:** cada entrada de um atleta em uma esteira gera um turno próprio. Os totais do evento são calculados pela agregação dos turnos finalizados.
+- **Operador exclusivo:** a constraint `chk_shifts_operator` exige exatamente um responsável por turno, usando `auditor_id` ou `manager_id`. No MER, isso é refletido pelos relacionamentos independentes **Operates** e **Audits**, ambos direcionados a Shifts.
+- **Esteira vinculada à equipe:** o relacionamento **Has** liga Teams a Treadmills (`treadmills.team_id`), enquanto o relacionamento **Hosts** liga Treadmills a Shifts (`shifts.treadmill_id`), preservando o histórico de uso por turno.
+- **Auditoria de checkpoints:** checkpoints guardam dados de revisão e `sync_id`; logs registram valores anteriores e novos, autoria, justificativa e vínculo opcional ao checkpoint.
+- **Ciclo de vida do evento:** `status`, `started_at` e `finished_at` distinguem eventos pendentes, em andamento e finalizados.
+- **Autenticação com integridade:** refresh tokens são modelados por dois relacionamentos mutuamente exclusivos — **Owns Session** (Manager–RefreshToken) e **Has Session** (Auditor–RefreshToken) — garantindo que cada token pertença a exatamente um gerente ou a um auditor existente, nunca aos dois simultaneamente.
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER)
 
-O DER traduz o modelo conceitual do MER para a estrutura relacional do banco de dados (PostgreSQL), adotando a **notação de tabelas relacionais** com tipos de dados, restrições (`NOT NULL`, `UNIQUE`, `CHECK`), chaves primárias (`PK`) e chaves estrangeiras (`FK`).
+O DER traduz o MER para a estrutura relacional do PostgreSQL. A versão abaixo representa o estado efetivamente obtido após a execução sequencial das migrations `001` a `017`, e não apenas o schema inicial da migration `001`.
 
 <div align="center">
-  <sub>Imagem 57 - Diagrama Entidade-Relacionamento</sub><br>
-  <img src="./assets/diagrama_entidade_relacionamento/diagrama_entidade_relacionamento.png" width="90%" alt="Diagrama Entidade-Relacionamento do projeto Red Bull 24 Horas"><br>
+  <sub>Imagem 73 - Diagrama Entidade-Relacionamento</sub><br>
+  <img src="./assets/diagrama_entidade_relacionamento/der.svg" width="100%" alt="Diagrama Entidade-Relacionamento consolidado do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -2899,120 +3258,73 @@ O DER traduz o modelo conceitual do MER para a estrutura relacional do banco de 
   <sub>Quadro 22 - Tabelas e colunas do DER</sub>
 </div>
 
-| Tabela             | Coluna                | Tipo           | Restrições                                           | Descrição                                                          |
-| ------------------ | --------------------- | -------------- | ---------------------------------------------------- | ------------------------------------------------------------------ |
-| **Managers**       | `id`                  | SERIAL         | PK                                                   | Identificador único do gerente                                     |
-|                    | `cpf`                 | VARCHAR        | UNIQUE                                               | CPF do gerente                                                     |
-|                    | `name`                | VARCHAR        | NOT NULL                                             | Nome completo                                                      |
-|                    | `email`               | VARCHAR(100)   | UNIQUE                                               | E-mail do gerente                                                  |
-|                    | `password`            | VARCHAR(100)   | —                                                    | Senha do gerente                                                   |
-| **Manager_events** | `id`                  | SERIAL         | PK                                                   | Identificador único do vínculo                                     |
-|                    | `manager_id`          | INT            | NOT NULL, FK → Managers(id)                          | Gerente vinculado ao evento                                        |
-|                    | `event_id`            | INT            | NOT NULL, FK → Events(id)                            | Evento vinculado ao gerente                                        |
-| **Events**         | `id`                  | SERIAL         | PK                                                   | Identificador único do evento                                      |
-|                    | `title`               | VARCHAR        | NOT NULL UNIQUE                                      | Título da edição (ex.: "Red Bull 24 Horas SP 2026")                |
-|                    | `local`               | VARCHAR        | NOT NULL UNIQUE                                      | Local de realização                                                |
-|                    | `date`                | DATE           | NOT NULL                                             | Data do evento                                                     |
-|                    | `deleted_at`          | TIMESTAMP      | —                                                    | Data de exclusão lógica                                            |
-| **Teams**          | `id`                  | SERIAL         | PK                                                   | Identificador único da equipe                                      |
-|                    | `name`                | VARCHAR        | NOT NULL UNIQUE                                      | Nome da equipe (ex.: "Azul", "Vermelha")                           |
-|                    | `deleted_at`          | TIMESTAMP      | —                                                    | Data de exclusão lógica                                            |
-|                    | `event_id`            | INT            | FK → Events(id)                                      | Evento ao qual a equipe pertence                                   |
-| **Athletes**       | `id`                  | SERIAL         | PK                                                   | Identificador único do atleta                                      |
-|                    | `name`                | VARCHAR        | NOT NULL                                             | Nome completo                                                      |
-|                    | `gender`              | VARCHAR        | NOT NULL                                             | Gênero, utilizado para apuração por categoria                      |
-|                    | `cpf`                 | VARCHAR        | UNIQUE                                               | CPF do atleta                                                      |
-|                    | `deleted_at`          | TIMESTAMP      | —                                                    | Data de exclusão lógica                                            |
-|                    | `team_id`             | INT            | FK → Teams(id)                                       | Equipe à qual o atleta pertence                                    |
-| **Auditors**       | `id`                  | SERIAL         | PK                                                   | Identificador único do auditor                                     |
-|                    | `name`                | VARCHAR        | NOT NULL                                             | Nome do auditor                                                    |
-|                    | `cpf`                 | VARCHAR        | UNIQUE                                               | CPF do auditor                                                     |
-|                    | `registration_number` | INT            | NOT NULL UNIQUE                                      | Número de registro funcional                                       |
-|                    | `is_active`           | BOOLEAN        | —                                                    | Indica se o auditor está ativo no sistema                          |
-|                    | `email`               | VARCHAR(100)   | UNIQUE                                               | E-mail do auditor                                                  |
-|                    | `password`            | VARCHAR(100)   | —                                                    | Senha do auditor                                                   |
-| **Treadmills**     | `id`                  | SERIAL         | PK                                                   | Identificador único da esteira                                     |
-|                    | `shift_id`            | INT            | FK → Shifts(id)                                      | Turno atualmente em execução                                       |
-|                    | `number`              | INT            | NOT NULL UNIQUE                                      | Número físico da esteira (Technogym)                               |
-| **Shifts**         | `id`                  | SERIAL         | PK                                                   | Identificador único do turno                                       |
-|                    | `status`              | VARCHAR        | NOT NULL CHECK ('pending','in progress','completed') | Estado do turno                                                    |
-|                    | `athlete_id`          | INT            | FK → Athletes(id)                                    | Atleta realizando o turno                                          |
-|                    | `auditor_id`          | INT            | FK → Auditors(id)                                    | Auditor responsável pelo registro                                  |
-|                    | `start_at`            | TIMESTAMP      | —                                                    | Início do turno                                                    |
-|                    | `total_time`          | INTERVAL       | —                                                    | Duração total (calculada ao finalizar)                             |
-|                    | `end_at`              | TIMESTAMP      | —                                                    | Encerramento do turno                                              |
-|                    | `speed`               | INT            | NOT NULL                                             | Velocidade configurada (km/h)                                      |
-|                    | `km_start`            | INT            | NOT NULL                                             | Quilometragem inicial no odômetro                                  |
-|                    | `km_end`              | INT            | NOT NULL                                             | Quilometragem final no odômetro                                    |
-|                    | `distance`            | INT            | NOT NULL                                             | Distância percorrida (`km_end - km_start`)                         |
-| **Checkpoints**    | `id`                  | SERIAL         | PK                                                   | Identificador único do checkpoint                                  |
-|                    | `shift_id`            | INT            | FK → Shifts(id)                                      | Turno ao qual o checkpoint pertence                                |
-|                    | `timestamp`           | TIMESTAMP      | —                                                    | Data e hora do registro                                            |
-|                    | `distance`            | INT            | NOT NULL                                             | Quilometragem parcial no momento do checkpoint                     |
-|                    | `reviewed`            | BOOLEAN        | NOT NULL DEFAULT FALSE                               | Indica se o checkpoint foi revisado                                |
-|                    | `justification`       | VARCHAR(400)   | —                                                    | Justificativa em caso de revisão ou contestação                    |
-|                    | `reviewed_at`         | TIMESTAMP      | —                                                    | Data e hora em que a revisão foi realizada                         |
-|                    | `reviewed_by_id`      | INT            | NOT NULL                                             | Identificador de quem realizou a revisão                           |
-|                    | `reviewed_by_role`    | VARCHAR(20)    | —                                                    | Papel do revisor (ex.: manager, auditor)                           |
-|                    | `type`                | VARCHAR        | CHECK ('mandatory', 'voluntary')                     | Obrigatório (a cada 5 min) ou voluntário                           |
-|                    | `old_distance`        | INT            | NOT NULL                                             | Quilometragem anterior ao ajuste, para fins de auditoria           |
-|                    | `sync_id`             | VARCHAR(64)    | —                                                    | Identificador de sincronização para controle de idempotência       |
-| **Logs**           | `id`                  | SERIAL         | PK                                                   | Identificador único do log                                         |
-|                    | `shift_id`            | INT            | FK NOT NULL → Shifts(id)                             | Turno ao qual o log está vinculado                                 |
-|                    | `timestamp`           | TIMESTAMP      | NOT NULL                                             | Data e hora da ação                                                |
-|                    | `type`                | VARCHAR        | CHECK ('created', 'updated', 'finished')             | Tipo da ação auditada                                              |
-|                    | `checkpoint_id`       | INT            | FK → Checkpoints(id)                                 | Checkpoint associado ao log, quando aplicável                      |
-|                    | `old_value`           | INT            | NOT NULL                                             | Valor anterior do campo alterado                                   |
-|                    | `new_value`           | INT            | NOT NULL                                             | Novo valor do campo alterado                                       |
-|                    | `author_id`           | INT            | NOT NULL                                             | Identificador do autor da ação                                     |
-|                    | `author_role`         | VARCHAR(20)    | —                                                    | Papel do autor da ação (ex.: manager, auditor)                     |
-|                    | `justification`       | VARCHAR(400)   | —                                                    | Justificativa textual da alteração realizada                       |
-| **Refresh_tokens** | `id`                  | SERIAL         | PK                                                   | Identificador único do token                                       |
-|                    | `token_hash`          | VARCHAR(255)   | UNIQUE NOT NULL                                      | Hash do refresh token                                              |
-|                    | `manager_id`          | INT            | FK → Managers(id)                                    | Gerente dono do token, quando aplicável                            |
-|                    | `auditor_id`          | INT            | FK → Auditors(id)                                    | Auditor dono do token, quando aplicável                            |
-|                    | `expires_at`          | TIMESTAMP      | NOT NULL                                             | Data de expiração do token                                         |
-|                    | `revoked_at`          | TIMESTAMP      | —                                                    | Data de revogação do token                                         |
-|                    | `created_at`          | TIMESTAMP      | NOT NULL DEFAULT CURRENT_TIMESTAMP                   | Data de criação do token                                           |
+#### Entidades e atributos
+
+As entidades foram derivadas do domínio e revisadas conforme o schema resultante das migrations `001` a `025`. O DER inclui as entidades de autenticação porque seus vínculos possuem integridade referencial no banco e fazem parte da responsabilidade operacional dos usuários.
+
+<div align="center">
+  <sub>Quadro 22 - Entidades e atributos do DER</sub>
+</div>
+
+| Entidade | Descrição | Atributos principais | Chave |
+| :--- | :--- | :--- | :--- |
+| **Managers** | Gerentes que administram eventos. | `id`, `name`, `cpf`, `email`, `password` | `id` |
+| **Events** | Edições da competição, incluindo seu ciclo de vida operacional e controle de pausas. | `id`, `title`, `local`, `date`, `status`, `started_at`, `finished_at`, `deleted_at`, `image_url`, `paused_at`, `paused_ms` | `id` |
+| **Teams** | Equipes vinculadas a uma edição específica. | `id`, `name`, `event_id`, `deleted_at` | `id` |
+| **Athletes** | Atletas pertencentes a uma equipe, com suporte a foto e compartilhamento de desempenho. | `id`, `name`, `gender`, `cpf`, `team_id`, `deleted_at`, `image_url`, `share_token`, `email` | `id` |
+| **Auditors** | Operadores responsáveis pelo registro dos turnos e checkpoints. | `id`, `name`, `cpf`, `registration_number`, `is_active`, `email`, `password` | `id` |
+| **Shifts** | Sessões individuais de corrida de um atleta em uma esteira, com suporte a leitura OCR e foto. | `id`, `status`, `athlete_id`, `auditor_id`, `manager_id`, `treadmill_id`, `start_at`, `end_at`, `total_time`, `speed`, `km_start`, `km_end`, `distance`, `ocr_speed`, `ocr_distance`, `ocr_pace`, `ocr_time`, `image_url` | `id` |
+| **Treadmills** | Esteiras físicas numeradas, referenciadas pelos turnos que nelas ocorrem. | `id`, `number` | `id` |
+| **Checkpoints** | Leituras parciais do turno, com suporte a revisão, sincronização offline e leitura OCR. | `id`, `shift_id`, `timestamp`, `distance`, `type`, `reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`, `sync_id`, `ocr_speed`, `ocr_distance`, `ocr_pace`, `ocr_time`, `image_url` | `id` |
+| **Logs** | Registros imutáveis de ações e alterações relacionadas a um turno. | `id`, `shift_id`, `timestamp`, `type`, `checkpoint_id`, `old_value`, `new_value`, `author_id`, `author_role`, `justification` | `id` |
+| **PauseLog** | Intervalos de pausa de uma competição, com rastreio de início, retomada e duração. | `id`, `event_id`, `paused_at`, `resumed_at`, `duration_ms` | `id` |
+| **RefreshToken** | Sessão renovável pertencente exclusivamente a um gerente ou auditor. | `id`, `token_hash`, `manager_id`, `auditor_id`, `expires_at`, `revoked_at`, `created_at` | `id` |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
+#### Relacionamentos e cardinalidades
+
+Os relacionamentos refletem o schema consolidado após as migrations da Sprint 5. A FK de esteira passou a residir em `shifts.treadmill_id`, corrigindo o vínculo anterior. O controle de pausas foi extraído para a entidade `PauseLog`, vinculada diretamente ao evento. O operador de cada turno pode ser um auditor ou um gerente, nunca os dois simultaneamente. A posse de sessões de autenticação é modelada por dois relacionamentos independentes e mutuamente exclusivos: um para gerentes e outro para auditores.
+
 <div align="center">
-  <sub>Quadro 23 - Relacionamentos e chaves estrangeiras do DER</sub>
+  <sub>Quadro 23 - Relacionamentos e cardinalidades do DER</sub>
 </div>
 
-| Tabela origem      | Coluna FK         | Tabela referenciada | Cardinalidade | Relacionamento                                                        |
-| ------------------ | ----------------- | ------------------- | ------------- | --------------------------------------------------------------------- |
-| **Manager_events** | `manager_id`      | Managers            | N : 1         | Vários eventos podem ser geridos pelo mesmo gerente                   |
-| **Manager_events** | `event_id`        | Events              | N : 1         | Vários gerentes podem estar vinculados ao mesmo evento                |
-| **Teams**          | `event_id`        | Events              | N : 1         | Várias equipes pertencem a um evento                                  |
-| **Athletes**       | `team_id`         | Teams               | N : 1         | Vários atletas compõem uma equipe                                     |
-| **Treadmills**     | `shift_id`        | Shifts              | N : 1         | Uma esteira recebe vários turnos ao longo das 24 horas                |
-| **Shifts**         | `athlete_id`      | Athletes            | N : 1         | Um atleta realiza vários turnos durante a competição                  |
-| **Shifts**         | `auditor_id`      | Auditors            | N : 1         | Um auditor é responsável por vários turnos no seu plantão             |
-| **Checkpoints**    | `shift_id`        | Shifts              | N : 1         | Vários checkpoints são registrados dentro de um turno                 |
-| **Logs**           | `shift_id`        | Shifts              | N : 1         | Vários logs são gerados ao longo do ciclo de vida de um turno         |
-| **Logs**           | `checkpoint_id`   | Checkpoints         | 1 : 1         | Um log pode estar associado a um checkpoint específico revisado       |
-| **Refresh_tokens** | `manager_id`      | Managers            | N : 1         | Um gerente pode possuir vários tokens de sessão ativos                |
-| **Refresh_tokens** | `auditor_id`      | Auditors            | N : 1         | Um auditor pode possuir vários tokens de sessão ativos                |
+| Relacionamento | Entidade A | Cardinalidade | Entidade B | Descrição |
+| :--- | :--- | :--- | :--- | :--- |
+| **Manages** | Managers | N:N | Events | Gerentes podem administrar vários eventos e eventos podem possuir vários gerentes. |
+| **Has** | Events | 1:N | Teams | Cada equipe pertence a um único evento. |
+| **Records** | Events | 1:N | PauseLog | Cada intervalo de pausa pertence a um único evento; um evento pode ter vários intervalos registrados. |
+| **Rosters** | Teams | 1:N | Athletes | Cada atleta pertence a uma única equipe. |
+| **Performs** | Athletes | 1:N | Shifts | Um atleta pode realizar vários turnos; cada turno possui exatamente um atleta. |
+| **Audits** | Auditors | 1:N | Shifts | Um auditor pode operar vários turnos. |
+| **Operates** | Managers | 1:N | Shifts | Um gerente pode operar turnos quando atua na função operacional. |
+| **Hosts** | Treadmills | 1:N | Shifts | Uma esteira recebe vários turnos; cada turno referencia no máximo uma esteira. |
+| **Generates** | Shifts | 1:N | Checkpoints | Todo checkpoint pertence a um turno. |
+| **Produces** | Shifts | 1:N | Logs | Todo log pertence a um turno. |
+| **References** | Checkpoints | 1:N opcional | Logs | Um log pode apontar para um checkpoint; vários logs podem referenciar o mesmo checkpoint. |
+| **Owns Session** | Managers | 1:N | RefreshToken | Cada refresh token de gerente pertence exatamente a um gerente. |
+| **Has Session** | Auditors | 1:N | RefreshToken | Cada refresh token de auditor pertence exatamente a um auditor. |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
-Cinco decisões traduzem regras de negócio para restrições concretas no banco:
+#### Decisões de modelagem
 
-- **`CHECK` nos campos de estado:** `status` em Shifts e `type` em Checkpoints e Logs aceitam apenas valores predefinidos, eliminando inconsistências sem depender exclusivamente da camada de aplicação.
-- **`number` como `UNIQUE` em Treadmills:** impede cadastro duplicado de equipamentos, espelhando a unicidade física de cada esteira Technogym.
-- **`shift_id` em Logs como `FK NOT NULL`:** garante que todo log esteja vinculado a um turno, assegurando a trilha de auditoria pós-evento.
-- **`deleted_at` como exclusão lógica:** Events, Teams e Athletes adotam soft delete, preservando o histórico de dados mesmo após remoção da interface.
-- **Rastreabilidade de revisões em Checkpoints:** os campos `reviewed`, `reviewed_by_id`, `reviewed_by_role`, `reviewed_at` e `old_distance` registram integralmente quem alterou um checkpoint, quando e qual era o valor anterior, viabilizando auditoria completa de contestações pós-turno.
-
-A cadeia `Managers → Manager_events → Events → Teams → Athletes → Shifts → Checkpoints / Logs` reflete o fluxo operacional completo do sistema, do cadastro pré-evento à auditoria pós-evento. A tabela `Logs` passou a referenciar diretamente `Checkpoints`, permitindo rastrear com precisão qual registro foi contestado e qual valor foi corrigido. A tabela `Refresh_tokens` sustenta a camada de autenticação com FKs explícitas para `Managers` e `Auditors`, substituindo o campo genérico anterior e tornando a titularidade dos tokens verificável diretamente no banco.
+- **Shift como entidade central:** cada entrada de um atleta em uma esteira gera um turno próprio. Os totais do evento são calculados pela agregação dos turnos finalizados.
+- **Operador exclusivo:** a constraint `chk_shifts_operator` exige exatamente um responsável por turno, usando `auditor_id` ou `manager_id`. No DER, isso é refletido pelos relacionamentos independentes **Operates** e **Audits**, ambos direcionados a `Shifts`.
+- **Esteira vinculada ao turno:** o relacionamento **Hosts** liga `Treadmills` a `Shifts` via `shifts.treadmill_id`, preservando o histórico de uso por turno. A FK reside em `Shifts`, corrigindo o modelo anterior onde `treadmill_id` estava incorretamente em `Treadmills`.
+- **Verificação por foto e OCR:** `Shifts` e `Checkpoints` passam a armazenar `image_url` (foto da esteira) e os campos `ocr_speed`, `ocr_distance`, `ocr_pace` e `ocr_time`, permitindo auditoria visual e leitura automatizada de dados da esteira.
+- **Controle de pausas:** a entidade `PauseLog` registra cada intervalo de pausa de um evento, com `paused_at`, `resumed_at` e `duration_ms`. O evento em si mantém `paused_at` e `paused_ms` para refletir o estado corrente, enquanto o histórico completo de intervalos fica em `PauseLog`.
+- **Compartilhamento de desempenho:** atletas recebem `share_token UUID` gerado ao final do evento e `email VARCHAR(255)`, habilitando o envio de links individuais de desempenho via `feat/shareSystem`.
+- **Tipos numéricos revisados:** `speed`, `km_start`, `km_end` e `distance` em `Shifts`, e `distance` em `Checkpoints`, foram convertidos de `INT` para `NUMERIC(8,2)`, refletindo a migration `018_shiftKmDecimal`. Os campos `old_value` e `new_value` em `Logs` também passaram de `INT` para `NUMERIC` para suportar valores decimais.
+- **Auditoria de checkpoints:** checkpoints guardam dados de revisão e `sync_id`; logs registram valores anteriores e novos, autoria, justificativa e vínculo opcional ao checkpoint.
+- **Autenticação com integridade:** refresh tokens são modelados por dois relacionamentos mutuamente exclusivos — **Owns Session** (Manager–RefreshToken) e **Has Session** (Auditor–RefreshToken) — garantindo que cada token pertença a exatamente um gerente ou a um auditor existente, nunca aos dois simultaneamente.
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
@@ -3033,14 +3345,14 @@ O modelo físico implementa o DER da seção 3.6.2 como **migrations DDL version
 | [`005_checkpointCorrection.sql`](../src/database/migrations/005_checkpointCorrection.sql) | 4      | RF031: adiciona metadados de correção retroativa à tabela `checkpoints` (`reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`) e campos de trilha de auditoria à tabela `logs` (`checkpoint_id`, `old_value`, `new_value`, `author_id`, `author_role`, `justification`). |
 | [`006_refreshTokenUserLink.sql`](../src/database/migrations/006_refreshTokenUserLink.sql) | 4      | Substitui a modelagem polimórfica de `refresh_tokens` (`user_id` + `user_role` sem FK) por duas colunas FK nullable mutuamente exclusivas: `manager_id → managers(id)` e `auditor_id → auditors(id)`, ambas `ON DELETE CASCADE`, com `CHECK` garantindo que exatamente uma delas esteja preenchida. Remove `user_id`, `user_role` e o índice `idx_refresh_tokens_user`. |
 | [`007_checkpointSyncId.sql`](../src/database/migrations/007_checkpointSyncId.sql)         | 4      | RF026: adiciona coluna `sync_id VARCHAR(64)` à tabela `checkpoints` e cria índice único parcial `ON checkpoints(sync_id) WHERE sync_id IS NOT NULL`, viabilizando a sincronização offline idempotente. |
-| [`008_managerAsAuditor.sql`](../src/database/migrations/008_managerAsAuditor.sql)           | 4      | Permite que gerentes registrem turnos: remove `NOT NULL` de `shifts.auditor_id`, adiciona `shifts.manager_id` (FK → `managers(id)`) e constraint `chk_shifts_operator` (`num_nonnulls(auditor_id, manager_id) = 1`) garantindo exatamente um operador por turno. |
+| [`008_managerAsAuditor.sql`](../src/database/migrations/008_managerAsAuditor.sql)           | 4      | Permite que gerentes registrem turnos: remove a FK e o `NOT NULL` de `shifts.auditor_id`, adiciona `shifts.manager_id` (FK → `managers(id)`) e a constraint `chk_shifts_operator` (`num_nonnulls(auditor_id, manager_id) = 1`). A FK de `auditor_id` não é recriada pela migration, pendência registrada na seção 3.6.2. |
 | [`009_treadmillTeamRelation.sql`](../src/database/migrations/009_treadmillTeamRelation.sql) | 4      | Vincula esteiras a equipes: adiciona `treadmills.team_id` (FK → `teams(id)`, `ON DELETE SET NULL`) com índice auxiliar, permitindo que cada equipe gerencie seu próprio conjunto de esteiras. |
 | [`010_logTypes.sql`](../src/database/migrations/010_logTypes.sql)                           | 4      | Expande o vocabulário de auditoria: substitui o `CHECK chk_logs_type` para aceitar também `'abandoned'` (encerramento por saída voluntária do atleta) e `'force_closed'` (encerramento manual por gerente ou operador). |
 | [`011_dropTreadmillShiftLegacy.sql`](../src/database/migrations/011_dropTreadmillShiftLegacy.sql) | 4 | Remove a coluna legada `treadmills.shift_id` (criada na migration 001, substituída por `shifts.treadmill_id` na 004): descarta `fk_treadmills_shift` e a coluna, eliminando o `ON DELETE CASCADE` que apagava esteiras ao limpar turnos. |
 | [`012_eventStatus.sql`](../src/database/migrations/012_eventStatus.sql)                     | 4      | Introduz ciclo de vida formal nos eventos: adiciona `status VARCHAR(20) DEFAULT 'pending'`, `started_at` e `finished_at` à tabela `events`, com `CHECK chk_events_status` restringindo o status a `pending`, `in_progress` ou `finished`. |
 | [`013_eventStatusFix.sql`](../src/database/migrations/013_eventStatusFix.sql)               | 4      | Normalização retroativa idempotente: remapeia valores legados `'open'` → `'in_progress'` e `'closed'` → `'finished'` em bancos onde a migration 012 foi aplicada antes do rewrite, e reaplica o `CHECK` e o `DEFAULT` do modelo de três estados. |
 | [`014_checkpointDistanceDecimal.sql`](../src/database/migrations/014_checkpointDistanceDecimal.sql) | 4 | Converte `distance` de `INT` para `NUMERIC(8,2)` em `checkpoints` e `shifts`, permitindo registrar quilometragens com precisão decimal conforme reportado pelas esteiras Technogym. |
-| [`015_treadmillNumberNotUnique.sql`](../src/database/migrations/015_treadmillNumberNotUnique.sql) | 4 | Remove a constraint `UNIQUE` de `treadmills.number`: o número da esteira passa a ser relativo ao contexto evento/equipe (cada equipe numera suas esteiras de 1 a N), permitindo o mesmo número em equipes distintas. |
+| [`015_treadmillNumberNotUnique.sql`](../src/database/migrations/015_treadmillNumberNotUnique.sql) | 4 | Remove a constraint `UNIQUE` de `treadmills.number`, permitindo o mesmo número em equipes distintas. A migration não adiciona `UNIQUE(team_id, number)`, portanto a unicidade dentro da equipe ainda depende da aplicação. |
 | [`016_logsValueNumeric.sql`](../src/database/migrations/016_logsValueNumeric.sql)           | 4      | Converte `logs.old_value` e `logs.new_value` de `INT` para `NUMERIC(8,2)`, preservando a precisão decimal nos registros de auditoria de alterações de distância após a migration 014. |
 | [`017_checkpointOldDistanceNumeric.sql`](../src/database/migrations/017_checkpointOldDistanceNumeric.sql) | 4 | Converte `checkpoints.old_distance` de `INT` para `NUMERIC(8,2)`, completando a propagação do tipo decimal à trilha de auditoria de checkpoints (complemento da migration 014). |
 
@@ -3389,7 +3701,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_checkpoints_sync_id
 
 A migration `008_managerAsAuditor.sql` estende o modelo operacional ao permitir que gerentes também registrem turnos, papel que até então era exclusivo dos auditores. A mudança reflete uma decisão de produto da sprint 4: em situações de campo, um gerente presente pode iniciar ou encerrar um turno sem depender de um auditor disponível.
 
-A coluna `auditor_id` em `shifts` tem o `NOT NULL` removido, tornando-se opcional. Em paralelo, é adicionada a coluna `manager_id` (`INT`, nullable) com `FOREIGN KEY` para `managers(id)`. A constraint antiga `fk_shifts_auditor` é removida e recriada implicitamente pelo `REFERENCES`. Para garantir a integridade do vínculo operador↔turno sem abrir a possibilidade de um turno sem operador ou com dois operadores simultâneos, a migration adiciona o `CHECK` `chk_shifts_operator` — baseado em `num_nonnulls(auditor_id, manager_id) = 1` — que impõe que exatamente um dos dois campos esteja preenchido. O índice `idx_shifts_manager_id` é criado para acelerar as consultas que listam turnos por gerente.
+A coluna `auditor_id` em `shifts` tem a constraint `fk_shifts_auditor` e o `NOT NULL` removidos, tornando-se opcional e, no estado atual, sem FK. Em paralelo, é adicionada a coluna `manager_id` (`INT`, nullable) com `FOREIGN KEY` para `managers(id)`. Para impedir um turno sem operador ou com dois operadores simultâneos, a migration adiciona o `CHECK` `chk_shifts_operator` — baseado em `num_nonnulls(auditor_id, manager_id) = 1` — que impõe que exatamente um dos dois campos esteja preenchido. O índice `idx_shifts_manager_id` é criado para acelerar as consultas que listam turnos por gerente. Uma migration corretiva futura deve recriar a FK de `auditor_id` sem voltar a torná-la obrigatória.
 
 ```sql
 ALTER TABLE shifts
@@ -3494,6 +3806,8 @@ ALTER TABLE shifts
 
 A migration `015_treadmillNumberNotUnique.sql` remove a constraint `UNIQUE` sobre `treadmills.number`, criada na migration 001. A unicidade global do número de esteira fazia sentido no modelo inicial, onde havia um único conjunto de esteiras por banco. Com a introdução do vínculo `treadmills.team_id` (migration 009), o número da esteira passou a ser relativo ao contexto evento/equipe: cada equipe numera suas próprias esteiras de 1 a N, de modo que o número 1 pode existir simultaneamente para duas equipes diferentes. A unicidade global deixou de ser uma invariante válida e passou a bloquear inserções legítimas.
 
+Entretanto, a migration remove somente a constraint global e não cria uma constraint composta. Assim, o schema atual também aceita números duplicados dentro da mesma equipe. Para representar integralmente a regra pretendida no banco, uma migration futura deve avaliar a inclusão de `UNIQUE(team_id, number)`.
+
 ```sql
 ALTER TABLE treadmills DROP CONSTRAINT IF EXISTS treadmills_number_key;
 ```
@@ -3519,7 +3833,9 @@ ALTER TABLE checkpoints
 
 **Síntese do modelo físico**
 
-O modelo físico é entregue em **dezessete migrations versionadas e reproduzíveis** — todas idempotentes com `IF NOT EXISTS` e `IF EXISTS` — aplicadas em ordem sequencial. A migration 001 estabelece o schema-base com integridade referencial e regras de domínio garantidas no próprio banco; as migrations 002, 003 e 004 evoluem esse schema na sprint 3 — N:N entre gerentes e eventos, exclusão lógica e vínculo direto turno→esteira. As migrations 005, 006 e 007, desenvolvidas na sprint 4, adicionam: metadados de correção retroativa de checkpoints com trilha de auditoria imutável; integridade referencial real em `refresh_tokens` via duas FKs nullable mutuamente exclusivas; e suporte à sincronização offline idempotente por `sync_id`. As migrations 008 a 017 consolidam as evoluções operacionais da sprint 4: permissão de gerentes como operadores de turno com constraint de operador único (008); vínculo direto esteira→equipe (009); expansão dos tipos de log com `abandoned` e `force_closed` (010); remoção da coluna legada `treadmills.shift_id` cujo cascade causava perda acidental de registros (011); ciclo de vida formal do evento em três estados — `pending`, `in_progress`, `finished` — com normalização retroativa de dados legados (012 e 013); conversão de distâncias de `INT` para `NUMERIC(8,2)` em `checkpoints` e `shifts` para suportar precisão decimal das esteiras Technogym (014); remoção da unicidade global do número de esteira, tornando-o relativo à equipe (015); e propagação do tipo decimal para as colunas de auditoria `logs.old_value`/`new_value` e `checkpoints.old_distance` (016 e 017). As políticas `ON DELETE` diferenciadas (`CASCADE` ao longo das entidades temporárias do evento, `RESTRICT` para entidades de carreira como gerentes, auditores e atletas), os `CHECK` sobre estados e quilometragem, e os índices secundários sobre todas as FKs traduzem as regras operacionais do Red Bull 24 Horas em estrutura física do PostgreSQL, apoiando tanto a operação em tempo real durante o evento quanto a auditoria formal posterior.
+O modelo físico é entregue em **dezessete migrations versionadas e reproduzíveis**, aplicadas em ordem sequencial. A migration 001 estabelece o schema-base; as migrations 002, 003 e 004 introduzem a relação N:N entre gerentes e eventos, exclusão lógica e o vínculo turno→esteira. As migrations 005, 006 e 007 adicionam a correção auditável de checkpoints, a titularidade referencial dos refresh tokens e a sincronização offline idempotente. As migrations 008 a 017 incorporam gerente como operador de turno, esteira por equipe, novos tipos de log, remoção do vínculo legado `treadmills.shift_id`, ciclo de vida do evento e distâncias decimais.
+
+O schema resultante possui constraints de estado, período, quilometragem e proprietário exclusivo, além de políticas `ON DELETE` adequadas a diferentes relações. A revisão consolidada, contudo, identificou duas garantias ainda incompletas: a ausência da FK de `shifts.auditor_id` após a migration 008 e a ausência de unicidade composta para o número da esteira após a migration 015. Essas pendências estão explicitadas no DER e devem orientar a próxima evolução do modelo físico.
 
 ### 3.6.4. Consultas SQL e lógica proposicional
  
@@ -3569,10 +3885,10 @@ ON CONFLICT (sync_id) WHERE sync_id IS NOT NULL DO NOTHING
 
 | | |
 | :--- | :--- |
-| **Proposições lógicas** | **$A$**: O `sync_id` informado já existe no banco (`ON CONFLICT (sync_id) WHERE sync_id IS NOT NULL`) |
-| **Expressão lógica proposicional** | $A \rightarrow \neg\text{INSERT}$ |
-| **Interpretação** | Se o `sync_id` já existe (A é verdadeiro), o `INSERT` é suprimido; se não existe (A é falso), o registro é inserido normalmente. A condicional garante exatamente uma inserção por `sync_id`, tornando o endpoint de sync idempotente independentemente de quantas vezes o mesmo batch seja reenviado. |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$\neg A$ (INSERT ocorre)</th></tr></thead><tbody><tr><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td></tr></tbody></table> |
+| **Proposições lógicas** | **$A$**: O checkpoint possui `sync_id` definido (`sync_id IS NOT NULL`) — distingue registro offline de registro online <br><br> **$B$**: O `sync_id` já existe no índice único parcial — conflito detectado pelo `ON CONFLICT` |
+| **Expressão lógica proposicional** | $\text{INSERT executado} \iff \neg A \lor \neg B$ <br><br> Equivalentemente: $A \land B \rightarrow \neg\text{INSERT}$ (se é offline **e** o `sync_id` já existe, a inserção é suprimida com `DO NOTHING`) |
+| **Interpretação** | O registro só é inserido quando **não** se trata de checkpoint offline ($\neg A$) **ou** quando o `sync_id` é inédito ($\neg B$). A inserção é bloqueada apenas quando ambas as condições são verdadeiras simultaneamente: o checkpoint veio do modo offline ($A$) **e** seu identificador já consta no índice ($B$). Isso torna o endpoint de sincronização idempotente: reenvios do mesmo batch não duplicam dados. Checkpoints registrados online ($\neg A$, `sync_id IS NULL`) nunca disparam o índice parcial e são sempre inseridos. |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th><th>$\neg A \lor \neg B$</th><th>comportamento</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td><td>V</td><td>INSERT (checkpoint online, sem sync_id)</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td><td>impossível ($B$ implica $A$)</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td><td>INSERT (sync_id novo, registro inserido)</td></tr><tr><td>V</td><td>V</td><td>V</td><td>F</td><td>DO NOTHING (sync_id duplicado, ignorado)</td></tr></tbody></table> |
 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
@@ -3681,33 +3997,35 @@ RETURNING *
 
 | | |
 | :--- | :--- |
-| **Proposições lógicas** | **$A$**: Existe um turno com o identificador informado (`id = $2`)<br><br>**$B$**: O turno está em andamento (`status = 'in_progress'`) |
-| **Expressão lógica proposicional** | $A \land B$ |
-| **Interpretação** | O `UPDATE` só efetiva o encerramento quando ambas as condições são verdadeiras: o `id` corresponde a um turno existente **e** esse turno está em andamento. Turnos já encerrados (`completed`) ou inexistentes não satisfazem a cláusula `WHERE` e não são alterados — o `RETURNING *` retorna zero linhas nesses casos, sinal que o serviço usa para retornar 404. |
-| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td></tr></tbody></table> |
+| **Proposições lógicas** | **$A$**: Existe um turno com o identificador informado (`id = $2`) <br><br> **$B$**: O turno está em andamento (`status = 'in_progress'`) <br><br> **$C$**: O tempo decorrido desde o início do turno é positivo (`EXTRACT(EPOCH FROM (NOW() - start_at)) > 0`) |
+| **Expressão lógica proposicional** | $\text{UPDATE executado} \iff A \land B$ <br><br> $\text{velocidade calculada} \iff (A \land B) \land C$ <br><br> $\text{velocidade} = 0 \iff (A \land B) \land \neg C$ |
+| **Interpretação** | O `UPDATE` só efetiva o encerramento quando $A \land B$: o turno existe **e** está em andamento. Falhando qualquer das duas, o `RETURNING *` retorna zero linhas e o serviço responde 404. Dentro do `CASE` de velocidade, $C$ adiciona uma terceira condição: se o tempo decorrido é positivo, a velocidade é calculada normalmente; se for zero ou negativo ($\neg C$), a velocidade assume 0 para evitar divisão por zero. Assim, a velocidade só é computada quando $A \land B \land C$ — três condições verdadeiras simultaneamente — e é forçada a 0 quando $A \land B \land \neg C$, evidenciando o uso combinado de conjunção, negação e condicional em uma mesma consulta. |
+| **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$A \land B$</th><th>velocidade</th><th>resultado</th></tr></thead><tbody><tr><td>F</td><td>*</td><td>*</td><td>F</td><td>N/A</td><td>0 rows, 404</td></tr><tr><td>V</td><td>F</td><td>*</td><td>F</td><td>N/A</td><td>0 rows, 404</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>0</td><td>UPDATE com speed=0</td></tr><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>calculada</td><td>UPDATE com speed=ROUND(...)</td></tr></tbody></table> |
 
   <sup> Fonte: Desenvolvido pelo próprio grupo, 2026. </sup>
 </div>
 
 &nbsp;&nbsp;&nbsp;&nbsp;Assim, é possível afirmar que o entendimento da lógica proposicional possui papel essencial no desenvolvimento e na administração do banco de dados do nosso sistema. A estrutura implementada evidencia a utilização adequada de proposições, conectivos lógicos e operadores booleanos em consultas SQL, possibilitando a criação de comandos eficientes, consistentes e seguros para processos de filtragem, seleção e associação de dados do nosso sistema para o evento. Além disso, as tabelas verdade apresentadas ilustram as operações lógicas efetivamente aplicadas no código, contemplando funcionalidades como inserir ou ignorar o Sync Offline.
-A documentação completa e navegável dos endpoints está disponível em [`docs/api/index.html`](../docs/api/index.html) e também servida pelo próprio backend em `GET /docs` (acessível sem autenticação).
+A documentação completa e navegável dos endpoints está disponível em [`documentos/outros/WebAPI/index.html`](outros/WebAPI/index.html) e também servida pelo próprio backend em `GET /docs` (acessível sem autenticação).
 
 ### Resumo dos fluxos implementados
 
-| Fluxo | Endpoints | RFs cobertos (principais) |
+| Fluxo | Endpoints | RFs cobertos |
 |---|---|---|
-| **Autenticação** | 6 | RF027 |
-| **Eventos** | 5 | RF051 |
+| **Autenticação** | 7 | RF027 |
+| **Eventos** | 7 | RF051, RF010, RF011 |
 | **Esteiras** | 4 | RF004 |
 | **Equipes** | 5 | RF001, RF005 |
 | **Atletas** | 5 | RF002, RF006, RF023 |
-| **Turnos** | 3 | RF007–RF019, RF025, RF032–RF034, RF044–RF046 |
+| **Turnos** | 8 | RF007–RF019, RF025, RF031–RF034, RF044–RF046 |
 | **Histórico** | 1 | RF022, RF041–RF043 |
 | **Alertas** | 1 | RF028–RF030, RF039, RF053 |
-| **Métricas** | 6 | RF020, RF021, RF035–RF038, RF040, RF049, RF052 |
+| **Sincronização** | 1 | RF026 |
+| **Logs de Auditoria** | 1 | RF024 |
+| **Métricas** | 7 | RF020, RF021, RF035–RF038, RF040, RF049, RF050, RF052 |
 | **Exportação** | 2 | RF047, RF048 |
 
-**Total atual: 38 endpoints implementados e documentados**, organizados em dez fluxos. Além dos fluxos de Autenticação, Eventos, Esteiras, Equipes e Atletas, foram implementados nesta sprint os fluxos de Turnos (auditoria operacional de início, checkpoints e encerramento), Histórico, Alertas (detecção de inconsistências), Métricas e Exportação. Os poucos endpoints ainda não implementados — validação pré-evento (RF003), log de auditoria (RF024), sincronização offline (RF026), correção de checkpoint (RF031) e compartilhamento público (RF050) — estão planejados para a sprint 4, com contrato já definido no Quadro 31 da seção 3.9.
+**Total Sprint 4: 49 endpoints implementados e documentados**, organizados em doze fluxos. Em relação à sprint 3, foram acrescentados nesta sprint: o fluxo de **Sincronização offline** (`POST /audit/sync`, RF026), o fluxo de **Logs de Auditoria** (`GET /audit/logs`, RF024), os endpoints de início e encerramento de evento no fluxo de Eventos, a edição retroativa de checkpoint e turno no fluxo de Turnos, o link público de compartilhamento nas Métricas e a listagem de auditores ativos na Autenticação. O único endpoint ainda planejado é a validação de equipe (RF003, `GET /teams/:teamId/validation`) agendado para a sprint 5, conforme o Quadro 31 da seção 3.9.
 
 Cada endpoint contém: método HTTP, path completo, headers, body request (com campos obrigatórios e validações), shape da resposta de sucesso, exemplos JSON e tabela de status codes possíveis.
 
@@ -3715,7 +4033,194 @@ Cada endpoint contém: método HTTP, path completo, headers, body request (com c
 
 ---
 
-A documentação técnica completa da WebAPI está disponível de forma navegável no arquivo [`docs/api/index.html`](../docs/api/index.html), presente no repositório do projeto, e também pode ser acessada publicamente pelo link [https://g02-73a453.pages.git.inteli.edu.br/api/](https://g02-73a453.pages.git.inteli.edu.br/api/). A documentação reúne 49 endpoints organizados em doze fluxos: **Autenticação** (7 endpoints para registro de gerentes e auditores, login, renovação e revogação de token JWT, consulta do usuário autenticado e listagem de auditores ativos), **Eventos** (7 endpoints de CRUD completo de eventos mais o início e o encerramento da competição, restritos ao perfil gerente), **Esteiras** (4 endpoints de CRUD de esteiras vinculadas a eventos), **Equipes** (5 endpoints de CRUD de equipes), **Atletas** (5 endpoints de CRUD de atletas vinculados a equipes), **Turnos** (8 endpoints para iniciar turno, registrar e listar checkpoints, consultar status, encerrar, abandonar e editar retroativamente turno e checkpoint), **Histórico** (1 endpoint com filtros por equipe, esteira e atleta), **Alertas** (1 endpoint de inconsistências detectadas em tempo real), **Sincronização** (1 endpoint que recebe em lote os checkpoints registrados offline e os persiste de forma idempotente por `sync_id`), **Logs de Auditoria** (1 endpoint que expõe a trilha imutável de edições retroativas com filtros por turno, checkpoint, autor e tipo), **Métricas** (7 endpoints de desempenho individual e agregado por evento, incluindo o link público de compartilhamento sem autenticação) e **Exportação** (2 endpoints para geração de arquivos CSV de turnos e checkpoints). A documentação inclui ainda um Anexo de Mapeamento RF↔Endpoint com rastreabilidade completa dos RF001–RF053 definidos no WAD, indicando explicitamente os requisitos ainda não implementados. Cada endpoint está descrito com método HTTP, path completo, headers obrigatórios, body de requisição com campos e validações, shape da resposta de sucesso com exemplos em JSON e tabela de status codes possíveis (200, 201, 204, 400, 401, 403, 404, 409, 422 e 500).
+A documentação técnica completa da WebAPI está disponível de forma navegável no arquivo [`documentos/outros/WebAPI/index.html`](outros/WebAPI/index.html), presente no repositório do projeto, e também pode ser acessada publicamente pelo link [https://g02-73a453.pages.git.inteli.edu.br/api/](https://g02-73a453.pages.git.inteli.edu.br/api/). A documentação reúne 54 endpoints organizados em treze fluxos:
+
+### 3.7.1. Tratamento de Erros (Error Handling)
+
+Todos os endpoints da WebAPI adotam um **contrato de resposta de erro uniforme**. Em qualquer situação de falha — validação, regra de negócio, recurso inexistente ou erro interno — a API retorna sempre um objeto JSON com a chave `error` contendo a mensagem descritiva do problema, sem expor stack traces ou detalhes internos ao cliente.
+
+**Formato padrão de erro:**
+
+```json
+{ "error": "<mensagem descritiva do problema>" }
+```
+
+**Formato estendido — conflito de turno (409):**
+
+Quando a tentativa de iniciar um turno viola a regra de ocupação de esteira ou de atleta em andamento, a resposta inclui campos adicionais que identificam o turno conflitante, permitindo ao frontend exibir contexto ao auditor sem nova requisição:
+
+```json
+{
+  "error": "Equipe já possui um turno em andamento",
+  "conflict_shift_id": 42,
+  "conflict_athlete": "João Silva",
+  "conflict_treadmill": "Esteira 3",
+  "conflict_start_at": "2026-05-10T14:32:00.000Z"
+}
+```
+
+**Mapeamento de status HTTP por categoria de erro:**
+
+| Status | Categoria | Quando ocorre |
+| :----- | :-------- | :------------ |
+| `400` | Validação de entrada | Campo obrigatório ausente, tipo inválido, ID não numérico |
+| `401` | Não autenticado | Cookie `accessToken` ausente ou expirado |
+| `403` | Não autorizado | Perfil sem permissão para o recurso (auditor tentando rota de gerente) |
+| `404` | Recurso não encontrado | Entidade (turno, atleta, equipe, esteira, evento) inexistente no banco |
+| `409` | Conflito de regra de negócio | Turno duplicado, email já cadastrado, esteira ocupada, atleta em andamento |
+| `422` | Violação de regra de negócio | Erro cujo código inicia com `RN` — condição de negócio não satisfeita |
+| `500` | Erro interno | Falha inesperada no servidor ou no banco de dados |
+
+**Propagação interna:**
+
+Os Services lançam `new Error("<mensagem>")` com textos padronizados. Os Controllers capturam a exceção e determinam o status HTTP inspecionando o texto da mensagem via `statusFromError(message)`: mensagens contendo `"não encontrad"` → 404; `"em aberto"`, `"ocupada"` ou `"em andamento"` → 409; `"inválid"` → 400; prefixo `"RN"` → 422; demais → 500. Esse padrão garante que a lógica de mapeamento esteja centralizada, sem duplicação por rota.
+
+### 3.7.2. Endpoints por grupo funcional e mapeamento RF
+
+A tabela abaixo lista todos os 54 endpoints organizados por grupo, com método HTTP, path completo, requisitos funcionais atendidos e requisito de autenticação. Para o contrato completo de cada endpoint — headers, body com campos e validações, exemplos de payload JSON e tabela de status codes (200, 201, 204, 400, 401, 403, 404, 409, 422 e 500) — consulte a documentação navegável em [`documentos/outros/WebAPI/index.html`](outros/WebAPI/index.html) ou o endereço público [https://g02-73a453.pages.git.inteli.edu.br/api/](https://g02-73a453.pages.git.inteli.edu.br/api/).
+
+**Legenda de Auth:** `—` = público; `JWT` = cookie `accessToken` obrigatório; `(manager)` = restrito ao perfil gerente; `[mgr|aud]` = ambos os perfis.
+
+#### Autenticação — 7 endpoints
+
+| Método | Path | RF | Auth |
+|--------|------|----|------|
+| `POST` | `/auth/register/manager` | RF027 | — |
+| `POST` | `/auth/register/auditor` | RF027 | — |
+| `POST` | `/auth/login` | RF027 | — |
+| `POST` | `/auth/refresh` | RF027 | cookie `refreshToken` |
+| `POST` | `/auth/logout` | RF027 | cookie `refreshToken` |
+| `GET` | `/auth/me` | RF027 | JWT |
+| `GET` | `/auth/auditors` | RF027 | JWT (manager) |
+
+#### Eventos — 9 endpoints
+
+| Método | Path | RF | Auth |
+|--------|------|----|------|
+| `POST` | `/events` | RF051 | JWT (manager) |
+| `GET` | `/events` | RF051 | JWT |
+| `GET` | `/events/:id` | RF051 | JWT |
+| `PATCH` | `/events/:id` | RF051 | JWT (manager) |
+| `DELETE` | `/events/:id` | RF051 | JWT (manager) |
+| `PATCH` | `/events/:id/start` | RF010, RF051 | JWT (manager) |
+| `PATCH` | `/events/:id/pause` | RF051 | JWT (manager) |
+| `PATCH` | `/events/:id/resume` | RF051 | JWT (manager) |
+| `PATCH` | `/events/:id/finish` | RF011, RF051 | JWT (manager) |
+
+> `pause` congela o cronômetro de 24h (`paused_at`) sem encerrar a competição e bloqueia auditores de salvar turnos e checkpoints; `resume` religa o cronômetro. Ambos exigem o evento em `in_progress`.
+
+#### Esteiras — 4 endpoints
+
+| Método | Path | RF | Auth |
+|--------|------|----|------|
+| `POST` | `/events/treadmills` | RF004 | JWT |
+| `GET` | `/events/treadmills` | RF004, RF038 | JWT |
+| `PATCH` | `/events/treadmills/:id` | RF004 | JWT |
+| `DELETE` | `/events/treadmills/:id` | RF004 | JWT |
+
+#### Equipes — 5 endpoints
+
+| Método | Path | RF | Auth |
+|--------|------|----|------|
+| `POST` | `/teams` | RF001, RF015 | JWT |
+| `GET` | `/teams` | RF005 | JWT |
+| `GET` | `/teams/:id` | RF005 | JWT |
+| `PATCH` | `/teams/:id` | RF023 | JWT (manager) |
+| `DELETE` | `/teams/:id` | RF001 | JWT (manager) |
+
+#### Atletas — 5 endpoints
+
+| Método | Path | RF | Auth |
+|--------|------|----|------|
+| `POST` | `/teams/:teamId/athletes` | RF002, RF006 | JWT |
+| `GET` | `/teams/:teamId/athletes` | RF006, RF005 | JWT |
+| `GET` | `/teams/:teamId/athletes/:id` | RF006 | JWT |
+| `PATCH` | `/teams/:teamId/athletes/:id` | RF023 | JWT (manager) |
+| `DELETE` | `/teams/:teamId/athletes/:id` | RF002 | JWT (manager) |
+
+#### Turnos — 8 endpoints
+
+| Método | Path | RF | Auth |
+|--------|------|----|------|
+| `POST` | `/audit/shifts/start` | RF007–RF011, RF034, RF046 | JWT (mgr\|aud) |
+| `GET` | `/audit/shifts/:id/status` | RF014 | JWT |
+| `GET` | `/audit/shifts/:id/checkpoints` | RF012, RF025 | JWT |
+| `POST` | `/audit/shifts/:id/checkpoints` | RF012, RF013, RF032, RF033, RF045 | JWT |
+| `PATCH` | `/audit/shifts/:id/finish` | RF014–RF019, RF044 | JWT |
+| `PATCH` | `/audit/shifts/:id/abandon` | RF014 | JWT |
+| `PATCH` | `/audit/shifts/:id` | RF031 | JWT (manager) |
+| `PATCH` | `/audit/checkpoints/:id` | RF031 | JWT (manager) |
+
+#### Imagens e OCR — 3 endpoints
+
+| Método | Path | RF | Auth |
+|--------|------|----|------|
+| `POST` | `/audit/ocr` | — | JWT |
+| `PATCH` | `/audit/shifts/:id/image` | — | JWT |
+| `PATCH` | `/audit/checkpoints/:id/image` | — | JWT |
+
+> Evolução além do escopo original (o WAD registrava a captura por foto do display apenas como capacidade futura via visão computacional). Os três endpoints recebem a imagem via `multipart/form-data` no campo `image` (jpeg, png, webp ou gif; máx. 10 MB). `POST /audit/ocr` extrai os campos do display (velocidade, distância, pace, tempo) por OCR multimodal (Gemini, com fallback Groq) sem persistir. Os dois `PATCH .../image` enviam a imagem ao Supabase Storage, gravam a URL pública em `image_url` do turno/checkpoint e persistem o OCR em paralelo (melhor esforço — a falha do OCR não impede o upload). Sem RF formal associado.
+
+#### Histórico — 1 endpoint
+
+| Método | Path | RF | Auth |
+|--------|------|----|------|
+| `GET` | `/audit/history` | RF022, RF041, RF042, RF043 | JWT |
+
+> Query params opcionais: `team_id`, `treadmill_id`, `athlete_id`.
+
+#### Alertas — 1 endpoint
+
+| Método | Path | RF | Auth |
+|--------|------|----|------|
+| `GET` | `/audit/alerts` | RF028, RF029, RF030, RF039, RF045, RF046, RF053 | JWT |
+
+#### Sincronização — 1 endpoint
+
+| Método | Path | RF | Auth |
+|--------|------|----|------|
+| `POST` | `/audit/sync` | RF026 | JWT |
+
+> Body: array de checkpoints offline. Cada item deve conter `sync_id` (SHA-256 hex 64 chars), `shift_id`, `distance`, `timestamp` e `checkpoint_type`. Resposta `201`: `{ inserted, skipped, errors[] }`.
+
+#### Logs de Auditoria — 1 endpoint
+
+| Método | Path | RF | Auth |
+|--------|------|----|------|
+| `GET` | `/audit/logs` | RF024 | JWT |
+
+> Query params opcionais: `shift_id`, `checkpoint_id`, `author_id`, `type`.
+
+#### Métricas — 7 endpoints
+
+| Método | Path | RF | Auth |
+|--------|------|----|------|
+| `GET` | `/metrics/events/:eventId/teams` | RF020 | JWT |
+| `GET` | `/metrics/events/:eventId/dashboard` | RF021, RF038, RF040 | JWT |
+| `GET` | `/metrics/events/:eventId/athletes` | RF035 | JWT |
+| `GET` | `/metrics/athletes/:athleteId/shifts` | RF036 | JWT |
+| `GET` | `/metrics/athletes/:athleteId/snapshots` | RF037 | JWT |
+| `GET` | `/metrics/athletes/:athleteId/performance` | RF049, RF052 | JWT |
+| `GET` | `/metrics/athletes/:athleteId/share` | RF050 | — |
+
+> O endpoint `/share` (RF050, RN36) é a única rota pública do grupo — declarada antes do `router.use(requireAuth)` em `metricsRoutes.ts`. Os demais 6 endpoints exigem `requireAuth` (Bearer JWT).
+
+#### Exportação — 2 endpoints
+
+| Método | Path | RF | Auth |
+|--------|------|----|------|
+| `GET` | `/export/events/:eventId/shifts` | RF047 | JWT (manager) |
+| `GET` | `/export/events/:eventId/checkpoints` | RF048 | JWT (manager) |
+
+> Resposta: `Content-Type: text/csv`. Arquivo com cabeçalho sempre presente; corpo vazio se não houver dados.
+
+#### Endpoint planejado para Sprint 5
+
+| Método | Path | RF | RN | Status |
+|--------|------|----|-----|--------|
+| `GET` | `/teams/:teamId/validation` | RF003 | RN17, RN28 | Sprint 5 |
+
+> Validará se a equipe possui exatamente 16 corredores ativos antes de liberar o início de turnos. Contrato já definido; implementação planejada para a sprint 5 (ver §3.9 Quadro 31).
 
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
@@ -3726,25 +4231,138 @@ A documentação técnica completa da WebAPI está disponível de forma navegáv
 
 ---
 
-Esta seção será elaborada na sprint 4, contemplando a descrição completa do fluxo de autenticação implementado no sistema. Serão apresentados os mecanismos de persistência segura de senhas utilizando algoritmos de hash criptográfico, como bcrypt ou argon2, incluindo os parâmetros de custo adotados e suas respectivas justificativas técnicas. Além disso, a seção abordará o processo de validação de credenciais, criação e gerenciamento de sessão de usuário, garantindo conformidade com boas práticas de segurança e assegurando que nenhuma senha seja armazenada em texto plano no banco de dados.
+O sistema implementa autenticação própria, sem uso de bibliotecas de sessão completa como Passport, Auth0 ou similares. Toda a lógica está concentrada em `authService.ts`, `authController.ts` e `authMiddleware.ts`.
+
+**Persistência segura de senhas:**
+
+As senhas de gerentes e auditores são armazenadas exclusivamente como hash bcrypt, gerado com fator de custo `saltRounds = 10`. Esse parâmetro produz um tempo de processamento de aproximadamente 100 ms por operação de hash em hardware convencional, inviabilizando ataques de força bruta em escala sem impacto perceptível na experiência do usuário. Nenhuma senha é armazenada em texto plano no banco de dados — a coluna `password` das tabelas `managers` e `auditors` contém apenas o hash resultante.
+
+**Fluxo de login:**
+
+1. O cliente envia `POST /auth/login` com `{ email, password }`.
+2. O `authService` recupera o registro pelo e-mail e executa `bcrypt.compare(password, record.password)`.
+3. Se a comparação falhar ou o auditor estiver inativo (`is_active = false`), a operação é rejeitada com status 401.
+4. Em caso de sucesso, dois tokens JWT são emitidos: `accessToken` (expiração de 15 minutos, assinado com `JWT_ACCESS_SECRET`) e `refreshToken` (expiração de 7 dias, assinado com `JWT_REFRESH_SECRET`).
+5. Ambos os tokens são enviados ao cliente como cookies HttpOnly com atributo `SameSite=strict`, impedindo acesso via JavaScript e mitigando ataques CSRF.
+
+**Registro de usuários:**
+
+O registro de gerentes (`POST /auth/register/manager`) e auditores (`POST /auth/register/auditor`) aplica o mesmo processo de hash antes de persistir o registro. E-mail e número de registro possuem restrição de unicidade no banco, com retorno 409 em caso de duplicidade.
 
 ### 3.8.2. Controle de sessão
 
 ---
 
-_Descreva o controle de sessão baseado em `session id` persistido em tabela própria, com expiração. Se optar por JWT, justifique a escolha explicando os trade-offs (stateless, não revogável, payload exposto)._
+O controle de sessão adota uma arquitetura híbrida: o `accessToken` é um JWT stateless de curta duração, enquanto o `refreshToken` é persistido no banco de dados para permitir revogação explícita.
+
+**Justificativa da escolha por JWT:**
+
+JWT foi escolhido por reduzir a latência nas requisições autenticadas — o servidor valida o token localmente sem consultar o banco a cada chamada. O trade-off aceito é que o `accessToken`, por ser stateless, não pode ser revogado antes de seu vencimento natural (15 minutos). Esse risco é mitigado pela curta duração: mesmo que um token seja comprometido, sua janela de uso é mínima.
+
+**Tabela `refresh_tokens`:**
+
+O `refreshToken` não é armazenado em texto plano. O valor é convertido para hash SHA-256 via `hashToken()` antes da persistência na coluna `token_hash` da tabela `refresh_tokens`. A tabela mantém ainda os campos `expires_at` (data de vencimento), `revoked_at` (preenchido no logout ou rotação) e FKs mutuamente exclusivas para `managers` e `auditors`, garantindo que cada token pertença a exatamente um usuário.
+
+**Rotação de tokens:**
+
+A rota `POST /auth/refresh` valida o `refreshToken` recebido via cookie, revoga o registro correspondente no banco (preenchendo `revoked_at`) e emite um novo par de tokens. Isso implementa rotação automática: tokens de refresh são de uso único, limitando a janela de comprometimento.
+
+**Logout:**
+
+`POST /auth/logout` lê o `refreshToken` do corpo da requisição, calcula seu hash e marca o registro como revogado no banco. O `accessToken` expira naturalmente em até 15 minutos após o logout — comportamento esperado e documentado no contrato da API.
 
 ### 3.8.3. Autorização
 
 ---
 
-_Descreva as regras de autorização por rota e por operação, baseadas no perfil do usuário autenticado. A verificação deve ocorrer no backend — o frontend nunca é fonte de verdade para autorização._
+A autorização é verificada exclusivamente no backend por dois middlewares em `src/middlewares/authMiddleware.ts`, aplicados em camadas:
+
+- **`requireAuth`** — valida o `accessToken` enviado no cabeçalho `Authorization: Bearer <token>`. Usado nas rotas de API JSON. Rejeita com `401` se o token estiver ausente, expirado ou inválido.
+- **`requirePageAuth`** — equivalente para rotas SSR: lê o `accessToken` do cookie `HttpOnly`, tenta renovação automática via `refreshToken` se o access expirou, e redireciona para `/login` apenas se ambos os tokens falharem.
+- **`requireRole(...roles)`** — aplicado sobre `requireAuth`/`requirePageAuth`; rejeita com `403` se o perfil do usuário autenticado (`manager` ou `auditor`) não estiver na lista de papéis permitidos.
+
+O frontend nunca é fonte de verdade para autorização: cada tela EJS renderizada já recebe apenas os dados do perfil correto, mas a restrição real é imposta pelas rotas protegidas no servidor.
+
+O quadro abaixo mapeia os grupos de rotas ao nível de autorização exigido:
+
+<div align = "center">
+  <sub> Quadro 34 - Mapeamento de autorização por grupo de rota </sub><br>
+
+| Nível de Acesso | Rotas / Endpoints | Middleware |
+| :-------------- | :---------------- | :--------- |
+| **Público** (sem autenticação) | `GET /login`, `GET /metrics/athletes/:id/share` (RF050) | — |
+| **Qualquer usuário autenticado** (`manager` ou `auditor`) | `GET /home`, `GET /overview`, `GET /audit`, `GET /manager/shifts`, `GET /manager/event/:id`; `GET /alerts`, `GET /audit/history`, `GET /audit/logs`, `POST /audit/sync`, `GET /audit/shifts/:id/status`, `GET /audit/shifts/:id/checkpoints`, `PATCH /audit/shifts/:id`, `PATCH /audit/checkpoints/:id`; todos os endpoints de `/metrics/*` exceto share; `/export/*` | `requirePageAuth` / `requireAuth` |
+| **Manager exclusivo** | `PATCH /events/:id/start`, `PATCH /events/:id/finish`; páginas `/manager/create-event/*`, `/manager/event/:id/edit` | `requireAuth` + `requireRole('manager')` |
+
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+As operações de registro de turno e checkpoint (`POST /audit/shifts/start`, `POST /audit/shifts/:id/checkpoints`, `PATCH /audit/shifts/:id/finish`) não exigem `requireRole` explícito além de `requireAuth`, pois a vinculação do `auditor_id` ao turno ocorre via `req.user.id` extraído do token — garantindo que um auditor só opera sobre os seus próprios turnos sem necessidade de filtro adicional de perfil.
 
 ### 3.8.4. Estratégias de Resiliência
 
 ---
 
-_Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.)._
+O sistema adota um conjunto de estratégias de resiliência focadas nos riscos reais do contexto operacional — conectividade instável em campo e possibilidade de tokens expirados durante turnos longos — sem introduzir complexidade desnecessária (ex: circuit breaker) para um sistema de escopo controlado.
+
+**1. Timeout e pool de conexões (banco de dados)**
+
+O pool PostgreSQL (`src/database/connection.ts`) está configurado com:
+
+```typescript
+const pool = new Pool({
+  max: 15,                        // máximo de 15 conexões simultâneas
+  idleTimeoutMillis: 30000,       // libera conexão ociosa após 30s
+  connectionTimeoutMillis: 5000,  // falha rápida se banco indisponível em 5s
+});
+```
+
+O `connectionTimeoutMillis: 5000` impede que requisições travem indefinidamente aguardando o banco: se a conexão não for estabelecida em 5 segundos, o pool lança um erro que o Express captura e retorna como `500`, liberando o thread do servidor imediatamente.
+
+**2. Renovação silenciosa de tokens (retry automático de sessão)**
+
+O middleware `requirePageAuth` implementa um ciclo de retry transparente para o usuário:
+
+1. Tenta validar o `accessToken` do cookie (válido por 15 min).
+2. Se expirado/inválido, tenta renovar via `refreshToken` (válido por 7 dias) sem exigir nova autenticação.
+3. Emite novos cookies `HttpOnly` com o par renovado e prossegue a requisição.
+4. Só redireciona para `/login` se ambos os tokens falharem.
+
+Isso garante que auditores em turnos de 2–4 horas nunca vejam interrupção de sessão por expiração silenciosa do access token.
+
+**3. Idempotência em operações críticas (sincronização offline)**
+
+O endpoint `POST /audit/sync` (RF025/RF026) implementa idempotência via `sync_id` determinístico gerado no cliente antes da perda de conectividade. A persistência usa:
+
+```sql
+INSERT INTO checkpoints (..., sync_id)
+VALUES (...)
+ON CONFLICT (sync_id) WHERE sync_id IS NOT NULL
+DO NOTHING;
+```
+
+Isso garante que reenvios da mesma fila offline (ex: múltiplos cliques em "Sincronizar" ou reconexão automática) nunca criam duplicatas, satisfazendo RF025 (sem duplicidade de dados).
+
+**4. Tratamento de body ausente (requisições malformadas)**
+
+Após o fix #233, o endpoint `POST /auth/logout` utiliza optional chaining:
+
+```typescript
+const refreshToken = req.body?.refreshToken;
+```
+
+Prevenindo crash (`TypeError: Cannot read property 'refreshToken' of undefined`) quando a requisição chega sem body — situação que ocorre em tabs remanescentes ou chamadas de ferramentas de teste sem `Content-Type`.
+
+**5. Ausência de circuit breaker e retry com backoff exponencial**
+
+O sistema não implementa circuit breaker formal nem retry com backoff exponencial no backend, pois:
+
+- A única dependência externa crítica é o banco PostgreSQL (Supabase), acessado via pool com timeout rápido (5s). Falhas são propagadas como `500` imediatamente.
+- Não há integração com APIs de terceiros no fluxo crítico de registro (RNF019), eliminando o cenário típico de retry em chamadas HTTP externas.
+- O volume de usuários simultâneos (≤ 50, RNF016) não justifica circuit breaker entre camadas internas.
+
+Caso a escala do evento aumente significativamente, recomenda-se introduzir retry com backoff nas chamadas ao pool e um health-check endpoint (`GET /health`) para monitoramento externo.
 
 ## 3.9. Matriz de Rastreabilidade (RTM)
 
@@ -3752,23 +4370,27 @@ A Matriz de Rastreabilidade de Requisitos (RTM — *Requirements Traceability Ma
 
 No contexto do Red Bull 24 Horas, onde inconsistências nos dados podem invalidar o resultado de uma competição inteira, a rastreabilidade deixa de ser uma formalidade documental e passa a ser uma garantia operacional.
 
-Os endpoints mapeados nesta matriz já estão implementados e cobertos por testes automatizados na suíte do projeto, organizada por arquivos reais (`auth.service.test.ts`, `event.test.ts`, `team.test.ts`, `shift.test.ts`, `history.test.ts`, `alerts.test.ts`, `logs.test.ts`, `sync.test.ts`, `metrics.test.ts` e `export.test.ts`), referenciados diretamente na coluna *Teste* para tornar a rastreabilidade fiel ao código entregue. A única exceção é o endpoint `GET /teams/:teamId/validation` (RF003), marcado com *(sprint 4)*, que possui contrato definido mas ainda será implementado, conforme o Quadro 31 ao final desta seção.
+Os endpoints mapeados nesta matriz estão implementados e cobertos por testes automatizados na suíte do projeto, organizada por arquivos reais (`auth.service.test.ts`, `event.test.ts`, `team.test.ts`, `shift.test.ts`, `history.test.ts`, `alerts.test.ts`, `logs.test.ts`, `sync.test.ts`, `metrics.test.ts` e `export.test.ts`), referenciados diretamente na coluna *Teste* com o arquivo e o cenário validado, para tornar a rastreabilidade fiel ao código entregue. A única exceção é o endpoint `GET /teams/:teamId/validation` (RF003), marcado na coluna *Status* como **Sprint 5**, que possui contrato definido mas será implementado na próxima sprint, conforme o Quadro 31 ao final desta seção.
 
 > **Legenda de personas:**
 > - **NR** — Nicole Rauen (atleta / influenciadora)
 > - **BG** — Bruno Gardesani (gerente de field marketing)
 > - **LA** — Lucas Andrade (operador de evento / auditor)
 >
-> *(sprint 4)* — endpoint com contrato definido e implementação planejada para a sprint 4 (ver Quadro 31).
+> **Legenda de Status:**
+> - **Implementado** — endpoint operante, coberto por testes automatizados e validado na suíte da sprint 4.
+> - **Sprint 5** — contrato definido (método, path, RN), implementação planejada para a sprint 5 (ver Quadro 31).
 
 <div align = "center">
   <sub> Quadro 30 - Matriz de Rastreabilidade (RTM) </sub><br>
 
-| Persona | RF | RN | Endpoint | Tela | Teste |
-|---------|----|----|----------|------|-------|
+Linhas sem marcação na coluna *Status* = **Implementado** na sprint 4.
+
+| Persona | RF | RN | Endpoint | Tela | Teste | Status |
+|---------|----|----|----------|------|-------|--------|
 | LA | RF001 | RN15, RN28 | `POST /teams` | Tela de Registro Pré-Evento → Cadastro de Equipe | `team.test.ts` — cadastro com nome único; bloqueio de terceira equipe e de nome duplicado |
 | LA | RF002 | RN16 | `POST /teams/:teamId/athletes` | Tela de Registro Pré-Evento → Cadastro de Atleta | `team.test.ts` — cadastro de corredor vinculado a equipe; rejeição sem equipe selecionada |
-| LA, BG | RF003 | RN17, RN28 | `GET /teams/:teamId/validation` *(sprint 4)* | Tela de Registro Pré-Evento → Cadastro de Equipe (listagem) | `team.test.ts` *(sprint 4)* — validação de exatamente 16 corredores antes de liberar o início |
+| LA, BG | RF003 | RN17, RN28 | `GET /teams/:teamId/validation` | Tela de Registro Pré-Evento → Cadastro de Equipe (listagem) | `team.test.ts` — validação de exatamente 16 corredores antes de liberar o início *(sprint 5)* | Sprint 5 |
 | LA | RF004 | RN19 | `GET /events/treadmills` | Tela de Acompanhamento de Esteiras / Tela de Início de Turno | `event.test.ts` — listagem de esteiras com status Livre/Ocupada; bloqueio de esteira ocupada |
 | LA | RF005 | RN20 | `GET /teams` | Tela de Seleção de Corredor e Registro de Início | `team.test.ts` — listagem de corredores restrita à equipe selecionada |
 | LA | RF006 | RN21 | `GET /teams/:teamId/athletes` | Tela de Seleção de Corredor e Registro de Início | `team.test.ts` — seleção de corredor disponível; bloqueio de corredor com turno em aberto |
@@ -3779,7 +4401,7 @@ Os endpoints mapeados nesta matriz já estão implementados e cobertos por teste
 | LA | RF011 | — | `POST /audit/shifts/start` | Tela de Seleção de Corredor e Registro de Início | `shift.test.ts` — timestamp de início gerado pelo servidor, sem campo editável |
 | LA | RF012 | RN03, RN34 | `POST /audit/shifts/:id/checkpoints` | Modal de Checkpoint Obrigatório | `shift.test.ts` — checkpoint obrigatório a cada 5 min como ação bloqueante |
 | LA | RF013 | RN04 | `POST /audit/shifts/:id/checkpoints` | Modal de Checkpoint Obrigatório | `shift.test.ts` — rejeição de km de checkpoint menor que o anterior |
-| LA | RF014 | RN05, RN35 | `PATCH /audit/shifts/:id/finish` | Fluxo de Registro de Fim de Turno | `shift.test.ts` — abertura do fluxo de encerramento apenas com turno ativo |
+| LA | RF014 | RN05, RN35 | `PATCH /audit/shifts/:id/finish`, `PATCH /audit/shifts/:id/abandon` | Fluxo de Registro de Fim de Turno / Abandono de Turno | `shift.test.ts` — abertura do fluxo de encerramento apenas com turno ativo; abandono com justificativa obrigatória |
 | LA | RF015 | RN06 | `PATCH /audit/shifts/:id/finish` | Fluxo de Registro de Fim de Turno | `shift.test.ts` — rejeição de km_final menor que o último checkpoint |
 | LA | RF016 | RN33 | `PATCH /audit/shifts/:id/finish` | Fluxo de Registro de Fim de Turno | `shift.test.ts` — timestamp de encerramento gerado pelo servidor |
 | LA, BG | RF017 | RN07, RN32 | `PATCH /audit/shifts/:id/finish` | Fluxo de Registro de Fim de Turno | `shift.test.ts` — cálculo e persistência da distância (km_final − km_inicial) |
@@ -3816,7 +4438,7 @@ Os endpoints mapeados nesta matriz já estão implementados e cobertos por teste
 | BG | RF048 | RN26 | `GET /export/events/:id/checkpoints` | Tela de Desempenho Final (exportação) | `export.test.ts` — CSV de checkpoints; cabeçalho isolado sem dados |
 | NR, BG | RF049 | — | `GET /metrics/athletes/:id/performance` | Tela de Desempenho Final | `metrics.test.ts` — perfil de desempenho final por corredor; valores zerados sem erro |
 | NR | RF050 | RN36 | `GET /metrics/athletes/:id/share` | Tela de Desempenho Final | `metrics.test.ts` — geração de link público e único de desempenho do atleta |
-| BG | RF051 | RN18, RN29, RN37 | `POST /events` | Tela de Registro Pré-Evento → Cadastro de Local/Evento | `event.test.ts` — cadastro de local antes do início; bloqueio de alteração após o início |
+| BG | RF051 | RN18, RN29, RN37 | `POST /events`, `PATCH /events/:id`, `PATCH /events/:id/start`, `PATCH /events/:id/finish` | Tela de Registro Pré-Evento → Cadastro de Local/Evento; ações de ciclo de vida (gerente) | `event.test.ts` — cadastro de local antes do início; bloqueio de alteração após o início; início e encerramento com requireRole(manager) |
 | NR | RF052 | — | `GET /metrics/athletes/:id/performance` | Tela de Desempenho Final | `metrics.test.ts` — acesso do corredor ao histórico completo após o evento |
 | LA | RF053 | — | `GET /audit/alerts` | Tela de Acompanhamento de Esteiras | `alerts.test.ts` — alerta de inatividade de esteira após 5 min sem checkpoint |
 
@@ -3826,18 +4448,20 @@ Os endpoints mapeados nesta matriz já estão implementados e cobertos por teste
 
 #### Plano de implementação de endpoints
 
-Com a implementação, nesta sprint, dos fluxos de auditoria (logs), sincronização offline, correção de checkpoints inconsistentes e compartilhamento público de desempenho, esses endpoints passaram a constar como implementados e cobertos por testes na RTM acima. Resta, portanto, **um único endpoint planejado para a sprint 4**: a validação de aptidão de equipe (RF003). O contrato (método, path e RN governante) já está definido para que a implementação seja uma evolução incremental, sem alterar os endpoints existentes.
+Com a integração ponta a ponta realizada na sprint 4, todos os endpoints da RTM estão implementados e cobertos por testes, com exceção de **um único endpoint planejado para a sprint 5**: a validação de aptidão de equipe (RF003). O contrato (método, path e RN governante) já está definido para que a implementação seja uma evolução incremental, sem alterar os endpoints existentes.
 
 <div align = "center">
-  <sub> Quadro 31 - Endpoint planejado para a sprint 4 </sub><br>
+  <sub> Quadro 31 - Endpoint planejado para a sprint 5 </sub><br>
 
-| RF | Endpoint planejado | RN | Descrição e plano de implementação |
-|----|--------------------|----|------------------------------------|
-| RF003 | `GET /teams/:teamId/validation` | RN17, RN28 | Validar se a equipe possui exatamente 16 corredores ativos antes de liberar o início de turnos. **Plano:** novo método no `teamService` que conta atletas ativos por equipe e retorna o status de aptidão (apto/quantidade faltante); rota somente leitura consumida pela tela de cadastro, com cobertura prevista em `team.test.ts`. |
+| RF | Endpoint planejado | RN | Status | Descrição e plano de implementação |
+|----|--------------------|----|--------|------------------------------------|
+| RF003 | `GET /teams/:teamId/validation` | RN17, RN28 | Sprint 5 | Validar se a equipe possui exatamente 16 corredores ativos antes de liberar o início de turnos. Plano: novo método no `teamService` que conta atletas ativos por equipe e retorna o status de aptidão (apto/quantidade faltante); rota somente leitura consumida pela tela de cadastro, com cobertura em `team.test.ts`. |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
+
+# <a name="c4"></a>4. Desenvolvimento da Aplicação Web (sprints 1 a 5)
 
 ## 4.1. Primeira versão da aplicação web 
 
@@ -3854,15 +4478,15 @@ O foco dessa sprint foi a implementação do backend da aplicação. Todos os fl
 Implementamos a camada responsável pelo gerenciamento dos eventos da competição. Por ele, é possível criar um evento, validar data, local e esteiras, acompanhar métricas como quilometragem total por equipe e velocidade média, além de exportar os dados coletados durante o evento ao fim da competição. Abaixo temos os diagramas realizados durante a sprint 3, que são os diagramas de arquitetura e classe arquitetural. 
 
 <div align="center">
-  <sub>Imagem 58 – Diagrama de arquitetura do fluxo de Eventos e Histórico</sub><br>
-  <img src="./assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de arquitetura - Eventos e Histórico"><br>
+  <sub>Imagem 74 – Diagrama de arquitetura do fluxo de Eventos </sub><br>
+  <img src="./assets/diagramas_arquitetura/eventos.svg" width="100%" alt="Diagrama de arquitetura - Eventos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 
 <div align="center">
-  <sub>Imagem 59 – Diagrama de classes arquiteturais do fluxo de Eventos</sub><br>
+  <sub>Imagem 75 – Diagrama de classes arquiteturais do fluxo de Eventos</sub><br>
   <img src="./assets/diagramas_arquiteturais/EVENTS_ClassDiagram.png" width="100%" alt="Diagrama de arquitetura - Eventos e Histórico"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -3875,7 +4499,7 @@ Implementamos o módulo de cadastro e gerenciamento das equipes e seus corredore
 
 
 <div align="center">
-  <sub>Imagem 60 – Diagrama de classes arquiteturais do fluxo de Equipes</sub><br>
+  <sub>Imagem 76 – Diagrama de classes arquiteturais do fluxo de Equipes</sub><br>
   <img src="./assets/diagramas_arquiteturais/TEAMS_ClassDiagram.png" width="100%" alt="Diagrama de classes - Teams"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -3886,14 +4510,14 @@ Implementamos o módulo de cadastro e gerenciamento das equipes e seus corredore
 Essa é a parte central do sistema. O auditor consegue registrar o início e o fim de cada turno de corrida, informando a esteira, o corredor e a quilometragem mostrada no display. Os checkpoints obrigatórios a cada 5 minutos e os voluntários também estão funcionando, com o horário registrado automaticamente pelo banco de dados. Abaixo temos os diagramas realizados durante a sprint 3, que são os diagramas de arquitetura e classe arquitetural. 
 
 <div align="center">
-  <sub>Imagem 61 – Diagrama de arquitetura do fluxo de Turnos</sub><br>
+  <sub>Imagem 77 – Diagrama de arquitetura do fluxo de Turnos</sub><br>
   <img src="./assets/diagramas_arquitetura/turnos.svg" width="100%" alt="Diagrama de arquitetura - Turnos"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 62 – Diagrama de classes arquiteturais do fluxo de Turnos</sub><br>
+  <sub>Imagem 78 – Diagrama de classes arquiteturais do fluxo de Turnos</sub><br>
   <img src="./assets/diagramas_arquiteturais/TURNS_ClassDiagram.png" width="100%" alt="Diagrama de classes - Turns"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -3905,7 +4529,7 @@ Implementamos também o fluxo de histórico com todos os lançamentos realizados
 
 
 <div align="center">
-  <sub>Imagem 63 – Diagrama de classes arquiteturais do fluxo de Histórico</sub><br>
+  <sub>Imagem 79 – Diagrama de classes arquiteturais do fluxo de Histórico</sub><br>
   <img src="./assets/diagramas_arquiteturais/HISTORY_ClassDiagram.png" width="100%" alt="Diagrama de classes - History"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -3916,14 +4540,14 @@ Implementamos também o fluxo de histórico com todos os lançamentos realizados
 Implementamos o módulo de logs de auditoria e a lógica de sincronização offline. Em caso de queda de rede durante o evento, o sistema armazena os dados localmente e os envia ao servidor assim que a conexão é restabelecida, garantindo que nenhum registro seja perdido. Abaixo temos os diagramas realizados durante a sprint 3, que são os diagramas de arquitetura e classe arquitetural. 
 
 <div align="center">
-  <sub>Imagem 64 – Diagrama de arquitetura do fluxo de Logs</sub><br>
+  <sub>Imagem 80 – Diagrama de arquitetura do fluxo de Logs</sub><br>
   <img src="./assets/diagramas_arquitetura/logs.svg" width="100%" alt="Diagrama de arquitetura - Logs"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 65 – Diagrama de classes arquiteturais do fluxo de Logs</sub><br>
+  <sub>Imagem 81 – Diagrama de classes arquiteturais do fluxo de Logs</sub><br>
   <img src="./assets/diagramas_arquiteturais/LOGS_ClassDiagram.png" width="100%" alt="Diagrama de classes - Logs"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -3934,14 +4558,14 @@ Implementamos o módulo de logs de auditoria e a lógica de sincronização offl
 Desenvolvemos o módulo de acompanhamento em tempo real que mostra a quilometragem acumulada por cada equipe e os principais indicadores da competição. Qualquer pessoa da organização consegue acompanhar o andamento da disputa sem precisar intervir manualmente nos registros. Esse fluxo conta com diagrama de arquitetura, diagrama de classes arquiteturais e diagrama de sequência UML completos.
 
 <div align="center">
-  <sub>Imagem 66 – Diagrama de arquitetura do Dashboard</sub><br>
+  <sub>Imagem 82 – Diagrama de arquitetura do Dashboard</sub><br>
   <img src="./assets/diagramas_arquitetura/dashboard.svg" width="100%" alt="Diagrama de arquitetura - Dashboard"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 67 – Diagrama de classes arquiteturais do Dashboard</sub><br>
+  <sub>Imagem 83 – Diagrama de classes arquiteturais do Dashboard</sub><br>
   <img src="./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de classes - Dashboard"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -3994,7 +4618,7 @@ Desenvolvemos a Matriz de Rastreabilidade do projeto, consolidando os vínculos 
 Finalizamos 20 telas do protótipo de alta fidelidade, com guia completo de tipografia, iconografia e imagens, definindo a identidade visual da aplicação. A seguir, destacamos telas que cobrem o evento, principalmente por onde auditores e gerentes passam ao longo das 24 horas.
 
 <div align="center">
-  <sub>Imagem 68 – Tela de login</sub><br>
+  <sub>Imagem 84 – Tela de login</sub><br>
   <img src="./assets/relatorio_desenvolvimento/prototipo_login.png" width="100%" alt="Protótipo - Login"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -4002,35 +4626,35 @@ Finalizamos 20 telas do protótipo de alta fidelidade, com guia completo de tipo
 
 
 <div align="center">
-  <sub>Imagem 69 – Tela de histórico de auditoria (dashboard)</sub><br>
+  <sub>Imagem 85 – Tela de histórico de auditoria (dashboard)</sub><br>
   <img src="./assets/relatorio_desenvolvimento/prototipo_historico_auditoria.png" width="100%" alt="Protótipo - Histórico auditoria"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 70 – Tela de histórico de equipes (dashboard)</sub><br>
+  <sub>Imagem 86 – Tela de histórico de equipes (dashboard)</sub><br>
   <img src="./assets/relatorio_desenvolvimento/prototipo_historico_equipes.png" width="100%" alt="Protótipo - Histórico equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 71 – Tela de histórico geral (dashboard)</sub><br>
+  <sub>Imagem 87 – Tela de histórico geral (dashboard)</sub><br>
   <img src="./assets/relatorio_desenvolvimento/prototipo_historico_geral.png" width="100%" alt="Protótipo - Histórico geral"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 72 – Tela de inconsistência</sub><br>
+  <sub>Imagem 88 – Tela de inconsistência</sub><br>
   <img src="./assets/relatorio_desenvolvimento/prototipo_inconsistencia.png" width="100%" alt="Protótipo - inconsistencia"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 73 – Tela de registro de checkpoints</sub><br>
+  <sub>Imagem 89 – Tela de registro de checkpoints</sub><br>
   <img src="./assets/relatorio_desenvolvimento/prototipo_checkpoints.png" width="100%" alt="Protótipo - checkpoints"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
@@ -4063,7 +4687,92 @@ A maior dificuldade técnica da sprint foi garantir que o registro de turnos e c
 
 ---
 
-_Descreva e ilustre aqui o desenvolvimento da segunda versão do sistema web, com foco no que foi consolidado entre a primeira versão funcional e o sistema operacional integrado. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos._
+### a) O que foi implementado
+
+A segunda versão consolidou a integração ponta a ponta dos fluxos principais do sistema, eliminando as páginas HTML estáticas e conectando todas as interfaces ao backend via renderização server-side (SSR) com EJS. O foco da sprint foi tornar o sistema operacional em condições reais de evento: autenticação funcional, fluxos de auditoria e gerência integrados ao banco, estatísticas em tempo real e correção de bugs críticos identificados nos testes de integração.
+
+**Integração backend–frontend (SSR com autenticação)**
+
+Substituiu-se a arquitetura de páginas estáticas por views EJS servidas diretamente pelo Express, com estado inicial injetado pelo servidor via `res.render()`. O `pageController` centraliza a lógica de carregamento das páginas, consultando o banco antes de renderizar e repassando os dados às views. A autenticação JWT com cookies `HttpOnly` e `SameSite=Strict` foi integrada a todas as rotas protegidas, com refresh automático de token transparente ao usuário. Fechamento: issues #202, #204, #209, #233.
+
+**Fluxo de auditoria completo**
+
+Implementou-se o ciclo completo de registro de turno para auditores: seleção de esteira (`treadmill.ejs`), início de turno com seleção de atleta (`auditoria.ejs`), registro de checkpoints com validação de quilometragem (`audit.ejs`), cronômetro de tempo em pista, lembrete de inatividade e troca rápida de corredor. Sete bugs críticos identificados nos testes de integração foram corrigidos nesta sprint (issues #227–#233), incluindo falha de persistência do estado de esteira via `sessionStorage`, constante `AUDITOR_ID` impedindo reassignment no fluxo de troca de operador, modal de aviso de quilometragem menor que checkpoint anterior e crash no logout com `req.body` ausente. Fechamento: issues #208, #214, #215, #217, #227, #228, #229, #231.
+
+<div align="center">
+  <sub>Imagem 90 – Tela de seleção de esteira (treadmill.ejs)</sub><br>
+  <img src="assets/relatorio_desenvolvimento/prototipo_checkpoints.png" width="100%" alt="Seleção de esteira"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 91 – Tela de auditoria em andamento (audit.ejs)</sub><br>
+  <img src="assets/relatorio_desenvolvimento/prototipo_historico_auditoria.png" width="100%" alt="Auditoria em andamento"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+**Fluxo do gerente**
+
+Implementou-se o módulo completo do gerente de evento: criação e edição de competições (`competition.ejs`, `editar-competicao.ejs`), cadastro e listagem de equipes e atletas (`gerente-equipes.ejs`, `informacoes-atleta.ejs`, `teams.ejs`), configuração de datas e localidades (`gerente-data-horario.ejs`, `gerente-localidade.ejs`) e gestão de turnos (`manager-shifts.ejs`), incluindo edição retroativa de checkpoints com trilha de auditoria imutável. Fechamento: issues #126, #129, #219, #220, #221, #222, #223, #224.
+
+<div align="center">
+  <sub>Imagem 92 – Tela de gestão de equipes (gerente-equipes.ejs)</sub><br>
+  <img src="assets/relatorio_desenvolvimento/prototipo_historico_equipes.png" width="100%" alt="Gestão de equipes"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+<div align="center">
+  <sub>Imagem 93 – Tela de turnos do gerente (manager-shifts.ejs)</sub><br>
+  <img src="assets/relatorio_desenvolvimento/prototipo_historico_geral.png" width="100%" alt="Gestão de turnos"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+**Estatísticas e visão geral do evento**
+
+Implementou-se o módulo de acompanhamento em tempo real: placar por equipe com quilometragem acumulada e velocidade média (`estatisticas-evento.ejs`), visão geral do evento com atletas em pista e turnos ativos (`visao-evento.ejs`) e tela de overview para o gerente (`overview.ejs`). A correção do bug #232 garantiu que a velocidade seja recalculada corretamente ao editar apenas a quilometragem de um turno sem alterar o horário de encerramento. Fechamento: issues #197, #232.
+
+<div align="center">
+  <sub>Imagem 94 – Tela de estatísticas do evento (estatisticas-evento.ejs)</sub><br>
+  <img src="assets/relatorio_desenvolvimento/prototipo_inconsistencia.png" width="100%" alt="Estatísticas do evento"><br>
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
+**Evolução do schema — migrations 008–017**
+
+Dez novas migrations corrigiram e expandiram o schema para suportar os fluxos da sprint: conversão das colunas `old_value`, `new_value` (tabela `logs`) e `old_distance` (tabela `checkpoints`) de `INT` para `NUMERIC`, eliminando truncamento de quilometragem decimal (ex.: 10,50 km → 10); e demais ajustes de integridade referencial e índices. Fechamento: issue #230.
+
+**Suíte de testes expandida**
+
+A suíte de testes automatizados foi expandida com novas suítes (`pageController.test.ts`, `auth.routes.test.ts`) e correção de falhas em dez arquivos existentes (`auth.controller.test.ts`, `shift.test.ts`, `alerts.test.ts`, `event.test.ts`, `history.test.ts`, `export.test.ts`, `metrics.test.ts`), resultando em 301 testes passando em 18 suítes com cobertura de 95,45% em statements e 96,87% em funções na camada Service. Fechamento: issue #235.
+
+---
+
+### b) O que não foi concluído
+
+| Item | Motivo | Previsão |
+| :--- | :------ | :------- |
+| `GET /teams/:teamId/validation` (RF003) | Depende de regras de validação de equipe ainda em definição com o parceiro | Sprint 5 |
+| Modo TV — interface pública de placar (RF034) | Backend implementado; frontend da tela de exibição em pista não finalizado | Sprint 5 |
+| Link público de compartilhamento individual de atleta (RF050) | Endpoint implementado; integração com a tela do atleta não concluída | Sprint 5 |
+| Seções WAD §3.8.1 e §3.8.2 — Autenticação e Controle de sessão | Concluído na sprint 4 | Sprint 4 |
+| Testes de usabilidade com usuários reais | Previsto para sprint 5 conforme barema do Art. 15 | Sprint 5 |
+
+---
+
+### c) Dificuldades técnicas enfrentadas e próximos passos
+
+A principal dificuldade técnica foi a **migração de arquitetura SPA-estática para SSR com EJS**. As páginas existentes foram desenvolvidas como HTML estático com fetch de API no cliente; integrá-las ao SSR exigiu refatorar o `pageController` para consultar o banco antes de cada render e injetar o estado inicial diretamente no template, evitando flicker e requisições redundantes no carregamento. A separação de responsabilidades entre o que o servidor injeta e o que o JavaScript do cliente gerencia de forma incremental demandou alinhamento cuidadoso entre as camadas.
+
+A segunda dificuldade foi a **resolução de conflitos entre cinco branches paralelas**. Como o trabalho da sprint foi desenvolvido em paralelo por membros distintos sobre uma base divergente, a integração sequencial em develop gerou conflitos extensos em arquivos de rotas e controllers compartilhados, resolvidos via reset para o HEAD de develop e re-apply seletivo dos arquivos por branch.
+
+O **bug #227** (sessionStorage não persistido ao navegar entre telas) revelou uma dependência implícita de estado no cliente que não estava documentada: a tela de seleção de esteira armazenava o `treadmill_id` apenas no `sessionStorage`, sem confirmação no backend, o que fazia o fluxo falhar ao recarregar a página. A correção passou a persistir a seleção via cookie de sessão validado pelo servidor.
+
+**Próximos passos para a sprint 5:** concluir RF003 e RF034, realizar testes de usabilidade com pelo menos três participantes, refatorar pontos de acoplamento identificados nos testes de integração e preparar a versão final para publicação conforme os critérios do Art. 18. As seções §3.8.1 (Autenticação) e §3.8.2 (Controle de sessão) foram concluídas ainda na sprint 4.
 
 ## 4.3. Versão final da aplicação web (sprint 5)
 
@@ -4281,20 +4990,22 @@ A tabela a seguir apresenta a finalidade de cada conjunto de testes automatizado
 
 #### Resumo Quantitativo dos Testes
 
-| Módulo               | Quantidade de Cenários         |
-| -------------------- | ------------------------------ |
-| Auth Service         | 18                             |
-| Auth Controller      | 17                             |
-| Auth Middleware      | 7                              |
-| Eventos              | 18                             |
-| Equipes e Atletas    | 23                             |
-| Turnos e Checkpoints | 36                             |
-| Alertas              | 7                              |
-| Histórico            | 8                              |
-| Logs                 | 15                             |
-| Métricas             | 20                             |
-| Exportação CSV       | 11                             |
-| **Total**            | **180 cenários automatizados** |
+| Módulo                    | Quantidade de Cenários         |
+| ------------------------- | ------------------------------ |
+| Auth Service              | 18                             |
+| Auth Controller           | 17                             |
+| Auth Middleware e Rotas   | 13                             |
+| Eventos                   | 36                             |
+| Equipes e Atletas         | 31                             |
+| Turnos e Checkpoints      | 78                             |
+| Sincronização             | 16                             |
+| Alertas                   | 7                              |
+| Histórico                 | 11                             |
+| Logs                      | 15                             |
+| Métricas                  | 20                             |
+| Exportação CSV            | 15                             |
+| Pages / Interface         | 24                             |
+| **Total**                 | **301 cenários automatizados** |
 
 A implementação desses testes automatizados garante a validação das principais regras de negócio da plataforma RedRun, reduzindo riscos de regressão e aumentando a confiabilidade dos fluxos críticos da operação do evento.
 
@@ -4311,44 +5022,44 @@ npm test
 Resultado obtido:
 
 ```bash
-Test Suites: 11 passed, 11 total
-Tests: 180 passed, 180 total
-Snapshots: 0 total
-Time: 28.261 s
+Test Suites: 18 passed, 18 total
+Tests:       301 passed, 301 total
+Snapshots:   0 total
+Time:        8.216 s
 ```
 
 As Figuras 1 a 5 apresentam a execução completa da suíte automatizada, evidenciando que todos os testes foram aprovados com sucesso.
 
 <div align="center">
-  <sub>Imagem 74 - Print dos teste - 1 </sub><br>
+  <sub>Imagem 95 - Print dos teste - 1 </sub><br>
   <img src= "./assets/testes/teste_1.png" width="100%" alt="testes 1"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 75 - Print dos teste - 2 </sub><br>
+  <sub>Imagem 96 - Print dos teste - 2 </sub><br>
   <img src= "./assets/testes/teste_2.png" width="100%" alt="testes 2"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 76 - Print dos teste - 3 </sub><br>
+  <sub>Imagem 97 - Print dos teste - 3 </sub><br>
   <img src= "./assets/testes/teste_3.png" width="100%" alt="testes 3"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 77 - Print dos teste - 4 </sub><br>
+  <sub>Imagem 98 - Print dos teste - 4 </sub><br>
   <img src= "./assets/testes/teste_4.png" width="100%" alt="testes 4"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
 
 <div align="center">
-  <sub>Imagem 78 - Print dos teste - 5 </sub><br>
+  <sub>Imagem 99 - Print dos teste - 5 </sub><br>
   <img src= "./assets/testes/teste_5.png" width="100%" alt="testes 5"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -4365,7 +5076,7 @@ O relatório deve apresentar os percentuais de cobertura por camada, especialmen
 A figura a seguir apresenta o relatório de cobertura gerado pelo Jest, incluindo os percentuais obtidos pela camada Service.
 
 <div align="center">
-  <sub>Imagem 79 - Relatório de cobertura do jest - 1 </sub><br>
+  <sub>Imagem 100 - Relatório de cobertura do jest - 1 </sub><br>
   <img src= "./assets/testes/tabela_1.png" width="100%" alt="jest 1"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -4374,10 +5085,10 @@ A figura a seguir apresenta o relatório de cobertura gerado pelo Jest, incluind
 A execução do relatório de cobertura demonstrou que a camada Service atingiu os requisitos mínimos definidos para o projeto, apresentando:
 
 ```bash
-Statements: 96,02%
-Branches: 89,88%
-Functions: 100%
-Lines: 99,56%
+Statements: 95,45%
+Branches:   90,74%
+Functions:  96,87%
+Lines:      98,29%
 ```
 
 Os resultados evidenciam ampla cobertura das regras de negócio implementadas na camada de serviços, superando a cobertura mínima de 80% definida para esta entrega.
@@ -4430,17 +5141,274 @@ Os resultados evidenciam ampla cobertura das regras de negócio implementadas na
 
 Esse mapeamento garante que as 41 Regras de Negócio estejam ligadas aos RFs correspondentes e aos principais fluxos testáveis da WebAPI.
 
----
-
 ## 5.2. Testes de usabilidade (sprint 5)
-
----
 
 ### 5.2.1. Relatório de testes de guerrilha
 
----
+Os testes de guerrilha são uma técnica de avaliação de usabilidade informal e de baixo custo, na qual o sistema é apresentado a usuários reais recrutados de forma espontânea, sem agendamento prévio ou laboratório controlado. O objetivo é identificar rapidamente problemas de usabilidade com base em tarefas específicas, enquanto um facilitador observa e registra dificuldades e sugestões sem interferir no processo.
 
-_Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização)._
+#### Descrição dos Testes e das Etapas
+
+| # | Teste | Enunciado da Tarefa |
+|---|-------|---------------------|
+| T1 | Login e Criação de Evento | "Como gerente, você deve fazer login e criar um evento." |
+| T2 | Criação de Equipes e Início do Evento | "Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado." |
+| T3 | Auditoria de Equipe | "Como auditor, você deve auditar uma equipe no evento criado." |
+
+| Teste | Etapa | Descrição da Etapa |
+|-------|-------|--------------------|
+| T1 | Etapa 1 | Adicionar as credenciais de gerente e realizar o login |
+| T1 | Etapa 2 | Iniciar a criação de um evento |
+| T1 | Etapa 3 | Adicionar as informações do evento |
+| T1 | Etapa 4 | Concluir a criação do evento e realizar o logout |
+| T2 | Etapa 1 | Durante a criação do evento, criar duas equipes |
+| T2 | Etapa 2 | Durante a criação do evento, adicionar atletas às duas equipes |
+| T2 | Etapa 3 | Concluir a criação do evento e iniciá-lo |
+| T3 | Etapa 1 | Adicionar as credenciais de auditor e realizar o login |
+| T3 | Etapa 2 | Selecionar o evento criado |
+| T3 | Etapa 3 | Realizar a auditoria de um período de 2 minutos |
+| T3 | Etapa 4 | Concluir a auditoria e realizar o logout |
+
+#### Resultados dos Testes de Guerrilha
+
+**Testador:** Enzo Braga
+
+**Perfil:** Estudante de Ciência da Computação / Produzindo um projeto para a BrPec Agropecuária
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Nenhuma ocorrência | — |
+| 2 | Iniciar a criação de um evento | Nenhuma ocorrência | — |
+| 3 | Adicionar as informações do evento | Enzo sentiu dificuldade em inserir o nome da cidade, e sugeriu que o formulário de escolha do nome aceitasse nomes sem acento, facilitando a seleção da cidade do evento | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrões |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Enzo sentiu dificuldade de encontrar o botão de criar a segunda equipe | H6 – Reconhecimento em vez de lembrança |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Nenhuma ocorrência | — |
+| 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
+
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Nenhuma ocorrência | — |
+| 2 | Selecionar o evento criado | Enzo sentiu dificuldade em iniciar a auditoria, clicando diretamente no evento criado ao invés do botão "iniciar auditoria" | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrões |
+| 3 | Realizar a auditoria de um período de 2 minutos | Enzo sentiu muita dificuldade em realizar a auditoria; mesmo com as explicações fornecidas no início do teste, ele não soube como realizar um checkpoint, nem como inserir o quilômetro inicial ou registrar o quilômetro final | H6 – Reconhecimento em vez de lembrança; H10 – Ajuda e documentação; H2 – Correspondência entre o sistema e o mundo real |
+| 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
+
+**Testador:** Lucas Levi
+
+**Perfil:** Estudante de Engenharia da Computação / Produzindo um projeto para a Defesa Civil de Santo André
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
+**Panorama Geral:** ❌ Não conseguiu
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Nenhuma ocorrência | — |
+| 2 | Iniciar a criação de um evento | Lucas não compreendeu a instrução "defina a data e horário de início", travando nessa etapa | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrões |
+| 3 | Adicionar as informações do evento | Nenhuma ocorrência | — |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
+**Panorama Geral:** ❌ Não conseguiu
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Nenhuma ocorrência | — |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Lucas achou a tela de adição de atletas confusa; o botão de adicionar em cinza gerou ambiguidade, e sugeriu que o botão deixasse claro se é para adicionar atleta ou líder | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões; H8 – Design estético e minimalista |
+| 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
+
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
+**Panorama Geral:** ❌ Não conseguiu
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Nenhuma ocorrência | — |
+| 2 | Selecionar o evento criado | Lucas sentiu dificuldade para iniciar a auditoria, clicando diretamente no evento ao invés do botão "iniciar auditoria"; também teve dificuldade na seleção da equipe; o botão "próximo" em cinza não sinalizava que era clicável | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões; H6 – Reconhecimento em vez de lembrança |
+| 3 | Realizar a auditoria de um período de 2 minutos | Lucas teve muita dificuldade para iniciar e finalizar a auditoria, incluindo o preenchimento de km inicial e final; também não compreendeu o fluxo de saída de checkpoints | H6 – Reconhecimento em vez de lembrança; H10 – Ajuda e documentação; H2 – Correspondência entre o sistema e o mundo real |
+| 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
+
+**Testador:** Paulo Roberto
+
+**Perfil:** Estudante de Engenharia da Computação / Produzindo um projeto para a Defesa Civil de Santo André
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Paulo não percebeu que precisava clicar no perfil "gerente" além de inserir as credenciais | H6 – Reconhecimento em vez de lembrança; H3 – Controle e liberdade do usuário |
+| 2 | Iniciar a criação de um evento | Paulo teve dificuldade em compreender como prosseguir após inserir as credenciais do evento; ao retornar à tela, as informações não eram salvas | H1 – Visibilidade do status do sistema; H5 – Prevenção de erros; H9 – Ajudar os usuários a reconhecer, diagnosticar e recuperar erros |
+| 3 | Adicionar as informações do evento | Paulo criou o evento com data anterior à atual; o sistema também permitia registrar corredores com data de nascimento no futuro; Paulo elogiou a validação do CPF | H5 – Prevenção de erros; H9 – Ajudar os usuários a reconhecer, diagnosticar e recuperar erros |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Paulo novamente não percebeu que precisava clicar no perfil "gerente" além de inserir as credenciais | H6 – Reconhecimento em vez de lembrança |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | O sistema permitia cadastrar corredores com data de nascimento no futuro; Paulo elogiou a validação do CPF | H5 – Prevenção de erros |
+| 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
+
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Paulo novamente teve dificuldade em perceber que precisava clicar no perfil além de inserir as credenciais | H6 – Reconhecimento em vez de lembrança |
+| 2 | Selecionar o evento criado | Paulo teve dificuldade em selecionar a equipe no momento de iniciar a auditoria, e também ao selecionar o próximo corredor | H1 – Visibilidade do status do sistema; H6 – Reconhecimento em vez de lembrança |
+| 3 | Realizar a auditoria de um período de 2 minutos | Paulo teve dificuldade para finalizar a auditoria | H1 – Visibilidade do status do sistema; H10 – Ajuda e documentação |
+| 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
+
+**Testadora:** Laís Victoria
+
+**Perfil:** Estudante de Ciência da Computação / Produzindo um projeto para a BrPec Agropecuária
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Nenhuma ocorrência | — |
+| 2 | Iniciar a criação de um evento | Laís criou o evento com data anterior à atual, sem que o sistema impedisse | H5 – Prevenção de erros; H9 – Ajudar os usuários a reconhecer, diagnosticar e recuperar erros |
+| 3 | Adicionar as informações do evento | Nenhuma ocorrência | — |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
+**Panorama Geral:** *(não registrado)*
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Nenhuma ocorrência | — |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Laís criou o evento com data anterior à atual | H5 – Prevenção de erros |
+| 3 | Concluir a criação do evento e iniciá-lo | Laís teve dificuldade em encontrar a opção de logout | H4 – Consistência e padrões; H6 – Reconhecimento em vez de lembrança |
+
+**Teste 3 (T3):** *"Como auditora, você deve auditar uma equipe no evento criado."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Laís teve dificuldade em encontrar a opção de logout da sessão anterior | H4 – Consistência e padrões; H6 – Reconhecimento em vez de lembrança |
+| 2 | Selecionar o evento criado | Laís teve dificuldade ao adicionar um checkpoint, não compreendendo o layout; também não identificou claramente qual era o corredor atual sendo auditado | H1 – Visibilidade do status do sistema; H2 – Correspondência entre o sistema e o mundo real; H8 – Design estético e minimalista |
+| 3 | Realizar a auditoria de um período de 2 minutos | Nenhuma dificuldade em encerrar as auditorias | — |
+| 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
+
+**Testador:** Pedro Negri 
+
+**Perfil:** Estudante de Engenharia de Software / Produzindo um projeto para a BrPec Agropecuária
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Nenhuma ocorrência; diferente de outros testadores, Pedro identificou de imediato a necessidade de selecionar o perfil "gerente" antes de inserir as credenciais | — |
+| 2 | Iniciar a criação de um evento | Pedro teve uma breve hesitação ao preencher o campo de data e horário de início, por não haver um exemplo de formato esperado (placeholder); conseguiu prosseguir por tentativa | H2 – Correspondência entre o sistema e o mundo real; H10 – Ajuda e documentação |
+| 3 | Adicionar as informações do evento | Nenhuma ocorrência; Pedro também elogiou a validação do CPF, assim como outros testadores | — |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Nenhuma ocorrência | — |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Pedro também identificou o botão de adicionar atleta em cinza como pouco intuitivo, reforçando a observação feita anteriormente por Lucas Levi; sugeriu que o botão indicasse explicitamente "Adicionar atleta" ou "Adicionar líder" | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões |
+| 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
+
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Nenhuma ocorrência | — |
+| 2 | Selecionar o evento criado | Pedro notou que, ao selecionar a equipe para iniciar a auditoria, o botão "próximo" aparecia na cor vermelha, o que pode causar confusão visual já que essa cor costuma ser associada a erros ou ações destrutivas | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões |
+| 3 | Realizar a auditoria de um período de 2 minutos | Nenhuma ocorrência registrada | — |
+| 4 | Concluir a auditoria e realizar o logout | Pedro considerou a usabilidade geral tranquila, mas sugeriu melhorar a diferenciação visual entre o botão de "finalizar turno" (concluir a auditoria) e o botão de logout, já que ambos pareciam semelhantes | H4 – Consistência e padrões; H8 – Design estético e minimalista |
+
+**Testador:** Valter Lima
+
+**Perfil:** Estudante de Sistemas da Informação / Produzindo um projeto para a Defesa Civil de Santo André
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Valter inseriu corretamente as credenciais, porém inicialmente não percebeu que deveria selecionar o perfil "gerente" antes de prosseguir | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrões |
+| 2 | Iniciar a criação de um evento | Nenhuma ocorrência | — |
+| 3 | Adicionar as informações do evento | Valter teve dificuldade para identificar quais campos eram obrigatórios, pois não havia diferenciação visual clara entre campos obrigatórios e opcionais | H1 – Visibilidade do status do sistema; H5 – Prevenção de erros |
+| 4 | Concluir a criação do evento e realizar o logout | Após finalizar o cadastro, Valter procurou uma confirmação mais explícita de que o evento havia sido criado com sucesso | H1 – Visibilidade do status do sistema |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Valter criou a primeira equipe sem dificuldades, porém não percebeu imediatamente como adicionar a segunda equipe | H6 – Reconhecimento em vez de lembrança |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Demonstrou insegurança ao utilizar o botão de adição de participantes, pois não ficou claro se o cadastro estava sendo realizado para atleta ou líder da equipe | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões |
+| 3 | Concluir a criação do evento e iniciá-lo | Valter procurou uma tela de revisão antes de iniciar o evento, esperando validar todas as informações cadastradas | H3 – Controle e liberdade do usuário; H5 – Prevenção de erros |
+
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Nenhuma ocorrência | — |
+| 2 | Selecionar o evento criado | Valter clicou inicialmente no card do evento esperando iniciar automaticamente a auditoria, sem perceber a necessidade de utilizar o botão específico para essa ação | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrõess |
+| 3 | Realizar a auditoria de um período de 2 minutos | Valter compreendeu o conceito geral da auditoria, porém apresentou dificuldade para identificar a sequência correta entre registrar quilometragem inicial, checkpoints e quilometragem final. Também sugeriu que o sistema apresentasse orientações contextuais durante a execução da auditoria | H10 – Ajuda e documentação; H2 – Correspondência entre o sistema e o mundo real; H6 – Reconhecimento em vez de lembrança |
+| 4 | Concluir a auditoria e realizar o logout | Após finalizar a auditoria, Valter não teve certeza se os dados haviam sido efetivamente salvos, procurando uma confirmação visual mais evidente | H1 – Visibilidade do status do sistema |
+
+#### Pontos de Melhoria Identificados
+
+Os problemas observados durante os testes de guerrilha foram consolidados e priorizados conforme a escala de severidade proposta por Nielsen, variando de 0 (Sem Importância) a 4 (Catastrófico). A classificação considerou a frequência com que o problema ocorreu, o impacto na execução das tarefas e o risco de impedir a conclusão dos fluxos principais do sistema.
+
+| Prioridade | Problema Identificado | Evidências Observadas | Recomendação |
+| :--- | :--- | :--- | :--- |
+| **4 – Catastrófico** | Fluxo de auditoria pouco intuitivo, dificultando o registro de quilometragem inicial, checkpoints e quilometragem final | Identificado por Enzo Braga, Lucas Levi, Paulo Roberto e Valter Lima. Em alguns casos impediu ou comprometeu a conclusão da tarefa T3. | Reestruturar o fluxo de auditoria com orientação passo a passo, indicadores visuais de progresso e instruções contextuais durante a execução. |
+| **4 – Catastrófico** | Ausência de auxílio ou documentação contextual para realização da auditoria | Usuários não compreenderam o significado de checkpoints, quilometragem inicial e final, mesmo após explicação prévia. | Adicionar tutoriais rápidos, tooltips e mensagens de ajuda diretamente na interface de auditoria. |
+| **3 – Grave** | Sistema permite cadastrar eventos com datas anteriores à data atual | Identificado por Paulo Roberto e Laís Victoria. Possibilita o registro de dados inconsistentes. | Implementar validação de datas para impedir eventos em períodos inválidos. |
+| **3 – Grave** | Sistema permite cadastrar corredores com data de nascimento futura | Identificado por Paulo Roberto durante a criação de equipes. | Implementar validação de data de nascimento compatível com a realidade do usuário. |
+| **3 – Grave** | Usuários não percebem que precisam selecionar o perfil (Gerente ou Auditor) antes do login | Problema recorrente identificado por Paulo Roberto e Valter Lima. | Tornar a seleção de perfil mais evidente ou automatizar a identificação do perfil após autenticação. |
+| **3 – Grave** | Dificuldade para iniciar a auditoria devido à expectativa de clicar diretamente no evento | Observado por Enzo Braga, Lucas Levi e Valter Lima. | Transformar o card do evento em elemento clicável ou destacar visualmente o botão de início da auditoria. |
+| **2 – Simples** | Botão de adicionar atleta/líder possui significado ambíguo | Relatado por Lucas Levi, Pedro Negri e Valter Lima. | Alterar os rótulos dos botões para ações explícitas, como "Adicionar Atleta" e "Adicionar Líder". |
+| **2 – Simples** | Dificuldade para criar uma segunda equipe durante a configuração do evento | Relatada por Enzo Braga e Valter Lima. | Destacar visualmente a funcionalidade de criação de novas equipes e apresentar feedback após a criação da primeira. |
+| **2 – Simples** | Campo de seleção de cidade exige acentuação correta para localização dos resultados | Relatado por Enzo Braga. | Implementar busca tolerante a acentos e variações ortográficas. |
+| **2 – Simples** | Usuários têm dificuldade em identificar a equipe ou corredor atualmente auditado | Relatado por Laís Victoria e Paulo Roberto. | Destacar visualmente o corredor ativo e a equipe selecionada durante a auditoria. |
+| **2 – Simples** | Ausência de tela de revisão antes da inicialização do evento | Relatado por Valter Lima. | Adicionar uma etapa de confirmação contendo resumo das informações cadastradas. |
+| **1 – Cosmético** | Botão "Próximo" utiliza cor vermelha, associada normalmente a erros ou exclusões | Observado por Pedro Negri. | Utilizar cores compatíveis com a ação executada, seguindo padrões de interface. |
+| **1 – Cosmético** | Dificuldade para localizar a opção de logout | Relatada por Laís Victoria. | Reposicionar ou destacar visualmente a funcionalidade de logout. |
+| **1 – Cosmético** | Ausência de confirmação visual clara após criação de eventos ou finalização de auditorias | Relatada por Valter Lima. | Exibir mensagens de sucesso e indicadores visuais de conclusão da operação. |
+| **1 – Cosmético** | Ausência de indicação clara dos campos obrigatórios nos formulários | Relatada por Valter Lima. | Utilizar marcações visuais padronizadas para diferenciar campos obrigatórios dos opcionais. |
+| **0 – Sem Importância** | Validação correta do CPF durante o cadastro de participantes | Elogiada por Paulo Roberto e Pedro Negri. Não representa problema de usabilidade. | Manter a implementação atual. |
 
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
@@ -4504,7 +5472,7 @@ No eixo comportamental, organizações esportivas e marcas ampliam o uso de dado
 
 No eixo mercadológico, consolida-se a demanda por soluções especializadas em eficiência operacional, voltadas a eventos com múltiplos registros simultâneos, consolidação de métricas e acompanhamento contínuo. Em vez de plataformas genéricas de inscrição ou bilheteria, as organizações passam a buscar ferramentas específicas de controle e rastreabilidade — camada exata em que a RedRun atua.
 
-## 6.2.4 Análise da Concorrência
+### 6.2.4 Análise da Concorrência
 
 ---
 
@@ -4530,6 +5498,8 @@ A concorrência enfrentada pela RedRun não se concentra em um produto equivalen
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
+
+#### Vantagens Competitivas
 
 A comparação evidencia o espaço competitivo que a RedRun ocupa. O método manual é aderente à dinâmica do evento, mas frágil na confiabilidade; os vestíveis e as plataformas genéricas são digitais e robustos, mas não se ajustam ao formato de revezamento em esteira. A RedRun é a única alternativa que reúne, simultaneamente, **aderência total à dinâmica do evento e digitalização rastreável da operação** — combinação que nenhum concorrente entrega de forma integrada. Esse posicionamento de nicho, detalhado na seção 6.6, transforma uma necessidade operacional específica em uma vantagem defensável: não competir em amplitude de funcionalidades, mas em precisão e confiabilidade dentro de um contexto que as soluções de mercado não atendem.
 
@@ -4637,6 +5607,12 @@ A principal estratégia é a demonstração funcional: antes do evento, a RedRun
 ---
 
 ## 6.6 Posicionamento & Branding
+
+### Proposta de Valor
+
+A proposta de valor da RedRun concentra-se em um ponto específico: substituir o registro manual com prancheta por um fluxo digital rastreável, simples o suficiente para o auditor operar sob pressão durante 24 horas consecutivas e robusto o suficiente para garantir a integridade dos resultados ao final da competição. O valor entregue ao gerente é a configuração centralizada e o controle consolidado em tempo real; o valor entregue ao auditor é a redução da carga cognitiva e do risco de erro; o valor entregue à Red Bull é a confiabilidade dos dados de uma competição onde a precisão dos registros define os resultados.
+
+### Posicionamento e Diferenciação
 
 A RedRun posiciona-se como uma solução operacional especializada para eventos esportivos de endurance, e não como uma plataforma genérica de gestão de eventos. Identificou-se que os concorrentes se dividem em dois grupos.
 

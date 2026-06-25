@@ -17,7 +17,7 @@ flowchart TB
 
     subgraph L2["Rotas protegidas"]
         direction TB
-        R1["GET /audit/history"]:::route
+        R1["GET /audit/history<br/>event_id obrigatório"]:::route
         R2["PATCH /audit/checkpoints/:id"]:::route
         AUTH["JWT obrigatório"]:::route
     end
@@ -32,15 +32,16 @@ flowchart TB
         direction TB
         HS["HistoryService"]:::service
         SS["ShiftService"]:::service
-        RN["RF016 histórico<br/>RF015 correção<br/>RN23/RN24 rastreabilidade"]:::note
+        RN["RF014 histórico<br/>RF015 correção<br/>RN23/RN24 rastreabilidade"]:::note
     end
 
     subgraph L5["Repositories"]
         direction TB
         HR["HistoryRepository"]:::repository
         SR1["findCheckpointById"]:::repository
-        SR2["findNeighbors"]:::repository
-        SR3["correctCheckpoint"]:::repository
+        SR2["findShiftById"]:::repository
+        SR3["findNeighbors"]:::repository
+        SR4["correctCheckpoint + correction log"]:::repository
     end
 
     subgraph L6["Banco de Dados"]
@@ -71,9 +72,10 @@ flowchart TB
     HR --> TM
     HR --> CP
     SS --> SR1 --> CP
-    SS --> SR2 --> CP
+    SS --> SR2 --> SH
     SS --> SR3 --> CP
-    SR3 --> CC
+    SS --> SR4 --> CP
+    SR4 --> CC
     SH --> DB
     AT --> DB
     TE --> DB
@@ -81,5 +83,5 @@ flowchart TB
     CP --> DB
     CC --> DB
     DB --> HR --> HS --> HC --> O1 --> C
-    DB --> SR3 --> SS --> SC --> O2 --> C
+    DB --> SR4 --> SS --> SC --> O2 --> C
     SS -. valida intervalo .-> O3

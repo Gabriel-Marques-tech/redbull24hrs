@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/auditoria.css">
+    <script src="/js/tema.js"></script>
 </head>
 
 <body>
@@ -22,14 +23,20 @@
                 <p id="nomeOperador">Lucas Andrade</p>
             </div>
 
-            <button class="btn-trocar" type="button"><strong>â‡„</strong></button>
+            <button class="btn-trocar" type="button"><strong>⇄</strong></button>
         </div>
 
         <p class="tempo-restante">
             Restam <span id="tempoRestante">23:20:03</span>
         </p>
 
-        <button class="btn-sair" type="button">â†ª</button>
+        <button class="btn-sair" type="button" aria-label="Sair da auditoria">
+            <svg class="icone-sair-svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M10 5H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h4"></path>
+                <path d="M14 7l5 5-5 5"></path>
+                <path d="M19 12H9"></path>
+            </svg>
+        </button>
     </header>
 
     <main class="conteudo-auditoria">
@@ -38,7 +45,7 @@
                 <small>Corredor atual</small>
                 <p>
                     <span id="corredorAtual">Mariana Toledo</span>
-                    <button class="btn-editar" type="button">âœŽ</button>
+                    <button class="btn-editar" type="button">✎</button>
                 </p>
             </div>
 
@@ -51,8 +58,9 @@
                     Iniciar corrida
                 </button>
 
-                <button class="btn-proximo-corredor escondido" id="btnProximoCorredor" type="button" aria-label="PrÃ³ximo corredor">
+                <button class="btn-proximo-corredor escondido" id="btnProximoCorredor" type="button" aria-label="Finalizar turno">
                     <span class="icone-proximo"></span>
+                    <span class="texto-finalizar-turno">Finalizar turno</span>
                 </button>
 
                 <button class="btn-esteira" id="btnAbrirEsteira" type="button">
@@ -64,7 +72,7 @@
 
         <section class="area-registros">
             <div class="ultimos-registros">
-                <h2>Ãšltimos registros</h2>
+                <h2>Últimos registros</h2>
 
                 <table>
                     <thead>
@@ -72,14 +80,14 @@
                             <th>Corredor</th>
                             <th>Correu</th>
                             <th>Esteira</th>
-                            <th>InÃ­cio</th>
+                            <th>Ini­cio</th>
                             <th>Fim</th>
                         </tr>
                     </thead>
 
                     <tbody id="tabelaRegistros">
                         <tr>
-                            <td>Pietro SansÃ£o</td>
+                            <td>Pietro Sansão</td>
                             <td>4km</td>
                             <td>Esteira 2</td>
                             <td>12:02:53</td>
@@ -87,7 +95,7 @@
                         </tr>
 
                         <tr>
-                            <td>Pietro SansÃ£o</td>
+                            <td>Pietro Sansão</td>
                             <td>2km</td>
                             <td>Esteira 1</td>
                             <td>12:02:53</td>
@@ -98,25 +106,42 @@
             </div>
 
             <aside class="proximos-corredores">
-                <h2>PrÃ³ximo corredor</h2>
+                <div class="fila-resumo" id="filaResumo">
+                    <button class="btn-organizar-fila" id="btnOrganizarFila" type="button">
+                        <span>Organizar fila</span>
+                    </button>
+                </div>
 
-                <div class="lista-corredores" id="listaCorredores">
+                <p class="instrucao-fila">Arraste para ordenar</p>
+                <div class="lista-corredores fila-lista" id="fila">
                     <div class="corredor-fila" draggable="true">
                         <span class="avatar"></span>
-                        <p>Pietro SansÃ£o</p>
-                        <span class="drag">â ¿</span>
+                        <p>Pietro Sansão</p>
+                        <span class="drag">⠿</span>
                     </div>
 
                     <div class="corredor-fila" draggable="true">
                         <span class="avatar"></span>
                         <p>Gabriel Marques</p>
-                        <span class="drag">â ¿</span>
+                        <span class="drag">⠿</span>
                     </div>
 
                     <div class="corredor-fila" draggable="true">
                         <span class="avatar"></span>
                         <p>Laura Faria</p>
-                        <span class="drag">â ¿</span>
+                        <span class="drag">⠿</span>
+                    </div>
+
+                    <div class="corredor-fila" draggable="true">
+                        <span class="avatar"></span>
+                        <p>Marina Toledo</p>
+                        <span class="drag">⠿</span>
+                    </div>
+
+                    <div class="corredor-fila" draggable="true">
+                        <span class="avatar"></span>
+                        <p>Rafael Lima</p>
+                        <span class="drag">⠿</span>
                     </div>
                 </div>
             </aside>
@@ -150,10 +175,16 @@
 
     <div class="modal-finalizar-competicao escondido" id="modalFinalizarCompeticao">
         <div class="modal-finalizar-conteudo">
-            <div class="icone-finalizar">â†ª</div>
+            <div class="icone-finalizar" aria-hidden="true">
+                <svg class="icone-sair-svg" viewBox="0 0 24 24">
+                    <path d="M10 5H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h4"></path>
+                    <path d="M14 7l5 5-5 5"></path>
+                    <path d="M19 12H9"></path>
+                </svg>
+            </div>
 
-            <h2>Finalizar competiÃ§Ã£o?</h2>
-            <p>Ao finalizar uma competiÃ§Ã£o, nÃ£o Ã©<br>possÃ­vel iniciÃ¡-la novamente.</p>
+            <h2>Finalizar competição?</h2>
+            <p>Ao finalizar uma competição, não é<br>possível iniciá-la novamente.</p>
 
             <div class="acoes-finalizar">
                 <button class="btn-cancelar-finalizar" id="btnCancelarFinalizarCompeticao" type="button">
@@ -174,14 +205,14 @@
                     <label for="selectCorredor">Corredor</label>
                     <select id="selectCorredor">
                         <option>Mariana Toledo</option>
-                        <option>Pietro SansÃ£o</option>
+                        <option>Pietro Sansão</option>
                         <option>Gabriel Marques</option>
                         <option>Laura Faria</option>
                     </select>
                 </div>
 
                 <div class="campo-turno campo-horario">
-                    <label for="inicioTurno">InÃ­cio</label>
+                    <label for="inicioTurno">Início</label>
                     <input id="inicioTurno" type="text" value="12:14">
                 </div>
 
@@ -238,7 +269,3 @@
 </body>
 
 </html>
-
-
-
-
