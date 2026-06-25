@@ -2,7 +2,7 @@ body { overflow: auto !important; }
 main { height: auto !important; }
 
 .conteudo-visao {
-    width: 700px;
+    width: min(700px, calc(100vw - 48px));
     padding-bottom: 60px;
 }
 

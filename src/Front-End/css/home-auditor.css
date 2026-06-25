@@ -448,8 +448,32 @@ body.drawer-aberto .tema-toggle {
     }
 
     .card {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .card-event {
+        gap: 2px;
+    }
+
+    .card-event h3 {
+        font-size: 13px;
+        line-height: 1.2;
+    }
+
+    .card-event .card-local {
+        font-size: 11px;
+    }
+
+    .card-status {
+        top: 8px;
+        right: 8px;
+        width: 10px;
+        height: 10px;
+    }
+
+    .grupo-titulo {
         font-size: 16px;
-        padding: 14px;
     }
 
     body.drawer-aberto .tema-toggle {

@@ -3,7 +3,7 @@ body { overflow: auto !important; }
 main { height: auto !important; }
 
 .conteudo-stats {
-    width: 760px;
+    width: min(760px, calc(100vw - 48px));
     padding-bottom: 60px;
 }
 
