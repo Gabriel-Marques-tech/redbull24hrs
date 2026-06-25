@@ -1774,7 +1774,7 @@
           <span class="collapse-indicator" aria-hidden="true"></span>
         </div>
         <div class="endpoint-body">
-          <p>Verifica a existência da equipe antes de inserir o atleta. A validação de 16 corredores por equipe (RF003) <strong>não está implementada</strong> neste endpoint.</p>
+          <p>Verifica a existência da equipe antes de inserir o atleta. O RF003 não exige um número exato de corredores por equipe, portanto não há validação de quantidade neste endpoint.</p>
 
           <p class="section-label">Request Body</p>
           <pre class="code-block">{
@@ -3435,7 +3435,7 @@
         <tbody>
           <tr><td>RF001</td><td>Cadastro de exatamente duas equipes por evento com nome único</td><td><code class="inline">POST /teams</code>, <code class="inline">GET /teams</code> <span class="partial">(⚠ limite de 2 equipes não implementado)</span></td></tr>
           <tr><td>RF002</td><td>Cadastro de corredores vinculados a uma equipe</td><td><code class="inline">POST /teams/:teamId/athletes</code>, <code class="inline">GET /teams/:teamId/athletes</code></td></tr>
-          <tr><td>RF003</td><td>Validar 16 corredores por equipe antes do início</td><td><code class="inline">POST /audit/shifts/start</code> (RN17: rejeita com 422 se equipe sem 16 corredores ativos), <code class="inline">PATCH /events/:id/start</code></td></tr>
+          <tr><td>RF003</td><td>Não exigir número exato de corredores por equipe; início permitido com ao menos um corredor ativo</td><td><code class="inline">POST /audit/shifts/start</code> (RN17: rejeita com 422 se equipe sem corredores ativos), <code class="inline">PATCH /events/:id/start</code></td></tr>
           <tr><td>RF004</td><td>Seleção da esteira onde o corredor inicia</td><td><code class="inline">GET /events/treadmills</code>, <code class="inline">POST /events/treadmills</code></td></tr>
           <tr><td>RF005</td><td>Seleção da equipe associada à esteira</td><td><code class="inline">GET /teams</code> (seleção da equipe), <code class="inline">POST /audit/shifts/start</code> <span class="partial">(via athlete_id, que pertence a uma equipe)</span></td></tr>
           <tr><td>RF006</td><td>Seleção do corredor da equipe para iniciar corrida</td><td><code class="inline">GET /teams/:teamId/athletes</code> <span class="partial">(listagem)</span>, <code class="inline">POST /audit/shifts/start</code></td></tr>
