@@ -25,5 +25,7 @@ router.get('/manager/create-event/athlete', authMiddleware.requirePageAuth, auth
 router.get('/manager/event/:id', authMiddleware.requirePageAuth, authMiddleware.requireRole('manager', 'auditor'), pageController.getEventOverview)
 // Edição de competição agendada — apenas manager
 router.get('/manager/event/:id/edit', authMiddleware.requirePageAuth, authMiddleware.requireRole('manager'), pageController.getEditEvent)
+// Compartilhamento de desempenhos — apenas manager, evento finalizado
+router.get('/manager/event/:id/share', authMiddleware.requirePageAuth, authMiddleware.requireRole('manager'), pageController.getShareManager)
 
 export default router
