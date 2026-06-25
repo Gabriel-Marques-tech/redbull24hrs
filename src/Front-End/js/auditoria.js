@@ -884,6 +884,13 @@ function exibirOcrTurno(ocr) {
     if (ocrPaceEl)     ocrPaceEl.textContent     = ocr.pace     ?? '—'
     if (ocrTimeEl)     ocrTimeEl.textContent     = ocr.time     ?? '—'
     ocrResultadoTurno.classList.remove('escondido')
+
+    const quilometragemTurno   = document.getElementById('quilometragemTurno')
+    const tempoPercorridoTurno = document.getElementById('tempoPercorridoTurno')
+    const paceTurno            = document.getElementById('paceTurno')
+    if (ocr.distance != null && quilometragemTurno)   quilometragemTurno.value   = ocr.distance
+    if (ocr.time     != null && tempoPercorridoTurno) tempoPercorridoTurno.value = ocr.time
+    if (ocr.pace     != null && paceTurno)            paceTurno.value            = ocr.pace
 }
 
 if (btnFinalizarTurnoFoto && finalizarTurnoFotoInput) {
@@ -1073,7 +1080,7 @@ async function abrirModalOperador() {
         const card = document.createElement('div')
         card.className = 'perfil-card' + (a.id === AUDITOR_ID ? ' selecionado' : '')
         card.innerHTML = `
-            <div class="perfil-avatar"></div>
+            <div class="perfil-avatar"${a.image_url ? ` style="background-image:url('${a.image_url}')"` : ''}></div>
             <span class="perfil-nome">${a.name}</span>
         `
         card.addEventListener('click', () => selecionarOperador(a, card))
