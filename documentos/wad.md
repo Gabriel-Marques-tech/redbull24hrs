@@ -5640,6 +5640,10 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ¹⁹ AEGIS AI. **Quanto custa desenvolver software sob medida em 2026? Preços reais + guia**. Aegis AI, 2026. Disponível em: https://www.aegisai.com.br/blog/preco-desenvolvimento-software-sob-medida-2026. Acesso em: 6 jun. 2026.
 
+²⁰ BANGOR, Aaron; KORTUM, Philip T.; MILLER, James T. An empirical evaluation of the System Usability Scale. *International Journal of Human-Computer Interaction*, v. 24, n. 6, p. 574–594, 2008. Disponível em: https://www.tandfonline.com/doi/abs/10.1080/10447310802205776. Acesso em: 24 jun. 2026.
+
+²¹ BARROS, Myrela. *Guia atualizado de como utilizar a escala SUS (System Usability Scale) no seu produto*. UX Collective, out. 2022. Disponível em: <https://brasil.uxdesign.cc/guia-atualizado-de-como-utilizar-a-escala-sus-system-usability-scale-no-seu-produto-ab773f29c522>. Acesso em: 22 jun. 2026.
+
 ¹⁴ BRASIL. Lei nº 13.709, de 14 de agosto de 2018. Lei Geral de Proteção de Dados Pessoais (LGPD). Brasília, DF: Presidência da República, 2018. Disponível em: https://www.gov.br/pt-br/lgpd/lei-geral-de-protecao-de-dados-lgpd. Acesso em: 1 jun. 2026.
 
 ⁸ BUSINESS RULES GROUP. **Business Rules Manifesto: the principles of rule independence**. Version 2.0. S. l.: Business Rules Group, 2003. Disponível em: https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf. Acesso em: 27 abr. 2026.
