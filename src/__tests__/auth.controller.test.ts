@@ -43,7 +43,7 @@ describe("registerManager", () => {
 
     await AuthController.registerManager(req, res);
 
-    expect(mockService.registerManager).toHaveBeenCalledWith("M", "m@a.com", "pwd");
+    expect(mockService.registerManager).toHaveBeenCalledWith("M", "m@a.com", "pwd", null);
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith(manager);
   });
@@ -113,6 +113,7 @@ describe("registerAuditor", () => {
       "A",
       "a@a.com",
       "pwd",
+      null,
       99,
     );
     expect(res.status).toHaveBeenCalledWith(201);
