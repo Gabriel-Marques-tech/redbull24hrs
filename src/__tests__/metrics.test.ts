@@ -18,6 +18,9 @@ jest.mock("../repositories/metricsRepository", () => ({
 		avgDistancePerShift: jest.fn(),
 		kmSnapshots: jest.fn(),
 		athletePerformance: jest.fn(),
+		genderKmByEvent: jest.fn(),
+		pacePeriodByEvent: jest.fn(),
+		totalKmByEvent: jest.fn(),
 	},
 }));
 
@@ -230,6 +233,128 @@ describe("GET /metrics/athletes/:athleteId/performance", () => {
 		(metricsRepository.athletePerformance as jest.Mock).mockResolvedValue([]);
 		await request(app).get("/metrics/athletes/1/performance");
 		expect(metricsRepository.athletePerformance).toHaveBeenCalledWith(1, undefined);
+	});
+});
+
+// ─── GET /metrics/events/:eventId/gender-km (Modo TV) ────────────────────────
+
+describe("GET /metrics/events/:eventId/gender-km", () => {
+	it("200 – soma km por gênero classificando f/m e ignorando desconhecidos", async () => {
+		(metricsRepository.genderKmByEvent as jest.Mock).mockResolvedValue([
+			{ gender: "Feminino", total_km: 10.5 },
+			{ gender: "feminino", total_km: 4.5 },
+			{ gender: "Masculino", total_km: 20 },
+			{ gender: "Outro", total_km: 99 },
+			{ gender: null, total_km: 7 },
+			{ gender: "M", total_km: "abc" },
+		]);
+		const res = await request(app).get("/metrics/events/1/gender-km");
+		expect(res.status).toBe(200);
+		// mulheres: 10.5 + 4.5 = 15; homens: 20 (+ NaN->0 da matrícula "abc")
+		expect(res.body).toEqual({ mulheres: 15, homens: 20 });
+	});
+
+	it("500 – propaga erro do repositório", async () => {
+		(metricsRepository.genderKmByEvent as jest.Mock).mockRejectedValue(new Error("falha db"));
+		const res = await request(app).get("/metrics/events/1/gender-km");
+		expect(res.status).toBe(500);
+		expect(res.body).toHaveProperty("error");
+	});
+});
+
+// ─── GET /metrics/events/:eventId/pace (Modo TV) ─────────────────────────────
+
+describe("GET /metrics/events/:eventId/pace", () => {
+	it("200 – usa pace de checkpoints e formata mm:ss", async () => {
+		(metricsRepository.pacePeriodByEvent as jest.Mock).mockResolvedValue({
+			period_idx: 1,
+			checkpoint_sec_per_km: 305,
+			shift_sec_per_km: 400,
+			overall_sec_per_km: 500,
+		});
+		const res = await request(app).get("/metrics/events/1/pace");
+		expect(res.status).toBe(200);
+		// 305s → 05:05; idx 1 → "18h–12h restantes"
+		expect(res.body).toEqual({ valor: "05:05", periodo: "18h–12h restantes", period_idx: 1 });
+	});
+
+	it("200 – recai em shift e depois overall quando checkpoint ausente", async () => {
+		(metricsRepository.pacePeriodByEvent as jest.Mock).mockResolvedValue({
+			period_idx: 0,
+			checkpoint_sec_per_km: null,
+			shift_sec_per_km: null,
+			overall_sec_per_km: 360,
+		});
+		const res = await request(app).get("/metrics/events/1/pace");
+		expect(res.body.valor).toBe("06:00");
+		expect(res.body.periodo).toBe("24h–18h restantes");
+	});
+
+	it("200 – valor nulo quando não há dados de pace", async () => {
+		(metricsRepository.pacePeriodByEvent as jest.Mock).mockResolvedValue(null);
+		const res = await request(app).get("/metrics/events/1/pace");
+		expect(res.status).toBe(200);
+		expect(res.body).toEqual({ valor: null, periodo: "24h–18h restantes", period_idx: 0 });
+	});
+
+	it("200 – clampa idx fora do intervalo [0,3]", async () => {
+		(metricsRepository.pacePeriodByEvent as jest.Mock).mockResolvedValue({
+			period_idx: 99,
+			overall_sec_per_km: 0,
+		});
+		const res = await request(app).get("/metrics/events/1/pace");
+		// idx clampado a 3 → "6h–0h restantes"; secPerKm 0 → valor null
+		expect(res.body.period_idx).toBe(99);
+		expect(res.body.periodo).toBe("6h–0h restantes");
+		expect(res.body.valor).toBeNull();
+	});
+
+	it("500 – propaga erro do repositório", async () => {
+		(metricsRepository.pacePeriodByEvent as jest.Mock).mockRejectedValue(new Error("falha db"));
+		const res = await request(app).get("/metrics/events/1/pace");
+		expect(res.status).toBe(500);
+	});
+});
+
+// ─── GET /metrics/events/:eventId/tv (Modo TV) ───────────────────────────────
+
+describe("GET /metrics/events/:eventId/tv", () => {
+	it("200 – agrega total, gênero e pace", async () => {
+		(metricsRepository.genderKmByEvent as jest.Mock).mockResolvedValue([
+			{ gender: "F", total_km: 12 },
+			{ gender: "M", total_km: 8 },
+		]);
+		(metricsRepository.totalKmByEvent as jest.Mock).mockResolvedValue({
+			total_km: 20.005,
+			completed_shifts: 4,
+		});
+		(metricsRepository.pacePeriodByEvent as jest.Mock).mockResolvedValue({
+			period_idx: 0,
+			checkpoint_sec_per_km: 300,
+		});
+		const res = await request(app).get("/metrics/events/1/tv");
+		expect(res.status).toBe(200);
+		expect(res.body.total_km).toBe(20.01);
+		expect(res.body.completed_shifts).toBe(4);
+		expect(res.body.genero).toEqual({ mulheres: 12, homens: 8 });
+		expect(res.body.pace.valor).toBe("05:00");
+	});
+
+	it("200 – usa defaults quando total vem nulo", async () => {
+		(metricsRepository.genderKmByEvent as jest.Mock).mockResolvedValue([]);
+		(metricsRepository.totalKmByEvent as jest.Mock).mockResolvedValue(null);
+		(metricsRepository.pacePeriodByEvent as jest.Mock).mockResolvedValue(null);
+		const res = await request(app).get("/metrics/events/1/tv");
+		expect(res.status).toBe(200);
+		expect(res.body.total_km).toBe(0);
+		expect(res.body.completed_shifts).toBe(0);
+		expect(res.body.genero).toEqual({ mulheres: 0, homens: 0 });
+	});
+
+	it("500 – propaga erro do repositório", async () => {
+		(metricsRepository.totalKmByEvent as jest.Mock).mockRejectedValue(new Error("falha db"));
+		const res = await request(app).get("/metrics/events/1/tv");
+		expect(res.status).toBe(500);
 	});
 });
 
