@@ -5913,7 +5913,7 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ¹ ESPM. **Runaholic Club: lifestyle e comunidade de wellness para a Geração Z**. 9 abr. 2026. Disponível em: https://www.espm.br/blog/runaholic-club-lifestyle-e-comunidade-de-wellness-para-a-geracao-z/. Acesso em: 28 abr. 2026.
 
-¹⁰ FIELDING, Roy Thomas. **Architectural Styles and the Design of Network-based Software Architectures**. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: https://ics.uci.edu/~fielding/pubs/dissertation/top.htm. Acesso em: 27 abr. 2026.
+⁹ FIELDING, Roy Thomas. **Architectural Styles and the Design of Network-based Software Architectures**. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: https://ics.uci.edu/~fielding/pubs/dissertation/top.htm. Acesso em: 27 abr. 2026.
 
 ¹⁶ GLOBAL MARKET INSIGHTS. **Event Management Software Market Share, Size and Forecast 2024-2032**. Global Market Insights, 2024. Disponível em: https://www.gminsights.com/industry-analysis/event-management-software-market. Acesso em: 6 jun. 2026.
 
@@ -5923,7 +5923,7 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ³ H.PRIME SAÚDE. **A revolução da geração wellness: por que a saúde se tornou o novo símbolo de sucesso**. 20 ago. 2025. Disponível em: https://hprimesaude.com.br/blog/a-revolucao-da-geracao-wellness-por-que-a-saude-se-tornou-o-novo-simbolo-de-sucesso/. Acesso em: 28 abr. 2026.
 
-⁹ JACOBSON, Ivar; SPENCE, Ian; BITTNER, Kurt. **Use-Case 3.0 — The Definitive Guide**. S. l.: Ivar Jacobson International, 2024.
+¹⁰ JACOBSON, Ivar; SPENCE, Ian; BITTNER, Kurt. **Use-Case 3.0 — The Definitive Guide**. S. l.: Ivar Jacobson International, 2024.
 
 ¹¹ MONTGOMERY, Cynthia A.; PORTER, Michael E. (org.). **Estratégia: a busca da vantagem competitiva**. Rio de Janeiro: Elsevier, 1998.
 
