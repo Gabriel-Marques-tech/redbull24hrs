@@ -1685,7 +1685,7 @@ Na sprint 1, os RNFs foram definidos em nível conceitual, com critérios mensur
 | **RNF002** | USAB | Dados do modo TV expostos por endpoint somente leitura; a aplicação visual do contraste/fonte (WCAG AA) é responsabilidade do frontend, em desenvolvimento. | `GET /metrics/events/:id/dashboard` |
 | **RNF003** | USAB | Mensagens de erro de validação padronizadas e acionáveis retornadas pela API (ex.: "km final inválido: menor que o km inicial"). | `shiftService.ts` (mensagens dos `throw`) |
 | **RNF004** | USAB | Cada operação crítica (início, checkpoint, encerramento) resolvida em um único endpoint, minimizando idas ao servidor; contagem de cliques validada no frontend. | `shiftRoutes.ts` |
-| **RNF005** | CONF | Estratégia de *upsert* idempotente (`ON CONFLICT ... DO UPDATE` com checagem cronológica) definida (seção 3.6.4) e unicidade garantida por PK; exposição em lote via `POST /audit/sync` prevista para a sprint 4 (Quadro 31). | Consulta 1 (3.6.4); PK em `checkpoints` |
+| **RNF005** | CONF | Estratégia de *upsert* idempotente (`ON CONFLICT ... DO UPDATE` com checagem cronológica) definida (seção 3.6.4) e unicidade garantida por PK; exposição em lote via `POST /audit/sync` prevista para a sprint 4 (Quadro 34). | Consulta 1 (3.6.4); PK em `checkpoints` |
 | **RNF006** | CONF | Integridade transacional garantida em duas camadas: `CHECK`/`FK`/`UNIQUE` no banco e validações no Service antes da persistência. | `001_initialSchema.sql`; `shiftService.ts` |
 | **RNF007** | CONF | Detecção de inconsistências operacionais implementada (RF044-RF046, RF053): rotação de esteira RF039 (30 min), inatividade RF053 (5 min), intervalo > 10 min RF045 e km fora de ordem RF044; alertas visuais e sonoros RF029/RF030 são responsabilidade do frontend; fluxo de revisão RF031 suportado pelo retorno de erro antes da persistência. | `alertsRepository.ts`, `alertsService.ts`, `shiftService.ts` |
 | **RNF008** | DES | Consultas operacionais atendidas por índices sobre todas as FKs e *pool* de conexões; aferição formal de p95 prevista para a sprint 4. | índices em `001_initialSchema.sql`; `connection.ts` |
@@ -1747,7 +1747,7 @@ Na sprint 4, com a integração ponta a ponta dos fluxos de auditoria, gerência
 Na sprint 5, última iteração do projeto, foram concluídas as validações pendentes, incorporadas novas funcionalidades de operação (pausa de evento, registro de pace, captura de imagem com OCR e suporte a tema escuro/claro) e consolidado o estado final de todos os RNFs. O quadro a seguir registra, por RNF com evolução nesta sprint, a atualização técnica realizada, a métrica de verificação e o procedimento correspondente.
 
 <div align = "center">
-  <sub> Quadro 16.3 - Evolução dos RNFs: Sprint 5 — validação final e novas funcionalidades </sub><br>
+  <sub> Quadro 19 - Evolução dos RNFs: Sprint 5 — validação final e novas funcionalidades </sub><br>
 
 | RNF | Eixo | Atualização Sprint 5 | Métrica de Verificação | Procedimento de Verificação | Evidência |
 | :-- | :--- | :------------------- | :--------------------- | :-------------------------- | :-------- |
@@ -2041,7 +2041,7 @@ O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 H
 ---
 
 <div align = "center">
-  <sub> Quadro 19 - Atores de Casos de Uso </sub><br>
+  <sub> Quadro 20 - Atores de Casos de Uso </sub><br>
 
 | Ator                      | Tipo                                | Descrição                                                                                                                                                                                                                                                                                                                                          |
 | ------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -2057,7 +2057,7 @@ O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 H
 Os casos de uso foram identificados a partir dos requisitos funcionais da seção 3.1.1 e do escopo do MVP descrito no TAPI. Cada caso representa um caminho até um valor concreto entregue ao usuário, conforme orientação do guia: _"a use case is all the ways of using a system to achieve a goal of a particular user"_.
 
 <div align = "center">
-  <sub> Quadro 20 - Casos de Uso </sub><br>
+  <sub> Quadro 21 - Casos de Uso </sub><br>
 
 | Caso de uso                       | Ator primário                   | Objetivo                                                                                                                                                                                | Pré-requisitos                                                                      | Atores secundários                                                          | Pós-requisitos                                                                                           |
 | --------------------------------- | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
@@ -2082,7 +2082,7 @@ Como a esteira é zerada a cada troca de corredor (dinâmica do evento), a quilo
 Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: **`<<include>>`** representa comportamento _obrigatório_ e reutilizável que sempre é executado pelo caso-base; **`<<extend>>`** representa comportamento _opcional_ que ocorre apenas em condições específicas, sem que o caso-base precise ter conhecimento do caso estensor. Como recomenda Jacobson et al.[⁹](#8-referências) na prática _Structured Use-Case Modeling_, esses recursos foram usados com parcimônia — apenas onde tornam o modelo mais claro, e não para fragmentar o diagrama em micro-fluxos.
 
 <div align = "center">
-  <sub> Quadro 21 - Relacionamentos include e extend </sub><br>
+  <sub> Quadro 22 - Relacionamentos include e extend </sub><br>
 
 | Relacionamento | Caso-base                 | Caso relacionado                           | Justificativa                                                                                                                                                                                                                                                                                                              |
 | -------------- | ------------------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -2411,13 +2411,7 @@ Cada diagrama cumpre um papel específico: Autenticação (3.2.4.7) detalha o ci
 
 Em conjunto, esses fluxos garantem que a transição da apuração manual para o sistema digital ocorra de forma rastreável, íntegra e auditável, entregando aos parceiros da Red Bull uma ferramenta confiável para o controle do evento esportivo.
 
-### 3.2.5. Diagrama de Atividades ou Estados (sprint 4 ou sprint 5)
-
----
-
-_Ao menos um fluxo relevante em UML ou BPMN. Use a notação da ferramenta escolhida de forma consistente (sem misturar convenções)._
-
-### 3.2.6. Diagrama de Implantação (sprints 4 e 5)
+### 3.2.5. Diagrama de Implantação (sprints 4 e 5)
 
 ---
 
@@ -2438,13 +2432,13 @@ O terceiro nó é o **banco de dados** (`<<database>>`), PostgreSQL 15+, acessad
 
 O quarto nó é o **GitLab** (`<<cloud>>`), que hospeda o repositório do projeto (branches `main` e `develop`) e executa o pipeline de CI/CD. O pipeline publica automaticamente o arquivo `documentos/outros/WebAPI/index.html` no GitLab Pages, disponibilizando a documentação navegável da WebAPI publicamente em `g02-73a453.pages.git.inteli.edu.br/api/`. O deploy da aplicação em si é realizado manualmente via `npm run build` seguido de `npm start` no servidor de destino.
 
-### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
+### 3.2.6. Padrões de Projeto Aplicados (sprints 3 a 5)
 
 ---
 
 Padrões de projeto (design patterns) são soluções reutilizáveis e já testadas para problemas comuns no desenvolvimento de software. Eles funcionam como modelos que ajudam a estruturar o código de forma mais organizada, flexível, limpa e fácil de manter. Os padrões apresentados a seguir foram escolhidos não apenas por convenção, mas porque ajudaram a resolver problemas reais encontrados durante o desenvolvimento do projeto. 
 
-#### 3.2.7.1 Backend
+#### 3.2.6.1 Backend
 
 ---
 
@@ -2563,7 +2557,7 @@ O que é: Divide a aplicação em três partes com funções diferentes. O Model
 **Onde se aplica no projeto:** Nos métodos `startShift`, `registerCheckpoint` e `finishShift` do `shiftService`, onde cada guard clause corresponde a uma regra de negócio independente, verificada antes da persistência dos dados.
 
 
-#### 3.2.7.2 Frontend
+#### 3.2.6.2 Frontend
 
 ---
 O desenvolvimento do frontend seguiu uma abordagem progressiva, compatível com o estágio atual do projeto. As páginas de interface estão implementadas em HTML e CSS estáticos, sem dependência de frameworks ou bundlers, o que permitiu iteração rápida sobre o layout e a estrutura visual nas primeiras sprints. Os padrões descritos a seguir refletem as decisões tomadas para organizar essa camada, considerando tanto o que já está implementado quanto a arquitetura planejada para a adição da camada JavaScript nas próximas sprints.
@@ -2603,7 +2597,7 @@ O desenvolvimento do frontend seguiu uma abordagem progressiva, compatível com 
 
 
 
-#### 3.2.7.3 Princípios SOLID aplicados
+#### 3.2.6.3 Princípios SOLID aplicados
 
 ---
 
@@ -2892,7 +2886,7 @@ O sistema de grid é a estrutura invisível que organiza os elementos na tela, g
 A aplicação Red Bull 24 Horas adota um **grid de 12 colunas** com as seguintes especificações:
 
 <div align="center">
-  <sub>Quadro 33 - Sistema de Grid da Interface</sub><br>
+  <sub>Quadro 23 - Sistema de Grid da Interface</sub><br>
 
 | Propriedade | Valor | Descrição |
 |---|---|---|
@@ -3212,7 +3206,7 @@ O Modelo Entidade-Relacionamento (MER) apresenta a visão conceitual consolidada
 As entidades foram derivadas do domínio e revisadas conforme o schema resultante das migrations `001` a `025`. O MER inclui as entidades de autenticação porque seus vínculos possuem integridade referencial no banco e fazem parte da responsabilidade operacional dos usuários.
 
 <div align="center">
-  <sub>Quadro 20 - Entidades e atributos do MER</sub>
+  <sub>Quadro 24 - Entidades e atributos do MER</sub>
 </div>
 
 | Entidade | Descrição | Atributos principais | Chave |
@@ -3239,7 +3233,7 @@ As entidades foram derivadas do domínio e revisadas conforme o schema resultant
 Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui atletas e esteiras; um turno aponta para a esteira utilizada; e o turno é operado por um único responsável — auditor ou gerente, conforme a constraint `chk_shifts_operator` — enquanto a auditoria (revisão de checkpoints) é exclusiva de auditores. A posse de sessões de autenticação (refresh tokens) continua modelada por dois relacionamentos independentes e mutuamente exclusivos: um para gerentes e outro para auditores. Eventos passaram a registrar seu histórico de pausas em uma entidade própria.
 
 <div align="center">
-  <sub>Quadro 21 - Relacionamentos e cardinalidades do MER</sub>
+  <sub>Quadro 25 - Relacionamentos e cardinalidades do MER</sub>
 </div>
 
 | Relacionamento | Entidade A | Cardinalidade | Entidade B | Descrição |
@@ -3287,16 +3281,12 @@ O DER traduz o MER para a estrutura relacional do PostgreSQL. A versão abaixo r
   <br><br>
 </div>
 
-<div align="center">
-  <sub>Quadro 22 - Tabelas e colunas do DER</sub>
-</div>
-
 #### Entidades e atributos
 
 As entidades foram derivadas do domínio e revisadas conforme o schema resultante das migrations `001` a `025`. O DER inclui as entidades de autenticação porque seus vínculos possuem integridade referencial no banco e fazem parte da responsabilidade operacional dos usuários.
 
 <div align="center">
-  <sub>Quadro 22 - Entidades e atributos do DER</sub>
+  <sub>Quadro 26 - Entidades e atributos do DER</sub>
 </div>
 
 | Entidade | Descrição | Atributos principais | Chave |
@@ -3323,7 +3313,7 @@ As entidades foram derivadas do domínio e revisadas conforme o schema resultant
 Os relacionamentos refletem o schema consolidado após as migrations da Sprint 5. A FK de esteira passou a residir em `shifts.treadmill_id`, corrigindo o vínculo anterior. O controle de pausas foi extraído para a entidade `PauseLog`, vinculada diretamente ao evento. O operador de cada turno pode ser um auditor ou um gerente, nunca os dois simultaneamente. A posse de sessões de autenticação é modelada por dois relacionamentos independentes e mutuamente exclusivos: um para gerentes e outro para auditores.
 
 <div align="center">
-  <sub>Quadro 23 - Relacionamentos e cardinalidades do DER</sub>
+  <sub>Quadro 27 - Relacionamentos e cardinalidades do DER</sub>
 </div>
 
 | Relacionamento | Entidade A | Cardinalidade | Entidade B | Descrição |
@@ -3366,7 +3356,7 @@ Os relacionamentos refletem o schema consolidado após as migrations da Sprint 5
 O modelo físico implementa o DER da seção 3.6.2 como **migrations DDL versionadas** em SQL puro (PostgreSQL), armazenadas em [src/database/migrations/](../src/database/migrations/) com prefixo numérico sequencial (`001_`, `002_`, ...) que define a ordem de aplicação. A estratégia garante reprodutibilidade, já que qualquer ambiente (desenvolvimento, homologação ou produção) pode reconstruir o schema completo executando as migrations em ordem, além de rastreabilidade das mudanças de schema ao longo do projeto.
 
 <div align="center">
-  <sub>Quadro 24 - Migrations registradas</sub>
+  <sub>Quadro 28 - Migrations registradas</sub>
 </div>
 
 | Arquivo                                                                               | Sprint | Descrição                                                                                                                                                                                                                                                                                              |
@@ -3885,7 +3875,7 @@ O schema resultante possui constraints de estado, período, quilometragem e prop
 Entre os principais conectivos lógicos utilizados, temos:
  
 <div align="center">
-  <sub> Quadro 22 - Conectivos Lógicos </sub><br>
+  <sub> Quadro 29 - Conectivos Lógicos </sub><br>
 
 | Tipos de conectivos lógicos | Representação     |
 | ---------------------------- | ------------------- |
@@ -3922,7 +3912,7 @@ ON CONFLICT (sync_id) WHERE sync_id IS NOT NULL DO NOTHING
 
 <br>
 <div align="center">
-  <sub> Quadro 23 - Lógica Proposicional: 1 </sub><br>
+  <sub> Quadro 30 - Lógica Proposicional: 1 </sub><br>
 
 | | |
 | :--- | :--- |
@@ -3952,7 +3942,7 @@ ORDER BY total_km DESC
 
 <br>
 <div align="center">
-  <sub> Quadro 24 - Lógica Proposicional: 2 </sub><br>
+  <sub> Quadro 31 - Lógica Proposicional: 2 </sub><br>
 
 | | |
 |---|---|
@@ -3982,7 +3972,7 @@ WHERE t.event_id = $1
 
 <br>
 <div align="center">
-  <sub> Quadro 25 - Lógica Proposicional: 3 </sub><br>
+  <sub> Quadro 32 - Lógica Proposicional: 3 </sub><br>
 
 | | |
 |---|---|
@@ -4034,7 +4024,7 @@ RETURNING *
 
 <br>
 <div align="center">
-  <sub> Quadro 26 - Lógica Proposicional: 4 </sub><br>
+  <sub> Quadro 33 - Lógica Proposicional: 4 </sub><br>
 
 | | |
 | :--- | :--- |
@@ -4219,6 +4209,10 @@ A tabela abaixo lista todos os 54 endpoints organizados por grupo, com método H
 
 #### Sincronização — 1 endpoint
 
+<div align="center">
+  <sub>Quadro 34 - Endpoint POST /audit/sync</sub>
+</div>
+
 | Método | Path | RF | Auth |
 |--------|------|----|------|
 | `POST` | `/audit/sync` | RF026 | JWT |
@@ -4330,7 +4324,7 @@ O frontend nunca é fonte de verdade para autorização: cada tela EJS renderiza
 O quadro abaixo mapeia os grupos de rotas ao nível de autorização exigido:
 
 <div align = "center">
-  <sub> Quadro 27 - Mapeamento de autorização por grupo de rota </sub><br>
+  <sub> Quadro 35 - Mapeamento de autorização por grupo de rota </sub><br>
 
 | Nível de Acesso | Rotas / Endpoints | Middleware |
 | :-------------- | :---------------- | :--------- |
@@ -4426,7 +4420,7 @@ Os endpoints mapeados nesta matriz estão implementados e cobertos por testes au
 > - **Conveniência futura** — endpoint de leitura opcional, sem impacto no atendimento do RF (a regra já é aplicada em outro endpoint).
 
 <div align = "center">
-  <sub> Quadro 28 - Matriz de Rastreabilidade (RTM) </sub><br>
+  <sub> Quadro 36 - Matriz de Rastreabilidade (RTM) </sub><br>
 
 Linhas sem marcação na coluna *Status* = **Implementado** na sprint 4.
 
@@ -4495,7 +4489,7 @@ Linhas sem marcação na coluna *Status* = **Implementado** na sprint 4.
 Com a integração ponta a ponta, todos os endpoints da RTM estão implementados e cobertos por testes. A validação de aptidão de equipe (RF003) é aplicada em tempo de execução no início de turno (`POST /audit/shifts/start` e `PATCH /events/:id/start`, RN17), sem depender de endpoint novo. Um endpoint dedicado de leitura (`GET /teams/:teamId/validation`) permanece como conveniência futura, descrito a seguir.
 
 <div align = "center">
-  <sub> Quadro 29 - Endpoint de conveniência futura </sub><br>
+  <sub> Quadro 37 - Endpoint de conveniência futura </sub><br>
 
 | RF | Endpoint de conveniência | RN | Status | Descrição |
 |----|--------------------|----|--------|------------------------------------|
@@ -4637,7 +4631,7 @@ ORDER BY total_km DESC
 ```
 
 <div align="center">
-<sub>Lógica Proposicional da Consulta 2 (exemplo — detalhamento completo no Quadro 27, seção 3.6.4)</sub>
+<sub>Lógica Proposicional da Consulta 2 (exemplo — detalhamento completo no Quadro 35, seção 3.6.4)</sub>
 
 | | |
 |---|---|
@@ -5273,7 +5267,7 @@ npm test -- --coverage
 O relatório de cobertura demonstra o percentual de código exercitado pelos testes automatizados na camada **Service**, responsável pela implementação das principais regras de negócio da plataforma.
 
 <div align="center">
-  <sub>Figura 101 - Relatório de cobertura da camada Service</sub><br>
+  <sub>Imagem 95 - Relatório de cobertura da camada Service</sub><br>
   <img src="./assets/testes/tabela_1.png" width="100%" alt="Relatório de cobertura do Jest"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -5656,7 +5650,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">'
-<sub>Imagem 101 - Escala de classificação SUS </sub><br>
+<sub>Imagem 96 - Escala de classificação SUS </sub><br>
  <img src="./assets/teste-sus/escala_sus.png" width="100%" alt="Escala de classificação SUS"><br>
   <sub>Fonte: Bangor, Kortum e Miller (2008) [²⁰](#8-referências).</sub>
   <br><br><br>
@@ -5798,7 +5792,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 102 - Gráfico SUS - Pergunta 1</sub><br>
+ <sub>Imagem 97 - Gráfico SUS - Pergunta 1</sub><br>
  <img src="./assets/teste-sus/grafico_pergunta_1.png" width="100%" alt="Gráfico SUS - Pergunta 1"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5806,7 +5800,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 103 - Gráfico SUS - Pergunta 2</sub><br>
+ <sub>Imagem 98 - Gráfico SUS - Pergunta 2</sub><br>
  <img src="./assets/teste-sus/grafico_pergunta_2.png" width="100%" alt="Gráfico SUS - Pergunta 2"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5814,7 +5808,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 104 - Gráfico SUS - Pergunta 3</sub><br>
+ <sub>Imagem 99 - Gráfico SUS - Pergunta 3</sub><br>
  <img src="./assets/teste-sus/grafico_pergunta_3.png" width="100%" alt="Gráfico SUS - Pergunta 3"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5822,7 +5816,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 105 - Gráfico SUS - Pergunta 4</sub><br>
+ <sub>Imagem 100 - Gráfico SUS - Pergunta 4</sub><br>
  <img src="./assets/teste-sus/grafico_pergunta_4.png" width="100%" alt="Gráfico SUS - Pergunta 4"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5830,7 +5824,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 106 - Gráfico SUS - Pergunta 5</sub><br>
+ <sub>Imagem 101 - Gráfico SUS - Pergunta 5</sub><br>
  <img src="./assets/teste-sus/grafico_pergunta_5.png" width="100%" alt="Gráfico SUS - Pergunta 5"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5838,7 +5832,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 107 - Gráfico SUS - Pergunta 6</sub><br>
+ <sub>Imagem 102 - Gráfico SUS - Pergunta 6</sub><br>
  <img src="./assets/teste-sus/grafico_pergunta_6.png" width="100%" alt="Gráfico SUS - Pergunta 6"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5846,7 +5840,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 108 - Gráfico SUS - Pergunta 7</sub><br>
+ <sub>Imagem 103 - Gráfico SUS - Pergunta 7</sub><br>
  <img src="./assets/teste-sus/grafico_pergunta_7.png" width="100%" alt="Gráfico SUS - Pergunta 7"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5854,7 +5848,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 109 - Gráfico SUS - Pergunta 8</sub><br>
+ <sub>Imagem 104 - Gráfico SUS - Pergunta 8</sub><br>
  <img src="./assets/teste-sus/grafico_pergunta_8.png" width="100%" alt="Gráfico SUS - Pergunta 8"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5862,7 +5856,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 110 - Gráfico SUS - Pergunta 9</sub><br>
+ <sub>Imagem 105 - Gráfico SUS - Pergunta 9</sub><br>
  <img src="./assets/teste-sus/grafico_pergunta_9.png" width="100%" alt="Gráfico SUS - Pergunta 9"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5870,7 +5864,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 111 - Gráfico SUS - Pergunta 10</sub><br>
+ <sub>Imagem 106 - Gráfico SUS - Pergunta 10</sub><br>
 <img src="./assets/teste-sus/grafico_pergunta_10.png" width="100%" alt="Gráfico SUS - Pergunta 10"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5963,7 +5957,7 @@ A concorrência enfrentada pela RedRun não se concentra em um produto equivalen
 **Concorrentes indiretos.** Em uma camada distinta operam as **plataformas comerciais de gestão de eventos** (como Sympla, Even3 e Eventbrite) e as **soluções de cronometragem esportiva por chip RFID** (amplamente usadas em corridas de rua). As primeiras são maduras e escaláveis, mas resolvem inscrição, bilheteria e credenciamento — não o registro de desempenho em tempo real. As segundas pressupõem um percurso físico com pontos de captura, premissa que não se aplica a uma esteira estática, onde não há deslocamento espacial a ser cronometrado. Nenhuma das duas modela a semântica central do evento: a sessão de corrida em uma esteira zerada a cada troca de corredor.
  
 <div align="center">
-  <sub> Quadro 30 - Análise comparativa da concorrência </sub><br>
+  <sub> Quadro 38 - Análise comparativa da concorrência </sub><br>
 
 | Critério | Método manual (prancheta) | Dispositivos vestíveis | Plataformas genéricas / chip RFID | **RedRun** |
 | :--- | :---: | :---: | :---: | :---: |
@@ -6020,7 +6014,7 @@ A atleta participante, representada pela persona Nicole Rauen, é beneficiária 
 O Business Model Canvas (BMC) é uma ferramenta estratégica visual que organiza os elementos essenciais de um negócio em nove blocos interdependentes, oferecendo uma visão sistêmica e simplificada de como a empresa cria, entrega e captura valor. Para aplicá-lo, basta preencher cada bloco com as informações do seu projeto, partindo da proposta de valor e expandindo para os demais elementos como clientes, canais, receitas e custos. Dessa forma, o BMC permite identificar oportunidades, alinhar estratégias e validar o modelo de negócios de maneira ágil e colaborativa. Abaixo está o Business Model Canvas do nosso projeto RedRun:
 
 <div align="center">
-  <sub> Imagem 80 - Business Model Canvas </sub>
+  <sub> Imagem 107 - Business Model Canvas </sub>
   <br><br>
   <img src="./assets/business_model_canvas/business_model_canvas.png" width=100%>
   <br>
