@@ -5774,13 +5774,15 @@ A adoção da RedRun é influenciada por três tendências principais: digitaliz
 
 ### 6.3.1 Segmentação de Mercado:
 
-A RedRun atende a um segmento primário bem delimitado: as equipes operacionais do Red Bull 24 Horas no Brasil. Geograficamente, o evento é realizado em múltiplas regiões do país, incluindo capitais e cidades de médio porte, e cada edição regional opera com sua própria equipe, tornando a solução replicável sem adaptações estruturais.
+A RedRun atende a um segmento primário bem delimitado: o Red Bull 24 Horas Brasil, considerando a Red Bull e sua equipe responsável como cliente comprador da solução. Geograficamente, o evento é realizado em múltiplas regiões do país, incluindo capitais e cidades de médio porte, e cada edição regional opera com sua própria equipe, tornando a solução replicável sem adaptações estruturais relevantes.
 
-Dentro desse segmento, dois grupos compõem o público direto. O primeiro é o gerente do evento, responsável pela configuração e coordenação geral da operação antes e durante a competição. O segundo é formado pelos auditores, membros da equipe de Field Marketing da Red Bull que atuam na linha de frente ao longo das 24 horas. Segundo a ABRAPE (2025), o setor de eventos registrou 179.133 empregos formais em 2024, evidenciando a profissionalização crescente das equipes operacionais que sustentam eventos dessa escala [¹⁹](#8-referências).
+Dentro desse segmento primário, é importante separar três papéis. O **cliente comprador** é a Red Bull, por meio dos responsáveis pela organização e pelo Field Marketing do evento, que decidem sobre adoção, continuidade e expansão da solução. Os **usuários operacionais** são o gerente do evento, responsável pela configuração e coordenação geral da operação, e os auditores, que registram turnos, checkpoints e dados de corrida ao longo das 24 horas. Os **beneficiários finais** são os atletas participantes e demais públicos impactados pela confiabilidade da apuração, pois recebem resultados mais consistentes e evidências de desempenho mais rastreáveis, sem necessariamente operar ou contratar o sistema.
 
-Como segmento secundário, identifica-se o mercado de eventos de corrida em revezamento de forma geral: competições universitárias, corporativas e de academias que operam no mesmo formato de equipes em esteira por períodos prolongados e que enfrentam o mesmo problema de apuração manual. Esse mercado representa uma oportunidade de expansão natural da solução após a validação no contexto Red Bull.
+Segundo a ABRAPE (2025), o setor de eventos registrou 179.133 empregos formais em 2024, evidenciando a profissionalização crescente das equipes operacionais que sustentam eventos dessa escala [¹⁹](#8-referências). Esse dado reforça o mercado potencial para ferramentas que reduzam retrabalho, padronizem processos e aumentem a confiabilidade operacional em eventos de alta intensidade.
 
-O que une ambos os segmentos é a demanda por um sistema simples, estável e confiável, capaz de operar continuamente em ambientes de alta pressão operacional e substituir registros manuais por um fluxo digital rastreável.
+Como mercado potencial de expansão, identifica-se o universo de eventos de corrida em revezamento e experiências esportivas cronometradas: competições universitárias, corporativas, de academias e ativações de marca que operam com equipes, esteiras ou ciclos prolongados de registro manual. Esse mercado representa uma oportunidade posterior à validação no contexto Red Bull, especialmente em formatos que compartilham a mesma dor de apuração contínua, pressão operacional e necessidade de dados auditáveis.
+
+O que une esses recortes é a demanda por um sistema simples, estável e confiável, capaz de operar continuamente em ambientes de alta pressão operacional e substituir registros manuais por um fluxo digital rastreável.
 
 ---
 
