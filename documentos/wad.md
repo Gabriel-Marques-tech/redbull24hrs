@@ -5412,7 +5412,268 @@ Os problemas observados durante os testes de guerrilha foram consolidados e prio
 
 ---
 
-_Posicione aqui o relatório dos testes SUS realizados._
+Como complemento ao teste de guerrilha documentado na seção anterior, foi aplicada a escala SUS (System Usability Scale) para medir de forma padronizada a usabilidade percebida do sistema. Enquanto o teste de guerrilha captura comportamentos e dificuldades observadas durante o uso, o SUS quantifica a percepção subjetiva dos participantes após a experiência, permitindo comparar o resultado com benchmarks consolidados da área [](#8-referências). O SUS é composto por 10 afirmações respondidas em uma escala de 1 a 5 (sendo 1 = "Discordo totalmente" e 5 = "Concordo totalmente"), e o resultado final gera uma pontuação de 0 a 100.
+
+O formulário foi respondido por 6 participantes logo após a realização do teste de guerrilha, com base na experiência que acabaram de ter com o sistema. Os participantes eram alunos da própria instituição, sem vínculo com a Red Bull ou conhecimento prévio do contexto do evento. Vale destacar que as afirmações do SUS alternam entre positivas e negativas: as perguntas de número ímpar (1, 3, 5, 7 e 9) são formuladas de forma positiva, enquanto as de número par (2, 4, 6, 8 e 10) são formuladas de forma negativa. Essa alternância é intencional e serve para reduzir vieses nas respostas [](#8-referências).
+
+
+**Fórmula de cálculo:**
+
+Para cada resposta, é aplicada a seguinte lógica [](#8-referências):
+- Perguntas ímpares (1, 3, 5, 7 e 9): subtrai-se 1 do valor respondido
+- Perguntas pares (2, 4, 6, 8 e 10): subtrai-se o valor respondido de 5
+
+A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score final de cada participante. A média entre todos os participantes representa o score SUS do sistema. A pontuação média do SUS é 68, fazendo com que uma pontuação acima ou abaixo da média forneça uma visão imediata da usabilidade geral da solução de design do projeto. [](#8-referências).
+
+| Score SUS | Classificação | Aceitabilidade |
+|---|---|---|
+| 85 a 100 | Excelente / Melhor imaginável | Aceitável |
+| 71 a 84 | Bom | Aceitável |
+| 51 a 70 | OK / Marginal | Marginal |
+| 26 a 50 | Ruim | Não aceitável |
+| 0 a 25 | Inaceitável / Pior imaginável | Não aceitável |
+
+
+<div align="center">'
+<sub>Imagem 101 - Escala de classificação SUS </sub><br>
+ <img src="./assets/teste-sus/escala_sus.png" width="100%" alt="Escala de classificação SUS"><br>
+  <sub>Fonte: Bangor, Kortum e Miller (2008) [](#8-referências).</sub>
+  <br><br><br>
+</div>
+
+## Respostas por Participante
+
+### Testador: Enzo Braga
+**Perfil:** Estudante de Ciência da Computação
+
+| # | Afirmação | Nota |
+|---|-----------|------|
+| 1 | Eu acho que gostaria de usar esse sistema com frequência. | 4 |
+| 2 | Eu acho o sistema desnecessariamente complexo. | 2 |
+| 3 | Eu achei o sistema fácil de usar. | 3 |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema. | 3 |
+| 5 | Eu acho que as várias funções do sistema estão muito bem integradas. | 4 |
+| 6 | Eu acho que o sistema apresenta muita inconsistência. | 2 |
+| 7 | Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente. | 3 |
+| 8 | Eu achei o sistema atrapalhado de usar. | 2 |
+| 9 | Eu me senti confiante ao usar o sistema. | 4 |
+| 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 2 |
+
+**Score SUS: 67,5**
+
+---
+
+### Testador: Lucas Levi
+**Perfil:** Estudante de Engenharia da Computação
+
+| # | Afirmação | Nota |
+|---|-----------|------|
+| 1 | Eu acho que gostaria de usar esse sistema com frequência. | 2 |
+| 2 | Eu acho o sistema desnecessariamente complexo. | 4 |
+| 3 | Eu achei o sistema fácil de usar. | 2 |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema. | 4 |
+| 5 | Eu acho que as várias funções do sistema estão muito bem integradas. | 2 |
+| 6 | Eu acho que o sistema apresenta muita inconsistência. | 3 |
+| 7 | Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente. | 2 |
+| 8 | Eu achei o sistema atrapalhado de usar. | 4 |
+| 9 | Eu me senti confiante ao usar o sistema. | 2 |
+| 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 4 |
+
+**Score SUS: 32,5**
+
+---
+
+### Testador: Paulo Roberto
+**Perfil:** Estudante de Engenharia da Computação
+
+| # | Afirmação | Nota |
+|---|-----------|------|
+| 1 | Eu acho que gostaria de usar esse sistema com frequência. | 3 |
+| 2 | Eu acho o sistema desnecessariamente complexo. | 3 |
+| 3 | Eu achei o sistema fácil de usar. | 3 |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema. | 3 |
+| 5 | Eu acho que as várias funções do sistema estão muito bem integradas. | 3 |
+| 6 | Eu acho que o sistema apresenta muita inconsistência. | 3 |
+| 7 | Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente. | 3 |
+| 8 | Eu achei o sistema atrapalhado de usar. | 2 |
+| 9 | Eu me senti confiante ao usar o sistema. | 3 |
+| 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 3 |
+
+**Score SUS: 52,5**
+
+---
+
+### Testadora: Lais Victoria
+**Perfil:** Estudante de Ciência da Computação
+
+| # | Afirmação | Nota |
+|---|-----------|------|
+| 1 | Eu acho que gostaria de usar esse sistema com frequência. | 4 |
+| 2 | Eu acho o sistema desnecessariamente complexo. | 2 |
+| 3 | Eu achei o sistema fácil de usar. | 4 |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema. | 2 |
+| 5 | Eu acho que as várias funções do sistema estão muito bem integradas. | 4 |
+| 6 | Eu acho que o sistema apresenta muita inconsistência. | 2 |
+| 7 | Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente. | 3 |
+| 8 | Eu achei o sistema atrapalhado de usar. | 2 |
+| 9 | Eu me senti confiante ao usar o sistema. | 4 |
+| 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 2 |
+
+**Score SUS: 72,4**
+
+---
+
+### Testador: Pedro Negri
+**Perfil:** Estudante de Ciência da Computação
+
+| # | Afirmação | Nota |
+|---|-----------|------|
+| 1 | Eu acho que gostaria de usar esse sistema com frequência. | 4 |
+| 2 | Eu acho o sistema desnecessariamente complexo. | 2 |
+| 3 | Eu achei o sistema fácil de usar. | 4 |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema. | 2 |
+| 5 | Eu acho que as várias funções do sistema estão muito bem integradas. | 4 |
+| 6 | Eu acho que o sistema apresenta muita inconsistência. | 2 |
+| 7 | Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente. | 4 |
+| 8 | Eu achei o sistema atrapalhado de usar. | 2 |
+| 9 | Eu me senti confiante ao usar o sistema. | 4 |
+| 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 2 |
+
+**Score SUS: 75,0**
+
+---
+
+### Testador: Valter Lima
+**Perfil:** Estudante de Sistemas da Informação
+
+| # | Afirmação | Nota |
+|---|-----------|------|
+| 1 | Eu acho que gostaria de usar esse sistema com frequência. | 3 |
+| 2 | Eu acho o sistema desnecessariamente complexo. | 3 |
+| 3 | Eu achei o sistema fácil de usar. | 2 |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema. | 4 |
+| 5 | Eu acho que as várias funções do sistema estão muito bem integradas. | 3 |
+| 6 | Eu acho que o sistema apresenta muita inconsistência. | 3 |
+| 7 | Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente. | 2 |
+| 8 | Eu achei o sistema atrapalhado de usar. | 3 |
+| 9 | Eu me senti confiante ao usar o sistema. | 2 |
+| 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 4 |
+
+**Score SUS: 37,5**
+
+---
+
+## Consolidação dos Resultados
+
+| Participante | Score SUS | Classificação |
+|---|---|---|
+| Enzo Braga | 67,5 | OK/Marginal |
+| Lucas Levi | 32,5 | Ruim |
+| Paulo Roberto | 52,5 | OK / Marginal |
+| Lais Victoria | 72,5 | Bom |
+| Pedro Negri | 75,0 | Bom |
+| Valter Lima | 37,5 | Ruim |
+| **Média final** | **56,25** | **OK / Marginal** |
+
+
+<div align="center">
+ <sub>Imagem 102 - Gráfico SUS - Pergunta 1</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_1.png" width="100%" alt="Gráfico SUS - Pergunta 1"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 103 - Gráfico SUS - Pergunta 2</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_2.png" width="100%" alt="Gráfico SUS - Pergunta 2"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 104 - Gráfico SUS - Pergunta 3</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_3.png" width="100%" alt="Gráfico SUS - Pergunta 3"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 105 - Gráfico SUS - Pergunta 4</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_4.png" width="100%" alt="Gráfico SUS - Pergunta 4"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 106 - Gráfico SUS - Pergunta 5</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_5.png" width="100%" alt="Gráfico SUS - Pergunta 5"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 107 - Gráfico SUS - Pergunta 6</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_6.png" width="100%" alt="Gráfico SUS - Pergunta 6"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 108 - Gráfico SUS - Pergunta 7</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_7.png" width="100%" alt="Gráfico SUS - Pergunta 7"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 109 - Gráfico SUS - Pergunta 8</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_8.png" width="100%" alt="Gráfico SUS - Pergunta 8"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 110 - Gráfico SUS - Pergunta 9</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_9.png" width="100%" alt="Gráfico SUS - Pergunta 9"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 111 - Gráfico SUS - Pergunta 10</sub><br>
+<img src="./assets/teste-sus/grafico_pergunta_10.png" width="100%" alt="Gráfico SUS - Pergunta 10"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+## Análise dos Resultados
+
+O score médio de 56,25 posiciona o RedRun abaixo da média de referência do SUS (68) [](#8-referências), com scores individuais variando entre 32,5 e 75,0, uma amplitude de 42,5 pontos que revela experiências bastante assimétricas entre os participantes. Essa dispersão não é aleatória: ela acompanha diretamente o desempenho observado no teste de guerrilha. Participantes que navegaram com mais naturalidade pelo fluxo de gerente, como Lais Victoria (72,5) e Pedro Negri (75,0), avaliaram o sistema de forma positiva. Já os que enfrentaram barreiras no fluxo de auditoria, como Lucas Levi (32,5) e Valter Lima (37,5), reportaram dificuldades que impactaram diretamente sua percepção de usabilidade.
+
+Vale destacar um caso específico: Lucas Levi foi o único participante que não concluiu nenhuma das três tarefas do teste de guerrilha (T1, T2 e T3), e seu score de 32,5 é o mais baixo da amostra, o que reforça a coerência entre desempenho objetivo e percepção subjetiva. Esse caso ilustra bem como o SUS, quando analisado junto ao guerrilha, oferece uma leitura mais completa da experiência do usuário.
+
+Nas perguntas positivas, os resultados mostram uma percepção moderada: na pergunta 1 ("gostaria de usar o sistema com frequência"), 3 de 6 participantes (50%) responderam 4 e 2 responderam 3, sem nenhuma resposta acima de 4. Na pergunta 3 ("achei o sistema fácil de usar"), as respostas ficaram distribuídas igualmente entre 2, 3 e 4, cada uma com 33,3%, sem nenhum 5. Na pergunta 5 ("funções bem integradas"), 3 de 6 (50%) responderam 4, resultado positivo mas contido. Na pergunta 7 ("as pessoas aprenderão rapidamente"), metade dos participantes (50%) respondeu 3 e 33,3% responderam 2, indicando baixa confiança na curva de aprendizado. Na pergunta 9 ("me senti confiante"), 3 de 6 responderam 4, mas 2 responderam 2.
+
+Nas perguntas negativas, os dados são mais preocupantes do que o esperado: na pergunta 2 ("o sistema é desnecessariamente complexo"), 50% responderam 2 e 33,3% responderam 3, ou seja, apenas 1 participante discordou fortemente. Na pergunta 4 ("precisaria de ajuda técnica"), as respostas ficaram divididas igualmente entre 2, 3 e 4 (33,3% cada), o que confirma o achado catastrófico número 2 do guerrilha: a ausência de documentação contextual. Como essa é uma afirmação negativa, concordância alta nela indica problema de usabilidade. Na pergunta 6 ("o sistema apresenta muita inconsistência"), as respostas se dividiram entre 2 e 3 (50% cada), sem nenhuma nota 1, indicando que parte dos participantes percebeu algum grau de inconsistência. Na pergunta 8 ("o sistema é atrapalhado de usar"), 4 de 6 participantes (66,7%) responderam 2, o que é positivo, mas 1 respondeu 3 e 1 respondeu 4. Na pergunta 10 ("precisei aprender coisas novas"), 50% responderam 2, mas 33,3% responderam 4, reforçando a dificuldade de onboarding identificada no guerrilha.
+
+Os dois problemas classificados como catastróficos no teste de guerrilha, o fluxo de auditoria pouco intuitivo e a ausência de documentação contextual, são os principais responsáveis pela queda do score médio abaixo de 68. Eles afetaram diretamente quatro dos seis participantes (Enzo, Lucas, Paulo Roberto e Valter Lima) e impactaram a dimensão mais crítica do sistema: o registro da quilometragem durante o evento.
+
+Por outro lado, o sistema apresenta aspectos avaliados de forma consistente e positiva, como a integração das funcionalidades de gerente, a validação de CPF elogiada por dois testadores e a estabilidade geral da aplicação. Esses pontos são refletidos nos scores mais altos e indicam que a base do sistema é funcional, sendo os ajustes necessários localizados, porém estratégicos.
+
+Com base nos resultados do SUS e nos achados do teste de guerrilha, o grupo realizou melhorias direcionadas ao fluxo de auditoria e à interface do sistema, priorizando os problemas de severidade 3 e 4 identificados. As correções incluíram reestruturação do fluxo de auditoria, adição de instruções contextuais e melhorias na seleção de perfil. Por limitações de tempo e disponibilidade dos participantes, não foi possível reaplicar o SUS após as refatorações para mensurar o impacto das mudanças.
+
+Como limitação, vale registrar que a amostra é pequena (n=6), não probabilística e composta por participantes sem contexto operacional do evento, o que pode ter introduzido viés de cortesia nas respostas e amplificado a percepção de dificuldade em tarefas que um auditor real executaria com mais familiaridade.
+
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
 
