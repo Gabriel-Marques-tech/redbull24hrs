@@ -52,7 +52,7 @@ Regras de negócio são declarações que definem ou restringem aspectos do func
 **RN16** — Um corredor só pode ser vinculado a uma única equipe por evento. Após o início do primeiro turno do evento, não é permitido adicionar, remover ou transferir corredores entre equipes.
 - RF associado: RF002
 
-**RN17** — O sistema deve bloquear o início de qualquer turno enquanto qualquer uma das duas equipes não possuir exatamente 16 corredores com status "ativo". O bloqueio deve ser verificado a cada tentativa de início de turno, não apenas no cadastro.
+**RN17** — O sistema deve bloquear o início de qualquer turno enquanto qualquer uma das duas equipes não possuir ao menos um corredor com status "ativo"; não há exigência de número exato de corredores. O bloqueio deve ser verificado a cada tentativa de início de turno, não apenas no cadastro.
 - RF associado: RF003
 
 **RN18** — O campo local/região é obrigatório e deve ser preenchido antes do início do primeiro turno. Após o início do evento, o local não pode ser alterado — qualquer tentativa deve ser rejeitada.

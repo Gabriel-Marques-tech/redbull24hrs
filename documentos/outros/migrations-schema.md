@@ -173,8 +173,8 @@ filename (PK), applied_at
    exclusivas (CHECK: exatamente uma preenchida). Não existe mais `user_id`/`user_role`
    nem tabela `users`.
 7. **RF003 (RN17/RN28)**: `POST /audit/shifts/start` valida que todas as equipes do evento
-   do atleta têm exatamente 16 corredores ativos antes de abrir o turno. Sem coluna nova —
-   implementado via query em `shiftRepository.validateTeamsForAthlete`. Retorna 422 se violado.
+   do atleta têm ao menos um corredor ativo antes de abrir o turno, sem exigir número exato.
+   Sem coluna nova — implementado via query em `shiftRepository.validateTeamsForAthlete`. Retorna 422 se violado.
 9. **RF026 (RN27)**: `POST /audit/sync` — batch de checkpoints offline. Frontend gera
    `sync_id = SHA256(shift_id|distance|checkpoint_type|timestamp)` (hex 64 chars).
    Backend insere com timestamp original; `ON CONFLICT (sync_id) WHERE sync_id IS NOT NULL DO NOTHING`
