@@ -73,6 +73,8 @@ body{
 /* ---------------- BOTÃƒO DE CANCELAR TELAS AUDITOR ---------------- */
 
 .cancelar {
+    position: relative;
+    z-index: 30;
     display: flex;
     align-items: center;
     width: 50px;
@@ -119,7 +121,7 @@ main:has(> .etapas) {
 main > .etapas{
     position: absolute;
     top: 55px;
-    left: 50%;
+    left: 50vw;
     z-index: 20;
     display: flex;
     align-items: flex-start;
@@ -203,7 +205,7 @@ main > .etapas .etapa p{
 .botoes-fluxo-selecao {
     position: fixed !important;
     bottom: 65px !important;
-    left: 50%;
+    left: 50vw;
     z-index: 100;
     display: flex;
     justify-content: center;
@@ -219,6 +221,7 @@ main > .etapas .etapa p{
     height: 60px !important;
     border-radius: 6px;
     font-size: 28px !important;
+    touch-action: manipulation;
 }
 
 .botoes-fluxo-selecao > button:not(:disabled),

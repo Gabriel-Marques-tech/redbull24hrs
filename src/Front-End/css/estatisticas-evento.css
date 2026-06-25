@@ -3,7 +3,7 @@ body { overflow: auto !important; }
 main { height: auto !important; }
 
 .conteudo-stats {
-    width: 760px;
+    width: min(760px, calc(100vw - 48px));
     padding-bottom: 60px;
 }
 
@@ -2693,4 +2693,117 @@ html[data-theme="dark"] .genero-nome {
     color: #17003f !important;
     -webkit-text-fill-color: #17003f;
     text-shadow: none;
+}
+
+@media (max-width: 600px) {
+    .conteudo-stats {
+        width: calc(100vw - 32px);
+        padding-bottom: 80px;
+    }
+
+    /* topo */
+    .stats-topo {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .stats-topo-info h1 {
+        font-size: 24px;
+    }
+
+    .stats-titulo-linha {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .stats-acoes-topo {
+        flex-wrap: wrap;
+        margin-right: 0;
+        gap: 8px;
+    }
+
+    .stats-titulo-linha .btn-exportar {
+        width: 100%;
+        margin-right: 0;
+        justify-content: center;
+    }
+
+    .btn-modo-tv,
+    .btn-exportar {
+        width: 100%;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+    /* barra de ação */
+    .stats-barra-acao {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 14px 16px;
+    }
+
+    .stats-barra-botoes {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .btn-pausar,
+    .btn-finalizar {
+        flex: 1;
+        min-width: 0;
+        font-size: 14px;
+    }
+
+    /* tabs */
+    .stats-tabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+    }
+
+    .tab {
+        white-space: nowrap;
+        font-size: 13px;
+        padding: 10px 14px;
+    }
+
+    /* KPI grid */
+    .dash-kpis {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dash-kpi-valor {
+        font-size: 22px;
+    }
+
+    /* 2-col grid → 1 col */
+    .dash-grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    /* team stat body → wrap */
+    .team-stat-body {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .stat-item {
+        flex: 0 0 calc(50% - 6px);
+        padding: 0;
+        border-right: none;
+    }
+
+    /* tables → horizontal scroll */
+    .tabela-historico,
+    .tabela-atletas {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .stats-meta {
+        flex-wrap: wrap;
+        gap: 8px;
+        font-size: 14px;
+    }
 }

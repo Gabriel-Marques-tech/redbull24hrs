@@ -20,6 +20,8 @@
     height: 31px;
     border-radius: 50%;
     background-color: #d9d9d9;
+    background-size: cover;
+    background-position: center;
     display: inline-block;
     flex-shrink: 0;
     margin-top: 12px;
@@ -778,14 +780,16 @@
 /* ---------------- REGISTROS ---------------- */
 
 .area-registros {
-    width: 780px;
+    width: min(780px, calc(100vw - 24px));
     display: flex;
     gap: 28px;
     margin-top: 18px;
 }
 
 .ultimos-registros {
-    width: 532px;
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
 }
 
 .ultimos-registros h2,
@@ -1797,7 +1801,7 @@ img {
     width: min(720px, calc(100vw - 48px));
     max-height: calc(100vh - 48px);
     padding: 22px 40px 24px;
-    overflow-y: auto;
+    overflow: hidden;
     justify-content: flex-start;
 }
 
@@ -2804,8 +2808,9 @@ html[data-theme="dark"] #modalCheckpoint .checkpoint-input-linha input::placehol
 #modalCheckpoint .modal-checkpoint-conteudo .btn-registrar-turno,
 #modalCheckpoint .modal-checkpoint-conteudo .btn-cancelar-turno {
     position: static;
-    width: 178px;
-    flex: 0 0 178px;
+    width: auto;
+    flex: 1;
+    min-width: 0;
 }
 
 #modalCheckpoint .modal-checkpoint-conteudo .btn-registrar-turno {
@@ -2973,4 +2978,584 @@ html[data-theme="dark"] #modalEsteira .opcao-esteira.opcao-ocupada {
 
 html[data-theme="dark"] .fila-lista.fila-aberta::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.22);
+}
+
+/* ────────────────────────────────────────────────────────────
+   MODAL CHECKPOINT: 1 coluna em viewports ≤ 900px (iPad incluído)
+   ──────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+
+    #modalCheckpoint .modal-turno-conteudo {
+        height: auto;
+        padding: 16px 20px 18px;
+        overflow: hidden;
+        align-items: stretch;
+    }
+
+    #modalCheckpoint .checkpoint-cronometro-topo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    #modalCheckpoint .checkpoint-corredor {
+        width: 100%;
+    }
+
+    #modalCheckpoint .checkpoint-corredor select {
+        height: 38px;
+        font-size: 15px;
+    }
+
+    #modalCheckpoint .checkpoint-conteudo {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        padding-top: 8px;
+        padding-bottom: 4px;
+        gap: 8px;
+    }
+
+    #modalCheckpoint .checkpoint-foto {
+        padding-right: 0;
+        padding-bottom: 0;
+    }
+
+    #modalCheckpoint .checkpoint-foto .checkpoint-secao-titulo {
+        display: none;
+    }
+
+    #modalCheckpoint .checkpoint-foto-preview {
+        display: none;
+    }
+
+    #modalCheckpoint .btn-checkpoint-foto {
+        margin: 0;
+        width: 100%;
+        height: 36px;
+        font-size: 13px;
+    }
+
+    #modalCheckpoint .checkpoint-dados {
+        padding-left: 0;
+        border-left: none;
+    }
+
+    #modalCheckpoint .checkpoint-dados .checkpoint-secao-titulo {
+        display: none;
+    }
+
+    #modalCheckpoint .checkpoint-campos {
+        gap: 6px;
+        margin-top: 0;
+    }
+
+    #modalCheckpoint .checkpoint-input-linha input {
+        height: 36px;
+        font-size: 14px;
+    }
+
+    #modalCheckpoint .modal-checkpoint-conteudo .checkpoint-acoes {
+        gap: 10px;
+        margin-top: 10px;
+        justify-content: stretch;
+    }
+
+    #modalCheckpoint .modal-checkpoint-conteudo .btn-cancelar-turno,
+    #modalCheckpoint .modal-checkpoint-conteudo .btn-registrar-turno {
+        height: 40px;
+        font-size: 14px;
+        flex: 1;
+        width: auto;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+/* ────────────────────────────────────────────────────────────
+   MODAIS: compacto em viewports ≤ 768px (telefones + tablets)
+   ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+    /* ── Modal finalizar turno ── */
+    #modalTurno .modal-turno-conteudo {
+        padding: 16px 20px 18px;
+    }
+
+    #modalTurno .modal-turno-conteudo::before {
+        font-size: 18px;
+        margin-bottom: 8px;
+        padding-bottom: 6px;
+    }
+
+    #modalTurno .finalizar-turno-foto {
+        min-height: 0;
+        padding: 8px 12px;
+        gap: 12px;
+        margin-bottom: 8px;
+    }
+
+    #modalTurno .finalizar-turno-foto-preview {
+        width: 64px;
+        height: 40px;
+        flex-basis: 64px;
+    }
+
+    #modalTurno .finalizar-turno-foto-info strong {
+        font-size: 14px;
+    }
+
+    #modalTurno .finalizar-turno-foto-info small {
+        font-size: 12px;
+        margin: 2px 0 6px;
+    }
+
+    #modalTurno .btn-finalizar-turno-foto {
+        height: 28px;
+        font-size: 12px;
+        padding: 0 12px;
+    }
+
+    /* corredor + tempo em linha */
+    #modalTurno .campos-turno {
+        flex-wrap: nowrap;
+        gap: 10px;
+        justify-content: flex-start;
+    }
+
+    #modalTurno .campo-corredor {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    #modalTurno .campo-tempo {
+        flex: 0 0 150px;
+        width: 150px;
+    }
+
+    #modalTurno .campo-turno label {
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
+
+    #modalTurno .campo-turno select,
+    #modalTurno .campo-turno input {
+        height: 36px;
+        font-size: 14px;
+    }
+
+    #modalTurno .tempo-percorrido {
+        font-size: 20px;
+    }
+
+    #modalTurno .relacao-horario {
+        font-size: 11px;
+        margin-top: 3px;
+    }
+
+    #modalTurno .campos-km {
+        gap: 10px;
+        margin-top: 8px;
+    }
+
+    #modalTurno .campo-quilometragem {
+        margin-top: 0;
+    }
+
+    #modalTurno .acoes-modal-turno {
+        margin-top: 10px;
+        gap: 10px;
+    }
+
+    #modalTurno .modal-turno-conteudo .btn-cancelar-turno,
+    #modalTurno .modal-turno-conteudo .btn-registrar-turno {
+        height: 42px;
+        font-size: 15px;
+    }
+
+    /* ── Modal checkpoint: layout coluna única ── */
+    #modalCheckpoint .modal-turno-conteudo {
+        height: auto;
+        padding: 16px 20px 18px;
+        overflow: hidden;
+        align-items: stretch;
+    }
+
+    #modalCheckpoint .checkpoint-cronometro-topo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    #modalCheckpoint .checkpoint-cronometro-label {
+        font-size: 11px;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+
+    #modalCheckpoint .checkpoint-cronometro-valor {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--vermelho);
+        font-variant-numeric: tabular-nums;
+        margin-left: auto;
+    }
+
+    #modalCheckpoint .checkpoint-corredor {
+        width: 100%;
+    }
+
+    #modalCheckpoint .checkpoint-corredor label {
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
+
+    #modalCheckpoint .checkpoint-corredor select {
+        height: 38px;
+        font-size: 15px;
+    }
+
+    #modalCheckpoint .checkpoint-divisor {
+        margin-top: 8px;
+    }
+
+    /* grid 2 col → flex coluna */
+    #modalCheckpoint .checkpoint-conteudo {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        padding-top: 8px;
+        padding-bottom: 4px;
+        gap: 8px;
+    }
+
+    /* seção foto: só o botão, largura total */
+    #modalCheckpoint .checkpoint-foto {
+        padding-right: 0;
+        padding-bottom: 0;
+    }
+
+    #modalCheckpoint .checkpoint-foto .checkpoint-secao-titulo {
+        display: none;
+    }
+
+    #modalCheckpoint .checkpoint-foto-preview {
+        display: none;
+    }
+
+    #modalCheckpoint .btn-checkpoint-foto {
+        margin: 0;
+        width: 100%;
+        height: 36px;
+        font-size: 13px;
+        gap: 6px;
+    }
+
+    #modalCheckpoint .btn-checkpoint-foto svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* seção dados: campos empilhados */
+    #modalCheckpoint .checkpoint-dados {
+        padding-left: 0;
+        border-left: none;
+    }
+
+    #modalCheckpoint .checkpoint-dados .checkpoint-secao-titulo {
+        display: none;
+    }
+
+    #modalCheckpoint .checkpoint-campos {
+        gap: 6px;
+        margin-top: 0;
+    }
+
+    #modalCheckpoint .checkpoint-campo label {
+        font-size: 12px;
+        margin-bottom: 2px;
+    }
+
+    #modalCheckpoint .checkpoint-input-linha input {
+        height: 36px;
+        font-size: 14px;
+    }
+
+    /* especificidade (1,2,0) para bater linha 2799-2813 */
+    #modalCheckpoint .modal-checkpoint-conteudo .checkpoint-acoes {
+        gap: 10px;
+        margin-top: 10px;
+        justify-content: stretch;
+    }
+
+    #modalCheckpoint .modal-checkpoint-conteudo .btn-cancelar-turno,
+    #modalCheckpoint .modal-checkpoint-conteudo .btn-registrar-turno {
+        height: 40px;
+        font-size: 14px;
+        flex: 1;
+        width: auto;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+@media (max-width: 600px) {
+
+    /* ── Checkpoint iPhone: inputs 2 colunas para caber na tela ── */
+    #modalCheckpoint .modal-turno-conteudo {
+        padding: 12px 14px 14px;
+    }
+
+    #modalCheckpoint .checkpoint-cronometro-topo {
+        margin-bottom: 6px;
+    }
+
+    #modalCheckpoint .checkpoint-cronometro-valor {
+        font-size: 17px;
+    }
+
+    #modalCheckpoint .checkpoint-corredor select {
+        height: 34px;
+        font-size: 14px;
+    }
+
+    #modalCheckpoint .checkpoint-divisor {
+        margin-top: 6px;
+    }
+
+    #modalCheckpoint .checkpoint-conteudo {
+        gap: 6px;
+        padding-top: 6px;
+    }
+
+    #modalCheckpoint .btn-checkpoint-foto {
+        height: 30px;
+        font-size: 12px;
+    }
+
+    /* distância e velocidade em linha, tempo abaixo sozinho */
+    #modalCheckpoint .checkpoint-campos {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+
+    /* tempo ocupa as 2 colunas */
+    #modalCheckpoint .checkpoint-campo:nth-child(2) {
+        grid-column: 1 / -1;
+    }
+
+    #modalCheckpoint .checkpoint-input-linha input {
+        height: 32px;
+        font-size: 13px;
+    }
+
+    #modalCheckpoint .checkpoint-campo label {
+        font-size: 11px;
+    }
+
+    #modalCheckpoint .modal-checkpoint-conteudo .checkpoint-acoes {
+        margin-top: 8px;
+        gap: 8px;
+    }
+
+    #modalCheckpoint .modal-checkpoint-conteudo .btn-cancelar-turno,
+    #modalCheckpoint .modal-checkpoint-conteudo .btn-registrar-turno {
+        height: 36px;
+        font-size: 13px;
+    }
+
+    body {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    /* --- topo --- */
+    .topo {
+        height: 64px;
+        padding: 0 14px;
+    }
+
+    .operador p {
+        font-size: 14px;
+    }
+
+    .tempo-restante {
+        font-size: 13px;
+    }
+
+    /* --- cronômetro --- */
+    .conteudo-auditoria {
+        padding: 0 16px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .cronometro-area {
+        width: 100%;
+    }
+
+    .corredor-atual p {
+        font-size: 17px;
+    }
+
+    .cronometro {
+        width: 100%;
+        height: 100px;
+        font-size: 52px;
+    }
+
+    /* --- ações --- */
+    .acoes-wrapper {
+        width: 100%;
+    }
+
+    .input-km {
+        max-width: 100%;
+    }
+
+    .acoes-corrida {
+        width: 100%;
+    }
+
+    .btn-iniciar {
+        flex: 1;
+    }
+
+    /* --- modal de esteira --- */
+    .modal-conteudo {
+        width: 96vw;
+        height: auto;
+        max-height: 90vh;
+        padding: 20px 16px;
+        overflow-y: auto;
+        justify-content: flex-start;
+    }
+
+    .modal-conteudo h2 {
+        font-size: 18px;
+        margin-bottom: 16px;
+        text-align: center;
+    }
+
+    .opcoes-esteira {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .opcao-esteira {
+        width: 100%;
+        height: 72px;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 12px;
+        padding: 0 16px;
+        font-size: 16px;
+    }
+
+    .opcao-esteira .icone-esteira {
+        width: 40px;
+        flex-shrink: 0;
+    }
+
+    .acoes-modal {
+        margin-top: 16px;
+        width: 100%;
+    }
+
+    .btn-cancelar-modal,
+    .btn-selecionar-modal {
+        flex: 1;
+        font-size: 15px;
+    }
+
+    /* --- modal finalizar competição --- */
+    .modal-finalizar-conteudo {
+        width: 94vw;
+        height: auto;
+        padding: 24px 18px;
+    }
+
+    .modal-finalizar-conteudo h2 {
+        font-size: 22px;
+    }
+
+    .modal-finalizar-conteudo p {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    /* --- modal operador --- */
+    .modal-operador {
+        width: calc(100vw - 32px);
+    }
+
+    /* --- registros --- */
+    .area-registros {
+        width: 100%;
+        flex-direction: column;
+        gap: 16px;
+        margin-top: 14px;
+    }
+
+    .ultimos-registros {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .proximos-corredores {
+        width: 100%;
+    }
+
+    /* --- modal de turno (campos) --- */
+    .campos-turno {
+        flex-direction: column;
+        gap: 16px;
+        width: 100%;
+        align-items: stretch;
+    }
+
+    .campo-corredor,
+    .campo-corredor select {
+        width: 100%;
+    }
+
+    .campo-horario,
+    .campo-horario input {
+        width: 100%;
+    }
+
+    .campo-turno label {
+        font-size: 18px;
+    }
+
+    .campo-turno select,
+    .campo-turno input {
+        height: 52px;
+        font-size: 18px;
+    }
+
+    .campo-quilometragem {
+        width: 100%;
+        transform: none;
+        margin-top: 24px;
+    }
+
+    .campo-quilometragem input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .btn-registrar-turno {
+        width: 100%;
+        margin-top: 32px;
+        font-size: 22px;
+        height: 60px;
+    }
 }
