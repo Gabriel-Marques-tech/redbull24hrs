@@ -2758,3 +2758,57 @@ html[data-theme="dark"] #modalCheckpoint .checkpoint-input-linha input::placehol
 .corredor-atual .acao-corredor {
     margin-top: 14px;
 }
+
+/* Ajustes finais de escala e ergonomia da auditoria. */
+.modal-km-menor-conteudo {
+    width: 665px;
+    max-width: 90vw;
+    min-height: 340px;
+    padding: 34px 48px 42px;
+}
+
+.modal-km-menor-conteudo h2 {
+    font-size: 26px;
+    margin-bottom: 8px;
+}
+
+.modal-km-menor-conteudo p {
+    font-size: 19px;
+    margin-bottom: 24px;
+}
+
+.resumo-km-menor {
+    margin-bottom: 28px;
+}
+
+.acoes-corrida:has(.btn-proximo-corredor:not(.escondido)) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.acoes-corrida:has(.btn-proximo-corredor:not(.escondido)) .btn-iniciar,
+.acoes-corrida:has(.btn-proximo-corredor:not(.escondido)) .btn-proximo-corredor {
+    min-width: 0;
+    height: 64px;
+    padding: 0 18px;
+    font-size: 18px;
+    line-height: 1.12;
+    text-align: center;
+}
+
+.acoes-corrida:has(.btn-proximo-corredor:not(.escondido)) .btn-iniciar {
+    white-space: normal;
+}
+
+.fila-lista.fila-aberta {
+    max-height: 320px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 8px;
+    border: 1px solid #d5d5dc;
+    border-radius: 8px;
+}
+
+html[data-theme="dark"] .fila-lista.fila-aberta {
+    border-color: var(--borda);
+    background: rgba(255, 255, 255, 0.03);
+}
