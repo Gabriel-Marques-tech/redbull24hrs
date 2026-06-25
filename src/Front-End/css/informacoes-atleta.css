@@ -163,12 +163,13 @@
     gap: 18px;
 }
 
-.campo-cpf-apoio {
+.campo-cpf-apoio,
+.escondido {
     display: none !important;
 }
 
 #formAtleta.cadastro-apoio #campoEmailPessoa {
-    display: none;
+    display: flex;
 }
 
 #formAtleta.cadastro-apoio .campo-cpf-apoio {
@@ -180,8 +181,7 @@
     margin-top: -18px;
     grid-template-columns: 264px minmax(0, 1fr);
     grid-template-areas:
-        "foto dados"
-        "foto senha"
+        "foto campos"
         "acao acao";
     column-gap: 18px;
     row-gap: 10px;
@@ -215,15 +215,31 @@
     align-self: center;
 }
 
+#formAtleta.cadastro-apoio .campos-apoio-wrapper {
+    grid-area: campos;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 #formAtleta.cadastro-apoio .grid-cadastro-pessoa {
-    grid-area: dados;
     grid-template-columns: 1fr;
     gap: 10px;
 }
 
+#registroAuditor::-webkit-outer-spin-button,
+#registroAuditor::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#registroAuditor {
+    -moz-appearance: textfield;
+}
+
 #formAtleta.cadastro-apoio .campos-acesso {
-    grid-area: senha;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 0;
 }
 

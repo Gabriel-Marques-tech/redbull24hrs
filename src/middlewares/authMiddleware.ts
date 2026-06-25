@@ -18,6 +18,7 @@ const requireAuth = (req: Request, res: Response, next: NextFunction): void => {
       email: payload.email,
       role: payload.role,
       name: payload.name,
+      image_url: payload.image_url ?? null,
     };
     next();
   } catch {
@@ -51,6 +52,7 @@ const requirePageAuth = async (req: Request, res: Response, next: NextFunction) 
                 email: payload.email,
                 role: payload.role,
                 name: payload.name,
+                image_url: payload.image_url ?? null,
             }
             next()
             return
@@ -95,6 +97,7 @@ const requirePageAuth = async (req: Request, res: Response, next: NextFunction) 
             email: payload.email,
             role: payload.role,
             name: payload.name,
+            image_url: payload.image_url ?? null,
         }
     } catch {
         res.redirect('/login')
