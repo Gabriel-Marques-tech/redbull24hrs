@@ -3,7 +3,7 @@ import { pool } from "./database/connection";
 import app from "./app";
 
 config();
-const port = Number(process.env.SERVER_PORT);
+const port = Number(process.env.PORT ?? process.env.SERVER_PORT ?? 3000);
 
 async function bootstrap() {
 	try {

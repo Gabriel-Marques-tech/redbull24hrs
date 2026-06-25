@@ -240,3 +240,57 @@ describe("exportService – fmtInterval ramo objeto", () => {
 		expect(res.body.error).toBe("db down");
 	});
 });
+
+// ─── exportService – ramos de formatação (fmtDate/fmtStatus/fmtSpeed/zebra) ───
+
+describe("exportService – ramos de formatação", () => {
+	const cellAt = (ws: ExcelJS.Worksheet, header: string, rowNumber: number): string => {
+		const headers = rowValues(ws, 1);
+		const idx = headers.indexOf(header);
+		return rowValues(ws, rowNumber)[idx] ?? "";
+	};
+
+	it("200 – cobre data inválida, status nulo/desconhecido, velocidade e zebra", async () => {
+		const rows = [
+			{
+				...mockShiftRows[0],
+				status: null,                       // fmtStatus: v ?? ""
+				speed: null,                        // fmtSpeed: v == null
+				pace: "5:30",                       // transformShift: pace ?? "" (ramo truthy)
+				start_at: "data-invalida",          // fmtDate: isNaN(getTime())
+				total_time: { minutes: 30, seconds: 5 }, // fmtInterval: hours || 0
+			},
+			{
+				...mockShiftRows[0],
+				id: 2,
+				status: "status_desconhecido",      // fmtStatus: STATUS_MAP[s] ?? s
+				speed: "abc",                       // fmtSpeed: isNaN(n)
+				pace: "",
+			},
+			{
+				...mockShiftRows[0],
+				id: 3,
+				speed: "",                          // fmtSpeed: v === ""
+			},
+		];
+		(exportRepository.shiftsByEvent as jest.Mock).mockResolvedValue(rows);
+		const res = await request(app).get("/export/events/1/shifts").buffer().parse(binaryParser);
+		expect(res.status).toBe(200);
+		const ws = await loadSheet(res.body);
+		expect(ws.rowCount).toBe(4); // header + 3 linhas (cobre zebra na linha ímpar)
+
+		// linha 2 (row index 0)
+		expect(cellAt(ws, "Início", 2)).toBe("data-invalida");
+		expect(cellAt(ws, "Status", 2)).toBe("");
+		expect(cellAt(ws, "Velocidade", 2)).toBe("");
+		expect(cellAt(ws, "Pace (min/km)", 2)).toBe("5:30");
+		expect(cellAt(ws, "Duração (hh:mm:ss)", 2)).toBe("00:30:05");
+
+		// linha 3 (row index 1 → zebra)
+		expect(cellAt(ws, "Status", 3)).toBe("status_desconhecido");
+		expect(cellAt(ws, "Velocidade", 3)).toBe("abc");
+
+		// linha 4 (row index 2): velocidade vazia e numérica normal coberta antes
+		expect(cellAt(ws, "Velocidade", 4)).toBe("");
+	});
+});
