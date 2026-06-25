@@ -80,6 +80,7 @@
                             <th>Corredor</th>
                             <th>Km início</th>
                             <th>Km fim</th>
+                            <th>Pace</th>
                             <th>Início</th>
                             <th>Fim</th>
                             <th>Auditor</th>
@@ -359,9 +360,16 @@
                 </div>
             </div>
 
-            <div class="campo-turno campo-quilometragem">
-                <label for="quilometragemTurno">Registre a quilometragem final</label>
-                <input id="quilometragemTurno" type="number" min="0" step="0.1" placeholder="Km final">
+            <div class="campos-km">
+                <div class="campo-turno campo-pace">
+                    <label for="paceTurno">Pace da esteira</label>
+                    <input id="paceTurno" type="text" maxlength="5" placeholder="MM:SS">
+                </div>
+
+                <div class="campo-turno campo-quilometragem">
+                    <label for="quilometragemTurno">Quilometragem final</label>
+                    <input id="quilometragemTurno" type="number" min="0" step="0.1" placeholder="Km final">
+                </div>
             </div>
 
             <div class="acoes-modal-turno">

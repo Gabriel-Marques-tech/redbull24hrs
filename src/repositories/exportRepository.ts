@@ -13,6 +13,7 @@ export const exportRepository = {
 			   s.km_end,
 			   s.distance,
 			   s.speed,
+			   s.pace,
 			   a.name     AS athlete_name,
 			   t.name     AS team_name,
 			   tr.number  AS treadmill_number,

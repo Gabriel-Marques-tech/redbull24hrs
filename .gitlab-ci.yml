@@ -2,7 +2,7 @@ pages:
   stage: deploy
   script:
     - mkdir -p public/api
-    - cp docs/api/index.html public/api/index.html
+    - cp documentos/outros/WebAPI/index.html public/api/index.html
   artifacts:
     paths:
       - public
