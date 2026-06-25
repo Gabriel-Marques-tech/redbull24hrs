@@ -41,6 +41,13 @@ export const eventService = {
 		if (!event) throw new Error("Evento não encontrado");
 		if (event.status === "in_progress") throw new Error("Evento já está em andamento");
 		if (event.status === "finished") throw new Error("Evento já está encerrado");
+
+		const emptyTeams = await eventRepository.teamsWithoutAthletes(id);
+		if (emptyTeams.length > 0) {
+			const names = emptyTeams.map((t) => `"${t.name}"`).join(", ");
+			throw new Error(`Não é possível iniciar o evento: equipe(s) sem atletas cadastrados: ${names}`);
+		}
+
 		const started = await eventRepository.start(id);
 		if (!started) throw new Error("Não foi possível iniciar o evento");
 		return started;
