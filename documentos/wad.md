@@ -628,12 +628,12 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
  | Identificação | US07 |
 | :--- | :--- |
 | **Persona** | Bruno Gardesani |
-| **User Story** | "Como gerente de evento, quero cadastrar e listar previamente as equipes e seus respectivos 16 atletas na etapa de configuração, para que os operadores possam apenas selecionar os competidores corretos no início das corridas, evitando atrasos e digitações incorretas na pista." |
+| **User Story** | "Como gerente de evento, quero cadastrar e listar previamente as equipes e seus respectivos atletas na etapa de configuração, para que os operadores possam apenas selecionar os competidores corretos no início das corridas, evitando atrasos e digitações incorretas na pista." |
 | **Critério de aceite 1** | CR1: O sistema deve permitir o cadastro nominal de todos os atletas exclusivamente na etapa de configuração pré-evento, associando cada um à sua respectiva equipe.<br>**Validação:** Verificar se a tela de registro pré-evento aceita a inserção e armazena os nomes dos atletas vinculados às equipes. |
 | **Teste de aceitação 1** | Acessar o módulo de configuração pré-evento, cadastrar uma lista de atletas para a "Equipe A" e salvar antes da largada.<br>**Esperado:** Atletas persistidos com sucesso e vinculados corretamente à listagem da equipe. |
 | **Critério de aceite 2** | CR2: A tela de início de turno operada pelo operador deve conter apenas um campo de seleção (*select/dropdown*) com a lista pré-carregada de atletas cadastrados.<br>**Validação:** Garantir que o operador não consiga digitar ou alterar o nome do atleta no momento de iniciar uma corrida. |
 | **Teste de aceitação 2** | Iniciar um novo turno na esteira e abrir o campo de seleção do atleta.<br>**Esperado:** O sistema exibe em formato de lista os nomes previamente cadastrados pelo gerente, sem campo de texto livre para digitação. |
-| **Critérios INVEST** | **Independente:** Isola o escopo de gestão cadastral das regras de cronometragem da pista.<br>**Negociável:** A interface de listagem pode usar ordenação alfabética ou por número de inscrição.<br>**Valiosa:** Mitiga erros de grafia no calor do evento e blinda as regras de negócio de 16 atletas por equipe.<br>**Estimável:** Baseia-se em formulários CRUD tradicionais de banco de dados.<br>**Pequena:** Focada estritamente na carga de dados estruturais iniciais.<br>**Testável:** Validada checando se os nomes salvos na configuração aparecem perfeitamente nas telas de pista. |
+| **Critérios INVEST** | **Independente:** Isola o escopo de gestão cadastral das regras de cronometragem da pista.<br>**Negociável:** A interface de listagem pode usar ordenação alfabética ou por número de inscrição.<br>**Valiosa:** Mitiga erros de grafia no calor do evento e blinda as regras de negócio de composição das equipes.<br>**Estimável:** Baseia-se em formulários CRUD tradicionais de banco de dados.<br>**Pequena:** Focada estritamente na carga de dados estruturais iniciais.<br>**Testável:** Validada checando se os nomes salvos na configuração aparecem perfeitamente nas telas de pista. |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -765,7 +765,7 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------- |
 | RF001 | O sistema deve permitir o cadastro de exatamente duas equipes por evento, com nome e identificador únicos, impedindo duplicatas.                                                          | Alta       | Planejado |
 | RF002 | O sistema deve permitir o cadastro de corredores vinculados a uma única equipe das duas existentes por evento.                                                                            | Alta       | Planejado |
-| RF003 | O sistema deve validar que cada equipe possui exatamente 16 corredores antes do início do evento, bloqueando o início caso a condição não seja atendida.                                  | Alta       | Planejado |
+| RF003 | O sistema não deve exigir um número exato de corredores por equipe; o início do evento é permitido independentemente da quantidade cadastrada em cada equipe, bastando que cada equipe possua ao menos um corredor ativo. | Alta       | Planejado |
 | RF004 | O sistema deve permitir a seleção da esteira onde o corredor iniciará a atividade.                                                                                                        | Alta       | Planejado |
 | RF005 | O sistema deve permitir a seleção da equipe associada à esteira escolhida.                                                                                                                | Alta       | Planejado |
 | RF006 | O sistema deve permitir a seleção do corredor da equipe para iniciar a corrida.                                                                                                           | Alta       | Planejado |
@@ -860,16 +860,16 @@ Então o sistema deve exibir erro de validação no campo de equipe e não persi
 
 ---
 
-**RF003 – Validação de 16 corredores por equipe**
+**RF003 – Não obrigatoriedade de número exato de corredores por equipe**
 
 ```gherkin
-Dado que uma equipe possui menos de 16 corredores cadastrados
+Dado que uma equipe não possui nenhum corredor ativo
 Quando o Administrador tenta iniciar o evento
-Então o sistema deve bloquear o início e exibir a mensagem "A equipe [nome] possui [N] corredor(es). São necessários exatamente 16"
+Então o sistema deve bloquear o início e exibir a mensagem "A equipe [nome] não possui corredores ativos"
 
-Dado que ambas as equipes possuem exatamente 16 corredores
+Dado que ambas as equipes possuem ao menos um corredor ativo, em qualquer quantidade
 Quando o Administrador tenta iniciar o evento
-Então o sistema deve permitir o início sem bloqueios
+Então o sistema deve permitir o início sem exigir número exato de corredores
 ```
 
 ---
@@ -1513,7 +1513,7 @@ Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio 
 | RN14 | No modo TV nenhuma ação de escrita pode ser executada — a interface é estritamente somente leitura. O acesso ao modo TV não requer autenticação. Qualquer tentativa de POST/PUT/DELETE originada do modo TV deve ser bloqueada no servidor.                                                                | RF040 |
 | RN15 | O sistema permite o cadastro de exatamente 2 equipes por evento. A tentativa de cadastrar uma terceira equipe deve ser bloqueada com mensagem de erro. Nomes de equipes devem ser únicos dentro do evento.                                                                                                 | RF001 |
 | RN16 | Um corredor só pode ser vinculado a uma única equipe por evento. Após o início do primeiro turno do evento, não é permitido adicionar, remover ou transferir corredores entre equipes.                                                                                                                     | RF002 |
-| RN17 | O sistema deve bloquear o início de qualquer turno enquanto qualquer uma das duas equipes não possuir exatamente 16 corredores com status "ativo". O bloqueio deve ser verificado a cada tentativa de início de turno, não apenas no cadastro.                                                             | RF003 |
+| RN17 | O sistema deve bloquear o início de qualquer turno enquanto qualquer uma das duas equipes não possuir ao menos um corredor com status "ativo"; não há exigência de número exato de corredores. O bloqueio deve ser verificado a cada tentativa de início de turno, não apenas no cadastro.                                                             | RF003 |
 | RN18 | O campo local/região é obrigatório e deve ser preenchido antes do início do primeiro turno. Após o início do evento, o local não pode ser alterado — qualquer tentativa deve ser rejeitada.                                                                                                                | RF051 |
 | RN19 | Apenas esteiras com status "Livre" podem ser selecionadas para iniciar um novo turno. Esteiras "Ocupadas" devem aparecer visualmente desabilitadas na interface e não aceitar seleção.                                                                                                                     | RF004 |
 | RN20 | A equipe selecionada para uma esteira fica associada durante todo o turno em andamento. Não é permitido trocar a equipe de uma esteira enquanto houver turno em andamento nela.                                                                                                                            | RF005 |
@@ -1556,7 +1556,7 @@ A coluna **Status** reflete o estado de implementação na WebAPI (seção 3.7):
 | ----- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | ------------------------------- |
 | RF001 | RN15, RN28                          | `POST /teams`, `GET /teams`, `GET /teams/:id`, `PATCH /teams/:id`                                                                                | POST / GET / GET / PATCH               | Implementado                    |
 | RF002 | RN16                                | `POST /teams/:teamId/athletes`, `GET /teams/:teamId/athletes`, `GET /teams/:teamId/athletes/:id`, `PATCH /teams/:teamId/athletes/:id`            | POST / GET / GET / PATCH               | Implementado                    |
-| RF003 | RN17, RN28                          | `POST /audit/shifts/start` (RN17 bloqueia início sem 16 atletas ativos), `PATCH /events/:id/start`                                               | POST / PATCH                           | Implementado                    |
+| RF003 | RN17, RN28                          | `POST /audit/shifts/start` (RN17 bloqueia início sem corredores ativos), `PATCH /events/:id/start`                                               | POST / PATCH                           | Implementado                    |
 | RF004 | RN19                                | `GET /events/treadmills`, `POST /events/treadmills`                                                                                              | GET / POST                             | Implementado                    |
 | RF005 | RN20                                | `GET /teams`                                                                                                                                     | GET                                    | Implementado                    |
 | RF006 | RN21                                | `GET /teams/:teamId/athletes`                                                                                                                    | GET                                    | Implementado                    |
@@ -1612,7 +1612,7 @@ A coluna **Status** reflete o estado de implementação na WebAPI (seção 3.7):
   <br><br>
 </div>
 
-Observa-se que os endpoints de cada RF pertencem aos treze fluxos consolidados na documentação da WebAPI (seção 3.7): Autenticação, Eventos, Esteiras, Equipes, Atletas, Turnos, Imagens e OCR, Histórico, Alertas, Sincronização, Logs de Auditoria, Métricas e Exportação. A validação de aptidão de equipe (RF003) é garantida em tempo de execução: `POST /audit/shifts/start` rejeita o início de turno enquanto qualquer equipe não tiver exatamente 16 atletas ativos (RN17), e a mesma regra incide em `PATCH /events/:id/start`; um endpoint dedicado de leitura (`GET /teams/:teamId/validation`) permanece como conveniência futura, sem impacto no atendimento do RF003. Os RF marcados como *Frontend* (RF029, RF030, RF034 e RF040) não demandam um endpoint próprio: sua execução ocorre na camada de interface, reutilizando endpoints de leitura já operantes no backend (notificação visual e sonora de alertas a partir de `GET /audit/alerts`, *hot swap* a partir de `POST /audit/shifts/start` e Modo TV a partir de `GET /metrics/events/:id/dashboard`).
+Observa-se que os endpoints de cada RF pertencem aos treze fluxos consolidados na documentação da WebAPI (seção 3.7): Autenticação, Eventos, Esteiras, Equipes, Atletas, Turnos, Imagens e OCR, Histórico, Alertas, Sincronização, Logs de Auditoria, Métricas e Exportação. A validação de aptidão de equipe (RF003) é garantida em tempo de execução: `POST /audit/shifts/start` rejeita o início de turno enquanto qualquer equipe não tiver ao menos um corredor ativo (RN17), sem exigir número exato de corredores, e a mesma regra incide em `PATCH /events/:id/start`; um endpoint dedicado de leitura (`GET /teams/:teamId/validation`) permanece como conveniência futura, sem impacto no atendimento do RF003. Os RF marcados como *Frontend* (RF029, RF030, RF034 e RF040) não demandam um endpoint próprio: sua execução ocorre na camada de interface, reutilizando endpoints de leitura já operantes no backend (notificação visual e sonora de alertas a partir de `GET /audit/alerts`, *hot swap* a partir de `POST /audit/shifts/start` e Modo TV a partir de `GET /metrics/events/:id/dashboard`).
 
 ### 3.1.5. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
@@ -4264,7 +4264,7 @@ A tabela abaixo lista todos os 54 endpoints organizados por grupo, com método H
 | `PATCH` | `/events/:id/start` | RF003 | RN17, RN28 | Implementado |
 | `GET` | `/teams/:teamId/validation` | RF003 | RN17, RN28 | Conveniência futura |
 
-> A regra de exatamente 16 corredores ativos por equipe (RN17) já é aplicada em tempo de execução: `POST /audit/shifts/start` e `PATCH /events/:id/start` rejeitam a operação (HTTP 422) enquanto a condição não for atendida, satisfazendo o RF003. O endpoint de leitura `GET /teams/:teamId/validation` é uma conveniência futura para expor o status de aptidão (apto / quantidade faltante) à tela de cadastro, sem alterar o atendimento do RF003.
+> A regra de presença de ao menos um corredor ativo por equipe (RN17), em vez de número exato de corredores, já é aplicada em tempo de execução: `POST /audit/shifts/start` e `PATCH /events/:id/start` rejeitam a operação (HTTP 422) enquanto a condição não for atendida, satisfazendo o RF003. O endpoint de leitura `GET /teams/:teamId/validation` é uma conveniência futura para expor o status de aptidão (apto / sem corredores ativos) à tela de cadastro, sem alterar o atendimento do RF003.
 
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
@@ -4414,7 +4414,7 @@ A Matriz de Rastreabilidade de Requisitos (RTM — *Requirements Traceability Ma
 
 No contexto do Red Bull 24 Horas, onde inconsistências nos dados podem invalidar o resultado de uma competição inteira, a rastreabilidade deixa de ser uma formalidade documental e passa a ser uma garantia operacional.
 
-Os endpoints mapeados nesta matriz estão implementados e cobertos por testes automatizados na suíte do projeto, organizada por arquivos reais (`auth.service.test.ts`, `event.test.ts`, `team.test.ts`, `shift.test.ts`, `history.test.ts`, `alerts.test.ts`, `logs.test.ts`, `sync.test.ts`, `metrics.test.ts` e `export.test.ts`), referenciados diretamente na coluna *Teste* com o arquivo e o cenário validado, para tornar a rastreabilidade fiel ao código entregue. O RF003 (validação de aptidão de equipe) é atendido em tempo de execução por `POST /audit/shifts/start` e `PATCH /events/:id/start` (RN17: rejeitam a operação sem 16 atletas ativos), coberto em `shift.test.ts`; um endpoint dedicado de leitura (`GET /teams/:teamId/validation`) permanece como conveniência futura.
+Os endpoints mapeados nesta matriz estão implementados e cobertos por testes automatizados na suíte do projeto, organizada por arquivos reais (`auth.service.test.ts`, `event.test.ts`, `team.test.ts`, `shift.test.ts`, `history.test.ts`, `alerts.test.ts`, `logs.test.ts`, `sync.test.ts`, `metrics.test.ts` e `export.test.ts`), referenciados diretamente na coluna *Teste* com o arquivo e o cenário validado, para tornar a rastreabilidade fiel ao código entregue. O RF003 (validação de aptidão de equipe) é atendido em tempo de execução por `POST /audit/shifts/start` e `PATCH /events/:id/start` (RN17: rejeitam a operação sem corredores ativos), coberto em `shift.test.ts`; um endpoint dedicado de leitura (`GET /teams/:teamId/validation`) permanece como conveniência futura.
 
 > **Legenda de personas:**
 > - **NR** — Nicole Rauen (atleta / influenciadora)
@@ -4434,7 +4434,7 @@ Linhas sem marcação na coluna *Status* = **Implementado** na sprint 4.
 |---------|----|----|----------|------|-------|--------|
 | LA | RF001 | RN15, RN28 | `POST /teams` | Tela de Registro Pré-Evento → Cadastro de Equipe | `team.test.ts` — cadastro com nome único; bloqueio de terceira equipe e de nome duplicado |
 | LA | RF002 | RN16 | `POST /teams/:teamId/athletes` | Tela de Registro Pré-Evento → Cadastro de Atleta | `team.test.ts` — cadastro de corredor vinculado a equipe; rejeição sem equipe selecionada |
-| LA, BG | RF003 | RN17, RN28 | `POST /audit/shifts/start` | Tela de Início de Turno | `shift.test.ts` — bloqueio de início quando a equipe não possui 16 atletas ativos |
+| LA, BG | RF003 | RN17, RN28 | `POST /audit/shifts/start` | Tela de Início de Turno | `shift.test.ts` — bloqueio de início quando a equipe não possui corredores ativos |
 | LA | RF004 | RN19 | `GET /events/treadmills` | Tela de Acompanhamento de Esteiras / Tela de Início de Turno | `event.test.ts` — listagem de esteiras com status Livre/Ocupada; bloqueio de esteira ocupada |
 | LA | RF005 | RN20 | `GET /teams` | Tela de Seleção de Corredor e Registro de Início | `team.test.ts` — listagem de corredores restrita à equipe selecionada |
 | LA | RF006 | RN21 | `GET /teams/:teamId/athletes` | Tela de Seleção de Corredor e Registro de Início | `team.test.ts` — seleção de corredor disponível; bloqueio de corredor com turno em aberto |
@@ -4499,7 +4499,7 @@ Com a integração ponta a ponta, todos os endpoints da RTM estão implementados
 
 | RF | Endpoint de conveniência | RN | Status | Descrição |
 |----|--------------------|----|--------|------------------------------------|
-| RF003 | `GET /teams/:teamId/validation` | RN17, RN28 | Conveniência futura | RF003 já atendido em tempo de execução por `POST /audit/shifts/start` e `PATCH /events/:id/start` (RN17 rejeita início sem 16 atletas ativos). Endpoint de leitura opcional: novo método no `teamService` que conta atletas ativos por equipe e retorna o status de aptidão (apto/quantidade faltante), consumido pela tela de cadastro. |
+| RF003 | `GET /teams/:teamId/validation` | RN17, RN28 | Conveniência futura | RF003 já atendido em tempo de execução por `POST /audit/shifts/start` e `PATCH /events/:id/start` (RN17 rejeita início sem corredores ativos). Endpoint de leitura opcional: novo método no `teamService` que conta atletas ativos por equipe e retorna o status de aptidão (apto/sem corredores ativos), consumido pela tela de cadastro. |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -4800,7 +4800,7 @@ A suíte de testes automatizados foi expandida com novas suítes (`pageControlle
 
 | Item | Motivo | Previsão |
 | :--- | :------ | :------- |
-| `GET /teams/:teamId/validation` (RF003) — endpoint de leitura dedicado | RF003 já atendido em runtime via `POST /audit/shifts/start` e `PATCH /events/:id/start` (RN17 rejeita início sem 16 atletas ativos); endpoint de leitura opcional não implementado | Conveniência futura |
+| `GET /teams/:teamId/validation` (RF003) — endpoint de leitura dedicado | RF003 já atendido em runtime via `POST /audit/shifts/start` e `PATCH /events/:id/start` (RN17 rejeita início sem corredores ativos); endpoint de leitura opcional não implementado | Conveniência futura |
 | Modo TV — interface pública de placar (RF034) | Backend implementado; frontend da tela de exibição em pista não finalizado | Sprint 5 |
 | Link público de compartilhamento individual de atleta (RF050) | Endpoint implementado; integração com a tela do atleta não concluída | Sprint 5 |
 | Seções WAD §3.8.1 e §3.8.2 — Autenticação e Controle de sessão | Concluído na sprint 4 | Sprint 4 |
@@ -5359,7 +5359,7 @@ Observa-se que diversos serviços atingiram **100% de cobertura**, incluindo *al
 | RN41 | RF027 | Controle de sessão e autenticação |
 
 O mapeamento evidencia que as **41 Regras de Negócio** implementadas na plataforma estão vinculadas aos respectivos requisitos funcionais e aos principais fluxos validados pela suíte automatizada, demonstrando elevada cobertura das funcionalidades críticas da aplicação.
-
+/
 ## 5.2. Testes de usabilidade (sprint 5)
 
 ### 5.2.1. Relatório de testes de guerrilha
