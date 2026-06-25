@@ -73,6 +73,8 @@ body{
 /* ---------------- BOTÃƒO DE CANCELAR TELAS AUDITOR ---------------- */
 
 .cancelar {
+    position: relative;
+    z-index: 30;
     display: flex;
     align-items: center;
     width: 50px;
@@ -119,7 +121,7 @@ main:has(> .etapas) {
 main > .etapas{
     position: absolute;
     top: 55px;
-    left: 50%;
+    left: 50vw;
     z-index: 20;
     display: flex;
     align-items: flex-start;
