@@ -5412,18 +5412,18 @@ Os problemas observados durante os testes de guerrilha foram consolidados e prio
 
 ---
 
-Como complemento ao teste de guerrilha documentado na seção anterior, foi aplicada a escala SUS (System Usability Scale) para medir de forma padronizada a usabilidade percebida do sistema. Enquanto o teste de guerrilha captura comportamentos e dificuldades observadas durante o uso, o SUS quantifica a percepção subjetiva dos participantes após a experiência, permitindo comparar o resultado com benchmarks consolidados da área [](#8-referências). O SUS é composto por 10 afirmações respondidas em uma escala de 1 a 5 (sendo 1 = "Discordo totalmente" e 5 = "Concordo totalmente"), e o resultado final gera uma pontuação de 0 a 100.
+Como complemento ao teste de guerrilha documentado na seção anterior, foi aplicada a escala SUS (System Usability Scale) para medir de forma padronizada a usabilidade percebida do sistema. Enquanto o teste de guerrilha captura comportamentos e dificuldades observadas durante o uso, o SUS quantifica a percepção subjetiva dos participantes após a experiência, permitindo comparar o resultado com benchmarks consolidados da área [²¹](#8-referências). O SUS é composto por 10 afirmações respondidas em uma escala de 1 a 5 (sendo 1 = "Discordo totalmente" e 5 = "Concordo totalmente"), e o resultado final gera uma pontuação de 0 a 100.
 
-O formulário foi respondido por 6 participantes logo após a realização do teste de guerrilha, com base na experiência que acabaram de ter com o sistema. Os participantes eram alunos da própria instituição, sem vínculo com a Red Bull ou conhecimento prévio do contexto do evento. Vale destacar que as afirmações do SUS alternam entre positivas e negativas: as perguntas de número ímpar (1, 3, 5, 7 e 9) são formuladas de forma positiva, enquanto as de número par (2, 4, 6, 8 e 10) são formuladas de forma negativa. Essa alternância é intencional e serve para reduzir vieses nas respostas [](#8-referências).
+O formulário foi respondido por 6 participantes logo após a realização do teste de guerrilha, com base na experiência que acabaram de ter com o sistema. Os participantes eram alunos da própria instituição, sem vínculo com a Red Bull ou conhecimento prévio do contexto do evento. Vale destacar que as afirmações do SUS alternam entre positivas e negativas: as perguntas de número ímpar (1, 3, 5, 7 e 9) são formuladas de forma positiva, enquanto as de número par (2, 4, 6, 8 e 10) são formuladas de forma negativa. Essa alternância é intencional e serve para reduzir vieses nas respostas [²¹](#8-referências).
 
 
 **Fórmula de cálculo:**
 
-Para cada resposta, é aplicada a seguinte lógica [](#8-referências):
+Para cada resposta, é aplicada a seguinte lógica [²¹](#8-referências):
 - Perguntas ímpares (1, 3, 5, 7 e 9): subtrai-se 1 do valor respondido
 - Perguntas pares (2, 4, 6, 8 e 10): subtrai-se o valor respondido de 5
 
-A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score final de cada participante. A média entre todos os participantes representa o score SUS do sistema. A pontuação média do SUS é 68, fazendo com que uma pontuação acima ou abaixo da média forneça uma visão imediata da usabilidade geral da solução de design do projeto. [](#8-referências).
+A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score final de cada participante. A média entre todos os participantes representa o score SUS do sistema. A pontuação média do SUS é 68, fazendo com que uma pontuação acima ou abaixo da média forneça uma visão imediata da usabilidade geral da solução de design do projeto. [²¹](#8-referências).
 
 | Score SUS | Classificação | Aceitabilidade |
 |---|---|---|
@@ -5437,7 +5437,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 <div align="center">'
 <sub>Imagem 101 - Escala de classificação SUS </sub><br>
  <img src="./assets/teste-sus/escala_sus.png" width="100%" alt="Escala de classificação SUS"><br>
-  <sub>Fonte: Bangor, Kortum e Miller (2008) [](#8-referências).</sub>
+  <sub>Fonte: Bangor, Kortum e Miller (2008) [²⁰](#8-referências).</sub>
   <br><br><br>
 </div>
 
@@ -5658,7 +5658,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 ## Análise dos Resultados
 
-O score médio de 56,25 posiciona o RedRun abaixo da média de referência do SUS (68) [](#8-referências), com scores individuais variando entre 32,5 e 75,0, uma amplitude de 42,5 pontos que revela experiências bastante assimétricas entre os participantes. Essa dispersão não é aleatória: ela acompanha diretamente o desempenho observado no teste de guerrilha. Participantes que navegaram com mais naturalidade pelo fluxo de gerente, como Lais Victoria (72,5) e Pedro Negri (75,0), avaliaram o sistema de forma positiva. Já os que enfrentaram barreiras no fluxo de auditoria, como Lucas Levi (32,5) e Valter Lima (37,5), reportaram dificuldades que impactaram diretamente sua percepção de usabilidade.
+O score médio de 56,25 posiciona o RedRun abaixo da média de referência do SUS (68) [²⁰](#8-referências), com scores individuais variando entre 32,5 e 75,0, uma amplitude de 42,5 pontos que revela experiências bastante assimétricas entre os participantes. Essa dispersão não é aleatória: ela acompanha diretamente o desempenho observado no teste de guerrilha. Participantes que navegaram com mais naturalidade pelo fluxo de gerente, como Lais Victoria (72,5) e Pedro Negri (75,0), avaliaram o sistema de forma positiva. Já os que enfrentaram barreiras no fluxo de auditoria, como Lucas Levi (32,5) e Valter Lima (37,5), reportaram dificuldades que impactaram diretamente sua percepção de usabilidade.
 
 Vale destacar um caso específico: Lucas Levi foi o único participante que não concluiu nenhuma das três tarefas do teste de guerrilha (T1, T2 e T3), e seu score de 32,5 é o mais baixo da amostra, o que reforça a coerência entre desempenho objetivo e percepção subjetiva. Esse caso ilustra bem como o SUS, quando analisado junto ao guerrilha, oferece uma leitura mais completa da experiência do usuário.
 
