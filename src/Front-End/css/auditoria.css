@@ -2812,3 +2812,104 @@ html[data-theme="dark"] .fila-lista.fila-aberta {
     border-color: var(--borda);
     background: rgba(255, 255, 255, 0.03);
 }
+
+/* Ajuste final: modal de esteira no mesmo porte dos avisos. */
+#modalEsteira .modal-conteudo {
+    width: 665px;
+    max-width: 90vw;
+    height: auto;
+    min-height: 340px;
+    padding: 34px 48px 42px;
+    justify-content: center;
+}
+
+#modalEsteira .modal-conteudo h2 {
+    font-size: 26px;
+    margin-bottom: 28px;
+}
+
+#modalEsteira .opcoes-esteira {
+    gap: 24px;
+    justify-content: center;
+}
+
+#modalEsteira .opcao-esteira {
+    width: 180px;
+    height: 160px;
+    gap: 12px;
+    color: var(--texto-principal);
+}
+
+#modalEsteira .opcao-esteira .icone-esteira {
+    width: 82px;
+}
+
+#modalEsteira .acoes-modal {
+    margin-top: 28px;
+    gap: 14px;
+}
+
+#modalEsteira .btn-cancelar-modal,
+#modalEsteira .btn-selecionar-modal {
+    width: 160px;
+    height: 52px;
+    font-size: 16px;
+}
+
+html[data-theme="dark"] #modalEsteira .opcao-esteira {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] #modalEsteira .opcao-esteira .icone-preto {
+    display: none;
+}
+
+html[data-theme="dark"] #modalEsteira .opcao-esteira .icone-branco {
+    display: block;
+}
+
+html[data-theme="dark"] #modalEsteira .opcao-esteira.selecionada {
+    background: var(--vermelho);
+    border-color: var(--vermelho);
+    color: var(--branco);
+}
+
+html[data-theme="dark"] #modalEsteira .opcao-esteira.opcao-ocupada {
+    opacity: 0.55;
+}
+
+/* A fila aberta precisa comportar 16 corredores sem empurrar a tela. */
+.proximos-corredores {
+    min-height: 0;
+}
+
+.fila-lista.fila-aberta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    height: min(320px, 34vh);
+    max-height: 320px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+}
+
+.fila-lista.fila-aberta .corredor-fila {
+    flex: 0 0 46px;
+}
+
+.fila-lista.fila-aberta::-webkit-scrollbar {
+    width: 8px;
+}
+
+.fila-lista.fila-aberta::-webkit-scrollbar-thumb {
+    background: rgba(142, 142, 154, 0.55);
+    border-radius: 999px;
+}
+
+html[data-theme="dark"] .fila-lista.fila-aberta::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.22);
+}
