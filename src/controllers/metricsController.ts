@@ -32,6 +32,36 @@ export const metricsController = {
 		}
 	},
 
+	async getGenderKm(req: Request, res: Response) {
+		const eventId = Number(req.params.eventId);
+		try {
+			const data = await metricsService.getGenderKm(eventId);
+			res.status(200).json(data);
+		} catch (error: any) {
+			res.status(500).json({ error: error.message });
+		}
+	},
+
+	async getCompetitionPace(req: Request, res: Response) {
+		const eventId = Number(req.params.eventId);
+		try {
+			const data = await metricsService.getCompetitionPace(eventId);
+			res.status(200).json(data);
+		} catch (error: any) {
+			res.status(500).json({ error: error.message });
+		}
+	},
+
+	async getTvSummary(req: Request, res: Response) {
+		const eventId = Number(req.params.eventId);
+		try {
+			const data = await metricsService.getTvSummary(eventId);
+			res.status(200).json(data);
+		} catch (error: any) {
+			res.status(500).json({ error: error.message });
+		}
+	},
+
 	async getAvgDistancePerShift(req: Request, res: Response) {
 		const athleteId = Number(req.params.athleteId);
 		try {

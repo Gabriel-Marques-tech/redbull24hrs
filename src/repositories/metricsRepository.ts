@@ -322,6 +322,128 @@ export const metricsRepository = {
 		return result.rows;
 	},
 
+	async genderKmByEvent(eventId: number) {
+		const result = await pool.query(
+			`SELECT a.gender,
+			        COALESCE(SUM(s.distance) FILTER (WHERE s.status = 'completed'), 0) AS total_km
+			 FROM athletes a
+			 JOIN teams t ON t.id = a.team_id
+			 LEFT JOIN shifts s ON s.athlete_id = a.id
+			 WHERE t.event_id = $1 AND t.deleted_at IS NULL AND a.deleted_at IS NULL
+			   AND a.gender IS NOT NULL AND a.gender <> ''
+			 GROUP BY a.gender`,
+			[eventId]
+		);
+		return result.rows;
+	},
+
+	// Soma de km de todos os turnos concluídos do evento (total coletivo do modo TV).
+	async totalKmByEvent(eventId: number) {
+		const result = await pool.query(
+			`SELECT COALESCE(SUM(s.distance) FILTER (WHERE s.status = 'completed'), 0) AS total_km,
+			        COUNT(s.id)              FILTER (WHERE s.status = 'completed')     AS completed_shifts
+			 FROM shifts s
+			 JOIN athletes a ON a.id = s.athlete_id
+			 JOIN teams t    ON t.id = a.team_id
+			 WHERE t.event_id = $1`,
+			[eventId]
+		);
+		return result.rows[0];
+	},
+
+	// Pace médio (seg/km) do período de 6h vigente da competição.
+	// Períodos por tempo restante: 0=24h–18h, 1=18h–12h, 2=12h–6h, 3=6h–0h (idx 3 aberto).
+	// O período é ancorado na última atividade (checkpoint/turno), não no relógio, para
+	// funcionar em eventos encerrados ou de teste que já passaram das 24h.
+	// Fonte primária: segmentos entre checkpoints consecutivos do mesmo turno. Como muitos
+	// turnos têm < 2 checkpoints, há fallback para o pace dos turnos concluídos (total_time/distance)
+	// do período e, por fim, de todo o evento.
+	async pacePeriodByEvent(eventId: number) {
+		const result = await pool.query(
+			`WITH min_shift AS (
+			   SELECT MIN(s2.start_at) AS t_min
+			   FROM shifts s2
+			   JOIN athletes a2 ON a2.id = s2.athlete_id
+			   JOIN teams t2    ON t2.id = a2.team_id
+			   WHERE t2.event_id = $1
+			 ),
+			 ref AS (
+			   SELECT e.status, e.finished_at,
+			          LEAST(
+			              COALESCE(e.started_at, m.t_min),
+			              COALESCE(m.t_min, e.started_at)
+			          ) AS t0
+			   FROM events e, min_shift m
+			   WHERE e.id = $1
+			 ),
+			 cps AS (
+			   SELECT c.timestamp, c.distance,
+			          LAG(c.distance)  OVER (PARTITION BY c.shift_id ORDER BY c.timestamp, c.id) AS prev_dist,
+			          LAG(c.timestamp) OVER (PARTITION BY c.shift_id ORDER BY c.timestamp, c.id) AS prev_ts
+			   FROM checkpoints c
+			   JOIN shifts s    ON s.id = c.shift_id
+			   JOIN athletes a  ON a.id = s.athlete_id
+			   JOIN teams t     ON t.id = a.team_id
+			   WHERE t.event_id = $1
+			 ),
+			 last_act AS (
+			   SELECT GREATEST(
+			     COALESCE((SELECT MAX(timestamp) FROM cps), '-infinity'::timestamp),
+			     COALESCE((
+			       SELECT MAX(s.end_at)
+			       FROM shifts s
+			       JOIN athletes a ON a.id = s.athlete_id
+			       JOIN teams t    ON t.id = a.team_id
+			       WHERE t.event_id = $1 AND s.status = 'completed'
+			     ), '-infinity'::timestamp)
+			   ) AS ts
+			 ),
+			 period AS (
+			   SELECT r.t0, r.status,
+			          (CASE WHEN la.ts > '-infinity'::timestamp THEN la.ts
+			                ELSE COALESCE(r.finished_at, NOW()) END) AS ref_now
+			   FROM ref r, last_act la
+			 ),
+			 calc AS (
+			   SELECT t0, status,
+			          GREATEST(0, EXTRACT(EPOCH FROM (ref_now - t0)) / 3600.0) AS elapsed_h,
+			          LEAST(3, GREATEST(0,
+			              FLOOR(EXTRACT(EPOCH FROM (ref_now - t0)) / 3600.0 / 6)
+			          ))::int AS idx
+			   FROM period
+			 )
+			 SELECT
+			   p.idx                            AS period_idx,
+			   ROUND(p.elapsed_h::numeric, 2)   AS elapsed_hours,
+			   p.status                         AS event_status,
+			   (SELECT AVG(EXTRACT(EPOCH FROM (c.timestamp - c.prev_ts)) / NULLIF(c.distance - c.prev_dist, 0))
+			      FROM cps c
+			      WHERE c.prev_dist IS NOT NULL AND c.distance > c.prev_dist
+			        AND c.timestamp >= p.t0 + (p.idx * 6) * INTERVAL '1 hour'
+			        AND (p.idx >= 3 OR c.timestamp < p.t0 + ((p.idx + 1) * 6) * INTERVAL '1 hour')
+			   ) AS checkpoint_sec_per_km,
+			   (SELECT AVG(EXTRACT(EPOCH FROM s.total_time) / NULLIF(s.distance, 0))
+			      FROM shifts s
+			      JOIN athletes a ON a.id = s.athlete_id
+			      JOIN teams t    ON t.id = a.team_id
+			      WHERE t.event_id = $1 AND s.status = 'completed'
+			        AND s.distance > 0 AND s.total_time IS NOT NULL
+			        AND s.end_at >= p.t0 + (p.idx * 6) * INTERVAL '1 hour'
+			        AND (p.idx >= 3 OR s.end_at < p.t0 + ((p.idx + 1) * 6) * INTERVAL '1 hour')
+			   ) AS shift_sec_per_km,
+			   (SELECT AVG(EXTRACT(EPOCH FROM s.total_time) / NULLIF(s.distance, 0))
+			      FROM shifts s
+			      JOIN athletes a ON a.id = s.athlete_id
+			      JOIN teams t    ON t.id = a.team_id
+			      WHERE t.event_id = $1 AND s.status = 'completed'
+			        AND s.distance > 0 AND s.total_time IS NOT NULL
+			   ) AS overall_sec_per_km
+			 FROM calc p`,
+			[eventId]
+		);
+		return result.rows[0];
+	},
+
 	async athletePerformance(athleteId: number, eventId?: number) {
 		const params: number[] = [athleteId];
 		const eventCond = eventId != null ? `AND t.event_id = $${params.push(eventId)}` : "";
