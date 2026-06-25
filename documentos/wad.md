@@ -5437,7 +5437,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">'
-<sub>Imagem 86 - Escala de classificação SUS </sub><br>
+<sub>Imagem 101 - Escala de classificação SUS </sub><br>
  <img src="./assets/teste-sus/escala_sus.png" width="100%" alt="Escala de classificação SUS"><br>
   <sub>Fonte: Bangor, Kortum e Miller (2008) [²⁸](#8-referências).</sub>
   <br><br><br>
@@ -5579,7 +5579,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 81 - Gráfico SUS - Pergunta 1</sub><br>
+ <sub>Imagem 102 - Gráfico SUS - Pergunta 1</sub><br>
  <img src="./assets/teste-sus/grafico_pergunta_1.png" width="100%" alt="Gráfico SUS - Pergunta 1"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5587,7 +5587,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 82 - Gráfico SUS - Pergunta 2</sub><br>
+ <sub>Imagem 103 - Gráfico SUS - Pergunta 2</sub><br>
  <img src="./assets/teste-sus/grafico_pergunta_2.png" width="100%" alt="Gráfico SUS - Pergunta 2"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5595,7 +5595,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 83 - Gráfico SUS - Pergunta 3</sub><br>
+ <sub>Imagem 104 - Gráfico SUS - Pergunta 3</sub><br>
  <img src="./assets/teste-sus/grafico_pergunta_3.png" width="100%" alt="Gráfico SUS - Pergunta 3"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5603,7 +5603,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 84 - Gráfico SUS - Pergunta 4</sub><br>
+ <sub>Imagem 105 - Gráfico SUS - Pergunta 4</sub><br>
  <img src="./assets/teste-sus/grafico_pergunta_4.png" width="100%" alt="Gráfico SUS - Pergunta 4"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5611,7 +5611,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 85 - Gráfico SUS - Pergunta 5</sub><br>
+ <sub>Imagem 106 - Gráfico SUS - Pergunta 5</sub><br>
  <img src="./assets/teste-sus/grafico_pergunta_5.png" width="100%" alt="Gráfico SUS - Pergunta 5"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5619,7 +5619,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 86 - Gráfico SUS - Pergunta 6</sub><br>
+ <sub>Imagem 107 - Gráfico SUS - Pergunta 6</sub><br>
  <img src="./assets/teste-sus/grafico_pergunta_6.png" width="100%" alt="Gráfico SUS - Pergunta 6"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5627,7 +5627,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 87 - Gráfico SUS - Pergunta 7</sub><br>
+ <sub>Imagem 108 - Gráfico SUS - Pergunta 7</sub><br>
  <img src="./assets/teste-sus/grafico_pergunta_7.png" width="100%" alt="Gráfico SUS - Pergunta 7"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5635,7 +5635,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 88 - Gráfico SUS - Pergunta 8</sub><br>
+ <sub>Imagem 109 - Gráfico SUS - Pergunta 8</sub><br>
  <img src="./assets/teste-sus/grafico_pergunta_8.png" width="100%" alt="Gráfico SUS - Pergunta 8"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5643,7 +5643,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 89 - Gráfico SUS - Pergunta 9</sub><br>
+ <sub>Imagem 110 - Gráfico SUS - Pergunta 9</sub><br>
  <img src="./assets/teste-sus/grafico_pergunta_9.png" width="100%" alt="Gráfico SUS - Pergunta 9"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
@@ -5651,7 +5651,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 
 <div align="center">
- <sub>Imagem 90 - Gráfico SUS - Pergunta 10</sub><br>
+ <sub>Imagem 111 - Gráfico SUS - Pergunta 10</sub><br>
 <img src="./assets/teste-sus/grafico_pergunta_10.png" width="100%" alt="Gráfico SUS - Pergunta 10"><br>
  <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
  <br><br><br>
