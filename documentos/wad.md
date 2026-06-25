@@ -5850,7 +5850,17 @@ A diferenciação da RedRun, portanto, não está na amplitude de funcionalidade
 
 Identificou-se que a RedRun é uma aplicação web integrada a uma API, desenvolvida exclusivamente para digitalizar o registro, o acompanhamento e a auditoria operacional do Red Bull 24 Horas Brasil. Sua função é substituir o processo manual baseado em pranchetas e planilhas por um fluxo digital estruturado e rastreável, capaz de controlar turnos, registrar métricas e manter histórico auditável ao longo das 24 horas de competição.
 
-Entre as principais funcionalidades, observou-se: o cadastro prévio de eventos, equipes, corredores e locais; o registro de início e fim de turno associado a auditor, esteira e horário; checkpoints a cada cinco minutos para preservar a referência durante a operação; o cálculo automatizado de distância e métricas acumuladas; o dashboard consolidado; a exportação dos dados; e a sincronização posterior em caso de instabilidade de conexão. 
+Entre as funcionalidades centrais do escopo validado, observou-se:
+
+- cadastro prévio de eventos, equipes, corredores e locais;
+- registro de início e fim de turno associado a auditor, esteira e horário;
+- checkpoints a cada cinco minutos para preservar a referência durante a operação;
+- cálculo automatizado de distância e métricas acumuladas;
+- dashboard consolidado;
+- consulta de histórico;
+- exportação dos dados.
+
+Funcionalidades complementares, como melhorias de sincronização em cenários de instabilidade, relatórios individuais compartilháveis e evoluções de automação, permanecem como extensões planejadas ou dependentes de validação adicional, sem comprometer o valor principal do MVP.
 
 O benefício central reside na redução da fragilidade da apuração manual, com menor risco de erro humano e maior confiabilidade dos resultados. Concluiu-se que o diferencial da RedRun está na aderência ao contexto específico do evento: uma solução simples para o auditor em campo, porém robusta na precisão e na rastreabilidade exigidas pela organização.
 
@@ -5873,7 +5883,9 @@ Identificou-se que a distribuição da RedRun ocorre por disponibilização digi
 O principal canal de entrega é o ambiente web, acessado por navegador. Observou-se que o uso prioritário previsto é em tablets, pelo equilíbrio entre mobilidade, área de tela e facilidade de interação; o acesso por celular é admitido em contingência, mediante validação prévia da equipe. A aplicação é entregue em funcionamento, com link de acesso, backend, API e banco de dados configurados.
 
 A disponibilização ocorre em três momentos: antes do evento, na configuração dos dados iniciais; 
-durante, no registro de turnos e métricas em tempo real; e após o encerramento, na consulta, exportação e auditoria dos dados. Concluiu-se que a estratégia é coerente com a natureza da solução, pois seu objetivo não é alcançar usuários em massa, mas assegurar que a equipe operacional disponha da ferramenta certa no momento crítico.
+durante, no registro de turnos e métricas em tempo real; e após o encerramento, na consulta, exportação e auditoria dos dados.
+
+Para replicação em outras edições, a praça não se limita à entrega operacional interna de uma única etapa. A estratégia prevê disponibilização controlada por evento, com ambientes configuráveis por localidade, equipe e data, permitindo que a mesma base da solução seja aplicada nas etapas regionais e na final nacional. Em um cenário de expansão, os canais de distribuição seriam institucionais e B2B: alinhamento com a equipe central da Red Bull, treinamento remoto ou presencial dos responsáveis locais, liberação de acesso por edição e suporte técnico durante janelas críticas de operação. Concluiu-se que a estratégia é coerente com a natureza da solução, pois seu objetivo não é alcançar usuários em massa, mas assegurar que cada equipe operacional disponha da ferramenta certa no momento crítico.
 
 ---
 
