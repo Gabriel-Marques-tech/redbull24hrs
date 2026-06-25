@@ -3164,7 +3164,7 @@ Além da organização dos fluxos de navegação, o protótipo aplica o Guia de 
 
 O protótipo completo pode ser acessado no Figma por meio do seguinte link: [Protótipo de alta fidelidade](https://www.figma.com/design/yf3pdWLwWF26GFlfaqid1O/Prot%C3%B3tipo?node-id=174-693&t=RxclnTyFX2daABXi-1).
 
-## 3.6. Modelagem do banco de dados (sprints 2 e 4)
+## 3.6. Modelagem do banco de dados
 
 ---
 
