@@ -17,6 +17,7 @@ export const imageController = {
 			const result = await imageService.uploadShiftImage(shift_id, req.file.buffer, req.file.mimetype);
 			res.status(200).json(result);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			const status = error.message.includes("não encontrado") ? 404 : 500;
 			res.status(status).json({ error: error.message });
 		}
@@ -49,6 +50,7 @@ export const imageController = {
 			const result = await imageService.uploadCheckpointImage(checkpoint_id, req.file.buffer, req.file.mimetype);
 			res.status(200).json(result);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			const status = error.message.includes("não encontrado") ? 404 : 500;
 			res.status(status).json({ error: error.message });
 		}

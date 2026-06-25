@@ -16,6 +16,7 @@ export const historyController = {
 			const entries = await historyService.getHistory({ event_id, team_id, treadmill_id, athlete_id });
 			res.status(200).json(entries);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
