@@ -34,6 +34,8 @@ const cargo      = document.getElementById("cargoAtleta");
 const emailPessoa = document.getElementById("emailPessoa");
 const senhaPessoa = document.getElementById("senhaPessoa");
 const cpfApoio = document.getElementById("cpfApoio");
+const registroAuditor = document.getElementById("registroAuditor");
+const campoRegistroAuditor = document.getElementById("campoRegistroAuditor");
 const linkCancelar = document.getElementById("linkCancelar");
 let fotoPerfilData = "";
 // true quando o usuário escolhe uma nova imagem nesta tela (diferencia de uma image_url já salva no DB)
@@ -85,13 +87,19 @@ function atualizarTipoCadastro() {
     formulario.classList.toggle("cadastro-apoio", !ehAtleta);
     document.body.classList.toggle("cadastro-apoio", !ehAtleta);
 
+    const ehAuditor = tipo === "auditor";
+    const ehGerente = tipo === "gerente";
     nascimento.required = ehAtleta;
     genero.required = ehAtleta;
     cargo.required = ehAtleta;
     cpf.required = false;
-    emailPessoa.required = ehAtleta;
-    cpfApoio.required = !ehAtleta;
+    emailPessoa.required = true;
+    cpfApoio.required = ehAuditor;
     senhaPessoa.required = !ehAtleta;
+    const campoCpfApoioEl = document.getElementById("campoCpfApoio");
+    if (campoCpfApoioEl) campoCpfApoioEl.classList.toggle("escondido", ehGerente);
+    if (campoRegistroAuditor) campoRegistroAuditor.classList.toggle("escondido", !ehAuditor);
+    if (registroAuditor) registroAuditor.required = ehAuditor;
 
     if (!ehAtleta) {
         genero.value = "";
@@ -101,31 +109,21 @@ function atualizarTipoCadastro() {
     }
 }
 
-function compactarImagemPerfil(arquivo) {
-    return new Promise((resolve, reject) => {
-        const leitor = new FileReader();
-        leitor.onerror = reject;
-        leitor.onload = () => {
-            const imagem = new Image();
-            imagem.onerror = reject;
-            imagem.onload = () => {
-                const tamanhoMaximo = 320;
-                const escala = Math.min(1, tamanhoMaximo / Math.max(imagem.width, imagem.height));
-                const largura = Math.max(1, Math.round(imagem.width * escala));
-                const altura = Math.max(1, Math.round(imagem.height * escala));
-                const canvas = document.createElement("canvas");
-                canvas.width = largura;
-                canvas.height = altura;
-                const contexto = canvas.getContext("2d");
-                contexto.fillStyle = "#ffffff";
-                contexto.fillRect(0, 0, largura, altura);
-                contexto.drawImage(imagem, 0, 0, largura, altura);
-                resolve(canvas.toDataURL("image/jpeg", 0.78));
-            };
-            imagem.src = String(leitor.result || "");
-        };
-        leitor.readAsDataURL(arquivo);
-    });
+async function compactarImagemPerfil(arquivo) {
+    const bitmap = await createImageBitmap(arquivo, { imageOrientation: "from-image" });
+    const tamanhoMaximo = 320;
+    const escala = Math.min(1, tamanhoMaximo / Math.max(bitmap.width, bitmap.height));
+    const largura = Math.max(1, Math.round(bitmap.width * escala));
+    const altura = Math.max(1, Math.round(bitmap.height * escala));
+    const canvas = document.createElement("canvas");
+    canvas.width = largura;
+    canvas.height = altura;
+    const contexto = canvas.getContext("2d");
+    contexto.fillStyle = "#ffffff";
+    contexto.fillRect(0, 0, largura, altura);
+    contexto.drawImage(bitmap, 0, 0, largura, altura);
+    bitmap.close();
+    return canvas.toDataURL("image/jpeg", 0.78);
 }
 
 if (!edicao) {
@@ -231,14 +229,14 @@ formulario.addEventListener("submit", async (evento) => {
     const tipoCadastroAtual = tipoCadastroInicial;
     const ehAtleta = tipoCadastroAtual === "atleta";
 
-    if (!fotoPerfilData && !modoEventEdit) {
+    if (!fotoPerfilData && !modoEventEdit && !modoDrawer) {
         alert("Envie uma imagem de perfil para este cadastro.");
         return;
     }
 
     const emailValor = emailPessoa.value.trim();
 
-    if (ehAtleta && !emailValor) { alert("Preencha o e-mail."); return; }
+    if (!emailValor) { alert("Preencha o e-mail."); return; }
     if (ehAtleta && !nascimento.value) { alert("Preencha a data de nascimento do atleta."); return; }
     if (ehAtleta && !genero.value) { alert("Selecione o gênero do atleta."); return; }
     if (ehAtleta && !cargo.value) { alert("Selecione o cargo do atleta."); return; }
@@ -281,9 +279,35 @@ formulario.addEventListener("submit", async (evento) => {
     } else {
         // ---- fluxo criação: salva em localStorage ----
         if (modoDrawer) {
+            const btn = formulario.querySelector("button[type=submit]");
+            btn.disabled = true; btn.textContent = "Salvando...";
+
+            const endpoint = tipoCadastroAtual === "gerente"
+                ? "/auth/register/manager"
+                : "/auth/register/auditor";
+
+            const corpo = new FormData();
+            corpo.append("name", nome.value.trim());
+            corpo.append("email", emailValor);
+            corpo.append("password", senhaPessoa.value);
+            if (cpfDigitos) corpo.append("cpf", cpfDigitos);
+            if (tipoCadastroAtual === "auditor" && registroAuditor?.value)
+                corpo.append("registration_number", registroAuditor.value);
+            if (novaFotoSelecionada && fotoPerfilData) {
+                corpo.append("photo", dataURLparaBlob(fotoPerfilData), "foto.jpg");
+            }
+
+            const res = await authFetch(endpoint, { method: "POST", body: corpo });
+            if (!res || !res.ok) {
+                const err = await res?.json().catch(() => ({}));
+                alert(err?.error || "Erro ao cadastrar usuário.");
+                btn.disabled = false; btn.textContent = "Concluir";
+                return;
+            }
+            const cadastrado = await res.json();
             sessionStorage.setItem("cadastroUsuarioConcluido", JSON.stringify({
                 tipoCadastro: tipoCadastroAtual,
-                nome: nome.value.trim()
+                nome: cadastrado.name || nome.value.trim()
             }));
             localStorage.removeItem("atletaEmEdicao");
             window.location.href = urlRetorno;
@@ -337,6 +361,7 @@ formulario.addEventListener("submit", async (evento) => {
             cadastro.cargo      = cargo.value || "Atleta";
         } else {
             cadastro.cpf = cpfDigitos;
+            cadastro.email = emailValor;
             cadastro.senha = senhaPessoa.value;
             cadastro.cargo = tipoCadastroAtual === "auditor" ? "Auditor" : "Gerente";
         }
