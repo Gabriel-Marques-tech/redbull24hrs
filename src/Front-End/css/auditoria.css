@@ -3166,4 +3166,256 @@ html[data-theme="dark"] .fila-lista.fila-aberta::-webkit-scrollbar-thumb {
         font-size: 22px;
         height: 60px;
     }
+
+    /* ─── MODAL FINALIZAR TURNO: sem scroll, tudo comprimido ─── */
+    #modalTurno .modal-turno-conteudo {
+        padding: 14px 16px 16px;
+        overflow: hidden;
+        max-height: 96vh;
+        justify-content: flex-start;
+        gap: 0;
+    }
+
+    #modalTurno .modal-turno-conteudo::before {
+        font-size: 17px;
+        margin-bottom: 6px;
+        padding-bottom: 6px;
+    }
+
+    #modalTurno .finalizar-turno-foto {
+        min-height: 0;
+        padding: 6px 10px;
+        gap: 10px;
+        margin-bottom: 6px;
+    }
+
+    #modalTurno .finalizar-turno-foto-preview {
+        width: 56px;
+        height: 36px;
+        flex-basis: 56px;
+    }
+
+    #modalTurno .finalizar-turno-foto-info strong {
+        font-size: 13px;
+    }
+
+    #modalTurno .finalizar-turno-foto-info small {
+        font-size: 11px;
+        margin: 1px 0 4px;
+    }
+
+    #modalTurno .btn-finalizar-turno-foto {
+        height: 26px;
+        font-size: 12px;
+        padding: 0 10px;
+    }
+
+    #modalTurno .campos-turno {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 8px;
+        margin-top: 0;
+    }
+
+    #modalTurno .campo-corredor {
+        flex: 1 1 auto;
+    }
+
+    #modalTurno .campo-tempo {
+        flex: 0 0 140px;
+        width: 140px;
+    }
+
+    #modalTurno .campo-turno label {
+        font-size: 12px;
+        margin-bottom: 3px;
+    }
+
+    #modalTurno .campo-turno select,
+    #modalTurno .campo-turno input {
+        height: 36px;
+        font-size: 14px;
+    }
+
+    #modalTurno .tempo-percorrido {
+        font-size: 18px;
+    }
+
+    #modalTurno .relacao-horario {
+        font-size: 10px;
+        margin-top: 2px;
+    }
+
+    #modalTurno .campos-km {
+        gap: 8px;
+        margin-top: 6px;
+    }
+
+    #modalTurno .campo-pace,
+    #modalTurno .campo-quilometragem {
+        flex: 1;
+        margin-top: 0;
+    }
+
+    #modalTurno .campo-quilometragem {
+        margin-top: 0;
+    }
+
+    #modalTurno .acoes-modal-turno {
+        margin-top: 8px;
+        gap: 8px;
+    }
+
+    #modalTurno .btn-cancelar-turno,
+    #modalTurno .btn-registrar-turno {
+        height: 40px;
+        font-size: 15px;
+        width: auto;
+        flex: 1;
+        margin-top: 0;
+    }
+
+    /* ─── MODAL CHECKPOINT: 1 coluna, sem scroll ─── */
+    #modalCheckpoint .modal-turno-conteudo {
+        padding: 14px 16px 16px;
+        overflow: hidden;
+        max-height: 96vh;
+        width: calc(100vw - 32px);
+    }
+
+    .checkpoint-cronometro-topo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 6px;
+    }
+
+    .checkpoint-cronometro-label {
+        font-size: 12px;
+        color: #888;
+    }
+
+    .checkpoint-cronometro-valor {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--vermelho);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .checkpoint-corredor {
+        width: 100%;
+    }
+
+    .checkpoint-corredor label {
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
+
+    .checkpoint-corredor select {
+        height: 38px;
+        font-size: 14px;
+    }
+
+    .checkpoint-divisor {
+        margin-top: 8px;
+    }
+
+    /* lado da foto: esconde preview, mantém só o botão compacto */
+    .checkpoint-conteudo {
+        grid-template-columns: 1fr;
+        min-height: 0;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        gap: 0;
+    }
+
+    .checkpoint-foto {
+        padding-right: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    .checkpoint-foto .checkpoint-secao-titulo {
+        flex: 1;
+        min-height: 0;
+        gap: 8px;
+    }
+
+    .checkpoint-foto-preview {
+        display: none;
+    }
+
+    .btn-checkpoint-foto {
+        margin: 0;
+        width: auto;
+        height: 34px;
+        font-size: 12px;
+        gap: 6px;
+        flex-shrink: 0;
+        padding: 0 12px;
+    }
+
+    .btn-checkpoint-foto svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .checkpoint-icone {
+        width: 32px;
+        height: 32px;
+        flex-basis: 32px;
+    }
+
+    .checkpoint-icone svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .checkpoint-secao-titulo strong {
+        font-size: 13px;
+    }
+
+    .checkpoint-secao-titulo small {
+        font-size: 10px;
+    }
+
+    .checkpoint-dados {
+        padding-left: 0;
+        border-left: none;
+    }
+
+    .checkpoint-dados .checkpoint-secao-titulo {
+        display: none;
+    }
+
+    .checkpoint-campos {
+        gap: 5px;
+        margin-top: 0;
+    }
+
+    .checkpoint-campo label {
+        font-size: 12px;
+        margin-bottom: 2px;
+    }
+
+    .checkpoint-input-linha input {
+        height: 34px;
+        font-size: 14px;
+    }
+
+    .modal-checkpoint-conteudo .checkpoint-acoes {
+        gap: 10px;
+        margin-top: 8px;
+    }
+
+    .modal-checkpoint-conteudo .btn-cancelar-turno,
+    .modal-checkpoint-conteudo .btn-registrar-turno {
+        height: 40px;
+        font-size: 14px;
+        flex: 1;
+        width: auto;
+    }
 }
