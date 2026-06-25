@@ -68,6 +68,7 @@ async function tryGemini(imageBuffer: Buffer, mimetype: string): Promise<Treadmi
 			if (!isRetryable || modelName === GEMINI_MODELS[GEMINI_MODELS.length - 1]) throw err;
 		}
 	}
+	/* istanbul ignore next: inalcançável — o loop sempre retorna ou lança no último modelo */
 	throw new Error("Todos os modelos Gemini falharam");
 }
 
