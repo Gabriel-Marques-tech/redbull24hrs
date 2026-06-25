@@ -43,7 +43,7 @@ const registerAuditor = async (req: Request, res: Response): Promise<void> => {
     res.status(201).json(auditor);
   } catch (error: any) {
     if (error?.code === PG_UNIQUE_VIOLATION) {
-      res.status(409).json({ error: "Email já cadastrado" });
+      res.status(409).json({ error: "Email ou matrícula já cadastrados" });
       return;
     }
     res.status(500).json({ error: "Erro ao cadastrar auditor" });
