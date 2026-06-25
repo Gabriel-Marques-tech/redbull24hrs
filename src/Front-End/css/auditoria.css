@@ -3078,142 +3078,148 @@ html[data-theme="dark"] .fila-lista.fila-aberta::-webkit-scrollbar-thumb {
         font-size: 15px;
     }
 
-    /* ── Modal checkpoint: 1 coluna ── */
+    /* ── Modal checkpoint: layout coluna única ── */
     #modalCheckpoint .modal-turno-conteudo {
         padding: 16px 20px 18px;
+        overflow: hidden;
     }
 
-    .checkpoint-cronometro-topo {
+    #modalCheckpoint .checkpoint-cronometro-topo {
         display: flex;
         align-items: center;
         gap: 10px;
         margin-bottom: 8px;
     }
 
-    .checkpoint-cronometro-label {
+    #modalCheckpoint .checkpoint-cronometro-label {
         font-size: 12px;
         color: #888;
         text-transform: uppercase;
         letter-spacing: 0.3px;
     }
 
-    .checkpoint-cronometro-valor {
+    #modalCheckpoint .checkpoint-cronometro-valor {
         font-size: 20px;
         font-weight: 700;
         color: var(--vermelho);
         font-variant-numeric: tabular-nums;
     }
 
-    .checkpoint-corredor {
+    #modalCheckpoint .checkpoint-corredor {
         width: 100%;
     }
 
-    .checkpoint-corredor label {
+    #modalCheckpoint .checkpoint-corredor label {
         font-size: 13px;
         margin-bottom: 4px;
     }
 
-    .checkpoint-corredor select {
+    #modalCheckpoint .checkpoint-corredor select {
         height: 38px;
         font-size: 15px;
     }
 
-    .checkpoint-divisor {
+    #modalCheckpoint .checkpoint-divisor {
         margin-top: 8px;
     }
 
-    /* grid 2 col → 1 col, foto escondida */
-    .checkpoint-conteudo {
-        grid-template-columns: 1fr;
+    /* grid 2 col → flex coluna */
+    #modalCheckpoint .checkpoint-conteudo {
+        display: flex;
+        flex-direction: column;
         min-height: 0;
         padding-top: 8px;
         padding-bottom: 4px;
-    }
-
-    .checkpoint-foto {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 12px;
-        padding-right: 0;
-        margin-bottom: 8px;
-    }
-
-    .checkpoint-foto .checkpoint-secao-titulo {
-        flex: 1;
-        min-height: 0;
         gap: 8px;
     }
 
-    .checkpoint-foto-preview {
+    /* seção foto: linha compacta com botão */
+    #modalCheckpoint .checkpoint-foto {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        padding-right: 0;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    #modalCheckpoint .checkpoint-foto .checkpoint-icone {
+        width: 32px;
+        height: 32px;
+        flex: 0 0 32px;
+    }
+
+    #modalCheckpoint .checkpoint-foto .checkpoint-icone svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    #modalCheckpoint .checkpoint-foto .checkpoint-secao-titulo {
+        flex: 1;
+        min-height: 0;
+        gap: 0;
+    }
+
+    #modalCheckpoint .checkpoint-secao-titulo strong {
+        font-size: 12px;
+    }
+
+    #modalCheckpoint .checkpoint-secao-titulo small {
         display: none;
     }
 
-    .btn-checkpoint-foto {
+    #modalCheckpoint .checkpoint-foto-preview {
+        display: none;
+    }
+
+    #modalCheckpoint .btn-checkpoint-foto {
         margin: 0;
         width: auto;
-        height: 34px;
+        height: 32px;
         font-size: 12px;
-        gap: 6px;
+        gap: 5px;
         flex-shrink: 0;
-        padding: 0 12px;
+        padding: 0 10px;
     }
 
-    .btn-checkpoint-foto svg {
-        width: 18px;
-        height: 18px;
+    #modalCheckpoint .btn-checkpoint-foto svg {
+        width: 15px;
+        height: 15px;
     }
 
-    .checkpoint-icone {
-        width: 34px;
-        height: 34px;
-        flex-basis: 34px;
-    }
-
-    .checkpoint-icone svg {
-        width: 18px;
-        height: 18px;
-    }
-
-    .checkpoint-secao-titulo strong {
-        font-size: 13px;
-    }
-
-    .checkpoint-secao-titulo small {
-        font-size: 10px;
-    }
-
-    .checkpoint-dados {
+    /* seção dados: campos empilhados */
+    #modalCheckpoint .checkpoint-dados {
         padding-left: 0;
         border-left: none;
     }
 
-    .checkpoint-dados .checkpoint-secao-titulo {
+    #modalCheckpoint .checkpoint-dados .checkpoint-secao-titulo {
         display: none;
     }
 
-    .checkpoint-campos {
+    #modalCheckpoint .checkpoint-campos {
         gap: 6px;
         margin-top: 0;
     }
 
-    .checkpoint-campo label {
+    #modalCheckpoint .checkpoint-campo label {
         font-size: 12px;
         margin-bottom: 2px;
     }
 
-    .checkpoint-input-linha input {
-        height: 34px;
+    #modalCheckpoint .checkpoint-input-linha input {
+        height: 36px;
         font-size: 14px;
     }
 
-    .modal-checkpoint-conteudo .checkpoint-acoes {
+    #modalCheckpoint .checkpoint-acoes {
         gap: 10px;
         margin-top: 10px;
     }
 
-    .modal-checkpoint-conteudo .btn-cancelar-turno,
-    .modal-checkpoint-conteudo .btn-registrar-turno {
+    #modalCheckpoint .btn-cancelar-turno,
+    #modalCheckpoint .btn-registrar-turno {
         height: 40px;
         font-size: 14px;
         flex: 1;
