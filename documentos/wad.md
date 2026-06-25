@@ -5427,6 +5427,22 @@ Para cada resposta, é aplicada a seguinte lógica [²⁷](#8-referências):
 
 A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score final de cada participante. A média entre todos os participantes representa o score SUS do sistema. A pontuação média do SUS é 68, fazendo com que uma pontuação acima ou abaixo da média forneça uma visão imediata da usabilidade geral da solução de design do projeto. [²⁷](#8-referências).
 
+| Score SUS | Classificação | Aceitabilidade |
+|---|---|---|
+| 85 a 100 | Excelente / Melhor imaginável | Aceitável |
+| 71 a 84 | Bom | Aceitável |
+| 51 a 70 | OK / Marginal | Marginal |
+| 26 a 50 | Ruim | Não aceitável |
+| 0 a 25 | Inaceitável / Pior imaginável | Não aceitável |
+
+
+<div align="center">'
+<sub>Imagem 86 - Escala de classificação SUS </sub><br>
+ <img src="./assets/teste-sus/escala_sus.png" width="100%" alt="Escala de classificação SUS"><br>
+  <sub>Fonte: Bangor, Kortum e Miller (2008) [²⁸](#8-referências).</sub>
+  <br><br><br>
+</div>
+
 ## Respostas por Participante
 
 ### Testador: Enzo Braga
@@ -5646,7 +5662,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 O score médio de 56,25 posiciona o RedRun abaixo da média de referência do SUS (68) [²⁸](#8-referências), com scores individuais variando entre 32,5 e 75,0, uma amplitude de 42,5 pontos que revela experiências bastante assimétricas entre os participantes. Essa dispersão não é aleatória: ela acompanha diretamente o desempenho observado no teste de guerrilha. Participantes que navegaram com mais naturalidade pelo fluxo de gerente, como Lais Victoria (72,5) e Pedro Negri (75,0), avaliaram o sistema de forma positiva. Já os que enfrentaram barreiras no fluxo de auditoria, como Lucas Levi (32,5) e Valter Lima (37,5), reportaram dificuldades que impactaram diretamente sua percepção de usabilidade.
 
-Vale destacar um caso específico: Lucas Levi foi o único participante que não concluiu nenhuma das três tarefas do teste de guerrilha (T1, T2 e T3), e seu score de 27,5 é o mais baixo da amostra, o que reforça a coerência entre desempenho objetivo e percepção subjetiva. Esse caso ilustra bem como o SUS, quando analisado junto ao guerrilha, oferece uma leitura mais completa da experiência do usuário.
+Vale destacar um caso específico: Lucas Levi foi o único participante que não concluiu nenhuma das três tarefas do teste de guerrilha (T1, T2 e T3), e seu score de 32,5 é o mais baixo da amostra, o que reforça a coerência entre desempenho objetivo e percepção subjetiva. Esse caso ilustra bem como o SUS, quando analisado junto ao guerrilha, oferece uma leitura mais completa da experiência do usuário.
 
 Nas perguntas positivas, os resultados mostram uma percepção moderada: na pergunta 1 ("gostaria de usar o sistema com frequência"), 3 de 6 participantes (50%) responderam 4 e 2 responderam 3, sem nenhuma resposta acima de 4. Na pergunta 3 ("achei o sistema fácil de usar"), as respostas ficaram distribuídas igualmente entre 2, 3 e 4, cada uma com 33,3%, sem nenhum 5. Na pergunta 5 ("funções bem integradas"), 3 de 6 (50%) responderam 4, resultado positivo mas contido. Na pergunta 7 ("as pessoas aprenderão rapidamente"), metade dos participantes (50%) respondeu 3 e 33,3% responderam 2, indicando baixa confiança na curva de aprendizado. Na pergunta 9 ("me senti confiante"), 3 de 6 responderam 4, mas 2 responderam 2.
 
