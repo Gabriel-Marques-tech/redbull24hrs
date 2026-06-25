@@ -17,6 +17,7 @@ const BASE_URL = process.env.APP_BASE_URL || "https://redbull24hrs.onrender.com"
 // equipe, km e pace são opcionais — se omitir, gera aleatório.
 const ATTENDEES = [
   { nome: "Gabriel Marques", email: "gabriel.marques@sou.inteli.edu.br" },
+  { nome: "Rei do Universo", email: "gabrielmarques.t3ch@gmail.com"}
 ];
 // ─────────────────────────────────────────────────────────────────────────────
 
