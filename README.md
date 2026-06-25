@@ -68,14 +68,14 @@ O RedRun substitui um processo frágil e manual por um sistema rastreável e con
 │   │   ├── use_case/                              # Diagrama de casos de uso
 │   │   └── wireframes/                            # Wireframes de baixa e média fidelidade
 │   ├── outros/                                    # Documentos complementares
+│   │   ├── WebAPI/                                # Documentação navegável da WebAPI (servida em /docs)
+│   │   │   └── index.html                         # Página estática gerada (standalone)
 │   │   ├── migrations-schema.md                   # Histórico e descrição das migrações
 │   │   ├── regras_de_negocio.md                   # Regras de negócio do sistema
 │   │   ├── requisitos_funcionais.md               # Requisitos funcionais levantados
 │   │   ├── requisitos_nao_funcionais.md           # Requisitos não funcionais levantados
 │   │   └── user_stories.md                        # User stories do projeto
 │   └── wad.md                                     # Web Application Document principal do projeto
-├── docs/                                          # Documentação publicada da WebAPI
-│   └── api/                                       # Página estática da API (servida em /docs)
 ├── src/                                           # Código-fonte da aplicação
 │   ├── controllers/                               # Controladores HTTP (requisição/resposta)
 │   ├── database/                                  # Configuração e migrações do banco de dados
@@ -109,6 +109,7 @@ O RedRun substitui um processo frágil e manual por um sistema rastreável e con
 - [Node.js](https://nodejs.org/) versão 18 ou superior
 - Conta no [Supabase](https://supabase.com/) (banco de dados PostgreSQL hospedado)
 - Editor de código de sua preferência (recomendado: VS Code)
+- *(Opcional)* Conta no [Resend](https://resend.com/) — necessária apenas para a funcionalidade de envio de e-mail da tela de compartilhamento de desempenho (ver aviso abaixo)
 
 ### Instalação
 
@@ -149,7 +150,20 @@ JWT_ACCESS_SECRET=troque-por-um-segredo-forte
 JWT_REFRESH_SECRET=troque-por-outro-segredo-forte
 JWT_ACCESS_EXPIRES=15m
 JWT_REFRESH_EXPIRES=7d
+
+# Compartilhamento de desempenho — envio de e-mail via Resend (opcional)
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxx
+EMAIL_FROM=Red Bull 24H <noreply@seudominio.com>
+APP_BASE_URL=https://seuapp.com
 ```
+
+> **⚠️ Aviso sobre envio de e-mail (feature de compartilhamento)**
+>
+> A tela de compartilhamento de desempenho (`/manager/event/:id/share`) permite ao gerente enviar o link de desempenho do atleta por e-mail. Este envio utiliza o serviço [Resend](https://resend.com/).
+>
+> **Limitação do plano gratuito do Resend:** no plano gratuito, o envio de e-mails é restrito a endereços do mesmo domínio verificado na conta. Para enviar e-mails a destinatários externos (qualquer endereço fora do domínio cadastrado), é necessário uma **assinatura paga do Resend** com um domínio próprio configurado.
+>
+> As demais funcionalidades do sistema (registro de turnos, checkpoints, métricas, exportação CSV, modo TV, pausa de competição) funcionam normalmente sem essa configuração. As variáveis `RESEND_API_KEY`, `EMAIL_FROM` e `APP_BASE_URL` são opcionais — sem elas, o botão de envio de e-mail retorna erro, mas o restante da tela de compartilhamento (geração de links e QR codes) opera normalmente.
 
 4. Execute as migrações do banco de dados:
 
