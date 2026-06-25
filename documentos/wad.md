@@ -5376,7 +5376,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 | 9 | Eu me senti confiante ao usar o sistema. | 4 |
 | 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 2 |
 
-**Score SUS: 72,5**
+**Score SUS: 67,5**
 
 ---
 
@@ -5396,7 +5396,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 | 9 | Eu me senti confiante ao usar o sistema. | 2 |
 | 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 4 |
 
-**Score SUS: 27,5**
+**Score SUS: 32,5**
 
 ---
 
@@ -5436,7 +5436,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 | 9 | Eu me senti confiante ao usar o sistema. | 4 |
 | 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 2 |
 
-**Score SUS: 77,5**
+**Score SUS: 72,4**
 
 ---
 
