@@ -5559,7 +5559,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 | Lais Victoria | 72,5 | Bom |
 | Pedro Negri | 75,0 | Bom |
 | Valter Lima | 37,5 | Ruim |
-| **Média final** | **57,1** | **OK / Marginal** |
+| **Média final** | **56,25** | **OK / Marginal** |
 
 
 <div align="center">
