@@ -128,3 +128,6 @@ graphify-out/
 
 # AI tools (configs locais de assistentes de IA — não commitar)
 .mcp.json
+
+# Notas locais de atualizações/entrega
+ATUALIZACOES.md
