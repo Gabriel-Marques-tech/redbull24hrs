@@ -164,6 +164,11 @@
     <!-- Modal registrar checkpoint -->
     <div class="modal-turno escondido" id="modalCheckpoint">
         <div class="modal-turno-conteudo modal-checkpoint-conteudo">
+            <div class="checkpoint-cronometro-topo">
+                <span class="checkpoint-cronometro-label">Tempo em curso</span>
+                <span class="checkpoint-cronometro-valor" id="cronometroModal">00:00:00</span>
+            </div>
+
             <div class="checkpoint-corredor">
                 <label for="corredorCheckpointModal">Corredor</label>
                 <select id="corredorCheckpointModal" disabled>
@@ -325,6 +330,16 @@
                 </div>
             </div>
 
+            <div class="ocr-resultado escondido" id="ocrResultadoTurno">
+                <small class="ocr-label">Leitura da esteira (OCR)</small>
+                <div class="ocr-campos">
+                    <span class="ocr-campo"><label>Velocidade</label><strong id="ocrSpeed">—</strong></span>
+                    <span class="ocr-campo"><label>Distância</label><strong id="ocrDistance">—</strong></span>
+                    <span class="ocr-campo"><label>Pace</label><strong id="ocrPace">—</strong></span>
+                    <span class="ocr-campo"><label>Tempo</label><strong id="ocrTime">—</strong></span>
+                </div>
+            </div>
+
             <div class="campos-turno">
                 <div class="campo-turno campo-corredor">
                     <label for="selectCorredor">Corredor</label>
@@ -342,14 +357,16 @@
                 </div>
             </div>
 
-            <div class="campo-turno campo-pace">
-                <label for="paceTurno">Pace da esteira</label>
-                <input id="paceTurno" type="text" maxlength="5" placeholder="MM:SS">
-            </div>
+            <div class="campos-km">
+                <div class="campo-turno campo-pace">
+                    <label for="paceTurno">Pace da esteira</label>
+                    <input id="paceTurno" type="text" maxlength="5" placeholder="MM:SS">
+                </div>
 
-            <div class="campo-turno campo-quilometragem">
-                <label for="quilometragemTurno">Registre a quilometragem final</label>
-                <input id="quilometragemTurno" type="number" min="0" step="0.1" placeholder="Km final">
+                <div class="campo-turno campo-quilometragem">
+                    <label for="quilometragemTurno">Quilometragem final</label>
+                    <input id="quilometragemTurno" type="number" min="0" step="0.1" placeholder="Km final">
+                </div>
             </div>
 
             <div class="acoes-modal-turno">

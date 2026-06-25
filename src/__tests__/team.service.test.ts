@@ -32,15 +32,21 @@ jest.mock("../repositories/treadmillRepository", () => ({
   },
 }));
 
+jest.mock("../utils/supabaseStorage", () => ({
+  removeFromStorage: jest.fn(),
+}));
+
 import { eventRepository } from "../repositories/eventRepository";
 import { teamRepository } from "../repositories/teamRepository";
 import { athleteRepository } from "../repositories/athleteRepository";
 import { treadmillRepository } from "../repositories/treadmillRepository";
+import { removeFromStorage } from "../utils/supabaseStorage";
 
 const mockEventRepo = eventRepository as jest.Mocked<typeof eventRepository>;
 const mockTeamRepo = teamRepository as jest.Mocked<typeof teamRepository>;
 const mockAthleteRepo = athleteRepository as jest.Mocked<typeof athleteRepository>;
 const mockTreadmillRepo = treadmillRepository as jest.Mocked<typeof treadmillRepository>;
+const mockRemove = removeFromStorage as jest.MockedFunction<typeof removeFromStorage>;
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -121,5 +127,17 @@ describe("teamService.getAthlete", () => {
     await expect(teamService.getAthlete(1, 99)).rejects.toThrow(
       "Atleta não encontrado"
     );
+  });
+});
+
+describe("teamService.updateAthlete", () => {
+  it("remove a foto antiga ao trocar image_url", async () => {
+    mockTeamRepo.findById.mockResolvedValue({ id: 1 } as any);
+    mockAthleteRepo.findById.mockResolvedValue({ id: 5, image_url: "http://x/old.png" } as any);
+    mockAthleteRepo.update.mockResolvedValue({ id: 5, image_url: "http://x/new.png" } as any);
+
+    await teamService.updateAthlete(1, 5, { image_url: "http://x/new.png" });
+
+    expect(mockRemove).toHaveBeenCalledWith("http://x/old.png");
   });
 });
