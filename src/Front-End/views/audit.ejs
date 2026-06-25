@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auditoria</title>
+    <link rel="icon" type="image/png" href="/assets/logo/logo-redrun.png">
+    <link rel="apple-touch-icon" href="/assets/logo/logo-redrun.png">
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/auditoria.css">
+    <script src="/js/tema.js"></script>
 </head>
 <body>
     <div class="barra-gradiente"></div>
 
     <header class="topo">
         <div class="operador" id="areaOperador" onclick="abrirModalOperador()" title="Trocar operador" style="cursor:pointer">
+            <% if (auditor.image_url) { %>
+            <div class="avatar avatar-operador" style="background-image:url('<%= auditor.image_url %>')"></div>
+            <% } else { %>
             <span class="avatar avatar-operador"></span>
+            <% } %>
             <div>
                 <small>Operador <span class="seta-bandeja">▾</span></small>
                 <p id="nomeOperador"><%= auditor.name %></p>
@@ -21,16 +28,25 @@
 
         <p class="tempo-restante">Esteira <strong id="labelEsteira"><%= treadmill.number %></strong> — <%= team.name %></p>
 
-        <button class="btn-sair" type="button" data-href="/home">↪</button>
+        <button class="btn-sair" type="button" data-href="/home" aria-label="Sair da auditoria">
+            <svg class="icone-sair-svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M10 5H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h4"></path>
+                <path d="M14 7l5 5-5 5"></path>
+                <path d="M19 12H9"></path>
+            </svg>
+        </button>
     </header>
 
     <main class="conteudo-auditoria">
         <section class="cronometro-area">
-            <div class="corredor-atual" id="corredorAtualArea" onclick="abrirBandejaCorredores()" title="Clique para selecionar corredor">
-                <small>Corredor atual <span class="seta-bandeja">▾</span></small>
+            <div class="corredor-atual" id="corredorAtualArea">
+                <small>Corredor atual</small>
                 <p>
                     <span id="corredorAtual"><%= athletes[0] ? athletes[0].name : '—' %></span>
                 </p>
+                <button class="acao-corredor" type="button" onclick="abrirBandejaCorredores()" title="Trocar corredor atual">
+                    Trocar corredor <span class="seta-bandeja">▾</span>
+                </button>
             </div>
 
             <div class="cronometro" id="cronometro">00:00:00</div>
@@ -41,8 +57,9 @@
                         Iniciar corrida
                     </button>
 
-                    <button class="btn-proximo-corredor escondido" id="btnProximoCorredor" type="button" aria-label="Próximo corredor">
+                    <button class="btn-proximo-corredor escondido" id="btnProximoCorredor" type="button" aria-label="Finalizar turno">
                         <span class="icone-proximo"></span>
+                        <span class="texto-finalizar-turno">Finalizar turno</span>
                     </button>
 
                     <button class="btn-esteira" id="btnAbrirEsteira" type="button" onclick="abrirModalEsteira()">
@@ -69,6 +86,7 @@
                             <th>Corredor</th>
                             <th>Km início</th>
                             <th>Km fim</th>
+                            <th>Pace</th>
                             <th>Início</th>
                             <th>Fim</th>
                             <th>Auditor</th>
@@ -79,13 +97,25 @@
             </div>
 
             <aside class="proximos-corredores">
-                <h2>Próximos corredores</h2>
-                <div id="fila">
-                    <% athletes.slice(1).forEach(athlete => { %>
-                    <div class="corredor-fila" draggable="true" data-id="<%= athlete.id %>">
+                <div class="fila-resumo" id="filaResumo">
+                    <button class="btn-organizar-fila" id="btnOrganizarFila" type="button">
+                        <span>Organizar fila</span>
+                    </button>
+                </div>
+                <p class="instrucao-fila">Arraste para ordenar</p>
+                <div id="fila" class="fila-lista">
+                    <% const filaPreview = athletes.length > 1 ? athletes.slice(1) : [
+                        { id: 'mock-1', name: 'Pietro Sansao' },
+                        { id: 'mock-2', name: 'Gabriel Marques' },
+                        { id: 'mock-3', name: 'Laura Faria' },
+                        { id: 'mock-4', name: 'Marina Toledo' },
+                        { id: 'mock-5', name: 'Rafael Lima' }
+                    ]; %>
+                    <% filaPreview.forEach(athlete => { %>
+                    <div class="corredor-fila" draggable="true" data-id="<%= athlete.id %>" title="Arraste para reorganizar a fila">
                         <span class="avatar"></span>
                         <p><%= athlete.name %></p>
-                        <span class="drag">⠿</span>
+                        <span class="drag" aria-hidden="true">⠿</span>
                     </div>
                     <% }) %>
                 </div>
@@ -163,21 +193,93 @@
     <!-- Modal registrar checkpoint -->
     <div class="modal-turno escondido" id="modalCheckpoint">
         <div class="modal-turno-conteudo modal-checkpoint-conteudo">
-            <div class="campos-turno">
-                <div class="campo-turno campo-corredor">
-                    <label for="kmCheckpointModal">Quilometragem</label>
-                    <input id="kmCheckpointModal" type="number" min="0" step="0.1" placeholder="Km checkpoint">
-                </div>
-                <div class="campo-turno campo-cps-sessao">
-                    <label>Checkpoints desta corrida</label>
-                    <div class="lista-cps-sessao" id="listaCpsSessao">
-                        <p class="cps-vazio">Nenhum checkpoint ainda</p>
-                    </div>
-                </div>
+            <div class="checkpoint-cronometro-topo">
+                <span class="checkpoint-cronometro-label">Tempo em curso</span>
+                <span class="checkpoint-cronometro-valor" id="cronometroModal">00:00:00</span>
             </div>
-            <div class="acoes-modal-turno">
-                <button class="btn-cancelar-turno" id="btnCancelarCheckpoint" type="button">Cancelar</button>
-                <button class="btn-registrar-turno" id="btnRegistrarCheckpoint" type="button">Registrar</button>
+
+            <div class="checkpoint-corredor">
+                <label for="corredorCheckpointModal">Corredor</label>
+                <select id="corredorCheckpointModal" disabled>
+                    <option>Corredor atual</option>
+                </select>
+            </div>
+
+            <div class="checkpoint-divisor"></div>
+
+            <div class="checkpoint-conteudo">
+                <section class="checkpoint-foto">
+                    <div class="checkpoint-secao-titulo">
+                        <span class="checkpoint-icone">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M4 7h3l1.5-2h7L17 7h3v12H4z"></path>
+                                <circle cx="12" cy="13" r="4"></circle>
+                            </svg>
+                        </span>
+                        <div>
+                            <strong>Foto do checkpoint</strong>
+                            <small>A foto preenche os dados ao lado.</small>
+                        </div>
+                    </div>
+
+                    <div class="checkpoint-foto-preview" id="checkpointFotoPreview">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4 7h3l1.5-2h7L17 7h3v12H4z"></path>
+                            <circle cx="12" cy="13" r="4"></circle>
+                        </svg>
+                    </div>
+
+                    <input id="checkpointFotoInput" type="file" accept="image/*" capture="environment">
+                    <button class="btn-checkpoint-foto" id="btnCheckpointFoto" type="button">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4 7h3l1.5-2h7L17 7h3v12H4z"></path>
+                            <circle cx="12" cy="13" r="4"></circle>
+                        </svg>
+                        <span>Tirar nova foto</span>
+                    </button>
+                </section>
+
+                <section class="checkpoint-dados">
+                    <div class="checkpoint-secao-titulo">
+                        <span class="checkpoint-icone checkpoint-icone-dados">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z"></path>
+                            </svg>
+                        </span>
+                        <div>
+                            <strong>Dados identificados</strong>
+                            <small>Revise antes de confirmar.</small>
+                        </div>
+                    </div>
+
+                    <div class="checkpoint-campos">
+                        <div class="checkpoint-campo">
+                            <label for="kmCheckpointModal">Distância</label>
+                            <div class="checkpoint-input-linha">
+                                <input id="kmCheckpointModal" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Km checkpoint">
+                            </div>
+                        </div>
+
+                        <div class="checkpoint-campo">
+                            <label for="tempoCheckpointModal">Tempo</label>
+                            <div class="checkpoint-input-linha">
+                                <input id="tempoCheckpointModal" type="text">
+                            </div>
+                        </div>
+
+                        <div class="checkpoint-campo">
+                            <label for="velocidadeCheckpointModal">Velocidade</label>
+                            <div class="checkpoint-input-linha">
+                                <input id="velocidadeCheckpointModal" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Km/h">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="acoes-modal-turno checkpoint-acoes">
+                        <button class="btn-cancelar-turno" id="btnCancelarCheckpoint" type="button">Cancelar</button>
+                        <button class="btn-registrar-turno" id="btnRegistrarCheckpoint" type="button">Confirmar</button>
+                    </div>
+                </section>
             </div>
         </div>
     </div>
@@ -220,6 +322,33 @@
     <!-- Modal finalizar turno -->
     <div class="modal-turno escondido" id="modalTurno">
         <div class="modal-turno-conteudo">
+            <div class="finalizar-turno-foto">
+                <div class="finalizar-turno-foto-preview" id="finalizarTurnoFotoPreview">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 7h3l1.5-2h7L17 7h3v12H4z"></path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                </div>
+                <div class="finalizar-turno-foto-info">
+                    <strong>Foto da finalização</strong>
+                    <small>Registre uma imagem do encerramento do turno.</small>
+                    <input id="finalizarTurnoFotoInput" type="file" accept="image/*" capture="environment">
+                    <button class="btn-finalizar-turno-foto" id="btnFinalizarTurnoFoto" type="button">
+                        Tirar foto
+                    </button>
+                </div>
+            </div>
+
+            <div class="ocr-resultado escondido" id="ocrResultadoTurno">
+                <small class="ocr-label">Leitura da esteira (OCR)</small>
+                <div class="ocr-campos">
+                    <span class="ocr-campo"><label>Velocidade</label><strong id="ocrSpeed">—</strong></span>
+                    <span class="ocr-campo"><label>Distância</label><strong id="ocrDistance">—</strong></span>
+                    <span class="ocr-campo"><label>Pace</label><strong id="ocrPace">—</strong></span>
+                    <span class="ocr-campo"><label>Tempo</label><strong id="ocrTime">—</strong></span>
+                </div>
+            </div>
+
             <div class="campos-turno">
                 <div class="campo-turno campo-corredor">
                     <label for="selectCorredor">Corredor</label>
@@ -237,9 +366,16 @@
                 </div>
             </div>
 
-            <div class="campo-turno campo-quilometragem">
-                <label for="quilometragemTurno">Registre a quilometragem final</label>
-                <input id="quilometragemTurno" type="number" min="0" step="0.1" placeholder="Km final">
+            <div class="campos-km">
+                <div class="campo-turno campo-pace">
+                    <label for="paceTurno">Pace da esteira</label>
+                    <input id="paceTurno" type="text" maxlength="5" placeholder="MM:SS">
+                </div>
+
+                <div class="campo-turno campo-quilometragem">
+                    <label for="quilometragemTurno">Quilometragem final</label>
+                    <input id="quilometragemTurno" type="number" min="0" step="0.1" placeholder="Km final">
+                </div>
             </div>
 
             <div class="acoes-modal-turno">
@@ -252,7 +388,13 @@
     <!-- Modal sair da auditoria -->
     <div class="modal-finalizar-competicao escondido" id="modalFinalizarCompeticao">
         <div class="modal-finalizar-conteudo">
-            <div class="icone-finalizar">↪</div>
+            <div class="icone-finalizar" aria-hidden="true">
+                <svg class="icone-sair-svg" viewBox="0 0 24 24">
+                    <path d="M10 5H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h4"></path>
+                    <path d="M14 7l5 5-5 5"></path>
+                    <path d="M19 12H9"></path>
+                </svg>
+            </div>
 
             <h2>Sair da auditoria?</h2>
             <p>O turno em andamento será<br>encerrado automaticamente.</p>

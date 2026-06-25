@@ -1,0 +1,7 @@
+ALTER TABLE athletes
+  ADD COLUMN IF NOT EXISTS share_token UUID DEFAULT NULL;
+
+CREATE UNIQUE INDEX IF NOT EXISTS athletes_share_token_idx ON athletes (share_token);
+
+ALTER TABLE athletes
+  ADD COLUMN IF NOT EXISTS email VARCHAR(255) DEFAULT NULL;

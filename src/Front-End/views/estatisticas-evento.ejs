@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estatísticas — <%= evento.title %></title>
+    <link rel="icon" type="image/png" href="/assets/logo/logo-redrun.png">
+    <link rel="apple-touch-icon" href="/assets/logo/logo-redrun.png">
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/equipe.css">
     <link rel="stylesheet" href="/css/estatisticas-evento.css">
+    <script src="/js/tema.js"></script>
 </head>
 <body>
     <div class="barra-gradiente"></div>
@@ -17,7 +20,7 @@
     </a>
 
     <main>
-        <aside class="etapas">
+        <aside class="etapas etapas-estatisticas">
             <h3>Competição</h3>
             <div class="etapa ativa"><span>1</span><p>Estatísticas</p></div>
         </aside>
@@ -30,6 +33,9 @@
                     ? new Date(evento.date).toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' })
                     : '—';
                 const startedAtIso = evento.started_at ? new Date(evento.started_at).toISOString() : '';
+                const pausedAtIso = evento.paused_at ? new Date(evento.paused_at).toISOString() : '';
+                const tvTotalKm = Number(dashboardStats.totalKm || 0);
+                const tvParticipantCount = Array.isArray(athleteStats) ? athleteStats.length : 0;
             %>
 
             <div class="stats-topo">
@@ -39,10 +45,18 @@
                     </span>
                     <div class="stats-titulo-linha">
                         <h1><%= evento.title %></h1>
-                        <button type="button" class="btn-exportar" onclick="exportarPlanilha(<%= evento.id %>)">
-                            <img src="/assets/estatisticas/compartilhar.svg" alt="" class="btn-exportar-icone">
-                            Compartilhar como planilha
-                        </button>
+                        <div class="stats-acoes-topo">
+                            <button type="button" class="btn-exportar" onclick="abrirModalExport(<%= evento.id %>)">
+                                <img src="/assets/estatisticas/compartilhar.svg" alt="" class="btn-exportar-icone">
+                                Compartilhar como planilha
+                            </button>
+                            <% if (evento.status === 'finished' && user_role === 'manager') { %>
+                            <a href="/manager/event/<%= evento.id %>/share" class="btn-exportar" style="text-decoration:none;">
+                                <img src="/assets/estatisticas/compartilhar.svg" alt="" class="btn-exportar-icone">
+                                Compartilhar desempenhos
+                            </a>
+                            <% } %>
+                        </div>
                     </div>
                     <div class="stats-meta">
                         <span><img src="/assets/estatisticas/mapa.svg" alt="" class="meta-icone"> <%= evento.local %></span>
@@ -54,13 +68,21 @@
             <% if (evento.status === 'in_progress') { %>
             <div class="stats-barra-acao">
                 <div class="countdown-bloco">
-                    <span class="countdown-label">Tempo restante</span>
+                    <span class="countdown-label" id="countdownLabel">Tempo restante<%= evento.paused_at ? ' (pausado)' : '' %></span>
                     <span class="countdown-timer" id="countdown">--:--:--</span>
                 </div>
                 <% if (user_role === 'manager') { %>
-                <button type="button" class="btn-finalizar" onclick="finalizarCompetição(<%= evento.id %>)">
-                    Finalizar competição
-                </button>
+                <div class="stats-barra-botoes">
+                    <button type="button" class="btn-modo-tv" id="btnAbrirModoTv" title="Configurar Exibição Pública" aria-label="Modo TV">
+                        <span class="btn-modo-tv-icone" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn-pausar<%= evento.paused_at ? ' btn-pausar-retomar' : '' %>" onclick="togglePausa(<%= evento.id %>)">
+                        <%= evento.paused_at ? 'Retomar competição' : 'Pausar competição' %>
+                    </button>
+                    <button type="button" class="btn-finalizar" onclick="finalizarCompetição(<%= evento.id %>)">
+                        Finalizar Competição
+                    </button>
+                </div>
                 <% } %>
             </div>
             <% } %>
@@ -142,6 +164,11 @@
                     const periodos = ['Madrugada', 'Manhã', 'Tarde', 'Noite'];
                     const periodoIcone = { 'Madrugada': '🌙', 'Manhã': '🌅', 'Tarde': '☀️', 'Noite': '🌆' };
                     const kmByHourJson = JSON.stringify(ds.kmByHour);
+                    const fmtDur = (s) => {
+                        s = Math.max(0, Math.floor(Number(s) || 0));
+                        const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), ss = s % 60;
+                        return h > 0 ? `${h}h ${String(m).padStart(2,'0')}min` : `${m}min ${String(ss).padStart(2,'0')}s`;
+                    };
                 %>
 
                 <!-- KPIs de topo -->
@@ -170,6 +197,13 @@
                         <span class="dash-kpi-label">Maior turno</span>
                         <span class="dash-kpi-valor"><%= Number(best.distance).toFixed(1) %> <span class="dash-kpi-unit">km</span></span>
                         <span class="dash-kpi-sub"><%= best.athlete_name %> · <%= dur %></span>
+                    </div>
+                    <% } %>
+                    <% if (pauseInfo && pauseInfo.count > 0) { %>
+                    <div class="dash-kpi">
+                        <span class="dash-kpi-label">Tempo pausado</span>
+                        <span class="dash-kpi-valor"><%= fmtDur(pauseInfo.totalSeconds) %></span>
+                        <span class="dash-kpi-sub"><%= pauseInfo.count %> pausa<%= pauseInfo.count !== 1 ? 's' : '' %> · descontado da duração</span>
                     </div>
                     <% } %>
                 </div>
@@ -324,6 +358,31 @@
 
             <!-- TAB HISTÓRICO -->
             <div class="tab-conteudo tab-oculto" id="tab-historico">
+                <% if (pauseInfo && pauseInfo.count > 0) {
+                    const fmtTs = (v) => v ? new Date(v).toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit' }) : '—';
+                    const fmtDurH = (s) => { s = Math.max(0, Math.floor(Number(s) || 0)); const h = Math.floor(s/3600), m = Math.floor((s%3600)/60), ss = s%60; return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(ss).padStart(2,'0')}`; };
+                %>
+                <div class="historico-equipe-bloco">
+                <h3 class="historico-equipe-nome">Pausas da competição · total <%= fmtDurH(pauseInfo.totalSeconds) %></h3>
+                <div class="tabela-wrapper">
+                <table class="tabela-historico">
+                    <thead>
+                        <tr><th>#</th><th>Pausada em</th><th>Retomada em</th><th>Duração</th></tr>
+                    </thead>
+                    <tbody>
+                        <% pauseInfo.pauses.forEach((p, idx) => { %>
+                        <tr>
+                            <td class="col-num"><%= idx + 1 %></td>
+                            <td><%= fmtTs(p.paused_at) %></td>
+                            <td><%= p.ongoing ? 'Em andamento' : fmtTs(p.resumed_at) %></td>
+                            <td><%= fmtDurH(p.duration_seconds) %><%= p.ongoing ? ' (em curso)' : '' %></td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+                </div>
+                </div>
+                <% } %>
                 <% const shifts = historyEntries.filter(e => e.entry_type === 'shift_start'); %>
                 <% if (shifts.length === 0) { %>
                 <p class="stats-vazio">Nenhum turno registrado.</p>
@@ -427,15 +486,20 @@
                     <h3 class="equipe-tab-nome"><%= eq.name %></h3>
                     <table class="tabela-atletas">
                         <thead>
-                            <tr><th>#</th><th>Atleta</th><th>Km total</th><th>Turnos</th></tr>
+                            <tr>
+                                <th class="col-num">#</th>
+                                <th class="col-atleta">Atleta</th>
+                                <th class="col-km">Km total</th>
+                                <th class="col-turnos">Turnos</th>
+                            </tr>
                         </thead>
                         <tbody>
                             <% eq.atletas.forEach((a, idx) => { %>
                             <tr>
                                 <td class="col-num"><%= idx + 1 %></td>
-                                <td><%= a.athlete_name %></td>
-                                <td><%= Number(a.total_km).toFixed(1) %></td>
-                                <td><%= a.shift_count %></td>
+                                <td class="col-atleta"><%= a.athlete_name %></td>
+                                <td class="col-km"><%= Number(a.total_km).toFixed(1) %></td>
+                                <td class="col-turnos"><%= a.shift_count %></td>
                             </tr>
                             <% }) %>
                         </tbody>
@@ -450,7 +514,322 @@
         </section>
     </main>
 
+    <!-- Modal seleção de colunas para exportação -->
+    <div class="modal-export-overlay escondido" id="modalExportColunas">
+        <div class="modal-export-conteudo">
+            <div class="modal-export-barra"></div>
+            <h2>Exportar planilha</h2>
+            <p class="modal-export-desc">Escolha as colunas que deseja incluir na exportação.</p>
+
+            <div class="modal-export-secao">
+                <p class="modal-export-grupo-titulo">Sempre incluídas</p>
+                <div class="modal-export-fixas">
+                    <span>Atleta</span>
+                    <span>Equipe</span>
+                    <span>Início</span>
+                    <span>Fim</span>
+                    <span>Status</span>
+                </div>
+            </div>
+
+            <div class="modal-export-secao">
+                <p class="modal-export-grupo-titulo">Opcionais</p>
+                <div class="modal-export-opcoes">
+                    <label class="modal-export-opcao">
+                        <input type="checkbox" value="treadmill" checked>
+                        <span>Esteira</span>
+                    </label>
+                    <label class="modal-export-opcao">
+                        <input type="checkbox" value="km_start" checked>
+                        <span>Km início</span>
+                    </label>
+                    <label class="modal-export-opcao">
+                        <input type="checkbox" value="km_end" checked>
+                        <span>Km fim</span>
+                    </label>
+                    <label class="modal-export-opcao">
+                        <input type="checkbox" value="distance" checked>
+                        <span>Distância (km)</span>
+                    </label>
+                    <label class="modal-export-opcao">
+                        <input type="checkbox" value="speed" checked>
+                        <span>Velocidade</span>
+                    </label>
+                    <label class="modal-export-opcao">
+                        <input type="checkbox" value="total_time" checked>
+                        <span>Duração</span>
+                    </label>
+                    <label class="modal-export-opcao">
+                        <input type="checkbox" value="auditor" checked>
+                        <span>Auditor</span>
+                    </label>
+                    <label class="modal-export-opcao">
+                        <input type="checkbox" value="id" checked>
+                        <span>ID</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="modal-export-acoes">
+                <button class="modal-export-btn-cancelar" id="btnCancelarExport" type="button">Cancelar</button>
+                <button class="modal-export-btn-confirmar" id="btnConfirmarExport" type="button">Exportar</button>
+            </div>
+        </div>
+    </div>
+
     <% if (user_role === 'manager') { %>
+    <div class="tv-config-overlay" id="tvConfigOverlay"></div>
+    <aside class="tv-config-drawer" id="tvConfigDrawer" aria-hidden="true">
+        <div class="tv-config-topo">
+            <div>
+                <span class="tv-config-etiqueta">Experiência pública</span>
+                <h2>Conteúdo para o público</h2>
+                <p>Monte uma apresentação envolvente sem revelar o desempenho das equipes.</p>
+            </div>
+            <button type="button" class="tv-config-fechar" id="btnFecharModoTv" aria-label="Fechar">&times;</button>
+        </div>
+
+        <div class="tv-config-preview">
+            <div class="tv-preview-tela">
+                <span class="tv-preview-status">AO VIVO</span>
+                <strong><%= evento.title %></strong>
+                <div class="tv-preview-numeros">
+                    <span><%= tvParticipantCount %> participantes</span>
+                    <span><%= tvTotalKm.toFixed(1) %> km juntos</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="tv-config-opcoes">
+            <label class="tv-config-opcao">
+                <span><strong>1. Abertura do evento</strong><small>Marca, local e tempo restante</small></span>
+                <input type="checkbox" data-tv-opcao="abertura" checked>
+                <i></i>
+            </label>
+            <label class="tv-config-opcao">
+                <span><strong>2. Quilômetros juntos</strong><small>Total ao vivo, participantes e equivalência</small></span>
+                <input type="checkbox" data-tv-opcao="coletivo" checked>
+                <i></i>
+            </label>
+            <label class="tv-config-opcao">
+                <span><strong>3. Ritmo e projeção</strong><small>Projeção de km ao fim, ritmo coletivo e progresso</small></span>
+                <input type="checkbox" data-tv-opcao="ritmo" checked>
+                <i></i>
+            </label>
+            <label class="tv-config-opcao">
+                <span><strong>4. Mulheres e homens</strong><small>Prévia do total coletivo por gênero</small></span>
+                <input type="checkbox" data-tv-opcao="genero" checked>
+                <i></i>
+            </label>
+            <label class="tv-config-opcao">
+                <span><strong>5. Pace médio</strong><small>Pace do período de 6h, atualizado a cada turno concluído</small></span>
+                <input type="checkbox" data-tv-opcao="pace" checked>
+                <i></i>
+            </label>
+            <label class="tv-config-opcao">
+                <span><strong>6. Marca do dia</strong><small>Maior turno da competição, sem identificar atletas</small></span>
+                <input type="checkbox" data-tv-opcao="recorde" checked>
+                <i></i>
+            </label>
+            <label class="tv-config-opcao">
+                <span><strong>7. Energia Red Bull 24h</strong><small>Mensagem institucional para o público</small></span>
+                <input type="checkbox" data-tv-opcao="mensagem" checked>
+                <i></i>
+            </label>
+        </div>
+
+        <label class="tv-config-tempo">
+            <span><strong>Tempo de cada tela</strong><small>A apresentação troca automaticamente.</small></span>
+            <select id="tvTempoTela">
+                <option value="8">8 segundos</option>
+                <option value="12" selected>12 segundos</option>
+                <option value="18">18 segundos</option>
+            </select>
+        </label>
+
+        <div class="tv-config-seguranca">
+            O conteúdo público nunca mostra nomes, equipes, posições, esteiras, auditores ou históricos operacionais.
+        </div>
+
+        <button type="button" class="tv-config-iniciar" id="btnIniciarModoTv">
+            Iniciar apresentação
+        </button>
+    </aside>
+
+    <section class="modo-tv" id="modoTv" aria-hidden="true">
+        <div class="modo-tv-gradiente"></div>
+        <div class="modo-tv-marca">
+            <span class="modo-tv-ao-vivo"><i></i> AO VIVO</span>
+            <strong>Red Bull 24h</strong>
+        </div>
+        <button type="button" class="modo-tv-sair" id="btnSairModoTv">Encerrar exibição</button>
+
+        <div class="modo-tv-palco">
+            <article class="modo-tv-tela modo-tv-tela-abertura" data-tv-tela="abertura">
+                <div class="modo-tv-tela-conteudo">
+                    <span class="modo-tv-sobretitulo">24 horas conectando pessoas</span>
+                    <h1><%= evento.title %></h1>
+                    <p class="modo-tv-chamada">Energia, movimento e uma experiência construída por todos.</p>
+                    <div class="modo-tv-abertura-rodape">
+                        <div>
+                            <span>Tempo restante</span>
+                            <strong id="tvCountdown">--:--:--</strong>
+                        </div>
+                        <div class="modo-tv-local">
+                            <strong><%= evento.local %></strong>
+                            <span><%= dataFmt %></span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="modo-tv-tela modo-tv-tela-coletivo" data-tv-tela="coletivo">
+                <div class="modo-tv-tela-conteudo">
+                    <span class="modo-tv-sobretitulo">O número que importa</span>
+                    <h2 class="modo-tv-total-titulo">Juntos, já percorremos <strong id="tvTotalKm"><%= tvTotalKm.toFixed(1) %><small> km</small></strong></h2>
+                    <p class="modo-tv-chamada">É a soma de cada turno, cada passo e cada pessoa que entrou nessa corrida.</p>
+                    <div class="modo-tv-dados-coletivos">
+                        <div><strong><%= tvParticipantCount %></strong><span>pessoas correndo</span></div>
+                        <div><strong>2</strong><span>equipes mantendo o desafio vivo</span></div>
+                        <div><strong>24h</strong><span>de corrida sem parar</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="modo-tv-tela modo-tv-tela-ritmo" data-tv-tela="ritmo">
+                <div class="modo-tv-tela-conteudo">
+                    <span class="modo-tv-sobretitulo">No ritmo de agora</span>
+                    <% if (evento.status === 'finished') { %>
+                    <h2 class="modo-tv-total-titulo">A competição percorreu <strong><%= Number(dashboardStats.totalKm).toFixed(0) %><small> km</small></strong></h2>
+                    <p class="modo-tv-chamada">Vinte e quatro horas de movimento contínuo, do primeiro ao último passo.</p>
+                    <% } else { %>
+                    <h2 class="modo-tv-total-titulo">Nesse ritmo, vamos cruzar <strong><%= dashboardStats.projectedKm != null ? dashboardStats.projectedKm : '—' %><small> km</small></strong></h2>
+                    <p class="modo-tv-chamada">Uma projeção viva, que cresce a cada turno que entra na pista.</p>
+                    <% } %>
+                    <div class="modo-tv-dados-coletivos">
+                        <div><strong><%= dashboardStats.rateKmH != null ? dashboardStats.rateKmH : '—' %></strong><span>km/h de ritmo coletivo</span></div>
+                        <div><strong><%= dashboardStats.elapsedHours != null ? Math.min(100, Math.round((dashboardStats.elapsedHours / 24) * 100)) : 0 %>%</strong><span>da competição concluída</span></div>
+                        <div><strong><%= Number(dashboardStats.totalKm).toFixed(0) %></strong><span>km percorridos até agora</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="modo-tv-tela modo-tv-tela-genero" data-tv-tela="genero">
+                <div class="modo-tv-tela-conteudo">
+                    <span class="modo-tv-sobretitulo">A corrida também é delas</span>
+                    <h2 id="tvTituloGenero">Mulheres e homens fazem essa energia acontecer.</h2>
+                    <div class="modo-tv-genero-experiencia">
+                        <div class="modo-tv-genero-destaque modo-tv-genero-mulheres">
+                            <div class="modo-tv-genero-topo">
+                                <span class="modo-tv-genero-icone modo-tv-genero-icone-mulheres" aria-hidden="true">
+                                    <img src="/assets/esteira/Esteira-feminina-branca.svg" alt="">
+                                </span>
+                                <span class="modo-tv-genero-etiqueta">Mulheres</span>
+                            </div>
+                            <div class="modo-tv-genero-valor">
+                                <strong id="tvKmMulheres">—<small> km</small></strong>
+                                <span id="tvPctMulheres">—%</span>
+                            </div>
+                            <p>quilômetros construídos por todas as mulheres</p>
+                            <div class="modo-tv-genero-barra">
+                                <i id="tvBarraMulheres" style="width:50%"></i>
+                            </div>
+                        </div>
+
+                        <div class="modo-tv-genero-destaque modo-tv-genero-homens">
+                            <div class="modo-tv-genero-topo">
+                                <span class="modo-tv-genero-icone modo-tv-genero-icone-homens" aria-hidden="true">
+                                    <img src="/assets/esteira/esteira-branca.svg" alt="">
+                                </span>
+                                <span class="modo-tv-genero-etiqueta">Homens</span>
+                            </div>
+                            <div class="modo-tv-genero-valor">
+                                <strong id="tvKmHomens">—<small> km</small></strong>
+                                <span id="tvPctHomensNumero">—%</span>
+                            </div>
+                            <p>quilômetros construídos por todos os homens</p>
+                            <div class="modo-tv-genero-barra">
+                                <i id="tvBarraHomens" style="width:50%"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </article>
+
+            <article class="modo-tv-tela modo-tv-tela-pace" data-tv-tela="pace">
+                <div class="modo-tv-tela-conteudo">
+                    <span class="modo-tv-sobretitulo">Para quem entende de corrida</span>
+                    <h2>Qual é o ritmo da competição agora?</h2>
+                    <div class="modo-tv-pace-card">
+                        <div>
+                            <span>Pace médio da competição</span>
+                            <strong id="tvPaceMedio">—<small class="tv-unidade-escura"> min/km</small></strong>
+                            <p id="tvPacePeriodo">Atualizado a cada turno concluído</p>
+                        </div>
+                        <div class="modo-tv-pace-explicacao">
+                            <strong>O que isso significa?</strong>
+                            <p>É o tempo médio necessário para percorrer um quilômetro, considerando toda a corrida.</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="modo-tv-tela modo-tv-tela-recorde" data-tv-tela="recorde">
+                <div class="modo-tv-tela-conteudo">
+                    <span class="modo-tv-sobretitulo">A marca do dia</span>
+                    <h2>O maior turno até agora</h2>
+                    <%
+                        const tvMelhorTurno = (dashboardStats.topShifts && dashboardStats.topShifts.length) ? dashboardStats.topShifts[0] : null;
+                        const tvDurRecorde = tvMelhorTurno && tvMelhorTurno.duration_seconds
+                            ? Math.floor(tvMelhorTurno.duration_seconds / 3600) + 'h ' + Math.floor((tvMelhorTurno.duration_seconds % 3600) / 60) + 'min'
+                            : '—';
+                        const tvDistRecorde = tvMelhorTurno ? Number(tvMelhorTurno.distance).toFixed(1) : '—';
+                    %>
+                    <div class="modo-tv-recorde-card">
+                        <div class="modo-tv-recorde-medalha">
+                            <span>Maior distância em um único turno</span>
+                            <div class="modo-tv-recorde-arte">
+                                <img src="/assets/medalha/medalha_cordao.svg" alt="">
+                                <strong><%= tvDistRecorde %><small class="tv-unidade-escura"> km</small></strong>
+                            </div>
+                        </div>
+                        <div class="modo-tv-recorde-contexto">
+                            <div class="modo-tv-recorde-metrica destaque">
+                                <small>Distância</small>
+                                <strong><%= tvDistRecorde %><span> km</span></strong>
+                            </div>
+                            <div class="modo-tv-recorde-metrica">
+                                <small>Duração</small>
+                                <strong><%= tvDurRecorde %></strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="modo-tv-tela modo-tv-tela-mensagem" data-tv-tela="mensagem">
+                <div class="modo-tv-tela-conteudo">
+                    <span class="modo-tv-sobretitulo">Red Bull 24h</span>
+                    <h2>A competição virou palco para uma experiência que não para.</h2>
+                    <p class="modo-tv-chamada">Chegue mais perto. Acompanhe. Torça pela energia de todo mundo.</p>
+                    <div class="modo-tv-assinatura">
+                        <strong>24</strong>
+                        <span>horas conectando ideias,<br>energias e pessoas.</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <div class="modo-tv-controles">
+            <button type="button" id="tvAnterior" aria-label="Tela anterior">‹</button>
+            <div class="modo-tv-indicadores" id="tvIndicadores"></div>
+            <button type="button" id="tvPausar" aria-label="Pausar apresentação">Pausar</button>
+            <button type="button" id="tvProxima" aria-label="Próxima tela">›</button>
+        </div>
+        <div class="modo-tv-progresso"><i id="tvProgresso"></i></div>
+    </section>
+
     <!-- Modal: editar turno (manager) -->
     <div id="modalEditarTurno" class="modal-editar-overlay" style="display:none;">
         <div class="modal-editar-conteudo">
@@ -490,6 +869,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <script>
     window.STARTED_AT    = '<%= startedAtIso %>';
+    window.PAUSED_AT     = '<%= pausedAtIso %>';
+    window.PAUSED_MS     = <%= Number(evento.paused_ms) || 0 %>;
     window.EVENTO_STATUS = '<%= evento.status %>';
     window.EVENTO_ID     = <%= evento.id %>;
     window.KM_BY_HOUR     = <%- JSON.stringify(dashboardStats.kmByHour) %>;
@@ -497,6 +878,9 @@
     window.TOP_BY_GENDER  = <%- JSON.stringify(dashboardStats.topByGender) %>;
     window.TEAM_STATS     = <%- JSON.stringify(teamStats) %>;
     window.ATHLETE_STATS  = <%- JSON.stringify(athleteStats) %>;
+    window.TV_GENDER_TOTALS = window.TV_GENDER_TOTALS || null;
+    window.TV_PACE_6H = window.TV_PACE_6H || null;
+    window.TV_TOTAL_KM = <%= tvTotalKm %>;
     </script>
     <script>
     async function authFetch(url, options = {}) {
@@ -525,33 +909,90 @@
         });
     });
 
-    // Countdown
+    // Countdown — congela enquanto pausado e retoma de onde parou ao retomar.
+    // fim = início + 24h + tempo total já pausado. Pausado: usa paused_at como
+    // referência (congela); rodando: usa o relógio atual.
+    const DURACAO_MS = 24 * 60 * 60 * 1000; // 24h em ms
+    const pausaState = {
+        pausedAt: window.PAUSED_AT ? new Date(window.PAUSED_AT).getTime() : null,
+        pausedMs: Number(window.PAUSED_MS) || 0,
+    };
+
+    function atualizar() {
+        const el = document.getElementById('countdown');
+        if (!el || !window.STARTED_AT) return;
+        const fim = new Date(window.STARTED_AT).getTime() + DURACAO_MS + pausaState.pausedMs;
+        const ref = pausaState.pausedAt !== null ? pausaState.pausedAt : Date.now();
+        const diff = fim - ref;
+        if (diff <= 0) { el.textContent = '00:00:00'; return; }
+        const h = String(Math.floor(diff / 3600000)).padStart(2, '0');
+        const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+        const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+        el.textContent = `${h}:${m}:${s}`;
+    }
+
     if (window.EVENTO_STATUS === 'in_progress' && window.STARTED_AT) {
-        const duracao = 24 * 60 * 60 * 1000; // 24h em ms
-        function atualizar() {
-            const agora = Date.now();
-            const fim = new Date(window.STARTED_AT).getTime() + duracao;
-            const diff = fim - agora;
-            const el = document.getElementById('countdown');
-            if (!el) return;
-            if (diff <= 0) { el.textContent = '00:00:00'; return; }
-            const h = String(Math.floor(diff / 3600000)).padStart(2, '0');
-            const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
-            const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
-            el.textContent = `${h}:${m}:${s}`;
-        }
         atualizar();
         setInterval(atualizar, 1000);
     }
 
-    // Export planilha
-    async function exportarPlanilha(eventId) {
+    // Pausar / retomar competição
+    async function togglePausa(eventId) {
+        const btn = document.querySelector('.btn-pausar');
+        const label = document.getElementById('countdownLabel');
+        const pausar = pausaState.pausedAt === null;
+        btn.disabled = true;
+        const res = await authFetch(`/events/${eventId}/${pausar ? 'pause' : 'resume'}`, { method: 'PATCH' });
+        if (res && res.ok) {
+            const ev = await res.json();
+            pausaState.pausedAt = ev.paused_at ? new Date(ev.paused_at).getTime() : null;
+            pausaState.pausedMs = Number(ev.paused_ms) || 0;
+            const pausado = pausaState.pausedAt !== null;
+            btn.textContent = pausado ? 'Retomar competição' : 'Pausar competição';
+            btn.classList.toggle('btn-pausar-retomar', pausado);
+            if (label) label.textContent = pausado ? 'Tempo restante (pausado)' : 'Tempo restante';
+            atualizar();
+        } else {
+            const err = await res?.json().catch(() => ({}));
+            alert(err?.error || 'Erro ao pausar/retomar competição.');
+        }
+        btn.disabled = false;
+    }
+
+    // Export — modal de seleção de colunas
+    const modalExport = document.getElementById('modalExportColunas');
+
+    function abrirModalExport(eventId) {
+        modalExport.dataset.eventId = eventId;
+        modalExport.classList.remove('escondido');
+    }
+
+    function fecharModalExport() {
+        modalExport.classList.add('escondido');
+    }
+
+    document.getElementById('btnCancelarExport').addEventListener('click', fecharModalExport);
+    modalExport.addEventListener('click', (e) => { if (e.target === modalExport) fecharModalExport(); });
+
+    const COLUNAS_FIXAS = ['athlete', 'team', 'start_at', 'end_at', 'status'];
+
+    document.getElementById('btnConfirmarExport').addEventListener('click', async () => {
+        const eventId = Number(modalExport.dataset.eventId);
+        const opcionais = [...modalExport.querySelectorAll('.modal-export-opcao input:checked')]
+            .map(cb => cb.value);
+        const colunas = [...COLUNAS_FIXAS, ...opcionais];
+        fecharModalExport();
+        await exportarPlanilha(eventId, colunas);
+    });
+
+    async function exportarPlanilha(eventId, columns) {
         const btn = document.querySelector('.btn-exportar');
         const original = btn.innerHTML;
         btn.disabled = true;
         btn.innerHTML = '<img src="/assets/estatisticas/compartilhar.svg" alt="" class="btn-exportar-icone"> Gerando...';
+        const qs = columns?.length ? `?columns=${columns.join(',')}` : '';
         try {
-            const res = await authFetch(`/export/events/${eventId}/shifts`);
+            const res = await authFetch(`/export/events/${eventId}/shifts${qs}`);
             if (!res || !res.ok) {
                 const err = await res?.json().catch(() => ({}));
                 alert(err?.error || 'Erro ao exportar.');
@@ -583,6 +1024,33 @@
 
         const kmByHour  = window.KM_BY_HOUR  || {};
         const teamStats = window.TEAM_STATS   || [];
+        const darkTheme = document.documentElement.dataset.theme === 'dark';
+        const chartTextColor = darkTheme ? '#c4c4ce' : '#666';
+        const chartGridColor = darkTheme ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)';
+        Chart.defaults.color = chartTextColor;
+        Chart.defaults.borderColor = chartGridColor;
+        const chartScaleOptions = (title) => ({
+            title: {
+                display: true,
+                text: title,
+                color: chartTextColor,
+            },
+            ticks: {
+                color: chartTextColor,
+            },
+            grid: {
+                color: chartGridColor,
+            },
+            border: {
+                color: chartGridColor,
+            },
+        });
+        const chartLegendOptions = {
+            position: 'top',
+            labels: {
+                color: chartTextColor,
+            },
+        };
 
         // --- Gráfico 1: km acumulado por equipe (linha) ---
         const teamIds = Object.keys(kmByHour);
@@ -617,10 +1085,10 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: true,
-                plugins: { legend: { position: 'top' }, tooltip: { mode: 'index', intersect: false } },
+                plugins: { legend: chartLegendOptions, tooltip: { mode: 'index', intersect: false } },
                 scales: {
-                    x: { title: { display: true, text: 'Hora do evento' } },
-                    y: { title: { display: true, text: 'Km acumulado' }, beginAtZero: true },
+                    x: chartScaleOptions('Hora do evento'),
+                    y: { ...chartScaleOptions('Km acumulado'), beginAtZero: true },
                 },
             },
         });
@@ -650,7 +1118,7 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: true,
-                plugins: { legend: { position: 'top' }, tooltip: { mode: 'index', intersect: false } },
+                plugins: { legend: chartLegendOptions, tooltip: { mode: 'index', intersect: false } },
                 scales: {
                     x: { title: { display: true, text: 'Período' } },
                     y: { title: { display: true, text: 'Km (destaque do período)' }, beginAtZero: true },
@@ -679,13 +1147,311 @@
             const err = await res?.json().catch(() => ({}));
             alert(err?.error || 'Erro ao finalizar competição.');
             btn.disabled = false;
-            btn.textContent = 'Finalizar competição';
+            btn.textContent = 'Finalizar Competição';
         }
     }
     </script>
 
     <% if (user_role === 'manager') { %>
     <script>
+    (function configurarModoTv() {
+        const drawer = document.getElementById('tvConfigDrawer');
+        const overlay = document.getElementById('tvConfigOverlay');
+        const modoTv = document.getElementById('modoTv');
+        const btnAbrir = document.getElementById('btnAbrirModoTv');
+        const btnFechar = document.getElementById('btnFecharModoTv');
+        const btnIniciar = document.getElementById('btnIniciarModoTv');
+        const btnSair = document.getElementById('btnSairModoTv');
+        const opcoes = [...document.querySelectorAll('[data-tv-opcao]')];
+        const tempoTela = document.getElementById('tvTempoTela');
+        const btnAnterior = document.getElementById('tvAnterior');
+        const btnProxima = document.getElementById('tvProxima');
+        const btnPausar = document.getElementById('tvPausar');
+        const indicadores = document.getElementById('tvIndicadores');
+        const progresso = document.getElementById('tvProgresso');
+        const chave = `modoTv:${window.EVENTO_ID}`;
+        let telasAtivas = [];
+        let telaAtual = 0;
+        let temporizador = null;
+        let pausado = false;
+
+        if (!drawer || !overlay || !modoTv) return;
+
+        function preferenciasAtuais() {
+            return {
+                telas: Object.fromEntries(opcoes.map(input => [input.dataset.tvOpcao, input.checked])),
+                duracao: Number(tempoTela?.value || 12),
+            };
+        }
+
+        function salvarPreferencias() {
+            localStorage.setItem(chave, JSON.stringify(preferenciasAtuais()));
+        }
+
+        function carregarPreferencias() {
+            const salvas = JSON.parse(localStorage.getItem(chave) || '{}');
+            const telasSalvas = salvas.telas || salvas;
+            opcoes.forEach(input => {
+                if (typeof telasSalvas[input.dataset.tvOpcao] === 'boolean') {
+                    input.checked = telasSalvas[input.dataset.tvOpcao];
+                }
+            });
+            if (tempoTela && salvas.duracao) tempoTela.value = String(salvas.duracao);
+        }
+
+        function abrirConfiguracao() {
+            drawer.classList.add('aberto');
+            overlay.classList.add('aberto');
+            drawer.setAttribute('aria-hidden', 'false');
+        }
+
+        function fecharConfiguracao() {
+            drawer.classList.remove('aberto');
+            overlay.classList.remove('aberto');
+            drawer.setAttribute('aria-hidden', 'true');
+        }
+
+        function prepararTelas() {
+            const preferencias = preferenciasAtuais();
+            telasAtivas = [...modoTv.querySelectorAll('[data-tv-tela]')].filter(tela => {
+                const ativa = preferencias.telas[tela.dataset.tvTela] !== false;
+                tela.classList.toggle('tv-desativada', !ativa);
+                return ativa;
+            });
+
+            if (telasAtivas.length === 0) {
+                const abertura = modoTv.querySelector('[data-tv-tela="abertura"]');
+                if (abertura) {
+                    abertura.classList.remove('tv-desativada');
+                    telasAtivas = [abertura];
+                }
+            }
+
+            indicadores.innerHTML = telasAtivas
+                .map((_, index) => `<button type="button" data-tv-indice="${index}" aria-label="Ir para tela ${index + 1}"></button>`)
+                .join('');
+            indicadores.querySelectorAll('button').forEach(botao => {
+                botao.addEventListener('click', () => mostrarTela(Number(botao.dataset.tvIndice), true));
+            });
+        }
+
+        function atualizarGenero() {
+            const totais = window.TV_GENDER_TOTALS;
+            if (!totais) return;
+
+            const mulheres = Number(totais.mulheres);
+            const homens = Number(totais.homens);
+            const campoMulheres = document.getElementById('tvKmMulheres');
+            const campoHomens = document.getElementById('tvKmHomens');
+            const titulo = document.getElementById('tvTituloGenero');
+            const pctMulheres = document.getElementById('tvPctMulheres');
+            const pctHomensNumero = document.getElementById('tvPctHomensNumero');
+            const barraMulheres = document.getElementById('tvBarraMulheres');
+            const barraHomens = document.getElementById('tvBarraHomens');
+
+            if (Number.isFinite(mulheres) && campoMulheres) {
+                campoMulheres.innerHTML = `${mulheres.toFixed(1)} <small>km</small>`;
+            }
+            if (Number.isFinite(homens) && campoHomens) {
+                campoHomens.innerHTML = `${homens.toFixed(1)} <small>km</small>`;
+            }
+            if (Number.isFinite(mulheres) && Number.isFinite(homens)) {
+                const total = mulheres + homens;
+                const percentualMulheres = total > 0 ? (mulheres / total) * 100 : 0;
+                const percentualHomens = total > 0 ? (homens / total) * 100 : 0;
+                if (pctMulheres) pctMulheres.textContent = `${percentualMulheres.toFixed(0)}%`;
+                if (pctHomensNumero) pctHomensNumero.textContent = `${percentualHomens.toFixed(0)}%`;
+                if (barraMulheres) barraMulheres.style.width = `${percentualMulheres}%`;
+                if (barraHomens) barraHomens.style.width = `${percentualHomens}%`;
+                if (titulo) {
+                    const diferenca = Math.abs(mulheres - homens);
+                    if (diferenca < 0.1) {
+                        titulo.textContent = 'Lado a lado, a energia não para.';
+                    } else if (mulheres > homens) {
+                        titulo.textContent = 'Hoje, elas estão levando essa energia ainda mais longe.';
+                    } else {
+                        titulo.textContent = 'Mulheres e homens fazem essa energia acontecer.';
+                    }
+                }
+            }
+        }
+
+        function atualizarPace() {
+            const pace = window.TV_PACE_6H;
+            if (!pace) return;
+
+            const valor = document.getElementById('tvPaceMedio');
+            const periodo = document.getElementById('tvPacePeriodo');
+
+            if (pace.valor && valor) {
+                valor.innerHTML = `${pace.valor}<small class="tv-unidade-escura"> min/km</small>`;
+            }
+            if (pace.periodo && periodo) {
+                periodo.textContent = `Média coletiva do período ${pace.periodo}`;
+            }
+        }
+
+        // Integração:
+        // atualizarDadosModoTv({
+        //   genero: { mulheres: 82.4, homens: 91 },
+        //   pace: { valor: '05:42', periodo: '12h às 18h' }
+        // });
+        // Atualiza o total coletivo de km (tela "coletivo").
+        function atualizarColetivo() {
+            const total = window.TV_TOTAL_KM;
+            const campo = document.getElementById('tvTotalKm');
+            if (campo && Number.isFinite(Number(total))) {
+                campo.innerHTML = `${Number(total).toFixed(1)} <small>km</small>`;
+            }
+        }
+
+        window.atualizarDadosModoTv = function atualizarDadosModoTv(dados = {}) {
+            if (dados.genero) window.TV_GENDER_TOTALS = dados.genero;
+            if (dados.pace) window.TV_PACE_6H = dados.pace;
+            if (dados.total_km != null) window.TV_TOTAL_KM = dados.total_km;
+            atualizarColetivo();
+            atualizarGenero();
+            atualizarPace();
+        };
+
+        // Busca o resumo dinâmico do modo TV (total, gênero, pace) e aplica nas telas.
+        // Em caso de falha de conexão, mantém os valores anteriores (não sobrescreve).
+        async function carregarResumoTv() {
+            try {
+                const res = await authFetch(`/metrics/events/${window.EVENTO_ID}/tv`);
+                if (!res || !res.ok) return;
+                const dados = await res.json();
+                window.atualizarDadosModoTv({
+                    total_km: dados.total_km,
+                    genero: dados.genero,
+                    pace: dados.pace && dados.pace.valor ? dados.pace : undefined,
+                });
+            } catch (_) {
+                // conexão perdida: mantém os últimos valores recebidos
+            }
+        }
+
+        // Carrega ao montar e verifica a cada 60s se há novo turno concluído.
+        carregarResumoTv();
+        setInterval(carregarResumoTv, 10 * 1000);
+
+        function reiniciarProgresso() {
+            if (!progresso) return;
+            progresso.style.animation = 'none';
+            void progresso.offsetWidth;
+            if (!pausado) {
+                progresso.style.animation = `tvProgresso ${preferenciasAtuais().duracao}s linear forwards`;
+            }
+        }
+
+        function agendarProxima() {
+            clearTimeout(temporizador);
+            if (pausado || telasAtivas.length < 2) return;
+            temporizador = setTimeout(() => mostrarTela(telaAtual + 1), preferenciasAtuais().duracao * 1000);
+        }
+
+        function mostrarTela(indice, interacaoManual = false) {
+            if (!telasAtivas.length) return;
+            telaAtual = (indice + telasAtivas.length) % telasAtivas.length;
+            modoTv.querySelectorAll('[data-tv-tela]').forEach(tela => tela.classList.remove('tv-ativa'));
+            telasAtivas[telaAtual].classList.add('tv-ativa');
+            indicadores.querySelectorAll('button').forEach((botao, index) => {
+                botao.classList.toggle('ativo', index === telaAtual);
+            });
+            if (interacaoManual && pausado) {
+                clearTimeout(temporizador);
+            } else {
+                reiniciarProgresso();
+                agendarProxima();
+            }
+        }
+
+        function alternarPausa() {
+            pausado = !pausado;
+            btnPausar.textContent = pausado ? 'Continuar' : 'Pausar';
+            modoTv.classList.toggle('tv-pausado', pausado);
+            if (pausado) {
+                clearTimeout(temporizador);
+                progresso.style.animationPlayState = 'paused';
+            } else {
+                reiniciarProgresso();
+                agendarProxima();
+            }
+        }
+
+        function sincronizarCronometroTv() {
+            const origem = document.getElementById('countdown');
+            const destino = document.getElementById('tvCountdown');
+            if (origem && destino) destino.textContent = origem.textContent;
+        }
+
+        async function iniciarModoTv() {
+            salvarPreferencias();
+            prepararTelas();
+            carregarResumoTv();
+            atualizarColetivo();
+            atualizarGenero();
+            atualizarPace();
+            sincronizarCronometroTv();
+            fecharConfiguracao();
+            modoTv.classList.add('ativo');
+            modoTv.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            pausado = false;
+            btnPausar.textContent = 'Pausar';
+            mostrarTela(0);
+
+            try {
+                if (modoTv.requestFullscreen && !document.fullscreenElement) {
+                    await modoTv.requestFullscreen();
+                }
+            } catch (_) {}
+        }
+
+        async function sairModoTv() {
+            clearTimeout(temporizador);
+            temporizador = null;
+            pausado = false;
+            modoTv.classList.remove('ativo');
+            modoTv.classList.remove('tv-pausado');
+            modoTv.setAttribute('aria-hidden', 'true');
+            modoTv.querySelectorAll('[data-tv-tela]').forEach(tela => tela.classList.remove('tv-ativa'));
+            if (progresso) progresso.style.animation = 'none';
+            document.body.style.removeProperty('overflow');
+            btnPausar.textContent = 'Pausar';
+            if (document.fullscreenElement) {
+                try { await document.exitFullscreen(); } catch (_) {}
+            }
+        }
+
+        carregarPreferencias();
+        btnAbrir?.addEventListener('click', abrirConfiguracao);
+        btnFechar.addEventListener('click', fecharConfiguracao);
+        overlay.addEventListener('click', fecharConfiguracao);
+        btnIniciar.addEventListener('click', iniciarModoTv);
+        btnSair.addEventListener('click', sairModoTv);
+        opcoes.forEach(input => input.addEventListener('change', salvarPreferencias));
+        tempoTela?.addEventListener('change', salvarPreferencias);
+        btnAnterior.addEventListener('click', () => mostrarTela(telaAtual - 1, true));
+        btnProxima.addEventListener('click', () => mostrarTela(telaAtual + 1, true));
+        btnPausar.addEventListener('click', alternarPausa);
+        setInterval(sincronizarCronometroTv, 1000);
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && modoTv.classList.contains('ativo')) sairModoTv();
+        });
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement && modoTv.classList.contains('ativo')) sairModoTv();
+        });
+
+        const parametros = new URLSearchParams(window.location.search);
+        if (parametros.get('modoTv') === 'config') {
+            abrirConfiguracao();
+            parametros.delete('modoTv');
+            const novaBusca = parametros.toString();
+            history.replaceState(null, '', window.location.pathname + (novaBusca ? `?${novaBusca}` : ''));
+        }
+    })();
+
     (function () {
         const overlay   = document.getElementById('modalEditarTurno');
         if (!overlay) return;

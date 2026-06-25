@@ -9,6 +9,7 @@ jest.mock("../repositories/eventRepository", () => ({
     softDelete: jest.fn(),
     start: jest.fn(),
     finish: jest.fn(),
+    teamsWithoutAthletes: jest.fn(),
   },
 }));
 
@@ -22,8 +23,16 @@ jest.mock("../repositories/treadmillRepository", () => ({
   },
 }));
 
+jest.mock("../utils/supabaseStorage", () => ({
+  removeFromStorage: jest.fn(),
+}));
+
 import { eventRepository } from "../repositories/eventRepository";
+import { treadmillRepository } from "../repositories/treadmillRepository";
+import { removeFromStorage } from "../utils/supabaseStorage";
 const mockRepo = eventRepository as jest.Mocked<typeof eventRepository>;
+const mockTreadmillRepo = treadmillRepository as jest.Mocked<typeof treadmillRepository>;
+const mockRemove = removeFromStorage as jest.MockedFunction<typeof removeFromStorage>;
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -44,6 +53,26 @@ describe("eventService.updateEvent", () => {
     await expect(
       eventService.updateEvent(999, { title: "New" })
     ).rejects.toThrow("Evento não encontrado");
+  });
+
+  it("remove a foto antiga ao trocar image_url", async () => {
+    mockRepo.findById.mockResolvedValue({ id: 1, image_url: "http://x/old.png" } as any);
+    mockRepo.update.mockResolvedValue({ id: 1, image_url: "http://x/new.png" } as any);
+
+    await eventService.updateEvent(1, { image_url: "http://x/new.png" });
+
+    expect(mockRemove).toHaveBeenCalledWith("http://x/old.png");
+  });
+});
+
+describe("eventService.listTreadmillsByTeam", () => {
+  it("delega ao repositório com o team_id", async () => {
+    mockTreadmillRepo.findByTeam.mockResolvedValue([{ id: 1 }] as any);
+
+    const result = await eventService.listTreadmillsByTeam(7);
+
+    expect(mockTreadmillRepo.findByTeam).toHaveBeenCalledWith(7);
+    expect(result).toEqual([{ id: 1 }]);
   });
 });
 
@@ -68,6 +97,17 @@ describe("eventService.startEvent", () => {
     mockRepo.findById.mockResolvedValue({ id: 1, status: "finished" } as any);
     await expect(eventService.startEvent(1)).rejects.toThrow(
       "Evento já está encerrado"
+    );
+  });
+
+  it("throws quando há equipes sem atletas cadastrados", async () => {
+    mockRepo.findById.mockResolvedValue({ id: 1, status: "pending" } as any);
+    (mockRepo as any).teamsWithoutAthletes.mockResolvedValue([
+      { name: "Equipe Alpha" },
+      { name: "Equipe Beta" },
+    ]);
+    await expect(eventService.startEvent(1)).rejects.toThrow(
+      'equipe(s) sem atletas cadastrados: "Equipe Alpha", "Equipe Beta"'
     );
   });
 });
@@ -104,7 +144,8 @@ describe("eventService.registerEvent", () => {
       "Race",
       "SP",
       "2026-01-01",
-      1
+      1,
+      null
     );
     expect(result).toEqual(mockEvent);
   });

@@ -17,24 +17,25 @@ flowchart TB
 
     subgraph L2["Rota protegida"]
         direction TB
-        R["GET /metrics/events/:id/dashboard<br/>AuthMiddleware"]:::route
+        R["GET /metrics/events/:id/dashboard<br/>polling auto ≤10s"]:::route
+        H["GET /status<br/>healthcheck planejado"]:::route
     end
 
     subgraph L3["Controller"]
         direction TB
-        MC["MetricsController<br/>getDashboard"]:::controller
+        MC["MetricsController"]:::controller
     end
 
     subgraph L4["Service"]
         direction TB
         MS["MetricsService<br/>consolida indicadores"]:::service
-        RN["RF013 + RN11<br/>atualização recorrente"]:::note
+        RN["RF013 · RN11<br/>dados atualizados e consistentes"]:::note
     end
 
     subgraph L5["Repository"]
         direction TB
         MR["MetricsRepository<br/>dashboardByEvent"]:::repository
-        Q1["placar por equipe"]:::repository
+        Q1["scoreboard por equipe"]:::repository
         Q2["turnos ativos/finalizados"]:::repository
         Q3["atletas em prova"]:::repository
     end
@@ -47,14 +48,17 @@ flowchart TB
         T3["athletes"]:::db
         T4["shifts"]:::db
         T5["treadmills"]:::db
+        CP["checkpoints"]:::db
     end
 
     subgraph L7["Resposta"]
         direction TB
-        OUT["200 OK<br/>scoreboard + métricas"]:::output
+        OUT["200 OK<br/>scoreboard + métricas + atletas"]:::output
+        ERR["dados desatualizados<br/>se healthcheck falhar"]:::output
     end
 
     C --> R --> MC --> MS --> MR
+    C -.-> H -.-> MC
     MS -.-> RN
     MR --> Q1 --> T2
     Q1 --> T4
@@ -62,10 +66,12 @@ flowchart TB
     Q2 --> T5
     MR --> Q3 --> T3
     Q3 --> T4
+    Q3 --> CP
     T1 --> DB
     T2 --> DB
     T3 --> DB
     T4 --> DB
     T5 --> DB
-    DB --> MR
-    MR --> MS --> MC --> OUT --> C
+    CP --> DB
+    DB --> MR --> MS --> MC --> OUT --> C
+    H -. falha .-> ERR -.-> C

@@ -8,6 +8,7 @@ export const metricsController = {
 			const data = await metricsService.getDashboard(eventId);
 			res.status(200).json(data);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
@@ -18,6 +19,7 @@ export const metricsController = {
 			const data = await metricsService.getTeamKm(eventId);
 			res.status(200).json(data);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
@@ -26,6 +28,37 @@ export const metricsController = {
 		const eventId = Number(req.params.eventId);
 		try {
 			const data = await metricsService.getAthleteKm(eventId);
+			res.status(200).json(data);
+		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
+			res.status(500).json({ error: error.message });
+		}
+	},
+
+	async getGenderKm(req: Request, res: Response) {
+		const eventId = Number(req.params.eventId);
+		try {
+			const data = await metricsService.getGenderKm(eventId);
+			res.status(200).json(data);
+		} catch (error: any) {
+			res.status(500).json({ error: error.message });
+		}
+	},
+
+	async getCompetitionPace(req: Request, res: Response) {
+		const eventId = Number(req.params.eventId);
+		try {
+			const data = await metricsService.getCompetitionPace(eventId);
+			res.status(200).json(data);
+		} catch (error: any) {
+			res.status(500).json({ error: error.message });
+		}
+	},
+
+	async getTvSummary(req: Request, res: Response) {
+		const eventId = Number(req.params.eventId);
+		try {
+			const data = await metricsService.getTvSummary(eventId);
 			res.status(200).json(data);
 		} catch (error: any) {
 			res.status(500).json({ error: error.message });
@@ -38,6 +71,7 @@ export const metricsController = {
 			const data = await metricsService.getAvgDistancePerShift(athleteId);
 			res.status(200).json(data);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
@@ -53,6 +87,7 @@ export const metricsController = {
 			const data = await metricsService.getKmSnapshots(athleteId, eventId);
 			res.status(200).json(data);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
@@ -64,6 +99,7 @@ export const metricsController = {
 			const data = await metricsService.getAthletePerformance(athleteId, eventId);
 			res.status(200).json(data);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
@@ -79,6 +115,7 @@ export const metricsController = {
 			const data = await metricsService.getAthletePerformance(athleteId);
 			res.status(200).json(data);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},

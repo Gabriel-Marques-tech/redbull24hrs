@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Turnos em andamento</title>
+    <link rel="icon" type="image/png" href="/assets/logo/logo-redrun.png">
+    <link rel="apple-touch-icon" href="/assets/logo/logo-redrun.png">
     <link rel="stylesheet" href="/css/global.css">
+    <script src="/js/tema.js"></script>
     <style>
         body { font-family: sans-serif; padding: 40px; }
         h1 { font-size: 28px; margin-bottom: 8px; }
@@ -27,11 +30,26 @@
             display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px;
         }
         .btn-voltar {
-            padding: 8px 20px; background: #fff; border: 1px solid #ccc;
-            border-radius: 6px; cursor: pointer; font-size: 14px;
+            min-width: 148px; padding: 10px 20px; background: #fff; border: 1px solid #ccc;
+            border-radius: 6px; cursor: pointer; color: #1c1c1c; font-size: 0; font-weight: 700;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-voltar::before {
+            content: ""; width: 18px; height: 18px;
+            background: url("/assets/competi%C3%A7%C3%A3o/Seta.svg") center / contain no-repeat;
+        }
+        .btn-voltar::after {
+            content: "Voltar"; font-size: 14px;
         }
         .btn-voltar:hover { border-color: var(--vermelho); color: var(--vermelho); }
         .contador { font-size: 14px; color: #666; }
+        html[data-theme="dark"] .btn-voltar {
+            background: var(--fundo-superficie); border-color: var(--borda); color: var(--texto-principal);
+        }
+        html[data-theme="dark"] .btn-voltar::before { filter: brightness(0) invert(1); }
+        html[data-theme="dark"] .contador,
+        html[data-theme="dark"] .subtitulo,
+        html[data-theme="dark"] .empty { color: var(--texto-secundario); }
     </style>
 </head>
 <body>

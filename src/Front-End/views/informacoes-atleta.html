@@ -1,10 +1,13 @@
-ï»¿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InformaÃ§Ãµes do atleta</title>
+    <title>Informações do atleta</title>
+    <link rel="icon" type="image/png" href="../assets/logo/logo-redrun.png">
+    <link rel="apple-touch-icon" href="../assets/logo/logo-redrun.png">
     <link rel="stylesheet" href="../css/global.css">
+    <script src="/js/tema.js"></script>
     <link rel="stylesheet" href="../css/equipe.css">
     <link rel="stylesheet" href="../css/informacoes-atleta.css">
 </head>
@@ -12,7 +15,7 @@
     <div class="barra-gradiente"></div>
 
     <a href="equipe.html?passo=2" class="cancelar">
-        <img src="../assets/competiÃ§Ã£o/Seta.svg" alt="">
+        <img src="../assets/competição/Seta.svg" alt="">
         Cancelar
     </a>
 
@@ -26,26 +29,46 @@
 
         <section class="conteudo-atleta">
             <span class="subetapa-atleta">Cadastro de atleta</span>
-            <h1>InformaÃ§Ãµes do atleta</h1>
+            <h1>Informações do atleta</h1>
 
             <form id="formAtleta">
-                <label>Nome:<input id="nomeAtleta" type="text" required></label>
-                <label class="campo-data-atleta">Data de nascimento:<input id="nascimentoAtleta" type="date" required></label>
-                <label>CPF:<input id="cpfAtleta" type="text" required></label>
+                <div class="grid-cadastro-pessoa">
+                    <label class="campo-cadastro-pessoa campo-cadastro-duplo">
+                        <span>Nome <strong>*</strong></span>
+                        <input id="nomeAtleta" type="text" required>
+                    </label>
 
-                <div class="seletores-atleta">
-                    <select id="generoAtleta" required>
-                        <option value="">GÃªnero:</option>
-                        <option>Feminino</option>
-                        <option>Masculino</option>
-                        <option>Outro</option>
-                    </select>
+                    <label class="campo-cadastro-pessoa campo-cadastro-duplo">
+                        <span>E-mail <strong>*</strong></span>
+                        <input id="emailPessoa" type="email" placeholder="email@exemplo.com" required>
+                    </label>
+                </div>
 
-                    <select id="cargoAtleta" required>
-                        <option value="">Cargo:</option>
-                        <option>Atleta</option>
-                        <option>LÃ­der</option>
-                    </select>
+                <div class="campos-atleta" id="camposAtleta">
+                    <label class="campo-cadastro-pessoa campo-data-atleta">
+                        <span>Nascimento <strong>*</strong></span>
+                        <input id="nascimentoAtleta" type="date" required>
+                    </label>
+
+                    <label class="campo-cadastro-pessoa">
+                        <span>CPF</span>
+                        <input id="cpfAtleta" type="text" placeholder="000.000.000-00">
+                    </label>
+
+                    <div class="seletores-atleta">
+                        <select id="generoAtleta" required>
+                            <option value="">Gênero *</option>
+                            <option>Feminino</option>
+                            <option>Masculino</option>
+                            <option>Outro</option>
+                        </select>
+
+                        <select id="cargoAtleta" required>
+                            <option value="">Cargo *</option>
+                            <option>Atleta</option>
+                            <option>Líder</option>
+                        </select>
+                    </div>
                 </div>
 
                 <button type="submit">Concluir</button>

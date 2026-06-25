@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Esteira</title>
-    <link rel="stylesheet" href="/css/esteira.css">
+    <link rel="icon" type="image/png" href="/assets/logo/logo-redrun.png">
+    <link rel="apple-touch-icon" href="/assets/logo/logo-redrun.png">
     <link rel="stylesheet" href="/css/global.css">
+    <script src="/js/tema.js"></script>
+    <link rel="stylesheet" href="/css/esteira.css">
 </head>
 <body>
 
@@ -45,8 +48,7 @@
                     const ocupada = busyIds.includes(treadmill.id);
                 %>
                 <div class="esteira <%= ocupada ? 'esteira-ocupada' : '' %>"
-                     data-id="<%= treadmill.id %>"
-                     <%= ocupada ? '' : 'onclick="selecionarEsteira(this)"' %>>
+                     data-id="<%= treadmill.id %>">
                     <img src="/assets/esteira/<%= ocupada ? 'esteira-cinza.svg' : 'esteira.svg' %>" alt="">
                     <p><strong>Esteira <%= treadmill.number %></strong></p>
                     <% if (ocupada) { %>
@@ -56,7 +58,7 @@
                 <% }) %>
             </div>
 
-            <div class="botoes">
+            <div class="botoes botoes-fluxo-selecao">
                 <button class="btn-voltar" onclick="window.location.href='/team?eventId=<%= eventId %>'">Anterior</button>
                 <button class="btn-proximo" id="btn-proximo" disabled onclick="proximaEtapa()">Próximo</button>
             </div>

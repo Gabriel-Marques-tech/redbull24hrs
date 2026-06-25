@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagem do evento</title>
+    <link rel="icon" type="image/png" href="/assets/logo/logo-redrun.png">
+    <link rel="apple-touch-icon" href="/assets/logo/logo-redrun.png">
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/js/tema.js"></script>
+    <link rel="stylesheet" href="/css/equipe.css">
+    <link rel="stylesheet" href="/css/gerente-imagem-evento.css">
+</head>
+<body>
+    <div class="barra-gradiente"></div>
+
+    <a href="/home" class="cancelar">
+        <img src="/assets/competiÃ§Ã£o/Seta.svg" alt="">
+        Cancelar
+    </a>
+
+    <main>
+        <aside class="etapas">
+            <h3>Etapas</h3>
+            <div class="etapa"><span>1</span><p>Local</p></div>
+            <div class="etapa ativa"><span>2</span><p>Imagem</p></div>
+            <div class="etapa"><span>3</span><p>Data e hora</p></div>
+            <div class="etapa"><span>4</span><p>Equipes</p></div>
+        </aside>
+
+        <section class="conteudo conteudo-imagem-evento">
+            <div class="formulario-imagem-evento">
+                <h1>Escolha a imagem do evento</h1>
+                <div class="upload-imagem-evento" id="uploadImagemEvento">
+                    <div class="imagem-evento-preview" id="imagemEventoPreview" aria-hidden="true">+</div>
+                    <div>
+                        <strong>Imagem do evento <span>*</span></strong>
+                        <p>Ela ser&aacute; usada para identificar a competi&ccedil;&atilde;o.</p>
+                        <button id="btnImagemEvento" type="button">Escolher imagem</button>
+                    </div>
+                    <input id="imagemEvento" type="file" accept="image/*">
+                </div>
+            </div>
+
+            <div class="botoes botoes-imagem-evento">
+                <button class="btn-voltar" type="button" onclick="window.location.href='/manager/create-event/location'">Anterior</button>
+                <button class="btn-proximo-imagem" type="button">Pr&oacute;ximo</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="/js/gerente-imagem-evento.js"></script>
+</body>
+</html>

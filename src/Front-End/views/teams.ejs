@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auditor</title>
+    <link rel="icon" type="image/png" href="/assets/logo/logo-redrun.png">
+    <link rel="apple-touch-icon" href="/assets/logo/logo-redrun.png">
     <link rel="stylesheet" href="/css/global.css">
+    <script src="/js/tema.js"></script>
     <link rel="stylesheet" href="/css/equipe.css">
 </head>
 <body>
@@ -45,10 +48,12 @@
             <% teams.forEach(team => { %>
             <div class="selecao-equipe" data-id="<%= team.id %>">
 
-                <button class="selecao-topo">
+                <div class="selecao-topo" role="button" tabindex="0">
                     <span><%= team.name %></span>
-                    <img src="/assets/competição/Seta.svg" alt="">
-                </button>
+                    <button class="selecao-seta" type="button" aria-label="Mostrar atletas da equipe">
+                        <img src="/assets/competição/Seta.svg" alt="">
+                    </button>
+                </div>
 
                 <div class="selecao-lista">
                     <% team.athletes.forEach(athlete => { %>
@@ -61,7 +66,7 @@
 
         </div>
 
-        <div class="botoes">
+        <div class="botoes botoes-fluxo-selecao">
             <button class="btn-voltar" onclick="window.location.href='/competition'">Anterior</button>
             <button class="btn-proximo" id="btn-proximo" disabled onclick="proximaEtapa()">Próximo</button>
         </div>
@@ -74,19 +79,33 @@
 
     document.querySelectorAll('.selecao-equipe').forEach(card => {
         const topo = card.querySelector('.selecao-topo');
-        topo.addEventListener('click', () => {
-            const jaExpandida = card.classList.contains('expandida');
+        const seta = card.querySelector('.selecao-seta');
 
-            // fecha todas
-            document.querySelectorAll('.selecao-equipe').forEach(c => c.classList.remove('expandida'));
-
-            // seleciona esta
+        const selecionarEquipe = () => {
             document.querySelectorAll('.selecao-equipe').forEach(c => c.classList.remove('selecionada'));
             card.classList.add('selecionada');
-            if (!jaExpandida) card.classList.add('expandida');
 
             teamIdSelecionado = card.dataset.id;
             btnProximo.disabled = false;
+        };
+
+        topo.addEventListener('click', (event) => {
+            if (event.target.closest('.selecao-seta')) return;
+            selecionarEquipe();
+        });
+
+        topo.addEventListener('keydown', (event) => {
+            if (event.key !== 'Enter' && event.key !== ' ') return;
+            event.preventDefault();
+            selecionarEquipe();
+        });
+
+        seta.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const jaExpandida = card.classList.contains('expandida');
+
+            document.querySelectorAll('.selecao-equipe').forEach(c => c.classList.remove('expandida'));
+            if (!jaExpandida) card.classList.add('expandida');
         });
     });
 

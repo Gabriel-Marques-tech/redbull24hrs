@@ -1,13 +1,18 @@
 import { Request, Response } from "express";
 import AuthService from "../services/authService";
 import { UserRole } from "../types/user.types";
+import { uploadToStorage } from "../utils/supabaseStorage";
 
 const PG_UNIQUE_VIOLATION = "23505";
 
 const registerManager = async (req: Request, res: Response): Promise<void> => {
   const { name, email, password } = req.body;
   try {
-    const manager = await AuthService.registerManager(name, email, password);
+    let image_url: string | null = null;
+    if (req.file) {
+      image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos", "users");
+    }
+    const manager = await AuthService.registerManager(name, email, password, image_url);
     if (!manager) {
       res.status(400).json({ error: "Dados inválidos para cadastro de gerente" });
       return;
@@ -25,12 +30,12 @@ const registerManager = async (req: Request, res: Response): Promise<void> => {
 const registerAuditor = async (req: Request, res: Response): Promise<void> => {
   const { name, email, password, registration_number } = req.body;
   try {
-    const auditor = await AuthService.registerAuditor(
-      name,
-      email,
-      password,
-      registration_number,
-    );
+    let image_url: string | null = null;
+    if (req.file) {
+      image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos", "users");
+    }
+    const regNum = registration_number ? Number(registration_number) : undefined;
+    const auditor = await AuthService.registerAuditor(name, email, password, image_url, regNum);
     if (!auditor) {
       res.status(400).json({ error: "Dados inválidos para cadastro de auditor" });
       return;
@@ -77,20 +82,32 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
       sameSite: "strict",
       maxAge: 15 * 60 * 1000
     })
-    res.status(200).json({user} );
+    res.status(200).json({ user });
   } catch {
     res.status(500).json({ error: "Erro ao autenticar usuário" });
   }
 };
 
 const refreshToken = async (req: Request, res: Response): Promise<void> => {
-  const  refreshToken  = req.cookies.refreshToken;
+  const  refreshToken  = req.cookies?.refreshToken;
   try {
     const tokens = await AuthService.refresh(refreshToken);
     if (!tokens) {
       res.status(401).json({ error: "Refresh token inválido ou expirado" });
       return;
     }
+    res.cookie('accessToken', tokens.accessToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000,
+    });
+    res.cookie('refreshToken', tokens.refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
     res.status(200).json(tokens);
   } catch {
     res.status(500).json({ error: "Erro ao renovar token" });
@@ -98,9 +115,11 @@ const refreshToken = async (req: Request, res: Response): Promise<void> => {
 };
 
 const logout = async (req: Request, res: Response): Promise<void> => {
-  const { refreshToken } = req.body ?? {};
+  const refreshToken = req.cookies?.refreshToken ?? req.body?.refreshToken;
   try {
     await AuthService.logout(refreshToken);
+    res.clearCookie('accessToken');
+    res.clearCookie('refreshToken');
     res.status(204).send();
   } catch {
     res.status(500).json({ error: "Erro ao encerrar sessão" });
