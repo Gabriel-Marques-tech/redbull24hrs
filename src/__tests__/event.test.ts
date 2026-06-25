@@ -10,6 +10,8 @@ jest.mock("../repositories/eventRepository", () => ({
 		softDelete: jest.fn(),
 		start: jest.fn(),
 		finish: jest.fn(),
+		pause: jest.fn(),
+		resume: jest.fn(),
 	},
 }));
 
@@ -266,6 +268,82 @@ describe("PATCH /events/:id/finish", () => {
 
 	it("401 – sem token de autenticação", async () => {
 		const res = await request(app).patch("/events/1/finish").send({});
+		expect(res.status).toBe(401);
+	});
+});
+
+// ─── PATCH /events/:id/pause (apenas manager) ─────────────────────────────────
+
+describe("PATCH /events/:id/pause", () => {
+	it("200 – manager pausa evento em andamento", async () => {
+		(eventRepository.findById as jest.Mock).mockResolvedValue({ ...mockEvent, status: "in_progress", paused_at: null });
+		(eventRepository.pause as jest.Mock).mockResolvedValue({ ...mockEvent, status: "in_progress", paused_at: "2026-06-01T10:00:00Z" });
+		const res = await request(app).patch("/events/1/pause").set(managerHeader).send({});
+		expect(res.status).toBe(200);
+		expect(res.body).toHaveProperty("paused_at");
+	});
+
+	it("404 – evento não encontrado", async () => {
+		(eventRepository.findById as jest.Mock).mockResolvedValue(null);
+		const res = await request(app).patch("/events/999/pause").set(managerHeader).send({});
+		expect(res.status).toBe(404);
+	});
+
+	it("409 – evento não está em andamento", async () => {
+		(eventRepository.findById as jest.Mock).mockResolvedValue({ ...mockEvent, status: "pending", paused_at: null });
+		const res = await request(app).patch("/events/1/pause").set(managerHeader).send({});
+		expect(res.status).toBe(409);
+	});
+
+	it("409 – evento já está pausado", async () => {
+		(eventRepository.findById as jest.Mock).mockResolvedValue({ ...mockEvent, status: "in_progress", paused_at: "2026-06-01T10:00:00Z" });
+		const res = await request(app).patch("/events/1/pause").set(managerHeader).send({});
+		expect(res.status).toBe(409);
+	});
+
+	it("403 – auditor não pode pausar evento", async () => {
+		asAuditorOnce();
+		const res = await request(app).patch("/events/1/pause").set(managerHeader).send({});
+		expect(res.status).toBe(403);
+	});
+
+	it("401 – sem token de autenticação", async () => {
+		const res = await request(app).patch("/events/1/pause").send({});
+		expect(res.status).toBe(401);
+	});
+});
+
+// ─── PATCH /events/:id/resume (apenas manager) ────────────────────────────────
+
+describe("PATCH /events/:id/resume", () => {
+	it("200 – manager retoma evento pausado", async () => {
+		(eventRepository.findById as jest.Mock).mockResolvedValue({ ...mockEvent, status: "in_progress", paused_at: "2026-06-01T10:00:00Z" });
+		(eventRepository.resume as jest.Mock).mockResolvedValue({ ...mockEvent, status: "in_progress", paused_at: null });
+		const res = await request(app).patch("/events/1/resume").set(managerHeader).send({});
+		expect(res.status).toBe(200);
+		expect(res.body).toMatchObject({ paused_at: null });
+	});
+
+	it("404 – evento não encontrado", async () => {
+		(eventRepository.findById as jest.Mock).mockResolvedValue(null);
+		const res = await request(app).patch("/events/999/resume").set(managerHeader).send({});
+		expect(res.status).toBe(404);
+	});
+
+	it("409 – evento não está pausado", async () => {
+		(eventRepository.findById as jest.Mock).mockResolvedValue({ ...mockEvent, status: "in_progress", paused_at: null });
+		const res = await request(app).patch("/events/1/resume").set(managerHeader).send({});
+		expect(res.status).toBe(409);
+	});
+
+	it("403 – auditor não pode retomar evento", async () => {
+		asAuditorOnce();
+		const res = await request(app).patch("/events/1/resume").set(managerHeader).send({});
+		expect(res.status).toBe(403);
+	});
+
+	it("401 – sem token de autenticação", async () => {
+		const res = await request(app).patch("/events/1/resume").send({});
 		expect(res.status).toBe(401);
 	});
 });
