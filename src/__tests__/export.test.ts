@@ -206,6 +206,14 @@ describe("exportService – fmtInterval ramo objeto", () => {
 		expect(await durationCell(res.body)).toBe("02:00:00");
 	});
 
+	it("200 – total_time numérico cai no String(v) bruto", async () => {
+		const rowNum = [{ ...mockShiftRows[0], total_time: 5400 }];
+		(exportRepository.shiftsByEvent as jest.Mock).mockResolvedValue(rowNum);
+		const res = await request(app).get("/export/events/1/shifts").buffer().parse(binaryParser);
+		expect(res.status).toBe(200);
+		expect(await durationCell(res.body)).toBe("5400");
+	});
+
 	it("200 – total_time null resulta em célula de duração vazia", async () => {
 		const rowNull = [{ ...mockShiftRows[0], total_time: null }];
 		(exportRepository.shiftsByEvent as jest.Mock).mockResolvedValue(rowNull);
