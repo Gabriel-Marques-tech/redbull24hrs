@@ -1,10 +1,10 @@
-﻿body {
+body {
     overflow: hidden;
 }
 
 .conteudo-atleta {
     position: relative;
-    width: min(760px, calc(100vw - 48px));
+    width: 760px;
     margin-left: 60px;
     margin-top: -80px;
 }
@@ -33,7 +33,7 @@
 }
 
 #formAtleta {
-    width: min(760px, calc(100vw - 48px));
+    width: 760px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -338,7 +338,7 @@ body.cadastro-apoio:not(.cadastro-pelo-drawer) .conteudo-atleta {
 }
 
 .cadastro-pelo-drawer .conteudo-atleta {
-    width: min(760px, calc(100vw - 48px));
+    width: 760px;
     margin-left: 0;
     margin-top: -10px;
 }
@@ -383,52 +383,76 @@ html[data-theme="dark"] .campo-tipo-cadastro select {
     color: var(--texto-principal);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
     body {
         overflow-y: auto;
-        overflow-x: hidden;
     }
 
     .conteudo-atleta {
-        width: calc(100vw - 32px);
-        margin-left: 0;
-        margin-top: 0;
+        position: static;
+    }
+
+    .cabecalho-cadastro-pessoa {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
     }
 
     .conteudo-atleta h1 {
-        font-size: 24px;
-        margin-bottom: 14px;
-    }
-
-    #formAtleta {
-        width: 100%;
+        font-size: clamp(26px, 8vw, 34px);
+        line-height: 1.12;
     }
 
     .campos-atleta,
-    .campos-acesso,
+    .campos-acesso.ativo,
     .grid-cadastro-pessoa,
-    .seletores-atleta {
-        grid-template-columns: 1fr;
-    }
-
+    .seletores-atleta,
     #formAtleta.cadastro-apoio {
+        display: grid;
         grid-template-columns: 1fr;
-        grid-template-areas:
-            "foto"
-            "campos"
-            "acao";
+        grid-template-areas: none;
     }
 
-    .cadastro-pelo-drawer .conteudo-atleta {
-        width: calc(100vw - 32px);
-    }
-
-    #formAtleta > button[type="submit"] {
-        width: 100%;
-        margin-top: 16px;
-    }
-
+    #formAtleta.cadastro-apoio .campo-foto-perfil,
+    #formAtleta.cadastro-apoio .campos-apoio-wrapper,
     #formAtleta.cadastro-apoio > button[type="submit"] {
-        margin-top: 16px;
+        grid-area: auto;
+    }
+
+    #formAtleta .campo-cadastro-pessoa {
+        align-items: flex-start;
+        flex-direction: column;
+        height: auto;
+        min-height: 58px;
+        gap: 4px;
+        padding: 10px 12px;
+        font-size: 15px;
+    }
+
+    #formAtleta .campo-cadastro-pessoa input,
+    .campo-tipo-cadastro select {
+        width: 100%;
+        height: 36px;
+        margin-left: 0;
+        padding: 0;
+        font-size: 16px;
+    }
+
+    .campo-foto-perfil {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .seletores-atleta select {
+        height: 50px;
+        font-size: 16px;
+    }
+
+    #formAtleta > button[type="submit"],
+    #formAtleta.cadastro-apoio > button[type="submit"] {
+        width: 100%;
+        height: 52px;
+        margin-top: 18px;
+        font-size: 18px;
     }
 }

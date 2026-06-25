@@ -2,7 +2,7 @@ body { overflow: auto !important; }
 main { height: auto !important; }
 
 .conteudo-visao {
-    width: min(700px, calc(100vw - 48px));
+    width: 700px;
     padding-bottom: 60px;
 }
 
@@ -170,29 +170,21 @@ main { height: auto !important; }
     font-size: 15px;
 }
 
-@media (max-width: 600px) {
-    .conteudo-visao {
-        width: calc(100vw - 32px);
-        padding-bottom: 80px;
-    }
-
+@media (max-width: 900px) {
     .visao-header h1 {
-        font-size: 24px;
+        font-size: clamp(28px, 8vw, 34px);
+        line-height: 1.1;
     }
 
     .visao-meta {
-        flex-wrap: wrap;
-        gap: 12px;
-        font-size: 14px;
-    }
-
-    .visao-equipes {
-        grid-template-columns: 1fr;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
     }
 
     .visao-acoes {
-        flex-direction: column;
         align-items: stretch;
+        flex-direction: column;
     }
 
     .btn-editar-evento,
@@ -200,5 +192,21 @@ main { height: auto !important; }
     .btn-secundario {
         width: 100%;
         text-align: center;
+    }
+
+    .visao-equipes {
+        grid-template-columns: 1fr;
+    }
+
+    .visao-equipe {
+        padding: 16px;
+    }
+
+    .lista-visao-atletas li {
+        grid-template-columns: 24px minmax(0, 1fr);
+    }
+
+    .atleta-genero {
+        grid-column: 2;
     }
 }
