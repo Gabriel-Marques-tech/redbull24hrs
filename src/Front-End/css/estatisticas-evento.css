@@ -361,6 +361,7 @@ main { height: auto !important; }
 .stat-item:last-child { border-right: none; padding-right: 0; }
 
 .stat-icone { width: 28px; height: 28px; flex-shrink: 0; opacity: 0.75; }
+.stat-item-destaque .stat-icone { filter: brightness(0); }
 
 .stat-info { display: flex; flex-direction: column; gap: 2px; }
 .stat-valor { font-size: 18px; font-weight: 800; color: #111; line-height: 1.1; }
