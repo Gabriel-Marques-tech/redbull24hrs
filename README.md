@@ -157,13 +157,13 @@ EMAIL_FROM=Red Bull 24H <noreply@seudominio.com>
 APP_BASE_URL=https://seuapp.com
 ```
 
-> **⚠️ Aviso sobre envio de e-mail (feature de compartilhamento)**
+> **Aviso sobre envio de e-mail (feature de compartilhamento)**
 >
 > A tela de compartilhamento de desempenho (`/manager/event/:id/share`) permite ao gerente enviar o link de desempenho do atleta por e-mail. Este envio utiliza o serviço [Resend](https://resend.com/).
 >
-> **Limitação do plano gratuito do Resend:** no plano gratuito, o envio de e-mails é restrito a endereços do mesmo domínio verificado na conta. Para enviar e-mails a destinatários externos (qualquer endereço fora do domínio cadastrado), é necessário uma **assinatura paga do Resend** com um domínio próprio configurado.
+> No plano gratuito do Resend, o envio de e-mails é restrito a endereços do mesmo domínio verificado na conta. Para enviar e-mails a destinatários externos (qualquer endereço fora do domínio cadastrado), é necessária uma assinatura paga do Resend com um domínio próprio configurado.
 >
-> As demais funcionalidades do sistema (registro de turnos, checkpoints, métricas, exportação CSV, modo TV, pausa de competição) funcionam normalmente sem essa configuração. As variáveis `RESEND_API_KEY`, `EMAIL_FROM` e `APP_BASE_URL` são opcionais — sem elas, o botão de envio de e-mail retorna erro, mas o restante da tela de compartilhamento (geração de links e QR codes) opera normalmente.
+> As demais funcionalidades do sistema (registro de turnos, checkpoints, métricas, exportação CSV, modo TV, pausa de competição) funcionam normalmente sem essa configuração. As variáveis `RESEND_API_KEY`, `EMAIL_FROM` e `APP_BASE_URL` são opcionais. Sem elas, o botão de envio de e-mail retorna erro, mas o restante da tela de compartilhamento (geração de links e cópia de URL) opera normalmente.
 
 4. Execute as migrações do banco de dados:
 
