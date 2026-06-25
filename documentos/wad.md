@@ -5899,9 +5899,6 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ¹⁷ ABRAMOV, Dan. **Presentational and Container Components.** Medium, 23 mar. 2015. Disponível em: https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0. Acesso em: 26 mai. 2026.
 
-²⁸ BANGOR, Aaron; KORTUM, Philip T.; MILLER, James T. An empirical evaluation of the System Usability Scale. **International Journal of Human-Computer Interaction**, v. 24, n. 6, p. 574–594, 2008. Disponível em: https://www.tandfonline.com/doi/abs/10.1080/10447310802205776. Acesso em: 24 jun. 2026.
-
-²⁷ BARROS, Myrela. **Guia atualizado de como utilizar a escala SUS (System Usability Scale) no seu produto**. UX Collective, out. 2022. Disponível em: <https://brasil.uxdesign.cc/guia-atualizado-de-como-utilizar-a-escala-sus-system-usability-scale-no-seu-produto-ab773f29c522>. Acesso em: 22 jun. 2026.
 
 ⁸ BUSINESS RULES GROUP. **Business Rules Manifesto:** the principles of rule independence. Version 2.0. S. l.: Business Rules Group, 2003. Disponível em: <https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf>. Acesso em: 27 abr. 2026.
 
