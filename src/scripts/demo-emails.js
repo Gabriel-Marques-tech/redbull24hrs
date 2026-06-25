@@ -11,7 +11,7 @@ require("dotenv").config();
 const nodemailer = require("nodemailer");
 
 // ─── EDITE AQUI ──────────────────────────────────────────────────────────────
-const BASE_URL = process.env.APP_BASE_URL || "https://SEU-APP.onrender.com";
+const BASE_URL = process.env.APP_BASE_URL || "https://redbull24hrs.onrender.com";
 
 // Cole aqui os dados do forms — só nome + email obrigatórios.
 // equipe, km e pace são opcionais — se omitir, gera aleatório.
