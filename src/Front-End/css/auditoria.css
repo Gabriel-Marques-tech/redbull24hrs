@@ -3080,8 +3080,10 @@ html[data-theme="dark"] .fila-lista.fila-aberta::-webkit-scrollbar-thumb {
 
     /* ── Modal checkpoint: layout coluna única ── */
     #modalCheckpoint .modal-turno-conteudo {
+        height: auto;
         padding: 16px 20px 18px;
         overflow: hidden;
+        align-items: stretch;
     }
 
     #modalCheckpoint .checkpoint-cronometro-topo {
@@ -3092,7 +3094,7 @@ html[data-theme="dark"] .fila-lista.fila-aberta::-webkit-scrollbar-thumb {
     }
 
     #modalCheckpoint .checkpoint-cronometro-label {
-        font-size: 12px;
+        font-size: 11px;
         color: #888;
         text-transform: uppercase;
         letter-spacing: 0.3px;
@@ -3103,6 +3105,7 @@ html[data-theme="dark"] .fila-lista.fila-aberta::-webkit-scrollbar-thumb {
         font-weight: 700;
         color: var(--vermelho);
         font-variant-numeric: tabular-nums;
+        margin-left: auto;
     }
 
     #modalCheckpoint .checkpoint-corredor {
@@ -3133,39 +3136,13 @@ html[data-theme="dark"] .fila-lista.fila-aberta::-webkit-scrollbar-thumb {
         gap: 8px;
     }
 
-    /* seção foto: linha compacta com botão */
+    /* seção foto: só o botão, largura total */
     #modalCheckpoint .checkpoint-foto {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 10px;
         padding-right: 0;
-        padding-bottom: 8px;
-        border-bottom: 1px solid #e0e0e0;
-    }
-
-    #modalCheckpoint .checkpoint-foto .checkpoint-icone {
-        width: 32px;
-        height: 32px;
-        flex: 0 0 32px;
-    }
-
-    #modalCheckpoint .checkpoint-foto .checkpoint-icone svg {
-        width: 16px;
-        height: 16px;
+        padding-bottom: 0;
     }
 
     #modalCheckpoint .checkpoint-foto .checkpoint-secao-titulo {
-        flex: 1;
-        min-height: 0;
-        gap: 0;
-    }
-
-    #modalCheckpoint .checkpoint-secao-titulo strong {
-        font-size: 12px;
-    }
-
-    #modalCheckpoint .checkpoint-secao-titulo small {
         display: none;
     }
 
@@ -3175,17 +3152,15 @@ html[data-theme="dark"] .fila-lista.fila-aberta::-webkit-scrollbar-thumb {
 
     #modalCheckpoint .btn-checkpoint-foto {
         margin: 0;
-        width: auto;
-        height: 32px;
-        font-size: 12px;
-        gap: 5px;
-        flex-shrink: 0;
-        padding: 0 10px;
+        width: 100%;
+        height: 36px;
+        font-size: 13px;
+        gap: 6px;
     }
 
     #modalCheckpoint .btn-checkpoint-foto svg {
-        width: 15px;
-        height: 15px;
+        width: 16px;
+        height: 16px;
     }
 
     /* seção dados: campos empilhados */
