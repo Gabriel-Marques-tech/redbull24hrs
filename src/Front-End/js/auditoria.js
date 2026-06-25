@@ -190,6 +190,28 @@ async function forcarEncerramento(conflictId) {
     })
 }
 
+async function uploadFotoParaEntidade(tipo, id, arquivo) {
+    const form = new FormData()
+    form.append('image', arquivo)
+    return authFetch(`/audit/${tipo}/${id}/image`, { method: 'PATCH', body: form })
+}
+
+function abrirLightbox(src) {
+    const lb = document.createElement('div')
+    lb.className = 'ocr-lightbox'
+    lb.innerHTML = `
+        <button class="ocr-lightbox-fechar" aria-label="Fechar">&times;</button>
+        <img src="${src}" alt="Foto ampliada">
+    `
+    const fechar = () => document.body.removeChild(lb)
+    lb.addEventListener('click', e => { if (e.target === lb) fechar() })
+    lb.querySelector('.ocr-lightbox-fechar').addEventListener('click', fechar)
+    document.addEventListener('keydown', function esc(e) {
+        if (e.key === 'Escape') { fechar(); document.removeEventListener('keydown', esc) }
+    })
+    document.body.appendChild(lb)
+}
+
 async function registrarCheckpoint(kmDistance) {
     const res = await authFetch(`/audit/shifts/${shiftId}/checkpoints`, {
         method: 'POST',
@@ -372,12 +394,30 @@ if (btnCheckpointFoto && checkpointFotoInput) {
 }
 
 if (checkpointFotoInput && checkpointFotoPreview) {
-    checkpointFotoInput.addEventListener('change', () => {
+    checkpointFotoInput.addEventListener('change', async () => {
         const arquivo = checkpointFotoInput.files?.[0]
         if (!arquivo) return
         if (checkpointFotoUrl) URL.revokeObjectURL(checkpointFotoUrl)
         checkpointFotoUrl = URL.createObjectURL(arquivo)
-        checkpointFotoPreview.innerHTML = `<img src="${checkpointFotoUrl}" alt="Foto do checkpoint">`
+        checkpointFotoPreview.innerHTML = `<img src="${checkpointFotoUrl}" alt="Foto do checkpoint" style="cursor:zoom-in">`
+        checkpointFotoPreview.querySelector('img').addEventListener('click', () => abrirLightbox(checkpointFotoUrl))
+
+        if (btnCheckpointFoto) btnCheckpointFoto.disabled = true
+        try {
+            const form = new FormData()
+            form.append('image', arquivo)
+            const res = await authFetch('/audit/ocr', { method: 'POST', body: form })
+            if (res && res.ok) {
+                const { ocr } = await res.json()
+                if (ocr) {
+                    if (ocr.distance != null && kmCheckpointModal)          kmCheckpointModal.value = ocr.distance
+                    if (ocr.speed    != null && velocidadeCheckpointModal)  velocidadeCheckpointModal.value = ocr.speed
+                    if (ocr.time     != null && tempoCheckpointModal)       tempoCheckpointModal.value = ocr.time
+                }
+            }
+        } finally {
+            if (btnCheckpointFoto) btnCheckpointFoto.disabled = false
+        }
     })
 }
 
@@ -806,14 +846,78 @@ if (btnProximoCorredor) {
 }
 
 // ─── Modal Finalizar Turno ────────────────────────────────────
-const modalTurno         = document.getElementById('modalTurno')
-const selectCorredor     = document.getElementById('selectCorredor')
-const inicioTurno        = document.getElementById('inicioTurno')
-const fimTurno           = document.getElementById('fimTurno')
-const tempoPercorridoTurno = document.getElementById('tempoPercorridoTurno')
-const quilometragemTurno = document.getElementById('quilometragemTurno')
-const btnRegistrarTurno  = document.getElementById('btnRegistrarTurno')
-const btnCancelarTurno   = document.getElementById('btnCancelarTurno')
+const modalTurno              = document.getElementById('modalTurno')
+const selectCorredor          = document.getElementById('selectCorredor')
+const inicioTurno             = document.getElementById('inicioTurno')
+const fimTurno                = document.getElementById('fimTurno')
+const tempoPercorridoTurno    = document.getElementById('tempoPercorridoTurno')
+const quilometragemTurno      = document.getElementById('quilometragemTurno')
+const btnRegistrarTurno       = document.getElementById('btnRegistrarTurno')
+const btnCancelarTurno        = document.getElementById('btnCancelarTurno')
+const finalizarTurnoFotoInput   = document.getElementById('finalizarTurnoFotoInput')
+const finalizarTurnoFotoPreview = document.getElementById('finalizarTurnoFotoPreview')
+const btnFinalizarTurnoFoto     = document.getElementById('btnFinalizarTurnoFoto')
+const ocrResultadoTurno         = document.getElementById('ocrResultadoTurno')
+const ocrSpeedEl                = document.getElementById('ocrSpeed')
+const ocrDistanceEl             = document.getElementById('ocrDistance')
+const ocrPaceEl                 = document.getElementById('ocrPace')
+const ocrTimeEl                 = document.getElementById('ocrTime')
+let finalizarTurnoFotoUrl = null
+
+function limparFotoFinalizarTurno() {
+    if (finalizarTurnoFotoUrl) { URL.revokeObjectURL(finalizarTurnoFotoUrl); finalizarTurnoFotoUrl = null }
+    if (finalizarTurnoFotoInput) finalizarTurnoFotoInput.value = ''
+    if (btnFinalizarTurnoFoto) btnFinalizarTurnoFoto.textContent = 'Tirar foto'
+    if (ocrResultadoTurno) ocrResultadoTurno.classList.add('escondido')
+    if (finalizarTurnoFotoPreview) {
+        finalizarTurnoFotoPreview.innerHTML = `
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7h3l1.5-2h7L17 7h3v12H4z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+            </svg>`
+    }
+}
+
+function exibirOcrTurno(ocr) {
+    if (!ocrResultadoTurno) return
+    if (!ocr) { ocrResultadoTurno.classList.add('escondido'); return }
+    if (ocrSpeedEl)    ocrSpeedEl.textContent    = ocr.speed    != null ? `${ocr.speed} km/h` : '—'
+    if (ocrDistanceEl) ocrDistanceEl.textContent = ocr.distance != null ? `${ocr.distance} km` : '—'
+    if (ocrPaceEl)     ocrPaceEl.textContent     = ocr.pace     ?? '—'
+    if (ocrTimeEl)     ocrTimeEl.textContent     = ocr.time     ?? '—'
+    ocrResultadoTurno.classList.remove('escondido')
+}
+
+if (btnFinalizarTurnoFoto && finalizarTurnoFotoInput) {
+    btnFinalizarTurnoFoto.addEventListener('click', () => finalizarTurnoFotoInput.click())
+}
+
+if (finalizarTurnoFotoInput && finalizarTurnoFotoPreview) {
+    finalizarTurnoFotoInput.addEventListener('change', async () => {
+        const arquivo = finalizarTurnoFotoInput.files?.[0]
+        if (!arquivo) return
+        if (finalizarTurnoFotoUrl) URL.revokeObjectURL(finalizarTurnoFotoUrl)
+        finalizarTurnoFotoUrl = URL.createObjectURL(arquivo)
+        finalizarTurnoFotoPreview.innerHTML =
+            `<img src="${finalizarTurnoFotoUrl}" alt="Foto da finalização do turno" style="cursor:zoom-in">`
+        finalizarTurnoFotoPreview.querySelector('img')?.addEventListener('click', () => abrirLightbox(finalizarTurnoFotoUrl))
+        if (btnFinalizarTurnoFoto) btnFinalizarTurnoFoto.textContent = 'Tirar nova foto'
+
+        if (!shiftId) return
+        if (btnFinalizarTurnoFoto) btnFinalizarTurnoFoto.disabled = true
+        finalizarTurnoFotoPreview.classList.add('ocr-loading')
+        try {
+            const res = await uploadFotoParaEntidade('shifts', shiftId, arquivo)
+            if (res && res.ok) {
+                const data = await res.json()
+                exibirOcrTurno(data.ocr)
+            }
+        } finally {
+            finalizarTurnoFotoPreview.classList.remove('ocr-loading')
+            if (btnFinalizarTurnoFoto) btnFinalizarTurnoFoto.disabled = false
+        }
+    })
+}
 
 function abrirModalTurno() {
     if (!modalTurno) return
@@ -863,6 +967,7 @@ function abrirModalTurno() {
 
 function fecharModalTurno() {
     if (modalTurno) modalTurno.classList.add('escondido')
+    limparFotoFinalizarTurno()
 }
 
 if (modalTurno) {
