@@ -190,6 +190,21 @@ export const eventRepository = {
 		return { pauses, totalSeconds, count: pauses.length };
 	},
 
+	async teamsWithoutAthletes(event_id: number): Promise<{ id: number; name: string }[]> {
+		const result = await pool.query(
+			`SELECT t.id, t.name
+			 FROM teams t
+			 WHERE t.event_id = $1
+			   AND t.deleted_at IS NULL
+			   AND NOT EXISTS (
+			       SELECT 1 FROM athletes a
+			       WHERE a.team_id = t.id AND a.deleted_at IS NULL
+			   )`,
+			[event_id]
+		);
+		return result.rows;
+	},
+
 	async softDelete(id: number) {
 		const result = await pool.query(
 			`UPDATE events SET deleted_at = NOW() WHERE id = $1 AND deleted_at IS NULL RETURNING *`,

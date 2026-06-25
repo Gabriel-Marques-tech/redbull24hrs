@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informações do cadastro</title>
+    <link rel="icon" type="image/png" href="/assets/logo/logo-redrun.png">
+    <link rel="apple-touch-icon" href="/assets/logo/logo-redrun.png">
     <link rel="stylesheet" href="/css/global.css">
     <script src="/js/tema.js"></script>
     <link rel="stylesheet" href="/css/equipe.css">
@@ -37,28 +39,42 @@
                         <span>+</span>
                     </div>
                     <div>
-                        <strong>Imagem de perfil <span class="asterisco-obrigatorio">*</span></strong>
+                        <strong>Imagem de perfil</strong>
                         <p>Envie uma foto para identificar este cadastro.</p>
                         <button type="button" id="btnFotoPerfil">Escolher imagem</button>
                     </div>
                     <input id="fotoPerfilPessoa" type="file" accept="image/*">
                 </div>
 
-                <div class="grid-cadastro-pessoa">
-                    <label class="campo-cadastro-pessoa campo-cadastro-duplo">
-                        <span>Nome <strong>*</strong></span>
-                        <input id="nomeAtleta" type="text" required>
-                    </label>
+                <div class="campos-apoio-wrapper">
+                    <div class="grid-cadastro-pessoa">
+                        <label class="campo-cadastro-pessoa campo-cadastro-duplo">
+                            <span>Nome <strong>*</strong></span>
+                            <input id="nomeAtleta" type="text" required>
+                        </label>
 
-                    <label class="campo-cadastro-pessoa campo-cadastro-duplo" id="campoEmailPessoa">
-                        <span>E-mail <strong>*</strong></span>
-                        <input id="emailPessoa" type="email" placeholder="email@exemplo.com" required>
-                    </label>
+                        <label class="campo-cadastro-pessoa campo-cadastro-duplo" id="campoEmailPessoa">
+                            <span>E-mail <strong>*</strong></span>
+                            <input id="emailPessoa" type="email" placeholder="email@exemplo.com" required>
+                        </label>
 
-                    <label class="campo-cadastro-pessoa campo-cadastro-duplo campo-cpf-apoio" id="campoCpfApoio">
-                        <span>CPF <strong>*</strong></span>
-                        <input id="cpfApoio" type="text" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00">
-                    </label>
+                        <label class="campo-cadastro-pessoa campo-cadastro-duplo campo-cpf-apoio" id="campoCpfApoio">
+                            <span>CPF <strong>*</strong></span>
+                            <input id="cpfApoio" type="text" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00">
+                        </label>
+
+                        <label class="campo-cadastro-pessoa campo-cadastro-duplo escondido" id="campoRegistroAuditor">
+                            <span>N° de registro <strong>*</strong></span>
+                            <input id="registroAuditor" type="number" min="1" placeholder="Ex: 1042">
+                        </label>
+                    </div>
+
+                    <div class="campos-acesso" id="camposAcesso">
+                        <label class="campo-cadastro-pessoa">
+                            <span>Senha <strong>*</strong></span>
+                            <input id="senhaPessoa" type="password" placeholder="Senha de acesso">
+                        </label>
+                    </div>
                 </div>
 
                 <div class="campos-atleta" id="camposAtleta">
@@ -86,13 +102,6 @@
                             <option value="Líder">Líder</option>
                         </select>
                     </div>
-                </div>
-
-                <div class="campos-acesso" id="camposAcesso">
-                    <label class="campo-cadastro-pessoa">
-                        <span>Senha <strong>*</strong></span>
-                        <input id="senhaPessoa" type="password" placeholder="Senha de acesso">
-                    </label>
                 </div>
 
                 <button type="submit">Concluir</button>

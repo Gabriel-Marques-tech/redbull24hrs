@@ -19,6 +19,7 @@ export const logsController = {
 			const logs = await logsService.getLogs({ shift_id, checkpoint_id, type, author_id });
 			res.status(200).json(logs);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			const status = error.message.includes("inválid") ? 400 : 500;
 			res.status(status).json({ error: error.message });
 		}

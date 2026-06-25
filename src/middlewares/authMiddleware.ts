@@ -5,12 +5,15 @@ import AuthService from "../services/authService";
 
 const requireAuth = (req: Request, res: Response, next: NextFunction): void => {
   const header = req.headers.authorization;
-  if (!header || !header.startsWith("Bearer ")) {
+  const token = header?.startsWith("Bearer ")
+    ? header.slice("Bearer ".length).trim()
+    : req.cookies?.accessToken;
+
+  if (!token) {
     res.status(401).json({ error: "Token de acesso ausente" });
     return;
   }
 
-  const token = header.slice("Bearer ".length).trim();
   try {
     const payload = verifyAccessToken(token);
     req.user = {
@@ -18,6 +21,7 @@ const requireAuth = (req: Request, res: Response, next: NextFunction): void => {
       email: payload.email,
       role: payload.role,
       name: payload.name,
+      image_url: payload.image_url ?? null,
     };
     next();
   } catch {
@@ -51,6 +55,7 @@ const requirePageAuth = async (req: Request, res: Response, next: NextFunction) 
                 email: payload.email,
                 role: payload.role,
                 name: payload.name,
+                image_url: payload.image_url ?? null,
             }
             next()
             return
@@ -95,6 +100,7 @@ const requirePageAuth = async (req: Request, res: Response, next: NextFunction) 
             email: payload.email,
             role: payload.role,
             name: payload.name,
+            image_url: payload.image_url ?? null,
         }
     } catch {
         res.redirect('/login')
