@@ -3258,51 +3258,73 @@ O DER traduz o MER para a estrutura relacional do PostgreSQL. A versão abaixo r
   <sub>Quadro 22 - Tabelas e colunas do DER</sub>
 </div>
 
-| Tabela | Colunas consolidadas | Restrições e observações |
-| :--- | :--- | :--- |
-| **managers** | `id`, `cpf`, `name`, `email`, `password` | PK em `id`; CPF único quando preenchido; `email` único (`VARCHAR(100)`). |
-| **manager_events** | `manager_id`, `event_id` | PK composta; ambas as colunas são FKs com `ON DELETE CASCADE`. |
-| **events** | `id`, `title`, `local`, `date`, `status`, `started_at`, `finished_at`, `deleted_at`, `image_url`, `paused_at`, `paused_ms` | `title` e `local` únicos; status `pending`, `in_progress` ou `finished`; `image_url` é `VARCHAR` nullable; `paused_at` é `TIMESTAMP` nullable; `paused_ms` é `BIGINT DEFAULT 0`. |
-| **teams** | `id`, `name`, `event_id`, `deleted_at` | FK obrigatória para `events`; `name` único (`NOT NULL UNIQUE`). |
-| **athletes** | `id`, `name`, `gender`, `cpf`, `team_id`, `deleted_at`, `image_url`, `share_token`, `email` | FK obrigatória para `teams`; CPF único quando preenchido; `image_url` é `VARCHAR` nullable; `share_token` é `UUID` nullable; `email` é `VARCHAR(255)` nullable. |
-| **auditors** | `id`, `name`, `cpf`, `registration_number`, `is_active`, `email`, `password` | `registration_number` único (`INT NOT NULL UNIQUE`); `email` único (`VARCHAR(100)`); CPF único quando preenchido. |
-| **shifts** | `id`, `status`, `athlete_id`, `auditor_id`, `manager_id`, `treadmill_id`, `start_at`, `total_time`, `end_at`, `speed`, `km_start`, `km_end`, `distance`, `ocr_speed`, `ocr_distance`, `ocr_pace`, `ocr_time`, `image_url` | Status: `pending`, `in_progress` ou `completed`; `speed`, `km_start`, `km_end` e `distance` são `NUMERIC(8,2) NOT NULL`; `ocr_speed`, `ocr_distance`, `ocr_pace` são `NUMERIC`; `ocr_time` é `VARCHAR(10)`; `image_url` é `TEXT` nullable; FKs para atleta, auditor, gerente e esteira. |
-| **treadmills** | `id`, `number` | `number` é `INT NOT NULL UNIQUE`; referenciada por `shifts.treadmill_id`. |
-| **checkpoints** | `id`, `shift_id`, `timestamp`, `distance`, `type`, `reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`, `sync_id`, `ocr_speed`, `ocr_distance`, `ocr_pace`, `ocr_time`, `image_url` | `reviewed` é `BOOLEAN NOT NULL DEFAULT FALSE`; `distance` é `NUMERIC`; `old_distance` é `INT NOT NULL`; `sync_id` é `VARCHAR(64)`; `ocr_speed`, `ocr_distance`, `ocr_pace` são `NUMERIC`; `ocr_time` é `VARCHAR(10)`; `image_url` é `TEXT` nullable; campos de revisão são nullable. |
-| **logs** | `id`, `shift_id`, `timestamp`, `type`, `checkpoint_id`, `old_value`, `new_value`, `author_id`, `author_role`, `justification` | Tipos: `created`, `updated`, `finished`; `old_value` e `new_value` são `NUMERIC`; `author_role` é `VARCHAR(20)`; `justification` é `VARCHAR(400)`; vínculo com checkpoint é opcional. |
-| **pause_log** | `id`, `event_id`, `paused_at`, `resumed_at`, `duration_ms` | FK para `events`; `paused_at` é `TIMESTAMP NOT NULL`; `resumed_at` é `TIMESTAMP` nullable; `duration_ms` é `BIGINT` nullable. |
-| **refresh_tokens** | `id`, `token_hash`, `manager_id`, `auditor_id`, `expires_at`, `revoked_at`, `created_at` | `token_hash` é `VARCHAR(255) UNIQUE NOT NULL`; `expires_at` é `TIMESTAMP NOT NULL`; `created_at` tem `DEFAULT CURRENT_TIMESTAMP`; exatamente um proprietário entre gerente e auditor. |
+#### Entidades e atributos
+
+As entidades foram derivadas do domínio e revisadas conforme o schema resultante das migrations `001` a `025`. O DER inclui as entidades de autenticação porque seus vínculos possuem integridade referencial no banco e fazem parte da responsabilidade operacional dos usuários.
+
+<div align="center">
+  <sub>Quadro 22 - Entidades e atributos do DER</sub>
+</div>
+
+| Entidade | Descrição | Atributos principais | Chave |
+| :--- | :--- | :--- | :--- |
+| **Managers** | Gerentes que administram eventos. | `id`, `name`, `cpf`, `email`, `password` | `id` |
+| **Events** | Edições da competição, incluindo seu ciclo de vida operacional e controle de pausas. | `id`, `title`, `local`, `date`, `status`, `started_at`, `finished_at`, `deleted_at`, `image_url`, `paused_at`, `paused_ms` | `id` |
+| **Teams** | Equipes vinculadas a uma edição específica. | `id`, `name`, `event_id`, `deleted_at` | `id` |
+| **Athletes** | Atletas pertencentes a uma equipe, com suporte a foto e compartilhamento de desempenho. | `id`, `name`, `gender`, `cpf`, `team_id`, `deleted_at`, `image_url`, `share_token`, `email` | `id` |
+| **Auditors** | Operadores responsáveis pelo registro dos turnos e checkpoints. | `id`, `name`, `cpf`, `registration_number`, `is_active`, `email`, `password` | `id` |
+| **Shifts** | Sessões individuais de corrida de um atleta em uma esteira, com suporte a leitura OCR e foto. | `id`, `status`, `athlete_id`, `auditor_id`, `manager_id`, `treadmill_id`, `start_at`, `end_at`, `total_time`, `speed`, `km_start`, `km_end`, `distance`, `ocr_speed`, `ocr_distance`, `ocr_pace`, `ocr_time`, `image_url` | `id` |
+| **Treadmills** | Esteiras físicas numeradas, referenciadas pelos turnos que nelas ocorrem. | `id`, `number` | `id` |
+| **Checkpoints** | Leituras parciais do turno, com suporte a revisão, sincronização offline e leitura OCR. | `id`, `shift_id`, `timestamp`, `distance`, `type`, `reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`, `sync_id`, `ocr_speed`, `ocr_distance`, `ocr_pace`, `ocr_time`, `image_url` | `id` |
+| **Logs** | Registros imutáveis de ações e alterações relacionadas a um turno. | `id`, `shift_id`, `timestamp`, `type`, `checkpoint_id`, `old_value`, `new_value`, `author_id`, `author_role`, `justification` | `id` |
+| **PauseLog** | Intervalos de pausa de uma competição, com rastreio de início, retomada e duração. | `id`, `event_id`, `paused_at`, `resumed_at`, `duration_ms` | `id` |
+| **RefreshToken** | Sessão renovável pertencente exclusivamente a um gerente ou auditor. | `id`, `token_hash`, `manager_id`, `auditor_id`, `expires_at`, `revoked_at`, `created_at` | `id` |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
+#### Relacionamentos e cardinalidades
+
+Os relacionamentos refletem o schema consolidado após as migrations da Sprint 5. A FK de esteira passou a residir em `shifts.treadmill_id`, corrigindo o vínculo anterior. O controle de pausas foi extraído para a entidade `PauseLog`, vinculada diretamente ao evento. O operador de cada turno pode ser um auditor ou um gerente, nunca os dois simultaneamente. A posse de sessões de autenticação é modelada por dois relacionamentos independentes e mutuamente exclusivos: um para gerentes e outro para auditores.
+
 <div align="center">
-  <sub>Quadro 23 - Relacionamentos e chaves estrangeiras do DER</sub>
+  <sub>Quadro 23 - Relacionamentos e cardinalidades do DER</sub>
 </div>
 
-| Tabela origem | Coluna FK | Tabela referenciada | Cardinalidade | Política |
+| Relacionamento | Entidade A | Cardinalidade | Entidade B | Descrição |
 | :--- | :--- | :--- | :--- | :--- |
-| **manager_events** | `manager_id` | managers | N:1 | `ON DELETE CASCADE` |
-| **manager_events** | `event_id` | events | N:1 | `ON DELETE CASCADE` |
-| **teams** | `event_id` | events | N:1 | `ON DELETE CASCADE` |
-| **athletes** | `team_id` | teams | N:1 | `ON DELETE CASCADE` |
-| **shifts** | `athlete_id` | athletes | N:1 | `ON DELETE RESTRICT` |
-| **shifts** | `auditor_id` | auditors | N:1 opcional | Padrão PostgreSQL (`NO ACTION`) |
-| **shifts** | `manager_id` | managers | N:1 opcional | Padrão PostgreSQL (`NO ACTION`) |
-| **shifts** | `treadmill_id` | treadmills | N:1 | Padrão PostgreSQL (`NO ACTION`) |
-| **checkpoints** | `shift_id` | shifts | N:1 | `ON DELETE CASCADE` |
-| **logs** | `shift_id` | shifts | N:1 | `ON DELETE CASCADE` |
-| **logs** | `checkpoint_id` | checkpoints | N:1 opcional | `ON DELETE CASCADE` |
-| **pause_log** | `event_id` | events | N:1 | Padrão PostgreSQL (`NO ACTION`) |
-| **refresh_tokens** | `manager_id` | managers | N:1 opcional | `ON DELETE CASCADE` |
-| **refresh_tokens** | `auditor_id` | auditors | N:1 opcional | `ON DELETE CASCADE` |
+| **Manages** | Managers | N:N | Events | Gerentes podem administrar vários eventos e eventos podem possuir vários gerentes. |
+| **Has** | Events | 1:N | Teams | Cada equipe pertence a um único evento. |
+| **Records** | Events | 1:N | PauseLog | Cada intervalo de pausa pertence a um único evento; um evento pode ter vários intervalos registrados. |
+| **Rosters** | Teams | 1:N | Athletes | Cada atleta pertence a uma única equipe. |
+| **Performs** | Athletes | 1:N | Shifts | Um atleta pode realizar vários turnos; cada turno possui exatamente um atleta. |
+| **Audits** | Auditors | 1:N | Shifts | Um auditor pode operar vários turnos. |
+| **Operates** | Managers | 1:N | Shifts | Um gerente pode operar turnos quando atua na função operacional. |
+| **Hosts** | Treadmills | 1:N | Shifts | Uma esteira recebe vários turnos; cada turno referencia no máximo uma esteira. |
+| **Generates** | Shifts | 1:N | Checkpoints | Todo checkpoint pertence a um turno. |
+| **Produces** | Shifts | 1:N | Logs | Todo log pertence a um turno. |
+| **References** | Checkpoints | 1:N opcional | Logs | Um log pode apontar para um checkpoint; vários logs podem referenciar o mesmo checkpoint. |
+| **Owns Session** | Managers | 1:N | RefreshToken | Cada refresh token de gerente pertence exatamente a um gerente. |
+| **Has Session** | Auditors | 1:N | RefreshToken | Cada refresh token de auditor pertence exatamente a um auditor. |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
+
+#### Decisões de modelagem
+
+- **Shift como entidade central:** cada entrada de um atleta em uma esteira gera um turno próprio. Os totais do evento são calculados pela agregação dos turnos finalizados.
+- **Operador exclusivo:** a constraint `chk_shifts_operator` exige exatamente um responsável por turno, usando `auditor_id` ou `manager_id`. No DER, isso é refletido pelos relacionamentos independentes **Operates** e **Audits**, ambos direcionados a `Shifts`.
+- **Esteira vinculada ao turno:** o relacionamento **Hosts** liga `Treadmills` a `Shifts` via `shifts.treadmill_id`, preservando o histórico de uso por turno. A FK reside em `Shifts`, corrigindo o modelo anterior onde `treadmill_id` estava incorretamente em `Treadmills`.
+- **Verificação por foto e OCR:** `Shifts` e `Checkpoints` passam a armazenar `image_url` (foto da esteira) e os campos `ocr_speed`, `ocr_distance`, `ocr_pace` e `ocr_time`, permitindo auditoria visual e leitura automatizada de dados da esteira.
+- **Controle de pausas:** a entidade `PauseLog` registra cada intervalo de pausa de um evento, com `paused_at`, `resumed_at` e `duration_ms`. O evento em si mantém `paused_at` e `paused_ms` para refletir o estado corrente, enquanto o histórico completo de intervalos fica em `PauseLog`.
+- **Compartilhamento de desempenho:** atletas recebem `share_token UUID` gerado ao final do evento e `email VARCHAR(255)`, habilitando o envio de links individuais de desempenho via `feat/shareSystem`.
+- **Tipos numéricos revisados:** `speed`, `km_start`, `km_end` e `distance` em `Shifts`, e `distance` em `Checkpoints`, foram convertidos de `INT` para `NUMERIC(8,2)`, refletindo a migration `018_shiftKmDecimal`. Os campos `old_value` e `new_value` em `Logs` também passaram de `INT` para `NUMERIC` para suportar valores decimais.
+- **Auditoria de checkpoints:** checkpoints guardam dados de revisão e `sync_id`; logs registram valores anteriores e novos, autoria, justificativa e vínculo opcional ao checkpoint.
+- **Autenticação com integridade:** refresh tokens são modelados por dois relacionamentos mutuamente exclusivos — **Owns Session** (Manager–RefreshToken) e **Has Session** (Auditor–RefreshToken) — garantindo que cada token pertença a exatamente um gerente ou a um auditor existente, nunca aos dois simultaneamente.
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
