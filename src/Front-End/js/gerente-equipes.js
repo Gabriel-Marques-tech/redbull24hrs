@@ -256,6 +256,7 @@ async function submeterCadastro() {
             : new Date().toISOString();
 
         // 1. Criar evento (multipart se houver foto, senão JSON)
+        const imagemEvento = localStorage.getItem("imagemEvento") || "";
         const eventoRes = await authFetch("/events", {
             method: "POST",
             body: montarCorpo({
@@ -263,7 +264,7 @@ async function submeterCadastro() {
                 local,
                 date,
                 manager_id: window.MANAGER_ID
-            }, localidade.foto)
+            }, imagemEvento || null)
         });
         if (!eventoRes || !eventoRes.ok) {
             const err = await eventoRes?.json().catch(() => ({}));

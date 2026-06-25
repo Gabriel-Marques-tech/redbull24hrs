@@ -13,7 +13,11 @@
 
     <header class="topo">
         <div class="operador" id="areaOperador" onclick="abrirModalOperador()" title="Trocar operador" style="cursor:pointer">
+            <% if (auditor.image_url) { %>
+            <div class="avatar avatar-operador" style="background-image:url('<%= auditor.image_url %>')"></div>
+            <% } else { %>
             <span class="avatar avatar-operador"></span>
+            <% } %>
             <div>
                 <small>Operador <span class="seta-bandeja">▾</span></small>
                 <p id="nomeOperador"><%= auditor.name %></p>

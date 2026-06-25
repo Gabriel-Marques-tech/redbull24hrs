@@ -1,0 +1,3249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebAPI Docs — Red Bull 24 Horas</title>
+  <style>
+    /* ── Reset & Base ──────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #212529;
+      background: #f4f6f9;
+      line-height: 1.6;
+    }
+
+    /* ── Design tokens ─────────────────────────────────────────────────── */
+    :root {
+      --sidebar-w: 280px;
+      --header-h: 60px;
+      --rb-red:   #E10B17;
+      --rb-navy:  #001F5B;
+      --rb-gold:  #FFC200;
+      --get:    #1a7f4b;
+      --get-bg: #d1fae5;
+      --post:   #1a56a3;
+      --post-bg:#dbeafe;
+      --patch:  #b45309;
+      --patch-bg:#fef3c7;
+      --put:    #b45309;
+      --put-bg: #fef3c7;
+      --delete: #b91c1c;
+      --delete-bg:#fee2e2;
+      --radius: 6px;
+      --shadow: 0 1px 3px rgba(0,0,0,.10), 0 1px 2px rgba(0,0,0,.06);
+    }
+
+    /* ── Header ────────────────────────────────────────────────────────── */
+    .site-header {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      background: var(--rb-navy);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      gap: 1rem;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.3);
+    }
+    .header-brand { display: flex; align-items: center; gap: .75rem; flex: 1; }
+    .header-brand .rb-accent { color: var(--rb-red); font-size: 1.4rem; }
+    .header-title { font-size: 1.05rem; font-weight: 700; letter-spacing: .02em; }
+    .header-sub { font-size: .75rem; color: #94a3b8; display: block; }
+    .header-meta { display: flex; align-items: center; gap: 1rem; font-size: .78rem; color: #94a3b8; }
+    .header-meta a { color: var(--rb-gold); text-decoration: none; }
+    .header-meta a:hover { text-decoration: underline; }
+    .version-badge {
+      background: var(--rb-red); color: #fff;
+      padding: .15rem .5rem; border-radius: 12px;
+      font-size: .72rem; font-weight: 700;
+    }
+
+    /* ── Layout ────────────────────────────────────────────────────────── */
+    .layout {
+      display: flex;
+      margin-top: var(--header-h);
+      min-height: calc(100vh - var(--header-h));
+    }
+
+    /* ── Sidebar ───────────────────────────────────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: var(--header-h);
+      height: calc(100vh - var(--header-h));
+      width: var(--sidebar-w);
+      min-width: var(--sidebar-w);
+      background: #1e293b;
+      overflow-y: auto;
+      padding-bottom: 2rem;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: #1e293b; }
+    .sidebar::-webkit-scrollbar-thumb { background: #475569; border-radius: 2px; }
+
+    .search-box {
+      padding: .75rem 1rem;
+      position: sticky;
+      top: 0;
+      background: #1e293b;
+      z-index: 10;
+      border-bottom: 1px solid #334155;
+    }
+    .search-box input {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: var(--radius);
+      color: #e2e8f0;
+      font-size: .82rem;
+      padding: .4rem .7rem;
+      outline: none;
+    }
+    .search-box input::placeholder { color: #64748b; }
+    .search-box input:focus { border-color: var(--rb-red); }
+
+    .nav-group { padding: .75rem 0 .25rem; }
+    .nav-group-title {
+      padding: .25rem 1rem .35rem;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #64748b;
+    }
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .32rem 1rem;
+      text-decoration: none;
+      color: #94a3b8;
+      font-size: .82rem;
+      border-left: 2px solid transparent;
+      transition: background .15s, color .15s;
+    }
+    .nav-link:hover { background: #0f172a; color: #e2e8f0; }
+    .nav-link.active { border-left-color: var(--rb-red); color: #fff; background: #0f172a; }
+    .nav-link .mb { font-size: .65rem; font-weight: 700; padding: .1rem .3rem; border-radius: 3px; }
+    .nav-link .mb-get    { background: var(--get-bg);    color: var(--get);    }
+    .nav-link .mb-post   { background: var(--post-bg);   color: var(--post);   }
+    .nav-link .mb-patch  { background: var(--patch-bg);  color: var(--patch);  }
+    .nav-link .mb-put    { background: var(--put-bg);    color: var(--put);    }
+    .nav-link .mb-delete { background: var(--delete-bg); color: var(--delete); }
+    .nav-placeholder { padding: .3rem 1rem; font-size: .78rem; color: #475569; font-style: italic; }
+
+    /* ── Main content ──────────────────────────────────────────────────── */
+    .main-content {
+      flex: 1;
+      padding: 2rem;
+      max-width: 900px;
+    }
+
+    /* ── Flow sections ─────────────────────────────────────────────────── */
+    .flow-section { margin-bottom: 3rem; }
+    .flow-section > h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--rb-navy);
+      border-bottom: 3px solid var(--rb-red);
+      padding-bottom: .35rem;
+      margin-bottom: .6rem;
+    }
+    .flow-meta { font-size: .85rem; color: #475569; margin-bottom: 1.5rem; }
+    .flow-meta strong { color: #1e293b; }
+
+    /* ── Endpoint card ─────────────────────────────────────────────────── */
+    .endpoint-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius);
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .endpoint-header {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .75rem 1.1rem;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+      cursor: pointer;
+      user-select: none;
+      flex-wrap: wrap;
+    }
+    .endpoint-header:hover { background: #f1f5f9; }
+    .endpoint-summary { flex: 1; font-size: .85rem; color: #475569; }
+    .endpoint-path {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: .88rem;
+      color: #1e293b;
+    }
+    .param-placeholder { color: var(--rb-red); font-style: italic; }
+    .rf-badges { display: flex; gap: .3rem; flex-wrap: wrap; }
+    .rf-badge {
+      font-size: .68rem;
+      font-weight: 700;
+      background: #eff6ff;
+      color: #1a56a3;
+      border: 1px solid #bfdbfe;
+      padding: .1rem .35rem;
+      border-radius: 10px;
+      cursor: help;
+      white-space: nowrap;
+    }
+    .collapse-indicator { color: #94a3b8; font-size: .8rem; margin-left: auto; }
+
+    .endpoint-body {
+      padding: 1.1rem 1.25rem 1.25rem;
+      display: none;
+    }
+    .endpoint-card.open .endpoint-body { display: block; }
+    .endpoint-card.open .collapse-indicator::after { content: "▲"; }
+    .collapse-indicator::after { content: "▼"; }
+
+    /* ── Method badges ─────────────────────────────────────────────────── */
+    .badge {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 700;
+      padding: .2rem .5rem;
+      border-radius: 4px;
+      letter-spacing: .04em;
+      min-width: 54px;
+      text-align: center;
+    }
+    .badge-get    { background: var(--get-bg);    color: var(--get);    }
+    .badge-post   { background: var(--post-bg);   color: var(--post);   }
+    .badge-patch  { background: var(--patch-bg);  color: var(--patch);  }
+    .badge-put    { background: var(--put-bg);    color: var(--put);    }
+    .badge-delete { background: var(--delete-bg); color: var(--delete); }
+
+    /* ── Tables ────────────────────────────────────────────────────────── */
+    .doc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .82rem;
+      margin: .5rem 0 1.25rem;
+    }
+    .doc-table th {
+      background: #f1f5f9;
+      text-align: left;
+      padding: .45rem .75rem;
+      font-weight: 600;
+      color: #1e293b;
+      border: 1px solid #e2e8f0;
+    }
+    .doc-table td {
+      padding: .4rem .75rem;
+      border: 1px solid #e2e8f0;
+      vertical-align: top;
+      color: #374151;
+    }
+    .doc-table tr:nth-child(even) td { background: #f8fafc; }
+    .required { color: var(--rb-red); font-weight: 700; font-size: .75rem; }
+    .optional { color: #64748b; font-size: .75rem; }
+    code.inline {
+      font-family: "SFMono-Regular", Consolas, monospace;
+      background: #f1f5f9;
+      padding: .05rem .3rem;
+      border-radius: 3px;
+      font-size: .85em;
+      color: #0f172a;
+    }
+
+    /* ── Code blocks ───────────────────────────────────────────────────── */
+    .code-block {
+      background: #1e293b;
+      color: #e2e8f0;
+      border-radius: var(--radius);
+      padding: .9rem 1rem;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: .80rem;
+      line-height: 1.55;
+      overflow-x: auto;
+      margin: .5rem 0 1rem;
+    }
+    .code-block .kw  { color: #7dd3fc; }
+    .code-block .str { color: #86efac; }
+    .code-block .num { color: #fde68a; }
+    .code-block .key { color: #93c5fd; }
+    .code-block .cmt { color: #64748b; font-style: italic; }
+
+    /* ── Section headers ────────────────────────────────────────────────── */
+    .section-label {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #64748b;
+      margin: 1.1rem 0 .35rem;
+    }
+
+    /* ── Status code pills ──────────────────────────────────────────────── */
+    .status-code {
+      display: inline-block;
+      font-family: monospace;
+      font-size: .78rem;
+      font-weight: 700;
+      padding: .15rem .4rem;
+      border-radius: 4px;
+      min-width: 38px;
+      text-align: center;
+    }
+    .s2xx { background: #d1fae5; color: #065f46; }
+    .s4xx { background: #fef3c7; color: #92400e; }
+    .s5xx { background: #fee2e2; color: #991b1b; }
+
+    /* ── Placeholder / future ───────────────────────────────────────────── */
+    .placeholder-section > h2 { border-color: #94a3b8; color: #64748b; }
+    .placeholder-box {
+      background: #f8fafc;
+      border: 2px dashed #cbd5e1;
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      color: #64748b;
+    }
+    .placeholder-box h3 { font-size: 1rem; color: #475569; margin-bottom: .5rem; }
+    .placeholder-box ul { text-align: left; max-width: 480px; margin: .75rem auto 0; font-size: .85rem; }
+    .placeholder-box li { margin-bottom: .25rem; }
+    .warn-badge {
+      display: inline-block;
+      background: #fef3c7; color: #92400e;
+      font-size: .72rem; font-weight: 700;
+      padding: .2rem .5rem; border-radius: 3px;
+      margin-bottom: .75rem;
+    }
+
+    /* ── Branch note ────────────────────────────────────────────────────── */
+    .branch-note {
+      background: #eff6ff;
+      border-left: 3px solid #3b82f6;
+      padding: .5rem .75rem;
+      font-size: .82rem;
+      color: #1e40af;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-bottom: 1rem;
+    }
+
+    /* ── Appendix ───────────────────────────────────────────────────────── */
+    #rf-mapping { margin-bottom: 4rem; }
+    .not-impl { color: #94a3b8; font-style: italic; font-size: .82rem; }
+    .partial  { color: #b45309; font-size: .82rem; }
+
+    /* ── Responsive ─────────────────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .sidebar { display: none; }
+      .main-content { max-width: 100%; }
+    }
+
+    /* ── Hidden (search filter) ─────────────────────────────────────────── */
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════════════════════════ -->
+<header class="site-header" role="banner">
+  <div class="header-brand">
+    <span class="rb-accent" aria-hidden="true">&#9632;</span>
+    <div>
+      <span class="header-title">Red Bull 24 Horas — WebAPI</span>
+      <span class="header-sub">Documentação técnica de endpoints</span>
+    </div>
+  </div>
+  <div class="header-meta" aria-label="Metadados da documentação">
+    <a href="https://git.inteli.edu.br/graduacao/2026-1b/t27/g02" target="_blank" rel="noopener">
+      Repositório ↗
+    </a>
+  </div>
+</header>
+
+<!-- ══ LAYOUT ══════════════════════════════════════════════════════════════ -->
+<div class="layout">
+
+  <!-- ── SIDEBAR ─────────────────────────────────────────────────────────── -->
+  <aside class="sidebar" role="complementary" aria-label="Navegação de endpoints">
+    <div class="search-box" role="search">
+      <label for="search-input" class="sr-only">Buscar endpoints</label>
+      <input
+        id="search-input"
+        type="search"
+        placeholder="Buscar por path, método, RF…"
+        aria-label="Filtrar endpoints"
+        autocomplete="off"
+      />
+    </div>
+
+    <!-- Autenticação -->
+    <nav class="nav-group" aria-label="Autenticação">
+      <div class="nav-group-title">Autenticação</div>
+      <a class="nav-link" href="#post-auth-register-manager">
+        <span class="mb mb-post">POST</span>/auth/register/manager
+      </a>
+      <a class="nav-link" href="#post-auth-register-auditor">
+        <span class="mb mb-post">POST</span>/auth/register/auditor
+      </a>
+      <a class="nav-link" href="#post-auth-login">
+        <span class="mb mb-post">POST</span>/auth/login
+      </a>
+      <a class="nav-link" href="#post-auth-refresh">
+        <span class="mb mb-post">POST</span>/auth/refresh
+      </a>
+      <a class="nav-link" href="#post-auth-logout">
+        <span class="mb mb-post">POST</span>/auth/logout
+      </a>
+      <a class="nav-link" href="#get-auth-me">
+        <span class="mb mb-get">GET</span>/auth/me
+      </a>
+      <a class="nav-link" href="#get-auth-auditors">
+        <span class="mb mb-get">GET</span>/auth/auditors
+      </a>
+    </nav>
+
+    <!-- Eventos -->
+    <nav class="nav-group" aria-label="Eventos">
+      <div class="nav-group-title">Eventos</div>
+      <a class="nav-link" href="#get-events">
+        <span class="mb mb-get">GET</span>/events
+      </a>
+      <a class="nav-link" href="#post-events">
+        <span class="mb mb-post">POST</span>/events
+      </a>
+      <a class="nav-link" href="#get-events-id">
+        <span class="mb mb-get">GET</span>/events/:id
+      </a>
+      <a class="nav-link" href="#patch-events-id">
+        <span class="mb mb-patch">PATCH</span>/events/:id
+      </a>
+      <a class="nav-link" href="#delete-events-id">
+        <span class="mb mb-delete">DELETE</span>/events/:id
+      </a>
+      <a class="nav-link" href="#patch-events-start">
+        <span class="mb mb-patch">PATCH</span>/events/:id/start
+      </a>
+      <a class="nav-link" href="#patch-events-finish">
+        <span class="mb mb-patch">PATCH</span>/events/:id/finish
+      </a>
+      <div class="nav-group-title" style="margin-top:.5rem;">Esteiras</div>
+      <a class="nav-link" href="#get-events-treadmills">
+        <span class="mb mb-get">GET</span>/events/treadmills
+      </a>
+      <a class="nav-link" href="#post-events-treadmills">
+        <span class="mb mb-post">POST</span>/events/treadmills
+      </a>
+      <a class="nav-link" href="#patch-events-treadmills-id">
+        <span class="mb mb-patch">PATCH</span>/events/treadmills/:id
+      </a>
+      <a class="nav-link" href="#delete-events-treadmills-id">
+        <span class="mb mb-delete">DELETE</span>/events/treadmills/:id
+      </a>
+    </nav>
+
+    <!-- Equipes e Atletas -->
+    <nav class="nav-group" aria-label="Equipes e Atletas">
+      <div class="nav-group-title">Equipes e Atletas</div>
+      <a class="nav-link" href="#get-teams">
+        <span class="mb mb-get">GET</span>/teams
+      </a>
+      <a class="nav-link" href="#post-teams">
+        <span class="mb mb-post">POST</span>/teams
+      </a>
+      <a class="nav-link" href="#get-teams-id">
+        <span class="mb mb-get">GET</span>/teams/:id
+      </a>
+      <a class="nav-link" href="#patch-teams-id">
+        <span class="mb mb-patch">PATCH</span>/teams/:id
+      </a>
+      <a class="nav-link" href="#delete-teams-id">
+        <span class="mb mb-delete">DELETE</span>/teams/:id
+      </a>
+      <div class="nav-group-title" style="margin-top:.5rem;">Atletas</div>
+      <a class="nav-link" href="#get-teams-teamid-athletes">
+        <span class="mb mb-get">GET</span>/teams/:teamId/athletes
+      </a>
+      <a class="nav-link" href="#post-teams-teamid-athletes">
+        <span class="mb mb-post">POST</span>/teams/:teamId/athletes
+      </a>
+      <a class="nav-link" href="#get-teams-teamid-athletes-id">
+        <span class="mb mb-get">GET</span>/teams/:teamId/athletes/:id
+      </a>
+      <a class="nav-link" href="#patch-teams-teamid-athletes-id">
+        <span class="mb mb-patch">PATCH</span>/teams/:teamId/athletes/:id
+      </a>
+      <a class="nav-link" href="#delete-teams-teamid-athletes-id">
+        <span class="mb mb-delete">DELETE</span>/teams/:teamId/athletes/:id
+      </a>
+    </nav>
+
+    <!-- Turnos -->
+    <nav class="nav-group" aria-label="Turnos">
+      <div class="nav-group-title">Turnos</div>
+      <a class="nav-link" href="#post-audit-shifts-start">
+        <span class="mb mb-post">POST</span>/audit/shifts/start
+      </a>
+      <a class="nav-link" href="#post-audit-shifts-checkpoints">
+        <span class="mb mb-post">POST</span>/audit/shifts/:id/checkpoints
+      </a>
+      <a class="nav-link" href="#patch-audit-shifts-finish">
+        <span class="mb mb-patch">PATCH</span>/audit/shifts/:id/finish
+      </a>
+      <a class="nav-link" href="#patch-audit-shifts-abandon">
+        <span class="mb mb-patch">PATCH</span>/audit/shifts/:id/abandon
+      </a>
+      <a class="nav-link" href="#get-audit-shifts-status">
+        <span class="mb mb-get">GET</span>/audit/shifts/:id/status
+      </a>
+      <a class="nav-link" href="#get-audit-shifts-checkpoints">
+        <span class="mb mb-get">GET</span>/audit/shifts/:id/checkpoints
+      </a>
+      <a class="nav-link" href="#patch-audit-shifts-id">
+        <span class="mb mb-patch">PATCH</span>/audit/shifts/:id
+      </a>
+      <a class="nav-link" href="#patch-audit-checkpoints-id">
+        <span class="mb mb-patch">PATCH</span>/audit/checkpoints/:id
+      </a>
+    </nav>
+
+    <!-- Histórico -->
+    <nav class="nav-group" aria-label="Histórico">
+      <div class="nav-group-title">Histórico</div>
+      <a class="nav-link" href="#get-audit-history">
+        <span class="mb mb-get">GET</span>/audit/history
+      </a>
+    </nav>
+
+    <!-- Alertas -->
+    <nav class="nav-group" aria-label="Alertas">
+      <div class="nav-group-title">Alertas</div>
+      <a class="nav-link" href="#get-audit-alerts">
+        <span class="mb mb-get">GET</span>/audit/alerts
+      </a>
+    </nav>
+
+    <!-- Sincronização -->
+    <nav class="nav-group" aria-label="Sincronização">
+      <div class="nav-group-title">Sincronização</div>
+      <a class="nav-link" href="#post-audit-sync">
+        <span class="mb mb-post">POST</span>/audit/sync
+      </a>
+    </nav>
+
+    <!-- Logs de Auditoria -->
+    <nav class="nav-group" aria-label="Logs de Auditoria">
+      <div class="nav-group-title">Logs de Auditoria</div>
+      <a class="nav-link" href="#get-audit-logs">
+        <span class="mb mb-get">GET</span>/audit/logs
+      </a>
+    </nav>
+
+    <!-- Métricas -->
+    <nav class="nav-group" aria-label="Métricas">
+      <div class="nav-group-title">Métricas</div>
+      <a class="nav-link" href="#get-metrics-dashboard">
+        <span class="mb mb-get">GET</span>/metrics/events/:id/dashboard
+      </a>
+      <a class="nav-link" href="#get-metrics-teams">
+        <span class="mb mb-get">GET</span>/metrics/events/:id/teams
+      </a>
+      <a class="nav-link" href="#get-metrics-athletes">
+        <span class="mb mb-get">GET</span>/metrics/events/:id/athletes
+      </a>
+      <a class="nav-link" href="#get-metrics-athlete-shifts">
+        <span class="mb mb-get">GET</span>/metrics/athletes/:id/shifts
+      </a>
+      <a class="nav-link" href="#get-metrics-athlete-snapshots">
+        <span class="mb mb-get">GET</span>/metrics/athletes/:id/snapshots
+      </a>
+      <a class="nav-link" href="#get-metrics-athlete-performance">
+        <span class="mb mb-get">GET</span>/metrics/athletes/:id/performance
+      </a>
+      <a class="nav-link" href="#get-metrics-athlete-share">
+        <span class="mb mb-get">GET</span>/metrics/athletes/:id/share
+      </a>
+    </nav>
+
+    <!-- Exportação -->
+    <nav class="nav-group" aria-label="Exportação">
+      <div class="nav-group-title">Exportação</div>
+      <a class="nav-link" href="#get-export-shifts">
+        <span class="mb mb-get">GET</span>/export/events/:id/shifts
+      </a>
+      <a class="nav-link" href="#get-export-checkpoints">
+        <span class="mb mb-get">GET</span>/export/events/:id/checkpoints
+      </a>
+    </nav>
+
+    <!-- Anexo -->
+    <nav class="nav-group" aria-label="Anexos">
+      <div class="nav-group-title">Referência</div>
+      <a class="nav-link" href="#rf-mapping">
+        <span class="mb" style="background:#f1f5f9;color:#475569;">RF↔</span>Mapeamento RF
+      </a>
+    </nav>
+  </aside>
+
+  <!-- ── MAIN ─────────────────────────────────────────────────────────────── -->
+  <main class="main-content" id="main" role="main">
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         AUTENTICAÇÃO
+         ════════════════════════════════════════════════════════════════════ -->
+    <section class="flow-section" id="auth">
+      <h2>Autenticação</h2>
+      <p class="flow-meta">
+        Gerencia o registro e o acesso de <strong>Gerentes</strong> e <strong>Auditores</strong>.
+        Usa JWT (access token de curta duração + refresh token rotacionado).
+        Atende <strong>RF027</strong>.
+      </p>
+
+      <!-- POST /auth/register/manager -->
+      <div class="endpoint-card" id="post-auth-register-manager"
+           data-method="POST" data-path="/auth/register/manager" data-rfs="RF027">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false" aria-controls="body-post-auth-register-manager">
+          <span class="badge badge-post">POST</span>
+          <code class="endpoint-path">/auth/register/manager</code>
+          <span class="endpoint-summary">Cadastra um novo Gerente</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF027 — O sistema deve exigir autenticação (login e senha) para os perfis de Administrador e Auditor antes de permitir qualquer alteração nos dados.">RF027</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body" id="body-post-auth-register-manager">
+          <p>Cria um usuário com perfil <em>manager</em>. Senha armazenada com bcrypt (10 rounds). Não requer autenticação prévia.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Content-Type</code></td><td>application/json</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{
+  <span class="key">"name"</span>:     <span class="str">"Pedro Gerente"</span>,
+  <span class="key">"email"</span>:    <span class="str">"pedro@example.com"</span>,
+  <span class="key">"password"</span>: <span class="str">"Senh@Forte123"</span>
+}</pre>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Validações</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">name</code></td><td>string</td><td><span class="required">Sim</span></td><td>Não vazio</td></tr>
+              <tr><td><code class="inline">email</code></td><td>string</td><td><span class="required">Sim</span></td><td>Não vazio; unicidade verificada no banco</td></tr>
+              <tr><td><code class="inline">password</code></td><td>string</td><td><span class="required">Sim</span></td><td>Não vazio; criptografada com bcrypt (10 rounds)</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 201 Created</p>
+          <pre class="code-block">{
+  <span class="key">"id"</span>:    <span class="num">1</span>,
+  <span class="key">"name"</span>:  <span class="str">"Pedro Gerente"</span>,
+  <span class="key">"email"</span>: <span class="str">"pedro@example.com"</span>
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">201</span></td><td>Created</td><td>Gerente cadastrado com sucesso</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td>Algum campo obrigatório ausente ou inválido</td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Internal Server Error</td><td>Erro de banco (ex.: e-mail duplicado)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- POST /auth/register/auditor -->
+      <div class="endpoint-card" id="post-auth-register-auditor"
+           data-method="POST" data-path="/auth/register/auditor" data-rfs="RF027">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-post">POST</span>
+          <code class="endpoint-path">/auth/register/auditor</code>
+          <span class="endpoint-summary">Cadastra um novo Auditor</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF027 — O sistema deve exigir autenticação (login e senha) para os perfis de Administrador e Auditor antes de permitir qualquer alteração nos dados.">RF027</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Cria um usuário com perfil <em>auditor</em>. Requer número de registro único.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Content-Type</code></td><td>application/json</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{
+  <span class="key">"name"</span>:                <span class="str">"Ana Auditora"</span>,
+  <span class="key">"email"</span>:               <span class="str">"ana@example.com"</span>,
+  <span class="key">"password"</span>:            <span class="str">"Senh@Forte456"</span>,
+  <span class="key">"registration_number"</span>: <span class="num">12345</span>
+}</pre>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Validações</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">name</code></td><td>string</td><td><span class="required">Sim</span></td><td>Não vazio</td></tr>
+              <tr><td><code class="inline">email</code></td><td>string</td><td><span class="required">Sim</span></td><td>Não vazio; unicidade no banco</td></tr>
+              <tr><td><code class="inline">password</code></td><td>string</td><td><span class="required">Sim</span></td><td>Não vazio; bcrypt 10 rounds</td></tr>
+              <tr><td><code class="inline">registration_number</code></td><td>number</td><td><span class="required">Sim</span></td><td>Inteiro positivo; não vazio</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 201 Created</p>
+          <pre class="code-block">{
+  <span class="key">"id"</span>:                  <span class="num">1</span>,
+  <span class="key">"name"</span>:               <span class="str">"Ana Auditora"</span>,
+  <span class="key">"email"</span>:              <span class="str">"ana@example.com"</span>,
+  <span class="key">"registration_number"</span>: <span class="num">12345</span>,
+  <span class="key">"is_active"</span>:          <span class="kw">true</span>
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">201</span></td><td>Created</td><td>Auditor cadastrado</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td>Campo ausente: <code class="inline">{ "error": "Dados inválidos para cadastro de auditor" }</code></td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Internal Server Error</td><td>Erro de banco</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- POST /auth/login -->
+      <div class="endpoint-card" id="post-auth-login"
+           data-method="POST" data-path="/auth/login" data-rfs="RF027">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-post">POST</span>
+          <code class="endpoint-path">/auth/login</code>
+          <span class="endpoint-summary">Autentica usuário e emite tokens JWT</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF027 — O sistema deve exigir autenticação (login e senha) para os perfis de Administrador e Auditor antes de permitir qualquer alteração nos dados.">RF027</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Valida credenciais e retorna <em>access token</em> (curta duração) e <em>refresh token</em> (rotacionado). O campo <code class="inline">role</code> deve indicar o perfil pretendido — auditores inativos (<code class="inline">is_active = false</code>) têm o acesso negado.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Content-Type</code></td><td>application/json</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{
+  <span class="key">"email"</span>:    <span class="str">"ana@example.com"</span>,
+  <span class="key">"password"</span>: <span class="str">"Senh@Forte456"</span>,
+  <span class="key">"role"</span>:     <span class="str">"auditor"</span>
+}</pre>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Validações</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">email</code></td><td>string</td><td><span class="required">Sim</span></td><td>—</td></tr>
+              <tr><td><code class="inline">password</code></td><td>string</td><td><span class="required">Sim</span></td><td>—</td></tr>
+              <tr><td><code class="inline">role</code></td><td>string</td><td><span class="required">Sim</span></td><td>Deve ser <code class="inline">"manager"</code> ou <code class="inline">"auditor"</code></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">{
+  <span class="key">"user"</span>: {
+    <span class="key">"id"</span>:    <span class="str">"1"</span>,
+    <span class="key">"name"</span>:  <span class="str">"Ana Auditora"</span>,
+    <span class="key">"email"</span>: <span class="str">"ana@example.com"</span>,
+    <span class="key">"role"</span>:  <span class="str">"auditor"</span>
+  },
+  <span class="key">"tokens"</span>: {
+    <span class="key">"accessToken"</span>:  <span class="str">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."</span>,
+    <span class="key">"refreshToken"</span>: <span class="str">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."</span>
+  }
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Credenciais válidas; tokens emitidos</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td>Role inválido: <code class="inline">{ "error": "Perfil inválido. Use 'manager' ou 'auditor'" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Credenciais incorretas ou auditor inativo: <code class="inline">{ "error": "Credenciais inválidas" }</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- POST /auth/refresh -->
+      <div class="endpoint-card" id="post-auth-refresh"
+           data-method="POST" data-path="/auth/refresh" data-rfs="RF027">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-post">POST</span>
+          <code class="endpoint-path">/auth/refresh</code>
+          <span class="endpoint-summary">Rotaciona tokens JWT</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF027 — Autenticação de Admin e Auditor.">RF027</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Troca um refresh token válido por um novo par <em>(accessToken, refreshToken)</em>. O token antigo é revogado (rotação única).</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Content-Type</code></td><td>application/json</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{
+  <span class="key">"refreshToken"</span>: <span class="str">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."</span>
+}</pre>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">{
+  <span class="key">"accessToken"</span>:  <span class="str">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."</span>,
+  <span class="key">"refreshToken"</span>: <span class="str">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."</span>
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Token rotacionado com sucesso</td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Token ausente, expirado ou revogado: <code class="inline">{ "error": "Refresh token inválido ou expirado" }</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- POST /auth/logout -->
+      <div class="endpoint-card" id="post-auth-logout"
+           data-method="POST" data-path="/auth/logout" data-rfs="RF027">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-post">POST</span>
+          <code class="endpoint-path">/auth/logout</code>
+          <span class="endpoint-summary">Revoga o refresh token (logout)</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF027 — Autenticação de Admin e Auditor.">RF027</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Revoga o refresh token informado. Retorna <code class="inline">204 No Content</code> mesmo se o token não existir (idempotente).</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Content-Type</code></td><td>application/json</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{
+  <span class="key">"refreshToken"</span>: <span class="str">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."</span>
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">204</span></td><td>No Content</td><td>Logout realizado (sem corpo de resposta)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GET /auth/me -->
+      <div class="endpoint-card" id="get-auth-me"
+           data-method="GET" data-path="/auth/me" data-rfs="RF027">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/auth/me</code>
+          <span class="endpoint-summary">Retorna o usuário autenticado</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF027 — Autenticação de Admin e Auditor.">RF027</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Retorna os dados do usuário extraídos do access token. Requer o middleware <code class="inline">requireAuth</code>.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">{
+  <span class="key">"id"</span>:    <span class="str">"1"</span>,
+  <span class="key">"email"</span>: <span class="str">"ana@example.com"</span>,
+  <span class="key">"role"</span>:  <span class="str">"auditor"</span>,
+  <span class="key">"name"</span>:  <span class="str">""</span>  <span class="cmt">// campo preenchido apenas no contexto do login; extraído apenas do JWT</span>
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Token válido; dados retornados</td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Token ausente: <code class="inline">{ "error": "Token de acesso ausente" }</code><br>Token inválido/expirado: <code class="inline">{ "error": "Token de acesso inválido ou expirado" }</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GET /auth/auditors -->
+      <div class="endpoint-card" id="get-auth-auditors"
+           data-method="GET" data-path="/auth/auditors" data-rfs="RF027">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/auth/auditors</code>
+          <span class="endpoint-summary">Lista auditores ativos</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF027 — Autenticação e gestão de operadores.">RF027</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Retorna todos os auditores ativos (<code class="inline">is_active = TRUE</code>), ordenados por nome. Usado para preencher seletores de operador na operação de turnos. <strong>Rota pública</strong> (sem autenticação).</p>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">[
+  {
+    <span class="key">"id"</span>:    <span class="num">1</span>,
+    <span class="key">"name"</span>:  <span class="str">"Ana Souza"</span>,
+    <span class="key">"email"</span>: <span class="str">"ana@example.com"</span>
+  }
+]</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Lista retornada (array possivelmente vazio)</td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Internal Server Error</td><td><code class="inline">{ "error": "Erro ao listar auditores" }</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         EVENTOS
+         ════════════════════════════════════════════════════════════════════ -->
+    <section class="flow-section" id="events">
+      <h2>Eventos</h2>
+      <p class="flow-meta">
+        Gerencia eventos da competição e o cadastro de esteiras.
+        Atende parcialmente <strong>RF004</strong> (listagem de esteiras para seleção durante operação).
+      </p>
+
+      <!-- GET /events -->
+      <div class="endpoint-card" id="get-events"
+           data-method="GET" data-path="/events" data-rfs="">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/events</code>
+          <span class="endpoint-summary">Lista todos os eventos</span>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Retorna todos os eventos não deletados, ordenados por data crescente.</p>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">[
+  {
+    <span class="key">"id"</span>:         <span class="num">1</span>,
+    <span class="key">"title"</span>:      <span class="str">"Red Bull 24h São Paulo"</span>,
+    <span class="key">"local"</span>:      <span class="str">"São Paulo, SP"</span>,
+    <span class="key">"date"</span>:       <span class="str">"2026-06-15"</span>,
+    <span class="key">"deleted_at"</span>: <span class="kw">null</span>
+  }
+]</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Lista retornada (pode ser vazia: <code class="inline">[]</code>)</td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Internal Server Error</td><td>Erro de banco: <code class="inline">{ "error": "..." }</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- POST /events -->
+      <div class="endpoint-card" id="post-events"
+           data-method="POST" data-path="/events" data-rfs="">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-post">POST</span>
+          <code class="endpoint-path">/events</code>
+          <span class="endpoint-summary">Cria um novo evento</span>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Cria um evento e o associa ao gerente via tabela <code class="inline">manager_events</code> (transação atômica).</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Content-Type</code></td><td>application/json</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{
+  <span class="key">"manager_id"</span>: <span class="num">1</span>,
+  <span class="key">"title"</span>:      <span class="str">"Red Bull 24h São Paulo"</span>,
+  <span class="key">"local"</span>:      <span class="str">"São Paulo, SP"</span>,
+  <span class="key">"date"</span>:       <span class="str">"2026-06-15"</span>
+}</pre>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Validações</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">manager_id</code></td><td>number</td><td><span class="required">Sim</span></td><td>ID existente na tabela managers</td></tr>
+              <tr><td><code class="inline">title</code></td><td>string</td><td><span class="required">Sim</span></td><td>Não vazio</td></tr>
+              <tr><td><code class="inline">local</code></td><td>string</td><td><span class="required">Sim</span></td><td>Não vazio</td></tr>
+              <tr><td><code class="inline">date</code></td><td>string (ISO 8601)</td><td><span class="required">Sim</span></td><td>Formato de data aceito pelo PostgreSQL</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 201 Created</p>
+          <pre class="code-block">{
+  <span class="key">"id"</span>:         <span class="num">1</span>,
+  <span class="key">"title"</span>:      <span class="str">"Red Bull 24h São Paulo"</span>,
+  <span class="key">"local"</span>:      <span class="str">"São Paulo, SP"</span>,
+  <span class="key">"date"</span>:       <span class="str">"2026-06-15"</span>,
+  <span class="key">"deleted_at"</span>: <span class="kw">null</span>
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">201</span></td><td>Created</td><td>Evento criado</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td>Campo obrigatório ausente: <code class="inline">{ "error": "Campos obrigatórios: manager_id, title, local, date" }</code></td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Internal Server Error</td><td>Erro de banco ou FK inválida</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GET /events/:id -->
+      <div class="endpoint-card" id="get-events-id"
+           data-method="GET" data-path="/events/:id" data-rfs="">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/events/<span class="param-placeholder">:id</span></code>
+          <span class="endpoint-summary">Busca evento por ID</span>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">id</code></td><td>integer</td><td><span class="required">Sim</span></td><td>ID do evento</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">{
+  <span class="key">"id"</span>: <span class="num">1</span>, <span class="key">"title"</span>: <span class="str">"..."</span>, <span class="key">"local"</span>: <span class="str">"..."</span>, <span class="key">"date"</span>: <span class="str">"..."</span>, <span class="key">"deleted_at"</span>: <span class="kw">null</span>
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Evento encontrado</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td>Not Found</td><td><code class="inline">{ "error": "Evento não encontrado" }</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PATCH /events/:id -->
+      <div class="endpoint-card" id="patch-events-id"
+           data-method="PATCH" data-path="/events/:id" data-rfs="">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-patch">PATCH</span>
+          <code class="endpoint-path">/events/<span class="param-placeholder">:id</span></code>
+          <span class="endpoint-summary">Atualiza campos do evento</span>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Atualização parcial: apenas os campos presentes no body são alterados.</p>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">id</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{
+  <span class="key">"title"</span>: <span class="str">"Red Bull 24h Recife"</span>,
+  <span class="key">"local"</span>: <span class="str">"Recife, PE"</span>,
+  <span class="key">"date"</span>:  <span class="str">"2026-08-20"</span>
+}</pre>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">title</code></td><td>string</td><td><span class="optional">Opcional</span></td></tr>
+              <tr><td><code class="inline">local</code></td><td>string</td><td><span class="optional">Opcional</span></td></tr>
+              <tr><td><code class="inline">date</code></td><td>string (ISO 8601)</td><td><span class="optional">Opcional</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Atualizado</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td>Evento não encontrado</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- DELETE /events/:id -->
+      <div class="endpoint-card" id="delete-events-id"
+           data-method="DELETE" data-path="/events/:id" data-rfs="">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-delete">DELETE</span>
+          <code class="endpoint-path">/events/<span class="param-placeholder">:id</span></code>
+          <span class="endpoint-summary">Remove evento (soft delete)</span>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Define <code class="inline">deleted_at = NOW()</code>. O registro permanece no banco e pode ser recuperado.</p>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Soft-deleted; retorna o registro com <code class="inline">deleted_at</code> preenchido</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td><code class="inline">{ "error": "Evento não encontrado" }</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PATCH /events/:id/start -->
+      <div class="endpoint-card" id="patch-events-start"
+           data-method="PATCH" data-path="/events/:id/start" data-rfs="RF003">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-patch">PATCH</span>
+          <code class="endpoint-path">/events/<span class="param-placeholder">:id</span>/start</code>
+          <span class="endpoint-summary">Inicia a competição (libera operação de turnos)</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF003 — Bloqueio do início enquanto pré-condições não atendidas.">RF003</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Transiciona o evento de <code class="inline">pending</code> para <code class="inline">in_progress</code>. Só após o início os auditores podem abrir turnos. <strong>Acesso restrito a manager</strong> (<code class="inline">requireAuth</code> + <code class="inline">requireRole("manager")</code>).</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">id</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">{
+  <span class="key">"id"</span>:     <span class="num">1</span>,
+  <span class="key">"status"</span>: <span class="str">"in_progress"</span>
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Evento iniciado</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td><code class="inline">{ "error": "ID inválido" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Token ausente ou inválido</td></tr>
+              <tr><td><span class="status-code s4xx">403</span></td><td>Forbidden</td><td>Usuário não é manager</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td>Not Found</td><td><code class="inline">{ "error": "Evento não encontrado" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">409</span></td><td>Conflict</td><td>Evento já está em andamento ou já está encerrado</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PATCH /events/:id/finish -->
+      <div class="endpoint-card" id="patch-events-finish"
+           data-method="PATCH" data-path="/events/:id/finish" data-rfs="">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-patch">PATCH</span>
+          <code class="endpoint-path">/events/<span class="param-placeholder">:id</span>/finish</code>
+          <span class="endpoint-summary">Encerra a competição (bloqueia novos turnos)</span>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Transiciona o evento de <code class="inline">in_progress</code> para <code class="inline">finished</code>. Após o encerramento, auditores não conseguem salvar novos turnos nem checkpoints. <strong>Acesso restrito a manager</strong> (<code class="inline">requireAuth</code> + <code class="inline">requireRole("manager")</code>).</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">id</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">{
+  <span class="key">"id"</span>:     <span class="num">1</span>,
+  <span class="key">"status"</span>: <span class="str">"finished"</span>
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Evento encerrado</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td><code class="inline">{ "error": "ID inválido" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Token ausente ou inválido</td></tr>
+              <tr><td><span class="status-code s4xx">403</span></td><td>Forbidden</td><td>Usuário não é manager</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td>Not Found</td><td><code class="inline">{ "error": "Evento não encontrado" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">409</span></td><td>Conflict</td><td>Evento ainda não foi iniciado ou já está encerrado</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GET /events/treadmills -->
+      <div class="endpoint-card" id="get-events-treadmills"
+           data-method="GET" data-path="/events/treadmills" data-rfs="RF004">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/events/treadmills</code>
+          <span class="endpoint-summary">Lista todas as esteiras</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF004 — O sistema deve permitir a seleção da esteira onde o corredor iniciará a atividade.">RF004</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Retorna todas as esteiras cadastradas, ordenadas por número crescente.</p>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">[
+  { <span class="key">"id"</span>: <span class="num">1</span>, <span class="key">"number"</span>: <span class="num">1</span> },
+  { <span class="key">"id"</span>: <span class="num">2</span>, <span class="key">"number"</span>: <span class="num">2</span> }
+]</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Lista retornada</td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Erro de banco</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- POST /events/treadmills -->
+      <div class="endpoint-card" id="post-events-treadmills"
+           data-method="POST" data-path="/events/treadmills" data-rfs="RF004">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-post">POST</span>
+          <code class="endpoint-path">/events/treadmills</code>
+          <span class="endpoint-summary">Cadastra uma nova esteira</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF004 — O sistema deve permitir a seleção da esteira onde o corredor iniciará a atividade.">RF004</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{ <span class="key">"number"</span>: <span class="num">3</span> }</pre>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Validações</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">number</code></td><td>number</td><td><span class="required">Sim</span></td><td>Inteiro; não pode ser null/undefined</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 201 Created</p>
+          <pre class="code-block">{ <span class="key">"id"</span>: <span class="num">3</span>, <span class="key">"number"</span>: <span class="num">3</span> }</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">201</span></td><td>Esteira criada</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td><code class="inline">{ "error": "Campos obrigatórios: number" }</code></td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Erro de banco</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PATCH /events/treadmills/:id -->
+      <div class="endpoint-card" id="patch-events-treadmills-id"
+           data-method="PATCH" data-path="/events/treadmills/:id" data-rfs="">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-patch">PATCH</span>
+          <code class="endpoint-path">/events/treadmills/<span class="param-placeholder">:id</span></code>
+          <span class="endpoint-summary">Atualiza número da esteira</span>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody><tr><td><code class="inline">id</code></td><td>integer</td><td><span class="required">Sim</span></td></tr></tbody>
+          </table>
+
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{ <span class="key">"number"</span>: <span class="num">4</span> }</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Atualizado</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Campo <code class="inline">number</code> ausente</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td><code class="inline">{ "error": "Esteira não encontrada" }</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- DELETE /events/treadmills/:id -->
+      <div class="endpoint-card" id="delete-events-treadmills-id"
+           data-method="DELETE" data-path="/events/treadmills/:id" data-rfs="">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-delete">DELETE</span>
+          <code class="endpoint-path">/events/treadmills/<span class="param-placeholder">:id</span></code>
+          <span class="endpoint-summary">Remove esteira (hard delete)</span>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Remove permanentemente o registro da esteira do banco de dados.</p>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Esteira removida; retorna o registro deletado</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td><code class="inline">{ "error": "Esteira não encontrada" }</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         EQUIPES E ATLETAS
+         ════════════════════════════════════════════════════════════════════ -->
+    <section class="flow-section" id="teams">
+      <h2>Equipes e Atletas</h2>
+      <p class="flow-meta">
+        Gerencia o cadastro de equipes por evento e dos atletas (corredores) vinculados a cada equipe.
+        Atende <strong>RF001</strong>, <strong>RF002</strong> e parcialmente <strong>RF005</strong>, <strong>RF006</strong>.
+      </p>
+
+      <!-- GET /teams -->
+      <div class="endpoint-card" id="get-teams"
+           data-method="GET" data-path="/teams" data-rfs="RF001">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/teams</code>
+          <span class="endpoint-summary">Lista equipes (opcionalmente por evento)</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF001 — O sistema deve permitir o cadastro de exatamente duas equipes por evento, com nome e identificador únicos, impedindo duplicatas.">RF001</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p class="section-label">Query Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Default</th><th>Descrição</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><code class="inline">event_id</code></td>
+                <td>integer</td>
+                <td><span class="optional">Opcional</span></td>
+                <td>—</td>
+                <td>Filtra equipes de um evento específico</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">[
+  {
+    <span class="key">"id"</span>:         <span class="num">1</span>,
+    <span class="key">"name"</span>:       <span class="str">"Equipe Vermelha"</span>,
+    <span class="key">"event_id"</span>:   <span class="num">1</span>,
+    <span class="key">"deleted_at"</span>: <span class="kw">null</span>
+  }
+]</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Lista retornada</td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Erro de banco</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- POST /teams -->
+      <div class="endpoint-card" id="post-teams"
+           data-method="POST" data-path="/teams" data-rfs="RF001">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-post">POST</span>
+          <code class="endpoint-path">/teams</code>
+          <span class="endpoint-summary">Cadastra nova equipe</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF001 — O sistema deve permitir o cadastro de exatamente duas equipes por evento, com nome e identificador únicos, impedindo duplicatas.">RF001</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Verifica se o evento existe antes de inserir. A restrição de exatamente duas equipes por evento (RF001) <strong>não está implementada</strong> no serviço atual.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Content-Type</code></td><td>application/json</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{
+  <span class="key">"event_id"</span>: <span class="num">1</span>,
+  <span class="key">"name"</span>:     <span class="str">"Equipe Vermelha"</span>
+}</pre>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Validações</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">event_id</code></td><td>number</td><td><span class="required">Sim</span></td><td>Deve corresponder a um evento existente</td></tr>
+              <tr><td><code class="inline">name</code></td><td>string</td><td><span class="required">Sim</span></td><td>Não vazio</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 201 Created</p>
+          <pre class="code-block">{
+  <span class="key">"id"</span>: <span class="num">1</span>, <span class="key">"name"</span>: <span class="str">"Equipe Vermelha"</span>, <span class="key">"event_id"</span>: <span class="num">1</span>, <span class="key">"deleted_at"</span>: <span class="kw">null</span>
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">201</span></td><td>Equipe criada</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td><code class="inline">{ "error": "Campos obrigatórios: event_id, name" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td><code class="inline">{ "error": "Evento não encontrado" }</code></td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Erro de banco</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GET /teams/:id -->
+      <div class="endpoint-card" id="get-teams-id"
+           data-method="GET" data-path="/teams/:id" data-rfs="RF001">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/teams/<span class="param-placeholder">:id</span></code>
+          <span class="endpoint-summary">Busca equipe por ID</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF001 — Cadastro de equipes.">RF001</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody><tr><td><code class="inline">id</code></td><td>integer</td><td><span class="required">Sim</span></td></tr></tbody>
+          </table>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Equipe retornada</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td><code class="inline">{ "error": "Equipe não encontrada" }</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PATCH /teams/:id -->
+      <div class="endpoint-card" id="patch-teams-id"
+           data-method="PATCH" data-path="/teams/:id" data-rfs="RF001">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-patch">PATCH</span>
+          <code class="endpoint-path">/teams/<span class="param-placeholder">:id</span></code>
+          <span class="endpoint-summary">Renomeia equipe</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF001 — Cadastro de equipes.">RF001</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{ <span class="key">"name"</span>: <span class="str">"Equipe Azul"</span> }</pre>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody><tr><td><code class="inline">name</code></td><td>string</td><td><span class="required">Sim</span></td></tr></tbody>
+          </table>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Atualizado</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td><code class="inline">{ "error": "Campos obrigatórios: name" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td><code class="inline">{ "error": "Equipe não encontrada" }</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- DELETE /teams/:id -->
+      <div class="endpoint-card" id="delete-teams-id"
+           data-method="DELETE" data-path="/teams/:id" data-rfs="">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-delete">DELETE</span>
+          <code class="endpoint-path">/teams/<span class="param-placeholder">:id</span></code>
+          <span class="endpoint-summary">Remove equipe (soft delete)</span>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Soft-deleted</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td><code class="inline">{ "error": "Equipe não encontrada" }</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GET /teams/:teamId/athletes -->
+      <div class="endpoint-card" id="get-teams-teamid-athletes"
+           data-method="GET" data-path="/teams/:teamId/athletes" data-rfs="RF002 RF006">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/teams/<span class="param-placeholder">:teamId</span>/athletes</code>
+          <span class="endpoint-summary">Lista atletas de uma equipe</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF002 — O sistema deve permitir o cadastro de corredores vinculados a uma única equipe das duas existentes por evento.">RF002</span>
+            <span class="rf-badge" title="RF006 — O sistema deve permitir a seleção do corredor da equipe para iniciar a corrida.">RF006</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">teamId</code></td><td>integer</td><td><span class="required">Sim</span></td><td>ID da equipe</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">[
+  {
+    <span class="key">"id"</span>:         <span class="num">1</span>,
+    <span class="key">"name"</span>:       <span class="str">"João Silva"</span>,
+    <span class="key">"gender"</span>:     <span class="str">"M"</span>,
+    <span class="key">"cpf"</span>:        <span class="str">"123.456.789-00"</span>,
+    <span class="key">"team_id"</span>:    <span class="num">1</span>,
+    <span class="key">"deleted_at"</span>: <span class="kw">null</span>
+  }
+]</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Lista retornada</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td><code class="inline">{ "error": "Equipe não encontrada" }</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- POST /teams/:teamId/athletes -->
+      <div class="endpoint-card" id="post-teams-teamid-athletes"
+           data-method="POST" data-path="/teams/:teamId/athletes" data-rfs="RF002">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-post">POST</span>
+          <code class="endpoint-path">/teams/<span class="param-placeholder">:teamId</span>/athletes</code>
+          <span class="endpoint-summary">Cadastra atleta na equipe</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF002 — O sistema deve permitir o cadastro de corredores vinculados a uma única equipe das duas existentes por evento.">RF002</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Verifica a existência da equipe antes de inserir o atleta. A validação de 16 corredores por equipe (RF003) <strong>não está implementada</strong> neste endpoint.</p>
+
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{
+  <span class="key">"name"</span>:   <span class="str">"João Silva"</span>,
+  <span class="key">"gender"</span>: <span class="str">"M"</span>,
+  <span class="key">"cpf"</span>:    <span class="str">"123.456.789-00"</span>
+}</pre>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Validações</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">name</code></td><td>string</td><td><span class="required">Sim</span></td><td>Não vazio</td></tr>
+              <tr><td><code class="inline">gender</code></td><td>string</td><td><span class="required">Sim</span></td><td>Não vazio (ex.: <code class="inline">"M"</code>, <code class="inline">"F"</code>)</td></tr>
+              <tr><td><code class="inline">cpf</code></td><td>string</td><td><span class="optional">Opcional</span></td><td>Armazenado como texto; pode ser null</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 201 Created</p>
+          <pre class="code-block">{
+  <span class="key">"id"</span>: <span class="num">1</span>, <span class="key">"name"</span>: <span class="str">"João Silva"</span>, <span class="key">"gender"</span>: <span class="str">"M"</span>,
+  <span class="key">"cpf"</span>: <span class="str">"123.456.789-00"</span>, <span class="key">"team_id"</span>: <span class="num">1</span>, <span class="key">"deleted_at"</span>: <span class="kw">null</span>
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">201</span></td><td>Atleta criado</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td><code class="inline">{ "error": "Campos obrigatórios: name, gender" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td><code class="inline">{ "error": "Equipe não encontrada" }</code></td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Erro de banco</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GET /teams/:teamId/athletes/:id -->
+      <div class="endpoint-card" id="get-teams-teamid-athletes-id"
+           data-method="GET" data-path="/teams/:teamId/athletes/:id" data-rfs="RF002">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/teams/<span class="param-placeholder">:teamId</span>/athletes/<span class="param-placeholder">:id</span></code>
+          <span class="endpoint-summary">Busca atleta por ID</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF002 — Cadastro de corredores.">RF002</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">teamId</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+              <tr><td><code class="inline">id</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Atleta retornado</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td>Equipe ou atleta não encontrado</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PATCH /teams/:teamId/athletes/:id -->
+      <div class="endpoint-card" id="patch-teams-teamid-athletes-id"
+           data-method="PATCH" data-path="/teams/:teamId/athletes/:id" data-rfs="RF002 RF023 RF024">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-patch">PATCH</span>
+          <code class="endpoint-path">/teams/<span class="param-placeholder">:teamId</span>/athletes/<span class="param-placeholder">:id</span></code>
+          <span class="endpoint-summary">Atualiza dados do atleta</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF002 — Cadastro de corredores.">RF002</span>
+            <span class="rf-badge" title="RF023 — O sistema deve permitir a edição retroativa de registros por usuário autenticado.">RF023</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Atualização parcial dos campos do atleta. O log de auditoria para edições retroativas (RF024) <strong>não está implementado</strong> neste endpoint.</p>
+
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{
+  <span class="key">"name"</span>:   <span class="str">"João Silva Jr."</span>,
+  <span class="key">"gender"</span>: <span class="str">"M"</span>,
+  <span class="key">"cpf"</span>:    <span class="str">"987.654.321-00"</span>
+}</pre>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">name</code></td><td>string</td><td><span class="optional">Opcional</span></td></tr>
+              <tr><td><code class="inline">gender</code></td><td>string</td><td><span class="optional">Opcional</span></td></tr>
+              <tr><td><code class="inline">cpf</code></td><td>string | null</td><td><span class="optional">Opcional</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Atualizado</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td>Equipe ou atleta não encontrado</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- DELETE /teams/:teamId/athletes/:id -->
+      <div class="endpoint-card" id="delete-teams-teamid-athletes-id"
+           data-method="DELETE" data-path="/teams/:teamId/athletes/:id" data-rfs="">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-delete">DELETE</span>
+          <code class="endpoint-path">/teams/<span class="param-placeholder">:teamId</span>/athletes/<span class="param-placeholder">:id</span></code>
+          <span class="endpoint-summary">Remove atleta (soft delete)</span>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Soft-deleted</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td>Equipe ou atleta não encontrado</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         AUDITORIA — TURNOS
+         ════════════════════════════════════════════════════════════════════ -->
+    <section class="flow-section" id="audit">
+      <h2>Auditoria — Turnos</h2>
+      <p class="flow-meta">
+        Controla o ciclo de vida dos turnos dos corredores durante a competição: início, registros de checkpoint e encerramento.
+        Atende <strong>RF007–RF019</strong>, <strong>RF025</strong>, <strong>RF032</strong>, <strong>RF033</strong>.
+        Todos os endpoints exigem <strong>autenticação JWT</strong>.
+      </p>
+
+      <!-- POST /audit/shifts/start -->
+      <div class="endpoint-card" id="post-audit-shifts-start"
+           data-method="POST" data-path="/audit/shifts/start" data-rfs="RF007 RF008 RF009 RF010 RF011">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-post">POST</span>
+          <code class="endpoint-path">/audit/shifts/start</code>
+          <span class="endpoint-summary">Inicia um turno</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF007 — Início de turno somente se corredor sem turno em aberto.">RF007</span>
+            <span class="rf-badge" title="RF008 — Início de turno somente se esteira livre.">RF008</span>
+            <span class="rf-badge" title="RF009 — Armazena corredor e esteira no registro.">RF009</span>
+            <span class="rf-badge" title="RF010 — Armazena km inicial ≥ 0.">RF010</span>
+            <span class="rf-badge" title="RF011 — Timestamp de início gerado pelo servidor.">RF011</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Registra o início de um turno. Rejeita a operação se o corredor já possuir turno em aberto (<strong>RF007</strong>) ou se a esteira estiver ocupada (<strong>RF008</strong>). O <code class="inline">start_at</code> é gerado automaticamente pelo servidor (<strong>RF011</strong>).</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Content-Type</code></td><td>application/json</td><td><span class="required">Sim</span></td></tr>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{
+  <span class="key">"athlete_id"</span>:   <span class="num">3</span>,
+  <span class="key">"auditor_id"</span>:   <span class="num">1</span>,
+  <span class="key">"treadmill_id"</span>: <span class="num">2</span>,
+  <span class="key">"km_start"</span>:     <span class="num">0</span>
+}</pre>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Validações</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">athlete_id</code></td><td>number</td><td><span class="required">Sim</span></td><td>ID de atleta existente</td></tr>
+              <tr><td><code class="inline">auditor_id</code></td><td>number</td><td><span class="required">Sim</span></td><td>ID de auditor existente</td></tr>
+              <tr><td><code class="inline">treadmill_id</code></td><td>number</td><td><span class="required">Sim</span></td><td>ID de esteira existente</td></tr>
+              <tr><td><code class="inline">km_start</code></td><td>number</td><td><span class="required">Sim</span></td><td>Deve ser ≥ 0</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 201 Created</p>
+          <pre class="code-block">{
+  <span class="key">"id"</span>:           <span class="num">10</span>,
+  <span class="key">"status"</span>:       <span class="str">"in_progress"</span>,
+  <span class="key">"athlete_id"</span>:   <span class="num">3</span>,
+  <span class="key">"auditor_id"</span>:   <span class="num">1</span>,
+  <span class="key">"treadmill_id"</span>: <span class="num">2</span>,
+  <span class="key">"start_at"</span>:     <span class="str">"2026-06-15T08:00:00.000Z"</span>,
+  <span class="key">"km_start"</span>:     <span class="num">0</span>,
+  <span class="key">"km_end"</span>:       <span class="num">0</span>,
+  <span class="key">"distance"</span>:     <span class="num">0</span>,
+  <span class="key">"speed"</span>:        <span class="num">0</span>,
+  <span class="key">"end_at"</span>:       <span class="kw">null</span>,
+  <span class="key">"total_time"</span>:   <span class="kw">null</span>
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">201</span></td><td>Created</td><td>Turno iniciado com sucesso</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td>Campo ausente ou <code class="inline">km_start</code> &lt; 0: <code class="inline">{ "error": "Campos obrigatórios: athlete_id, auditor_id, treadmill_id, km_start" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td>Not Found</td><td>Atleta, auditor ou esteira não encontrado</td></tr>
+              <tr><td><span class="status-code s4xx">409</span></td><td>Conflict</td><td>Corredor já possui turno em aberto (RF007) ou esteira está ocupada (RF008)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- POST /audit/shifts/:id/checkpoints -->
+      <div class="endpoint-card" id="post-audit-shifts-checkpoints"
+           data-method="POST" data-path="/audit/shifts/:id/checkpoints" data-rfs="RF012 RF013 RF025 RF032 RF033">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-post">POST</span>
+          <code class="endpoint-path">/audit/shifts/<span class="param-placeholder">:id</span>/checkpoints</code>
+          <span class="endpoint-summary">Registra checkpoint de quilometragem</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF012 — Modal a cada 5 min para inserção de km.">RF012</span>
+            <span class="rf-badge" title="RF013 — Rejeitar km menor que o último checkpoint.">RF013</span>
+            <span class="rf-badge" title="RF025 — Registro de checkpoints offline.">RF025</span>
+            <span class="rf-badge" title="RF032 — Registro manual de km durante turno ativo.">RF032</span>
+            <span class="rf-badge" title="RF033 — Timestamp automático do servidor para registro manual.">RF033</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Registra a quilometragem atual do corredor no turno. A <code class="inline">distance</code> deve ser maior que o último checkpoint registrado (ou que <code class="inline">km_start</code> se for o primeiro). O <code class="inline">timestamp</code> é gerado automaticamente (<strong>RF033</strong>).</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Content-Type</code></td><td>application/json</td><td><span class="required">Sim</span></td></tr>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">id</code></td><td>integer</td><td><span class="required">Sim</span></td><td>ID do turno em aberto</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{
+  <span class="key">"distance"</span>: <span class="num">5.2</span>,
+  <span class="key">"type"</span>:     <span class="str">"mandatory"</span>
+}</pre>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Validações</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">distance</code></td><td>number</td><td><span class="required">Sim</span></td><td>Deve ser &gt; último checkpoint (ou &gt; <code class="inline">km_start</code>)</td></tr>
+              <tr><td><code class="inline">type</code></td><td>string</td><td><span class="optional">Opcional</span></td><td>Default: <code class="inline">"voluntary"</code>. Valores: <code class="inline">"mandatory"</code> | <code class="inline">"voluntary"</code></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 201 Created</p>
+          <pre class="code-block">{
+  <span class="key">"id"</span>:        <span class="num">42</span>,
+  <span class="key">"shift_id"</span>:  <span class="num">10</span>,
+  <span class="key">"distance"</span>:  <span class="num">5.2</span>,
+  <span class="key">"type"</span>:      <span class="str">"mandatory"</span>,
+  <span class="key">"timestamp"</span>: <span class="str">"2026-06-15T08:05:00.000Z"</span>
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">201</span></td><td>Created</td><td>Checkpoint registrado</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td><code class="inline">distance</code> ausente, menor que o último valor (RF013), tipo inválido ou intervalo entre checkpoints &gt; 10 min (RF045)</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td>Not Found</td><td>Turno não encontrado</td></tr>
+              <tr><td><span class="status-code s4xx">409</span></td><td>Conflict</td><td>Turno não está no status <code class="inline">"in_progress"</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PATCH /audit/shifts/:id/finish -->
+      <div class="endpoint-card" id="patch-audit-shifts-finish"
+           data-method="PATCH" data-path="/audit/shifts/:id/finish" data-rfs="RF014 RF015 RF016 RF017 RF018 RF019">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-patch">PATCH</span>
+          <code class="endpoint-path">/audit/shifts/<span class="param-placeholder">:id</span>/finish</code>
+          <span class="endpoint-summary">Encerra turno e calcula métricas</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF014 — Finalizar turno.">RF014</span>
+            <span class="rf-badge" title="RF015 — Rejeitar km_final menor que o último checkpoint.">RF015</span>
+            <span class="rf-badge" title="RF016 — Timestamp de encerramento gerado pelo servidor.">RF016</span>
+            <span class="rf-badge" title="RF017 — Calcular e persistir distância percorrida.">RF017</span>
+            <span class="rf-badge" title="RF018 — Calcular e persistir duração do turno.">RF018</span>
+            <span class="rf-badge" title="RF019 — Calcular e persistir velocidade média.">RF019</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Encerra o turno e calcula automaticamente <code class="inline">distance</code> (km_end − km_start), <code class="inline">total_time</code> (end_at − start_at) e <code class="inline">speed</code> (km/h). O <code class="inline">end_at</code> é gerado pelo servidor (<strong>RF016</strong>).</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Content-Type</code></td><td>application/json</td><td><span class="required">Sim</span></td></tr>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">id</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{ <span class="key">"km_end"</span>: <span class="num">12.4</span> }</pre>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Validações</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">km_end</code></td><td>number</td><td><span class="required">Sim</span></td><td>Deve ser ≥ <code class="inline">km_start</code> e ≥ último checkpoint (RF015, RF044)</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">{
+  <span class="key">"id"</span>:           <span class="num">10</span>,
+  <span class="key">"status"</span>:       <span class="str">"completed"</span>,
+  <span class="key">"athlete_id"</span>:   <span class="num">3</span>,
+  <span class="key">"auditor_id"</span>:   <span class="num">1</span>,
+  <span class="key">"treadmill_id"</span>: <span class="num">2</span>,
+  <span class="key">"km_start"</span>:     <span class="num">0</span>,
+  <span class="key">"km_end"</span>:       <span class="num">12.4</span>,
+  <span class="key">"distance"</span>:     <span class="num">12.4</span>,
+  <span class="key">"speed"</span>:        <span class="num">7.44</span>,
+  <span class="key">"total_time"</span>:   <span class="str">"01:40:00"</span>,
+  <span class="key">"start_at"</span>:     <span class="str">"2026-06-15T08:00:00.000Z"</span>,
+  <span class="key">"end_at"</span>:       <span class="str">"2026-06-15T09:40:00.000Z"</span>
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Turno encerrado; métricas calculadas e persistidas</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td><code class="inline">km_end</code> ausente, menor que <code class="inline">km_start</code> ou menor que o último checkpoint</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td>Not Found</td><td>Turno não encontrado</td></tr>
+              <tr><td><span class="status-code s4xx">409</span></td><td>Conflict</td><td>Turno não está no status <code class="inline">"in_progress"</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PATCH /audit/shifts/:id/abandon -->
+      <div class="endpoint-card" id="patch-audit-shifts-abandon"
+           data-method="PATCH" data-path="/audit/shifts/:id/abandon" data-rfs="">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-patch">PATCH</span>
+          <code class="endpoint-path">/audit/shifts/<span class="param-placeholder">:id</span>/abandon</code>
+          <span class="endpoint-summary">Abandona turno sem cálculo de métricas</span>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Encerra um turno em andamento como <strong>abandonado</strong>, sem calcular distância, duração ou velocidade. Usado quando o turno é interrompido sem encerramento regular. Se o turno já estiver fechado, a operação é ignorada e ainda retorna <code class="inline">200</code>.</p>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">id</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{ <span class="key">"force_close"</span>: <span class="num">true</span> }</pre>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Validações</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">force_close</code></td><td>boolean</td><td><span class="optional">Não</span></td><td>Quando <code class="inline">true</code>, força o fechamento. Default <code class="inline">false</code></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">{ <span class="key">"ok"</span>: <span class="num">true</span> }</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Turno abandonado, ou já estava fechado (no-op)</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td>Not Found</td><td><code class="inline">{ "error": "Turno não encontrado" }</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GET /audit/shifts/:id/status -->
+      <div class="endpoint-card" id="get-audit-shifts-status"
+           data-method="GET" data-path="/audit/shifts/:id/status" data-rfs="">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/audit/shifts/<span class="param-placeholder">:id</span>/status</code>
+          <span class="endpoint-summary">Consulta o status atual de um turno</span>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Retorna apenas o identificador e o status do turno (<code class="inline">in_progress</code>, <code class="inline">completed</code> ou <code class="inline">abandoned</code>). Requer autenticação JWT.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">id</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">{
+  <span class="key">"id"</span>:     <span class="num">10</span>,
+  <span class="key">"status"</span>: <span class="str">"in_progress"</span>
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Status retornado</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td><code class="inline">{ "error": "ID inválido" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Token ausente ou inválido</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td>Not Found</td><td><code class="inline">{ "error": "Turno não encontrado" }</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GET /audit/shifts/:id/checkpoints -->
+      <div class="endpoint-card" id="get-audit-shifts-checkpoints"
+           data-method="GET" data-path="/audit/shifts/:id/checkpoints" data-rfs="">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/audit/shifts/<span class="param-placeholder">:id</span>/checkpoints</code>
+          <span class="endpoint-summary">Lista os checkpoints de um turno</span>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Retorna todos os checkpoints registrados para o turno, em ordem cronológica. Requer autenticação JWT.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">id</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">[
+  {
+    <span class="key">"id"</span>:        <span class="num">42</span>,
+    <span class="key">"shift_id"</span>:  <span class="num">10</span>,
+    <span class="key">"distance"</span>:  <span class="num">3.2</span>,
+    <span class="key">"type"</span>:      <span class="str">"mandatory"</span>,
+    <span class="key">"timestamp"</span>: <span class="str">"2026-06-15T08:05:00.000Z"</span>
+  }
+]</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Lista retornada (array possivelmente vazio)</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td><code class="inline">{ "error": "ID inválido" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Token ausente ou inválido</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PATCH /audit/shifts/:id -->
+      <div class="endpoint-card" id="patch-audit-shifts-id"
+           data-method="PATCH" data-path="/audit/shifts/:id" data-rfs="RF023">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-patch">PATCH</span>
+          <code class="endpoint-path">/audit/shifts/<span class="param-placeholder">:id</span></code>
+          <span class="endpoint-summary">Edição retroativa de turno (manager)</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF023 — Edição retroativa de registros por usuário autenticado.">RF023</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Permite a um manager corrigir retroativamente os dados de um turno (km inicial/final, corredor e horários). <strong>Acesso restrito a manager</strong>: o controller retorna <code class="inline">403</code> para qualquer outro perfil.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Content-Type</code></td><td>application/json</td><td><span class="required">Sim</span></td></tr>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">id</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{
+  <span class="key">"km_start"</span>:   <span class="num">0</span>,
+  <span class="key">"km_end"</span>:     <span class="num">12.4</span>,
+  <span class="key">"athlete_id"</span>: <span class="num">3</span>,
+  <span class="key">"start_at"</span>:   <span class="str">"2026-06-15T08:00:00"</span>,
+  <span class="key">"end_at"</span>:     <span class="str">"2026-06-15T09:40:00"</span>
+}</pre>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Validações</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">km_start</code></td><td>number</td><td><span class="required">Sim</span></td><td>≥ 0</td></tr>
+              <tr><td><code class="inline">km_end</code></td><td>number</td><td><span class="required">Sim</span></td><td>≥ <code class="inline">km_start</code></td></tr>
+              <tr><td><code class="inline">athlete_id</code></td><td>integer</td><td><span class="optional">Não</span></td><td>Se informado e diferente do atual, deve existir</td></tr>
+              <tr><td><code class="inline">start_at</code></td><td>string</td><td><span class="optional">Não</span></td><td>Wall-clock sem timezone</td></tr>
+              <tr><td><code class="inline">end_at</code></td><td>string</td><td><span class="optional">Não</span></td><td>Deve ser ≥ <code class="inline">start_at</code></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Turno atualizado</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td>ID inválido, campos obrigatórios ausentes ou validações de km/horário</td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Token ausente ou inválido</td></tr>
+              <tr><td><span class="status-code s4xx">403</span></td><td>Forbidden</td><td><code class="inline">{ "error": "Apenas managers podem editar turnos" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td>Not Found</td><td>Turno não encontrado</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PATCH /audit/checkpoints/:id -->
+      <div class="endpoint-card" id="patch-audit-checkpoints-id"
+           data-method="PATCH" data-path="/audit/checkpoints/:id" data-rfs="RF023 RF024">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-patch">PATCH</span>
+          <code class="endpoint-path">/audit/checkpoints/<span class="param-placeholder">:id</span></code>
+          <span class="endpoint-summary">Corrige checkpoint e registra log de auditoria</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF023 — Edição retroativa de registros por usuário autenticado.">RF023</span>
+            <span class="rf-badge" title="RF024 — Log de auditoria de edições retroativas.">RF024</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Corrige a quilometragem de um checkpoint já registrado. A correção é validada contra os checkpoints vizinhos e <strong>gera um registro imutável em <code class="inline">logs</code></strong> (valor anterior, valor novo, autor, perfil e justificativa) — atendendo <strong>RF024</strong>. O evento do turno precisa estar <code class="inline">in_progress</code>. Requer autenticação JWT.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Content-Type</code></td><td>application/json</td><td><span class="required">Sim</span></td></tr>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">id</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{
+  <span class="key">"distance"</span>:      <span class="num">3.5</span>,
+  <span class="key">"justification"</span>: <span class="str">"Correção de digitação do auditor"</span>
+}</pre>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Validações</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">distance</code></td><td>number</td><td><span class="required">Sim</span></td><td>≥ 0, ≥ checkpoint anterior e ≤ checkpoint posterior</td></tr>
+              <tr><td><code class="inline">justification</code></td><td>string</td><td><span class="optional">Não</span></td><td>Registrada no log de auditoria</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Checkpoint corrigido e log gravado</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td><code class="inline">distance</code> ausente</td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Token ausente, inválido ou usuário não autenticado</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td>Not Found</td><td>Checkpoint ou turno não encontrado</td></tr>
+              <tr><td><span class="status-code s4xx">422</span></td><td>Unprocessable Entity</td><td>Distância inválida (fora do intervalo dos vizinhos)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         HISTÓRICO
+         ════════════════════════════════════════════════════════════════════ -->
+    <section class="flow-section" id="history">
+      <h2>Histórico</h2>
+      <p class="flow-meta">
+        Fornece o log unificado de atividades do evento: entradas, saídas e checkpoints em ordem decrescente de timestamp.
+        Suporta filtros por equipe, esteira e atleta.
+        Atende <strong>RF022</strong>, <strong>RF041</strong>, <strong>RF042</strong>, <strong>RF043</strong>.
+        Requer <strong>autenticação JWT</strong>.
+      </p>
+
+      <!-- GET /audit/history -->
+      <div class="endpoint-card" id="get-audit-history"
+           data-method="GET" data-path="/audit/history" data-rfs="RF022 RF041 RF042 RF043">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/audit/history</code>
+          <span class="endpoint-summary">Histórico de entradas, saídas e checkpoints</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF022 — Histórico em ordem decrescente de timestamp.">RF022</span>
+            <span class="rf-badge" title="RF041 — Filtrar histórico por equipe.">RF041</span>
+            <span class="rf-badge" title="RF042 — Filtrar histórico por esteira.">RF042</span>
+            <span class="rf-badge" title="RF043 — Filtrar histórico por corredor.">RF043</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Retorna um array unificado de eventos do tipo <code class="inline">shift_start</code>, <code class="inline">shift_end</code> e <code class="inline">checkpoint</code>, ordenado decrescentemente por <code class="inline">timestamp</code>. O parâmetro <code class="inline">event_id</code> é obrigatório; os demais permitem filtro adicional.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Query Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">event_id</code></td><td>integer</td><td><span class="required">Sim</span></td><td>ID do evento</td></tr>
+              <tr><td><code class="inline">team_id</code></td><td>integer</td><td><span class="optional">Opcional</span></td><td>Filtrar por equipe (RF041)</td></tr>
+              <tr><td><code class="inline">treadmill_id</code></td><td>integer</td><td><span class="optional">Opcional</span></td><td>Filtrar por esteira (RF042)</td></tr>
+              <tr><td><code class="inline">athlete_id</code></td><td>integer</td><td><span class="optional">Opcional</span></td><td>Filtrar por atleta (RF043)</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">[
+  {
+    <span class="key">"entry_type"</span>:       <span class="str">"checkpoint"</span>,
+    <span class="key">"timestamp"</span>:        <span class="str">"2026-06-15T08:05:00.000Z"</span>,
+    <span class="key">"shift_id"</span>:         <span class="num">10</span>,
+    <span class="key">"athlete_id"</span>:       <span class="num">3</span>,
+    <span class="key">"athlete_name"</span>:     <span class="str">"João Silva"</span>,
+    <span class="key">"team_id"</span>:          <span class="num">1</span>,
+    <span class="key">"team_name"</span>:        <span class="str">"Equipe Vermelha"</span>,
+    <span class="key">"treadmill_id"</span>:     <span class="num">2</span>,
+    <span class="key">"treadmill_number"</span>: <span class="num">2</span>,
+    <span class="key">"distance"</span>:         <span class="num">5.2</span>,
+    <span class="key">"checkpoint_type"</span>:  <span class="str">"mandatory"</span>
+  }
+]</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Lista retornada (pode ser vazia)</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td><code class="inline">event_id</code> ausente: <code class="inline">{ "error": "Parâmetro obrigatório: event_id" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Token ausente ou inválido</td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Internal Server Error</td><td>Erro de banco</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         ALERTAS
+         ════════════════════════════════════════════════════════════════════ -->
+    <section class="flow-section" id="inconsistencies">
+      <h2>Alertas e Inconsistências</h2>
+      <p class="flow-meta">
+        Detecta e expõe inconsistências operacionais em tempo real: esteiras ocupadas há mais de 30 minutos e esteiras sem checkpoint nos últimos 5 minutos.
+        Atende <strong>RF028</strong>, <strong>RF029</strong>, <strong>RF039</strong>, <strong>RF044</strong>, <strong>RF045</strong>, <strong>RF046</strong>, <strong>RF053</strong>.
+        Requer <strong>autenticação JWT</strong>.
+      </p>
+
+      <!-- GET /audit/alerts -->
+      <div class="endpoint-card" id="get-audit-alerts"
+           data-method="GET" data-path="/audit/alerts" data-rfs="RF028 RF029 RF039 RF044 RF045 RF046 RF053">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/audit/alerts</code>
+          <span class="endpoint-summary">Lista alertas ativos de inconsistência</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF028 — Detectar inconsistências e gerar alertas.">RF028</span>
+            <span class="rf-badge" title="RF029 — Notificação visual de inconsistência.">RF029</span>
+            <span class="rf-badge" title="RF039 — Sugerir alternância após 30 min consecutivos.">RF039</span>
+            <span class="rf-badge" title="RF053 — Alerta de inatividade de esteira após 5 min.">RF053</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Retorna dois grupos de alertas: esteiras com turno ativo há mais de 30 minutos (<strong>RF039</strong>) e esteiras que não receberam checkpoint nos últimos 5 minutos (<strong>RF053</strong>). A resposta é sempre 200 — alertas vazios indicam situação normal.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Query Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">event_id</code></td><td>integer</td><td><span class="required">Sim</span></td><td>ID do evento a monitorar</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">{
+  <span class="key">"treadmills_over_threshold"</span>: [
+    {
+      <span class="key">"treadmill_id"</span>:     <span class="num">2</span>,
+      <span class="key">"treadmill_number"</span>: <span class="num">2</span>,
+      <span class="key">"shift_id"</span>:         <span class="num">10</span>,
+      <span class="key">"athlete_name"</span>:     <span class="str">"João Silva"</span>,
+      <span class="key">"start_at"</span>:         <span class="str">"2026-06-15T08:00:00.000Z"</span>,
+      <span class="key">"minutes_occupied"</span>: <span class="num">35</span>
+    }
+  ],
+  <span class="key">"treadmills_without_checkpoint"</span>: [
+    {
+      <span class="key">"shift_id"</span>:         <span class="num">11</span>,
+      <span class="key">"treadmill_number"</span>: <span class="num">3</span>,
+      <span class="key">"athlete_name"</span>:     <span class="str">"Maria Souza"</span>,
+      <span class="key">"last_checkpoint"</span>:  <span class="str">"2026-06-15T09:10:00.000Z"</span>,
+      <span class="key">"minutes_since"</span>:    <span class="num">7</span>
+    }
+  ]
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Alertas retornados (arrays podem estar vazios)</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td><code class="inline">event_id</code> ausente: <code class="inline">{ "error": "Parâmetro obrigatório: event_id" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Token ausente ou inválido</td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Internal Server Error</td><td>Erro de banco</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         SINCRONIZAÇÃO
+         ════════════════════════════════════════════════════════════════════ -->
+    <section class="flow-section" id="sync">
+      <h2>Sincronização</h2>
+      <p class="flow-meta">
+        Recebe em lote os checkpoints registrados offline pelo dispositivo de campo e os persiste de forma idempotente.
+        Cada registro carrega um <code class="inline">sync_id</code> (SHA256) que garante que reenvios não gerem duplicatas.
+        Atende <strong>RF025</strong> e <strong>RF026</strong>.
+        Requer <strong>autenticação JWT</strong>.
+      </p>
+
+      <!-- POST /audit/sync -->
+      <div class="endpoint-card" id="post-audit-sync"
+           data-method="POST" data-path="/audit/sync" data-rfs="RF025 RF026">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-post">POST</span>
+          <code class="endpoint-path">/audit/sync</code>
+          <span class="endpoint-summary">Sincroniza checkpoints registrados offline</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF025 — Registro de checkpoints sem conexão.">RF025</span>
+            <span class="rf-badge" title="RF026 — Sincronização automática sem duplicidade.">RF026</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Recebe um array de checkpoints capturados offline e os insere. A deduplicação é feita por <code class="inline">sync_id</code> (<code class="inline">ON CONFLICT DO NOTHING</code>): registros já sincronizados são contados em <code class="inline">skipped</code>, não reinseridos. Registros inválidos ou cujo turno não existe / não está em andamento entram no array <code class="inline">errors</code> sem abortar o lote.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Content-Type</code></td><td>application/json</td><td><span class="required">Sim</span></td></tr>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Request Body</p>
+          <pre class="code-block">{
+  <span class="key">"records"</span>: [
+    {
+      <span class="key">"sync_id"</span>:         <span class="str">"a1b2c3...&lt;64 hex&gt;"</span>,
+      <span class="key">"shift_id"</span>:        <span class="num">10</span>,
+      <span class="key">"distance"</span>:        <span class="num">3.2</span>,
+      <span class="key">"checkpoint_type"</span>: <span class="str">"voluntary"</span>,
+      <span class="key">"timestamp"</span>:       <span class="str">"2026-06-15T08:05:00.000Z"</span>
+    }
+  ]
+}</pre>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Validações</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">records</code></td><td>array</td><td><span class="required">Sim</span></td><td>Deve ser um array; caso contrário <code class="inline">400</code></td></tr>
+              <tr><td><code class="inline">records[].sync_id</code></td><td>string</td><td><span class="required">Sim</span></td><td>SHA256 hex (64 caracteres). Chave de idempotência</td></tr>
+              <tr><td><code class="inline">records[].shift_id</code></td><td>integer</td><td><span class="required">Sim</span></td><td>Turno deve existir e estar <code class="inline">in_progress</code></td></tr>
+              <tr><td><code class="inline">records[].distance</code></td><td>number</td><td><span class="required">Sim</span></td><td>≥ 0</td></tr>
+              <tr><td><code class="inline">records[].checkpoint_type</code></td><td>string</td><td><span class="optional">Não</span></td><td><code class="inline">"mandatory"</code> ou <code class="inline">"voluntary"</code> (default <code class="inline">"voluntary"</code>)</td></tr>
+              <tr><td><code class="inline">records[].timestamp</code></td><td>string</td><td><span class="required">Sim</span></td><td>ISO 8601</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 201 Created</p>
+          <pre class="code-block">{
+  <span class="key">"inserted"</span>: <span class="num">2</span>,
+  <span class="key">"skipped"</span>:  <span class="num">1</span>,
+  <span class="key">"errors"</span>: [
+    { <span class="key">"sync_id"</span>: <span class="str">"e4f5..."</span>, <span class="key">"reason"</span>: <span class="str">"turno não está em andamento"</span> }
+  ]
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">201</span></td><td>Created</td><td>Lote processado; ver contadores e <code class="inline">errors</code></td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td><code class="inline">{ "error": "Campo obrigatório: records (array)" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Token ausente ou inválido</td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Internal Server Error</td><td>Erro de banco</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         LOGS DE AUDITORIA
+         ════════════════════════════════════════════════════════════════════ -->
+    <section class="flow-section" id="logs">
+      <h2>Logs de Auditoria</h2>
+      <p class="flow-meta">
+        Expõe a trilha de auditoria imutável de edições retroativas (criações, atualizações e finalizações),
+        com filtros opcionais combináveis por turno, checkpoint, autor e tipo.
+        Atende <strong>RF024</strong>.
+        Requer <strong>autenticação JWT</strong>.
+      </p>
+
+      <!-- GET /audit/logs -->
+      <div class="endpoint-card" id="get-audit-logs"
+           data-method="GET" data-path="/audit/logs" data-rfs="RF024">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/audit/logs</code>
+          <span class="endpoint-summary">Consulta a trilha de auditoria</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF024 — Log de auditoria de edições retroativas.">RF024</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Retorna os registros de auditoria em ordem cronológica crescente (<code class="inline">timestamp ASC, id ASC</code>). Os filtros são opcionais e combinam em <strong>AND</strong>; ausentes não restringem o resultado. A trilha é somente leitura.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Query Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">shift_id</code></td><td>integer</td><td><span class="optional">Não</span></td><td>Filtra por turno</td></tr>
+              <tr><td><code class="inline">checkpoint_id</code></td><td>integer</td><td><span class="optional">Não</span></td><td>Filtra por checkpoint</td></tr>
+              <tr><td><code class="inline">author_id</code></td><td>integer</td><td><span class="optional">Não</span></td><td>Filtra por autor da edição</td></tr>
+              <tr><td><code class="inline">type</code></td><td>string</td><td><span class="optional">Não</span></td><td><code class="inline">"created"</code>, <code class="inline">"updated"</code> ou <code class="inline">"finished"</code></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">[
+  {
+    <span class="key">"id"</span>:            <span class="num">7</span>,
+    <span class="key">"shift_id"</span>:      <span class="num">10</span>,
+    <span class="key">"checkpoint_id"</span>: <span class="num">42</span>,
+    <span class="key">"type"</span>:          <span class="str">"updated"</span>,
+    <span class="key">"old_value"</span>:     <span class="str">"3.2"</span>,
+    <span class="key">"new_value"</span>:     <span class="str">"3.5"</span>,
+    <span class="key">"author_id"</span>:     <span class="num">1</span>,
+    <span class="key">"author_role"</span>:   <span class="str">"auditor"</span>,
+    <span class="key">"justification"</span>: <span class="str">"Correção de digitação"</span>,
+    <span class="key">"timestamp"</span>:     <span class="str">"2026-06-15T08:10:00.000Z"</span>
+  }
+]</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Lista retornada (array possivelmente vazio)</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td>Filtro numérico não-inteiro ou <code class="inline">type</code> inválido</td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Token ausente ou inválido</td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Internal Server Error</td><td>Erro de banco</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         MÉTRICAS
+         ════════════════════════════════════════════════════════════════════ -->
+    <section class="flow-section" id="metrics">
+      <h2>Métricas</h2>
+      <p class="flow-meta">
+        Fornece dados analíticos e de desempenho para dashboard, placar e tela de desempenho individual.
+        Atende <strong>RF020</strong>, <strong>RF021</strong>, <strong>RF035</strong>–<strong>RF038</strong>, <strong>RF049</strong>, <strong>RF050</strong>, <strong>RF052</strong>.
+        Todos os endpoints exigem <strong>autenticação JWT</strong>, exceto o link público de compartilhamento (<code class="inline">/share</code>, RF050).
+      </p>
+
+      <!-- GET /metrics/events/:eventId/dashboard -->
+      <div class="endpoint-card" id="get-metrics-dashboard"
+           data-method="GET" data-path="/metrics/events/:eventId/dashboard" data-rfs="RF020 RF021 RF038">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/metrics/events/<span class="param-placeholder">:eventId</span>/dashboard</code>
+          <span class="endpoint-summary">Placar em tempo real e status das esteiras</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF020 — Km total por equipe.">RF020</span>
+            <span class="rf-badge" title="RF021 — Dashboard atualizado em até 10s.">RF021</span>
+            <span class="rf-badge" title="RF038 — Status de esteiras em tempo real.">RF038</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Retorna placar consolidado do evento, contagem de turnos e lista de atletas atualmente na pista.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">eventId</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">{
+  <span class="key">"scoreboard"</span>: [
+    { <span class="key">"id"</span>: <span class="num">1</span>, <span class="key">"name"</span>: <span class="str">"Equipe Vermelha"</span>, <span class="key">"total_km"</span>: <span class="num">87.4</span> },
+    { <span class="key">"id"</span>: <span class="num">2</span>, <span class="key">"name"</span>: <span class="str">"Equipe Azul"</span>,     <span class="key">"total_km"</span>: <span class="num">91.1</span> }
+  ],
+  <span class="key">"active_shifts"</span>:    <span class="num">4</span>,
+  <span class="key">"completed_shifts"</span>: <span class="num">28</span>,
+  <span class="key">"total_km"</span>:         <span class="num">178.5</span>,
+  <span class="key">"athletes_on_track"</span>: [
+    { <span class="key">"athlete_id"</span>: <span class="num">3</span>, <span class="key">"athlete_name"</span>: <span class="str">"João Silva"</span>, <span class="key">"treadmill_number"</span>: <span class="num">2</span> }
+  ]
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Dashboard retornado</td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Token ausente ou inválido</td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Erro de banco</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GET /metrics/events/:eventId/teams -->
+      <div class="endpoint-card" id="get-metrics-teams"
+           data-method="GET" data-path="/metrics/events/:eventId/teams" data-rfs="RF020">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/metrics/events/<span class="param-placeholder">:eventId</span>/teams</code>
+          <span class="endpoint-summary">Km total por equipe</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF020 — Km total acumulado por equipe.">RF020</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">[
+  { <span class="key">"id"</span>: <span class="num">1</span>, <span class="key">"name"</span>: <span class="str">"Equipe Vermelha"</span>, <span class="key">"total_km"</span>: <span class="num">87.4</span> },
+  { <span class="key">"id"</span>: <span class="num">2</span>, <span class="key">"name"</span>: <span class="str">"Equipe Azul"</span>,     <span class="key">"total_km"</span>: <span class="num">91.1</span> }
+]</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Lista retornada</td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Token ausente ou inválido</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GET /metrics/events/:eventId/athletes -->
+      <div class="endpoint-card" id="get-metrics-athletes"
+           data-method="GET" data-path="/metrics/events/:eventId/athletes" data-rfs="RF035">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/metrics/events/<span class="param-placeholder">:eventId</span>/athletes</code>
+          <span class="endpoint-summary">Km total por atleta no evento</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF035 — Distância total percorrida por corredor.">RF035</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">[
+  {
+    <span class="key">"id"</span>:          <span class="num">3</span>,
+    <span class="key">"name"</span>:        <span class="str">"João Silva"</span>,
+    <span class="key">"team_name"</span>:   <span class="str">"Equipe Vermelha"</span>,
+    <span class="key">"total_km"</span>:    <span class="num">24.8</span>,
+    <span class="key">"shift_count"</span>: <span class="num">3</span>
+  }
+]</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Lista retornada</td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Token ausente ou inválido</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GET /metrics/athletes/:athleteId/shifts -->
+      <div class="endpoint-card" id="get-metrics-athlete-shifts"
+           data-method="GET" data-path="/metrics/athletes/:athleteId/shifts" data-rfs="RF036">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/metrics/athletes/<span class="param-placeholder">:athleteId</span>/shifts</code>
+          <span class="endpoint-summary">Média de distância por turno do atleta</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF036 — Média de distância por turno por corredor.">RF036</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">athleteId</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">{
+  <span class="key">"avg_distance_per_shift"</span>: <span class="num">8.27</span>,
+  <span class="key">"total_shifts"</span>:           <span class="num">3</span>,
+  <span class="key">"total_distance"</span>:         <span class="num">24.8</span>
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Métricas retornadas</td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Token ausente ou inválido</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GET /metrics/athletes/:athleteId/snapshots -->
+      <div class="endpoint-card" id="get-metrics-athlete-snapshots"
+           data-method="GET" data-path="/metrics/athletes/:athleteId/snapshots" data-rfs="RF037">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/metrics/athletes/<span class="param-placeholder">:athleteId</span>/snapshots</code>
+          <span class="endpoint-summary">Evolução de km por hora do atleta</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF037 — Snapshots de evolução a cada 60 min.">RF037</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Retorna os km acumulados por bucket de 60 minutos desde o início do evento.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Query Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">event_id</code></td><td>integer</td><td><span class="required">Sim</span></td><td>ID do evento de referência</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">[
+  { <span class="key">"hour_bucket"</span>: <span class="num">1</span>, <span class="key">"km_in_bucket"</span>: <span class="num">8.3</span> },
+  { <span class="key">"hour_bucket"</span>: <span class="num">2</span>, <span class="key">"km_in_bucket"</span>: <span class="num">7.9</span> }
+]</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Snapshots retornados</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td><code class="inline">event_id</code> ausente: <code class="inline">{ "error": "Parâmetro obrigatório: event_id" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Token ausente ou inválido</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GET /metrics/athletes/:athleteId/performance -->
+      <div class="endpoint-card" id="get-metrics-athlete-performance"
+           data-method="GET" data-path="/metrics/athletes/:athleteId/performance" data-rfs="RF049 RF052">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/metrics/athletes/<span class="param-placeholder">:athleteId</span>/performance</code>
+          <span class="endpoint-summary">Desempenho final do atleta com checkpoints</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF049 — Tela de desempenho final por corredor.">RF049</span>
+            <span class="rf-badge" title="RF052 — Corredor acessa histórico completo de desempenho.">RF052</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Retorna todos os turnos do atleta com checkpoints aninhados. Inclui distância total, tempo em pista e velocidade média por turno.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Query Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">event_id</code></td><td>integer</td><td><span class="optional">Opcional</span></td><td>Filtra por evento específico</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">[
+  {
+    <span class="key">"id"</span>:               <span class="num">10</span>,
+    <span class="key">"start_at"</span>:         <span class="str">"2026-06-15T08:00:00.000Z"</span>,
+    <span class="key">"end_at"</span>:           <span class="str">"2026-06-15T09:40:00.000Z"</span>,
+    <span class="key">"distance"</span>:         <span class="num">12.4</span>,
+    <span class="key">"speed"</span>:            <span class="num">7.44</span>,
+    <span class="key">"total_time"</span>:       <span class="str">"01:40:00"</span>,
+    <span class="key">"treadmill_number"</span>: <span class="num">2</span>,
+    <span class="key">"checkpoints"</span>: [
+      { <span class="key">"id"</span>: <span class="num">42</span>, <span class="key">"timestamp"</span>: <span class="str">"2026-06-15T08:05:00.000Z"</span>, <span class="key">"distance"</span>: <span class="num">5.2</span>, <span class="key">"type"</span>: <span class="str">"mandatory"</span> }
+    ]
+  }
+]</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Desempenho retornado (array vazio se sem turnos)</td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Token ausente ou inválido</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GET /metrics/athletes/:athleteId/share -->
+      <div class="endpoint-card" id="get-metrics-athlete-share"
+           data-method="GET" data-path="/metrics/athletes/:athleteId/share" data-rfs="RF050">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/metrics/athletes/<span class="param-placeholder">:athleteId</span>/share</code>
+          <span class="endpoint-summary">Link público de desempenho do atleta</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF050 — Compartilhamento de desempenho final via link público.">RF050</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Versão pública (<strong>sem autenticação</strong>, RN36) da tela de desempenho do atleta. Retorna o mesmo payload de <code class="inline">/metrics/athletes/:athleteId/performance</code> (turnos com checkpoints aninhados), permitindo compartilhamento externo por link. Esta rota é declarada <strong>antes</strong> do middleware <code class="inline">requireAuth</code> da seção de métricas.</p>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">athleteId</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">[
+  {
+    <span class="key">"id"</span>:               <span class="num">10</span>,
+    <span class="key">"start_at"</span>:         <span class="str">"2026-06-15T08:00:00.000Z"</span>,
+    <span class="key">"end_at"</span>:           <span class="str">"2026-06-15T09:40:00.000Z"</span>,
+    <span class="key">"distance"</span>:         <span class="num">12.4</span>,
+    <span class="key">"speed"</span>:            <span class="num">7.44</span>,
+    <span class="key">"total_time"</span>:       <span class="str">"01:40:00"</span>,
+    <span class="key">"treadmill_number"</span>: <span class="num">2</span>,
+    <span class="key">"checkpoints"</span>: [ <span class="cmt">/* ... */</span> ]
+  }
+]</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Desempenho retornado (array vazio se sem turnos)</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td><code class="inline">{ "error": "athleteId inválido" }</code></td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Internal Server Error</td><td>Erro de banco</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         EXPORTAÇÃO
+         ════════════════════════════════════════════════════════════════════ -->
+    <section class="flow-section" id="export">
+      <h2>Exportação</h2>
+      <p class="flow-meta">
+        Gera arquivos CSV para download com todos os registros do evento.
+        Atende <strong>RF047</strong> e <strong>RF048</strong>.
+        Ambos os endpoints exigem <strong>autenticação JWT</strong>.
+      </p>
+
+      <!-- GET /export/events/:eventId/shifts -->
+      <div class="endpoint-card" id="get-export-shifts"
+           data-method="GET" data-path="/export/events/:eventId/shifts" data-rfs="RF047">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/export/events/<span class="param-placeholder">:eventId</span>/shifts</code>
+          <span class="endpoint-summary">Exporta todos os turnos em CSV</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF047 — Exportação CSV de todos os turnos.">RF047</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Retorna um arquivo CSV com todos os turnos finalizados do evento. O navegador recebe o arquivo para download via header <code class="inline">Content-Disposition</code>.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">eventId</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <p>Content-Type: <code class="inline">text/csv</code><br>
+          Content-Disposition: <code class="inline">attachment; filename="shifts-{eventId}.csv"</code></p>
+          <pre class="code-block"><span class="cmt">id,status,start_at,end_at,total_time,km_start,km_end,distance,speed,athlete_name,athlete_cpf,team_name,treadmill_number,auditor_name
+10,completed,2026-06-15T08:00:00.000Z,2026-06-15T09:40:00.000Z,01:40:00,0,12.4,12.4,7.44,João Silva,12345678901,Equipe Vermelha,2,Ana Auditora</span></pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Arquivo CSV gerado para download</td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Token ausente ou inválido</td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Erro de banco</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GET /export/events/:eventId/checkpoints -->
+      <div class="endpoint-card" id="get-export-checkpoints"
+           data-method="GET" data-path="/export/events/:eventId/checkpoints" data-rfs="RF048">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-get">GET</span>
+          <code class="endpoint-path">/export/events/<span class="param-placeholder">:eventId</span>/checkpoints</code>
+          <span class="endpoint-summary">Exporta todos os checkpoints em CSV</span>
+          <div class="rf-badges">
+            <span class="rf-badge" title="RF048 — Exportação CSV de todos os checkpoints.">RF048</span>
+          </div>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Retorna um arquivo CSV com todos os checkpoints do evento, incluindo dados de atleta, equipe e esteira.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">eventId</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <p>Content-Type: <code class="inline">text/csv</code><br>
+          Content-Disposition: <code class="inline">attachment; filename="checkpoints-{eventId}.csv"</code></p>
+          <pre class="code-block"><span class="cmt">id,timestamp,distance,type,shift_id,athlete_name,team_name,treadmill_number
+42,2026-06-15T08:05:00.000Z,5.2,mandatory,10,João Silva,Equipe Vermelha,2</span></pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>Arquivo CSV gerado para download</td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Token ausente ou inválido</td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Erro de banco</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         ANEXO — MAPEAMENTO RF ↔ ENDPOINT
+         ════════════════════════════════════════════════════════════════════ -->
+    <section class="flow-section" id="rf-mapping">
+      <h2>Anexo — Mapeamento RF ↔ Endpoint</h2>
+      <p class="flow-meta">
+        Rastreabilidade completa entre Requisitos Funcionais e os endpoints que os implementam.
+        Baseada nos RFs RF001–RF053 definidos no WAD (seção 3.1.2).
+      </p>
+      <table class="doc-table">
+        <thead>
+          <tr>
+            <th style="width:80px">RF</th>
+            <th>Descrição (resumo)</th>
+            <th>Endpoint(s)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>RF001</td><td>Cadastro de exatamente duas equipes por evento com nome único</td><td><code class="inline">POST /teams</code>, <code class="inline">GET /teams</code> <span class="partial">(⚠ limite de 2 equipes não implementado)</span></td></tr>
+          <tr><td>RF002</td><td>Cadastro de corredores vinculados a uma equipe</td><td><code class="inline">POST /teams/:teamId/athletes</code>, <code class="inline">GET /teams/:teamId/athletes</code></td></tr>
+          <tr><td>RF003</td><td>Validar 16 corredores por equipe antes do início</td><td><code class="inline">POST /audit/shifts/start</code> (RN17: rejeita com 422 se equipe sem 16 corredores ativos), <code class="inline">PATCH /events/:id/start</code></td></tr>
+          <tr><td>RF004</td><td>Seleção da esteira onde o corredor inicia</td><td><code class="inline">GET /events/treadmills</code>, <code class="inline">POST /events/treadmills</code></td></tr>
+          <tr><td>RF005</td><td>Seleção da equipe associada à esteira</td><td><code class="inline">POST /audit/shifts/start</code> <span class="partial">(via athlete_id, que pertence a uma equipe)</span></td></tr>
+          <tr><td>RF006</td><td>Seleção do corredor da equipe para iniciar corrida</td><td><code class="inline">GET /teams/:teamId/athletes</code> <span class="partial">(listagem)</span>, <code class="inline">POST /audit/shifts/start</code></td></tr>
+          <tr><td>RF007</td><td>Registrar início de turno apenas se corredor sem turno aberto</td><td><code class="inline">POST /audit/shifts/start</code></td></tr>
+          <tr><td>RF008</td><td>Registrar início de turno apenas se esteira livre</td><td><code class="inline">POST /audit/shifts/start</code></td></tr>
+          <tr><td>RF009</td><td>Armazenar corredor e esteira no registro de início de turno</td><td><code class="inline">POST /audit/shifts/start</code></td></tr>
+          <tr><td>RF010</td><td>Armazenar km inicial (≥ 0) informada pelo Auditor</td><td><code class="inline">POST /audit/shifts/start</code></td></tr>
+          <tr><td>RF011</td><td>Timestamp de início gerado pelo servidor</td><td><code class="inline">POST /audit/shifts/start</code></td></tr>
+          <tr><td>RF012</td><td>Modal bloqueante a cada 5 min para inserção de km</td><td><code class="inline">POST /audit/shifts/:id/checkpoints</code> <span class="partial">(backend aceita; modal é responsabilidade do front-end)</span></td></tr>
+          <tr><td>RF013</td><td>Rejeitar checkpoint com km menor que o último registrado</td><td><code class="inline">POST /audit/shifts/:id/checkpoints</code></td></tr>
+          <tr><td>RF014</td><td>Finalizar turno</td><td><code class="inline">PATCH /audit/shifts/:id/finish</code></td></tr>
+          <tr><td>RF015</td><td>Rejeitar km final menor que o último checkpoint</td><td><code class="inline">PATCH /audit/shifts/:id/finish</code></td></tr>
+          <tr><td>RF016</td><td>Timestamp de encerramento gerado pelo servidor</td><td><code class="inline">PATCH /audit/shifts/:id/finish</code></td></tr>
+          <tr><td>RF017</td><td>Calcular e persistir distância (km_final − km_inicial)</td><td><code class="inline">PATCH /audit/shifts/:id/finish</code></td></tr>
+          <tr><td>RF018</td><td>Calcular e persistir duração do turno</td><td><code class="inline">PATCH /audit/shifts/:id/finish</code></td></tr>
+          <tr><td>RF019</td><td>Calcular e persistir velocidade média (km/h)</td><td><code class="inline">PATCH /audit/shifts/:id/finish</code></td></tr>
+          <tr><td>RF020</td><td>Km total acumulado por equipe</td><td><code class="inline">GET /metrics/events/:eventId/teams</code>, <code class="inline">GET /metrics/events/:eventId/dashboard</code></td></tr>
+          <tr><td>RF021</td><td>Dashboard com placar atualizado em até 10s</td><td><code class="inline">GET /metrics/events/:eventId/dashboard</code></td></tr>
+          <tr><td>RF022</td><td>Histórico em ordem decrescente de timestamp</td><td><code class="inline">GET /audit/history</code></td></tr>
+          <tr><td>RF023</td><td>Edição retroativa de registros por usuário autenticado</td><td><code class="inline">PATCH /teams/:teamId/athletes/:id</code>, <code class="inline">PATCH /audit/shifts/:id</code> (manager), <code class="inline">PATCH /audit/checkpoints/:id</code></td></tr>
+          <tr><td>RF024</td><td>Log de auditoria de edições retroativas</td><td><code class="inline">PATCH /audit/checkpoints/:id</code> (grava log imutável), <code class="inline">GET /audit/logs</code> (consulta a trilha)</td></tr>
+          <tr><td>RF025</td><td>Registro de checkpoints sem conexão (persistência local)</td><td><code class="inline">POST /audit/shifts/:id/checkpoints</code>, <code class="inline">POST /audit/sync</code> (recebe o lote registrado offline) <span class="partial">(persistência local é responsabilidade do front-end)</span></td></tr>
+          <tr><td>RF026</td><td>Sincronização automática de dados offline</td><td><code class="inline">POST /audit/sync</code> (deduplicação por <code class="inline">sync_id</code>, sem duplicidade)</td></tr>
+          <tr><td>RF027</td><td>Autenticação (login/senha) para Admin e Auditor</td><td><code class="inline">POST /auth/login</code>, <code class="inline">POST /auth/register/manager</code>, <code class="inline">POST /auth/register/auditor</code>, <code class="inline">POST /auth/refresh</code>, <code class="inline">POST /auth/logout</code>, <code class="inline">GET /auth/me</code>, <code class="inline">GET /auth/auditors</code></td></tr>
+          <tr><td>RF028</td><td>Detectar inconsistências e gerar alertas em tempo real</td><td><code class="inline">GET /audit/alerts</code></td></tr>
+          <tr><td>RF029</td><td>Notificação visual de inconsistência</td><td><code class="inline">GET /audit/alerts</code> <span class="partial">(dados expostos; exibição visual é responsabilidade do front-end)</span></td></tr>
+          <tr><td>RF030</td><td>Sinal sonoro para inconsistências</td><td class="not-impl">Não implementado (front-end)</td></tr>
+          <tr><td>RF031</td><td>Auditor revisa e corrige inconsistências antes da persistência</td><td class="not-impl">Não implementado</td></tr>
+          <tr><td>RF032</td><td>Registro manual de km a qualquer momento durante turno ativo</td><td><code class="inline">POST /audit/shifts/:id/checkpoints</code> (type: "voluntary")</td></tr>
+          <tr><td>RF033</td><td>Timestamp automático para registro manual de km</td><td><code class="inline">POST /audit/shifts/:id/checkpoints</code></td></tr>
+          <tr><td>RF034</td><td>Novo turno em até 3 cliques a partir do encerramento</td><td class="not-impl">Não implementado (fluxo de UI)</td></tr>
+          <tr><td>RF035</td><td>Métrica de distância total percorrida por corredor</td><td><code class="inline">GET /metrics/events/:eventId/athletes</code></td></tr>
+          <tr><td>RF036</td><td>Média de distância por turno por corredor</td><td><code class="inline">GET /metrics/athletes/:athleteId/shifts</code></td></tr>
+          <tr><td>RF037</td><td>Snapshots de evolução a cada 60 min</td><td><code class="inline">GET /metrics/athletes/:athleteId/snapshots</code></td></tr>
+          <tr><td>RF038</td><td>Status de cada esteira (Ocupada/Livre) em tempo real</td><td><code class="inline">GET /metrics/events/:eventId/dashboard</code> (campo athletes_on_track)</td></tr>
+          <tr><td>RF039</td><td>Sugerir alternância de esteira após 30 min consecutivos</td><td><code class="inline">GET /audit/alerts</code> (campo treadmills_over_threshold)</td></tr>
+          <tr><td>RF040</td><td>Modo TV com fonte ≥ 48px, WCAG AA, sem login</td><td class="not-impl">Não implementado (front-end)</td></tr>
+          <tr><td>RF041</td><td>Filtrar histórico por equipe</td><td><code class="inline">GET /audit/history?team_id=</code></td></tr>
+          <tr><td>RF042</td><td>Filtrar histórico por esteira</td><td><code class="inline">GET /audit/history?treadmill_id=</code></td></tr>
+          <tr><td>RF043</td><td>Filtrar histórico por corredor</td><td><code class="inline">GET /audit/history?athlete_id=</code></td></tr>
+          <tr><td>RF044</td><td>Sinalizar km_final &lt; km_inicial no encerramento</td><td><code class="inline">PATCH /audit/shifts/:id/finish</code> (rejeita com 400)</td></tr>
+          <tr><td>RF045</td><td>Sinalizar intervalo entre checkpoints &gt; 10 min</td><td><code class="inline">POST /audit/shifts/:id/checkpoints</code> (rejeita com 400 se &gt; 10 min)</td></tr>
+          <tr><td>RF046</td><td>Sinalizar corredor com mais de um turno em aberto</td><td><code class="inline">POST /audit/shifts/start</code> (rejeita com 409)</td></tr>
+          <tr><td>RF047</td><td>Exportação CSV de todos os turnos</td><td><code class="inline">GET /export/events/:eventId/shifts</code></td></tr>
+          <tr><td>RF048</td><td>Exportação CSV de todos os checkpoints</td><td><code class="inline">GET /export/events/:eventId/checkpoints</code></td></tr>
+          <tr><td>RF049</td><td>Tela de desempenho final por corredor</td><td><code class="inline">GET /metrics/athletes/:athleteId/performance</code></td></tr>
+          <tr><td>RF050</td><td>Compartilhamento de desempenho final via link público</td><td><code class="inline">GET /metrics/athletes/:athleteId/share</code> (rota pública, sem auth — RN36)</td></tr>
+          <tr><td>RF051</td><td>Registrar local/região da etapa</td><td><code class="inline">POST /events</code> (<code class="inline">local</code> field), <code class="inline">PATCH /events/:id</code></td></tr>
+          <tr><td>RF052</td><td>Corredor acessa histórico completo de desempenho</td><td><code class="inline">GET /metrics/athletes/:athleteId/performance</code></td></tr>
+          <tr><td>RF053</td><td>Alerta de inatividade de esteira (&gt; 5 min sem checkpoint)</td><td><code class="inline">GET /audit/alerts</code> (campo treadmills_without_checkpoint)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main><!-- /main-content -->
+</div><!-- /layout -->
+
+<script>
+  /* ── Toggle endpoint card ──────────────────────────────────────────────── */
+  function toggleCard(header) {
+    const card = header.closest('.endpoint-card');
+    const isOpen = card.classList.toggle('open');
+    header.setAttribute('aria-expanded', String(isOpen));
+  }
+
+  /* keyboard support */
+  document.querySelectorAll('.endpoint-header').forEach(function(hdr) {
+    hdr.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleCard(hdr);
+      }
+    });
+  });
+
+  /* ── Open card when navigating to an anchor ───────────────────────────── */
+  function openCardByHash(hash) {
+    if (!hash) return;
+    const target = document.querySelector(hash);
+    if (target && target.classList.contains('endpoint-card')) {
+      target.classList.add('open');
+      const hdr = target.querySelector('.endpoint-header');
+      if (hdr) hdr.setAttribute('aria-expanded', 'true');
+    }
+  }
+  window.addEventListener('hashchange', function() { openCardByHash(location.hash); });
+  openCardByHash(location.hash);
+
+  /* ── Active sidebar link on scroll ────────────────────────────────────── */
+  (function() {
+    var cards = document.querySelectorAll('.endpoint-card[id]');
+    var links = document.querySelectorAll('.nav-link');
+
+    function onScroll() {
+      var scrollY = window.scrollY + 80;
+      var active = null;
+      cards.forEach(function(card) {
+        if (card.getBoundingClientRect().top + window.scrollY <= scrollY) {
+          active = card.id;
+        }
+      });
+      links.forEach(function(link) {
+        var href = link.getAttribute('href');
+        link.classList.toggle('active', href === '#' + active);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+
+  /* ── Client-side search / filter ──────────────────────────────────────── */
+  var searchInput = document.getElementById('search-input');
+  var allCards = document.querySelectorAll('.endpoint-card');
+
+  searchInput.addEventListener('input', function() {
+    var q = this.value.trim().toLowerCase();
+    allCards.forEach(function(card) {
+      if (!q) {
+        card.classList.remove('hidden');
+        return;
+      }
+      var method = (card.dataset.method || '').toLowerCase();
+      var path   = (card.dataset.path  || '').toLowerCase();
+      var rfs    = (card.dataset.rfs   || '').toLowerCase();
+      var text   = card.textContent.toLowerCase();
+      var match  = method.includes(q) || path.includes(q) || rfs.includes(q) || text.includes(q);
+      card.classList.toggle('hidden', !match);
+    });
+  });
+</script>
+</body>
+</html>
