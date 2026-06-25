@@ -5553,7 +5553,7 @@ A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score 
 
 | Participante | Score SUS | Classificação |
 |---|---|---|
-| Enzo Braga | 67,5 | Bom |
+| Enzo Braga | 67,5 |  |
 | Lucas Levi | 32,5 | Inaceitável |
 | Paulo Roberto | 52,5 | OK / Marginal |
 | Lais Victoria | 72,5 | Bom |
