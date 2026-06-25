@@ -35,16 +35,17 @@ Antes do RedRun, a apuração dos quilômetros era feita manualmente por auditor
 
 A plataforma oferece aos auditores e gerentes do evento um sistema digital completo para:
 
-- **Cadastrar** competições, equipes, corredores e esteiras;
+- **Cadastrar** competições, equipes, corredores (com foto) e esteiras;
 - **Registrar** o início, os checkpoints e o encerramento de cada turno na esteira;
-- **Registrar checkpoints** a cada 5 minutos, criando um histórico granular e rastreável de cada corrida;
-- **Acompanhar** a quilometragem acumulada por equipe em um dashboard de métricas em tempo real;
+- **Registrar checkpoints** a cada 5 minutos, criando um histórico granular e rastreável de cada corrida, com leitura automática da quilometragem por **OCR** a partir da foto do display da esteira;
+- **Operar offline** em campo, sincronizando os checkpoints sem conexão e mantendo trilha de auditoria das ações;
+- **Acompanhar** a quilometragem acumulada por equipe em um dashboard de métricas em tempo real, com **modo TV** público;
 - **Visualizar** as métricas totais ao final das 24 horas de competição;
-- **Exportar** os resultados em CSV, destinado à auditoria final do evento.
+- **Exportar** os resultados em planilha excel personalizavel, destinado à auditoria final do evento.
 
-O sistema conta com dois perfis de acesso: o **auditor**, responsável pelo registro em tempo real das corridas em campo, e o **gerente** (Field Marketing), que configura o evento e acompanha o desempenho geral. A autenticação e a autorização por perfil são feitas via JWT, garantindo segurança no acesso às informações.
+O sistema conta com dois perfis de acesso: o **auditor**, responsável pelo registro em tempo real das corridas em campo, e o **gerente** (Field Marketing), que configura o evento e acompanha o desempenho geral. A autenticação é feita por **JWT**: a WebAPI valida o access token por header Bearer e as páginas renderizadas no servidor usam autenticação por cookie com rotação de refresh token, com autorização por perfil garantindo segurança no acesso às informações.
 
-Tecnicamente, o backend é construído em **Node.js + TypeScript** com **Express 5**, seguindo uma arquitetura em camadas (Controller, Service, Repository) e persistindo os dados em **PostgreSQL** hospedado no **Supabase**. O frontend é renderizado no servidor com **EJS**, complementado por CSS e JavaScript estáticos. A primeira versão funcional do backend já está implementada e testada, com 38 endpoints cobrindo 10 fluxos de negócio e suíte de testes de integração em Jest e Supertest.
+Tecnicamente, o backend é construído em **Node.js + TypeScript** com **Express 5**, seguindo uma arquitetura em camadas (Controller, Service, Repository) e persistindo os dados em **PostgreSQL** hospedado no **Supabase**. As fotos de atletas, eventos, turnos e checkpoints são armazenadas no **Supabase Storage**, e a leitura automática da quilometragem usa **OCR** via Google Gemini (com fallback no Groq). O frontend é renderizado no servidor com **EJS**, complementado por CSS e JavaScript estáticos. O backend já está implementado e testado, com 57 endpoints de WebAPI cobrindo 11 fluxos de negócio e suíte de testes de integração em Jest e Supertest.
 
 O RedRun substitui um processo frágil e manual por um sistema rastreável e confiável, reduzindo erros operacionais e garantindo maior integridade nos resultados da competição.
 
@@ -253,7 +254,7 @@ Ao abrir a aplicação, a primeira tela é a de login. Para explorar o sistema s
 ## 🗃 Histórico de lançamentos
 
 * 0.5.0 - 25/06/2026
-    * Leitura automática da quilometragem por OCR a partir da foto da esteira, upload e processamento de imagens no Supabase Storage (limite de 5MB) com foto de atleta por evento; modo TV público com polling reduzido (60s → 10s); pausa de competição que bloqueia turnos e checkpoints, com log de auditoria da pausa; pace por turno exibido ao lado da quilometragem no modal de finalização; exportação CSV filtrada por colunas, telas de estatísticas da competição, diagramas de arquitetura (Mermaid/SVG) e de classes por módulo, e ampliação da cobertura de testes.
+    * Leitura automática da quilometragem por OCR a partir da foto da esteira, upload e processamento de imagens no Supabase Storage (limite de 5MB) com foto de atleta por evento; modo TV público com polling reduzido (60s → 10s); pausa de competição que bloqueia turnos e checkpoints, com log de auditoria da pausa; pace por turno exibido ao lado da quilometragem no modal de finalização; exportação em planilha filtrada por colunas, telas de estatísticas da competição, diagramas de arquitetura (Mermaid/SVG) e de classes por módulo, e ampliação da cobertura de testes.
 * 0.4.0 - 12/06/2026
     * Frontend integrado renderizado no servidor com EJS, autenticação por cookie com rotação de refresh token e proteção das rotas SSR; sincronização offline de checkpoints (dedupe por sync_id), trilha de auditoria e correção retroativa de checkpoints.
 * 0.3.0 - 29/05/2026
