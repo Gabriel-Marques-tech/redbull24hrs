@@ -207,7 +207,7 @@ describe("loginUser", () => {
     expect(res.cookie).toHaveBeenCalledWith("refreshToken", "ref", expect.any(Object));
     expect(res.cookie).toHaveBeenCalledWith("accessToken", "acc", expect.any(Object));
     expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({ user: result.user });
+    expect(res.json).toHaveBeenCalledWith({ user: result.user, accessToken: "acc" });
   });
 
   it("Retorna 500 quando o service lança erro inesperado", async () => {

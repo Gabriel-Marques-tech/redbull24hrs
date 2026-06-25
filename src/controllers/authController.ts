@@ -110,7 +110,7 @@ const refreshToken = async (req: Request, res: Response): Promise<void> => {
 };
 
 const logout = async (req: Request, res: Response): Promise<void> => {
-  const refreshToken = req.cookies.refreshToken ?? req.body?.refreshToken;
+  const refreshToken = req.cookies?.refreshToken ?? req.body?.refreshToken;
   try {
     await AuthService.logout(refreshToken);
     res.clearCookie('accessToken');
