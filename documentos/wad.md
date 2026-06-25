@@ -3236,6 +3236,18 @@ Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui
   <br><br>
 </div>
 
+#### Decisões de modelagem
+
+- **Shift como entidade central:** cada entrada de um atleta em uma esteira gera um turno próprio. Os totais do evento são calculados pela agregação dos turnos finalizados. O atributo `manager_id` em `Shifts` serve para vinculação histórica/auditoria do criador do registro, embora o fluxo operacional seja restrito a auditores.
+- **Operação e auditoria exclusivas do Auditor:** o turno não é operado por um gerente em tempo real. Os relacionamentos independentes **Operates** (auditor que conduz o turno) e **Audits** (auditor que audita/revisa o turno) conectam exclusivamente Auditors a Shifts.
+- **Esteira vinculada à equipe:** o relacionamento **Has** liga Teams a Treadmills, enquanto o relacionamento **Hosts** liga Treadmills a Shifts, preservando o histórico de uso por turno.
+- **Verificação por foto e OCR:** Shifts e Checkpoints armazenam `image_url` e os campos de leitura óptica (`ocr_distance`, `ocr_speed`, `ocr_pace`, `ocr_time`), permitindo conferir o valor inserido manualmente contra o valor lido automaticamente do painel da esteira.
+- **Classificação de checkpoints:** o atributo `type` de Checkpoints assume os valores derivados dos sub-atributos `mandatory` ou `voluntary`, distinguindo de forma clara pontos de controle obrigatórios dos opcionais diretamente na estrutura visual.
+- **Pausas no evento:** Events contém os atributos `image_url`, `paused_at` e `paused_ms` para refletir seu estado atual, enquanto a entidade **PauseLog** registra o histórico cronológico e preciso por meio de `paused_at`, `resumed_at` e `duration_ms`.
+- **Atletas com acompanhamento compartilhável:** Athletes possui `image_url`, `share_token` e `email`, possibilitando a geração de um link público e seguro de acompanhamento da corrida do atleta.
+- **Auditoria de checkpoints e logs:** checkpoints guardam dados de revisão e `sync_id`; logs registram de forma robusta os estados (`created`, `updated`, `finished`), os valores anteriores e novos, autoria (`author_id`, `author_role`), justificativa e vínculo relacional explícito (`shift_id`).
+- **Autenticação com integridade:** os refresh tokens contêm mapeamento explícito para `manager_id` e `auditor_id`, sendo modelados por dois relacionamentos mutuamente exclusivos — **Owns Session** (Manager–RefreshToken) e **Has Session** (Auditor–RefreshToken) — garantindo que cada token pertença a exatamente uma classe de usuário, respeitando as restrições do banco de dados.
+
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER)
 
 O DER traduz o MER para a estrutura relacional do PostgreSQL. A versão abaixo representa o estado efetivamente obtido após a execução sequencial das migrations `001` a `017`, e não apenas o schema inicial da migration `001`.
