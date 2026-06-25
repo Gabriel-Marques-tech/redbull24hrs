@@ -153,7 +153,11 @@
         <div class="bandeja-lista" id="bandejaLista">
             <% athletes.forEach((athlete, i) => { %>
             <div class="bandeja-item" data-id="<%= athlete.id %>" data-index="<%= i %>" onclick="selecionarCorredorManual(this)">
+                <% if (athlete.image_url) { %>
+                <span class="avatar" style="background-image:url('<%= athlete.image_url %>');background-size:cover;background-position:center;"></span>
+                <% } else { %>
                 <span class="avatar"></span>
+                <% } %>
                 <p><%= athlete.name %></p>
                 <% if (i === 0) { %><span class="badge-atual">atual</span><% } %>
             </div>
