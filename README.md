@@ -48,6 +48,10 @@ Tecnicamente, o backend é construído em **Node.js + TypeScript** com **Express
 
 O RedRun substitui um processo frágil e manual por um sistema rastreável e confiável, reduzindo erros operacionais e garantindo maior integridade nos resultados da competição.
 
+## 📝 Link de demonstração
+
+_Coloque aqui o link para o vídeo de demonstração do projeto_
+
 ## 📁 Estrutura de pastas
 
 ```
@@ -106,32 +110,68 @@ O RedRun substitui um processo frágil e manual por um sistema rastreável e con
 
 ### Pré-requisitos
 
-- [Node.js](https://nodejs.org/) versão 18 ou superior
-- Conta no [Supabase](https://supabase.com/) (banco de dados PostgreSQL hospedado)
-- Editor de código de sua preferência (recomendado: VS Code)
+Antes de começar, garanta que você tem disponível:
 
-### Instalação
+- **[Node.js](https://nodejs.org/) 18 ou superior** e o **npm** (instalado junto com o Node). Confirme com `node -v` e `npm -v`.
+- **[Git](https://git-scm.com/)** para clonar o repositório.
+- **Conta no [Supabase](https://supabase.com/)** com um projeto criado. O Supabase fornece tanto o banco **PostgreSQL** quanto o **Storage** usado para as fotos de atletas, eventos e checkpoints.
+- **Chave de API do [Google Gemini](https://aistudio.google.com/app/apikey)** (`GEMINI_API_KEY`), usada pelo OCR que lê a quilometragem na foto da esteira. É o provedor principal de OCR.
+- **(Opcional) Chave de API do [Groq](https://console.groq.com/keys)** (`GROQ_API_KEY`), usada como provedor de OCR reserva caso o Gemini fique indisponível. Sem ela, o sistema funciona, mas perde o fallback de OCR.
+- Editor de código de sua preferência (recomendado: VS Code).
 
-1. Clone o repositório:
+> As funcionalidades de upload de imagem e OCR dependem do Supabase Storage e da chave do Gemini. O restante da aplicação (cadastros, turnos, checkpoints manuais, métricas, exportação) funciona sem as chaves de OCR, apenas sem a leitura automática da quilometragem.
+
+### 1. Clonar o repositório
 
 ```sh
 git clone https://git.inteli.edu.br/graduacao/2026-1b/t27/g02.git
 cd g02
 ```
 
-2. Instale as dependências do projeto:
+### 2. Instalar as dependências
 
 ```sh
 npm install
 ```
 
-3. Copie o arquivo de exemplo de variáveis de ambiente e preencha com os seus dados:
+### 3. Preparar o projeto Supabase
+
+No painel do seu projeto Supabase:
+
+1. Em **Project Settings → Database**, copie a **connection string** do modo **Transaction pooler** (porta `6543`). Ela tem o formato `postgresql://postgres.SEU_PROJECT_REF:SENHA@HOST:6543/postgres` e será usada em `DATABASE_URL`.
+2. Em **Project Settings → API**, copie a **Project URL** (`SUPABASE_URL`) e a chave **`service_role`** (`SUPABASE_SERVICE_ROLE_KEY`). A `service_role` é uma chave administrativa: mantenha-a em segredo e nunca a exponha no frontend.
+3. Em **Storage**, crie um **bucket público** chamado **`photos`**. É nele que a aplicação grava, em pastas separadas, as fotos de atletas (`athletes/`), de eventos (`events/`), de turnos (`shifts/`) e de checkpoints (`checkpoints/`).
+
+### 4. Configurar as variáveis de ambiente
+
+Copie o arquivo de exemplo e edite o `.env` com os seus dados:
 
 ```sh
 cp .env.example .env
 ```
 
-Edite o arquivo `.env` com as credenciais do seu projeto Supabase e defina os segredos JWT:
+Preencha cada variável conforme a tabela abaixo:
+
+| Variável | Obrigatória | Descrição |
+|---|---|---|
+| `DATABASE_URL` | Sim | Connection string do pooler do Supabase (porta `6543`). |
+| `DATABASE_KEY` | Sim | Senha do banco de dados (a mesma usada na connection string). |
+| `DATABASE_PORT` | Sim | Porta de conexão; use `6543` para o Transaction pooler. |
+| `DATABASE_USER` | Sim | Usuário do banco, no formato `postgres.SEU_PROJECT_REF`. |
+| `DATABASE_NAME` | Sim | Nome do banco/identificação da aplicação; padrão `postgres`. |
+| `SERVER_PORT` | Sim | Porta em que o servidor Express sobe localmente (ex.: `3000`). |
+| `SUPABASE_URL` | Sim | Project URL do Supabase (`https://SEU_PROJECT_REF.supabase.co`). |
+| `SUPABASE_SERVICE_ROLE_KEY` | Sim | Chave `service_role` do Supabase, usada para upload/remoção no Storage. |
+| `JWT_ACCESS_SECRET` | Sim | Segredo para assinar o access token. Use um valor longo e aleatório. |
+| `JWT_REFRESH_SECRET` | Sim | Segredo para assinar o refresh token. Diferente do access. |
+| `JWT_ACCESS_EXPIRES` | Sim | Validade do access token (ex.: `15m`). |
+| `JWT_REFRESH_EXPIRES` | Sim | Validade do refresh token (ex.: `7d`). |
+| `GEMINI_API_KEY` | Sim | Chave do Google Gemini, provedor principal do OCR de quilometragem. |
+| `GROQ_API_KEY` | Opcional | Chave do Groq, provedor de OCR reserva (fallback). |
+
+> Dica: gere os segredos JWT com valores fortes e aleatórios, por exemplo `openssl rand -hex 32`, e use segredos distintos para access e refresh.
+
+Modelo do arquivo `.env`:
 
 ```env
 # Banco de Dados (Supabase)
@@ -144,26 +184,49 @@ DATABASE_NAME=postgres
 # Servidor
 SERVER_PORT=3000
 
+# Supabase Storage (upload de imagens)
+SUPABASE_URL=https://SEU_PROJECT_REF.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=SUA_SERVICE_ROLE_KEY_AQUI
+
 # Autenticação (JWT)
 JWT_ACCESS_SECRET=troque-por-um-segredo-forte
 JWT_REFRESH_SECRET=troque-por-outro-segredo-forte
 JWT_ACCESS_EXPIRES=15m
 JWT_REFRESH_EXPIRES=7d
+
+# OCR de checkpoints (leitura de quilometragem por foto)
+GEMINI_API_KEY=SUA_GEMINI_API_KEY_AQUI
+GROQ_API_KEY=SUA_GROQ_API_KEY_AQUI
 ```
 
-4. Execute as migrações do banco de dados:
+> O arquivo `.env` contém segredos e **não deve ser commitado** (já está no `.gitignore`). Use o `.env.example` como referência versionada.
+
+### 5. Executar as migrações do banco
+
+As migrações criam e atualizam o schema de forma incremental e idempotente; podem ser rodadas com segurança em um banco vazio ou já existente:
 
 ```sh
 npm run migrate
 ```
 
-5. Inicie o servidor em modo de desenvolvimento:
+### 6. Iniciar a aplicação
+
+Em desenvolvimento, com hot-reload:
 
 ```sh
 npm run dev
 ```
 
-6. Acesse a aplicação em [http://localhost:3000](http://localhost:3000). Você será redirecionado para a tela de login em [http://localhost:3000/login](http://localhost:3000/login).
+Para um ambiente de produção, compile o TypeScript e rode a build:
+
+```sh
+npm run build
+npm start
+```
+
+### 7. Acessar a aplicação
+
+Abra `http://localhost:3000` no navegador (ajuste a porta se alterou `SERVER_PORT`). Você será redirecionado para a tela de login em `http://localhost:3000/login`.
 
 ### Logins de teste
 
@@ -189,15 +252,17 @@ Ao abrir a aplicação, a primeira tela é a de login. Para explorar o sistema s
 
 ## 🗃 Histórico de lançamentos
 
+* 0.5.0 - 25/06/2026
+    * Leitura automática da quilometragem por OCR a partir da foto da esteira, upload e processamento de imagens no Supabase Storage (limite de 5MB) com foto de atleta por evento; modo TV público com polling reduzido (60s → 10s); pausa de competição que bloqueia turnos e checkpoints, com log de auditoria da pausa; pace por turno exibido ao lado da quilometragem no modal de finalização; exportação CSV filtrada por colunas, telas de estatísticas da competição, diagramas de arquitetura (Mermaid/SVG) e de classes por módulo, e ampliação da cobertura de testes.
 * 0.4.0 - 12/06/2026
-    * 
+    * Frontend integrado renderizado no servidor com EJS, autenticação por cookie com rotação de refresh token e proteção das rotas SSR; sincronização offline de checkpoints (dedupe por sync_id), trilha de auditoria e correção retroativa de checkpoints.
 * 0.3.0 - 29/05/2026
-    * 
+    * Backend em camadas (Controller, Service, Repository) com CRUD de eventos, equipes, turnos, histórico, métricas, alertas e exportação CSV; suíte de testes de integração (Jest + Supertest) e pipeline de CI/CD com deploy da WebAPI no GitLab Pages.
 * 0.2.0 - 15/05/2026
-    * 
+    * Modelagem do sistema: diagramas de classes, de sequência, de casos de uso e entidade-relacionamento (MER); wireframes, protótipos de alta fidelidade e primeira migration do banco de dados.
 * 0.1.0 - 01/05/2026
-    *
+    * Documentação inicial do projeto: WAD, requisitos funcionais e não funcionais, regras de negócio, user stories e análises de negócio (Forças de Porter, SWOT e Business Model Canvas).
 
 ## 📋 Licença/License
 
-<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a href="https://git.inteli.edu.br/graduacao/2026-1b/t27/g02">RedRun</a> © 2026 by <a href="https://git.inteli.edu.br/graduacao/2026-1b/t27/g02">Inteli, Fernanda Helena Bezerra, Gabriel Simões Marques, Giovanna Scharlau Carettoni, Laura Faria Damasceno, Miguel Vinícius da Silva, Nicoly Mendes Adesanmi, Pietro Sansão Lucas</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</a>
+<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p>RedRun © 2026 by <a href="https://www.inteli.edu.br">Inteli</a>, <a href="http://www.linkedin.com/in/nandahelena">Fernanda Helena Bezerra</a>, <a href="https://www.linkedin.com/in/gabrielmarquesinteli">Gabriel Simões Marques</a>, <a href="https://www.linkedin.com/in/giovannascharlaucarettoni">Giovanna Scharlau Carettoni</a>, <a href="http://www.linkedin.com/in/laura-faria-damasceno">Laura Faria Damasceno</a>, <a href="http://www.linkedin.com/in/miguelvvinicius">Miguel Vinícius da Silva</a>, <a href="http://www.linkedin.com/in/nicoly-mendes-adesanmi-b260052b2">Nicoly Mendes Adesanmi</a>, <a href="https://www.linkedin.com/in/pietrosansao">Pietro Sansão Lucas</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</a>.</p>
