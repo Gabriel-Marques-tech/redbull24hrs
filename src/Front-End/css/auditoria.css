@@ -1472,8 +1472,7 @@ img {
 
 .checkpoint-input-linha {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 34px;
-    gap: 12px;
+    grid-template-columns: minmax(0, 1fr);
     align-items: center;
 }
 
@@ -1492,31 +1491,10 @@ img {
     color: #8a8a8a;
 }
 
-.checkpoint-input-linha input[readonly] {
-    cursor: default;
-}
-
-.btn-editar-checkpoint {
-    display: grid;
-    place-items: center;
-    width: 34px;
-    height: 38px;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: var(--vermelho);
-    cursor: pointer;
-}
-
-.btn-editar-checkpoint svg {
-    width: 24px;
-    height: 24px;
-    margin: 0;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+.checkpoint-input-linha input:focus {
+    outline: none;
+    border-color: var(--vermelho);
+    box-shadow: 0 0 0 3px rgba(224, 0, 58, 0.18);
 }
 
 .modal-checkpoint-conteudo .checkpoint-acoes {
@@ -2611,6 +2589,27 @@ html[data-theme="dark"] .btn-cancelar-turno:hover {
     background: rgba(255, 255, 255, 0.08);
 }
 
+html[data-theme="dark"] .resumo-km-menor {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .divisor-km-menor {
+    background-color: var(--borda);
+}
+
+html[data-theme="dark"] .btn-cancelar-km-menor {
+    background: transparent;
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .btn-cancelar-km-menor:hover {
+    border-color: var(--texto-principal);
+    background: rgba(255, 255, 255, 0.08);
+}
+
 html[data-theme="dark"] .corredor-fila:hover {
     background: rgba(224, 0, 58, 0.12);
 }
@@ -2754,14 +2753,6 @@ html[data-theme="dark"] #modalCheckpoint .checkpoint-input-linha input::placehol
 
 #modalCheckpoint .modal-checkpoint-conteudo .btn-cancelar-turno {
     order: 1;
-}
-
-#modalCheckpoint .checkpoint-dados .checkpoint-input-linha {
-    grid-template-columns: minmax(0, 1fr) 44px;
-}
-
-#modalCheckpoint .btn-editar-checkpoint {
-    width: 44px;
 }
 
 .corredor-atual .acao-corredor {
