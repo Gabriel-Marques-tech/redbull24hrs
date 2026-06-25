@@ -4809,11 +4809,9 @@ O **bug #227** (sessionStorage não persistido ao navegar entre telas) revelou u
 
 ## 4.3. Versão final da aplicação web (sprint 5)
 
----
-
 ### a) O que foi refinado ou adicionado desde a sprint 4
 
-A sprint 5 teve dois objetivos simultâneos: fechar as pendências identificadas na sprint anterior e entregar as funcionalidades que tornam o sistema completo para uso real no evento. O resultado foi um conjunto de dez entregas que cobrem desde a leitura automática de quilometragem por câmera até o card de desempenho que o atleta compartilha nas redes sociais após as 24 horas de corrida.
+A sprint teve dois objetivos simultâneos: fechar as pendências identificadas na sprint anterior e entregar as funcionalidades que tornam o sistema completo para uso real no evento. O resultado foi um conjunto de dez entregas que cobrem desde a leitura automática de quilometragem por câmera até o card de desempenho que o atleta compartilha nas redes sociais após as 24 horas de corrida.
 
 **Upload de imagem no checkpoint e OCR (#268, #270)**
 
@@ -4855,13 +4853,11 @@ O fluxo de criação de evento ganhou uma etapa dedicada ao upload de imagem (`g
 
 Com todas as features entregues em paralelo, a última semana da sprint foi dedicada a fazer as integrações funcionarem juntas corretamente: o OCR voltou a preencher campos no modal após ter sido desconectado em um refactor intermediário; a foto de evento voltou a aparecer no card após ajuste de referência de URL; os avatares de auditor passaram a exibir a foto de perfil. Uma validação de negócio também foi adicionada: o sistema agora bloqueia o início do evento quando alguma equipe não tem atletas cadastrados, cobrindo o cenário mais crítico do RF003. A suíte de testes encerrou a sprint com 21 arquivos e cobertura atualizada para os novos módulos de imagem e OCR.
 
----
 
 ### b) Pendências remanescentes
 
-O sistema foi entregue completo para o escopo do MVP acordado com o parceiro. A única funcionalidade identificada como evolução natural para versões futuras é a comparação de resultados entre etapas regionais: hoje cada evento é registrado de forma independente, e não há uma visão consolidada que permita comparar a quilometragem total, pace médio ou número de trocas entre as diferentes regionais do Red Bull 24 Horas. Essa funcionalidade não foi incluída no escopo da sprint 5 porque depende de dados de múltiplos eventos já realizados e de decisões de modelagem sobre como agregar resultados de competições distintas — algo que se alinha mais a uma segunda versão do produto do que a um ajuste incremental.
+O sistema foi entregue completo para o escopo do MVP acordado com o parceiro. A única funcionalidade identificada como evolução natural para versões futuras é a comparação de resultados entre etapas regionais: hoje cada evento é registrado de forma independente, e não há uma visão consolidada que permita comparar a quilometragem total, pace médio ou número de trocas entre as diferentes regionais do Red Bull 24 Horas. Essa funcionalidade não foi incluída no escopo desta sprint porque depende de dados de múltiplos eventos já realizados e de decisões de modelagem sobre como agregar resultados de competições distintas — algo que se alinha mais a uma segunda versão do produto do que a um ajuste incremental.
 
----
 
 ### c) Dificuldades técnicas enfrentadas
 
