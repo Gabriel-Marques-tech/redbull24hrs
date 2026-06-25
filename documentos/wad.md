@@ -3206,6 +3206,36 @@ As entidades foram derivadas do domínio e revisadas conforme o schema resultant
   <br><br>
 </div>
 
+#### Relacionamentos e cardinalidades
+
+Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui atletas e esteiras; um turno aponta para a esteira utilizada; e o turno passou a ser operado e auditado exclusivamente por auditores, sem participação de gerentes nesse fluxo. A posse de sessões de autenticação (refresh tokens) continua modelada por dois relacionamentos independentes e mutuamente exclusivos: um para gerentes e outro para auditores. Eventos passaram a registrar seu histórico de pausas em uma entidade própria.
+
+<div align="center">
+  <sub>Quadro 21 - Relacionamentos e cardinalidades do MER</sub>
+</div>
+
+| Relacionamento | Entidade A | Cardinalidade | Entidade B | Descrição |
+| :--- | :--- | :--- | :--- | :--- |
+| **Manages** | Managers | N:N | Events | Gerentes podem administrar vários eventos e eventos podem possuir vários gerentes *(identificado graficamente como "Menages")*. |
+| **Has** | Events | 1:N | Teams | Cada equipe pertence a um único evento. |
+| **Rosters** | Teams | 1:N | Athletes | Cada atleta pertence a uma única equipe. |
+| **Has** | Teams | 1:N | Treadmills | Uma equipe pode possuir várias esteiras; uma esteira pode ficar temporariamente sem equipe. |
+| **Performs** | Athletes | 1:N | Shifts | Um atleta pode realizar vários turnos; cada turno possui um atleta. |
+| **Operates** | Auditors | 1:N | Shifts | Um auditor pode operar vários turnos, sendo o responsável direto pela condução da corrida no momento do registro. |
+| **Audits** | Auditors | 1:N | Shifts | Um auditor pode auditar (revisar) vários turnos; o turno pode ser auditado por um auditor diferente do que o operou. |
+| **Hosts** | Treadmills | 1:N | Shifts | Uma esteira recebe vários turnos e cada turno referencia no máximo uma esteira. |
+| **Records** | Shifts | 1:N | Checkpoints | Todo checkpoint pertence a um turno. |
+| **Generates** | Shifts | 1:N | Logs | Todo log pertence a um turno. |
+| **References** | Checkpoints | 1:N opcional | Logs | Um log pode apontar para um checkpoint; vários logs podem referenciar o mesmo checkpoint. |
+| **Records** | Events | 1:N | PauseLog | Um evento pode acumular vários registros de pausa ao longo de sua execução. |
+| **Owns Session** | Managers | 1:N | RefreshToken | Cada refresh token de gerente pertence exatamente a um gerente. |
+| **Has Session** | Auditors | 1:N | RefreshToken | Cada refresh token de auditor pertence exatamente a um auditor. |
+
+<div align="center">
+  <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
+  <br><br>
+</div>
+
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER)
 
 O DER traduz o MER para a estrutura relacional do PostgreSQL. A versão abaixo representa o estado efetivamente obtido após a execução sequencial das migrations `001` a `017`, e não apenas o schema inicial da migration `001`.
