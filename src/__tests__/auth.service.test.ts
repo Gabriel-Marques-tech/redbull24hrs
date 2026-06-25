@@ -58,10 +58,9 @@ describe("registerManager", () => {
 
 describe("registerAuditor", () => {
   it("Deve retornar null quando algum campo obrigatório está ausente", async () => {
-    expect(await authService.registerAuditor("", "a@a.com", "123", 10)).toBeNull();
-    expect(await authService.registerAuditor("A", "", "123", 10)).toBeNull();
-    expect(await authService.registerAuditor("A", "a@a.com", "", 10)).toBeNull();
-    expect(await authService.registerAuditor("A", "a@a.com", "123", 0)).toBeNull();
+    expect(await authService.registerAuditor("", "a@a.com", "123")).toBeNull();
+    expect(await authService.registerAuditor("A", "", "123")).toBeNull();
+    expect(await authService.registerAuditor("A", "a@a.com", "")).toBeNull();
     expect(mockRepo.registerAuditor).not.toHaveBeenCalled();
   });
 
@@ -71,20 +70,20 @@ describe("registerAuditor", () => {
       id: "5",
       name: "Aud",
       email: "aud@a.com",
-      registration_number: 42,
+      registration_number: 1000,
       is_active: true,
     });
 
-    const result = await authService.registerAuditor("Aud", "aud@a.com", "pwd", 42);
+    const result = await authService.registerAuditor("Aud", "aud@a.com", "pwd");
 
     expect(mockBcrypt.hash).toHaveBeenCalledWith("pwd", 10);
     expect(mockRepo.registerAuditor).toHaveBeenCalledWith(
       "Aud",
       "aud@a.com",
       "hashed",
-      42,
+      null,
     );
-    expect(result?.registration_number).toBe(42);
+    expect(result?.registration_number).toBe(1000);
   });
 });
 

@@ -1,40 +1,20 @@
 
 async function apiFetch(url, options = {}) {
-	const accessToken = localStorage.getItem('accessToken')
+	const makeReq = (token) => {
+		const headers = { 'Authorization': `Bearer ${token}`, ...options.headers }
+		if (!(options.body instanceof FormData)) headers['Content-Type'] = 'application/json'
+		return fetch(url, { credentials: 'include', ...options, headers })
+	}
 
-	const res = await fetch(url, {
-		credentials: 'include',
-		...options,
-		headers: {
-			'Content-Type': 'application/json',
-			'Authorization': `Bearer ${accessToken}`,
-			...options.headers
-		}
-	})
+	const accessToken = localStorage.getItem('accessToken')
+	const res = await makeReq(accessToken)
 
 	if (res.status === 401) {
-		const refreshRes = await fetch('/auth/refresh', {
-			method: 'POST',
-			credentials: 'include'
-		})
-
-		if (!refreshRes.ok) {
-			window.location.href = '/login'
-			return
-		}
-
+		const refreshRes = await fetch('/auth/refresh', { method: 'POST', credentials: 'include' })
+		if (!refreshRes.ok) { window.location.href = '/login'; return }
 		const { accessToken: newToken } = await refreshRes.json()
 		localStorage.setItem('accessToken', newToken)
-
-		return await fetch(url, {
-			credentials: 'include',
-			...options,
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${newToken}`,
-				...options.headers
-			}
-		})
+		return makeReq(newToken)
 	}
 
 	return res
