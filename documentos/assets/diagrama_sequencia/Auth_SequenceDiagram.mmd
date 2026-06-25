@@ -1,0 +1,144 @@
+
+%%{init: {
+  "theme": "base",
+  "background": "#ffffff",
+  "themeVariables": {
+    "primaryColor": "#0F0069",
+    "primaryTextColor": "#FFFFFF",
+    "primaryBorderColor": "#D2003C",
+    "secondaryColor": "#D2003C",
+    "secondaryTextColor": "#FFFFFF",
+    "secondaryBorderColor": "#D2003C",
+    "tertiaryColor": "#E8E8F5",
+    "tertiaryTextColor": "#0F0069",
+    "tertiaryBorderColor": "#0F0069",
+    "noteBkgColor": "#FFCC00",
+    "noteTextColor": "#0F0069",
+    "noteBorderColor": "#D2003C",
+    "activationBkgColor": "#D2003C",
+    "activationBorderColor": "#0F0069",
+    "actorBkg": "#0F0069",
+    "actorTextColor": "#FFFFFF",
+    "actorBorderColor": "#D2003C",
+    "actorLineColor": "#000000",
+    "signalColor": "#000000",
+    "signalTextColor": "#000000",
+    "labelBoxBkgColor": "#E8E8F5",
+    "labelBoxBorderColor": "#0F0069",
+    "labelTextColor": "#0F0069",
+    "loopTextColor": "#0F0069",
+    "fontFamily": "Arial, sans-serif",
+    "fontSize": "14px",
+    "background": "#FFFFFF"
+  }
+}}%%
+sequenceDiagram
+    participant C as Client (Browser)
+    participant AM as AuthMiddleware
+    participant AC as AuthController
+    participant AS as AuthService
+    participant AR as AuthRepository
+    participant DB as Database
+
+    Note over C,DB: 0 · Cadastro inicial — RF027
+
+    C->>+AC: 0a. POST /auth/register/manager { name, email, password }
+    Note over AC: Rota pública — sem requireAuth
+    AC->>+AS: registerManager(name, email, password)
+    AS->>AS: bcrypt.hash(password, 10)
+    AS->>+AR: createManager({ name, email, password_hash })
+    AR->>+DB: INSERT INTO managers (name, email, password_hash)
+    DB-->>-AR: manager { id, name, email, role: "manager" }
+    AR-->>-AS: manager
+    AS-->>-AC: manager
+    AC-->>-C: 201 { id, name, email, role: "manager" }
+
+    C->>+AC: 0b. POST /auth/register/auditor { name, email, password }
+    AC->>+AS: registerAuditor(name, email, password)
+    AS->>AS: bcrypt.hash(password, 10)
+    AS->>+AR: createAuditor({ name, email, password_hash })
+    AR->>+DB: INSERT INTO auditors (name, email, password_hash)
+    DB-->>-AR: auditor { id, name, email, role: "auditor" }
+    AR-->>-AS: auditor
+    AS-->>-AC: auditor
+    AC-->>-C: 201 { id, name, email, role: "auditor" }
+
+    alt Email ja cadastrado
+        AR-->>AS: conflict
+        AS-->>AC: 409 { error: "Email ja cadastrado" }
+        AC-->>C: 409 { error: "Email ja cadastrado" }
+    end
+
+    Note over C,DB: 1 · Login — RF027 · RN38 · RN39 · RN41
+
+    C->>+AC: 1. POST /auth/login { email, password }
+    AC->>+AS: 2. login(email, password)
+    AS->>+AR: 3. findByEmail(email)
+    AR->>+DB: 4. SELECT * FROM managers/auditors WHERE email = $1
+    DB-->>-AR: 5. user row (id, name, email, password_hash, role)
+    AR-->>-AS: 6. user | null
+    AS->>AS: 7. bcrypt.compare(password, hash)
+    AS->>AS: 8. signAccessToken(payload) — exp 15min
+    AS->>AS: 9. signRefreshToken() — exp 7d
+    AS->>+AR: 10. saveRefreshToken(SHA-256(refreshToken), userId, role)
+    AR->>+DB: 11. INSERT INTO refresh_tokens (token_hash, manager_id/auditor_id, expires_at)
+    DB-->>-AR: 12. ok
+    AR-->>-AS: 13. saved
+    AS-->>-AC: 14. { accessToken, refreshToken }
+    AC-->>-C: 15. 200 — Set-Cookie: accessToken (HttpOnly, 15min) + refreshToken (HttpOnly, 7d)
+
+    alt Credenciais inválidas
+        AS-->>AC: 401 { error: "Credenciais inválidas" }
+        AC-->>C: 401 { error: "Credenciais inválidas" }
+    end
+
+    Note over C,DB: 2 · Requisição autenticada (API) — requireAuth
+
+    C->>+AM: 16. GET /audit/shifts/:id/status — Authorization: Bearer <accessToken>
+    AM->>AM: 17. verifyAccessToken(token)
+    alt Token válido
+        AM->>AM: 18. req.user = { id, email, role, name }
+        AM-->>C: next() — requisição prossegue ao Controller
+    else Token ausente ou expirado
+        AM-->>-C: 401 { error: "Token de acesso inválido ou expirado" }
+    end
+
+    Note over C,DB: 3 · Renovação de token (SSR) — requirePageAuth
+
+    C->>+AM: 19. GET /audit (page route) — Cookie: accessToken (expirado)
+    AM->>AM: 20. verifyAccessToken(accessToken) → falha
+    AM->>+AS: 21. AuthService.refresh(refreshToken)
+    AS->>+AR: 22. findByHash(SHA-256(refreshToken))
+    AR->>+DB: 23. SELECT * FROM refresh_tokens WHERE token_hash = $1 AND revoked_at IS NULL
+    DB-->>-AR: 24. token row
+    AR-->>-AS: 25. tokenRecord
+    AS->>+AR: 26. revokeToken(id) — preenche revoked_at
+    AR->>+DB: 27. UPDATE refresh_tokens SET revoked_at = NOW()
+    DB-->>-AR: 28. ok
+    AR-->>-AS: 29. revoked
+    AS->>AS: 30. signAccessToken + signRefreshToken novos
+    AS->>+AR: 31. saveRefreshToken(novo hash)
+    AR->>+DB: 32. INSERT novo refresh_token
+    DB-->>-AR: 33. ok
+    AR-->>-AS: 34. saved
+    AS-->>-AM: 35. { accessToken, refreshToken }
+    AM->>AM: 36. Set-Cookie com novos tokens + req.user preenchido
+    AM-->>-C: 37. página renderizada normalmente
+
+    alt refreshToken ausente ou revogado
+        AS-->>AM: null
+        AM-->>C: redirect /login
+    end
+
+    Note over C,DB: 4 · Logout — RF027 · RN40 · RN41
+
+    C->>+AC: 38. POST /auth/logout { refreshToken? } — Cookie: refreshToken
+    AC->>+AS: 39. logout(refreshToken)
+    AS->>AS: 40. SHA-256(refreshToken)
+    AS->>+AR: 41. revokeToken(token_hash)
+    AR->>+DB: 42. UPDATE refresh_tokens SET revoked_at = NOW() WHERE token_hash = $1
+    DB-->>-AR: 43. ok
+    AR-->>-AS: 44. revoked
+    AS-->>-AC: 45. ok
+    AC-->>-C: 46. 200 — Clear-Cookie: accessToken + refreshToken
+    Note over C: accessToken expira naturalmente em até 15min

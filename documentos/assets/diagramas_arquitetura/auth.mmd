@@ -1,0 +1,80 @@
+%%{init: {"theme":"base","flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":80,"rankSpacing":95,"padding":24},"themeVariables":{"fontFamily":"Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryTextColor":"#0F0069","primaryBorderColor":"#0F0069","lineColor":"#0F0069","tertiaryColor":"#F5F5FA","tertiaryTextColor":"#0F0069"}}}%%
+flowchart TB
+
+    classDef client fill:#FFFFFF,stroke:#0F0069,stroke-width:2px,color:#0F0069;
+    classDef route fill:#FFF7CC,stroke:#D6A700,stroke-width:2px,color:#0F0069;
+    classDef controller fill:#E8E8F5,stroke:#0F0069,stroke-width:2px,color:#0F0069;
+    classDef service fill:#E7F5E8,stroke:#2E7D32,stroke-width:2px,color:#0F0069;
+    classDef repository fill:#FFF0D6,stroke:#EF6C00,stroke-width:2px,color:#0F0069;
+    classDef db fill:#ECEFF1,stroke:#37474F,stroke-width:2px,color:#0F0069;
+    classDef output fill:#FDE7EF,stroke:#D2003C,stroke-width:2px,color:#0F0069;
+    classDef note fill:#FFFFFF,stroke:#D2003C,stroke-width:2px,stroke-dasharray: 6 4,color:#0F0069;
+
+    subgraph L1["Cliente"]
+        direction TB
+        C["Browser / API Client"]:::client
+    end
+
+    subgraph L2["Rotas públicas/protegidas"]
+        direction TB
+        R1["POST /auth/register/manager"]:::route
+        R2["POST /auth/register/auditor"]:::route
+        R3["POST /auth/login"]:::route
+        R4["POST /auth/logout"]:::route
+        R5["requireAuth / requirePageAuth"]:::route
+    end
+
+    subgraph L3["Controller / Middleware"]
+        direction TB
+        AC["AuthController"]:::controller
+        AM["AuthMiddleware"]:::controller
+    end
+
+    subgraph L4["Service"]
+        direction TB
+        AS["AuthService<br/>hash + JWT + refresh"]:::service
+        RN["RF027<br/>RN38 · RN39 · RN40 · RN41"]:::note
+    end
+
+    subgraph L5["Repository"]
+        direction TB
+        AR["AuthRepository"]:::repository
+        Q1["createManager / createAuditor"]:::repository
+        Q2["findByEmail"]:::repository
+        Q3["save/revoke refresh token"]:::repository
+    end
+
+    subgraph L6["Banco de Dados"]
+        direction TB
+        DB["PostgreSQL"]:::db
+        M["managers"]:::db
+        AU["auditors"]:::db
+        RT["refresh_tokens"]:::db
+    end
+
+    subgraph L7["Saídas"]
+        direction TB
+        O1["201 usuário cadastrado"]:::output
+        O2["200 cookies HttpOnly"]:::output
+        O3["401 / 409 tratados"]:::output
+        O4["redirect /login se token inválido"]:::output
+    end
+
+    C --> R1 --> AC --> AS --> AR
+    C --> R2 --> AC
+    C --> R3 --> AC
+    C --> R4 --> AC
+    C --> R5 --> AM --> AS
+    AS -.-> RN
+    AR --> Q1 --> M
+    Q1 --> AU
+    AR --> Q2 --> M
+    Q2 --> AU
+    AR --> Q3 --> RT
+    M --> DB
+    AU --> DB
+    RT --> DB
+    DB --> AR --> AS --> AC --> O1 --> C
+    AC --> O2 --> C
+    AC --> O3 --> C
+    AM --> O4 --> C

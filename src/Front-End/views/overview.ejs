@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visão Geral</title>
     <link rel="stylesheet" href="/css/global.css">
+    <script src="/js/tema.js"></script>
     <link rel="stylesheet" href="/css/visao-geral.css">
 </head>
 <body>
@@ -42,26 +43,38 @@
             <div class="card-resumo">
                 <div class="linha-resumo">
                     <span class="icone"><img src="/assets/visao-geral/mapa.svg" alt=""></span>
-                    <p><%= event.local %></p>
+                    <div>
+                        <span class="rotulo-resumo">Local</span>
+                        <p><%= event.local %></p>
+                    </div>
                 </div>
 
                 <div class="linha-resumo">
                     <span class="icone"><img src="/assets/visao-geral/calendario.svg" alt=""></span>
-                    <p><%= new Date(event.date).toLocaleDateString('pt-BR') %></p>
+                    <div>
+                        <span class="rotulo-resumo">Data</span>
+                        <p><%= new Date(event.date).toLocaleDateString('pt-BR') %></p>
+                    </div>
                 </div>
 
                 <div class="linha-resumo">
                     <span class="icone"><img src="/assets/visao-geral/pessoas.svg" alt=""></span>
-                    <p><%= team.name %></p>
+                    <div>
+                        <span class="rotulo-resumo">Equipe</span>
+                        <p><%= team.name %></p>
+                    </div>
                 </div>
 
                 <div class="linha-resumo">
                     <span class="icone"><img src="/assets/visao-geral/esteira.svg" alt=""></span>
-                    <p>Esteira <%= treadmill.number %></p>
+                    <div>
+                        <span class="rotulo-resumo">Esteira inicial</span>
+                        <p>Esteira <%= treadmill.number %></p>
+                    </div>
                 </div>
             </div>
 
-            <div class="botoes">
+            <div class="botoes botoes-fluxo-selecao">
                 <button class="btn-voltar" type="button"
                     onclick="window.location.href='/treadmill?eventId=<%= eventId %>&teamId=<%= teamId %>'">
                     Anterior

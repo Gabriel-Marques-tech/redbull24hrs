@@ -29,21 +29,21 @@ export const shiftRepository = {
 		return result.rows;
 	},
 
-	async eventStatusByAthlete(athlete_id: number): Promise<string | null> {
+	async eventStatusByAthlete(athlete_id: number): Promise<{ status: string; paused_at: string | null } | null> {
 		const result = await pool.query(
-			`SELECT e.status
+			`SELECT e.status, e.paused_at
 			 FROM athletes a
 			 JOIN teams t  ON t.id = a.team_id
 			 JOIN events e ON e.id = t.event_id
 			 WHERE a.id = $1`,
 			[athlete_id]
 		);
-		return result.rows[0]?.status ?? null;
+		return result.rows[0] ?? null;
 	},
 
-	async eventStatusByShift(shift_id: number): Promise<string | null> {
+	async eventStatusByShift(shift_id: number): Promise<{ status: string; paused_at: string | null } | null> {
 		const result = await pool.query(
-			`SELECT e.status
+			`SELECT e.status, e.paused_at
 			 FROM shifts s
 			 JOIN athletes a ON a.id = s.athlete_id
 			 JOIN teams t    ON t.id = a.team_id
@@ -51,7 +51,7 @@ export const shiftRepository = {
 			 WHERE s.id = $1`,
 			[shift_id]
 		);
-		return result.rows[0]?.status ?? null;
+		return result.rows[0] ?? null;
 	},
 
 	async treadmillExists(treadmill_id: number): Promise<boolean> {
@@ -324,7 +324,7 @@ export const shiftRepository = {
 		);
 	},
 
-	async finish(id: number, km_end: number, duration_seconds?: number) {
+	async finish(id: number, km_end: number, duration_seconds?: number, pace?: string) {
 		// Quando há duração editada, calcula end_at = start_at + duração no SQL.
 		// Tudo no domínio do Postgres → zero conversão de timezone (TIMESTAMP sem tz).
 		const [sql, params] = duration_seconds != null
@@ -339,10 +339,11 @@ export const shiftRepository = {
 				               WHEN $3 > 0
 				               THEN ROUND(($1 - km_start) / ($3 / 3600.0))
 				               ELSE 0
-				             END
+				             END,
+				     pace = $4
 				 WHERE id = $2 AND status = 'in_progress'
 				 RETURNING *`,
-				[km_end, id, duration_seconds]
+				[km_end, id, duration_seconds, pace ?? null]
 			  ]
 			: [
 				`UPDATE shifts
@@ -355,10 +356,11 @@ export const shiftRepository = {
 				               WHEN EXTRACT(EPOCH FROM (NOW() - start_at)) > 0
 				               THEN ROUND(($1 - km_start) / (EXTRACT(EPOCH FROM (NOW() - start_at)) / 3600.0))
 				               ELSE 0
-				             END
+				             END,
+				     pace = $3
 				 WHERE id = $2 AND status = 'in_progress'
 				 RETURNING *`,
-				[km_end, id]
+				[km_end, id, pace ?? null]
 			  ];
 		const result = await pool.query(sql, params);
 		const shift = result.rows[0] ?? null;

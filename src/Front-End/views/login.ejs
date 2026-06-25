@@ -9,33 +9,38 @@
     <link href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap" rel="stylesheet">
     <link href="/css/login.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/global.css">
+    <script src="/js/tema.js"></script>
 </head>
 
 <body>
-
-    <div class="login">
-        <img src="/assets/logo-RB24h/logo.png" alt="logo">
+    <main class="login">
+        <img src="/assets/logo-RB24h/logo.png" alt="Red Bull 24h">
         <div class="titulo">
-            <h1>Faça seu login</h1><br>
-            <p>24 horas conectando ideias, energias e<br> pessoas que fazem acontecer.</p>
+            <h1>Faça seu login</h1>
+            <p>24 horas conectando ideias, energias e pessoas<br> que fazem acontecer.</p>
         </div>
         <div class="form">
             <form id="login-form">
-                <div class="role-selector">
-                    <input type="radio" id="role-auditor" name="role" value="auditor" checked>
-                    <label for="role-auditor">Auditor</label>
-                    <input type="radio" id="role-manager" name="role" value="manager">
-                    <label for="role-manager">Gerente</label>
+                <div class="perfil-login" role="radiogroup" aria-label="Tipo de usuário">
+                    <label>
+                        <input type="radio" name="role" value="auditor" checked>
+                        Auditor
+                    </label>
+                    <label>
+                        <input type="radio" name="role" value="manager">
+                        Gerente
+                    </label>
                 </div>
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Insira seu email" required>
+
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" placeholder="Insira seu e-mail" autocomplete="email" required>
                 <label for="senha" class="l1">Senha</label>
-                <input type="password" name="senha" id="senha" placeholder="Insira sua senha" required><br>
+                <input type="password" name="senha" id="senha" placeholder="Insira sua senha" autocomplete="current-password" required>
                 <p id="erro" style="color:red;display:none;margin:0;"></p>
                 <button type="submit"><strong>Entrar</strong></button>
             </form>
         </div>
-    </div>
+    </main>
 
     <script type="module" src="/js/login.js"></script>
 </body>

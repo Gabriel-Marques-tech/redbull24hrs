@@ -16,23 +16,26 @@ export const shiftService = {
 			throw new Error("Atleta não encontrado");
 
 		// Auditor só opera com evento em andamento (pending = não iniciado, finished = encerrado)
-		const eventStatus = await shiftRepository.eventStatusByAthlete(athlete_id);
+		const eventInfo = await shiftRepository.eventStatusByAthlete(athlete_id);
+		const eventStatus = eventInfo?.status ?? null;
 		if (eventStatus !== "in_progress")
 			throw new Error(
 				eventStatus === "finished"
 					? "Evento encerrado: não é possível iniciar novos turnos"
 					: "Evento não está em andamento: aguarde o início da competição"
 			);
+		if (eventInfo?.paused_at)
+			throw new Error("Competição pausada: não é possível iniciar turnos durante a pausa");
 
 		// RF003 / RN28: evento deve ter equipes cadastradas
-		// RF003 / RN17: cada equipe deve ter exatamente 16 corredores ativos
+		// Cada equipe precisa de pelo menos um corredor ativo (qualquer quantidade > 0)
 		const teams = await shiftRepository.validateTeamsForAthlete(athlete_id);
 		if (teams.length === 0)
 			throw new Error("RN28: nenhuma equipe cadastrada no evento do atleta");
-		const invalid = teams.filter((t) => t.count !== 16);
+		const invalid = teams.filter((t) => t.count < 1);
 		if (invalid.length > 0) {
-			const detail = invalid.map((t) => `"${t.name}" (${t.count}/16)`).join(", ");
-			throw new Error(`RN17: equipe(s) sem 16 corredores ativos: ${detail}`);
+			const detail = invalid.map((t) => `"${t.name}" (${t.count})`).join(", ");
+			throw new Error(`RN17: equipe(s) sem corredores ativos: ${detail}`);
 		}
 
 		if (!(await shiftRepository.treadmillExists(treadmill_id)))
@@ -81,9 +84,11 @@ export const shiftService = {
 		if (!shift) throw new Error("Turno não encontrado");
 		if (shift.status !== "in_progress") throw new Error("Turno não está em andamento");
 
-		const eventStatus = await shiftRepository.eventStatusByShift(shift_id);
-		if (eventStatus !== "in_progress")
+		const eventInfo = await shiftRepository.eventStatusByShift(shift_id);
+		if (eventInfo?.status !== "in_progress")
 			throw new Error("Evento não está em andamento: operação não permitida");
+		if (eventInfo?.paused_at)
+			throw new Error("Competição pausada: não é possível registrar checkpoints durante a pausa");
 
 		const lastKm = await shiftRepository.lastCheckpointKm(shift_id);
 		const floor = lastKm !== null ? lastKm : shift.km_start;
@@ -106,8 +111,8 @@ export const shiftService = {
 		const shift = await shiftRepository.findById(checkpoint.shift_id);
 		if (!shift) throw new Error("Turno não encontrado");
 
-		const eventStatus = await shiftRepository.eventStatusByShift(checkpoint.shift_id);
-		if (eventStatus !== "in_progress")
+		const eventInfo = await shiftRepository.eventStatusByShift(checkpoint.shift_id);
+		if (eventInfo?.status !== "in_progress")
 			throw new Error("Evento não está em andamento: operação não permitida");
 
 		if (new_distance < 0)
@@ -143,15 +148,15 @@ export const shiftService = {
 		await shiftRepository.abandon(shift_id, forceClose);
 	},
 
-	async finishShift(shift_id: number, km_end: number, athlete_id?: number, duration_seconds?: number) {
+	async finishShift(shift_id: number, km_end: number, athlete_id?: number, duration_seconds?: number, pace?: string) {
 		if (km_end < 0) throw new Error("km final inválido: deve ser maior ou igual a zero");
 
 		const shift = await shiftRepository.findById(shift_id);
 		if (!shift) throw new Error("Turno não encontrado");
 		if (shift.status !== "in_progress") throw new Error("Turno não está em andamento");
 
-		const eventStatus = await shiftRepository.eventStatusByShift(shift_id);
-		if (eventStatus !== "in_progress")
+		const eventInfo = await shiftRepository.eventStatusByShift(shift_id);
+		if (eventInfo?.status !== "in_progress")
 			throw new Error("Evento não está em andamento: operação não permitida");
 
 		if (km_end < shift.km_start)
@@ -174,7 +179,7 @@ export const shiftService = {
 			safeDuration = undefined;
 		}
 
-		const finished = await shiftRepository.finish(shift_id, km_end, safeDuration);
+		const finished = await shiftRepository.finish(shift_id, km_end, safeDuration, pace);
 		if (!finished) throw new Error("Turno não está em andamento");
 		return finished;
 	},
