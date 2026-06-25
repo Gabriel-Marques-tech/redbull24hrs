@@ -27,9 +27,16 @@ jest.mock("../repositories/athleteRepository", () => ({
 	},
 }));
 
+jest.mock("../repositories/treadmillRepository", () => ({
+	treadmillRepository: {
+		create: jest.fn(),
+	},
+}));
+
 import { eventRepository } from "../repositories/eventRepository";
 import { teamRepository } from "../repositories/teamRepository";
 import { athleteRepository } from "../repositories/athleteRepository";
+import { treadmillRepository } from "../repositories/treadmillRepository";
 
 const mockEvent = { id: 1, title: "Maratona SP", local: "São Paulo", date: "2026-06-01", deleted_at: null };
 const mockTeam = { id: 1, name: "Alpha", event_id: 1, deleted_at: null };
@@ -60,7 +67,9 @@ describe("GET /teams", () => {
 describe("POST /teams", () => {
 	it("201 – cria time em evento existente", async () => {
 		(eventRepository.findById as jest.Mock).mockResolvedValue(mockEvent);
+		(teamRepository.findAll as jest.Mock).mockResolvedValue([]);
 		(teamRepository.create as jest.Mock).mockResolvedValue(mockTeam);
+		(treadmillRepository.create as jest.Mock).mockResolvedValue({ id: 1 });
 		const res = await request(app).post("/teams").send({ event_id: 1, name: "Alpha" });
 		expect(res.status).toBe(201);
 		expect(res.body).toMatchObject({ id: 1, name: "Alpha" });
