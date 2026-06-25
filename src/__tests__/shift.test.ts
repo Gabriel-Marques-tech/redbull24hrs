@@ -124,7 +124,7 @@ describe("POST /audit/shifts/start", () => {
 		expect(res.status).toBe(409);
 	});
 
-	// RF003 – RN28/RN17
+	// RF003 – RN28
 	it("422 – RN28: nenhuma equipe cadastrada no evento", async () => {
 		happyStart();
 		(shiftRepository.validateTeamsForAthlete as jest.Mock).mockResolvedValue([]);
@@ -135,6 +135,7 @@ describe("POST /audit/shifts/start", () => {
 
 	it("422 – equipe sem corredores ativos (count 0)", async () => {
 		happyStart();
+		(shiftRepository.start as jest.Mock).mockResolvedValue(openShift);
 		(shiftRepository.validateTeamsForAthlete as jest.Mock).mockResolvedValue([
 			{ team_id: 1, name: "Alpha", count: 0 },
 			{ team_id: 2, name: "Beta",  count: 5 },

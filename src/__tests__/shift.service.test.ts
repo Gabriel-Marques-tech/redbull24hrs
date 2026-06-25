@@ -91,6 +91,7 @@ describe("shiftService.startShift", () => {
     ).resolves.toBeDefined();
   });
 
+
   it("throws when treadmill is occupied", async () => {
     mockRepo.athleteExists.mockResolvedValue(true);
     mockRepo.eventStatusByAthlete.mockResolvedValue({ status: "in_progress", paused_at: null });
@@ -418,7 +419,7 @@ describe("shiftService.finishShift – ramos extras", () => {
     mockRepo.finish.mockResolvedValue({ id: 1, status: "completed" });
 
     await shiftService.finishShift(1, 10, undefined, -5);
-    expect(mockRepo.finish).toHaveBeenCalledWith(1, 10, undefined);
+    expect(mockRepo.finish).toHaveBeenCalledWith(1, 10, undefined, undefined);
   });
 
   it("resets non-finite duration to undefined before calling finish", async () => {
@@ -433,6 +434,53 @@ describe("shiftService.finishShift – ramos extras", () => {
     mockRepo.finish.mockResolvedValue({ id: 1, status: "completed" });
 
     await shiftService.finishShift(1, 10, undefined, NaN);
-    expect(mockRepo.finish).toHaveBeenCalledWith(1, 10, undefined);
+    expect(mockRepo.finish).toHaveBeenCalledWith(1, 10, undefined, undefined);
+  });
+
+  it("reatribui o atleta quando athlete_id difere do turno", async () => {
+    mockRepo.findById.mockResolvedValue({
+      id: 1,
+      status: "in_progress",
+      km_start: 0,
+      athlete_id: 1,
+    } as any);
+    mockRepo.eventStatusByShift.mockResolvedValue({ status: "in_progress", paused_at: null });
+    mockRepo.lastCheckpointKm.mockResolvedValue(null);
+    mockRepo.athleteExists.mockResolvedValue(true);
+    mockRepo.finish.mockResolvedValue({ id: 1, status: "completed" });
+
+    await shiftService.finishShift(1, 10, 2);
+
+    expect(mockRepo.reassignAthlete).toHaveBeenCalledWith(1, 2);
+  });
+});
+
+describe("shiftService.startShift – pausa", () => {
+  it("throws when event is paused", async () => {
+    mockRepo.athleteExists.mockResolvedValue(true);
+    mockRepo.eventStatusByAthlete.mockResolvedValue({
+      status: "in_progress",
+      paused_at: "2026-06-01T10:00:00Z",
+    });
+    await expect(
+      shiftService.startShift(1, 1, "auditor", 1, 0)
+    ).rejects.toThrow("Competição pausada");
+  });
+});
+
+describe("shiftService.registerCheckpoint – pausa", () => {
+  it("throws when event is paused", async () => {
+    mockRepo.findById.mockResolvedValue({
+      id: 1,
+      status: "in_progress",
+      km_start: 0,
+    } as any);
+    mockRepo.eventStatusByShift.mockResolvedValue({
+      status: "in_progress",
+      paused_at: "2026-06-01T10:00:00Z",
+    });
+    await expect(
+      shiftService.registerCheckpoint(1, 5, "voluntary")
+    ).rejects.toThrow("Competição pausada");
   });
 });

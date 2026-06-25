@@ -293,3 +293,106 @@ h1{
 .btn-ver-mais:hover {
   background: #f0f0ff;
 }
+
+.user-drawer-acao-primaria:hover {
+  background: #b10033 !important;
+}
+
+.user-drawer-acao-secundaria:hover {
+  background: #fff3f6 !important;
+}
+
+.user-drawer-turnos:hover {
+  background: #f0f0ff !important;
+}
+
+/* tema escuro */
+html[data-theme="dark"] main {
+  background-color: var(--fundo-pagina);
+  color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .historico-titulo a,
+html[data-theme="dark"] .grupo-vazio,
+html[data-theme="dark"] .grupo-contador {
+  color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] .grupo-titulo {
+  border-color: var(--borda);
+}
+
+html[data-theme="dark"] .grupo-contador {
+  background-color: var(--fundo-suave);
+}
+
+html[data-theme="dark"] #overlayTurnoAtivo > div {
+  background: var(--fundo-superficie) !important;
+  color: var(--texto-principal);
+  border: 1px solid var(--borda);
+}
+
+html[data-theme="dark"] #overlayTurnoAtivo h2,
+html[data-theme="dark"] #modalTurnoTexto {
+  color: var(--texto-principal) !important;
+}
+
+html[data-theme="dark"] #overlayTurnoAtivo button:last-child {
+  background: var(--fundo-suave) !important;
+  color: var(--texto-principal) !important;
+  border: 1px solid var(--borda) !important;
+}
+
+html[data-theme="dark"] .user-drawer,
+html[data-theme="dark"] .user-drawer-conteudo,
+html[data-theme="dark"] .user-drawer-rodape {
+  background: var(--fundo-superficie) !important;
+  color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .user-drawer-funcao {
+  background: var(--fundo-suave) !important;
+  color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .user-drawer-acao-primaria {
+  background: var(--vermelho) !important;
+  border-color: var(--vermelho) !important;
+  color: #fff !important;
+}
+
+html[data-theme="dark"] .user-drawer-acao-primaria:hover {
+  background: #b10033 !important;
+}
+
+html[data-theme="dark"] .user-drawer-acao-secundaria {
+  background: transparent !important;
+  border-color: var(--vermelho) !important;
+  color: #ff4f7d !important;
+}
+
+html[data-theme="dark"] .user-drawer-acao-secundaria:hover {
+  background: var(--fundo-suave) !important;
+}
+
+html[data-theme="dark"] .user-drawer-turnos {
+  background: transparent !important;
+  border-color: var(--azul) !important;
+  color: #79aaff !important;
+}
+
+html[data-theme="dark"] .user-drawer-turnos:hover {
+  background: var(--fundo-suave) !important;
+}
+
+html[data-theme="dark"] .user-drawer-turnos p {
+  color: inherit;
+}
+
+html[data-theme="dark"] .user-drawer-rodape {
+  border-color: var(--borda) !important;
+}
+
+body.drawer-aberto .tema-toggle {
+  right: 342px;
+}

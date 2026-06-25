@@ -9,9 +9,28 @@
   --azul: #0F0069;
   --branco: #ffffff;
   --amarelo: #FFCC00;
+  --fundo-pagina: #ffffff;
+  --fundo-superficie: #ffffff;
+  --fundo-suave: #f1f1f4;
+  --texto-principal: #15151a;
+  --texto-secundario: #666670;
+  --borda: #d5d5dc;
+  --sombra: rgba(15, 0, 105, 0.10);
 }
 
-/* ---------------- DEFINE FONTE E ESPAÇAMENTO DE TODAS AS TELAS ---------------- */
+html[data-theme="dark"]{
+  color-scheme: dark;
+  --branco: #f7f7fb;
+  --fundo-pagina: #111116;
+  --fundo-superficie: #1c1c24;
+  --fundo-suave: #282832;
+  --texto-principal: #f5f5f7;
+  --texto-secundario: #d0d0da;
+  --borda: #3d3d49;
+  --sombra: rgba(0, 0, 0, 0.38);
+}
+
+/* ---------------- DEFINE FONTE E ESPAÃ‡AMENTO DE TODAS AS TELAS ---------------- */
 
 *{
   margin: 0;
@@ -32,6 +51,9 @@ html::-webkit-scrollbar{
 body{
   min-height: 100vh;
   overflow-x: hidden;
+  background-color: var(--fundo-pagina);
+  color: var(--texto-principal);
+  transition: background-color 0.22s ease, color 0.22s ease;
 }
 
 /* ---------------- DIV COLORIDA ---------------- */
@@ -48,7 +70,7 @@ body{
     );
 }
 
-/* ---------------- BOTÃO DE CANCELAR TELAS AUDITOR ---------------- */
+/* ---------------- BOTÃƒO DE CANCELAR TELAS AUDITOR ---------------- */
 
 .cancelar {
     display: flex;
@@ -85,33 +107,72 @@ body{
     background-color: #b10033;
 }
 
-/* ---------------- ETAPAS TELA AUDITOR ---------------- */
+/* ---------------- GUIA DE ETAPAS ---------------- */
 
-.etapas{
-    width: 240px;
-    min-width: 200px;
-    flex-shrink: 0;
-    height: fit-content;
-    background-color: #eeeeee;
-    border: 1px solid #C8C7C7;
-    margin-top: 100px;
-    overflow: visible;
+main:has(> .etapas) {
+    position: static;
+    justify-content: center;
+    gap: 0;
+    padding-top: 95px;
 }
 
-.etapas h3{
-    padding: 19px 34px;
-    font-size: 22px;
-}
-
-.etapa{
+main > .etapas{
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    z-index: 20;
     display: flex;
+    align-items: flex-start;
+    width: min(760px, calc(100vw - 180px));
+    min-width: 0;
+    height: auto;
+    margin-top: 0;
+    overflow: visible;
+    transform: translateX(-50%);
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+}
+
+main > .etapas h3{
+    display: none;
+}
+
+main > .etapas .etapa{
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 15px;
-    border-top: 1px solid #C8C7C7;
-    padding: 10px 34px;
+    justify-content: center;
+    gap: 6px;
+    min-height: 58px;
+    padding: 0 8px;
+    border: 0;
+}
+
+main > .etapas .etapa:not(:last-child)::after{
+    position: absolute;
+    top: 18px;
+    left: calc(50% + 19px);
+    width: calc(100% - 38px);
+    height: 2px;
+    background-color: #c8c7c7;
+    content: "";
+}
+
+main > .etapas .etapa p{
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: #5c5a5a;
 }
 
 .etapa span{
+    position: relative;
+    z-index: 1;
     width: 35px;
     height: 35px;
     border-radius: 50%;
@@ -122,9 +183,100 @@ body{
     font-weight: bold;
 }
 
+.etapa.ativa{
+    background-color: transparent;
+}
+
 .etapa.ativa span{
     background-color: var(--vermelho);
     color: var(--branco);
+    box-shadow: 0 0 0 7px rgba(210, 0, 60, 0.16);
+    animation: etapa-ativa-pulso 1.8s ease-in-out infinite;
+}
+
+.etapa.ativa p{
+    color: var(--vermelho);
+    animation: etapa-ativa-texto 0.35s ease-out both;
+}
+
+/* AÃ§Ãµes das etapas de equipe e esteira permanecem alinhadas. */
+.botoes-fluxo-selecao {
+    position: fixed !important;
+    bottom: 65px !important;
+    left: 50%;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    width: max-content;
+    margin: 0 !important;
+    padding-bottom: 0 !important;
+    transform: translateX(-50%);
+}
+
+.botoes-fluxo-selecao > button {
+    width: 180px !important;
+    height: 60px !important;
+    border-radius: 6px;
+    font-size: 28px !important;
+}
+
+.botoes-fluxo-selecao > button:not(:disabled),
+.select-equipe,
+.competicao,
+.selecao-equipe,
+.esteira,
+.cancelar {
+    transition:
+        transform 0.16s ease,
+        box-shadow 0.18s ease,
+        background-color 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease;
+}
+
+.botoes-fluxo-selecao > button:not(:disabled):active,
+.select-equipe:active,
+.competicao:active,
+.selecao-equipe:active,
+.esteira:active,
+.cancelar:active {
+    transform: scale(0.985);
+}
+
+@media (hover: hover) {
+    .botoes-fluxo-selecao > button:not(:disabled):hover,
+    .competicao:hover,
+    .selecao-equipe:hover,
+    .esteira:not(.esteira-ocupada):hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(15, 0, 105, 0.14);
+    }
+}
+
+@keyframes etapa-ativa-pulso {
+    0%, 100% { box-shadow: 0 0 0 7px rgba(210, 0, 60, 0.16); }
+    50% { box-shadow: 0 0 0 11px rgba(210, 0, 60, 0.04); }
+}
+
+@keyframes etapa-ativa-texto {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+    main:has(> .etapas) {
+        padding-top: 90px;
+    }
+
+    main > .etapas {
+        width: calc(100vw - 32px);
+        overflow-x: auto;
+    }
+
+    main > .etapas .etapa {
+        min-width: 100px;
+    }
 }
 
 
@@ -149,4 +301,298 @@ body{
     color: white;
     border: none;
     font-weight: 700;
+}
+
+/* ---------------- SELETOR GLOBAL DE TEMA ---------------- */
+
+.tema-toggle {
+    position: fixed;
+    right: 26px;
+    bottom: 26px;
+    z-index: 12000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 1px solid #001e62;
+    border-radius: 12px;
+    background: #001e62;
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(0, 30, 98, .24);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background-color .2s ease, color .2s ease;
+}
+
+.tema-toggle:hover,
+.tema-toggle:focus-visible {
+    transform: translateY(-2px);
+    background: #001e62;
+    border-color: #001e62;
+    color: #fff;
+    box-shadow: 0 10px 24px rgba(0, 30, 98, .28);
+}
+
+.tema-icone {
+    flex: 0 0 21px;
+    width: 21px;
+    height: 21px;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    line-height: 1;
+    text-align: center;
+}
+
+.tema-icone svg {
+    width: 21px;
+    height: 21px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+}
+
+.tema-icone .icone-lua {
+    fill: currentColor;
+}
+
+.tema-texto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+html[data-theme="dark"] .tema-toggle {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: #1d1d26;
+    border-color: #3d3d4d;
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .28);
+}
+
+html[data-theme="dark"] .tema-toggle:hover,
+html[data-theme="dark"] .tema-toggle:focus-visible {
+    background: var(--amarelo);
+    border-color: var(--amarelo);
+    color: #17120a;
+}
+
+/* ---------------- PALETA ESCURA GLOBAL ---------------- */
+
+html[data-theme="dark"] body,
+html[data-theme="dark"] main,
+html[data-theme="dark"] .conteudo {
+    background-color: var(--fundo-pagina);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea {
+    background-color: var(--fundo-superficie);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+    color: #9292a0;
+    opacity: 1;
+}
+
+html[data-theme="dark"] input:-webkit-autofill,
+html[data-theme="dark"] input:-webkit-autofill:hover,
+html[data-theme="dark"] input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--texto-principal);
+    -webkit-box-shadow: 0 0 0 1000px var(--fundo-superficie) inset;
+}
+
+html[data-theme="dark"] main > .etapas {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+html[data-theme="dark"] main > .etapas .etapa {
+    border-color: transparent;
+}
+
+html[data-theme="dark"] main > .etapas .etapa:not(:last-child)::after {
+    background-color: var(--borda);
+}
+
+html[data-theme="dark"] main > .etapas .etapa p {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] main > .etapas .etapa span {
+    background-color: #3a3a46;
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] main > .etapas .etapa.ativa {
+    background-color: transparent;
+}
+
+html[data-theme="dark"] main > .etapas .etapa.ativa span {
+    background-color: var(--vermelho);
+    color: #fff;
+}
+
+html[data-theme="dark"] main > .etapas .etapa.ativa p {
+    color: var(--vermelho);
+}
+
+html[data-theme="dark"] :is(
+    .card,
+    .modal,
+    .modal-content,
+    .modal-conteudo,
+    .modal-finalizar-conteudo,
+    .modal-checkpoint,
+    .modal-editar-conteudo,
+    .painel,
+    .sidebar,
+    .drawer,
+    .bloco,
+    .container-form,
+    .form-container,
+    .stats-card,
+    .stat-card,
+    .stats-barra-acao,
+    .team-stat-body,
+    .dash-kpi,
+    .dash-card,
+    .resumo-card,
+    .evento-card,
+    .equipe-card,
+    .equipe-tab-bloco,
+    .historico-equipe-bloco,
+    .visao-equipe,
+    .lista-card,
+    .profile-card
+) {
+    background-color: var(--fundo-superficie);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+    box-shadow: 0 10px 30px var(--sombra);
+}
+
+html[data-theme="dark"] table,
+html[data-theme="dark"] thead,
+html[data-theme="dark"] tbody,
+html[data-theme="dark"] tr {
+    background-color: transparent;
+    color: var(--texto-principal);
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] th {
+    background-color: var(--fundo-suave);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] td,
+html[data-theme="dark"] hr {
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] :is(
+    .tabela-checkpoints,
+    .lista-equipes,
+    .lista-eventos,
+    .lista-turnos,
+    .bandeja,
+    .bandeja-item,
+    .perfil-card
+) {
+    background-color: var(--fundo-superficie);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] :is(
+    tbody tr:hover td,
+    .perfil-card.selecionado,
+    .bandeja-item.selecionado
+) {
+    background-color: #341c29;
+}
+
+html[data-theme="dark"] :is(
+    .modal-subtitulo,
+    .texto-secundario,
+    .descricao,
+    .dash-kpi-sub,
+    .dash-kpi-unit
+) {
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] .btn-ver-mais {
+    background: var(--fundo-superficie);
+    color: var(--texto-principal);
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] [style*="background:#fff"],
+html[data-theme="dark"] [style*="background: #fff"],
+html[data-theme="dark"] [style*="background-color:#fff"],
+html[data-theme="dark"] [style*="background-color: #fff"] {
+    background: var(--fundo-superficie) !important;
+}
+
+html[data-theme="dark"] [style*="color:#1a1a1a"],
+html[data-theme="dark"] [style*="color: #1a1a1a"],
+html[data-theme="dark"] [style*="color:#555"],
+html[data-theme="dark"] [style*="color: #555"] {
+    color: var(--texto-principal) !important;
+}
+
+/* MantÃ©m informaÃ§Ãµes auxiliares legÃ­veis sobre superfÃ­cies escuras. */
+html[data-theme="dark"] :is(
+    label,
+    small,
+    .texto-secundario,
+    .descricao,
+    .subtitulo,
+    .modal-subtitulo,
+    .relacao-horario,
+    .grupo-vazio,
+    .grupo-contador,
+    .card-local,
+    .dash-kpi-sub,
+    .dash-kpi-unit
+) {
+    color: var(--texto-secundario) !important;
+}
+
+html[data-theme="dark"] :is(input, select, textarea)::placeholder {
+    color: #b7b7c3 !important;
+}
+
+html[data-theme="dark"] :is(button, a, [role="button"]):disabled {
+    color: #aaaab6;
+}
+
+@media (max-width: 700px) {
+    .tema-toggle {
+        right: 14px;
+        bottom: 14px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body,
+    .tema-toggle {
+        transition: none;
+    }
 }
