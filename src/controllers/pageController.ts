@@ -184,4 +184,18 @@ const getEditEvent = async (req: Request, res: Response): Promise<void> => {
 	res.render('editar-competicao', { manager_id: req.user?.id ?? 0, evento, equipes })
 }
 
-export default {getLogin, getHome, redirectHome, getCompetition, getTeam, getTreadmill, getOverview, getAudit, getManagerShifts, getCreateEventLocation, getCreateEventImage, getCreateEventSchedule, getCreateEventTeams, getCreateEventAthlete, getEventOverview, getEditEvent}
+const getShareManager = async (req: Request, res: Response): Promise<void> => {
+	const id = Number(req.params.id)
+	if (!id) { res.redirect('/home'); return }
+
+	let evento: any
+	try {
+		evento = await eventService.getEvent(id)
+	} catch {
+		res.redirect('/home'); return
+	}
+
+	res.render('share-manager', { event: evento, user: req.user })
+}
+
+export default {getLogin, getHome, redirectHome, getCompetition, getTeam, getTreadmill, getOverview, getAudit, getManagerShifts, getCreateEventLocation, getCreateEventImage, getCreateEventSchedule, getCreateEventTeams, getCreateEventAthlete, getEventOverview, getEditEvent, getShareManager}

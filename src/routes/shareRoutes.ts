@@ -5,6 +5,7 @@ import authMiddleware from "../middlewares/authMiddleware";
 const router: Router = express.Router();
 
 // Públicas (sem auth)
+router.get("/card-compartilhavel", shareController.cardPage);
 router.get("/athlete/:token", shareController.athletePage);
 router.get("/athlete/:token/data", shareController.athleteData);
 
