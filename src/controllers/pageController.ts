@@ -109,6 +109,10 @@ const getCreateEventLocation = async (req: Request, res: Response): Promise<void
 	res.render('gerente-localidade', { manager_id: req.user?.id ?? 0 })
 }
 
+const getCreateEventImage = async (req: Request, res: Response): Promise<void> => {
+	res.render('gerente-imagem-evento', { manager_id: req.user?.id ?? 0 })
+}
+
 const getCreateEventSchedule = async (req: Request, res: Response): Promise<void> => {
 	res.render('gerente-data-horario', { manager_id: req.user?.id ?? 0 })
 }
@@ -180,4 +184,4 @@ const getEditEvent = async (req: Request, res: Response): Promise<void> => {
 	res.render('editar-competicao', { manager_id: req.user?.id ?? 0, evento, equipes })
 }
 
-export default {getLogin, getHome, redirectHome, getCompetition, getTeam, getTreadmill, getOverview, getAudit, getManagerShifts, getCreateEventLocation, getCreateEventSchedule, getCreateEventTeams, getCreateEventAthlete, getEventOverview, getEditEvent}
+export default {getLogin, getHome, redirectHome, getCompetition, getTeam, getTreadmill, getOverview, getAudit, getManagerShifts, getCreateEventLocation, getCreateEventImage, getCreateEventSchedule, getCreateEventTeams, getCreateEventAthlete, getEventOverview, getEditEvent}
