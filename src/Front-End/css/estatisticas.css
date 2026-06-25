@@ -405,5 +405,73 @@
     }
 }
 
+@media (max-width: 600px) {
+    .pagina-estatisticas {
+        padding: 16px 16px 80px;
+    }
+
+    .cabecalho-estatisticas {
+        margin-top: 40px;
+        gap: 16px;
+    }
+
+    .cabecalho-estatisticas h1,
+    .cabecalho-atleta h1 {
+        font-size: 26px;
+    }
+
+    .info-evento,
+    .time-atleta {
+        font-size: 18px;
+    }
+
+    .abas-estatisticas {
+        gap: 0;
+        overflow-x: auto;
+        padding-top: 16px;
+        margin-top: 28px;
+    }
+
+    .aba {
+        font-size: 17px;
+        padding: 0 14px 12px;
+        white-space: nowrap;
+    }
+
+    .card-time {
+        width: 100%;
+    }
+
+    .card-time h2 {
+        padding: 0 20px;
+        font-size: 16px;
+    }
+
+    .metricas-time {
+        grid-template-columns: 1fr 1fr;
+        padding: 14px 20px;
+        gap: 14px;
+    }
+
+    .grade-equipes {
+        gap: 20px;
+    }
+
+    .tabela-estatisticas {
+        font-size: 14px;
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .btn-compartilhar {
+        width: 100%;
+    }
+
+    .metricas-atleta {
+        grid-template-columns: 1fr;
+    }
+}
+
 
 
