@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estatísticas — <%= evento.title %></title>
+    <link rel="icon" type="image/png" href="/assets/logo/logo-redrun.png">
+    <link rel="apple-touch-icon" href="/assets/logo/logo-redrun.png">
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/equipe.css">
     <link rel="stylesheet" href="/css/estatisticas-evento.css">
@@ -48,6 +50,12 @@
                                 <img src="/assets/estatisticas/compartilhar.svg" alt="" class="btn-exportar-icone">
                                 Compartilhar como planilha
                             </button>
+                            <% if (evento.status === 'finished' && user_role === 'manager') { %>
+                            <a href="/manager/event/<%= evento.id %>/share" class="btn-exportar" style="text-decoration:none;">
+                                <img src="/assets/estatisticas/compartilhar.svg" alt="" class="btn-exportar-icone">
+                                Compartilhar desempenhos
+                            </a>
+                            <% } %>
                         </div>
                     </div>
                     <div class="stats-meta">

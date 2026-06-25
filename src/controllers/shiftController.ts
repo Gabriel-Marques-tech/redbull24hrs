@@ -30,6 +30,7 @@ export const shiftController = {
 			);
 			res.status(201).json(shift);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			const status = statusFromError(error.message);
 			const body: any = { error: error.message };
 			if (error.conflictShiftId) {
@@ -49,6 +50,7 @@ export const shiftController = {
 			const checkpoints = await shiftService.listCheckpoints(shift_id);
 			res.status(200).json(checkpoints);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
@@ -64,6 +66,7 @@ export const shiftController = {
 			const checkpoint = await shiftService.registerCheckpoint(shift_id, Number(distance), type);
 			res.status(201).json(checkpoint);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(statusFromError(error.message)).json({ error: error.message });
 		}
 	},
@@ -91,6 +94,7 @@ export const shiftController = {
 			);
 			res.status(200).json(updated);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			const status = error.message.includes("não encontrad")
 				? 404
 				: error.message.includes("inválid")
@@ -107,6 +111,7 @@ export const shiftController = {
 			await shiftService.abandonShift(shift_id, forceClose);
 			res.status(200).json({ ok: true });
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(statusFromError(error.message)).json({ error: error.message });
 		}
 	},
@@ -128,6 +133,7 @@ export const shiftController = {
 			);
 			res.status(200).json(shift);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(statusFromError(error.message)).json({ error: error.message });
 		}
 	},
@@ -154,6 +160,7 @@ export const shiftController = {
 			});
 			res.status(200).json(shift);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(statusFromError(error.message)).json({ error: error.message });
 		}
 	},
@@ -166,6 +173,7 @@ export const shiftController = {
 			if (!shift) { res.status(404).json({ error: "Turno não encontrado" }); return; }
 			res.status(200).json({ id: shift.id, status: shift.status });
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},

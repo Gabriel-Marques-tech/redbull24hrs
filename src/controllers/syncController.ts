@@ -14,6 +14,7 @@ export const syncController = {
 			const result = await syncService.syncCheckpoints(records);
 			res.status(201).json(result);
 		} catch (error: any) {
+		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
 			res.status(500).json({ error: error.message });
 		}
 	},
