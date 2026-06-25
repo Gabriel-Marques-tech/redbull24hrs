@@ -72,6 +72,7 @@ describe("requireAuth", () => {
       email: "a@a.com",
       role: "auditor",
       name: "Auditor 42",
+      image_url: null,
     });
     expect(next).toHaveBeenCalled();
     expect(res.status).not.toHaveBeenCalled();
