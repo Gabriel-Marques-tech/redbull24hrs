@@ -4,6 +4,7 @@ export interface Manager {
   id: string;
   name: string;
   email: string;
+  image_url?: string | null;
 }
 
 export interface ManagerPassword extends Manager {
@@ -16,6 +17,7 @@ export interface Auditor {
   email: string;
   registration_number: number;
   is_active: boolean;
+  image_url?: string | null;
 }
 
 export interface AuditorPassword extends Auditor {
@@ -27,6 +29,7 @@ export interface AuthUser {
   name: string;
   email: string;
   role: UserRole;
+  image_url?: string | null;
 }
 
 export interface JwtPayload {
@@ -34,6 +37,7 @@ export interface JwtPayload {
   email: string;
   name: string;
   role: UserRole;
+  image_url?: string | null;
 }
 
 export interface AuthTokens {
