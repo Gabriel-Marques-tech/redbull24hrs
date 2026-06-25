@@ -1045,7 +1045,7 @@ tbody tr:hover td {
 /* ---------------- BANDEJA CORREDOR ---------------- */
 
 .corredor-atual {
-    cursor: pointer;
+    cursor: default;
     user-select: none;
     padding: 6px 12px;
     border-radius: 8px;
@@ -1053,7 +1053,7 @@ tbody tr:hover td {
 }
 
 .corredor-atual:hover {
-    background-color: #f3f3f3;
+    background-color: transparent;
 }
 
 .seta-bandeja {
@@ -1196,30 +1196,333 @@ img {
     border-bottom: 3px solid var(--vermelho);
 }
 
-/* Variante do modal para checkpoint */
-.modal-checkpoint-conteudo::before {
-    content: "Registrar checkpoint";
+.modal-turno-conteudo {
+    max-height: none;
+    overflow: visible;
+    padding-top: 28px;
+    padding-bottom: 28px;
 }
 
-.modal-checkpoint-conteudo #kmCheckpointModal {
+.finalizar-turno-foto {
     width: 100%;
-    padding: 0 16px;
+    min-height: 86px;
+    margin-bottom: 18px;
+    padding: 9px 12px;
+    border: 1px dashed #c8c8c8;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-sizing: border-box;
 }
 
-.modal-checkpoint-conteudo .acoes-modal-turno {
-    justify-content: center;
+.finalizar-turno-foto-preview {
+    display: grid;
+    place-items: center;
+    width: 112px;
+    height: 70px;
+    flex: 0 0 112px;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #e8e8e8;
+    color: #b8b8b8;
+}
+
+.finalizar-turno-foto-preview svg {
+    width: 34px;
+    height: 34px;
+    margin: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.2;
+}
+
+.finalizar-turno-foto-preview img {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    object-fit: contain;
+    background: #111;
+    cursor: zoom-in;
+}
+
+.finalizar-turno-foto-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.finalizar-turno-foto-info strong {
+    font-size: 16px;
+}
+
+.finalizar-turno-foto-info small {
+    margin: 3px 0 8px;
+    color: #777777;
+    font-size: 13px;
+}
+
+#finalizarTurnoFotoInput {
+    display: none;
+}
+
+.btn-finalizar-turno-foto {
+    height: 34px;
+    padding: 0 16px;
+    border: 2px solid var(--vermelho);
+    border-radius: 6px;
+    background: var(--branco);
+    color: var(--vermelho);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Variante do modal para checkpoint */
+.modal-checkpoint-conteudo {
+    align-items: stretch;
+    justify-content: flex-start;
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
+.modal-checkpoint-conteudo::before {
+    content: none;
+}
+
+.checkpoint-corredor {
+    width: 260px;
+}
+
+.checkpoint-corredor label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 18px;
+    color: #171717;
+}
+
+.checkpoint-corredor select {
+    width: 100%;
+    height: 46px;
+    padding: 0 40px 0 18px;
+    border: 0;
+    border-radius: 4px;
+    background-color: var(--vermelho);
+    color: var(--branco);
+    font: inherit;
+    font-size: 17px;
+    appearance: none;
+    opacity: 1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+}
+
+.checkpoint-divisor {
+    height: 1px;
+    margin-top: 10px;
+    background: #cfcfcf;
+}
+
+.checkpoint-conteudo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 235px;
+    padding-top: 12px;
+    padding-bottom: 16px;
+}
+
+.checkpoint-foto,
+.checkpoint-dados {
+    min-width: 0;
+}
+
+.checkpoint-foto {
+    padding-right: 28px;
+}
+
+.checkpoint-dados {
+    padding-left: 28px;
+    border-left: 1px solid #cfcfcf;
+}
+
+.checkpoint-secao-titulo {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    min-height: 44px;
+}
+
+.checkpoint-icone {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    border-radius: 50%;
+    background: #ffdce7;
+    color: var(--vermelho);
+}
+
+.checkpoint-icone svg {
+    width: 26px;
+    height: 26px;
+    margin: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+}
+
+.checkpoint-icone-dados svg {
+    fill: none;
+}
+
+.checkpoint-secao-titulo strong,
+.checkpoint-secao-titulo small {
+    display: block;
+}
+
+.checkpoint-secao-titulo strong {
+    margin-top: 2px;
+    font-size: 15px;
+    line-height: 1.2;
+}
+
+.checkpoint-secao-titulo small {
+    margin-top: 4px;
+    color: #777;
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+.checkpoint-foto-preview {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 160px;
+    margin-top: 10px;
+    overflow: hidden;
+    border-radius: 5px;
+    background: #e8e8e8;
+    color: #b8b8b8;
+}
+
+.checkpoint-foto-preview svg {
+    width: 42px;
+    height: 42px;
+    margin: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.2;
+}
+
+.checkpoint-foto-preview img {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    object-fit: contain;
+    background: #111;
+    cursor: zoom-in;
+}
+
+.modal-checkpoint-conteudo #checkpointFotoInput {
+    display: none;
+}
+
+.btn-checkpoint-foto {
+    display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 14px;
+    width: 220px;
+    height: 42px;
+    margin: 8px auto 0;
+    border: 2px solid var(--vermelho);
+    border-radius: 2px;
+    background: var(--branco);
+    color: var(--vermelho);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-checkpoint-foto svg {
+    width: 26px;
+    height: 26px;
+    margin: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+}
+
+.checkpoint-campos {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-top: 14px;
+}
+
+.checkpoint-campo label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.checkpoint-input-linha {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+}
+
+.checkpoint-input-linha input {
+    width: 100%;
+    height: 38px;
+    padding: 0 14px;
+    border: 1px solid #c8c8c8;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font: inherit;
+    font-size: 15px;
+}
+
+.checkpoint-input-linha input::placeholder {
+    color: #8a8a8a;
+}
+
+.checkpoint-input-linha input:focus {
+    outline: none;
+    border-color: var(--vermelho);
+    box-shadow: 0 0 0 3px rgba(224, 0, 58, 0.18);
+}
+
+.modal-checkpoint-conteudo .checkpoint-acoes {
+    justify-content: center;
+    gap: 28px;
+    margin-top: 12px;
 }
 
 .modal-checkpoint-conteudo .btn-cancelar-turno,
 .modal-checkpoint-conteudo .btn-registrar-turno {
-    width: 180px;
-    height: 56px;
+    width: 160px;
+    height: 48px;
     margin: 0;
-    padding: 0 20px;
-    flex: 0 0 180px;
-    align-self: auto;
+    padding: 0 22px;
+    flex: 0 0 160px;
+    border-radius: 8px;
+    font-size: 16px;
     transform: none;
+}
+
+.modal-checkpoint-conteudo .btn-cancelar-turno {
+    order: 2;
+    border: 2px solid var(--vermelho);
+    color: var(--vermelho);
+}
+
+.modal-checkpoint-conteudo .btn-registrar-turno {
+    order: 1;
 }
 
 .campo-cps-sessao {
@@ -1465,6 +1768,76 @@ img {
     cursor: pointer;
 }
 
+#modalTurno .modal-turno-conteudo {
+    width: min(720px, calc(100vw - 48px));
+    max-height: calc(100vh - 48px);
+    padding: 22px 40px 24px;
+    overflow-y: auto;
+    justify-content: flex-start;
+}
+
+#modalTurno .modal-turno-conteudo::before {
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+}
+
+#modalTurno .finalizar-turno-foto {
+    margin-bottom: 8px;
+    min-height: 64px;
+}
+
+#modalTurno .finalizar-turno-foto-preview {
+    width: 80px;
+    height: 50px;
+    flex: 0 0 80px;
+}
+
+#modalTurno .campo-turno select,
+#modalTurno .campo-turno input {
+    height: 38px;
+}
+
+#modalTurno .tempo-percorrido {
+    font-size: 24px;
+}
+
+#modalTurno .campos-km {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+#modalTurno .campo-pace {
+    flex: 1 1 140px;
+}
+
+#modalTurno .campo-pace input {
+    width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+
+#modalTurno .campo-quilometragem {
+    flex: 1 1 200px;
+    margin-top: 0;
+}
+
+#modalTurno .campo-quilometragem input {
+    width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+
+#modalTurno .acoes-modal-turno {
+    margin-top: 12px;
+}
+
+#modalTurno .modal-turno-conteudo .btn-cancelar-turno,
+#modalTurno .modal-turno-conteudo .btn-registrar-turno {
+    height: 44px;
+}
+
 /* ---------------- MODAL FINALIZAR COMPETICAO (PR #219) ---------------- */
 
 .modal-finalizar-competicao,
@@ -1540,6 +1913,24 @@ img {
 
 .btn-registrar-lembrete:hover {
     background-color: #bd003a;
+}
+
+html[data-theme="dark"] .modal-lembrete-conteudo {
+    background: var(--fundo-superficie);
+    border: 1px solid var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .modal-lembrete-conteudo h2 {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .modal-lembrete-conteudo p {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .btn-fechar-lembrete {
+    color: var(--texto-principal);
 }
 
 /* ---------------- MODAL KM MENOR QUE ANTERIOR ---------------- */
@@ -1724,4 +2115,837 @@ img {
     border: none;
     background-color: var(--vermelho);
     color: var(--branco);
+}
+
+/* ── OCR loading spinner ──────────────────────────────────────── */
+@keyframes ocr-spin {
+    to { transform: rotate(360deg); }
+}
+
+.ocr-analisando {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #888;
+    margin-top: 6px;
+}
+
+.ocr-analisando::before {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #ddd;
+    border-top-color: var(--vermelho);
+    border-radius: 50%;
+    animation: ocr-spin 0.7s linear infinite;
+    flex-shrink: 0;
+}
+
+.ocr-analisando.escondido { display: none; }
+
+/* ── OCR resultado turno ─────────────────────────────────────── */
+.ocr-resultado {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 12px;
+    background: #f5f5f5;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+.ocr-resultado.escondido { display: none; }
+
+.ocr-label {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.ocr-campos {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.ocr-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.ocr-campo label {
+    font-size: 10px;
+    color: #aaa;
+    text-transform: uppercase;
+}
+
+.ocr-campo strong {
+    font-size: 14px;
+    color: #222;
+}
+
+/* spinner no preview do checkpoint durante OCR */
+.checkpoint-foto-preview.ocr-loading,
+.finalizar-turno-foto-preview.ocr-loading {
+    position: relative;
+}
+
+.checkpoint-foto-preview.ocr-loading::after,
+.finalizar-turno-foto-preview.ocr-loading::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    border-radius: inherit;
+    display: grid;
+    place-items: center;
+}
+
+.checkpoint-foto-preview.ocr-loading::before,
+.finalizar-turno-foto-preview.ocr-loading::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    width: 28px;
+    height: 28px;
+    border: 3px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: ocr-spin 0.7s linear infinite;
+}
+
+/* ── Lightbox foto OCR ───────────────────────────────────────── */
+.ocr-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.88);
+    display: grid;
+    place-items: center;
+    cursor: zoom-out;
+    animation: ocr-lightbox-in 0.15s ease;
+}
+
+@keyframes ocr-lightbox-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.ocr-lightbox img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 92vw;
+    max-height: 88vh;
+    border-radius: 4px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    margin: 0;
+}
+
+.ocr-lightbox-fechar {
+    position: fixed;
+    top: 16px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 32px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.8;
+    padding: 4px 8px;
+}
+
+.ocr-lightbox-fechar:hover { opacity: 1; }
+
+/* ── Cronômetro no topo do modal checkpoint ──────────────────── */
+.checkpoint-cronometro-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: #f5f5f5;
+    border-bottom: 1px solid #e8e8e8;
+    border-radius: 8px 8px 0 0;
+    margin: -20px -20px 16px;
+}
+
+.checkpoint-cronometro-label {
+    font-size: 12px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.checkpoint-cronometro-valor {
+    font-size: 22px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #111;
+    letter-spacing: 0.04em;
+}
+
+/* Ajustes finais do modal de sair da auditoria. */
+.btn-sair {
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    color: inherit;
+    transition: background-color 0.15s, color 0.15s, transform 0.15s;
+}
+
+.icone-sair-svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.btn-sair:hover,
+.btn-sair:focus-visible {
+    background: var(--vermelho);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.btn-sair:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(224, 0, 58, 0.16);
+}
+
+.modal-finalizar-competicao .modal-finalizar-conteudo {
+    width: 560px;
+    max-width: 90vw;
+    height: auto;
+    min-height: 320px;
+    padding: 34px 42px 32px;
+    border-radius: 6px;
+}
+
+.modal-finalizar-competicao .icone-finalizar {
+    display: grid;
+    place-items: center;
+    width: 74px;
+    height: 74px;
+    margin-bottom: 22px;
+    border-radius: 50%;
+    background: var(--vermelho);
+    color: #fff;
+}
+
+.modal-finalizar-competicao .icone-finalizar .icone-sair-svg {
+    width: 36px;
+    height: 36px;
+}
+
+.modal-finalizar-competicao .modal-finalizar-conteudo h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.modal-finalizar-competicao .modal-finalizar-conteudo p {
+    font-size: 19px;
+    line-height: 1.25;
+    margin-bottom: 26px;
+}
+
+.modal-finalizar-competicao .btn-cancelar-finalizar,
+.modal-finalizar-competicao .btn-confirmar-finalizar {
+    width: 132px;
+    height: 48px;
+    font-size: 16px;
+}
+
+/* Cronometro e controles da fila. */
+.cronometro {
+    background-color: var(--branco);
+    border-color: #bdbdc4;
+    color: #1c1c1c;
+}
+
+.fila-resumo {
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    padding: 0;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.btn-organizar-fila {
+    width: 100%;
+    height: 40px;
+    border: 2px solid var(--vermelho);
+    border-radius: 8px;
+    background: var(--branco);
+    color: var(--vermelho);
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.instrucao-fila {
+    margin: -2px 0 10px;
+    color: #777;
+    font-size: 13px;
+}
+
+.fila-lista,
+.proximos-corredores .instrucao-fila {
+    display: none;
+}
+
+.fila-lista.fila-aberta,
+.fila-resumo.fila-aberta + .instrucao-fila {
+    display: flex;
+}
+
+.fila-resumo.fila-aberta + .instrucao-fila {
+    margin: 10px 0 14px;
+    color: #626262;
+    font-size: 12px;
+    line-height: 1.25;
+    justify-content: center;
+    text-align: center;
+}
+
+.fila-lista.fila-aberta {
+    flex-direction: column;
+    gap: 8px;
+}
+
+html[data-theme="dark"] .cronometro {
+    background: var(--fundo-superficie);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .btn-organizar-fila {
+    background: transparent;
+    border-color: var(--vermelho);
+    color: #fff;
+}
+
+html[data-theme="dark"] .proximos-corredores .instrucao-fila {
+    color: #d7d7df;
+}
+
+/* Composição da corrida em andamento. */
+.acoes-corrida:has(.btn-proximo-corredor:not(.escondido)) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 180px;
+    width: 100%;
+    gap: 14px;
+}
+
+.acoes-corrida:has(.btn-proximo-corredor:not(.escondido)) .btn-iniciar {
+    width: 100%;
+}
+
+.acoes-corrida:has(.btn-proximo-corredor:not(.escondido)) .btn-esteira.inativa {
+    display: none;
+}
+
+.btn-esteira.inativa {
+    display: none;
+}
+
+.btn-proximo-corredor {
+    width: 100%;
+    height: 64px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 8px;
+    background: var(--azul);
+    color: var(--branco);
+    font-size: 16px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.btn-proximo-corredor:hover,
+.btn-proximo-corredor:focus-visible {
+    background: #1d0a8f;
+}
+
+.btn-proximo-corredor .icone-proximo {
+    display: none;
+}
+
+.proximos-corredores {
+    width: 255px;
+    padding-top: 32px;
+}
+
+.acao-corredor {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 11px;
+    border: 1px solid var(--vermelho);
+    border-radius: 999px;
+    background: rgba(224, 0, 58, 0.08);
+    color: var(--vermelho);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    transition: background-color 0.15s, color 0.15s, transform 0.15s;
+}
+
+.acao-corredor .seta-bandeja {
+    color: inherit;
+    font-size: 17px;
+    line-height: 1;
+    margin-left: 6px;
+}
+
+.acao-corredor:hover,
+.acao-corredor:focus-visible {
+    background: var(--vermelho);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.acao-corredor:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(224, 0, 58, 0.16);
+}
+
+html[data-theme="dark"] .acao-corredor {
+    background: transparent;
+    color: var(--vermelho);
+    border-color: var(--vermelho);
+}
+
+/* Padronização final dos modais no modo escuro. */
+html[data-theme="dark"] .modal-esteira,
+html[data-theme="dark"] .modal-turno,
+html[data-theme="dark"] .modal-finalizar-competicao,
+html[data-theme="dark"] .modal-lembrete-cp,
+html[data-theme="dark"] .modal-km-menor,
+html[data-theme="dark"] .modal-overlay,
+html[data-theme="dark"] .bandeja-overlay {
+    background-color: rgba(0, 0, 0, 0.82);
+}
+
+html[data-theme="dark"] .modal-conteudo,
+html[data-theme="dark"] .modal-operador,
+html[data-theme="dark"] .bandeja-corredores,
+html[data-theme="dark"] .modal-turno-conteudo,
+html[data-theme="dark"] .modal-finalizar-conteudo,
+html[data-theme="dark"] .modal-km-menor-conteudo,
+html[data-theme="dark"] .modal-lembrete-conteudo {
+    background: var(--fundo-superficie);
+    border: 1px solid var(--borda);
+    color: var(--texto-principal);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+}
+
+html[data-theme="dark"] .modal-conteudo h2,
+html[data-theme="dark"] .modal-op-header,
+html[data-theme="dark"] .bandeja-header,
+html[data-theme="dark"] .modal-turno-conteudo::before,
+html[data-theme="dark"] .modal-finalizar-conteudo h2,
+html[data-theme="dark"] .modal-km-menor-conteudo h2,
+html[data-theme="dark"] .modal-lembrete-conteudo h2 {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .modal-finalizar-conteudo p,
+html[data-theme="dark"] .modal-km-menor-conteudo p,
+html[data-theme="dark"] .modal-lembrete-conteudo p,
+html[data-theme="dark"] .modal-op-senha p {
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] .modal-op-header,
+html[data-theme="dark"] .bandeja-header {
+    border-bottom-color: var(--borda);
+}
+
+html[data-theme="dark"] .btn-fechar-bandeja {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .bandeja-lista {
+    background: var(--fundo-superficie);
+}
+
+html[data-theme="dark"] .bandeja-item {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .bandeja-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="dark"] .bandeja-item.selecionado,
+html[data-theme="dark"] .auditor-card.selecionado {
+    background: rgba(224, 0, 58, 0.18);
+    border-color: rgba(224, 0, 58, 0.65);
+}
+
+html[data-theme="dark"] .auditor-card {
+    background: var(--fundo-superficie);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .auditor-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="dark"] .btn-cancelar-modal,
+html[data-theme="dark"] .btn-cancelar-finalizar,
+html[data-theme="dark"] .btn-cancelar-turno {
+    background: transparent;
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .btn-cancelar-modal:hover,
+html[data-theme="dark"] .btn-cancelar-finalizar:hover,
+html[data-theme="dark"] .btn-cancelar-turno:hover {
+    border-color: var(--texto-principal);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="dark"] .resumo-km-menor {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .divisor-km-menor {
+    background-color: var(--borda);
+}
+
+html[data-theme="dark"] .btn-cancelar-km-menor {
+    background: transparent;
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .btn-cancelar-km-menor:hover {
+    border-color: var(--texto-principal);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="dark"] .corredor-fila:hover {
+    background: rgba(224, 0, 58, 0.12);
+}
+
+html[data-theme="dark"] .corredor-fila.arrastando {
+    background: rgba(224, 0, 58, 0.16);
+    opacity: 0.72;
+}
+
+html[data-theme="dark"] .corredor-fila.alvo {
+    background: rgba(224, 0, 58, 0.20);
+}
+
+/* Modal de checkpoint: composição própria para tablet. */
+html[data-theme="dark"] #modalCheckpoint .modal-checkpoint-conteudo,
+#modalCheckpoint .modal-checkpoint-conteudo {
+    width: min(940px, calc(100vw - 56px));
+    max-height: calc(100vh - 56px);
+    padding: 0 42px 32px;
+    overflow: auto;
+}
+
+#modalCheckpoint .checkpoint-cronometro-topo {
+    margin: 0 -42px 20px;
+    padding: 16px 32px;
+    border-radius: 12px 12px 0 0;
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-cronometro-topo {
+    background: rgba(255, 255, 255, 0.06);
+    border-bottom-color: var(--borda);
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-cronometro-label {
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-cronometro-valor {
+    color: var(--texto-principal);
+}
+
+#modalCheckpoint .checkpoint-corredor {
+    width: 360px;
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-corredor label,
+html[data-theme="dark"] #modalCheckpoint .checkpoint-campo label,
+html[data-theme="dark"] #modalCheckpoint .checkpoint-secao-titulo strong {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-secao-titulo small {
+    color: var(--texto-secundario);
+}
+
+#modalCheckpoint .checkpoint-conteudo {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 36px;
+    min-height: 0;
+    padding: 18px 0 0;
+    align-items: start;
+}
+
+#modalCheckpoint .checkpoint-foto {
+    padding-right: 0;
+}
+
+#modalCheckpoint .checkpoint-dados {
+    padding-left: 36px;
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-dados {
+    border-left-color: var(--borda);
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-divisor {
+    background: var(--borda);
+}
+
+#modalCheckpoint .checkpoint-foto-preview {
+    height: 210px;
+    margin-top: 16px;
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-foto-preview {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--borda);
+    color: var(--texto-secundario);
+}
+
+#modalCheckpoint .btn-checkpoint-foto {
+    width: min(330px, 100%);
+    height: 48px;
+    margin-top: 16px;
+    border-radius: 8px;
+}
+
+html[data-theme="dark"] #modalCheckpoint .btn-checkpoint-foto {
+    background: transparent;
+    color: var(--vermelho);
+    border-color: var(--vermelho);
+}
+
+#modalCheckpoint .checkpoint-campos {
+    gap: 10px;
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-input-linha input {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] #modalCheckpoint .checkpoint-input-linha input::placeholder {
+    color: var(--texto-secundario);
+}
+
+#modalCheckpoint .checkpoint-divisor-inferior {
+    display: none;
+}
+
+#modalCheckpoint .modal-checkpoint-conteudo .checkpoint-acoes {
+    display: flex;
+    justify-content: flex-start;
+    gap: 14px;
+    margin-top: 20px;
+    padding-top: 0;
+    border-top: 0;
+}
+
+#modalCheckpoint .modal-checkpoint-conteudo .btn-registrar-turno,
+#modalCheckpoint .modal-checkpoint-conteudo .btn-cancelar-turno {
+    position: static;
+    width: 178px;
+    flex: 0 0 178px;
+}
+
+#modalCheckpoint .modal-checkpoint-conteudo .btn-registrar-turno {
+    order: 2;
+}
+
+#modalCheckpoint .modal-checkpoint-conteudo .btn-cancelar-turno {
+    order: 1;
+}
+
+.corredor-atual .acao-corredor {
+    margin-top: 14px;
+}
+
+/* Ajustes finais de escala e ergonomia da auditoria. */
+.modal-km-menor-conteudo {
+    width: 665px;
+    max-width: 90vw;
+    min-height: 340px;
+    padding: 34px 48px 42px;
+}
+
+.modal-km-menor-conteudo h2 {
+    font-size: 26px;
+    margin-bottom: 8px;
+}
+
+.modal-km-menor-conteudo p {
+    font-size: 19px;
+    margin-bottom: 24px;
+}
+
+.resumo-km-menor {
+    margin-bottom: 28px;
+}
+
+.acoes-corrida:has(.btn-proximo-corredor:not(.escondido)) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.acoes-corrida:has(.btn-proximo-corredor:not(.escondido)) .btn-iniciar,
+.acoes-corrida:has(.btn-proximo-corredor:not(.escondido)) .btn-proximo-corredor {
+    min-width: 0;
+    height: 64px;
+    padding: 0 18px;
+    font-size: 18px;
+    line-height: 1.12;
+    text-align: center;
+}
+
+.acoes-corrida:has(.btn-proximo-corredor:not(.escondido)) .btn-iniciar {
+    white-space: normal;
+}
+
+.fila-lista.fila-aberta {
+    max-height: 320px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 8px;
+    border: 1px solid #d5d5dc;
+    border-radius: 8px;
+}
+
+html[data-theme="dark"] .fila-lista.fila-aberta {
+    border-color: var(--borda);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* Ajuste final: modal de esteira no mesmo porte dos avisos. */
+#modalEsteira .modal-conteudo {
+    width: 665px;
+    max-width: 90vw;
+    height: auto;
+    min-height: 340px;
+    padding: 34px 48px 42px;
+    justify-content: center;
+}
+
+#modalEsteira .modal-conteudo h2 {
+    font-size: 26px;
+    margin-bottom: 28px;
+}
+
+#modalEsteira .opcoes-esteira {
+    gap: 24px;
+    justify-content: center;
+}
+
+#modalEsteira .opcao-esteira {
+    width: 180px;
+    height: 160px;
+    gap: 12px;
+    color: var(--texto-principal);
+}
+
+#modalEsteira .opcao-esteira .icone-esteira {
+    width: 82px;
+}
+
+#modalEsteira .acoes-modal {
+    margin-top: 28px;
+    gap: 14px;
+}
+
+#modalEsteira .btn-cancelar-modal,
+#modalEsteira .btn-selecionar-modal {
+    width: 160px;
+    height: 52px;
+    font-size: 16px;
+}
+
+html[data-theme="dark"] #modalEsteira .opcao-esteira {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] #modalEsteira .opcao-esteira .icone-preto {
+    display: none;
+}
+
+html[data-theme="dark"] #modalEsteira .opcao-esteira .icone-branco {
+    display: block;
+}
+
+html[data-theme="dark"] #modalEsteira .opcao-esteira.selecionada {
+    background: var(--vermelho);
+    border-color: var(--vermelho);
+    color: var(--branco);
+}
+
+html[data-theme="dark"] #modalEsteira .opcao-esteira.opcao-ocupada {
+    opacity: 0.55;
+}
+
+/* A fila aberta precisa comportar 16 corredores sem empurrar a tela. */
+.proximos-corredores {
+    min-height: 0;
+}
+
+.fila-lista.fila-aberta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    height: min(320px, 34vh);
+    max-height: 320px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+}
+
+.fila-lista.fila-aberta .corredor-fila {
+    flex: 0 0 46px;
+}
+
+.fila-lista.fila-aberta::-webkit-scrollbar {
+    width: 8px;
+}
+
+.fila-lista.fila-aberta::-webkit-scrollbar-thumb {
+    background: rgba(142, 142, 154, 0.55);
+    border-radius: 999px;
+}
+
+html[data-theme="dark"] .fila-lista.fila-aberta::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.22);
 }

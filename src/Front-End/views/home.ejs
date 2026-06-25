@@ -6,9 +6,15 @@
     <title><%= user && user.role === 'manager' ? 'Manager' : 'Auditor' %></title>
     <link rel="stylesheet" href="/css/home-auditor.css">
     <link rel="stylesheet" href="/css/global.css">
+    <script src="/js/tema.js"></script>
     <script type="module" src="/js/home.js"></script>
 </head>
 <body>
+    <%
+        const eventoAoVivo = Array.isArray(events)
+            ? events.find(evento => evento.status === 'in_progress')
+            : null;
+    %>
 
     <!-- Aviso: competições agendadas são exclusivas de managers -->
     <script>
@@ -40,8 +46,43 @@
     <!-- Overlay do drawer -->
     <div id="drawerOverlay" onclick="fecharDrawer()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:1000;"></div>
 
+    <% if (user && user.role === 'manager') { %>
+    <div id="confirmacaoCadastroOverlay" style="
+        display:none; position:fixed; inset:0; z-index:1200;
+        background:rgba(0,0,0,0.5); align-items:center; justify-content:center;
+    ">
+        <div style="
+            width:min(460px, calc(100vw - 32px)); padding:34px;
+            background:#fff; border-radius:16px; text-align:center;
+            box-shadow:0 10px 40px rgba(0,0,0,0.25);
+            font-family:'Inter',sans-serif;
+        ">
+            <div style="
+                width:58px; height:58px; margin:0 auto 18px;
+                border-radius:50%; background:#fce5ec; color:var(--vermelho);
+                display:flex; align-items:center; justify-content:center;
+                font-size:30px; font-weight:700;
+            ">✓</div>
+            <h2 id="confirmacaoCadastroTitulo" style="font-size:24px; margin-bottom:10px;">Cadastro concluído</h2>
+            <p id="confirmacaoCadastroTexto" style="color:#666; font-size:16px; line-height:1.5; margin-bottom:26px;"></p>
+            <div style="display:flex; gap:12px;">
+                <button type="button" onclick="concluirCadastroUsuario()" style="
+                    flex:1; height:50px; border:1.5px solid var(--vermelho);
+                    border-radius:8px; background:#fff; color:var(--vermelho);
+                    font-size:15px; font-weight:700; cursor:pointer;
+                ">Concluir</button>
+                <button type="button" onclick="cadastrarOutroUsuario()" style="
+                    flex:1; height:50px; border:none; border-radius:8px;
+                    background:var(--vermelho); color:#fff;
+                    font-size:15px; font-weight:700; cursor:pointer;
+                ">Cadastrar outro</button>
+            </div>
+        </div>
+    </div>
+    <% } %>
+
     <!-- Drawer lateral -->
-    <div id="userDrawer" style="
+    <div id="userDrawer" class="user-drawer" style="
         position:fixed; top:0; right:-340px; width:320px; height:100vh;
         background:#fff; z-index:1001; box-shadow:-4px 0 30px rgba(0,0,0,0.2);
         transition:right 0.3s ease; display:flex; flex-direction:column;
@@ -63,29 +104,65 @@
                 font-size:26px; font-weight:700; margin-bottom:16px; letter-spacing:1px;
                 font-family:'Inter', sans-serif;
             "><%= user ? user.name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase() : '?' %></div>
-            <p style="font-size:20px; font-weight:700; margin-bottom:4px; font-family:'Inter',sans-serif;"><%= user ? user.name : '—' %></p>
+            <div class="drawer-identidade-linha">
+                <p style="font-size:20px; font-weight:700; margin-bottom:4px; font-family:'Inter',sans-serif;"><%= user ? user.name : '—' %></p>
+                <% if (user && user.role === 'manager') { %>
+                    <% if (eventoAoVivo) { %>
+                    <a class="drawer-modo-tv" href="/manager/event/<%= eventoAoVivo.id %>?modoTv=config" title="Configurar Exibição Pública">
+                        <span class="drawer-modo-tv-icone" aria-hidden="true"></span>
+                        <strong>Modo TV</strong>
+                    </a>
+                    <% } else { %>
+                    <span class="drawer-modo-tv drawer-modo-tv-inativo" title="Disponível durante um evento em andamento">
+                        <span class="drawer-modo-tv-icone" aria-hidden="true"></span>
+                        <strong>Modo TV</strong>
+                    </span>
+                    <% } %>
+                <% } %>
+            </div>
             <p style="font-size:13px; opacity:0.7; font-family:'Inter',sans-serif;"><%= user ? user.email : '' %></p>
         </div>
 
         <!-- Info -->
-        <div style="padding:24px 28px; flex:1; display:flex; flex-direction:column; gap:16px;">
+        <div class="user-drawer-conteudo" style="padding:24px 28px; flex:1; display:flex; flex-direction:column; gap:16px;">
             <!-- Função — apenas informação -->
-            <div style="padding:14px 16px; background:#f5f5f5; border-radius:8px;">
+            <div class="user-drawer-funcao" style="padding:14px 16px; background:#f5f5f5; border-radius:8px;">
                 <p style="font-size:11px; color:#999; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:4px; font-family:'Inter',sans-serif;">Função</p>
                 <p style="font-size:16px; font-weight:600; font-family:'Inter',sans-serif;"><%= user ? (user.role === 'manager' ? 'Gerente' : 'Auditor') : '—' %></p>
             </div>
 
             <% if (user && user.role === 'manager') { %>
+            <button class="user-drawer-acao-primaria" type="button" onclick="abrirCadastroUsuario('gerente')" style="
+                width:100%; display:flex; align-items:center; justify-content:space-between;
+                padding:14px 16px; background:var(--vermelho);
+                border:none; border-radius:8px;
+                color:#fff; font-family:'Inter',sans-serif;
+                font-size:15px; font-weight:700; cursor:pointer;
+            ">
+                Cadastrar gerente
+                <span style="font-size:18px; font-weight:300;">+</span>
+            </button>
+
+            <button class="user-drawer-acao-secundaria" type="button" onclick="abrirCadastroUsuario('auditor')" style="
+                width:100%; display:flex; align-items:center; justify-content:space-between;
+                padding:14px 16px; background:#fff;
+                border:1.5px solid var(--vermelho); border-radius:8px;
+                color:var(--vermelho); font-family:'Inter',sans-serif;
+                font-size:15px; font-weight:700; cursor:pointer;
+            ">
+                Cadastrar auditor
+                <span style="font-size:18px; font-weight:300;">+</span>
+            </button>
+
             <!-- Navegação — outlined com seta -->
-            <a href="/manager/shifts" style="
+            <a class="user-drawer-turnos" href="/manager/shifts" style="
                 display:flex; align-items:center; justify-content:space-between;
                 padding:14px 16px; background:#fff;
                 border:1.5px solid var(--azul); border-radius:8px;
                 text-decoration:none; color:var(--azul);
                 font-family:'Inter',sans-serif;
                 transition:background 0.15s;
-            " onmouseover="this.style.background='#f0f0ff'"
-               onmouseout="this.style.background='#fff'">
+            ">
                 <div>
                     <p style="font-size:11px; color:#999; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:3px;">Turnos</p>
                     <p style="font-size:15px; font-weight:600;">Ver em andamento</p>
@@ -96,7 +173,7 @@
         </div>
 
         <!-- Logout -->
-        <div style="padding:24px 28px; border-top:1px solid #eee;">
+        <div class="user-drawer-rodape" style="padding:24px 28px; border-top:1px solid #eee;">
             <button onclick="fazerLogout()" style="
                 width:100%; height:52px; background:var(--vermelho); border:none;
                 color:#fff; border-radius:8px; font-size:16px; font-weight:700; cursor:pointer;
@@ -193,10 +270,30 @@
 function abrirDrawer() {
     document.getElementById('userDrawer').style.right = '0'
     document.getElementById('drawerOverlay').style.display = 'block'
+    document.body.classList.add('drawer-aberto')
 }
 function fecharDrawer() {
     document.getElementById('userDrawer').style.right = '-340px'
     document.getElementById('drawerOverlay').style.display = 'none'
+    document.body.classList.remove('drawer-aberto')
+}
+function abrirCadastroUsuario(tipoCadastro) {
+    localStorage.removeItem('cadastrosUsuariosGerente')
+    localStorage.setItem('atletaEmEdicao', JSON.stringify({
+        tipoCadastro,
+        apoio: true,
+        origem: 'drawer'
+    }))
+    window.location.href = '/manager/create-event/athlete'
+}
+function concluirCadastroUsuario() {
+    document.getElementById('confirmacaoCadastroOverlay').style.display = 'none'
+    sessionStorage.removeItem('cadastroUsuarioConcluido')
+}
+function cadastrarOutroUsuario() {
+    const cadastro = JSON.parse(sessionStorage.getItem('cadastroUsuarioConcluido') || '{}')
+    sessionStorage.removeItem('cadastroUsuarioConcluido')
+    abrirCadastroUsuario(cadastro.tipoCadastro || 'auditor')
 }
 async function fazerLogout() {
     try {
@@ -209,6 +306,17 @@ async function fazerLogout() {
     } catch(e) {}
     localStorage.clear()
     window.location.href = '/login'
+}
+
+localStorage.removeItem('cadastrosUsuariosGerente')
+localStorage.removeItem('cadastroUsuarioConcluido')
+const cadastroConcluido = JSON.parse(sessionStorage.getItem('cadastroUsuarioConcluido') || 'null')
+if (cadastroConcluido && document.getElementById('confirmacaoCadastroOverlay')) {
+    const tipo = cadastroConcluido.tipoCadastro === 'gerente' ? 'Gerente' : 'Auditor'
+    document.getElementById('confirmacaoCadastroTitulo').textContent = `${tipo} cadastrado`
+    document.getElementById('confirmacaoCadastroTexto').textContent =
+        `${cadastroConcluido.nome || tipo} foi cadastrado com sucesso. Deseja cadastrar outro ${tipo.toLowerCase()}?`
+    document.getElementById('confirmacaoCadastroOverlay').style.display = 'flex'
 }
 </script>
 

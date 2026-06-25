@@ -12,38 +12,32 @@ flowchart TB
 
     subgraph L1["Clientes"]
         direction TB
-        C["Auditor / Gestor"]:::client
-        OFF["Dispositivo offline"]:::client
+        C["Gerente<br/>trilha de auditoria"]:::client
     end
 
     subgraph L2["Rotas do fluxo"]
         direction TB
-        R1["GET /logs"]:::route
+        R1["GET /audit/logs<br/>event_id · shift_id · page"]:::route
         R2["PATCH /audit/checkpoints/:id"]:::route
-        R3["POST /sync"]:::route
         AUTH["JWT obrigatório"]:::route
     end
 
-    subgraph L3["Controllers"]
+    subgraph L3["Controller"]
         direction TB
         LC["LogsController"]:::controller
-        SC["ShiftController"]:::controller
-        SYC["SyncController"]:::controller
     end
 
-    subgraph L4["Services"]
+    subgraph L4["Service"]
         direction TB
         LS["LogsService"]:::service
-        SS["ShiftService"]:::service
-        SYS["SyncService"]:::service
-        RN["RN23 log imutável<br/>RN24 justificativa<br/>RN04 offline/sync"]:::note
+        RN["RF022 · RF024<br/>RN23 log imutável<br/>RN24 justificativa"]:::note
     end
 
-    subgraph L5["Repositories"]
+    subgraph L5["Repository"]
         direction TB
         LR["LogsRepository"]:::repository
-        SR["ShiftRepository"]:::repository
-        SYR["SyncRepository"]:::repository
+        Q1["findLogs(filters)"]:::repository
+        Q2["correctCheckpoint + insertLog"]:::repository
     end
 
     subgraph L6["Banco de Dados"]
@@ -51,34 +45,27 @@ flowchart TB
         DB["PostgreSQL"]:::db
         LOG["logs"]:::db
         CP["checkpoints"]:::db
-        CC["checkpoint_corrections"]:::db
         SH["shifts"]:::db
     end
 
     subgraph L7["Saídas"]
         direction TB
-        O1["200 logs[]"]:::output
-        O2["200 correção"]:::output
-        O3["200 syncCompleted"]:::output
+        O1["200 logs[] + total + page"]:::output
+        O2["200 checkpoint corrigido<br/>log gerado"]:::output
+        O3["200 logs: []"]:::output
     end
 
     C --> R1 --> AUTH --> LC --> LS --> LR
-    C --> R2 --> AUTH --> SC --> SS --> SR
-    OFF --> R3 --> AUTH --> SYC --> SYS --> SYR
+    C --> R2 --> AUTH --> LC
     LS -.-> RN
-    SS -.-> RN
-    SYS -.-> RN
-    LR --> LOG
-    SR --> CP
-    SR --> CC
-    SR --> SH
-    SYR --> LOG
-    SYR --> CP
-    SYR --> SH
+    LR --> Q1 --> LOG
+    Q1 --> SH
+    LR --> Q2 --> CP
+    Q2 --> LOG
+    Q2 --> SH
     LOG --> DB
     CP --> DB
-    CC --> DB
     SH --> DB
     DB --> LR --> LS --> LC --> O1 --> C
-    DB --> SR --> SS --> SC --> O2 --> C
-    DB --> SYR --> SYS --> SYC --> O3 --> OFF
+    LC --> O2 --> C
+    LC --> O3 --> C

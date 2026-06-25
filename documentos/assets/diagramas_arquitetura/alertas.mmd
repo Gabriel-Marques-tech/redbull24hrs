@@ -1,0 +1,66 @@
+%%{init: {"theme":"base","flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":80,"rankSpacing":95,"padding":24},"themeVariables":{"fontFamily":"Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryTextColor":"#0F0069","primaryBorderColor":"#0F0069","lineColor":"#0F0069","tertiaryColor":"#F5F5FA","tertiaryTextColor":"#0F0069"}}}%%
+flowchart TB
+
+    classDef client fill:#FFFFFF,stroke:#0F0069,stroke-width:2px,color:#0F0069;
+    classDef route fill:#FFF7CC,stroke:#D6A700,stroke-width:2px,color:#0F0069;
+    classDef controller fill:#E8E8F5,stroke:#0F0069,stroke-width:2px,color:#0F0069;
+    classDef service fill:#E7F5E8,stroke:#2E7D32,stroke-width:2px,color:#0F0069;
+    classDef repository fill:#FFF0D6,stroke:#EF6C00,stroke-width:2px,color:#0F0069;
+    classDef db fill:#ECEFF1,stroke:#37474F,stroke-width:2px,color:#0F0069;
+    classDef output fill:#FDE7EF,stroke:#D2003C,stroke-width:2px,color:#0F0069;
+    classDef note fill:#FFFFFF,stroke:#D2003C,stroke-width:2px,stroke-dasharray: 6 4,color:#0F0069;
+
+    subgraph L1["Cliente"]
+        direction TB
+        C["Auditor<br/>em turno"]:::client
+    end
+
+    subgraph L2["Rota protegida"]
+        direction TB
+        R["GET /audit/alerts?event_id=:id<br/>polling periódico"]:::route
+        AUTH["JWT obrigatório"]:::route
+    end
+
+    subgraph L3["Controller"]
+        direction TB
+        AC["AlertsController"]:::controller
+    end
+
+    subgraph L4["Service"]
+        direction TB
+        AS["AlertsService<br/>classify(alertsData)"]:::service
+        RN["RF028 · RF029 · RF039<br/>RN11 · RN12 · RN25"]:::note
+    end
+
+    subgraph L5["Repository"]
+        direction TB
+        AR["AlertsRepository"]:::repository
+        Q1["findAlerts(event_id)"]:::repository
+    end
+
+    subgraph L6["Banco de Dados"]
+        direction TB
+        DB["PostgreSQL"]:::db
+        SH["shifts"]:::db
+        CP["checkpoints"]:::db
+        AT["athletes"]:::db
+    end
+
+    subgraph L7["Saídas"]
+        direction TB
+        O1["200 alerts[]"]:::output
+        O2["200 alerts: []"]:::output
+        O3["400 event_id obrigatório"]:::output
+    end
+
+    C --> R --> AUTH --> AC --> AS --> AR
+    AS -.-> RN
+    AR --> Q1 --> SH
+    Q1 --> CP
+    Q1 --> AT
+    SH --> DB
+    CP --> DB
+    AT --> DB
+    DB --> AR --> AS --> AC --> O1 --> C
+    AC --> O2 --> C
+    AC -. event_id ausente .-> O3 --> C

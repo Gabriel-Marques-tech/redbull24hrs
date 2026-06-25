@@ -43,6 +43,11 @@ const inputKm            = document.getElementById('inputKm')
 const cronometro         = document.getElementById('cronometro')
 const corredorAtual      = document.getElementById('corredorAtual')
 const tabela             = document.getElementById('tabelaRegistros')
+const filaEl             = document.getElementById('fila')
+const filaResumoEl       = document.getElementById('filaResumo')
+const filaProximoNomeEl  = document.getElementById('filaProximoNome')
+const filaTotalEl        = document.getElementById('filaTotal')
+const btnOrganizarFila   = document.getElementById('btnOrganizarFila')
 
 // ─── Cronômetro ───────────────────────────────────────────────
 function formatarTempo(s) {
@@ -65,6 +70,8 @@ function parseTempo(str) {
 function iniciarTimer(inicial = 0) {
     segundos = inicial
     cronometro.textContent = formatarTempo(segundos)
+    document.body.classList.add('corrida-ativa')
+    if (cronometroModal) cronometroModal.textContent = formatarTempo(segundos)
     timerInterval = setInterval(() => {
         segundos++
         cronometro.textContent = formatarTempo(segundos)
@@ -74,6 +81,7 @@ function iniciarTimer(inicial = 0) {
 function pararTimer() {
     clearInterval(timerInterval)
     timerInterval = null
+    document.body.classList.remove('corrida-ativa')
 }
 
 // ─── Ação principal (Iniciar / Registrar checkpoint) ──────────
@@ -137,7 +145,7 @@ async function iniciarCorrida(kmStart) {
 
         if (!res) return  // refresh falhou → redirect /login
 
-        const err = await res.json()
+        const err = res ? await res.json() : {}
 
         if (res.status === 409 && err.conflict_shift_id) {
             const inicio = err.conflict_start_at
@@ -156,7 +164,7 @@ async function iniciarCorrida(kmStart) {
         }
 
         alert('Erro ao iniciar: ' + err.error)
-        return
+        return false
     }
 
     const shift = await res.json()
@@ -201,6 +209,7 @@ async function registrarCheckpoint(kmDistance) {
     atualizarUltimoCp()
     renderizarCpsSessao()
     agendarLembrete() // reinicia contagem de 5 min
+    return true
 }
 
 // ─── Último checkpoint info ───────────────────────────────────
@@ -254,9 +263,16 @@ if (btnLembreteAgora) {
 // ─── Modal Checkpoint ─────────────────────────────────────────
 const modalCheckpoint       = document.getElementById('modalCheckpoint')
 const kmCheckpointModal     = document.getElementById('kmCheckpointModal')
+const tempoCheckpointModal  = document.getElementById('tempoCheckpointModal')
+const velocidadeCheckpointModal = document.getElementById('velocidadeCheckpointModal')
+const corredorCheckpointModal = document.getElementById('corredorCheckpointModal')
+const checkpointFotoInput   = document.getElementById('checkpointFotoInput')
+const checkpointFotoPreview = document.getElementById('checkpointFotoPreview')
+const btnCheckpointFoto     = document.getElementById('btnCheckpointFoto')
 const listaCpsSessao        = document.getElementById('listaCpsSessao')
 const btnCancelarCheckpoint = document.getElementById('btnCancelarCheckpoint')
 const btnRegistrarCheckpoint = document.getElementById('btnRegistrarCheckpoint')
+let checkpointFotoUrl = null
 
 function renderizarCpsSessao() {
     if (!listaCpsSessao) return
@@ -324,13 +340,45 @@ function renderizarCpsSessao() {
 function abrirModalCheckpoint() {
     if (!modalCheckpoint) return
     if (kmCheckpointModal) { kmCheckpointModal.value = ''; }
+    if (tempoCheckpointModal) tempoCheckpointModal.value = formatarTempo(segundos)
+    if (velocidadeCheckpointModal) velocidadeCheckpointModal.value = ''
+    if (corredorCheckpointModal) {
+        const option = document.createElement('option')
+        option.textContent = atletaAtual?.name || 'Corredor atual'
+        corredorCheckpointModal.replaceChildren(option)
+    }
     renderizarCpsSessao()
     modalCheckpoint.classList.remove('escondido')
-    setTimeout(() => kmCheckpointModal?.focus(), 50)
 }
 
 function fecharModalCheckpoint() {
     if (modalCheckpoint) modalCheckpoint.classList.add('escondido')
+    if (checkpointFotoUrl) {
+        URL.revokeObjectURL(checkpointFotoUrl)
+        checkpointFotoUrl = null
+    }
+    if (checkpointFotoInput) checkpointFotoInput.value = ''
+    if (checkpointFotoPreview) {
+        checkpointFotoPreview.innerHTML = `
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7h3l1.5-2h7L17 7h3v12H4z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+            </svg>`
+    }
+}
+
+if (btnCheckpointFoto && checkpointFotoInput) {
+    btnCheckpointFoto.addEventListener('click', () => checkpointFotoInput.click())
+}
+
+if (checkpointFotoInput && checkpointFotoPreview) {
+    checkpointFotoInput.addEventListener('change', () => {
+        const arquivo = checkpointFotoInput.files?.[0]
+        if (!arquivo) return
+        if (checkpointFotoUrl) URL.revokeObjectURL(checkpointFotoUrl)
+        checkpointFotoUrl = URL.createObjectURL(arquivo)
+        checkpointFotoPreview.innerHTML = `<img src="${checkpointFotoUrl}" alt="Foto do checkpoint">`
+    })
 }
 
 if (modalCheckpoint) {
@@ -364,9 +412,9 @@ if (btnRegistrarCheckpoint) {
         }
 
         btnRegistrarCheckpoint.disabled = true
-        await registrarCheckpoint(km)
+        const registrado = await registrarCheckpoint(km)
         btnRegistrarCheckpoint.disabled = false
-        fecharModalCheckpoint()
+        if (registrado) fecharModalCheckpoint()
     })
 }
 
@@ -392,7 +440,7 @@ if (btnRegistrarCheckpoint) {
     modal.addEventListener('click', e => { if (e.target === modal) fechar() })
 })()
 
-async function finalizarCorrida(kmEnd, athleteIdOverride = null, durationSeconds = null) {
+async function finalizarCorrida(kmEnd, athleteIdOverride = null, durationSeconds = null, pace = null) {
     const body = { km_end: kmEnd }
     // Troca de corredor: só envia se diferir do atleta atual do turno
     if (athleteIdOverride && (!atletaAtual || athleteIdOverride !== atletaAtual.id)) {
@@ -400,6 +448,7 @@ async function finalizarCorrida(kmEnd, athleteIdOverride = null, durationSeconds
     }
     // Tempo editado: envia duração em segundos; backend faz end_at = start_at + duração no SQL
     if (durationSeconds != null) body.duration_seconds = durationSeconds
+    if (pace) body.pace = pace
 
     const res = await authFetch(`/audit/shifts/${shiftId}/finish`, {
         method: 'PATCH',
@@ -460,7 +509,7 @@ function adicionarLinhaTabela(shift, nomeAtleta, checkpoints, auditor) {
     const rowId  = `cps-${++_rowCounter}`
 
     const tr = document.createElement('tr')
-    tr.className = 'linha-turno'
+    tr.className = 'linha-turno registro-novo'
     tr.innerHTML = `
         <td>
             ${temCps ? `<button class="btn-toggle-cp" data-target="${rowId}" onclick="toggleCheckpoints(this)">▶</button>` : ''}
@@ -468,6 +517,7 @@ function adicionarLinhaTabela(shift, nomeAtleta, checkpoints, auditor) {
         </td>
         <td>${shift.km_start} km</td>
         <td>${shift.km_end} km</td>
+        <td>${shift.pace || '—'}</td>
         <td>${new Date(shift.start_at).toLocaleTimeString('pt-BR')}</td>
         <td>${new Date(shift.end_at).toLocaleTimeString('pt-BR')}</td>
         <td>${auditor || '—'}</td>
@@ -561,6 +611,7 @@ function criarItemFila(athlete) {
     div.className = 'corredor-fila'
     div.draggable = true
     div.dataset.id = athlete.id
+    div.title = 'Arraste para reorganizar a fila'
     div.innerHTML = `
         <span class="avatar"></span>
         <p>${athlete.name}</p>
@@ -570,11 +621,28 @@ function criarItemFila(athlete) {
     return div
 }
 
+function atualizarResumoFila() {
+    if (!filaProximoNomeEl || !filaTotalEl) return
+    const proximos = ATHLETES.slice(atletaIndex + 1)
+    filaProximoNomeEl.textContent = proximos[0] ? proximos[0].name : 'Fim da fila'
+    filaTotalEl.textContent = `${proximos.length} na fila`
+}
+
 function atualizarFila() {
-    const fila = document.getElementById('fila')
+    const fila = filaEl || document.getElementById('fila')
+    if (!fila) return
     fila.innerHTML = ''
     ATHLETES.slice(atletaIndex + 1).forEach(athlete => {
         fila.appendChild(criarItemFila(athlete))
+    })
+    atualizarResumoFila()
+}
+
+if (btnOrganizarFila && filaResumoEl && filaEl) {
+    btnOrganizarFila.addEventListener('click', () => {
+        const aberta = filaResumoEl.classList.toggle('fila-aberta')
+        filaEl.classList.toggle('fila-aberta', aberta)
+        btnOrganizarFila.textContent = aberta ? 'Fechar fila' : 'Organizar fila'
     })
 }
 
@@ -591,18 +659,19 @@ function ativarDrag(el) {
         dragging = null
         el.classList.remove('arrastando')
         // Sincroniza ATHLETES com nova ordem visual
-        const fila = document.getElementById('fila')
+        const fila = filaEl || document.getElementById('fila')
         const novaOrdem = [...fila.querySelectorAll('.corredor-fila')].map(d => {
             return ATHLETES.find(a => String(a.id) === d.dataset.id)
         }).filter(Boolean)
         // Substitui a fatia restante do array
         novaOrdem.forEach((a, i) => { ATHLETES[atletaIndex + 1 + i] = a })
+        atualizarResumoFila()
     })
 
     el.addEventListener('dragover', (e) => {
         e.preventDefault()
         if (!dragging || dragging === el) return
-        const fila = document.getElementById('fila')
+        const fila = filaEl || document.getElementById('fila')
         const items = [...fila.querySelectorAll('.corredor-fila')]
         const indexDragging = items.indexOf(dragging)
         const indexTarget   = items.indexOf(el)
@@ -616,6 +685,7 @@ function ativarDrag(el) {
 
 // Ativa drag nos itens do SSR (renderizados pelo EJS)
 document.querySelectorAll('#fila .corredor-fila').forEach(el => ativarDrag(el))
+atualizarResumoFila()
 
 // ─── Turno aberto ao carregar: RETOMA (não encerra) ───────────
 if (OPEN_SHIFT) {
@@ -784,6 +854,9 @@ function abrirModalTurno() {
     const ultimoCp = checkpointsSessao[checkpointsSessao.length - 1] || null
     quilometragemTurno.value = ultimoCp ? ultimoCp.km : (inputKm.value || '')
 
+    const paceTurno = document.getElementById('paceTurno')
+    if (paceTurno) paceTurno.value = ''
+
     modalTurno.classList.remove('escondido')
     setTimeout(() => quilometragemTurno.focus(), 50)
 }
@@ -811,9 +884,12 @@ if (btnRegistrarTurno) {
         // Tempo editado → envia duração em segundos (backend calcula end_at = start_at + duração)
         const secsEditado = parseTempo(tempoPercorridoTurno.value)
 
+        const paceTurno = document.getElementById('paceTurno')
+        const paceValor = paceTurno?.value.trim() || null
+
         const athleteId = Number(selectCorredor.value) || null
         btnRegistrarTurno.disabled = true
-        await finalizarCorrida(kmValor, athleteId, secsEditado)
+        await finalizarCorrida(kmValor, athleteId, secsEditado, paceValor)
         btnRegistrarTurno.disabled = false
         fecharModalTurno()
     })

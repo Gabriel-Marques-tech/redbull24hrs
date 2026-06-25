@@ -1,52 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1705" height="466" viewBox="0 0 1705 466">
-<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#0F0069"/></marker></defs>
-<rect width="100%" height="100%" fill="#FFFFFF"/>
-<text x="852.5" y="24" text-anchor="middle" font-family="Arial" font-size="20" font-weight="700" fill="#0F0069">Arquitetura do fluxo Events</text>
-<rect x="30" y="48" width="205" height="136" rx="18" fill="none" stroke="#D6D6E8" stroke-width="1.4"/><text x="132.5" y="72" text-anchor="middle" font-family="Arial" font-size="17" fill="#0F0069">Cliente</text>
-<rect x="270" y="48" width="205" height="316" rx="18" fill="none" stroke="#D6D6E8" stroke-width="1.4"/><text x="372.5" y="72" text-anchor="middle" font-family="Arial" font-size="17" fill="#0F0069">Rotas</text>
-<rect x="510" y="48" width="205" height="316" rx="18" fill="none" stroke="#D6D6E8" stroke-width="1.4"/><text x="612.5" y="72" text-anchor="middle" font-family="Arial" font-size="17" fill="#0F0069">Controllers</text>
-<rect x="750" y="48" width="205" height="406" rx="18" fill="none" stroke="#D6D6E8" stroke-width="1.4"/><text x="852.5" y="72" text-anchor="middle" font-family="Arial" font-size="17" fill="#0F0069">Services</text>
-<rect x="990" y="48" width="205" height="316" rx="18" fill="none" stroke="#D6D6E8" stroke-width="1.4"/><text x="1092.5" y="72" text-anchor="middle" font-family="Arial" font-size="17" fill="#0F0069">Repositories</text>
-<rect x="1230" y="48" width="205" height="226" rx="18" fill="none" stroke="#D6D6E8" stroke-width="1.4"/><text x="1332.5" y="72" text-anchor="middle" font-family="Arial" font-size="17" fill="#0F0069">Banco</text>
-<rect x="1470" y="48" width="205" height="316" rx="18" fill="none" stroke="#D6D6E8" stroke-width="1.4"/><text x="1572.5" y="72" text-anchor="middle" font-family="Arial" font-size="17" fill="#0F0069">Saídas</text>
-<path d="M219,123.0 L252.5,123.0 L252.5,123.0 L286,123.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M219,123.0 L252.5,123.0 L252.5,213.0 L286,213.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M219,123.0 L252.5,123.0 L252.5,303.0 L286,303.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M459,123.0 L492.5,123.0 L492.5,123.0 L526,123.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M459,213.0 L492.5,213.0 L492.5,213.0 L526,213.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M459,303.0 L492.5,303.0 L492.5,303.0 L526,303.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M699,123.0 L732.5,123.0 L732.5,123.0 L766,123.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M699,213.0 L732.5,213.0 L732.5,213.0 L766,213.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M699,303.0 L732.5,303.0 L732.5,303.0 L766,303.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M939,123.0 L972.5,123.0 L972.5,123.0 L1006,123.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M939,213.0 L972.5,213.0 L972.5,213.0 L1006,213.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M939,303.0 L972.5,303.0 L972.5,303.0 L1006,303.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M939,123.0 L852.5,123.0 L852.5,393.0 L766,393.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)" stroke-dasharray="6 5"/><text x="852.5" y="117.0" text-anchor="middle" font-family="Arial" font-size="12" fill="#0F0069">regras</text>
-<path d="M939,213.0 L852.5,213.0 L852.5,393.0 L766,393.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)" stroke-dasharray="6 5"/><text x="852.5" y="207.0" text-anchor="middle" font-family="Arial" font-size="12" fill="#0F0069">regras</text>
-<path d="M1179,123.0 L1212.5,123.0 L1212.5,213.0 L1246,213.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M1179,213.0 L1212.5,213.0 L1212.5,213.0 L1246,213.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M1179,303.0 L1212.5,303.0 L1212.5,213.0 L1246,213.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M1419,213.0 L1332.5,213.0 L1332.5,123.0 L1246,123.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M1419,123.0 L1452.5,123.0 L1452.5,123.0 L1486,123.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M1419,123.0 L1452.5,123.0 L1452.5,213.0 L1486,213.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M1419,123.0 L1452.5,123.0 L1452.5,303.0 L1486,303.0" fill="none" stroke="#0F0069" stroke-width="1.7" marker-end="url(#arrow)"/>
-<rect x="46" y="90" width="173" height="66" rx="12" fill="#FFFFFF" stroke="#0F0069" stroke-width="2.2"/><text x="132.5" y="114.3" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">Web Admin</text><text x="132.5" y="131.8" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">API Client</text>
-<rect x="286" y="90" width="173" height="66" rx="12" fill="#FFF7CC" stroke="#D6A700" stroke-width="2.2"/><text x="372.5" y="123.0" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">POST /events</text>
-<rect x="286" y="180" width="173" height="66" rx="12" fill="#FFF7CC" stroke="#D6A700" stroke-width="2.2"/><text x="372.5" y="213.0" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">GET métricas do evento</text>
-<rect x="286" y="270" width="173" height="66" rx="12" fill="#FFF7CC" stroke="#D6A700" stroke-width="2.2"/><text x="372.5" y="303.0" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">GET export CSV</text>
-<rect x="526" y="90" width="173" height="66" rx="12" fill="#E8E8F5" stroke="#0F0069" stroke-width="2.2"/><text x="612.5" y="123.0" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">EventController</text>
-<rect x="526" y="180" width="173" height="66" rx="12" fill="#E8E8F5" stroke="#0F0069" stroke-width="2.2"/><text x="612.5" y="213.0" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">MetricsController</text>
-<rect x="526" y="270" width="173" height="66" rx="12" fill="#E8E8F5" stroke="#0F0069" stroke-width="2.2"/><text x="612.5" y="303.0" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">ExportController</text>
-<rect x="766" y="90" width="173" height="66" rx="12" fill="#E7F5E8" stroke="#2E7D32" stroke-width="2.2"/><text x="852.5" y="123.0" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">EventService</text>
-<rect x="766" y="180" width="173" height="66" rx="12" fill="#E7F5E8" stroke="#2E7D32" stroke-width="2.2"/><text x="852.5" y="213.0" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">MetricsService</text>
-<rect x="766" y="270" width="173" height="66" rx="12" fill="#E7F5E8" stroke="#2E7D32" stroke-width="2.2"/><text x="852.5" y="303.0" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">ExportService</text>
-<rect x="766" y="360" width="173" height="66" rx="12" fill="#FFFFFF" stroke="#D2003C" stroke-width="2.2" stroke-dasharray="7 5"/><text x="852.5" y="384.3" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">RF025 · RF019</text><text x="852.5" y="401.8" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">RF014 · RF024</text>
-<rect x="1006" y="90" width="173" height="66" rx="12" fill="#FFF0D6" stroke="#EF6C00" stroke-width="2.2"/><text x="1092.5" y="123.0" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">EventRepository</text>
-<rect x="1006" y="180" width="173" height="66" rx="12" fill="#FFF0D6" stroke="#EF6C00" stroke-width="2.2"/><text x="1092.5" y="213.0" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">MetricsRepository</text>
-<rect x="1006" y="270" width="173" height="66" rx="12" fill="#FFF0D6" stroke="#EF6C00" stroke-width="2.2"/><text x="1092.5" y="303.0" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">Export queries</text>
-<rect x="1246" y="90" width="173" height="66" rx="12" fill="#ECEFF1" stroke="#37474F" stroke-width="2.2"/><text x="1332.5" y="123.0" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">PostgreSQL</text>
-<rect x="1246" y="180" width="173" height="66" rx="12" fill="#ECEFF1" stroke="#37474F" stroke-width="2.2"/><text x="1332.5" y="195.6" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">events · managers</text><text x="1332.5" y="213.1" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">teams · athletes</text><text x="1332.5" y="230.6" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">shifts · checkpoints</text>
-<rect x="1486" y="90" width="173" height="66" rx="12" fill="#FDE7EF" stroke="#D2003C" stroke-width="2.2"/><text x="1572.5" y="123.0" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">201 evento criado</text>
-<rect x="1486" y="180" width="173" height="66" rx="12" fill="#FDE7EF" stroke="#D2003C" stroke-width="2.2"/><text x="1572.5" y="213.0" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">200 dashboard/ranking</text>
-<rect x="1486" y="270" width="173" height="66" rx="12" fill="#FDE7EF" stroke="#D2003C" stroke-width="2.2"/><text x="1572.5" y="303.0" text-anchor="middle" font-family="Arial" font-size="14" fill="#0F0069">200 arquivo CSV</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1869" height="440" viewBox="0 0 1869 440">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#0F0069"/></marker></defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="145.5" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#0F0069">Cliente</text>
+<rect x="20" y="43" width="251" height="76" rx="14" fill="#F5F5FA" stroke="#0F0069" stroke-width="1" opacity="0.42"/>
+<rect x="28" y="57" width="235" height="54" rx="10" fill="#FFFFFF" stroke="#0F0069" stroke-width="2"/>
+<text x="145.5" y="75" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">Web Admin</text>
+<text x="145.5" y="91" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">API Client</text>
+<text x="408.5" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#0F0069">Rotas do fluxo</text>
+<rect x="283" y="43" width="251" height="220" rx="14" fill="#F5F5FA" stroke="#0F0069" stroke-width="1" opacity="0.42"/>
+<rect x="291" y="57" width="235" height="54" rx="10" fill="#FFF7CC" stroke="#D6A700" stroke-width="2"/>
+<text x="408.5" y="79" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">POST /events</text>
+<rect x="291" y="129" width="235" height="54" rx="10" fill="#FFF7CC" stroke="#D6A700" stroke-width="2"/>
+<text x="408.5" y="151" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">PATCH /events/:id/start</text>
+<rect x="291" y="201" width="235" height="54" rx="10" fill="#FFF7CC" stroke="#D6A700" stroke-width="2"/>
+<text x="408.5" y="223" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">PATCH /events/:id/finish</text>
+<text x="671.5" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#0F0069">Controller</text>
+<rect x="546" y="43" width="251" height="76" rx="14" fill="#F5F5FA" stroke="#0F0069" stroke-width="1" opacity="0.42"/>
+<rect x="554" y="57" width="235" height="54" rx="10" fill="#E8E8F5" stroke="#0F0069" stroke-width="2"/>
+<text x="671.5" y="79" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">EventController</text>
+<text x="934.5" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#0F0069">Service</text>
+<rect x="809" y="43" width="251" height="148" rx="14" fill="#F5F5FA" stroke="#0F0069" stroke-width="1" opacity="0.42"/>
+<rect x="817" y="57" width="235" height="54" rx="10" fill="#E7F5E8" stroke="#2E7D32" stroke-width="2"/>
+<text x="934.5" y="75" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">EventService</text>
+<text x="934.5" y="91" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">ciclo de vida do evento</text>
+<rect x="817" y="129" width="235" height="54" rx="10" fill="#FFFFFF" stroke="#D2003C" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="934.5" y="147" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">RF025 · RF051</text>
+<text x="934.5" y="163" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">RN22 status do evento</text>
+<text x="1197.5" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#0F0069">Repository</text>
+<rect x="1072" y="43" width="251" height="292" rx="14" fill="#F5F5FA" stroke="#0F0069" stroke-width="1" opacity="0.42"/>
+<rect x="1080" y="57" width="235" height="54" rx="10" fill="#FFF0D6" stroke="#EF6C00" stroke-width="2"/>
+<text x="1197.5" y="79" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">EventRepository</text>
+<rect x="1080" y="129" width="235" height="54" rx="10" fill="#FFF0D6" stroke="#EF6C00" stroke-width="2"/>
+<text x="1197.5" y="151" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">create</text>
+<rect x="1080" y="201" width="235" height="54" rx="10" fill="#FFF0D6" stroke="#EF6C00" stroke-width="2"/>
+<text x="1197.5" y="223" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">startEvent</text>
+<rect x="1080" y="273" width="235" height="54" rx="10" fill="#FFF0D6" stroke="#EF6C00" stroke-width="2"/>
+<text x="1197.5" y="295" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">finishEvent</text>
+<text x="1460.5" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#0F0069">Banco de Dados</text>
+<rect x="1335" y="43" width="251" height="220" rx="14" fill="#F5F5FA" stroke="#0F0069" stroke-width="1" opacity="0.42"/>
+<rect x="1343" y="57" width="235" height="54" rx="10" fill="#ECEFF1" stroke="#37474F" stroke-width="2"/>
+<text x="1460.5" y="79" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">PostgreSQL</text>
+<rect x="1343" y="129" width="235" height="54" rx="10" fill="#ECEFF1" stroke="#37474F" stroke-width="2"/>
+<text x="1460.5" y="151" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">events</text>
+<rect x="1343" y="201" width="235" height="54" rx="10" fill="#ECEFF1" stroke="#37474F" stroke-width="2"/>
+<text x="1460.5" y="223" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">managers</text>
+<text x="1723.5" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#0F0069">Saídas</text>
+<rect x="1598" y="43" width="251" height="220" rx="14" fill="#F5F5FA" stroke="#0F0069" stroke-width="1" opacity="0.42"/>
+<rect x="1606" y="57" width="235" height="54" rx="10" fill="#FDE7EF" stroke="#D2003C" stroke-width="2"/>
+<text x="1723.5" y="79" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">201 evento criado</text>
+<rect x="1606" y="129" width="235" height="54" rx="10" fill="#FDE7EF" stroke="#D2003C" stroke-width="2"/>
+<text x="1723.5" y="151" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">200 evento iniciado</text>
+<rect x="1606" y="201" width="235" height="54" rx="10" fill="#FDE7EF" stroke="#D2003C" stroke-width="2"/>
+<text x="1723.5" y="223" text-anchor="middle" font-family="Arial" font-size="12.5" fill="#0F0069">200 evento finalizado</text>
+<path d="M263.0,84.0 C303.0,84.0 251.0,84.0 291.0,84.0" fill="none" stroke="#0F0069" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M526.0,84.0 C566.0,84.0 514.0,84.0 554.0,84.0" fill="none" stroke="#0F0069" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M789.0,84.0 C829.0,84.0 777.0,84.0 817.0,84.0" fill="none" stroke="#0F0069" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1052.0,84.0 C1092.0,84.0 1040.0,84.0 1080.0,84.0" fill="none" stroke="#0F0069" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1315.0,84.0 C1355.0,84.0 1303.0,84.0 1343.0,84.0" fill="none" stroke="#0F0069" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1578.0,84.0 C1618.0,84.0 1566.0,84.0 1606.0,84.0" fill="none" stroke="#0F0069" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="18" y="422" font-family="Arial" font-size="11" fill="#0F0069">Atualizado a partir dos Diagramas de Sequência UML</text>
 </svg>
