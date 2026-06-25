@@ -58,8 +58,10 @@ _Coloque aqui o link para o vídeo de demonstração do projeto_
 ```
 ├── documentos/                                    # Documentação geral do projeto
 │   ├── assets/                                    # Recursos utilizados na documentação
+│   │   ├── business_model_canvas/                 # Business Model Canvas
 │   │   ├── classes_dominio/                       # Diagrama de classes de domínio
 │   │   ├── diagrama_entidade_relacionamento/      # Diagrama entidade-relacionamento
+│   │   ├── diagrama_implantacao/                  # Diagrama de implantação
 │   │   ├── diagrama_sequencia/                    # Diagramas de sequência por módulo
 │   │   ├── diagramas_arquitetura/                 # Diagramas de arquitetura em Mermaid e SVG
 │   │   ├── diagramas_arquiteturais/               # Diagramas de classes por módulo
@@ -69,18 +71,19 @@ _Coloque aqui o link para o vídeo de demonstração do projeto_
 │   │   ├── personas/                              # Personas do projeto
 │   │   ├── prototipos-alta-fidelidade/            # Protótipos de tela em SVG (fluxos auditor e gerente)
 │   │   ├── relatorio_desenvolvimento/             # Capturas de tela do protótipo em desenvolvimento
+│   │   ├── teste-sus/                             # Resultados do teste de usabilidade (SUS)
 │   │   ├── testes/                                # Evidências dos testes executados
 │   │   ├── use_case/                              # Diagrama de casos de uso
 │   │   └── wireframes/                            # Wireframes de baixa e média fidelidade
 │   ├── outros/                                    # Documentos complementares
+│   │   ├── WebAPI/                                # Página estática da WebAPI publicada (servida em /docs)
 │   │   ├── migrations-schema.md                   # Histórico e descrição das migrações
+│   │   ├── quebra_de_linha.md                     # Notas complementares
 │   │   ├── regras_de_negocio.md                   # Regras de negócio do sistema
 │   │   ├── requisitos_funcionais.md               # Requisitos funcionais levantados
 │   │   ├── requisitos_nao_funcionais.md           # Requisitos não funcionais levantados
 │   │   └── user_stories.md                        # User stories do projeto
 │   └── wad.md                                     # Web Application Document principal do projeto
-├── docs/                                          # Documentação publicada da WebAPI
-│   └── api/                                       # Página estática da API (servida em /docs)
 ├── src/                                           # Código-fonte da aplicação
 │   ├── controllers/                               # Controladores HTTP (requisição/resposta)
 │   ├── database/                                  # Configuração e migrações do banco de dados
@@ -89,10 +92,13 @@ _Coloque aqui o link para o vídeo de demonstração do projeto_
 │   │   ├── assets/                                # Imagens e ícones da interface
 │   │   ├── css/                                   # Folhas de estilo das páginas
 │   │   ├── js/                                    # Scripts client-side das páginas
-│   │   └── views/                                 # Templates EJS (e HTML legado) das páginas
+│   │   └── views/                                 # Templates EJS das páginas
+│   │       └── partials/                          # Trechos EJS reutilizáveis (cabeçalho, rodapé etc.)
 │   ├── middlewares/                               # Middlewares (autenticação/autorização JWT)
 │   ├── repositories/                              # Camada de acesso ao banco (SQL parametrizado)
 │   ├── routes/                                    # Definição das rotas da API e das páginas
+│   ├── scripts/                                   # Scripts auxiliares (ex.: testes de OCR, e-mails de demo)
+│   │   └── supportData/                           # Dados de apoio dos scripts
 │   ├── services/                                  # Lógica de negócio da aplicação
 │   ├── types/                                     # Tipos e interfaces TypeScript
 │   ├── utils/                                     # Funções utilitárias (ex.: emissão de JWT)
@@ -169,6 +175,10 @@ Preencha cada variável conforme a tabela abaixo:
 | `JWT_REFRESH_EXPIRES` | Sim | Validade do refresh token (ex.: `7d`). |
 | `GEMINI_API_KEY` | Sim | Chave do Google Gemini, provedor principal do OCR de quilometragem. |
 | `GROQ_API_KEY` | Opcional | Chave do Groq, provedor de OCR reserva (fallback). |
+| `SMTP_USER` | Opcional | Usuário SMTP (Brevo) para envio de e-mails. |
+| `SMTP_PASS` | Opcional | Chave/senha SMTP (Brevo) para envio de e-mails. |
+| `EMAIL_FROM` | Opcional | Remetente exibido nos e-mails enviados pela aplicação. |
+| `APP_BASE_URL` | Opcional | URL pública base da aplicação, usada em links de compartilhamento. |
 
 > Dica: gere os segredos JWT com valores fortes e aleatórios, por exemplo `openssl rand -hex 32`, e use segredos distintos para access e refresh.
 
@@ -198,6 +208,14 @@ JWT_REFRESH_EXPIRES=7d
 # OCR de checkpoints (leitura de quilometragem por foto)
 GEMINI_API_KEY=SUA_GEMINI_API_KEY_AQUI
 GROQ_API_KEY=SUA_GROQ_API_KEY_AQUI
+
+# Envio de e-mails (SMTP Brevo)
+SMTP_USER=SEU_SMTP_USER_AQUI
+SMTP_PASS=SUA_SMTP_KEY_AQUI
+EMAIL_FROM=Red Bull 24H <noreply@seudominio.com>
+
+# URL pública da aplicação (links de compartilhamento)
+APP_BASE_URL=http://localhost:3000
 ```
 
 > O arquivo `.env` contém segredos e **não deve ser commitado** (já está no `.gitignore`). Use o `.env.example` como referência versionada.
