@@ -203,7 +203,7 @@ main > .etapas .etapa p{
 .botoes-fluxo-selecao {
     position: fixed !important;
     bottom: 65px !important;
-    left: 50%;
+    left: 50vw;
     z-index: 100;
     display: flex;
     justify-content: center;
@@ -219,6 +219,7 @@ main > .etapas .etapa p{
     height: 60px !important;
     border-radius: 6px;
     font-size: 28px !important;
+    touch-action: manipulation;
 }
 
 .botoes-fluxo-selecao > button:not(:disabled),
