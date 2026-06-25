@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= athlete.name %> · Red Bull 24H</title>
+
+  <!-- Open Graph para preview ao compartilhar o link -->
+  <meta property="og:title" content="<%= athlete.name %> · Red Bull 24H" />
+  <meta property="og:description" content="<%= Number(athlete.total_km).toFixed(2) %> km percorridos · <%= athlete.total_shifts %> turnos · Equipe <%= athlete.team_name %>" />
+  <meta property="og:type" content="website" />
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0a0a0a;
+      color: #fff;
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      gap: 20px;
+    }
+
+    /* ── Card capturável ── */
+    #share-card {
+      background: linear-gradient(145deg, #111 0%, #1a1a1a 100%);
+      border: 1px solid #222;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 400px;
+      padding: 32px 28px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #share-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top right, rgba(190,0,0,0.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .card-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #be0000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .card-header-text h1 {
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .card-header-text p {
+      font-size: 13px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    .card-event {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #be0000;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .card-main-stat {
+      margin-bottom: 24px;
+    }
+
+    .card-main-stat .value {
+      font-size: 60px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+
+    .card-main-stat .unit {
+      font-size: 22px;
+      font-weight: 400;
+      color: #888;
+      margin-left: 4px;
+    }
+
+    .card-main-stat .label {
+      font-size: 13px;
+      color: #666;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .card-divider {
+      height: 1px;
+      background: #222;
+      margin-bottom: 20px;
+    }
+
+    .card-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-item .sv {
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .stat-item .sl {
+      font-size: 11px;
+      color: #666;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-footer .brand {
+      font-size: 11px;
+      color: #444;
+    }
+
+    .card-footer .brand span {
+      color: #be0000;
+      font-weight: 700;
+    }
+
+    .rb-logo {
+      font-size: 13px;
+      font-weight: 800;
+      color: #be0000;
+      letter-spacing: -0.02em;
+    }
+
+    /* ── Botões ── */
+    .actions {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: opacity 0.15s;
+    }
+
+    .btn:active { opacity: 0.8; }
+
+    .btn-share {
+      background: #be0000;
+      color: #fff;
+    }
+
+    .btn-download {
+      background: #1e1e1e;
+      color: #ccc;
+      border: 1px solid #2a2a2a;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #555;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Card capturável pelo html2canvas -->
+  <div id="share-card">
+    <div class="card-header">
+      <div class="card-avatar">
+        <%= athlete.name.trim().split(' ').slice(0,2).map((n) => n[0].toUpperCase()).join('') %>
+      </div>
+      <div class="card-header-text">
+        <h1><%= athlete.name %></h1>
+        <p><%= athlete.team_name %></p>
+      </div>
+    </div>
+
+    <div class="card-event">⚡ <%= athlete.event_name %></div>
+
+    <div class="card-main-stat">
+      <div>
+        <span class="value"><%= Number(athlete.total_km).toFixed(2) %></span>
+        <span class="unit">km</span>
+      </div>
+      <div class="label">Total percorrido</div>
+    </div>
+
+    <div class="card-divider"></div>
+
+    <div class="card-stats">
+      <div class="stat-item">
+        <div class="sv"><%= athlete.total_shifts %></div>
+        <div class="sl">Turnos</div>
+      </div>
+      <div class="stat-item">
+        <div class="sv"><%= athlete.avg_speed != null ? Number(athlete.avg_speed).toFixed(1) : '—' %></div>
+        <div class="sl">km/h médio</div>
+      </div>
+      <div class="stat-item">
+        <div class="sv"><%= athlete.best_shift_km != null ? Number(athlete.best_shift_km).toFixed(2) : '—' %></div>
+        <div class="sl">Melhor turno</div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <span class="brand">redbull24h · <span>by Inteli</span></span>
+      <span class="rb-logo">RB 24H</span>
+    </div>
+  </div>
+
+  <!-- Ações -->
+  <div class="actions">
+    <button class="btn btn-share" id="btn-share" onclick="compartilhar()">
+      Compartilhar
+    </button>
+    <button class="btn btn-download" id="btn-download" onclick="baixarImagem()">
+      Baixar imagem
+    </button>
+  </div>
+  <p class="hint">Salve a imagem e compartilhe no Instagram, WhatsApp e outras redes</p>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    async function gerarImagem() {
+      const card = document.getElementById('share-card');
+      const canvas = await html2canvas(card, {
+        backgroundColor: null,
+        scale: 2,
+        useCORS: true,
+        logging: false,
+      });
+      return canvas;
+    }
+
+    async function compartilhar() {
+      const btn = document.getElementById('btn-share');
+      btn.disabled = true;
+      btn.textContent = 'Gerando...';
+
+      try {
+        const canvas = await gerarImagem();
+
+        if (navigator.share && navigator.canShare) {
+          const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+          const file = new File([blob], 'desempenho-redbull24h.png', { type: 'image/png' });
+
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              title: '<%= athlete.name %> · Red Bull 24H',
+              text: '<%= Number(athlete.total_km).toFixed(2) %> km · <%= athlete.total_shifts %> turnos · Equipe <%= athlete.team_name %>',
+              files: [file],
+            });
+            return;
+          }
+        }
+
+        // Fallback: compartilha só o link
+        if (navigator.share) {
+          await navigator.share({
+            title: '<%= athlete.name %> · Red Bull 24H',
+            text: '<%= Number(athlete.total_km).toFixed(2) %> km percorridos no Red Bull 24H!',
+            url: window.location.href,
+          });
+          return;
+        }
+
+        // Desktop: copia link
+        await navigator.clipboard.writeText(window.location.href);
+        btn.textContent = 'Link copiado!';
+        setTimeout(() => { btn.textContent = 'Compartilhar'; btn.disabled = false; }, 2000);
+        return;
+
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          baixarImagem();
+        }
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Compartilhar';
+      }
+    }
+
+    async function baixarImagem() {
+      const btn = document.getElementById('btn-download');
+      btn.disabled = true;
+      btn.textContent = 'Gerando...';
+
+      try {
+        const canvas = await gerarImagem();
+        const link = document.createElement('a');
+        link.download = 'desempenho-redbull24h.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Baixar imagem';
+      }
+    }
+  </script>
+</body>
+</html>

@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auditoria</title>
+    <link rel="icon" type="image/png" href="/assets/logo/logo-redrun.png">
+    <link rel="apple-touch-icon" href="/assets/logo/logo-redrun.png">
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/auditoria.css">
     <script src="/js/tema.js"></script>
@@ -13,7 +15,11 @@
 
     <header class="topo">
         <div class="operador" id="areaOperador" onclick="abrirModalOperador()" title="Trocar operador" style="cursor:pointer">
+            <% if (auditor.image_url) { %>
+            <div class="avatar avatar-operador" style="background-image:url('<%= auditor.image_url %>')"></div>
+            <% } else { %>
             <span class="avatar avatar-operador"></span>
+            <% } %>
             <div>
                 <small>Operador <span class="seta-bandeja">▾</span></small>
                 <p id="nomeOperador"><%= auditor.name %></p>

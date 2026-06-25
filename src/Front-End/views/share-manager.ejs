@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Compartilhar desempenhos · <%= event.title %></title>
+  <link rel="stylesheet" href="/css/global.css"/>
+  <script src="/js/tema.js"></script>
+  <style>
+    body {
+      background: var(--fundo-pagina);
+      color: var(--texto-principal);
+      padding: 40px;
+    }
+
+    .barra-topo {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 32px; flex-wrap: wrap; gap: 12px;
+    }
+
+    .btn-voltar {
+      padding: 8px 20px;
+      background: var(--fundo-superficie);
+      border: 1px solid var(--borda);
+      border-radius: 6px; cursor: pointer; font-size: 14px;
+      text-decoration: none; color: var(--texto-principal); display: inline-block;
+    }
+    .btn-voltar:hover { border-color: var(--vermelho); color: var(--vermelho); }
+
+    .btn-send-all {
+      padding: 8px 20px; background: var(--vermelho); border: none; color: #fff;
+      border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 700;
+    }
+    .btn-send-all:hover { opacity: 0.85; }
+    .btn-send-all:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+    .subtitulo { color: var(--texto-secundario); font-size: 15px; margin-bottom: 28px; }
+
+    .search-bar {
+      width: 100%; max-width: 400px; padding: 9px 14px;
+      border: 1px solid var(--borda); border-radius: 6px; font-size: 14px;
+      margin-bottom: 20px; outline: none;
+      background: var(--fundo-superficie); color: var(--texto-principal);
+    }
+    .search-bar:focus { border-color: var(--vermelho); }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th {
+      text-align: left; padding: 10px 14px;
+      background: var(--fundo-suave); border-bottom: 2px solid var(--borda); font-weight: 600;
+      color: var(--texto-principal);
+    }
+    td { padding: 10px 14px; border-bottom: 1px solid var(--borda); vertical-align: middle; color: var(--texto-principal); }
+    tr:hover td { background: var(--fundo-suave); }
+
+    .badge-email { font-size: 12px; color: var(--texto-secundario); }
+    .badge-no-email { font-size: 12px; color: var(--borda); font-style: italic; }
+    .link-cell a { color: var(--vermelho); text-decoration: none; font-size: 13px; }
+    .link-cell a:hover { text-decoration: underline; }
+    .no-token { font-size: 12px; color: var(--borda); font-style: italic; }
+
+    .btn-copy {
+      padding: 5px 12px; background: var(--fundo-superficie); border: 1px solid var(--borda);
+      border-radius: 6px; font-size: 12px; cursor: pointer; color: var(--texto-principal);
+    }
+    .btn-copy:hover { border-color: var(--texto-secundario); }
+
+    .btn-send {
+      padding: 5px 14px; background: var(--vermelho); border: none; color: #fff;
+      border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600;
+    }
+    .btn-send:hover { opacity: 0.85; }
+    .btn-send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .status-ok  { font-size: 11px; color: #4caf50; margin-left: 6px; }
+    .status-err { font-size: 11px; color: #f44336; margin-left: 6px; }
+    .contador { font-size: 14px; color: var(--texto-secundario); }
+
+    .rodape-acoes {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+      margin-top: 32px; padding-top: 24px;
+      border-top: 1px solid var(--borda);
+    }
+  </style>
+</head>
+<body>
+
+<div class="barra-gradiente"></div>
+
+<div class="barra-topo">
+  <div>
+    <h1>Compartilhar desempenhos</h1>
+    <p class="subtitulo"><%= event.title %></p>
+  </div>
+  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+    <span class="contador" id="count-label"></span>
+    <button class="btn-send-all" id="btnEnviarTodos" onclick="enviarParaTodos()">Enviar link para todos</button>
+    <a class="btn-voltar" href="/manager/event/<%= event.id %>">← Voltar ao evento</a>
+  </div>
+</div>
+
+<input class="search-bar" type="search" placeholder="Buscar atleta ou equipe…" id="busca"/>
+
+<table id="tabela">
+  <thead>
+    <tr>
+      <th>Atleta</th>
+      <th>Equipe</th>
+      <th>Link</th>
+      <th>Ação</th>
+    </tr>
+  </thead>
+  <tbody id="corpo"></tbody>
+</table>
+
+<div class="rodape-acoes">
+  <a class="btn-voltar" href="/manager/event/<%= event.id %>">← Voltar ao evento</a>
+  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+    <span class="contador" id="count-label-rodape"></span>
+    <button class="btn-send-all" id="btnEnviarTodosRodape" onclick="enviarParaTodos()">Enviar link para todos</button>
+  </div>
+</div>
+
+<script>
+  const BASE = '<%= baseUrl %>';
+  const athletes = <%- JSON.stringify(athletes) %>;
+  const tbody = document.getElementById('corpo');
+  const countLabel = document.getElementById('count-label');
+  const countLabelRodape = document.getElementById('count-label-rodape');
+
+  function render(lista) {
+    tbody.innerHTML = '';
+    const txt = `${lista.length} atleta${lista.length !== 1 ? 's' : ''}`;
+    countLabel.textContent = txt;
+    countLabelRodape.textContent = txt;
+    lista.forEach(a => {
+      const tr = document.createElement('tr');
+      tr.dataset.nome = a.name.toLowerCase();
+      tr.dataset.equipe = (a.team_name || '').toLowerCase();
+
+      const link = a.share_token ? `${BASE}/share/athlete/${a.share_token}` : null;
+
+      tr.innerHTML = `
+        <td>
+          <strong>${a.name}</strong><br/>
+          ${a.email
+            ? `<span class="badge-email">${a.email}</span>`
+            : `<span class="badge-no-email">sem email</span>`}
+        </td>
+        <td>${a.team_name || '—'}</td>
+        <td class="link-cell">
+          ${link
+            ? `<a href="${link}" target="_blank">abrir card</a>`
+            : `<span class="no-token">evento não finalizado</span>`}
+        </td>
+        <td style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          ${link ? `<button class="btn-copy" onclick="copiar(this, '${link}')">Copiar</button>` : ''}
+          ${link && a.email ? `
+            <button class="btn-send" onclick="enviarEmail(this, '${a.share_token}')">Enviar</button>
+            <span class="status-msg"></span>
+          ` : ''}
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  async function copiar(btn, link) {
+    await navigator.clipboard.writeText(link);
+    const orig = btn.textContent;
+    btn.textContent = 'Copiado!';
+    setTimeout(() => btn.textContent = orig, 1500);
+  }
+
+  async function enviarEmail(btn, token) {
+    btn.disabled = true;
+    btn.textContent = 'Enviando…';
+    const msg = btn.nextElementSibling;
+    try {
+      const res = await fetch(`/share/athlete/${token}/send-email`, {
+        method: 'POST', credentials: 'include',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const data = await res.json();
+      if (res.ok) {
+        msg.className = 'status-ok'; msg.textContent = '✓ Enviado';
+        btn.textContent = 'Reenviar'; btn.disabled = false;
+      } else {
+        msg.className = 'status-err'; msg.textContent = data.error || 'Erro';
+        btn.textContent = 'Enviar'; btn.disabled = false;
+      }
+    } catch {
+      msg.className = 'status-err'; msg.textContent = 'Falha';
+      btn.textContent = 'Enviar'; btn.disabled = false;
+    }
+  }
+
+  async function enviarParaTodos() {
+    const comEmail = athletes.filter(a => a.email && a.share_token);
+    if (!comEmail.length) { alert('Nenhum atleta com email e link gerado.'); return; }
+    const btns = [document.getElementById('btnEnviarTodos'), document.getElementById('btnEnviarTodosRodape')];
+    btns.forEach(b => { b.disabled = true; b.textContent = `Enviando 0/${comEmail.length}…`; });
+    let ok = 0, err = 0;
+    for (const a of comEmail) {
+      try {
+        const res = await fetch(`/share/athlete/${a.share_token}/send-email`, {
+          method: 'POST', credentials: 'include',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        if (res.ok) ok++; else err++;
+      } catch { err++; }
+      const txt = `Enviando ${ok + err}/${comEmail.length}…`;
+      btns.forEach(b => b.textContent = txt);
+    }
+    const final = `✓ ${ok} enviado${ok !== 1 ? 's' : ''}${err ? ` · ${err} erro${err !== 1 ? 's' : ''}` : ''}`;
+    btns.forEach(b => { b.textContent = final; b.disabled = false; });
+  }
+
+  document.getElementById('busca').addEventListener('input', e => {
+    const q = e.target.value.toLowerCase();
+    render(athletes.filter(a =>
+      a.name.toLowerCase().includes(q) || (a.team_name || '').toLowerCase().includes(q)
+    ));
+  });
+
+  render(athletes);
+</script>
+</body>
+</html>

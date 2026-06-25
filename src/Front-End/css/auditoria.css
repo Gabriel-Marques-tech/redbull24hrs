@@ -28,6 +28,9 @@
 .avatar-operador {
     width: 42px;
     height: 42px;
+    margin-top: 0;
+    background-size: cover;
+    background-position: center;
 }
 
 .operador small {
@@ -873,6 +876,25 @@ tbody tr:hover td {
     background-color: #ffe0e8;
 }
 
+html[data-theme="dark"] .tabela-checkpoints {
+    background-color: var(--fundo-superficie);
+}
+
+html[data-theme="dark"] .tabela-checkpoints th {
+    background-color: var(--fundo-pagina);
+    color: var(--texto-principal);
+    border-bottom-color: var(--vermelho);
+}
+
+html[data-theme="dark"] .tabela-checkpoints td {
+    color: var(--texto-principal);
+    border-bottom-color: var(--borda);
+}
+
+html[data-theme="dark"] .tabela-checkpoints tbody tr:hover td {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
 /* ---------------- FILA DE CORREDORES ---------------- */
 
 .proximos-corredores {
@@ -1007,6 +1029,9 @@ tbody tr:hover td {
     height: 64px;
     border-radius: 50%;
     background-color: #d9d9d9;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
 }
 
 .perfil-nome {

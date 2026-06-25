@@ -6,6 +6,7 @@ import { shiftRepository } from "../repositories/shiftRepository"
 import { historyRepository } from "../repositories/historyRepository"
 import { metricsRepository } from "../repositories/metricsRepository"
 import { eventRepository } from "../repositories/eventRepository"
+import { shareRepository } from "../repositories/shareRepository"
 
 const getLogin = async (req: Request, res: Response ): Promise<void> => {
 	res.render('login')
@@ -184,4 +185,20 @@ const getEditEvent = async (req: Request, res: Response): Promise<void> => {
 	res.render('editar-competicao', { manager_id: req.user?.id ?? 0, evento, equipes })
 }
 
-export default {getLogin, getHome, redirectHome, getCompetition, getTeam, getTreadmill, getOverview, getAudit, getManagerShifts, getCreateEventLocation, getCreateEventImage, getCreateEventSchedule, getCreateEventTeams, getCreateEventAthlete, getEventOverview, getEditEvent}
+const getShareManager = async (req: Request, res: Response): Promise<void> => {
+	const id = Number(req.params.id)
+	if (!id) { res.redirect('/home'); return }
+
+	let evento: any
+	try {
+		evento = await eventService.getEvent(id)
+	} catch {
+		res.redirect('/home'); return
+	}
+
+	const athletes = await shareRepository.athletesByEvent(id)
+	const baseUrl = process.env.APP_BASE_URL ?? `${req.protocol}://${req.get('host')}`
+	res.render('share-manager', { event: evento, user: req.user, athletes, baseUrl })
+}
+
+export default {getLogin, getHome, redirectHome, getCompetition, getTeam, getTreadmill, getOverview, getAudit, getManagerShifts, getCreateEventLocation, getCreateEventImage, getCreateEventSchedule, getCreateEventTeams, getCreateEventAthlete, getEventOverview, getEditEvent, getShareManager}
