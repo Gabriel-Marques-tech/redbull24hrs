@@ -201,6 +201,16 @@ describe("GET /metrics/athletes/:athleteId/performance", () => {
 		expect(summary.shift_count).toBe(2);
 	});
 
+	it("200 – total_time não-objeto não soma tempo", async () => {
+		(metricsRepository.athletePerformance as jest.Mock).mockResolvedValue([
+			{ id: 1, distance: 10, total_time: "00:30:00" },
+		]);
+		const res = await request(app).get("/metrics/athletes/1/performance");
+		expect(res.status).toBe(200);
+		expect(res.body.summary.total_time_seconds).toBe(0);
+		expect(res.body.summary.avg_speed).toBe(0);
+	});
+
 	it("200 – summary zerado quando não há turnos", async () => {
 		(metricsRepository.athletePerformance as jest.Mock).mockResolvedValue([]);
 		const res = await request(app).get("/metrics/athletes/999/performance");
