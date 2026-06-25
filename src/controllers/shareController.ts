@@ -2,7 +2,19 @@ import { Request, Response } from "express";
 import { shareRepository } from "../repositories/shareRepository";
 import { emailService } from "../services/emailService";
 
+function speedToPace(speedKmh: number): string {
+	if (!speedKmh || speedKmh <= 0) return "—";
+	const totalSeconds = 3600 / speedKmh;
+	const min = Math.floor(totalSeconds / 60);
+	const sec = Math.round(totalSeconds % 60);
+	return `${min}:${String(sec).padStart(2, "0")}/km`;
+}
+
 export const shareController = {
+	async cardPage(_req: Request, res: Response) {
+		res.render("card-compartilhavel");
+	},
+
 	async athletePage(req: Request, res: Response) {
 		const token = String(req.params.token);
 
@@ -12,7 +24,16 @@ export const shareController = {
 			return;
 		}
 
-		res.render("share-athlete", { athlete });
+		const km = `${Number(athlete.total_km).toFixed(1)}km`;
+		const pace = speedToPace(Number(athlete.avg_speed));
+		const params = new URLSearchParams({
+			nome: athlete.name,
+			equipe: athlete.team_name ?? "Red Bull 24H",
+			km,
+			pace,
+		});
+
+		res.redirect(`/share/card-compartilhavel?${params.toString()}`);
 	},
 
 	async athleteData(req: Request, res: Response) {

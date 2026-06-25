@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card compartilhável RedBull 24 Horas</title>
+    <link rel="icon" type="image/png" href="/assets/logo/logo-redrun.png">
+    <link rel="apple-touch-icon" href="/assets/logo/logo-redrun.png">
+    <link rel="stylesheet" href="/css/card-compartilhavel.css">
+</head>
+<body>
+    <main class="pagina-card">
+        <section class="preview-card" aria-label="Card compartilhavel">
+            <div class="cartao-compartilhavel" id="cartaoCompartilhavel">
+                <span class="linha-energia linha-energia-1"></span>
+                <span class="linha-energia linha-energia-2"></span>
+                <span class="linha-energia linha-energia-3"></span>
+                <span class="circulo-energia circulo-energia-1"></span>
+                <span class="circulo-energia circulo-energia-2"></span>
+                <img class="cartao-logo" src="/assets/logo-RB24h/logo.png" alt="Red Bull 24 Horas">
+
+                <div class="cartao-conteudo">
+                    <span class="cartao-selo">Desafio concluido</span>
+                    <h1>Eu corri <strong id="cardKm">35km</strong></h1>
+                    <p class="cartao-evento">na RedBull 24 Horas!</p>
+
+                    <div class="cartao-metrica">
+                        <span>Pace m&eacute;dio</span>
+                        <strong id="cardPace">4:40/km</strong>
+                    </div>
+
+                    <div class="cartao-rodape">
+                        <span id="cardNome">Participante</span>
+                        <small id="cardEquipe">RedBull 24 Horas</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="acoes-card" aria-label="Acoes do card">
+            <button class="botao-card botao-primario" type="button" id="btnCompartilharCard">Compartilhar</button>
+            <button class="botao-card" type="button" id="btnBaixarCard">Baixar PNG</button>
+        </section>
+    </main>
+
+    <script src="/js/card-compartilhavel.js"></script>
+</body>
+</html>
