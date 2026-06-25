@@ -17,7 +17,7 @@ main {
 
 .conteudo {
     width: 700px;
-    margin-top: 40px;
+    margin-top: -40px;
     display: flex;
     flex-direction: column;
 }
@@ -25,41 +25,59 @@ main {
 .conteudo h2 {
     font-size: 35px;
     margin-bottom: 40px;
+    align-self: center;
+    width: 600px;
+    text-align: center;
 }
 
 /* ---------------- RESUMO ---------------- */
 
 .card-resumo {
     width: 600px;
-    background-color: var(--vermelho);
-    border-radius: 4px;
+    align-self: center;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
     overflow: hidden;
+    background: rgba(255, 255, 255, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
 }
 
 .linha-resumo {
-    height: 60px;
+    min-height: 58px;
     display: flex;
     align-items: center;
-    gap: 20px;
-    padding: 0 34px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    gap: 12px;
+    padding: 10px 18px;
+    background: linear-gradient(135deg, #e00040, #bd0038);
     color: var(--branco);
-    font-size: 18px;
+}
+
+.linha-resumo p {
+    margin: 2px 0 0;
+    font-size: 16px;
     font-weight: 700;
 }
 
-.linha-resumo:last-child {
-    border-bottom: none;
-}
-
 .icone {
-    width: 28px;
+    width: 24px;
     display: flex;
     justify-content: center;
 }
 
 .icone img {
-    width: 25px;
+    width: 22px;
+    filter: brightness(0) invert(1);
+}
+
+.rotulo-resumo {
+    display: block;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
 }
 
 /* ---------------- BOTÕES ---------------- */
@@ -99,4 +117,30 @@ main {
 
 .btn-iniciar:hover {
     background-color: var(--vermelho);
+}
+
+html[data-theme="dark"] .btn-voltar {
+    background: var(--fundo-superficie);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .btn-voltar:hover {
+    border-color: var(--vermelho);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .card-resumo {
+    background: #33415e;
+    border-color: #33415e;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, .22);
+}
+
+html[data-theme="dark"] .linha-resumo {
+    background: #1b2236;
+    border-left: 3px solid #004b93;
+}
+
+html[data-theme="dark"] .rotulo-resumo {
+    color: var(--texto-secundario);
 }

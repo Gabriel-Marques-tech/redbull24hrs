@@ -307,7 +307,7 @@ async function submeterCadastro() {
         }
 
         // Limpar localStorage do wizard
-        ["localidadeCompeticao", "dataHorarioCompeticao", "cadastroEquipesGerente", "atletaEmEdicao"]
+        ["localidadeCompeticao", "imagemEvento", "dataHorarioCompeticao", "cadastroEquipesGerente", "atletaEmEdicao"]
             .forEach((k) => localStorage.removeItem(k));
 
         window.location.href = "/home";
