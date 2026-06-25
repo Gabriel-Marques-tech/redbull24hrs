@@ -54,10 +54,11 @@ describe("GET /share/athlete/:token", () => {
 		expect(res.status).toBe(404);
 	});
 
-	it("200 renderiza view quando token válido", async () => {
+	it("302 redireciona para o card quando token válido", async () => {
 		mockRepo.athleteCardByToken.mockResolvedValue(mockAthlete);
 		const res = await request(app).get("/share/athlete/uuid-abc-123");
-		expect(res.status).toBe(200);
+		expect(res.status).toBe(302);
+		expect(res.headers.location).toContain("/share/card-compartilhavel");
 		expect(mockRepo.athleteCardByToken).toHaveBeenCalledWith("uuid-abc-123");
 	});
 });
