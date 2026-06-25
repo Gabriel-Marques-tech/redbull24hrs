@@ -1,4 +1,4 @@
--- migration 021: campos OCR em shifts e checkpoints
+-- migration 025: campos OCR em shifts e checkpoints
 ALTER TABLE shifts
   ADD COLUMN IF NOT EXISTS ocr_speed    NUMERIC(5,2),
   ADD COLUMN IF NOT EXISTS ocr_distance NUMERIC(6,3),
