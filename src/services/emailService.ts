@@ -1,17 +1,27 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM = process.env.EMAIL_FROM ?? "Red Bull 24H <noreply@redbull24h.com.br>";
 const BASE_URL = process.env.APP_BASE_URL ?? "http://localhost:3000";
+
+const transporter = nodemailer.createTransport({
+	host: "smtp-relay.brevo.com",
+	port: 587,
+	secure: false,
+	auth: {
+		user: process.env.SMTP_USER,
+		pass: process.env.SMTP_PASS,
+	},
+});
 
 export const emailService = {
 	async sendShareLink(to: string, athleteName: string, shareToken: string): Promise<void> {
 		const link = `${BASE_URL}/share/athlete/${shareToken}`;
 
-		const { error } = await resend.emails.send({
+		await transporter.sendMail({
 			from: FROM,
 			to,
-			subject: `${athleteName}, seu desempenho no Red Bull 24H está disponível!`,
+			subject: `Seu resultado no Red Bull 24H — ${athleteName}`,
+			text: `Olá, ${athleteName}!\n\nSeu resultado no Red Bull 24H está disponível. Acesse:\n\n${link}\n\nEquipe Red Bull 24H`,
 			html: `
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -40,6 +50,5 @@ export const emailService = {
 </html>
 			`.trim(),
 		});
-		if (error) throw new Error(error.message);
 	},
 };
