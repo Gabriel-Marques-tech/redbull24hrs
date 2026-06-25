@@ -399,6 +399,7 @@ if (checkpointFotoInput && checkpointFotoPreview) {
         checkpointFotoPreview.querySelector('img').addEventListener('click', () => abrirLightbox(checkpointFotoUrl))
 
         if (btnCheckpointFoto) btnCheckpointFoto.disabled = true
+        checkpointFotoPreview.classList.add('ocr-loading')
         try {
             const form = new FormData()
             form.append('image', arquivo)
@@ -412,6 +413,7 @@ if (checkpointFotoInput && checkpointFotoPreview) {
                 }
             }
         } finally {
+            checkpointFotoPreview.classList.remove('ocr-loading')
             if (btnCheckpointFoto) btnCheckpointFoto.disabled = false
         }
     })
