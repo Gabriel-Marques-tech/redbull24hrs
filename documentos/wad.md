@@ -70,7 +70,7 @@ Criado por Michael E. Porter, professor de Harvard, na década de 1970, o modelo
 
 1. Rivalidade entre concorrentes
 
-Na indústria de desenvolvimento de softwares e aplicações web sob medida, a rivalidade pode ser considerada alta de forma geral, pois o mercado conta com inúmeras agências de tecnologia, fábricas de software e desenvolvedores independentes capazes de criar sistemas de registro. No entanto, quando se trata de uma solução específica para o evento Red Bull 24 Horas, a rivalidade direta torna-se média a baixa. O projeto exige a criação de um fluxo simples de registro que substitua a prancheta, desenhado especificamente para a dinâmica de revezamento contínuo entre duas equipes operando duas esteiras simultaneamente. Desse modo, a rivalidade tende a ser menor quando a diferenciação e a customização do produto são muito altas para atender a uma necessidade exclusiva. Existem poucas soluções no mercado que se adaptem perfeitamente a esse formato sem gerar atrito na operação, fazendo com que a rivalidade seja restrita a fornecedores que consigam garantir extrema confiabilidade para rodar o sistema por 24 horas ininterruptas.
+Na indústria de desenvolvimento de softwares e aplicações web sob medida, a rivalidade pode ser considerada alta de forma geral, pois o mercado conta com inúmeras agências de tecnologia, fábricas de software e desenvolvedores independentes capazes de criar sistemas de registro. No entanto, quando se trata de uma solução específica para o evento Red Bull 24 Horas, a rivalidade direta torna-se média a baixa. O projeto exige a criação de um fluxo simples de registro que substitua a prancheta, desenhado especificamente para a dinâmica de revezamento contínuo entre duas equipes, cada uma operando duas esteiras (apenas uma ativa por vez). Desse modo, a rivalidade tende a ser menor quando a diferenciação e a customização do produto são muito altas para atender a uma necessidade exclusiva. Existem poucas soluções no mercado que se adaptem perfeitamente a esse formato sem gerar atrito na operação, fazendo com que a rivalidade seja restrita a fornecedores que consigam garantir extrema confiabilidade para rodar o sistema por 24 horas ininterruptas.
 
 1. Ameaça de novos entrantes
 
@@ -152,7 +152,7 @@ O público-alvo é composto pelo time operacional de Field Marketing da Red Bull
 
 **Time Operacional (responsáveis pela apuração):**
 
-- Registrar o início e fim de cada turno de corrida dos atletas nas duas esteiras por equipe
+- Registrar o início e fim de cada turno de corrida dos atletas nas duas esteiras da equipe, com apenas uma ativa por vez
 - Realizar marcações periódicas (a cada 5 minutos, no mínimo) como referência de segurança
 - Consolidar os quilômetros corridos por equipe ao longo das 24 horas ininterruptas
 - Garantir a continuidade do registro durante revezamentos rápidos entre atletas
@@ -519,7 +519,7 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 <div align = "center">
   <sub> Quadro 1 - US01 </sub><br>
 
-  | Identificação            | [US01](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/30)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+  | Identificação            | US01                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
   | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
   | **Persona**              | Lucas Andrade                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
   | **User Story**           | "Como operador de evento, quero registrar o início de uma corrida por meio da seleção da equipe e da esteira correspondente, para iniciar o acompanhamento dos quilômetros de forma estruturada, substituindo o registro manual em prancheta e reduzindo inconsistências durante a operação do evento."                                                                                                                                                                                                                                                                                                                                                                                                                   |
@@ -538,7 +538,7 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 <div align = "center">
   <sub> Quadro 2 - US02 </sub><br>
 
-  | Identificação            | [US02](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/31)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+  | Identificação            | US02                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
   | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
   | **Persona**              | Lucas Andrade                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
   | **User Story**           | "Como operador de evento, quero registrar checkpoints de quilômetros durante a corrida em andamento, para garantir o acompanhamento contínuo dos dados, reduzir a perda de informações em caso de falhas e substituir as marcações manuais realizadas a cada intervalo."                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
@@ -557,7 +557,7 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 <div align = "center">
   <sub> Quadro 3 - US03</sub><br>
 
- | Identificação | [US03](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/32) |
+ | Identificação | US03 |
 | :--- | :--- |
 | **Persona** | Lucas Andrade |
 | **User Story** | "Como operador de evento, quero encerrar o turno de uma corrida digitando manualmente a quilometragem final indicada no display da esteira, para consolidar os dados acumulados do atleta e manter o fluxo contínuo de registros sem depender de captura de imagens." |
@@ -574,7 +574,7 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 <div align = "center">
   <sub> Quadro 4 - US04 </sub><br>
 
-  | Identificação            | [US04](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/33)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+  | Identificação            | US04                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
   | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
   | **Persona**              | Bruno Gardesani                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
   | **User Story**           | "Como gerente de evento, quero visualizar os registros de corridas organizados por equipe e esteira, para acompanhar a operação de forma consolidada, validar a consistência dos dados e reduzir a necessidade de conferência manual realizada anteriormente."                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
@@ -593,7 +593,7 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 <div align = "center">
   <sub> Quadro 5 - US05 </sub><br>
 
-| Identificação | [US05](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/34) |
+| Identificação | US05 |
 | :--- | :--- |
 | **Persona** | Bruno Gardesani / Público Geral |
 | **User Story** | "Como gerente de evento, quero visualizar um dashboard centralizado atualizado em tempo real com base nos inputs manuais dos operadores, exibindo a distância total acumulada por equipe, velocidade média e ritmo (*pace*), para acompanhar a evolução da competição sem planilhas paralelas." |
@@ -608,7 +608,7 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 <div align = "center">
   <sub> Quadro 6 - US06 </sub><br>
 
-  | Identificação            | [US06](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/38)                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+  | Identificação            | US06                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
   | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
   | **Persona**              | Bruno Gardesani                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
   | **User Story**           | "Como gerente de evento, quero visualizar o total de quilômetros por equipe de forma consolidada, para acompanhar os dados com clareza e substituir conferências manuais realizadas anteriormente."                                                                                                                                                                                                                                                                                                                                                 |
@@ -625,15 +625,15 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 <div align = "center">
   <sub> Quadro 7 - US07 </sub><br>
 
- | Identificação | [US07](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/41) |
+ | Identificação | US07 |
 | :--- | :--- |
 | **Persona** | Bruno Gardesani |
-| **User Story** | "Como gerente de evento, quero cadastrar e listar previamente as equipes e seus respectivos 16 atletas na etapa de configuração, para que os operadores possam apenas selecionar os competidores corretos no início das corridas, evitando atrasos e digitações incorretas na pista." |
+| **User Story** | "Como gerente de evento, quero cadastrar e listar previamente as equipes e seus respectivos atletas na etapa de configuração, para que os operadores possam apenas selecionar os competidores corretos no início das corridas, evitando atrasos e digitações incorretas na pista." |
 | **Critério de aceite 1** | CR1: O sistema deve permitir o cadastro nominal de todos os atletas exclusivamente na etapa de configuração pré-evento, associando cada um à sua respectiva equipe.<br>**Validação:** Verificar se a tela de registro pré-evento aceita a inserção e armazena os nomes dos atletas vinculados às equipes. |
 | **Teste de aceitação 1** | Acessar o módulo de configuração pré-evento, cadastrar uma lista de atletas para a "Equipe A" e salvar antes da largada.<br>**Esperado:** Atletas persistidos com sucesso e vinculados corretamente à listagem da equipe. |
 | **Critério de aceite 2** | CR2: A tela de início de turno operada pelo operador deve conter apenas um campo de seleção (*select/dropdown*) com a lista pré-carregada de atletas cadastrados.<br>**Validação:** Garantir que o operador não consiga digitar ou alterar o nome do atleta no momento de iniciar uma corrida. |
 | **Teste de aceitação 2** | Iniciar um novo turno na esteira e abrir o campo de seleção do atleta.<br>**Esperado:** O sistema exibe em formato de lista os nomes previamente cadastrados pelo gerente, sem campo de texto livre para digitação. |
-| **Critérios INVEST** | **Independente:** Isola o escopo de gestão cadastral das regras de cronometragem da pista.<br>**Negociável:** A interface de listagem pode usar ordenação alfabética ou por número de inscrição.<br>**Valiosa:** Mitiga erros de grafia no calor do evento e blinda as regras de negócio de 16 atletas por equipe.<br>**Estimável:** Baseia-se em formulários CRUD tradicionais de banco de dados.<br>**Pequena:** Focada estritamente na carga de dados estruturais iniciais.<br>**Testável:** Validada checando se os nomes salvos na configuração aparecem perfeitamente nas telas de pista. |
+| **Critérios INVEST** | **Independente:** Isola o escopo de gestão cadastral das regras de cronometragem da pista.<br>**Negociável:** A interface de listagem pode usar ordenação alfabética ou por número de inscrição.<br>**Valiosa:** Mitiga erros de grafia no calor do evento e blinda as regras de negócio de composição das equipes.<br>**Estimável:** Baseia-se em formulários CRUD tradicionais de banco de dados.<br>**Pequena:** Focada estritamente na carga de dados estruturais iniciais.<br>**Testável:** Validada checando se os nomes salvos na configuração aparecem perfeitamente nas telas de pista. |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -642,7 +642,7 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 <div align = "center">
   <sub> Quadro 8 - US08 </sub><br>
 
-  | Identificação            | [US08](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/40)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+  | Identificação            | US08                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
   | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
   | **Persona**              | Lucas Andrade                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
   | **User Story**           | "Como operador de evento, quero que o sistema funcione mesmo sem conexão com a internet, para evitar perda de dados durante as 24 horas de evento."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
@@ -659,7 +659,7 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 <div align = "center">
   <sub> Quadro 9 - US09 </sub><br>
 
-  | Identificação            | [US09](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/41)                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+  | Identificação            | US09                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
   | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
   | **Persona**              | Lucas Andrade                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
   | **User Story**           | "Como operador de evento, quero ser alertado quando uma esteira ficar sem checkpoints por mais de 5 minutos, para identificar possíveis falhas técnicas ou atrasos na troca de corredor."                                                                                                                                                                                                                                                                                                                                                  |
@@ -676,7 +676,7 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 <div align = "center">
   <sub> Quadro 10 - US10 </sub><br>
 
-  | Identificação            | [US10](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/42)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+  | Identificação            | US10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
   | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
   | **Persona**              | Bruno Gardesani                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
   | **User Story**           | "Como gerente de evento, quero visualizar o desempenho das equipes agrupado por intervalos de tempo, para analisar a consistência dos dados ao longo do evento e apoiar auditorias pós-evento."                                                                                                                                                                                                                                                                                                                                                                                              |
@@ -693,7 +693,7 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 <div align = "center">
   <sub> Quadro 11 - US11 </sub><br>
 
-  | Identificação            | [US11](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/45)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+  | Identificação            | US11                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
   | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
   | **Persona**              | Lucas Andrade                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
   | **User Story**           | "Como operador de eventos, quero ser avisado quando houver inconsistências nos dados inseridos de acordo com o histórico, para evitar erro humano e falha na inserção de dados."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
@@ -711,7 +711,7 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 <div align = "center">
   <sub> Quadro 12 - US12 </sub><br>
 
-  | Identificação            | [US12](https://git.inteli.edu.br/graduacao/2026-1b/t27/g02/-/issues/46)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+  | Identificação            | US12                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
   | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
   | **Persona**              | Nicole Rauen                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
   | **User Story**           | “Como atleta participante, quero visualizar o meu desempenho final e compartilhar o resultado, para expor minha conquista e gerar reconhecimento."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
@@ -740,7 +740,7 @@ As user stories (ou histórias do usuário) consistem em documentos que demonstr
 
 O sistema é uma aplicação web desenvolvida com a finalidade de substituir o processo manual de registro de quilômetros no evento Red Bull 24 Horas, tornando a apuração mais confiável, rastreável e eficiente. A solução é direcionada aos auditores do evento, responsáveis por operar o sistema em tempo real durante as 24 horas de competição, em todas as regiões onde o evento é realizado.
 
-O evento é composto por duas equipes fixas, cada uma com seus corredores cadastrados previamente. Antes do início da competição, o auditor realiza o cadastro do local do evento, das equipes participantes e dos corredores vinculados a cada equipe. Cada equipe dispõe de duas esteiras simultâneas para revezamento contínuo dos atletas.
+O evento é composto por duas equipes fixas, cada uma com seus corredores cadastrados previamente. Antes do início da competição, o auditor realiza o cadastro do local do evento, das equipes participantes e dos corredores vinculados a cada equipe. Cada equipe dispõe de duas esteiras, das quais apenas uma é utilizada por vez no revezamento contínuo dos atletas.
 
 Durante o evento, os corredores se alternam nas esteiras ao longo das 24 horas. Cada vez que um corredor inicia sua corrida, o auditor registra o início do percurso, informando o corredor, a esteira e a quilometragem inicial lida no painel da esteira. A partir desse momento, o sistema contabiliza o andamento do percurso com registros automáticos de quilometragem a cada 5 minutos, garantindo pontos de recuperação caso haja interrupção na esteira. Ao término da corrida, o auditor registra o encerramento do percurso com a quilometragem final, e o sistema calcula automaticamente a distância percorrida e o tempo total daquele corredor.
 
@@ -765,7 +765,7 @@ Sua principal função é servir como um guia tanto para os desenvolvedores quan
 | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------- |
 | RF001 | O sistema deve permitir o cadastro de exatamente duas equipes por evento, com nome e identificador únicos, impedindo duplicatas.                                                          | Alta       | Planejado |
 | RF002 | O sistema deve permitir o cadastro de corredores vinculados a uma única equipe das duas existentes por evento.                                                                            | Alta       | Planejado |
-| RF003 | O sistema deve validar que cada equipe possui exatamente 16 corredores antes do início do evento, bloqueando o início caso a condição não seja atendida.                                  | Alta       | Planejado |
+| RF003 | O sistema não deve exigir um número exato de corredores por equipe; o início do evento é permitido independentemente da quantidade cadastrada em cada equipe, bastando que cada equipe possua ao menos um corredor ativo. | Alta       | Planejado |
 | RF004 | O sistema deve permitir a seleção da esteira onde o corredor iniciará a atividade.                                                                                                        | Alta       | Planejado |
 | RF005 | O sistema deve permitir a seleção da equipe associada à esteira escolhida.                                                                                                                | Alta       | Planejado |
 | RF006 | O sistema deve permitir a seleção do corredor da equipe para iniciar a corrida.                                                                                                           | Alta       | Planejado |
@@ -860,16 +860,16 @@ Então o sistema deve exibir erro de validação no campo de equipe e não persi
 
 ---
 
-**RF003 – Validação de 16 corredores por equipe**
+**RF003 – Não obrigatoriedade de número exato de corredores por equipe**
 
 ```gherkin
-Dado que uma equipe possui menos de 16 corredores cadastrados
+Dado que uma equipe não possui nenhum corredor ativo
 Quando o Administrador tenta iniciar o evento
-Então o sistema deve bloquear o início e exibir a mensagem "A equipe [nome] possui [N] corredor(es). São necessários exatamente 16"
+Então o sistema deve bloquear o início e exibir a mensagem "A equipe [nome] não possui corredores ativos"
 
-Dado que ambas as equipes possuem exatamente 16 corredores
+Dado que ambas as equipes possuem ao menos um corredor ativo, em qualquer quantidade
 Quando o Administrador tenta iniciar o evento
-Então o sistema deve permitir o início sem bloqueios
+Então o sistema deve permitir o início sem exigir número exato de corredores
 ```
 
 ---
@@ -980,7 +980,7 @@ E não deve existir campo editável de hora de início na interface do Auditor
 
 ---
 
-**RF012 – Modal bloqueante de checkpoint**
+**RF012 – Modal opcional de checkpoint**
 
 ```gherkin
 Dado que um turno está em andamento há exatamente 5 minutos
@@ -1433,7 +1433,7 @@ Então deve gerar alerta "Corredor com turnos simultâneos detectado" para o Aud
 ```gherkin
 Dado que o Administrador acessa a função de exportação de turnos
 Quando aciona o download
-Então o sistema deve gerar um arquivo .csv contendo todos os turnos com colunas: corredor, equipe, esteira, km_inicial, km_final, timestamp_início, timestamp_fim, duração e velocidade_média
+Então o sistema deve gerar um arquivo .csv contendo todos os turnos com colunas: id, athlete, team, treadmill, started_at, finished_at, km e speed
 
 Dado que não há turnos registrados no evento
 Quando o Administrador aciona o download
@@ -1447,7 +1447,7 @@ Então o sistema deve gerar um arquivo .csv com apenas o cabeçalho das colunas
 ```gherkin
 Dado que o Administrador acessa a função de exportação de checkpoints
 Quando aciona o download
-Então o sistema deve gerar um arquivo .csv contendo todos os checkpoints com colunas: corredor, esteira, quilometragem e timestamp
+Então o sistema deve gerar um arquivo .csv contendo todos os checkpoints com colunas: id, shift_id, athlete, type, distance, timestamp e sync_id
 
 Dado que não há checkpoints registrados no evento
 Quando o Administrador aciona o download
@@ -1499,21 +1499,21 @@ Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio 
 | ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
 | RN01 | Um corredor só pode iniciar um turno se não possuir outro turno com status "em andamento" em nenhuma das esteiras do evento.                                                                                                                                                                               | RF007 |
 | RN02 | A esteira selecionada deve estar com status "Livre" para que um novo turno possa ser iniciado. Esteiras "Ocupadas" não podem receber novo turno.                                                                                                                                                           | RF008 |
-| RN03 | O modal de checkpoint obrigatório deve ser disparado exatamente a cada 300 segundos (5 minutos) a partir do timestamp de início do turno. Nenhuma outra ação pode ser executada até que o auditor confirme o valor informado.                                                                              | RF012 |
+| RN03 | O modal de checkpoint deve ser disparado exatamente a cada 300 segundos (5 minutos) a partir do timestamp de início do turno. O preenchimento é opcional e não bloqueia outras ações da interface.                                                                              | RF012 |
 | RN04 | A quilometragem informada em um checkpoint voluntário deve ser maior ou igual à quilometragem do checkpoint imediatamente anterior registrado no mesmo turno (ou à km_inicial, se for o primeiro checkpoint).                                                                                              | RF013 |
 | RN05 | Um turno só pode ser finalizado se possuir ao menos um checkpoint registrado (obrigatório ou voluntário) após o início. Turnos sem nenhum checkpoint não podem ser encerrados.                                                                                                                             | RF014 |
 | RN06 | A quilometragem final informada deve ser maior ou igual à quilometragem do último checkpoint registrado no turno. Valores menores devem ser rejeitados antes de qualquer persistência.                                                                                                                     | RF015 |
 | RN07 | Ao finalizar um turno, o sistema deve calcular automaticamente: distância = km_final − km_inicial; duração = timestamp_fim − timestamp_início (em minutos); velocidade_média = distância / (duração / 60). Os três valores devem ser persistidos vinculados ao turno antes de retornar sucesso ao cliente. | RF017, RF018, RF019 |
-| RN08 | O hot swap só pode ser acionado imediatamente após a finalização de um turno na esteira adjacente. O próximo corredor deve pertencer à mesma equipe já configurada. Não é permitido hot swap(Troca de competidores em tempo real) sem turno anterior finalizado, ou com esteira em status ocupado.         | RF034 |
+| RN08 | O hot swap só pode ser acionado imediatamente após a finalização de um turno na mesma esteira. O próximo corredor deve pertencer à mesma equipe já configurada. Não é permitido hot swap(Troca de competidores em tempo real) sem turno anterior finalizado, ou com esteira em status ocupado.         | RF034 |
 | RN09 | A quilometragem total de uma equipe é a soma dos valores de distância (km_final − km_inicial) de todos os turnos com status "finalizado". Turnos em andamento, cancelados ou inconsistentes não entram no cálculo.                                                                                         | RF020 |
 | RN10 | Snapshots de distância acumulada por hora devem ser gerados automaticamente ao completar cada hora cheia desde o início do evento (t+60min, t+120min, etc.). Snapshots já gerados são imutáveis e não podem ser recalculados retroativamente.                                                              | RF037 |
 | RN11 | O dashboard deve ser atualizado em intervalos máximos de 10 segundos. Em caso de falha de conexão, o painel deve exibir indicador visual de "dados desatualizados" com timestamp da última atualização bem-sucedida — nunca exibir dados em branco.                                                        | RF021 |
-| RN12 | Uma esteira é "Ocupada" enquanto houver turno com status "em andamento" vinculado a ela, e passa para "Livre" imediatamente após o encerramento. O sistema deve sugerir revezamento quando uma esteira acumular 45 minutos contínuos de uso no mesmo turno.                                                | RF038, RF039 |
+| RN12 | Uma esteira é "Ocupada" enquanto houver turno com status "em andamento" vinculado a ela, e passa para "Livre" imediatamente após o encerramento. O sistema deve sugerir revezamento quando uma esteira acumular 30 minutos contínuos de uso no mesmo turno.                                                | RF038, RF039 |
 | RN13 | O histórico deve listar todos os eventos em ordem decrescente de timestamp. Eventos com o mesmo timestamp devem obedecer a seguinte prioridade de exibição: encerramento > checkpoint > início.                                                                                                            | RF022 |
 | RN14 | No modo TV nenhuma ação de escrita pode ser executada — a interface é estritamente somente leitura. O acesso ao modo TV não requer autenticação. Qualquer tentativa de POST/PUT/DELETE originada do modo TV deve ser bloqueada no servidor.                                                                | RF040 |
 | RN15 | O sistema permite o cadastro de exatamente 2 equipes por evento. A tentativa de cadastrar uma terceira equipe deve ser bloqueada com mensagem de erro. Nomes de equipes devem ser únicos dentro do evento.                                                                                                 | RF001 |
 | RN16 | Um corredor só pode ser vinculado a uma única equipe por evento. Após o início do primeiro turno do evento, não é permitido adicionar, remover ou transferir corredores entre equipes.                                                                                                                     | RF002 |
-| RN17 | O sistema deve bloquear o início de qualquer turno enquanto qualquer uma das duas equipes não possuir exatamente 16 corredores com status "ativo". O bloqueio deve ser verificado a cada tentativa de início de turno, não apenas no cadastro.                                                             | RF003 |
+| RN17 | O sistema deve bloquear o início de qualquer turno enquanto qualquer uma das duas equipes não possuir ao menos um corredor com status "ativo"; não há exigência de número exato de corredores. O bloqueio deve ser verificado a cada tentativa de início de turno, não apenas no cadastro.                                                             | RF003 |
 | RN18 | O campo local/região é obrigatório e deve ser preenchido antes do início do primeiro turno. Após o início do evento, o local não pode ser alterado — qualquer tentativa deve ser rejeitada.                                                                                                                | RF051 |
 | RN19 | Apenas esteiras com status "Livre" podem ser selecionadas para iniciar um novo turno. Esteiras "Ocupadas" devem aparecer visualmente desabilitadas na interface e não aceitar seleção.                                                                                                                     | RF004 |
 | RN20 | A equipe selecionada para uma esteira fica associada durante todo o turno em andamento. Não é permitido trocar a equipe de uma esteira enquanto houver turno em andamento nela.                                                                                                                            | RF005 |
@@ -1521,11 +1521,11 @@ Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio 
 | RN22 | Os filtros de equipe, esteira e corredor podem ser combinados (operação AND). A aplicação de filtros não altera os dados persistidos — apenas restringe a visibilidade dos registros exibidos. Remover filtros deve restaurar a visão completa.                                                            | RF041, RF042, RF043 |
 | RN23 | Toda edição retroativa deve gerar um registro de auditoria imutável com: id do registro alterado, valor anterior, valor novo, timestamp da alteração e id do auditor. O registro de auditoria não pode ser excluído nem modificado por nenhum perfil.                                                      | RF024 |
 | RN24 | A edição de quilometragem em um checkpoint só é válida se o novo valor for maior ou igual ao checkpoint imediatamente anterior e menor ou igual ao checkpoint imediatamente posterior do mesmo turno.                                                                                                      | RF023 |
-| RN25 | O sistema deve marcar como inconsistente qualquer turno onde: (a) km_final < km_inicial; (b) gap entre checkpoints superior a 10 minutos sem justificativa registrada; (c) corredor com dois turnos simultâneos. Inconsistências devem ser sinalizadas no dashboard sem bloquear a operação em andamento.  | RF028, RF044, RF045, RF046 |
-| RN26 | O CSV exportado deve conter duas seções: (1) turnos — corredor, equipe, esteira, km*inicial, km_final, duracao_min, timestamp_inicio, timestamp_fim; (2) checkpoints — turno_id, km, timestamp, tipo. O nome do arquivo deve seguir o padrão evento*{local}\_{data-ISO}.csv.                               | RF047, RF048 |
+| RN25 | O sistema deve marcar como inconsistente qualquer turno onde: (a) km_final < km_inicial; (b) gap entre checkpoints superior a 10 minutos sem justificativa registrada; (c) corredor com dois turnos simultâneos. Os casos (a) e (c) são rejeitados na persistência (erro 4xx); o caso (b) é sinalizado no dashboard sem bloquear a operação em andamento.  | RF028, RF044, RF045, RF046 |
+| RN26 | O CSV exportado deve conter duas seções com as colunas serializadas pelo `ExportService`: (1) turnos — `id, athlete, team, treadmill, started_at, finished_at, km, speed`; (2) checkpoints — `id, shift_id, athlete, type, distance, timestamp, sync_id`. O nome do arquivo deve seguir o padrão `shifts-{eventId}.csv` / `checkpoints-{eventId}.csv`.                               | RF047, RF048 |
 | RN27 | Em caso de ausência de conexão, os registros devem ser persistidos localmente com o timestamp original do momento do registro. Ao restabelecer conexão, a sincronização deve ocorrer automaticamente em até 30 segundos, sem duplicar registros, preservando a ordem cronológica original.                | RF025, RF026 |
 | RN28 | O evento deve ter exatamente duas equipes cadastradas antes do início do primeiro turno. A tentativa de iniciar qualquer turno sem que ambas as equipes estejam presentes deve ser bloqueada. | RF001, RF003 |
-| RN29 | O título e o local de um evento devem ser únicos no sistema. Não é permitido cadastrar dois eventos com o mesmo título ou com o mesmo local simultaneamente. | RF051 |
+| RN29 | O título de um evento deve ser único no sistema e o local deve ser único por data. Não é permitido cadastrar dois eventos com o mesmo título, nem dois eventos no mesmo local na mesma data (`uq_events_date_local`); o mesmo local pode ser reutilizado em datas distintas. | RF051 |
 | RN30 | O CPF de gerentes, auditores e atletas, quando informado, deve conter exatamente 11 dígitos numéricos. Valores em formato diferente devem ser rejeitados antes da persistência. | RF027 |
 | RN31 | Um auditor com status inativo (is_active = FALSE) não pode registrar novos turnos nem checkpoints. O bloqueio deve ser verificado a cada tentativa de operação, não apenas no momento do login. | RF027 |
 | RN32 | A velocidade registrada em um turno deve ser maior ou igual a zero. O valor km_end deve ser maior ou igual a km_start. A distância calculada deve ser maior ou igual a zero. Qualquer violação deve ser rejeitada antes da persistência. | RF010, RF017 |
@@ -1547,7 +1547,7 @@ Segundo o Business Rules Group[⁸](#8-referências) (p. 1), regras de negócio 
 
 A Matriz de Rastreabilidade RF → RN → Endpoint associa cada Requisito Funcional às suas Regras de Negócio e ao contrato de comunicação com o servidor, definindo o método HTTP e o endpoint responsável por executar aquela funcionalidade[¹⁰](#8-referências). Essa estrutura permite identificar onde cada RF é implementado na API, quais restrições de negócio governam sua execução e como as requisições são enviadas ao servidor.
 
-A coluna **Status** reflete o estado de implementação na WebAPI (seção 3.7): *Implementado* para os endpoints já operantes entre os 38 disponíveis na documentação navegável; *Planejado (sprint 5)* para o endpoint com contrato já definido (método, path e RN governante), porém ainda não implementado, conforme detalhado no Quadro 31 da seção 3.9; e *Frontend* para os RF cuja execução é responsabilidade da interface, consumindo um endpoint de leitura já existente no backend.
+A coluna **Status** reflete o estado de implementação na WebAPI (seção 3.7): *Implementado* para os endpoints já operantes entre os 54 disponíveis na documentação navegável; e *Frontend* para os RF cuja execução é responsabilidade da interface, consumindo um endpoint de leitura já existente no backend.
 
 <div align = "center">
   <sub> Quadro 15 - Matriz RF → RN → Endpoint </sub><br>
@@ -1556,7 +1556,7 @@ A coluna **Status** reflete o estado de implementação na WebAPI (seção 3.7):
 | ----- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | ------------------------------- |
 | RF001 | RN15, RN28                          | `POST /teams`, `GET /teams`, `GET /teams/:id`, `PATCH /teams/:id`                                                                                | POST / GET / GET / PATCH               | Implementado                    |
 | RF002 | RN16                                | `POST /teams/:teamId/athletes`, `GET /teams/:teamId/athletes`, `GET /teams/:teamId/athletes/:id`, `PATCH /teams/:teamId/athletes/:id`            | POST / GET / GET / PATCH               | Implementado                    |
-| RF003 | RN17, RN28                          | `GET /teams/:teamId/validation`                                                                                                                  | GET                                    | Planejado (Sprint 5)            |
+| RF003 | RN17, RN28                          | `POST /audit/shifts/start` (RN17 bloqueia início sem corredores ativos), `PATCH /events/:id/start`                                               | POST / PATCH                           | Implementado                    |
 | RF004 | RN19                                | `GET /events/treadmills`, `POST /events/treadmills`                                                                                              | GET / POST                             | Implementado                    |
 | RF005 | RN20                                | `GET /teams`                                                                                                                                     | GET                                    | Implementado                    |
 | RF006 | RN21                                | `GET /teams/:teamId/athletes`                                                                                                                    | GET                                    | Implementado                    |
@@ -1576,7 +1576,7 @@ A coluna **Status** reflete o estado de implementação na WebAPI (seção 3.7):
 | RF020 | RN09                                | `GET /metrics/events/:eventId/teams`, `GET /metrics/events/:eventId/dashboard`                                                                 | GET                                    | Implementado                    |
 | RF021 | RN11                                | `GET /metrics/events/:eventId/dashboard`                                                                                                       | GET                                    | Implementado                    |
 | RF022 | RN13                                | `GET /audit/history`                                                                                                                             | GET                                    | Implementado                    |
-| RF023 | RN24                                | `PATCH /teams/:teamId/athletes/:id`                                                                                                              | PATCH                                  | Implementado                    |
+| RF023 | RN24                                | `PATCH /teams/:teamId/athletes/:id`, `PATCH /audit/shifts/:id`, `PATCH /audit/checkpoints/:id`                                                    | PATCH                                  | Implementado                    |
 | RF024 | RN23                                | `GET /audit/logs`                                                                                                                                | GET                                    | Implementado                    |
 | RF025 | RN27                                | `POST /audit/shifts/:id/checkpoints`                                                                                                             | POST                                   | Implementado                    |
 | RF026 | RN27                                | `POST /audit/sync`                                                                                                                               | POST                                   | Implementado                    |
@@ -1612,7 +1612,7 @@ A coluna **Status** reflete o estado de implementação na WebAPI (seção 3.7):
   <br><br>
 </div>
 
-Observa-se que os endpoints de cada RF pertencem aos doze fluxos consolidados na documentação da WebAPI (seção 3.7): Autenticação, Eventos, Esteiras, Equipes, Atletas, Turnos, Histórico, Alertas, Sincronização, Logs de Auditoria, Métricas e Exportação. O endpoint classificado como *Planejado (sprint 5)* — `GET /teams/:teamId/validation` (RF003) — já tem contrato definido e será implementado de forma incremental, sem alterar os endpoints existentes, conforme o Quadro 31 (seção 3.9). Os RF marcados como *Frontend* (RF029, RF030, RF034 e RF040) não demandam um endpoint próprio: sua execução ocorre na camada de interface, reutilizando endpoints de leitura já operantes no backend (notificação visual e sonora de alertas a partir de `GET /audit/alerts`, *hot swap* a partir de `POST /audit/shifts/start` e Modo TV a partir de `GET /metrics/events/:id/dashboard`).
+Observa-se que os endpoints de cada RF pertencem aos treze fluxos consolidados na documentação da WebAPI (seção 3.7): Autenticação, Eventos, Esteiras, Equipes, Atletas, Turnos, Imagens e OCR, Histórico, Alertas, Sincronização, Logs de Auditoria, Métricas e Exportação. A validação de aptidão de equipe (RF003) é garantida em tempo de execução: `POST /audit/shifts/start` rejeita o início de turno enquanto qualquer equipe não tiver ao menos um corredor ativo (RN17), sem exigir número exato de corredores, e a mesma regra incide em `PATCH /events/:id/start`; um endpoint dedicado de leitura (`GET /teams/:teamId/validation`) permanece como conveniência futura, sem impacto no atendimento do RF003. Os RF marcados como *Frontend* (RF029, RF030, RF034 e RF040) não demandam um endpoint próprio: sua execução ocorre na camada de interface, reutilizando endpoints de leitura já operantes no backend (notificação visual e sonora de alertas a partir de `GET /audit/alerts`, *hot swap* a partir de `POST /audit/shifts/start` e Modo TV a partir de `GET /metrics/events/:id/dashboard`).
 
 ### 3.1.5. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
@@ -1754,11 +1754,11 @@ Na sprint 5, última iteração do projeto, foram concluídas as validações pe
 | **RNF001** | USAB | Fluxo de início/troca validado em teste de usabilidade presencial com usuários reais durante a sprint 5. Interface final consolidada com seleção de esteira → escolha de atleta → início de turno em tela única (`treadmill.ejs` → `auditoria.ejs`). | 95% dos usuários concluem o fluxo em ≤ 3 min | Teste de usabilidade com ≥ 3 participantes: cronometrar do clique em "Iniciar Turno" até a confirmação do servidor. Meta: ≤ 3 min em 95% das tentativas. | `treadmill.ejs` → `auditoria.ejs` → `POST /audit/shifts/start` |
 | **RNF002** | USAB | Tema escuro/claro implementado em `tema.js`: detecta preferência do sistema operacional (`prefers-color-scheme`) e persiste escolha no `localStorage`. O toggle respeita atributo `aria-pressed` e `aria-label`, mantendo acessibilidade. Contraste já validado na sprint 4 (5,9:1 > 4,5:1 WCAG AA). | Contraste ≥ 4,5:1 em ambos os temas; fonte ≥ 48px no modo TV | Inspecionar com DevTools os pares texto/fundo em tema claro e escuro. Verificar atributos `aria-*` no botão de alternância. | `src/Front-End/js/tema.js`; `src/Front-End/css/global.css` |
 | **RNF005** | CONF | Sincronização offline validada em `sync.test.ts`: endpoint `POST /audit/sync` garante idempotência via índice único parcial `uq_sync_id_partial` (`ON CONFLICT … DO NOTHING`). Nenhum checkpoint duplicado em 348 testes executados sem falha. | 100% dos checkpoints offline sincronizados em ≤ 30s sem duplicatas | Executar `npm test -- --testPathPattern sync`. Verificar que registros com mesmo `sync_id` não geram duplicata e que o endpoint responde em < 30s. | `syncController.ts`, `syncService.ts`; `sync.test.ts` |
-| **RNF006** | CONF | Integridade expandida na sprint 5: coluna `pace VARCHAR(8)` adicionada em `shifts` (migration 023) como nullable — turnos anteriores não possuem o dado, sem quebra de restrição. Tabela `pause_log` (migration 022) garante no máximo uma pausa aberta por evento via índice único parcial `uq_pause_log_open` (`WHERE resumed_at IS NULL`). | 100% das tentativas de persistência de dados inválidos bloqueadas com erro 4xx | Tentar `POST /audit/checkpoints` com `shift_id` inexistente e confirmar 404; executar `sync.test.ts` com `sync_id` duplicado e confirmar que apenas 1 registro é criado; tentar pausar evento já pausado e confirmar 409. | `023_shiftPace.sql`; `022_pauseLog.sql`; `event.test.ts` — cenários de pausa duplicada |
-| **RNF007** | CONF | Funcionalidade de pausa/retomada de evento implementada: `PATCH /events/:id/pause` congela o cronômetro de 24 h sem encerrar o evento (`paused_at` não nulo; `paused_ms` acumula tempo pausado); `PATCH /events/:id/resume` retoma o cronômetro e persiste intervalo em `pause_log`. O auditor pode identificar e corrigir inconsistências antes da persistência final, mantendo a rastreabilidade da pausa. | 100% das inconsistências definidas (RF044/RF045/RF046) geram alerta visual em ≤ 100ms; pausa/retomada rejeita transições inválidas com erro 4xx | Inserir checkpoint com km inferior ao anterior e cronometrar aparição do modal (meta: ≤ 100ms, DevTools Performance). Tentar pausar evento já pausado e confirmar 409; tentar retomar evento não pausado e confirmar 409. | `eventService.ts` — `pauseEvent`/`resumeEvent`; `021_eventPause.sql`; `022_pauseLog.sql`; `event.test.ts` |
+| **RNF006** | CONF | Integridade expandida na sprint 5: coluna `pace VARCHAR(8)` adicionada em `shifts` (migration 022) como nullable — turnos anteriores não possuem o dado, sem quebra de restrição. Tabela `pause_log` (migration 021) garante no máximo uma pausa aberta por evento via índice único parcial `uq_pause_log_open` (`WHERE resumed_at IS NULL`). | 100% das tentativas de persistência de dados inválidos bloqueadas com erro 4xx | Tentar `POST /audit/checkpoints` com `shift_id` inexistente e confirmar 404; executar `sync.test.ts` com `sync_id` duplicado e confirmar que apenas 1 registro é criado; tentar pausar evento já pausado e confirmar 409. | `022_shiftPace.sql`; `021_eventPause.sql`; `event.test.ts` — cenários de pausa duplicada |
+| **RNF007** | CONF | Funcionalidade de pausa/retomada de evento implementada: `PATCH /events/:id/pause` congela o cronômetro de 24 h sem encerrar o evento (`paused_at` não nulo; `paused_ms` acumula tempo pausado); `PATCH /events/:id/resume` retoma o cronômetro e persiste intervalo em `pause_log`. O auditor pode identificar e corrigir inconsistências antes da persistência final, mantendo a rastreabilidade da pausa. | 100% das inconsistências definidas (RF044/RF045/RF046) geram alerta visual em ≤ 100ms; pausa/retomada rejeita transições inválidas com erro 4xx | Inserir checkpoint com km inferior ao anterior e cronometrar aparição do modal (meta: ≤ 100ms, DevTools Performance). Tentar pausar evento já pausado e confirmar 409; tentar retomar evento não pausado e confirmar 409. | `eventService.ts` — `pauseEvent`/`resumeEvent`; `021_eventPause.sql`; `event.test.ts` |
 | **RNF008** | DES | Pool de conexões (`max: 15`) validado em produção ao longo das sprints 4–5. Aferição formal de p95 com ferramenta de carga (`autocannon`) a realizar antes do evento ao vivo. | P95 de tempo de resposta < 200ms para endpoints operacionais | Executar `autocannon -c 50 -d 10 http://localhost:3000/audit/shifts/start`. Coletar p95 do relatório. Meta: < 200ms. | `connection.ts` — configuração do pool; `001_initialSchema.sql` — índices sobre FKs |
 | **RNF011** | DES | `metricsService.ts` e `metricsRepository.ts` consolidam km total, velocidade média por turno e snapshots horários via consultas SQL agregadas (`SUM`, `AVG`, `COUNT`) sobre colunas indexadas. Aferição de tempo de renderização a confirmar em ambiente de produção. | Renderização de métricas consolidadas ≤ 1s | Medir com `curl -w "%{time_total}"` em `GET /metrics/events/:id/teams`. Meta: ≤ 1s. | `metricsRepository.ts`; `metricsService.ts`; `metrics.test.ts` |
-| **RNF013** | SEG | Trilha de auditoria estendida na sprint 5: evento de pausa e retomada registrados em `pause_log` com `paused_at`, `resumed_at` e `duration_seconds`, completando a rastreabilidade do ciclo de vida do evento além da trilha de edições em `logs`. | 100% das edições e pausas registradas com usuário, timestamp e dado anterior; consultáveis em ordem decrescente | Executar `logs.test.ts`. Verificar que toda edição via `PATCH` gera entrada em `logs`; pausar e retomar evento e confirmar entrada em `pause_log` com `resumed_at` preenchido. | `logsController.ts`, `logsRepository.ts`; `pause_log` (migration 022); `logs.test.ts`; `event.test.ts` |
+| **RNF013** | SEG | Trilha de auditoria estendida na sprint 5: evento de pausa e retomada registrados em `pause_log` com `paused_at`, `resumed_at` e `duration_seconds`, completando a rastreabilidade do ciclo de vida do evento além da trilha de edições em `logs`. | 100% das edições e pausas registradas com usuário, timestamp e dado anterior; consultáveis em ordem decrescente | Executar `logs.test.ts`. Verificar que toda edição via `PATCH` gera entrada em `logs`; pausar e retomar evento e confirmar entrada em `pause_log` com `resumed_at` preenchido. | `logsController.ts`, `logsRepository.ts`; `pause_log` (migration 021); `logs.test.ts`; `event.test.ts` |
 | **RNF015** | SUP | Suíte de testes expandida na sprint 5 com `ocr.service.test.ts` (6 casos), `image.service.test.ts` (8 casos), `image.test.ts` e `event.service.test.ts` (cobrindo pause/resume). Cobertura global atual: **91,8% em statements, 84,48% em branches, 92,94% em functions, 94,9% em lines** (348 testes, 21 suítes, 0 falhas). Atenção: `metricsService.ts` está em **49,18% em statements** (abaixo do mínimo de 75%) — expansão de cobertura prevista como débito técnico. | Cobertura ≥ 75% global e por service em statements, aferida por `npm test -- --coverage` | Executar `npm test -- --coverage`. Verificar coluna "% Stmts" por arquivo em `src/services/`. Meta: ≥ 75% em todos os services; alertar para `metricsService.ts`. | `src/__tests__/`; `npm test -- --coverage`; evidência atual: 91,8% global |
 | **RNF016** | CAP | Pool configurado (`max: 15`). Teste de carga formal com 50 usuários simultâneos a realizar antes do evento ao vivo para atestar SLA de 500ms. | 50 usuários simultâneos com tempo de resposta < 500ms | Executar `autocannon -c 50 -d 30 http://localhost:3000/metrics/events/1/dashboard`. Coletar p99. Meta: < 500ms. | `connection.ts` — `max: 15`; teste de carga a executar pré-evento |
 | **RNF017** | CAP | Índices secundários sobre FKs (`shift_id`, `event_id`, `team_id`, `athlete_id`, `treadmill_id`) permanecem em vigor desde a sprint 4. Exportação via `exportService.ts` usa `ExcelJS` para geração eficiente de CSV/XLSX. Aferição formal com 10.000 registros a realizar em ambiente de homologação antes do evento ao vivo. | Consultas filtradas e exportações de ≤ 10.000 registros processadas em < 3s | Inserir 10.000 registros via script SQL de seed. Executar `curl -w "%{time_total}"` em `GET /audit/history?event_id=1` e `GET /export/events/1/shifts`. Meta: < 3s. | `001_initialSchema.sql` — índices secundários; `historyRepository.ts`; `exportService.ts`; aferição a executar pré-evento |
@@ -2185,7 +2185,7 @@ O Diagrama de Sequência de Turnos mapeia cinco fluxos: inicialização do turno
 
 **1. Início do Turno:** O cliente envia `POST /audit/shifts/start { athlete_id, auditor_id, treadmill_id, km_start }`. O ShiftService verifica disponibilidade do atleta (findOpenByAthlete → null) e da esteira (findOpenByTreadmill → null) e, confirmada a disponibilidade, persiste o turno via `INSERT Shift { status: "in_progress" }` → `201 { id, status: "in_progress", km_start, start_at }`.
 
-**2. Checkpoint Obrigatório:** A cada ≤10 minutos, o auditor envia `POST /audit/shifts/{id}/checkpoints { distance, type: "mandatory" }`. O ShiftService valida que `distance >= último checkpoint` e que o intervalo desde o último registro é `≤10 min`, e persiste via `INSERT Checkpoint { type: "mandatory" }` → `201 { id, timestamp }`.
+**2. Checkpoint Obrigatório:** A cada 5 minutos o sistema solicita (modal opcional, não bloqueante) um checkpoint e o auditor envia `POST /audit/shifts/{id}/checkpoints { distance, type: "mandatory" }`. O ShiftService valida que `distance >= último checkpoint` e persiste via `INSERT Checkpoint { type: "mandatory" }` → `201 { id, timestamp }`. Intervalos superiores a 10 min entre checkpoints geram alerta de inconsistência (RF045).
 
 **3. Checkpoint Voluntário:** A qualquer momento, o auditor pode enviar `POST /audit/shifts/{id}/checkpoints { distance, type: "voluntary" }`. O fluxo de validação e persistência é idêntico ao do checkpoint obrigatório → `201 { id, timestamp }`.
 
@@ -2247,7 +2247,7 @@ O Diagrama de Registros e Sincronização cobre dois fluxos: a correção retroa
 
 **1. Valor Retroativo Incompatível:** `new_distance` fora do intervalo `[prev, next]` → `422 — Value must be between checkpoints`.
 
-**2. Registro Duplicado no Sync:** O ShiftService ignora silenciosamente o item e prossegue a fila → `200 OK — Partial sync (duplicates discarded)`.
+**2. Registro Duplicado no Sync:** O ShiftService ignora silenciosamente o item e prossegue a fila → `201 — Partial sync (duplicatas descartadas)`.
 
 ---
 
@@ -2264,7 +2264,7 @@ O Diagrama de Sequência do Dashboard cobre dois fluxos: o polling automático d
 
 **Fluxo Principal (Caminho Feliz)**
 
-**1. Polling Automático (a cada ≤10 s):** O cliente dispara `GET /metrics/events/{event_id}/dashboard` em loop com intervalo de no máximo 10 segundos (RF013, RN11). O MetricsController aciona MetricsService.getDashboard, que delega ao MetricsRepository.dashboardByEvent a execução de três consultas paralelas (placar, estatísticas gerais e atletas em pista) → `200 { scoreboard, active_shifts, completed_shifts, total_km, athletes_on_track }`.
+**1. Polling Automático (a cada ≤10 s):** O cliente dispara `GET /metrics/events/{event_id}/dashboard` em loop com intervalo de no máximo 10 segundos (RF021, RN11). O MetricsController aciona MetricsService.getDashboard, que delega ao MetricsRepository.dashboardByEvent a execução de três consultas paralelas (placar, estatísticas gerais e atletas em pista) → `200 { scoreboard, active_shifts, completed_shifts, total_km, athletes_on_track }`.
 
 **2. Healthcheck (planejado, não implementado):** O cliente aciona `GET /status`. O MetricsController faz um ping direto no banco de dados → `200 { db: "ok", timestamp }`.
 
@@ -2405,7 +2405,7 @@ O Diagrama de Métricas de Atleta cobre cinco endpoints que expõem o desempenho
 
 ---
 
-A modelagem da aplicação web do Red Bull 24 Horas por meio dos Diagramas de Sequência UML evidencia a arquitetura em camadas adotada no sistema, onde cada requisição percorre Controller, Service e Repository antes de alcançar o banco de dados. Os fluxos modelados cobrem integralmente os 49 endpoints implementados na sprint 4.
+A modelagem da aplicação web do Red Bull 24 Horas por meio dos Diagramas de Sequência UML evidencia a arquitetura em camadas adotada no sistema, onde cada requisição percorre Controller, Service e Repository antes de alcançar o banco de dados. Os fluxos modelados cobrem integralmente os 54 endpoints implementados.
 
 Cada diagrama cumpre um papel específico: Autenticação (3.2.4.7) detalha o ciclo completo de identidade, abrangendo cadastro, login, renovação silenciosa e logout; Alertas (3.2.4.8) expõe a detecção de inconsistências em tempo real; Logs de Auditoria (3.2.4.9) garante a trilha imutável de edições; Exportação (3.2.4.10) cobre a geração de CSV para auditoria externa; Métricas de Atleta (3.2.4.11) abrange ranking, histórico, snapshots e compartilhamento público. Os fluxos anteriores cobrem Eventos (3.2.4.1), com o ciclo de vida de início e encerramento pelo gerente; Equipes (3.2.4.2); Turnos (3.2.4.3), incluindo o abandono de turno com justificativa; Histórico (3.2.4.4); Registros e Sincronização (3.2.4.5); e Dashboard (3.2.4.6).
 
@@ -2430,11 +2430,11 @@ O Diagrama de Implantação UML da RedRun descreve como os artefatos de software
   <br><br>
 </div>
 
-O sistema opera sobre quatro nós principais. O primeiro é o **dispositivo cliente** (`<<device>>`), composto por tablets Android 10+ ou PCs com Chrome/Firefox. Nesse nó residem dois artefatos: o browser, que consome as páginas EJS renderizadas pelo servidor, e o `localStorage`, utilizado como buffer persistente de checkpoints registrados em modo offline. Quando o dispositivo perde conectividade durante o evento, os checkpoints são armazenados localmente com um identificador determinístico (`sync_id = SHA256(shift_id|distance|type|timestamp)`); ao reconectar, o browser envia os registros em lote ao endpoint `POST /sync/checkpoints`, que os persiste de forma idempotente sem gerar duplicatas.
+O sistema opera sobre quatro nós principais. O primeiro é o **dispositivo cliente** (`<<device>>`), composto por tablets Android 10+ ou PCs com Chrome/Firefox. Nesse nó residem dois artefatos: o browser, que consome as páginas EJS renderizadas pelo servidor, e o `localStorage`, utilizado como buffer persistente de checkpoints registrados em modo offline. Quando o dispositivo perde conectividade durante o evento, os checkpoints são armazenados localmente com um identificador determinístico (`sync_id = SHA256(shift_id|distance|type|timestamp)`); ao reconectar, o browser envia os registros em lote ao endpoint `POST /audit/sync`, que os persiste de forma idempotente sem gerar duplicatas.
 
-O segundo nó é o **servidor de aplicação** (`<<executionEnvironment>>`), executado sobre Node.js 20+ com Express 5 e TypeScript compilado. Nele estão implantados cinco artefatos: (1) as rotas HTTP, cobrindo 49 endpoints distribuídos em 12 fluxos funcionais; (2) os middlewares de autenticação JWT, validação de corpo e tratamento centralizado de erros; (3) as views EJS, responsáveis pela renderização server-side das interfaces de auditoria, gerência e Modo TV; (4) a documentação estática da WebAPI servida em `/docs`; e (5) o arquivo `.env`, que concentra as variáveis de ambiente — `DATABASE_URL`, `JWT_SECRET`, `JWT_REFRESH_SECRET` e `PORT`. A comunicação entre cliente e servidor ocorre via HTTPS/HTTP 1.1, com tokens de acesso e de renovação transmitidos em cookies `HttpOnly` e `SameSite=Strict`, eliminando a exposição do token ao JavaScript da página.
+O segundo nó é o **servidor de aplicação** (`<<executionEnvironment>>`), executado sobre Node.js 20+ com Express 5 e TypeScript compilado. Nele estão implantados cinco artefatos: (1) as rotas HTTP, cobrindo 54 endpoints distribuídos em 13 fluxos funcionais; (2) os middlewares de autenticação JWT, validação de corpo e tratamento centralizado de erros; (3) as views EJS, responsáveis pela renderização server-side das interfaces de auditoria, gerência e Modo TV; (4) a documentação estática da WebAPI servida em `/docs`; e (5) o arquivo `.env`, que concentra as variáveis de ambiente — `DATABASE_URL`, `JWT_SECRET`, `JWT_REFRESH_SECRET` e `PORT`. A comunicação entre cliente e servidor ocorre via HTTPS/HTTP 1.1, com tokens de acesso e de renovação transmitidos em cookies `HttpOnly` e `SameSite=Strict`, eliminando a exposição do token ao JavaScript da página.
 
-O terceiro nó é o **banco de dados** (`<<database>>`), PostgreSQL 15+, acessado pelo servidor de aplicação via TCP na porta 5432 por meio de um pool de conexões (`pg`, máximo de 10 conexões simultâneas). O schema é composto por 17 migrations DDL versionadas, aplicadas em ordem sequencial, cobrindo as tabelas `events`, `treadmills`, `teams`, `athletes`, `shifts`, `checkpoints`, `managers`, `auditors`, `refresh_tokens` e `audit_logs`. As migrations garantem reprodutibilidade do ambiente em qualquer máquina de desenvolvimento ou servidor de produção.
+O terceiro nó é o **banco de dados** (`<<database>>`), PostgreSQL 15+, acessado pelo servidor de aplicação via TCP na porta 5432 por meio de um pool de conexões (`pg`, máximo de 15 conexões simultâneas). O schema é composto por 25 migrations DDL versionadas, aplicadas em ordem sequencial, cobrindo as tabelas `events`, `treadmills`, `teams`, `athletes`, `shifts`, `checkpoints`, `managers`, `auditors`, `refresh_tokens` e `logs`. As migrations garantem reprodutibilidade do ambiente em qualquer máquina de desenvolvimento ou servidor de produção.
 
 O quarto nó é o **GitLab** (`<<cloud>>`), que hospeda o repositório do projeto (branches `main` e `develop`) e executa o pipeline de CI/CD. O pipeline publica automaticamente o arquivo `documentos/outros/WebAPI/index.html` no GitLab Pages, disponibilizando a documentação navegável da WebAPI publicamente em `g02-73a453.pages.git.inteli.edu.br/api/`. O deploy da aplicação em si é realizado manualmente via `npm run build` seguido de `npm start` no servidor de destino.
 
@@ -2668,11 +2668,11 @@ Tela operacional onde o auditor seleciona a esteira disponível, a equipe e o co
 
 #### Modal de Checkpoint
 
-Modal bloqueante exibido a cada 5 minutos a partir do início do turno, impedindo qualquer interação com a interface até que o auditor insira a quilometragem atual. Relacionado a US02 e RF012, sendo uma decisão deliberada para eliminar o risco de checkpoints esquecidos em momentos de alta pressão operacional.
+Modal opcional exibido a cada 5 minutos a partir do início do turno, solicitando que o auditor insira a quilometragem atual sem bloquear a interação com a interface. Relacionado a US02 e RF012, servindo como lembrete periódico para reduzir o risco de checkpoints esquecidos em momentos de alta pressão operacional.
 
 #### Tela de Encerramento de Turno
 
-Tela para registro do valor final de quilômetros e confirmação do encerramento do turno ativo, liberando automaticamente a esteira para o próximo corredor. Relacionado a US03, RF009, RF010 e RF013, garantindo a integridade dos dados ao fim de cada ciclo de corrida.
+Tela para registro do valor final de quilômetros e confirmação do encerramento do turno ativo, liberando automaticamente a esteira para o próximo corredor. Relacionado a US03, RF014 e RF015, garantindo a integridade dos dados ao fim de cada ciclo de corrida.
 
 #### Tela de Acompanhamento
 
@@ -2771,13 +2771,13 @@ O fluxo foi desenhado para ser concluído em até 3 cliques a partir da tela de 
 
 ---
 
-#### Modal de Checkpoint Obrigatório
+#### Modal de Checkpoint
 
-Modal bloqueante disparado automaticamente a cada 5 minutos durante um turno ativo. Impede qualquer outra interação com o sistema até que o auditor insira a quilometragem atual lida no display da esteira, garantindo que o registro periódico ocorra de forma contínua e sem dependência de iniciativa do operador.
+Modal opcional disparado automaticamente a cada 5 minutos durante um turno ativo. Solicita que o auditor insira a quilometragem atual lida no display da esteira sem bloquear outras interações com o sistema, mantendo o registro periódico como lembrete contínuo sem depender exclusivamente da iniciativa do operador.
 
-A natureza bloqueante do modal foi uma decisão deliberada para eliminar o risco de checkpoints esquecidos em momentos de alta pressão operacional, como as madrugadas.
+O lembrete periódico foi uma decisão deliberada para reduzir o risco de checkpoints esquecidos em momentos de alta pressão operacional, como as madrugadas.
 
-> Rastreabilidade: US02, US09, RF009, RF010.
+> Rastreabilidade: US02, RF012, RF013.
 
 ---
 
@@ -2809,7 +2809,7 @@ Ao concluir o fluxo, a esteira é marcada automaticamente como livre e o total a
 
 O design do fluxo prioriza a agilidade da transição entre corredores, reutilizando os dados de equipe e esteira já carregados para minimizar inputs do auditor.
 
-> Rastreabilidade: US03, RF012, RF013, RF034.
+> Rastreabilidade: US03, RF014, RF015, RF034.
 
 ---
 
@@ -3209,7 +3209,7 @@ O Modelo Entidade-Relacionamento (MER) apresenta a visão conceitual consolidada
 
 #### Entidades e atributos
 
-As entidades foram derivadas do domínio e revisadas conforme o schema resultante das migrations `001` a `017`. O MER inclui as entidades de autenticação porque seus vínculos possuem integridade referencial no banco e fazem parte da responsabilidade operacional dos usuários.
+As entidades foram derivadas do domínio e revisadas conforme o schema resultante das migrations `001` a `025`. O MER inclui as entidades de autenticação porque seus vínculos possuem integridade referencial no banco e fazem parte da responsabilidade operacional dos usuários.
 
 <div align="center">
   <sub>Quadro 20 - Entidades e atributos do MER</sub>
@@ -3236,7 +3236,7 @@ As entidades foram derivadas do domínio e revisadas conforme o schema resultant
 
 #### Relacionamentos e cardinalidades
 
-Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui atletas e esteiras; um turno aponta para a esteira utilizada; e o turno passou a ser operado e auditado exclusivamente por auditores, sem participação de gerentes nesse fluxo. A posse de sessões de autenticação (refresh tokens) continua modelada por dois relacionamentos independentes e mutuamente exclusivos: um para gerentes e outro para auditores. Eventos passaram a registrar seu histórico de pausas em uma entidade própria.
+Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui atletas e esteiras; um turno aponta para a esteira utilizada; e o turno é operado por um único responsável — auditor ou gerente, conforme a constraint `chk_shifts_operator` — enquanto a auditoria (revisão de checkpoints) é exclusiva de auditores. A posse de sessões de autenticação (refresh tokens) continua modelada por dois relacionamentos independentes e mutuamente exclusivos: um para gerentes e outro para auditores. Eventos passaram a registrar seu histórico de pausas em uma entidade própria.
 
 <div align="center">
   <sub>Quadro 21 - Relacionamentos e cardinalidades do MER</sub>
@@ -3249,8 +3249,8 @@ Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui
 | **Rosters** | Teams | 1:N | Athletes | Cada atleta pertence a uma única equipe. |
 | **Has** | Teams | 1:N | Treadmills | Uma equipe pode possuir várias esteiras; uma esteira pode ficar temporariamente sem equipe. |
 | **Performs** | Athletes | 1:N | Shifts | Um atleta pode realizar vários turnos; cada turno possui um atleta. |
-| **Operates** | Auditors | 1:N | Shifts | Um auditor pode operar vários turnos, sendo o responsável direto pela condução da corrida no momento do registro. |
-| **Audits** | Auditors | 1:N | Shifts | Um auditor pode auditar (revisar) vários turnos; o turno pode ser auditado por um auditor diferente do que o operou. |
+| **Operates** | Auditors / Managers | 1:N | Shifts | O turno é conduzido por um único operador, auditor ou gerente, conforme a constraint `chk_shifts_operator`. |
+| **Audits** | Auditors | 1:N | Shifts | A auditoria (revisão) de turnos é exclusiva de auditores; o turno pode ser revisado por um auditor diferente do que o operou. |
 | **Hosts** | Treadmills | 1:N | Shifts | Uma esteira recebe vários turnos e cada turno referencia no máximo uma esteira. |
 | **Records** | Shifts | 1:N | Checkpoints | Todo checkpoint pertence a um turno. |
 | **Generates** | Shifts | 1:N | Logs | Todo log pertence a um turno. |
@@ -3267,7 +3267,7 @@ Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui
 #### Decisões de modelagem
 
 - **Shift como entidade central:** cada entrada de um atleta em uma esteira gera um turno próprio. Os totais do evento são calculados pela agregação dos turnos finalizados. O atributo `manager_id` em `Shifts` serve para vinculação histórica/auditoria do criador do registro, embora o fluxo operacional seja restrito a auditores.
-- **Operação e auditoria exclusivas do Auditor:** o turno não é operado por um gerente em tempo real. Os relacionamentos independentes **Operates** (auditor que conduz o turno) e **Audits** (auditor que audita/revisa o turno) conectam exclusivamente Auditors a Shifts.
+- **Operação flexível, auditoria exclusiva do Auditor:** o turno é conduzido por um único operador (auditor ou gerente, garantido pela constraint `chk_shifts_operator`), enquanto a auditoria/revisão é exclusiva de auditores. O relacionamento **Operates** conecta o operador (Auditor ou Manager) a Shifts, e **Audits** conecta exclusivamente Auditors a Shifts.
 - **Esteira vinculada à equipe:** o relacionamento **Has** liga Teams a Treadmills, enquanto o relacionamento **Hosts** liga Treadmills a Shifts, preservando o histórico de uso por turno.
 - **Verificação por foto e OCR:** Shifts e Checkpoints armazenam `image_url` e os campos de leitura óptica (`ocr_distance`, `ocr_speed`, `ocr_pace`, `ocr_time`), permitindo conferir o valor inserido manualmente contra o valor lido automaticamente do painel da esteira.
 - **Classificação de checkpoints:** o atributo `type` de Checkpoints assume os valores derivados dos sub-atributos `mandatory` ou `voluntary`, distinguindo de forma clara pontos de controle obrigatórios dos opcionais diretamente na estrutura visual.
@@ -3278,7 +3278,7 @@ Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER)
 
-O DER traduz o MER para a estrutura relacional do PostgreSQL. A versão abaixo representa o estado efetivamente obtido após a execução sequencial das migrations `001` a `017`, e não apenas o schema inicial da migration `001`.
+O DER traduz o MER para a estrutura relacional do PostgreSQL. A versão abaixo representa o estado efetivamente obtido após a execução sequencial das migrations `001` a `025`, e não apenas o schema inicial da migration `001`.
 
 <div align="center">
   <sub>Imagem 73 - Diagrama Entidade-Relacionamento</sub><br>
@@ -3388,14 +3388,14 @@ O modelo físico implementa o DER da seção 3.6.2 como **migrations DDL version
 | [`015_treadmillNumberNotUnique.sql`](../src/database/migrations/015_treadmillNumberNotUnique.sql) | 4 | Remove a constraint `UNIQUE` de `treadmills.number`, permitindo o mesmo número em equipes distintas. A migration não adiciona `UNIQUE(team_id, number)`, portanto a unicidade dentro da equipe ainda depende da aplicação. |
 | [`016_logsValueNumeric.sql`](../src/database/migrations/016_logsValueNumeric.sql)           | 4      | Converte `logs.old_value` e `logs.new_value` de `INT` para `NUMERIC(8,2)`, preservando a precisão decimal nos registros de auditoria de alterações de distância após a migration 014. |
 | [`017_checkpointOldDistanceNumeric.sql`](../src/database/migrations/017_checkpointOldDistanceNumeric.sql) | 4 | Converte `checkpoints.old_distance` de `INT` para `NUMERIC(8,2)`, completando a propagação do tipo decimal à trilha de auditoria de checkpoints (complemento da migration 014). |
-| [`018_shiftKmDecimal.sql`](../src/database/migrations/018_shiftKmDecimal.sql)               | 4      | Converte `km_start`, `km_end` e `speed` de `shifts` de `INT` para `NUMERIC(8,2)`, permitindo registrar quilometragem e velocidade fracionárias (ex.: `10.50`) reportadas pelas esteiras. |
-| [`019_imageUrl.sql`](../src/database/migrations/019_imageUrl.sql)                           | 4      | RF013/RF014: adiciona `image_url TEXT` (opcional) às tabelas `shifts` e `checkpoints`, viabilizando o anexo de imagem comprobatória ao registro de turno e checkpoint (issue #268). |
-| [`020_athleteEventImageUrl.sql`](../src/database/migrations/020_athleteEventImageUrl.sql)   | 4      | Adiciona `image_url TEXT` (opcional) às tabelas `athletes` e `events`, suportando foto de atleta e imagem de evento armazenadas no Supabase Storage (issue #255). |
-| [`021_eventPause.sql`](../src/database/migrations/021_eventPause.sql)                       | 4      | Pausa de competição: adiciona `events.paused_at TIMESTAMP` (instante da pausa, `NULL` = rodando) e `events.paused_ms BIGINT DEFAULT 0` (tempo acumulado pausado), congelando o cronômetro de 24h sem encerrar o evento. Cria também a tabela `pause_log` (intervalos de pausa com `paused_at`, `resumed_at`, `duration_seconds`), índice por `event_id` e índice único parcial `WHERE resumed_at IS NULL` que garante no máximo uma pausa em aberto por evento. |
-| [`022_shiftPace.sql`](../src/database/migrations/022_shiftPace.sql)                         | 4      | Adiciona `shifts.pace VARCHAR(8)` (nullable) para registro manual do ritmo configurado na esteira pelo auditor (formato `MM:SS` por km). |
-| [`023_user_image_url.sql`](../src/database/migrations/023_user_image_url.sql)               | 4      | Adiciona `image_url TEXT` (opcional) às tabelas `managers` e `auditors` para foto de perfil. Cria a sequência `auditor_reg_num_seq` (início 1000) e a aplica como `DEFAULT` de `auditors.registration_number`, automatizando a numeração funcional. |
-| [`024_athleteShareToken.sql`](../src/database/migrations/024_athleteShareToken.sql)         | 4      | Card compartilhável de atleta: adiciona `athletes.share_token UUID` (índice único) para gerar link público de compartilhamento e `athletes.email VARCHAR(255)` para envio do card por e-mail. |
-| [`025_ocrFields.sql`](../src/database/migrations/025_ocrFields.sql)                         | 4      | Campos de OCR em `shifts` e `checkpoints` (`ocr_speed NUMERIC(5,2)`, `ocr_distance NUMERIC(6,3)`, `ocr_pace VARCHAR(8)`, `ocr_time VARCHAR(9)`), armazenando os valores extraídos automaticamente da leitura do painel da esteira. |
+| [`018_shiftKmDecimal.sql`](../src/database/migrations/018_shiftKmDecimal.sql)               | 5      | Converte `km_start`, `km_end` e `speed` de `shifts` de `INT` para `NUMERIC(8,2)`, permitindo registrar quilometragem e velocidade fracionárias (ex.: `10.50`) reportadas pelas esteiras. |
+| [`019_imageUrl.sql`](../src/database/migrations/019_imageUrl.sql)                           | 5      | RF013/RF014: adiciona `image_url TEXT` (opcional) às tabelas `shifts` e `checkpoints`, viabilizando o anexo de imagem comprobatória ao registro de turno e checkpoint (issue #268). |
+| [`020_athleteEventImageUrl.sql`](../src/database/migrations/020_athleteEventImageUrl.sql)   | 5      | Adiciona `image_url TEXT` (opcional) às tabelas `athletes` e `events`, suportando foto de atleta e imagem de evento armazenadas no Supabase Storage (issue #255). |
+| [`021_eventPause.sql`](../src/database/migrations/021_eventPause.sql)                       | 5      | Pausa de competição: adiciona `events.paused_at TIMESTAMP` (instante da pausa, `NULL` = rodando) e `events.paused_ms BIGINT DEFAULT 0` (tempo acumulado pausado), congelando o cronômetro de 24h sem encerrar o evento. Cria também a tabela `pause_log` (intervalos de pausa com `paused_at`, `resumed_at`, `duration_seconds`), índice por `event_id` e índice único parcial `WHERE resumed_at IS NULL` que garante no máximo uma pausa em aberto por evento. |
+| [`022_shiftPace.sql`](../src/database/migrations/022_shiftPace.sql)                         | 5      | Adiciona `shifts.pace VARCHAR(8)` (nullable) para registro manual do ritmo configurado na esteira pelo auditor (formato `MM:SS` por km). |
+| [`023_user_image_url.sql`](../src/database/migrations/023_user_image_url.sql)               | 5      | Adiciona `image_url TEXT` (opcional) às tabelas `managers` e `auditors` para foto de perfil. Cria a sequência `auditor_reg_num_seq` (início 1000) e a aplica como `DEFAULT` de `auditors.registration_number`, automatizando a numeração funcional. |
+| [`024_athleteShareToken.sql`](../src/database/migrations/024_athleteShareToken.sql)         | 5      | Card compartilhável de atleta: adiciona `athletes.share_token UUID` (índice único) para gerar link público de compartilhamento e `athletes.email VARCHAR(255)` para envio do card por e-mail. |
+| [`025_ocrFields.sql`](../src/database/migrations/025_ocrFields.sql)                         | 5      | Campos de OCR em `shifts` e `checkpoints` (`ocr_speed NUMERIC(5,2)`, `ocr_distance NUMERIC(6,3)`, `ocr_pace VARCHAR(8)`, `ocr_time VARCHAR(9)`), armazenando os valores extraídos automaticamente da leitura do painel da esteira. |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -4054,11 +4054,12 @@ A documentação completa e navegável dos endpoints está disponível em [`docu
 | Fluxo | Endpoints | RFs cobertos |
 |---|---|---|
 | **Autenticação** | 7 | RF027 |
-| **Eventos** | 7 | RF051, RF010, RF011 |
+| **Eventos** | 9 | RF051, RF003 |
 | **Esteiras** | 4 | RF004 |
 | **Equipes** | 5 | RF001, RF005 |
 | **Atletas** | 5 | RF002, RF006, RF023 |
 | **Turnos** | 8 | RF007–RF019, RF025, RF031–RF034, RF044–RF046 |
+| **Imagens e OCR** | 3 | — |
 | **Histórico** | 1 | RF022, RF041–RF043 |
 | **Alertas** | 1 | RF028–RF030, RF039, RF053 |
 | **Sincronização** | 1 | RF026 |
@@ -4066,7 +4067,7 @@ A documentação completa e navegável dos endpoints está disponível em [`docu
 | **Métricas** | 7 | RF020, RF021, RF035–RF038, RF040, RF049, RF050, RF052 |
 | **Exportação** | 2 | RF047, RF048 |
 
-**Total Sprint 4: 49 endpoints implementados e documentados**, organizados em doze fluxos. Em relação à sprint 3, foram acrescentados nesta sprint: o fluxo de **Sincronização offline** (`POST /audit/sync`, RF026), o fluxo de **Logs de Auditoria** (`GET /audit/logs`, RF024), os endpoints de início e encerramento de evento no fluxo de Eventos, a edição retroativa de checkpoint e turno no fluxo de Turnos, o link público de compartilhamento nas Métricas e a listagem de auditores ativos na Autenticação. O único endpoint ainda planejado é a validação de equipe (RF003, `GET /teams/:teamId/validation`) agendado para a sprint 5, conforme o Quadro 31 da seção 3.9.
+**Total: 54 endpoints implementados e documentados**, organizados em treze fluxos. Em relação à sprint 3, foram acrescentados ao longo do desenvolvimento: o fluxo de **Sincronização offline** (`POST /audit/sync`, RF026), o fluxo de **Logs de Auditoria** (`GET /audit/logs`, RF024), os endpoints de início e encerramento de evento no fluxo de Eventos, a edição retroativa de checkpoint e turno no fluxo de Turnos, o link público de compartilhamento nas Métricas e a listagem de auditores ativos na Autenticação. A validação de aptidão de equipe (RF003) já é aplicada em tempo de execução no início de turno (`POST /audit/shifts/start`, RN17); um endpoint dedicado de leitura (`GET /teams/:teamId/validation`) permanece como conveniência futura.
 
 Cada endpoint contém: método HTTP, path completo, headers, body request (com campos obrigatórios e validações), shape da resposta de sucesso, exemplos JSON e tabela de status codes possíveis.
 
@@ -4143,10 +4144,10 @@ A tabela abaixo lista todos os 54 endpoints organizados por grupo, com método H
 | `GET` | `/events/:id` | RF051 | JWT |
 | `PATCH` | `/events/:id` | RF051 | JWT (manager) |
 | `DELETE` | `/events/:id` | RF051 | JWT (manager) |
-| `PATCH` | `/events/:id/start` | RF010, RF051 | JWT (manager) |
+| `PATCH` | `/events/:id/start` | RF003, RF051 | JWT (manager) |
 | `PATCH` | `/events/:id/pause` | RF051 | JWT (manager) |
 | `PATCH` | `/events/:id/resume` | RF051 | JWT (manager) |
-| `PATCH` | `/events/:id/finish` | RF011, RF051 | JWT (manager) |
+| `PATCH` | `/events/:id/finish` | RF051 | JWT (manager) |
 
 > `pause` congela o cronômetro de 24h (`paused_at`) sem encerrar a competição e bloqueia auditores de salvar turnos e checkpoints; `resume` religa o cronômetro. Ambos exigem o evento em `in_progress`.
 
@@ -4163,7 +4164,7 @@ A tabela abaixo lista todos os 54 endpoints organizados por grupo, com método H
 
 | Método | Path | RF | Auth |
 |--------|------|----|------|
-| `POST` | `/teams` | RF001, RF015 | JWT |
+| `POST` | `/teams` | RF001 | JWT |
 | `GET` | `/teams` | RF005 | JWT |
 | `GET` | `/teams/:id` | RF005 | JWT |
 | `PATCH` | `/teams/:id` | RF023 | JWT (manager) |
@@ -4255,13 +4256,15 @@ A tabela abaixo lista todos os 54 endpoints organizados por grupo, com método H
 
 > Resposta: `Content-Type: text/csv`. Arquivo com cabeçalho sempre presente; corpo vazio se não houver dados.
 
-#### Endpoint planejado para Sprint 5
+#### RF003 — validação de aptidão de equipe
 
 | Método | Path | RF | RN | Status |
 |--------|------|----|-----|--------|
-| `GET` | `/teams/:teamId/validation` | RF003 | RN17, RN28 | Sprint 5 |
+| `POST` | `/audit/shifts/start` | RF003 | RN17, RN28 | Implementado |
+| `PATCH` | `/events/:id/start` | RF003 | RN17, RN28 | Implementado |
+| `GET` | `/teams/:teamId/validation` | RF003 | RN17, RN28 | Conveniência futura |
 
-> Validará se a equipe possui exatamente 16 corredores ativos antes de liberar o início de turnos. Contrato já definido; implementação planejada para a sprint 5 (ver §3.9 Quadro 31).
+> A regra de presença de ao menos um corredor ativo por equipe (RN17), em vez de número exato de corredores, já é aplicada em tempo de execução: `POST /audit/shifts/start` e `PATCH /events/:id/start` rejeitam a operação (HTTP 422) enquanto a condição não for atendida, satisfazendo o RF003. O endpoint de leitura `GET /teams/:teamId/validation` é uma conveniência futura para expor o status de aptidão (apto / sem corredores ativos) à tela de cadastro, sem alterar o atendimento do RF003.
 
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
@@ -4411,7 +4414,7 @@ A Matriz de Rastreabilidade de Requisitos (RTM — *Requirements Traceability Ma
 
 No contexto do Red Bull 24 Horas, onde inconsistências nos dados podem invalidar o resultado de uma competição inteira, a rastreabilidade deixa de ser uma formalidade documental e passa a ser uma garantia operacional.
 
-Os endpoints mapeados nesta matriz estão implementados e cobertos por testes automatizados na suíte do projeto, organizada por arquivos reais (`auth.service.test.ts`, `event.test.ts`, `team.test.ts`, `shift.test.ts`, `history.test.ts`, `alerts.test.ts`, `logs.test.ts`, `sync.test.ts`, `metrics.test.ts` e `export.test.ts`), referenciados diretamente na coluna *Teste* com o arquivo e o cenário validado, para tornar a rastreabilidade fiel ao código entregue. A única exceção é o endpoint `GET /teams/:teamId/validation` (RF003), marcado na coluna *Status* como **Sprint 5**, que possui contrato definido mas será implementado na próxima sprint, conforme o Quadro 31 ao final desta seção.
+Os endpoints mapeados nesta matriz estão implementados e cobertos por testes automatizados na suíte do projeto, organizada por arquivos reais (`auth.service.test.ts`, `event.test.ts`, `team.test.ts`, `shift.test.ts`, `history.test.ts`, `alerts.test.ts`, `logs.test.ts`, `sync.test.ts`, `metrics.test.ts` e `export.test.ts`), referenciados diretamente na coluna *Teste* com o arquivo e o cenário validado, para tornar a rastreabilidade fiel ao código entregue. O RF003 (validação de aptidão de equipe) é atendido em tempo de execução por `POST /audit/shifts/start` e `PATCH /events/:id/start` (RN17: rejeitam a operação sem corredores ativos), coberto em `shift.test.ts`; um endpoint dedicado de leitura (`GET /teams/:teamId/validation`) permanece como conveniência futura.
 
 > **Legenda de personas:**
 > - **NR** — Nicole Rauen (atleta / influenciadora)
@@ -4419,8 +4422,8 @@ Os endpoints mapeados nesta matriz estão implementados e cobertos por testes au
 > - **LA** — Lucas Andrade (operador de evento / auditor)
 >
 > **Legenda de Status:**
-> - **Implementado** — endpoint operante, coberto por testes automatizados e validado na suíte da sprint 4.
-> - **Sprint 5** — contrato definido (método, path, RN), implementação planejada para a sprint 5 (ver Quadro 31).
+> - **Implementado** — endpoint operante, coberto por testes automatizados e validado na suíte do projeto.
+> - **Conveniência futura** — endpoint de leitura opcional, sem impacto no atendimento do RF (a regra já é aplicada em outro endpoint).
 
 <div align = "center">
   <sub> Quadro 28 - Matriz de Rastreabilidade (RTM) </sub><br>
@@ -4431,7 +4434,7 @@ Linhas sem marcação na coluna *Status* = **Implementado** na sprint 4.
 |---------|----|----|----------|------|-------|--------|
 | LA | RF001 | RN15, RN28 | `POST /teams` | Tela de Registro Pré-Evento → Cadastro de Equipe | `team.test.ts` — cadastro com nome único; bloqueio de terceira equipe e de nome duplicado |
 | LA | RF002 | RN16 | `POST /teams/:teamId/athletes` | Tela de Registro Pré-Evento → Cadastro de Atleta | `team.test.ts` — cadastro de corredor vinculado a equipe; rejeição sem equipe selecionada |
-| LA, BG | RF003 | RN17, RN28 | `GET /teams/:teamId/validation` | Tela de Registro Pré-Evento → Cadastro de Equipe (listagem) | `team.test.ts` — validação de exatamente 16 corredores antes de liberar o início *(sprint 5)* | Sprint 5 |
+| LA, BG | RF003 | RN17, RN28 | `POST /audit/shifts/start` | Tela de Início de Turno | `shift.test.ts` — bloqueio de início quando a equipe não possui corredores ativos |
 | LA | RF004 | RN19 | `GET /events/treadmills` | Tela de Acompanhamento de Esteiras / Tela de Início de Turno | `event.test.ts` — listagem de esteiras com status Livre/Ocupada; bloqueio de esteira ocupada |
 | LA | RF005 | RN20 | `GET /teams` | Tela de Seleção de Corredor e Registro de Início | `team.test.ts` — listagem de corredores restrita à equipe selecionada |
 | LA | RF006 | RN21 | `GET /teams/:teamId/athletes` | Tela de Seleção de Corredor e Registro de Início | `team.test.ts` — seleção de corredor disponível; bloqueio de corredor com turno em aberto |
@@ -4440,8 +4443,8 @@ Linhas sem marcação na coluna *Status* = **Implementado** na sprint 4.
 | LA | RF009 | — | `POST /audit/shifts/start` | Tela de Seleção de Corredor e Registro de Início | `shift.test.ts` — persistência de corredor e esteira vinculados ao turno |
 | LA | RF010 | RN32 | `POST /audit/shifts/start` | Tela de Seleção de Corredor e Registro de Início | `shift.test.ts` — rejeição de km inicial negativo; persistência de km inicial válido |
 | LA | RF011 | — | `POST /audit/shifts/start` | Tela de Seleção de Corredor e Registro de Início | `shift.test.ts` — timestamp de início gerado pelo servidor, sem campo editável |
-| LA | RF012 | RN03, RN34 | `POST /audit/shifts/:id/checkpoints` | Modal de Checkpoint Obrigatório | `shift.test.ts` — checkpoint obrigatório a cada 5 min como ação bloqueante |
-| LA | RF013 | RN04 | `POST /audit/shifts/:id/checkpoints` | Modal de Checkpoint Obrigatório | `shift.test.ts` — rejeição de km de checkpoint menor que o anterior |
+| LA | RF012 | RN03, RN34 | `POST /audit/shifts/:id/checkpoints` | Modal de Checkpoint | `shift.test.ts` — checkpoint a cada 5 min como modal opcional, não bloqueante |
+| LA | RF013 | RN04 | `POST /audit/shifts/:id/checkpoints` | Modal de Checkpoint | `shift.test.ts` — rejeição de km de checkpoint menor que o anterior |
 | LA | RF014 | RN05, RN35 | `PATCH /audit/shifts/:id/finish`, `PATCH /audit/shifts/:id/abandon` | Fluxo de Registro de Fim de Turno / Abandono de Turno | `shift.test.ts` — abertura do fluxo de encerramento apenas com turno ativo; abandono com justificativa obrigatória |
 | LA | RF015 | RN06 | `PATCH /audit/shifts/:id/finish` | Fluxo de Registro de Fim de Turno | `shift.test.ts` — rejeição de km_final menor que o último checkpoint |
 | LA | RF016 | RN33 | `PATCH /audit/shifts/:id/finish` | Fluxo de Registro de Fim de Turno | `shift.test.ts` — timestamp de encerramento gerado pelo servidor |
@@ -4453,7 +4456,7 @@ Linhas sem marcação na coluna *Status* = **Implementado** na sprint 4.
 | LA, BG | RF022 | RN13 | `GET /audit/history` | Tela de Acompanhamento (aba Histórico) | `history.test.ts` — histórico em ordem decrescente de timestamp |
 | BG | RF023 | RN24 | `PATCH /teams/:teamId/athletes/:id` | Tela de Acompanhamento (edição retroativa) | `team.test.ts` — edição retroativa apenas por usuário autenticado |
 | BG | RF024 | RN23 | `GET /audit/logs` | Tela de Acompanhamento (log de auditoria) | `logs.test.ts` — trilha de auditoria com usuário, valor anterior, valor novo e timestamp |
-| LA | RF025 | RN27 | `POST /audit/shifts/:id/checkpoints` | Modal de Checkpoint Obrigatório / Tela de Início de Turno | `sync.test.ts` — registro de checkpoint persistido localmente em modo offline |
+| LA | RF025 | RN27 | `POST /audit/shifts/:id/checkpoints` | Modal de Checkpoint / Tela de Início de Turno | `sync.test.ts` — registro de checkpoint persistido localmente em modo offline |
 | LA | RF026 | RN27 | `POST /audit/sync` | Tela de Acompanhamento de Esteiras (indicador de sync) | `sync.test.ts` — sincronização automática ao reconectar, sem duplicidade de registros |
 | LA, BG | RF027 | RN30, RN31, RN38, RN39, RN40, RN41 | `POST /auth/login` | Tela de Login | `auth.service.test.ts` — bloqueio de acesso não autenticado; rejeição de credenciais inválidas |
 | LA | RF028 | RN25 | `GET /audit/alerts` | Tela de Inconsistência Detectada | `alerts.test.ts` — alerta em tempo real para quilometragem incompatível com o histórico |
@@ -4489,14 +4492,14 @@ Linhas sem marcação na coluna *Status* = **Implementado** na sprint 4.
 
 #### Plano de implementação de endpoints
 
-Com a integração ponta a ponta realizada na sprint 4, todos os endpoints da RTM estão implementados e cobertos por testes, com exceção de **um único endpoint planejado para a sprint 5**: a validação de aptidão de equipe (RF003). O contrato (método, path e RN governante) já está definido para que a implementação seja uma evolução incremental, sem alterar os endpoints existentes.
+Com a integração ponta a ponta, todos os endpoints da RTM estão implementados e cobertos por testes. A validação de aptidão de equipe (RF003) é aplicada em tempo de execução no início de turno (`POST /audit/shifts/start` e `PATCH /events/:id/start`, RN17), sem depender de endpoint novo. Um endpoint dedicado de leitura (`GET /teams/:teamId/validation`) permanece como conveniência futura, descrito a seguir.
 
 <div align = "center">
-  <sub> Quadro 29 - Endpoint planejado para a sprint 5 </sub><br>
+  <sub> Quadro 29 - Endpoint de conveniência futura </sub><br>
 
-| RF | Endpoint planejado | RN | Status | Descrição e plano de implementação |
+| RF | Endpoint de conveniência | RN | Status | Descrição |
 |----|--------------------|----|--------|------------------------------------|
-| RF003 | `GET /teams/:teamId/validation` | RN17, RN28 | Sprint 5 | Validar se a equipe possui exatamente 16 corredores ativos antes de liberar o início de turnos. Plano: novo método no `teamService` que conta atletas ativos por equipe e retorna o status de aptidão (apto/quantidade faltante); rota somente leitura consumida pela tela de cadastro, com cobertura em `team.test.ts`. |
+| RF003 | `GET /teams/:teamId/validation` | RN17, RN28 | Conveniência futura | RF003 já atendido em tempo de execução por `POST /audit/shifts/start` e `PATCH /events/:id/start` (RN17 rejeita início sem corredores ativos). Endpoint de leitura opcional: novo método no `teamService` que conta atletas ativos por equipe e retorna o status de aptidão (apto/sem corredores ativos), consumido pela tela de cadastro. |
 
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
@@ -4797,7 +4800,7 @@ A suíte de testes automatizados foi expandida com novas suítes (`pageControlle
 
 | Item | Motivo | Previsão |
 | :--- | :------ | :------- |
-| `GET /teams/:teamId/validation` (RF003) | Depende de regras de validação de equipe ainda em definição com o parceiro | Sprint 5 |
+| `GET /teams/:teamId/validation` (RF003) — endpoint de leitura dedicado | RF003 já atendido em runtime via `POST /audit/shifts/start` e `PATCH /events/:id/start` (RN17 rejeita início sem corredores ativos); endpoint de leitura opcional não implementado | Conveniência futura |
 | Modo TV — interface pública de placar (RF034) | Backend implementado; frontend da tela de exibição em pista não finalizado | Sprint 5 |
 | Link público de compartilhamento individual de atleta (RF050) | Endpoint implementado; integração com a tela do atleta não concluída | Sprint 5 |
 | Seções WAD §3.8.1 e §3.8.2 — Autenticação e Controle de sessão | Concluído na sprint 4 | Sprint 4 |
@@ -4813,7 +4816,7 @@ A segunda dificuldade foi a **resolução de conflitos entre cinco branches para
 
 O **bug #227** (sessionStorage não persistido ao navegar entre telas) revelou uma dependência implícita de estado no cliente que não estava documentada: a tela de seleção de esteira armazenava o `treadmill_id` apenas no `sessionStorage`, sem confirmação no backend, o que fazia o fluxo falhar ao recarregar a página. A correção passou a persistir a seleção via cookie de sessão validado pelo servidor.
 
-**Próximos passos para a sprint 5:** concluir RF003 e RF034, realizar testes de usabilidade com pelo menos três participantes, refatorar pontos de acoplamento identificados nos testes de integração e preparar a versão final para publicação conforme os critérios do Art. 18. As seções §3.8.1 (Autenticação) e §3.8.2 (Controle de sessão) foram concluídas ainda na sprint 4.
+**Próximos passos para a sprint 5:** concluir a integração de frontend do RF034 (Modo TV), realizar testes de usabilidade com pelo menos três participantes, refatorar pontos de acoplamento identificados nos testes de integração e preparar a versão final para publicação conforme os critérios do Art. 18. As seções §3.8.1 (Autenticação) e §3.8.2 (Controle de sessão) foram concluídas ainda na sprint 4.
 
 ## 4.3. Versão final da aplicação web (sprint 5)
 
@@ -5142,7 +5145,7 @@ A cobertura desses cenários garante que os fluxos principais da aplicação sej
 | Consulta de atleta | `GET /teams/:teamId/athletes/:id` | RN16 | RF002, RF006 |
 | Atualização de atleta | `PATCH /teams/:teamId/athletes/:id` | RN16, RN24 | RF002, RF023 |
 | Remoção de atleta | `DELETE /teams/:teamId/athletes/:id` | RN16 | RF002 |
-| Validação de equipe | `GET /teams/:teamId/validation` | RN17, RN28 | RF003 |
+| Validação de equipe | `POST /audit/shifts/start` (RN17) | RN17, RN28 | RF003 |
 | Início de turno | `POST /audit/shifts/start` | RN01, RN02, RN17, RN19, RN20, RN21, RN28, RN35 | RF004, RF005, RF006, RF007, RF008 |
 | Registro de checkpoint | `POST /audit/shifts/:id/checkpoints` | RN03, RN04, RN25, RN34 | RF012, RF013, RF025, RF028, RF032, RF045 |
 | Correção de checkpoint | `PATCH /audit/checkpoints/:id` | RN23, RN24, RN25 | RF023, RF031 |
@@ -5284,7 +5287,7 @@ Functions: 100%
 Lines: 100%
 ```
 
-Esses resultados superam significativamente a cobertura mínima de **80%** estabelecida para a camada de serviços, evidenciando elevada confiabilidade das regras de negócio implementadas.
+Esses resultados superam significativamente a cobertura mínima de **75%** estabelecida para a camada de serviços, evidenciando elevada confiabilidade das regras de negócio implementadas.
 
 ### Cobertura por Serviço
 

@@ -10,7 +10,7 @@ Requisitos Funcionais (RF) descrevem todas as tarefas, ações e serviços que o
 
 **RF002** — O sistema deve permitir o cadastro de corredores vinculados a uma única equipe das duas existentes por evento.
 
-**RF003** — O sistema deve validar que cada equipe possui exatamente 16 corredores antes do início do evento, bloqueando caso contrário.
+**RF003** — O sistema não deve exigir um número exato de corredores por equipe; o início do evento é permitido independentemente da quantidade cadastrada, bastando que cada equipe possua ao menos um corredor ativo.
 
 **RF004** — O sistema deve permitir a seleção da esteira onde o corredor iniciará a atividade.
 

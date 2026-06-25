@@ -1774,7 +1774,7 @@
           <span class="collapse-indicator" aria-hidden="true"></span>
         </div>
         <div class="endpoint-body">
-          <p>Verifica a existência da equipe antes de inserir o atleta. A validação de 16 corredores por equipe (RF003) <strong>não está implementada</strong> neste endpoint.</p>
+          <p>Verifica a existência da equipe antes de inserir o atleta. O RF003 não exige um número exato de corredores por equipe, portanto não há validação de quantidade neste endpoint.</p>
 
           <p class="section-label">Request Body</p>
           <pre class="code-block">{
@@ -1846,7 +1846,7 @@
 
       <!-- PATCH /teams/:teamId/athletes/:id -->
       <div class="endpoint-card" id="patch-teams-teamid-athletes-id"
-           data-method="PATCH" data-path="/teams/:teamId/athletes/:id" data-rfs="RF002 RF023 RF024">
+           data-method="PATCH" data-path="/teams/:teamId/athletes/:id" data-rfs="RF002 RF023">
         <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
              aria-expanded="false">
           <span class="badge badge-patch">PATCH</span>
@@ -2356,7 +2356,7 @@
 
       <!-- PATCH /audit/checkpoints/:id -->
       <div class="endpoint-card" id="patch-audit-checkpoints-id"
-           data-method="PATCH" data-path="/audit/checkpoints/:id" data-rfs="RF023 RF024">
+           data-method="PATCH" data-path="/audit/checkpoints/:id" data-rfs="RF023 RF024 RF031">
         <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
              aria-expanded="false">
           <span class="badge badge-patch">PATCH</span>
@@ -2365,6 +2365,7 @@
           <div class="rf-badges">
             <span class="rf-badge" title="RF023 — Edição retroativa de registros por usuário autenticado.">RF023</span>
             <span class="rf-badge" title="RF024 — Log de auditoria de edições retroativas.">RF024</span>
+            <span class="rf-badge" title="RF031 — Auditor revisa e corrige inconsistências (correção retroativa com justificativa).">RF031</span>
           </div>
           <span class="collapse-indicator" aria-hidden="true"></span>
         </div>
@@ -3434,16 +3435,16 @@
         <tbody>
           <tr><td>RF001</td><td>Cadastro de exatamente duas equipes por evento com nome único</td><td><code class="inline">POST /teams</code>, <code class="inline">GET /teams</code> <span class="partial">(⚠ limite de 2 equipes não implementado)</span></td></tr>
           <tr><td>RF002</td><td>Cadastro de corredores vinculados a uma equipe</td><td><code class="inline">POST /teams/:teamId/athletes</code>, <code class="inline">GET /teams/:teamId/athletes</code></td></tr>
-          <tr><td>RF003</td><td>Validar 16 corredores por equipe antes do início</td><td><code class="inline">POST /audit/shifts/start</code> (RN17: rejeita com 422 se equipe sem 16 corredores ativos), <code class="inline">PATCH /events/:id/start</code></td></tr>
+          <tr><td>RF003</td><td>Não exigir número exato de corredores por equipe; início permitido com ao menos um corredor ativo</td><td><code class="inline">POST /audit/shifts/start</code> (RN17: rejeita com 422 se equipe sem corredores ativos), <code class="inline">PATCH /events/:id/start</code></td></tr>
           <tr><td>RF004</td><td>Seleção da esteira onde o corredor inicia</td><td><code class="inline">GET /events/treadmills</code>, <code class="inline">POST /events/treadmills</code></td></tr>
-          <tr><td>RF005</td><td>Seleção da equipe associada à esteira</td><td><code class="inline">POST /audit/shifts/start</code> <span class="partial">(via athlete_id, que pertence a uma equipe)</span></td></tr>
+          <tr><td>RF005</td><td>Seleção da equipe associada à esteira</td><td><code class="inline">GET /teams</code> (seleção da equipe), <code class="inline">POST /audit/shifts/start</code> <span class="partial">(via athlete_id, que pertence a uma equipe)</span></td></tr>
           <tr><td>RF006</td><td>Seleção do corredor da equipe para iniciar corrida</td><td><code class="inline">GET /teams/:teamId/athletes</code> <span class="partial">(listagem)</span>, <code class="inline">POST /audit/shifts/start</code></td></tr>
           <tr><td>RF007</td><td>Registrar início de turno apenas se corredor sem turno aberto</td><td><code class="inline">POST /audit/shifts/start</code></td></tr>
           <tr><td>RF008</td><td>Registrar início de turno apenas se esteira livre</td><td><code class="inline">POST /audit/shifts/start</code></td></tr>
           <tr><td>RF009</td><td>Armazenar corredor e esteira no registro de início de turno</td><td><code class="inline">POST /audit/shifts/start</code></td></tr>
           <tr><td>RF010</td><td>Armazenar km inicial (≥ 0) informada pelo Auditor</td><td><code class="inline">POST /audit/shifts/start</code></td></tr>
           <tr><td>RF011</td><td>Timestamp de início gerado pelo servidor</td><td><code class="inline">POST /audit/shifts/start</code></td></tr>
-          <tr><td>RF012</td><td>Modal bloqueante a cada 5 min para inserção de km</td><td><code class="inline">POST /audit/shifts/:id/checkpoints</code> <span class="partial">(backend aceita; modal é responsabilidade do front-end)</span></td></tr>
+          <tr><td>RF012</td><td>Modal opcional (não bloqueante) a cada 5 min para inserção de km</td><td><code class="inline">POST /audit/shifts/:id/checkpoints</code> <span class="partial">(backend aceita; modal é responsabilidade do front-end)</span></td></tr>
           <tr><td>RF013</td><td>Rejeitar checkpoint com km menor que o último registrado</td><td><code class="inline">POST /audit/shifts/:id/checkpoints</code></td></tr>
           <tr><td>RF014</td><td>Finalizar turno</td><td><code class="inline">PATCH /audit/shifts/:id/finish</code></td></tr>
           <tr><td>RF015</td><td>Rejeitar km final menor que o último checkpoint</td><td><code class="inline">PATCH /audit/shifts/:id/finish</code></td></tr>
@@ -3462,21 +3463,21 @@
           <tr><td>RF028</td><td>Detectar inconsistências e gerar alertas em tempo real</td><td><code class="inline">GET /audit/alerts</code></td></tr>
           <tr><td>RF029</td><td>Notificação visual de inconsistência</td><td><code class="inline">GET /audit/alerts</code> <span class="partial">(dados expostos; exibição visual é responsabilidade do front-end)</span></td></tr>
           <tr><td>RF030</td><td>Sinal sonoro para inconsistências</td><td class="not-impl">Não implementado (front-end)</td></tr>
-          <tr><td>RF031</td><td>Auditor revisa e corrige inconsistências antes da persistência</td><td class="not-impl">Não implementado</td></tr>
+          <tr><td>RF031</td><td>Auditor revisa e corrige inconsistências antes da persistência</td><td><code class="inline">PATCH /audit/checkpoints/:id</code> (correção retroativa com justificativa, grava log imutável) <span class="partial">(revisão/alerta pré-persistência é responsabilidade do front-end — modal de aviso)</span></td></tr>
           <tr><td>RF032</td><td>Registro manual de km a qualquer momento durante turno ativo</td><td><code class="inline">POST /audit/shifts/:id/checkpoints</code> (type: "voluntary")</td></tr>
           <tr><td>RF033</td><td>Timestamp automático para registro manual de km</td><td><code class="inline">POST /audit/shifts/:id/checkpoints</code></td></tr>
           <tr><td>RF034</td><td>Novo turno em até 3 cliques a partir do encerramento</td><td class="not-impl">Não implementado (fluxo de UI)</td></tr>
           <tr><td>RF035</td><td>Métrica de distância total percorrida por corredor</td><td><code class="inline">GET /metrics/events/:eventId/athletes</code></td></tr>
           <tr><td>RF036</td><td>Média de distância por turno por corredor</td><td><code class="inline">GET /metrics/athletes/:athleteId/shifts</code></td></tr>
           <tr><td>RF037</td><td>Snapshots de evolução a cada 60 min</td><td><code class="inline">GET /metrics/athletes/:athleteId/snapshots</code></td></tr>
-          <tr><td>RF038</td><td>Status de cada esteira (Ocupada/Livre) em tempo real</td><td><code class="inline">GET /metrics/events/:eventId/dashboard</code> (campo athletes_on_track)</td></tr>
+          <tr><td>RF038</td><td>Status de cada esteira (Ocupada/Livre) em tempo real</td><td><code class="inline">GET /metrics/events/:eventId/dashboard</code> (status das esteiras no payload do dashboard)</td></tr>
           <tr><td>RF039</td><td>Sugerir alternância de esteira após 30 min consecutivos</td><td><code class="inline">GET /audit/alerts</code> (campo treadmills_over_threshold)</td></tr>
           <tr><td>RF040</td><td>Modo TV com fonte ≥ 48px, WCAG AA, sem login</td><td class="not-impl">Não implementado (front-end)</td></tr>
           <tr><td>RF041</td><td>Filtrar histórico por equipe</td><td><code class="inline">GET /audit/history?team_id=</code></td></tr>
           <tr><td>RF042</td><td>Filtrar histórico por esteira</td><td><code class="inline">GET /audit/history?treadmill_id=</code></td></tr>
           <tr><td>RF043</td><td>Filtrar histórico por corredor</td><td><code class="inline">GET /audit/history?athlete_id=</code></td></tr>
           <tr><td>RF044</td><td>Sinalizar km_final &lt; km_inicial no encerramento</td><td><code class="inline">PATCH /audit/shifts/:id/finish</code> (rejeita com 400)</td></tr>
-          <tr><td>RF045</td><td>Sinalizar intervalo entre checkpoints &gt; 10 min</td><td><code class="inline">POST /audit/shifts/:id/checkpoints</code> (rejeita com 400 se &gt; 10 min)</td></tr>
+          <tr><td>RF045</td><td>Sinalizar intervalo entre checkpoints &gt; 10 min</td><td><code class="inline">POST /audit/shifts/:id/checkpoints</code> (gera alerta; não bloqueia o registro)</td></tr>
           <tr><td>RF046</td><td>Sinalizar corredor com mais de um turno em aberto</td><td><code class="inline">POST /audit/shifts/start</code> (rejeita com 409)</td></tr>
           <tr><td>RF047</td><td>Exportação CSV de todos os turnos</td><td><code class="inline">GET /export/events/:eventId/shifts</code></td></tr>
           <tr><td>RF048</td><td>Exportação CSV de todos os checkpoints</td><td><code class="inline">GET /export/events/:eventId/checkpoints</code></td></tr>
