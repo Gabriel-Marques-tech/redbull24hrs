@@ -126,6 +126,15 @@ describe("POST /audit/sync – RF026 sincronização offline", () => {
 		expect(res.body.errors[0].reason).toMatch(/inválido/i);
 	});
 
+	it("201 – shift_id não inteiro → errors[]", async () => {
+		happyRepo();
+		const res = await request(app).post("/audit/sync").set(authHeader).send({
+			records: [{ ...validRecord, shift_id: "abc" }],
+		});
+		expect(res.status).toBe(201);
+		expect(res.body.errors[0].reason).toMatch(/shift_id/i);
+	});
+
 	it("201 – distance negativa → errors[]", async () => {
 		happyRepo();
 		const res = await request(app).post("/audit/sync").set(authHeader).send({

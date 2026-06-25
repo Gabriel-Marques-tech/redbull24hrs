@@ -2408,7 +2408,7 @@ O segundo nó é o **servidor de aplicação** (`<<executionEnvironment>>`), exe
 
 O terceiro nó é o **banco de dados** (`<<database>>`), PostgreSQL 15+, acessado pelo servidor de aplicação via TCP na porta 5432 por meio de um pool de conexões (`pg`, máximo de 10 conexões simultâneas). O schema é composto por 17 migrations DDL versionadas, aplicadas em ordem sequencial, cobrindo as tabelas `events`, `treadmills`, `teams`, `athletes`, `shifts`, `checkpoints`, `managers`, `auditors`, `refresh_tokens` e `audit_logs`. As migrations garantem reprodutibilidade do ambiente em qualquer máquina de desenvolvimento ou servidor de produção.
 
-O quarto nó é o **GitLab** (`<<cloud>>`), que hospeda o repositório do projeto (branches `main` e `develop`) e executa o pipeline de CI/CD. O pipeline publica automaticamente o arquivo `docs/api/index.html` no GitLab Pages, disponibilizando a documentação navegável da WebAPI publicamente em `g02-73a453.pages.git.inteli.edu.br/api/`. O deploy da aplicação em si é realizado manualmente via `npm run build` seguido de `npm start` no servidor de destino.
+O quarto nó é o **GitLab** (`<<cloud>>`), que hospeda o repositório do projeto (branches `main` e `develop`) e executa o pipeline de CI/CD. O pipeline publica automaticamente o arquivo `documentos/outros/WebAPI/index.html` no GitLab Pages, disponibilizando a documentação navegável da WebAPI publicamente em `g02-73a453.pages.git.inteli.edu.br/api/`. O deploy da aplicação em si é realizado manualmente via `npm run build` seguido de `npm start` no servidor de destino.
 
 ### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
@@ -3991,7 +3991,7 @@ RETURNING *
 </div>
 
 &nbsp;&nbsp;&nbsp;&nbsp;Assim, é possível afirmar que o entendimento da lógica proposicional possui papel essencial no desenvolvimento e na administração do banco de dados do nosso sistema. A estrutura implementada evidencia a utilização adequada de proposições, conectivos lógicos e operadores booleanos em consultas SQL, possibilitando a criação de comandos eficientes, consistentes e seguros para processos de filtragem, seleção e associação de dados do nosso sistema para o evento. Além disso, as tabelas verdade apresentadas ilustram as operações lógicas efetivamente aplicadas no código, contemplando funcionalidades como inserir ou ignorar o Sync Offline.
-A documentação completa e navegável dos endpoints está disponível em [`docs/api/index.html`](../docs/api/index.html) e também servida pelo próprio backend em `GET /docs` (acessível sem autenticação).
+A documentação completa e navegável dos endpoints está disponível em [`documentos/outros/WebAPI/index.html`](outros/WebAPI/index.html) e também servida pelo próprio backend em `GET /docs` (acessível sem autenticação).
 
 ### Resumo dos fluxos implementados
 
@@ -4018,7 +4018,7 @@ Cada endpoint contém: método HTTP, path completo, headers, body request (com c
 
 ---
 
-A documentação técnica completa da WebAPI está disponível de forma navegável no arquivo [`docs/api/index.html`](../docs/api/index.html), presente no repositório do projeto, e também pode ser acessada publicamente pelo link [https://g02-73a453.pages.git.inteli.edu.br/api/](https://g02-73a453.pages.git.inteli.edu.br/api/). A documentação reúne 49 endpoints organizados em doze fluxos:
+A documentação técnica completa da WebAPI está disponível de forma navegável no arquivo [`documentos/outros/WebAPI/index.html`](outros/WebAPI/index.html), presente no repositório do projeto, e também pode ser acessada publicamente pelo link [https://g02-73a453.pages.git.inteli.edu.br/api/](https://g02-73a453.pages.git.inteli.edu.br/api/). A documentação reúne 54 endpoints organizados em treze fluxos:
 
 ### 3.7.1. Tratamento de Erros (Error Handling)
 
@@ -4062,7 +4062,7 @@ Os Services lançam `new Error("<mensagem>")` com textos padronizados. Os Contro
 
 ### 3.7.2. Endpoints por grupo funcional e mapeamento RF
 
-A tabela abaixo lista todos os 49 endpoints organizados por grupo, com método HTTP, path completo, requisitos funcionais atendidos e requisito de autenticação. Para o contrato completo de cada endpoint — headers, body com campos e validações, exemplos de payload JSON e tabela de status codes (200, 201, 204, 400, 401, 403, 404, 409, 422 e 500) — consulte a documentação navegável em [`docs/api/index.html`](../docs/api/index.html) ou o endereço público [https://g02-73a453.pages.git.inteli.edu.br/api/](https://g02-73a453.pages.git.inteli.edu.br/api/).
+A tabela abaixo lista todos os 54 endpoints organizados por grupo, com método HTTP, path completo, requisitos funcionais atendidos e requisito de autenticação. Para o contrato completo de cada endpoint — headers, body com campos e validações, exemplos de payload JSON e tabela de status codes (200, 201, 204, 400, 401, 403, 404, 409, 422 e 500) — consulte a documentação navegável em [`documentos/outros/WebAPI/index.html`](outros/WebAPI/index.html) ou o endereço público [https://g02-73a453.pages.git.inteli.edu.br/api/](https://g02-73a453.pages.git.inteli.edu.br/api/).
 
 **Legenda de Auth:** `—` = público; `JWT` = cookie `accessToken` obrigatório; `(manager)` = restrito ao perfil gerente; `[mgr|aud]` = ambos os perfis.
 
@@ -4078,7 +4078,7 @@ A tabela abaixo lista todos os 49 endpoints organizados por grupo, com método H
 | `GET` | `/auth/me` | RF027 | JWT |
 | `GET` | `/auth/auditors` | RF027 | JWT (manager) |
 
-#### Eventos — 7 endpoints
+#### Eventos — 9 endpoints
 
 | Método | Path | RF | Auth |
 |--------|------|----|------|
@@ -4088,7 +4088,11 @@ A tabela abaixo lista todos os 49 endpoints organizados por grupo, com método H
 | `PATCH` | `/events/:id` | RF051 | JWT (manager) |
 | `DELETE` | `/events/:id` | RF051 | JWT (manager) |
 | `PATCH` | `/events/:id/start` | RF010, RF051 | JWT (manager) |
+| `PATCH` | `/events/:id/pause` | RF051 | JWT (manager) |
+| `PATCH` | `/events/:id/resume` | RF051 | JWT (manager) |
 | `PATCH` | `/events/:id/finish` | RF011, RF051 | JWT (manager) |
+
+> `pause` congela o cronômetro de 24h (`paused_at`) sem encerrar a competição e bloqueia auditores de salvar turnos e checkpoints; `resume` religa o cronômetro. Ambos exigem o evento em `in_progress`.
 
 #### Esteiras — 4 endpoints
 
@@ -4131,6 +4135,16 @@ A tabela abaixo lista todos os 49 endpoints organizados por grupo, com método H
 | `PATCH` | `/audit/shifts/:id/abandon` | RF014 | JWT |
 | `PATCH` | `/audit/shifts/:id` | RF031 | JWT (manager) |
 | `PATCH` | `/audit/checkpoints/:id` | RF031 | JWT (manager) |
+
+#### Imagens e OCR — 3 endpoints
+
+| Método | Path | RF | Auth |
+|--------|------|----|------|
+| `POST` | `/audit/ocr` | — | JWT |
+| `PATCH` | `/audit/shifts/:id/image` | — | JWT |
+| `PATCH` | `/audit/checkpoints/:id/image` | — | JWT |
+
+> Evolução além do escopo original (o WAD registrava a captura por foto do display apenas como capacidade futura via visão computacional). Os três endpoints recebem a imagem via `multipart/form-data` no campo `image` (jpeg, png, webp ou gif; máx. 10 MB). `POST /audit/ocr` extrai os campos do display (velocidade, distância, pace, tempo) por OCR multimodal (Gemini, com fallback Groq) sem persistir. Os dois `PATCH .../image` enviam a imagem ao Supabase Storage, gravam a URL pública em `image_url` do turno/checkpoint e persistem o OCR em paralelo (melhor esforço — a falha do OCR não impede o upload). Sem RF formal associado.
 
 #### Histórico — 1 endpoint
 

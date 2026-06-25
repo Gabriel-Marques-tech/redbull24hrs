@@ -22,8 +22,16 @@ jest.mock("../repositories/treadmillRepository", () => ({
   },
 }));
 
+jest.mock("../utils/supabaseStorage", () => ({
+  removeFromStorage: jest.fn(),
+}));
+
 import { eventRepository } from "../repositories/eventRepository";
+import { treadmillRepository } from "../repositories/treadmillRepository";
+import { removeFromStorage } from "../utils/supabaseStorage";
 const mockRepo = eventRepository as jest.Mocked<typeof eventRepository>;
+const mockTreadmillRepo = treadmillRepository as jest.Mocked<typeof treadmillRepository>;
+const mockRemove = removeFromStorage as jest.MockedFunction<typeof removeFromStorage>;
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -44,6 +52,26 @@ describe("eventService.updateEvent", () => {
     await expect(
       eventService.updateEvent(999, { title: "New" })
     ).rejects.toThrow("Evento não encontrado");
+  });
+
+  it("remove a foto antiga ao trocar image_url", async () => {
+    mockRepo.findById.mockResolvedValue({ id: 1, image_url: "http://x/old.png" } as any);
+    mockRepo.update.mockResolvedValue({ id: 1, image_url: "http://x/new.png" } as any);
+
+    await eventService.updateEvent(1, { image_url: "http://x/new.png" });
+
+    expect(mockRemove).toHaveBeenCalledWith("http://x/old.png");
+  });
+});
+
+describe("eventService.listTreadmillsByTeam", () => {
+  it("delega ao repositório com o team_id", async () => {
+    mockTreadmillRepo.findByTeam.mockResolvedValue([{ id: 1 }] as any);
+
+    const result = await eventService.listTreadmillsByTeam(7);
+
+    expect(mockTreadmillRepo.findByTeam).toHaveBeenCalledWith(7);
+    expect(result).toEqual([{ id: 1 }]);
   });
 });
 
