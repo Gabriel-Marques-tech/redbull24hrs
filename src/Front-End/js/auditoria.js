@@ -273,7 +273,6 @@ const listaCpsSessao        = document.getElementById('listaCpsSessao')
 const btnCancelarCheckpoint = document.getElementById('btnCancelarCheckpoint')
 const btnRegistrarCheckpoint = document.getElementById('btnRegistrarCheckpoint')
 let checkpointFotoUrl = null
-const camposEditaveisCheckpoint = [kmCheckpointModal, tempoCheckpointModal, velocidadeCheckpointModal]
 
 function renderizarCpsSessao() {
     if (!listaCpsSessao) return
@@ -343,9 +342,6 @@ function abrirModalCheckpoint() {
     if (kmCheckpointModal) { kmCheckpointModal.value = ''; }
     if (tempoCheckpointModal) tempoCheckpointModal.value = formatarTempo(segundos)
     if (velocidadeCheckpointModal) velocidadeCheckpointModal.value = ''
-    camposEditaveisCheckpoint.forEach(input => {
-        if (input) input.readOnly = true
-    })
     if (corredorCheckpointModal) {
         const option = document.createElement('option')
         option.textContent = atletaAtual?.name || 'Corredor atual'
@@ -384,21 +380,6 @@ if (checkpointFotoInput && checkpointFotoPreview) {
         checkpointFotoPreview.innerHTML = `<img src="${checkpointFotoUrl}" alt="Foto do checkpoint">`
     })
 }
-
-document.querySelectorAll('.btn-editar-checkpoint').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const input = document.getElementById(btn.dataset.input)
-        if (!input) return
-        camposEditaveisCheckpoint.forEach(campo => {
-            if (campo && campo !== input) campo.readOnly = true
-        })
-        input.readOnly = false
-        if (input === kmCheckpointModal && !input.value) input.value = ''
-        if (input === velocidadeCheckpointModal && !input.value) input.value = ''
-        input.focus()
-        input.select?.()
-    })
-})
 
 if (modalCheckpoint) {
     modalCheckpoint.addEventListener('click', (e) => {
