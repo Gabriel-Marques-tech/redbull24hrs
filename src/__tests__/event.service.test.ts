@@ -9,6 +9,7 @@ jest.mock("../repositories/eventRepository", () => ({
     softDelete: jest.fn(),
     start: jest.fn(),
     finish: jest.fn(),
+    teamsWithoutAthletes: jest.fn(),
   },
 }));
 
@@ -96,6 +97,17 @@ describe("eventService.startEvent", () => {
     mockRepo.findById.mockResolvedValue({ id: 1, status: "finished" } as any);
     await expect(eventService.startEvent(1)).rejects.toThrow(
       "Evento já está encerrado"
+    );
+  });
+
+  it("throws quando há equipes sem atletas cadastrados", async () => {
+    mockRepo.findById.mockResolvedValue({ id: 1, status: "pending" } as any);
+    (mockRepo as any).teamsWithoutAthletes.mockResolvedValue([
+      { name: "Equipe Alpha" },
+      { name: "Equipe Beta" },
+    ]);
+    await expect(eventService.startEvent(1)).rejects.toThrow(
+      'equipe(s) sem atletas cadastrados: "Equipe Alpha", "Equipe Beta"'
     );
   });
 });
