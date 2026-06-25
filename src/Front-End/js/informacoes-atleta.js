@@ -88,13 +88,16 @@ function atualizarTipoCadastro() {
     document.body.classList.toggle("cadastro-apoio", !ehAtleta);
 
     const ehAuditor = tipo === "auditor";
+    const ehGerente = tipo === "gerente";
     nascimento.required = ehAtleta;
     genero.required = ehAtleta;
     cargo.required = ehAtleta;
     cpf.required = false;
     emailPessoa.required = true;
-    cpfApoio.required = !ehAtleta;
+    cpfApoio.required = ehAuditor;
     senhaPessoa.required = !ehAtleta;
+    const campoCpfApoioEl = document.getElementById("campoCpfApoio");
+    if (campoCpfApoioEl) campoCpfApoioEl.classList.toggle("escondido", ehGerente);
     if (campoRegistroAuditor) campoRegistroAuditor.classList.toggle("escondido", !ehAuditor);
     if (registroAuditor) registroAuditor.required = ehAuditor;
 

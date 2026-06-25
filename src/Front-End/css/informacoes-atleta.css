@@ -163,7 +163,8 @@
     gap: 18px;
 }
 
-.campo-cpf-apoio {
+.campo-cpf-apoio,
+.escondido {
     display: none !important;
 }
 
