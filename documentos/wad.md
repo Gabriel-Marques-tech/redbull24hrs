@@ -5762,9 +5762,7 @@ A concorrência enfrentada pela RedRun não se concentra em um produto equivalen
 
 #### Vantagens Competitivas
 
-A comparação evidencia o espaço competitivo que a RedRun ocupa. O método manual é aderente à dinâmica do evento, mas frágil na confiabilidade; os vestíveis e as plataformas genéricas são digitais e robustos, mas não se ajustam ao formato de revezamento em esteira. A RedRun é a única alternativa que reúne, simultaneamente, **aderência total à dinâmica do evento e digitalização rastreável da operação** — combinação que nenhum concorrente entrega de forma integrada. Esse posicionamento de nicho, detalhado na seção 6.6, transforma uma necessidade operacional específica em uma vantagem defensável: não competir em amplitude de funcionalidades, mas em precisão e confiabilidade dentro de um contexto que as soluções de mercado não atendem.
-
-A adoção da RedRun é influenciada por três tendências principais: digitalização operacional em eventos, uso crescente de dados em experiências esportivas e busca por soluções especializadas de controle em tempo real. No eixo tecnológico, o mercado de softwares de gestão de eventos vem sendo impulsionado pela automação de processos, uso de plataformas em nuvem, aplicações móveis e análise de dados para apoiar decisões operacionais . Essa tendência favorece aplicações web e APIs como a RedRun, que substituem registros manuais por fluxos digitais capazes de consolidar informações com maior precisão e rastreabilidade.
+A comparação evidencia o espaço competitivo que a RedRun ocupa. O método manual é aderente à dinâmica do evento, mas frágil na confiabilidade; os vestíveis e as plataformas genéricas são digitais e robustos, mas não se ajustam ao formato de revezamento em esteira. A RedRun é a única alternativa que reúne, simultaneamente, **aderência total à dinâmica do evento e digitalização rastreável da operação** — combinação que nenhum concorrente entrega de forma integrada. Esse posicionamento de nicho, detalhado na seção 6.5.2, transforma uma necessidade operacional específica em uma vantagem defensável: não competir em amplitude de funcionalidades, mas em precisão e confiabilidade dentro de um contexto que as soluções de mercado não atendem.
 
 ---
 
@@ -5820,7 +5818,7 @@ Os canais pelos quais a solução chega aos usuários são a própria aplicaçã
 
 As parcerias-chave envolvem principalmente a Red Bull e seus representantes, que, além de clientes, são os detentores do conhecimento sobre o processo de auditoria do evento. Sem essa parceria, não seria possível compreender com profundidade as regras, fluxos e restrições que precisavam ser modeladas no sistema. A estrutura de custos concentrou-se no tempo da equipe de desenvolvimento e nos recursos tecnológicos utilizados ao longo das Sprints, como infraestrutura e ferramentas de desenvolvimento.
  
-As fontes de receita da RedRun decorrem de seu modelo de desenvolvimento sob encomenda (detalhado na seção 6.5.2): a remuneração principal vem da entrega da aplicação web e da API à Red Bull, mediante contrato de desenvolvimento da solução personalizada. A esse fluxo somam-se receitas potenciais recorrentes — contratos de hospedagem, suporte e manutenção evolutiva após a entrega, além de novos contratos de implantação à medida que a solução é expandida para as demais edições regionais e para a final nacional do evento.
+As fontes de receita da RedRun decorrem de seu modelo de desenvolvimento sob encomenda (detalhado na [seção 6.5.4](#654-preço)): a remuneração principal vem da entrega da aplicação web e da API à Red Bull, mediante contrato de desenvolvimento da solução personalizada. A esse fluxo somam-se receitas potenciais recorrentes — contratos de hospedagem, suporte e manutenção evolutiva após a entrega, além de novos contratos de implantação à medida que a solução é expandida para as demais edições regionais e para a final nacional do evento.
  
 Esse modelo de receita é sustentado pela proposta de valor econômica entregue ao cliente, que não se confunde com a receita em si. Para a Red Bull, a adoção da RedRun representa redução do tempo de auditoria, eliminação de materiais físicos como pranchetas e formulários impressos e diminuição da carga operacional da equipe — economias que reforçam o retorno sobre o investimento e justificam tanto a contratação inicial quanto a expansão da solução. Dessa forma, o valor da RedRun é, ao mesmo tempo, operacional para a equipe de Field Marketing e econômico para a marca, o que fundamenta a viabilidade do modelo de negócio.
 
@@ -5830,7 +5828,25 @@ Esse modelo de receita é sustentado pela proposta de valor econômica entregue 
 
 ---
 
-### 6.5.1 Produto/Serviço
+### 6.5.1 Proposta de Valor
+
+A proposta de valor da RedRun concentra-se em um ponto específico: substituir o registro manual com prancheta por um fluxo digital rastreável, simples o suficiente para o auditor operar sob pressão durante 24 horas consecutivas e robusto o suficiente para garantir a integridade dos resultados ao final da competição. O valor entregue ao gerente é a configuração centralizada e o controle consolidado em tempo real; o valor entregue ao auditor é a redução da carga cognitiva e do risco de erro; o valor entregue à Red Bull é a confiabilidade dos dados de uma competição em que a precisão dos registros define os resultados.
+
+Essa proposta se conecta diretamente à dor do cliente comprador: manter a credibilidade do Red Bull 24 Horas e reduzir falhas em uma operação longa, repetitiva e sujeita a fadiga humana. Ao mesmo tempo, entrega valor prático aos usuários operacionais, pois transforma o registro de quilometragem, turnos e checkpoints em um processo padronizado, consultável e auditável.
+
+---
+
+### 6.5.2 Posicionamento e Diferenciação
+
+A RedRun posiciona-se como uma solução operacional especializada para eventos esportivos de endurance, e não como uma plataforma genérica de gestão de eventos. Seu diferencial está em resolver uma etapa crítica que as soluções amplas de mercado não atendem com precisão: o registro confiável de desempenho em uma competição de revezamento contínuo em esteiras.
+
+Entre os concorrentes diretos/substitutos atuais estão o método manual com prancheta física e os dispositivos vestíveis, como relógios inteligentes e pulseiras de sincronização. Ambos foram analisados na [seção 2.1.1](#211-modelo-de-5-forças-de-porter) e mostram limitações diante da dinâmica de trocas rápidas, operação por 24 horas e necessidade de apuração oficial. Entre os concorrentes indiretos estão plataformas comerciais de gestão de eventos e soluções de cronometragem esportiva, que atuam em camadas diferentes e não resolvem o registro de desempenho em tempo real nesse formato específico.
+
+A diferenciação da RedRun, portanto, não está na amplitude de funcionalidades, mas na aderência ao contexto real do Red Bull 24 Horas: operação simples para auditoria em campo, rastreabilidade dos registros, consolidação de dados e menor dependência de processos manuais. A identidade pretendida associa-se a precisão, integridade de dados e confiabilidade operacional, com uma percepção de valor centrada em uma solução que funciona no momento crítico do evento.
+
+---
+
+### 6.5.3 Produto/Serviço
 
 Identificou-se que a RedRun é uma aplicação web integrada a uma API, desenvolvida exclusivamente para digitalizar o registro, o acompanhamento e a auditoria operacional do Red Bull 24 Horas Brasil. Sua função é substituir o processo manual baseado em pranchetas e planilhas por um fluxo digital estruturado e rastreável, capaz de controlar turnos, registrar métricas e manter histórico auditável ao longo das 24 horas de competição.
 
@@ -5840,7 +5856,7 @@ O benefício central reside na redução da fragilidade da apuração manual, co
 
 ---
 
-### 6.5.2 Preço
+### 6.5.4 Preço
 
 Identificou-se que, por ter sido desenvolvida exclusivamente para o Red Bull 24 Horas Brasil, o modelo de precificação mais adequado à RedRun é o de desenvolvimento sob encomenda, com entrega da aplicação web e da API ao cliente ao final do projeto. Nesse formato, o valor não decorre de assinatura ou licenciamento recorrente, mas da construção de uma solução personalizada para uma necessidade operacional específica.
 
@@ -5850,7 +5866,7 @@ Concluiu-se que a precificação deve contemplar levantamento de requisitos, pro
 
 ---
 
-### 6.5.3 Praça (Distribuição)
+### 6.5.5 Praça (Distribuição)
 
 Identificou-se que a distribuição da RedRun ocorre por disponibilização digital controlada, já que a solução é uma aplicação web integrada a uma API e desenvolvida exclusivamente para o Red Bull 24 Horas Brasil. Diferentemente de produtos abertos ao público, ela não depende de lojas de aplicativos, venda em site comercial ou marketplaces, pois o acesso é restrito aos usuários da operação, como auditores, coordenadores e responsáveis pela organização.
 
@@ -5861,31 +5877,13 @@ durante, no registro de turnos e métricas em tempo real; e após o encerramento
 
 ---
 
-### 6.5.4 Promoção
+### 6.5.6 Promoção
 
 Identificou-se que a promoção da RedRun deve ser compreendida como promoção da solução, e não como divulgação do evento, cuja comunicação pública permanece sob responsabilidade da Red Bull e de sua equipe de Field Marketing. No contexto do projeto, a promoção relaciona-se à apresentação, à adoção e à validação da aplicação junto aos usuários e partes interessadas da operação.
 
 Por se tratar de uma ferramenta operacional interna, observou-se que canais como SEO, campanhas pagas e redes sociais abertas não são prioritários, pois se destinam a produtos voltados ao público amplo. Os canais mais relevantes são as demonstrações funcionais, os treinamentos, as parcerias institucionais e as estratégias de relacionamento com o parceiro.
 
 A principal estratégia é a demonstração funcional: antes do evento, a RedRun é apresentada em simulações práticas do fluxo operacional, e, no contexto do PBL, no pitch final da Sprint 5. O treinamento dos usuários, por meio de guias rápidos e onboarding, reduz a resistência à adoção. Concluiu-se que, após o uso, a promoção apoia-se na comprovação de valor: dashboards, histórico e evidências de redução de retrabalho demonstram o impacto ao parceiro e sustentam a expansão para novas edições do Red Bull 24 Horas.
-
----
-
-## 6.6 Posicionamento & Branding
-
-### Proposta de Valor
-
-A proposta de valor da RedRun concentra-se em um ponto específico: substituir o registro manual com prancheta por um fluxo digital rastreável, simples o suficiente para o auditor operar sob pressão durante 24 horas consecutivas e robusto o suficiente para garantir a integridade dos resultados ao final da competição. O valor entregue ao gerente é a configuração centralizada e o controle consolidado em tempo real; o valor entregue ao auditor é a redução da carga cognitiva e do risco de erro; o valor entregue à Red Bull é a confiabilidade dos dados de uma competição onde a precisão dos registros define os resultados.
-
-### Posicionamento e Diferenciação
-
-A RedRun posiciona-se como uma solução operacional especializada para eventos esportivos de endurance, e não como uma plataforma genérica de gestão de eventos. Identificou-se que os concorrentes se dividem em dois grupos.
-
-Entre os concorrentes diretos/substitutos atuais estão o método manual com prancheta física e os dispositivos vestíveis (relógios inteligentes e pulseiras de sincronização, como a da Technogym); ambos foram analisados na seção 2.1.1 (5 Forças de Porter) e mostram-se inadequados à dinâmica de revezamento contínuo do evento.
-
-Entre os concorrentes indiretos estão as plataformas comerciais de gestão de eventos (inscrição, bilheteria, credenciamento), que atuam em camadas diferentes e não resolvem o registro de desempenho em tempo real. O atributo de marca que a RedRun pretende projetar é o de ferramenta confiável de missão crítica: estável, simples e precisa, feita sob medida para a operação.
-
-A identidade pretendida associa-se a precisão, integridade de dados e aderência ao contexto real do Red Bull 24 Horas. Concluiu-se que a percepção de valor desejada é a de uma solução que "não falha durante o evento" — posicionamento que privilegia confiabilidade operacional acima de amplitude de funcionalidades, diferenciando-a tanto do processo analógico quanto das plataformas de mercado.
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
