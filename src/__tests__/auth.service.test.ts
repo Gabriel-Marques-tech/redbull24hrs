@@ -51,6 +51,7 @@ describe("registerManager", () => {
       "Tester",
       "tester@gmail.com",
       "hashed-pwd",
+      undefined,
     );
     expect(result).toEqual({ id: "1", name: "Tester", email: "tester@gmail.com" });
   });
@@ -81,7 +82,8 @@ describe("registerAuditor", () => {
       "Aud",
       "aud@a.com",
       "hashed",
-      null,
+      undefined,
+      undefined,
     );
     expect(result?.registration_number).toBe(1000);
   });
@@ -137,7 +139,7 @@ describe("loginUser", () => {
     const result = await authService.loginUser("m@a.com", "pwd", "manager");
 
     expect(result).toEqual({
-      user: { id: "1", name: "M", email: "m@a.com", role: "manager" },
+      user: { id: "1", name: "M", email: "m@a.com", role: "manager", image_url: null },
       tokens: { accessToken: "access-token", refreshToken: "refresh-token" },
     });
     expect(mockRepo.saveRefreshToken).toHaveBeenCalledWith(
