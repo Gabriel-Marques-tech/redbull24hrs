@@ -876,6 +876,25 @@ tbody tr:hover td {
     background-color: #ffe0e8;
 }
 
+html[data-theme="dark"] .tabela-checkpoints {
+    background-color: var(--fundo-superficie);
+}
+
+html[data-theme="dark"] .tabela-checkpoints th {
+    background-color: var(--fundo-pagina);
+    color: var(--texto-principal);
+    border-bottom-color: var(--vermelho);
+}
+
+html[data-theme="dark"] .tabela-checkpoints td {
+    color: var(--texto-principal);
+    border-bottom-color: var(--borda);
+}
+
+html[data-theme="dark"] .tabela-checkpoints tbody tr:hover td {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
 /* ---------------- FILA DE CORREDORES ---------------- */
 
 .proximos-corredores {
