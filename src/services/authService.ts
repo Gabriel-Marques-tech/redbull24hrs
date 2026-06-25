@@ -24,6 +24,7 @@ const issueTokens = async (user: AuthUser): Promise<AuthTokens> => {
     email: user.email,
     name: user.name,
     role: user.role,
+    image_url: user.image_url ?? null,
   };
   const accessToken = signAccessToken(payload);
   const { token: refreshToken, expiresAt } = signRefreshToken(payload);
@@ -42,26 +43,23 @@ const registerManager = async (
   name: string,
   email: string,
   password: string,
+  image_url?: string | null,
 ): Promise<Manager | null> => {
   if (!name || !email || !password) return null;
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-  return UserRepository.registerManager(name, email, hashedPassword);
+  return UserRepository.registerManager(name, email, hashedPassword, image_url);
 };
 
 const registerAuditor = async (
   name: string,
   email: string,
   password: string,
-  registration_number: number,
+  image_url?: string | null,
+  registration_number?: number,
 ): Promise<Auditor | null> => {
-  if (!name || !email || !password || !registration_number) return null;
+  if (!name || !email || !password) return null;
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-  return UserRepository.registerAuditor(
-    name,
-    email,
-    hashedPassword,
-    registration_number,
-  );
+  return UserRepository.registerAuditor(name, email, hashedPassword, image_url, registration_number);
 };
 
 const loginUser = async (
@@ -81,6 +79,7 @@ const loginUser = async (
       name: record.name,
       email: record.email,
       role,
+      image_url: record.image_url ?? null,
     };
     const tokens = await issueTokens(user);
     return { user, tokens };
@@ -95,6 +94,7 @@ const loginUser = async (
     name: record.name,
     email: record.email,
     role,
+    image_url: record.image_url ?? null,
   };
   const tokens = await issueTokens(user);
   return { user, tokens };
@@ -121,6 +121,7 @@ const refresh = async (refreshToken: string): Promise<AuthTokens | null> => {
     name: payload.name,
     email: payload.email,
     role: payload.role,
+    image_url: payload.image_url ?? null,
   };
   return issueTokens(user);
 };
