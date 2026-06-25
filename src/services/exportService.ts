@@ -133,11 +133,11 @@ function transformShift(r: Record<string, unknown>): Record<string, unknown> {
 		km_end:     r.km_end,
 		distance:   r.distance,
 		speed:      fmtSpeed(r.speed),
+		pace:       r.pace ?? "",
 		status:     fmtStatus(r.status),
 		start_at:   fmtDate(r.start_at),
 		end_at:     fmtDate(r.end_at),
 		total_time: fmtInterval(r.total_time),
-		cpf:        r.athlete_cpf,
 		auditor:    r.auditor_name,
 		id:         r.id,
 	};
@@ -166,11 +166,11 @@ const SHIFT_COLUMNS = [
 	{ header: "Km fim",              key: "km_end",     width: 12 },
 	{ header: "Distância (km)",      key: "distance",   width: 15 },
 	{ header: "Velocidade",          key: "speed",      width: 16 },
+	{ header: "Pace (min/km)",       key: "pace",       width: 14 },
 	{ header: "Status",              key: "status",     width: 16 },
 	{ header: "Início",              key: "start_at",   width: 20 },
 	{ header: "Fim",                 key: "end_at",     width: 20 },
 	{ header: "Duração (hh:mm:ss)", key: "total_time", width: 18 },
-	{ header: "CPF",                 key: "cpf",        width: 16 },
 	{ header: "Auditor",             key: "auditor",    width: 20 },
 	{ header: "ID",                  key: "id",         width: 10 },
 ];
@@ -189,11 +189,14 @@ const CHECKPOINT_COLUMNS = [
 // ── service público ───────────────────────────────────────────────────────────
 
 export const exportService = {
-	async shiftsXlsx(eventId: number): Promise<Buffer> {
+	async shiftsXlsx(eventId: number, selectedColumns?: string[]): Promise<Buffer> {
 		const rows = await exportRepository.shiftsByEvent(eventId);
 		const wb = new ExcelJS.Workbook();
 		wb.creator = "RedRun";
-		buildWorksheet(wb, "Turnos", SHIFT_COLUMNS, rows.map(transformShift));
+		const cols = selectedColumns?.length
+			? SHIFT_COLUMNS.filter(c => selectedColumns.includes(c.key))
+			: SHIFT_COLUMNS;
+		buildWorksheet(wb, "Turnos", cols, rows.map(transformShift));
 		return Buffer.from(await wb.xlsx.writeBuffer());
 	},
 

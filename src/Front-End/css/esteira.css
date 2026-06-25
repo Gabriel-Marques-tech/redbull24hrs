@@ -9,8 +9,9 @@ main{
 /* ---------------- CONTEUDO ---------------- */
 
 .conteudo{
+    position: relative;
     width: 700px;
-    margin-top: 40px;
+    margin-top: -35px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,30 +26,35 @@ main{
 
 .lista-esteiras{
     display: flex;
-    gap: 40px;
+    gap: 32px;
 }
 
 .esteira{
-    width: 260px;
-    height: 230px;
+    position: relative;
+    width: 240px;
+    height: 170px;
     border: 1px solid #BDBDBD;
-    border-radius: 6px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
 }
 
 .esteira img{
-    width: 130px;
-    margin-bottom: 15px;
+    width: 90px;
+    margin-bottom: 8px;
 }
 
 .esteira:not(.esteira-ocupada):hover,
 .esteira.selecionada{
     background-color: var(--vermelho);
     color: var(--branco);
+    border-color: var(--vermelho);
+    box-shadow: 0 10px 24px rgba(224, 0, 64, .32);
+    transform: translateY(-3px);
 }
 
 .esteira-ocupada{
@@ -76,8 +82,7 @@ main{
     display: flex;
     justify-content: center;
     gap: 15px;
-
-    margin-top: 55px;
+    margin-top: 0;
 }
 
 .botoes button{
@@ -117,4 +122,53 @@ main{
 
 .btn-proximo:hover{
     background-color: var(--vermelho);
+}
+
+html[data-theme="dark"] .esteira {
+    background: var(--fundo-superficie);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .esteira:not(.esteira-ocupada):hover {
+    background: rgba(224, 0, 64, 0.18);
+    border-color: var(--vermelho);
+}
+
+html[data-theme="dark"] .esteira:not(.selecionada):not(.esteira-ocupada) img,
+html[data-theme="dark"] .esteira.selecionada img {
+    filter: brightness(0) invert(1);
+}
+
+html[data-theme="dark"] .esteira-ocupada {
+    background: var(--fundo-suave);
+    border-color: var(--borda);
+    color: var(--texto-secundario);
+    opacity: 1;
+}
+
+html[data-theme="dark"] .esteira.selecionada,
+html[data-theme="dark"] .esteira.selecionada:hover {
+    background: var(--vermelho);
+    border-color: var(--vermelho);
+    color: #fff;
+}
+
+html[data-theme="dark"] .btn-voltar {
+    background: var(--fundo-superficie);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .btn-proximo:disabled {
+    background: #555560;
+    color: #c4c4ce;
+    opacity: 1;
+}
+
+html[data-theme="dark"] .btn-proximo:not([disabled]) {
+    background: var(--vermelho);
+    color: #fff;
+    cursor: pointer;
+    opacity: 1;
 }

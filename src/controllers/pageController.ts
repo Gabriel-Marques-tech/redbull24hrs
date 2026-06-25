@@ -5,6 +5,7 @@ import { treadmillRepository } from "../repositories/treadmillRepository"
 import { shiftRepository } from "../repositories/shiftRepository"
 import { historyRepository } from "../repositories/historyRepository"
 import { metricsRepository } from "../repositories/metricsRepository"
+import { eventRepository } from "../repositories/eventRepository"
 
 const getLogin = async (req: Request, res: Response ): Promise<void> => {
 	res.render('login')
@@ -108,6 +109,10 @@ const getCreateEventLocation = async (req: Request, res: Response): Promise<void
 	res.render('gerente-localidade', { manager_id: req.user?.id ?? 0 })
 }
 
+const getCreateEventImage = async (req: Request, res: Response): Promise<void> => {
+	res.render('gerente-imagem-evento', { manager_id: req.user?.id ?? 0 })
+}
+
 const getCreateEventSchedule = async (req: Request, res: Response): Promise<void> => {
 	res.render('gerente-data-horario', { manager_id: req.user?.id ?? 0 })
 }
@@ -143,13 +148,14 @@ const getEventOverview = async (req: Request, res: Response): Promise<void> => {
 	}
 
 	// in_progress | finished → estatísticas
-	const [teamStats, athleteStats, historyEntries, dashboardStats] = await Promise.all([
+	const [teamStats, athleteStats, historyEntries, dashboardStats, pauseInfo] = await Promise.all([
 		metricsRepository.teamStatsByEvent(id),
 		metricsRepository.athleteStatsByEvent(id),
 		historyRepository.findByEvent({ event_id: id }),
 		metricsRepository.dashboardStats(id),
+		eventRepository.pausesByEvent(id),
 	])
-	res.render('estatisticas-evento', { manager_id: req.user?.id ?? 0, user_role, evento, teamStats, athleteStats, historyEntries, dashboardStats })
+	res.render('estatisticas-evento', { manager_id: req.user?.id ?? 0, user_role, evento, teamStats, athleteStats, historyEntries, dashboardStats, pauseInfo })
 }
 
 const getEditEvent = async (req: Request, res: Response): Promise<void> => {
@@ -178,4 +184,4 @@ const getEditEvent = async (req: Request, res: Response): Promise<void> => {
 	res.render('editar-competicao', { manager_id: req.user?.id ?? 0, evento, equipes })
 }
 
-export default {getLogin, getHome, redirectHome, getCompetition, getTeam, getTreadmill, getOverview, getAudit, getManagerShifts, getCreateEventLocation, getCreateEventSchedule, getCreateEventTeams, getCreateEventAthlete, getEventOverview, getEditEvent}
+export default {getLogin, getHome, redirectHome, getCompetition, getTeam, getTreadmill, getOverview, getAudit, getManagerShifts, getCreateEventLocation, getCreateEventImage, getCreateEventSchedule, getCreateEventTeams, getCreateEventAthlete, getEventOverview, getEditEvent}

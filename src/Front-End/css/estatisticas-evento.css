@@ -7,6 +7,10 @@ main { height: auto !important; }
     padding-bottom: 60px;
 }
 
+.etapas-estatisticas {
+    display: none !important;
+}
+
 /* topo */
 .stats-topo {
     display: flex;
@@ -105,7 +109,7 @@ main { height: auto !important; }
     align-items: center;
 }
 .stats-meta span { display: flex; align-items: center; gap: 6px; }
-.meta-icone { width: 18px; height: 18px; opacity: 0.6; }
+.meta-icone { width: 18px; height: 18px; opacity: 1; }
 
 /* badge */
 .badge-status {
@@ -148,6 +152,8 @@ main { height: auto !important; }
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 16px;
     background: #fff;
     border: 1px solid #eee;
     border-radius: 12px;
@@ -156,12 +162,46 @@ main { height: auto !important; }
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-.countdown-bloco { display: flex; flex-direction: column; gap: 2px; }
+.countdown-bloco {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 2px;
+}
 .countdown-label { font-size: 12px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
 .countdown-timer { font-size: 30px; font-weight: 800; color: var(--vermelho); font-variant-numeric: tabular-nums; letter-spacing: 2px; }
 
+.stats-acoes { display: flex; align-items: center; gap: 12px; }
+
+.btn-pausar {
+    min-width: 190px;
+    box-sizing: border-box;
+    padding: 13px 28px;
+    background: transparent;
+    border: 2px solid var(--vermelho);
+    border-radius: 8px;
+    color: var(--vermelho);
+    font-size: 16px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn-pausar:hover:not(:disabled) {
+    background: var(--vermelho);
+    color: #fff;
+}
+.btn-pausar:disabled { opacity: 0.6; cursor: default; }
+/* estado retomar: destaca que a competição está pausada */
+.btn-pausar-retomar {
+    background: var(--vermelho);
+    border-color: var(--vermelho);
+    color: #fff;
+}
+.btn-pausar-retomar:hover:not(:disabled) { background: #b10033; }
+
 .btn-finalizar {
-    width: 220px;
+    min-width: 200px;
     box-sizing: border-box;
     padding: 13px 28px;
     background: var(--vermelho);
@@ -170,11 +210,72 @@ main { height: auto !important; }
     color: #fff;
     font-size: 16px;
     font-weight: 700;
+    white-space: nowrap;
     cursor: pointer;
     transition: background 0.15s;
 }
 .btn-finalizar:hover:not(:disabled) { background: #b10033; }
 .btn-finalizar:disabled { opacity: 0.6; cursor: default; }
+
+/* grupo de botões à direita da barra de ação (Modo TV + Finalizar) */
+.stats-barra-botoes {
+    display: flex;
+    flex: 0 1 auto;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    gap: 12px;
+    min-width: 0;
+}
+
+/* Modo TV: mesma altura do Finalizar, largura levemente menor */
+.btn-modo-tv {
+    width: 56px;
+    min-width: 56px;
+    height: 56px;
+    box-sizing: border-box;
+    padding: 0;
+    background: #0f0069;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+}
+.btn-modo-tv:hover { background: #1a0a99; }
+.btn-modo-tv-icone {
+    position: relative;
+    width: 22px;
+    height: 16px;
+    flex: 0 0 22px;
+    border: 2px solid currentColor;
+    border-radius: 4px;
+}
+.btn-modo-tv-icone::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    width: 2px;
+    height: 5px;
+    border-radius: 2px;
+    background: currentColor;
+    transform: translateX(-50%);
+}
+.btn-modo-tv-icone::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -7px;
+    width: 14px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transform: translateX(-50%);
+}
 
 /* tabs */
 .stats-tabs {
@@ -260,6 +361,7 @@ main { height: auto !important; }
 .stat-item:last-child { border-right: none; padding-right: 0; }
 
 .stat-icone { width: 28px; height: 28px; flex-shrink: 0; opacity: 0.75; }
+.stat-item-destaque .stat-icone { filter: brightness(0); }
 
 .stat-info { display: flex; flex-direction: column; gap: 2px; }
 .stat-valor { font-size: 18px; font-weight: 800; color: #111; line-height: 1.1; }
@@ -519,6 +621,7 @@ main { height: auto !important; }
 .tabela-atletas {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
     font-size: 14px;
 }
 .tabela-atletas th {
@@ -536,6 +639,15 @@ main { height: auto !important; }
     border-bottom: 1px solid #f3f3f3;
 }
 .tabela-atletas tr:last-child td { border-bottom: none; }
+.tabela-atletas .col-num { width: 48px; }
+.tabela-atletas .col-atleta { width: 43%; }
+.tabela-atletas .col-km { width: 28%; }
+.tabela-atletas .col-turnos { width: 21%; }
+.tabela-atletas td.col-atleta {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
 /* Botão editar turno (manager) */
 .btn-editar-turno {
@@ -556,6 +668,148 @@ main { height: auto !important; }
     color: var(--vermelho);
     background: #fff5f5;
 }
+
+/* Modal exportação — estrutura base */
+.modal-export-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
+}
+.modal-export-overlay.escondido { display: none; }
+
+.modal-export-conteudo {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 30px;
+    width: 480px;
+    max-width: 92vw;
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
+    box-sizing: border-box;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+}
+
+.modal-export-barra {
+    width: 48px;
+    height: 4px;
+    background: var(--vermelho);
+    border-radius: 2px;
+    margin: 0 auto 18px;
+}
+
+.modal-export-conteudo h2 {
+    font-size: 21px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 6px;
+    color: #1a1a1a;
+}
+
+.modal-export-desc {
+    font-size: 13px;
+    color: #888;
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.modal-export-secao { margin-bottom: 16px; }
+
+.modal-export-grupo-titulo {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #aaa;
+    margin-bottom: 10px;
+}
+
+.modal-export-fixas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.modal-export-fixas span {
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: #f0f0f0;
+    color: #888;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.modal-export-opcoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.modal-export-opcao {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.modal-export-opcao span {
+    color: #333;
+}
+
+.modal-export-opcao:hover { border-color: var(--vermelho); background: #fff5f8; }
+
+.modal-export-opcao input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--vermelho);
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.modal-export-acoes {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.modal-export-btn-cancelar,
+.modal-export-btn-confirmar {
+    flex: 1;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.modal-export-btn-cancelar {
+    background: var(--azul);
+    color: #fff;
+}
+
+.modal-export-btn-cancelar:hover { background: #1a0a99; }
+
+.modal-export-btn-confirmar {
+    background: var(--vermelho);
+    color: #fff;
+}
+
+.modal-export-btn-confirmar:hover { background: #b10033; }
+.modal-export-btn-confirmar:disabled { opacity: 0.6; cursor: default; }
 
 /* Modal editar turno */
 .modal-editar-overlay {
@@ -655,12 +909,14 @@ main { height: auto !important; }
     background: rgba(10, 7, 24, 0.48);
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
     transition: opacity 0.25s, visibility 0.25s;
 }
 
 .tv-config-overlay.aberto {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
 }
 
 .tv-config-drawer {
@@ -852,6 +1108,54 @@ main { height: auto !important; }
     cursor: pointer;
 }
 
+html[data-theme="dark"] .tv-config-drawer {
+    background: var(--fundo-superficie);
+    color: var(--texto-principal);
+    box-shadow: -12px 0 40px rgba(0, 0, 0, 0.42);
+}
+
+html[data-theme="dark"] .tv-config-topo h2,
+html[data-theme="dark"] .tv-config-opcao strong,
+html[data-theme="dark"] .tv-config-tempo strong {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .tv-config-topo p,
+html[data-theme="dark"] .tv-config-opcao small,
+html[data-theme="dark"] .tv-config-tempo small {
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] .tv-config-fechar {
+    background: var(--fundo-suave);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .tv-config-preview,
+html[data-theme="dark"] .tv-config-seguranca {
+    background: var(--fundo-suave);
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] .tv-config-opcao,
+html[data-theme="dark"] .tv-config-tempo {
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] .tv-config-opcao i {
+    background: #555563;
+}
+
+html[data-theme="dark"] .tv-config-opcao input:checked + i {
+    background: var(--vermelho);
+}
+
+html[data-theme="dark"] .tv-config-tempo select {
+    background: var(--fundo-superficie);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
 .modo-tv {
     position: fixed;
     inset: 0;
@@ -863,12 +1167,14 @@ main { height: auto !important; }
     overflow: auto;
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
     transition: opacity 0.3s, visibility 0.3s;
 }
 
 .modo-tv.ativo {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
 }
 
 .modo-tv-gradiente {
@@ -1215,6 +1521,36 @@ main { height: auto !important; }
     }
     .modo-tv-impactos {
         grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 720px) {
+    .stats-barra-acao {
+        padding: 16px;
+    }
+    .countdown-bloco,
+    .stats-barra-botoes {
+        flex-basis: 100%;
+    }
+    .stats-barra-botoes {
+        justify-content: stretch;
+    }
+    .btn-pausar,
+    .btn-finalizar {
+        width: 100%;
+    }
+    .btn-modo-tv {
+        width: 56px;
+        min-width: 56px;
+    }
+    .modal-export-conteudo {
+        padding: 24px 18px;
+    }
+    .modal-export-opcoes {
+        grid-template-columns: 1fr;
+    }
+    .modal-export-acoes {
+        flex-direction: column-reverse;
     }
 }
 
@@ -1844,6 +2180,7 @@ main { height: auto !important; }
 }
 
 .modo-tv-pace-card > div:first-child > strong small {
+    color: #17003f;
     font-size: 0.23em;
 }
 
@@ -1866,6 +2203,164 @@ main { height: auto !important; }
 .modo-tv-pace-explicacao p {
     max-width: 520px;
     color: rgba(255, 255, 255, 0.72);
+}
+
+.modo-tv-tela-recorde {
+    align-items: flex-start;
+    padding-top: 16vh;
+}
+
+.modo-tv-tela-recorde .modo-tv-sobretitulo {
+    margin-bottom: 1.1vh;
+}
+
+.modo-tv-tela-recorde h2 {
+    max-width: 1180px;
+    font-size: clamp(56px, 5.4vw, 100px);
+    line-height: 0.96;
+}
+
+.modo-tv-recorde-card {
+    position: relative;
+    max-width: 1340px;
+    margin: 3vh 0 0;
+    display: grid;
+    grid-template-columns: minmax(340px, 0.82fr) minmax(420px, 0.78fr);
+    align-items: center;
+    gap: clamp(44px, 5.8vw, 96px);
+}
+
+.modo-tv-recorde-card > div {
+    min-height: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.modo-tv-recorde-medalha {
+    position: relative;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    color: #fff;
+    text-align: center;
+}
+
+.modo-tv-recorde-medalha::before,
+.modo-tv-recorde-medalha::after {
+    content: none;
+}
+
+.modo-tv-recorde-medalha > span {
+    position: relative;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    padding: 9px 18px;
+    border: 1px solid rgba(255, 207, 0, 0.55);
+    border-radius: 999px;
+    background: rgba(16, 0, 65, 0.72);
+    color: #ffcf00;
+    font-size: clamp(15px, 1.2vw, 21px);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.modo-tv-recorde-arte {
+    position: relative;
+    width: clamp(340px, 30vw, 500px);
+    height: clamp(400px, 35vw, 560px);
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.modo-tv-recorde-arte img {
+    display: block;
+    width: 100%;
+    height: auto;
+    opacity: 1;
+    transform: translateY(-17%);
+}
+
+.modo-tv-recorde-arte > strong {
+    position: absolute;
+    left: 50%;
+    top: 58%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    color: #17003f;
+    font-size: clamp(52px, 5.7vw, 90px);
+    font-weight: 900;
+    line-height: 0.78;
+    white-space: nowrap;
+    text-shadow: 0 2px 0 rgba(255, 218, 76, 0.38);
+}
+
+.modo-tv-recorde-arte > strong small {
+    color: #17003f;
+    display: block;
+    margin-top: 0.2em;
+    font-size: 0.26em;
+    transform: translateY(0.18em);
+}
+
+.modo-tv-recorde-contexto {
+    min-height: 300px;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: #fff;
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    align-content: center;
+    gap: clamp(34px, 4vh, 58px);
+}
+
+.modo-tv-recorde-metrica {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: clamp(24px, 2.8vw, 44px);
+    border-left: 8px solid rgba(255, 207, 0, 0.9);
+    min-height: 132px;
+}
+
+.modo-tv-recorde-metrica:first-child {
+    border-left-color: #d90040;
+}
+
+.modo-tv-recorde-metrica small,
+.modo-tv-recorde-metrica strong {
+    display: block;
+}
+
+.modo-tv-recorde-metrica small {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: clamp(14px, 1.1vw, 19px);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.modo-tv-recorde-metrica strong {
+    margin-top: 10px;
+    color: #ffcf00;
+    font-size: clamp(50px, 5vw, 92px);
+    font-weight: 900;
+    line-height: 0.95;
+}
+
+.modo-tv-recorde-metrica strong span {
+    font-size: 0.36em;
+}
+
+.modo-tv-recorde-metrica.destaque strong {
+    font-size: clamp(78px, 7vw, 128px);
 }
 
 .modo-tv-ritmo-grid {
@@ -2028,8 +2523,12 @@ main { height: auto !important; }
     }
     .modo-tv-generos,
     .modo-tv-marco-grid,
-    .modo-tv-pace-card {
+    .modo-tv-pace-card,
+    .modo-tv-recorde-card {
         grid-template-columns: 1fr;
+    }
+    .modo-tv-recorde-card > div {
+        min-height: auto;
     }
     .modo-tv-genero-experiencia {
         grid-template-columns: 1fr;
@@ -2051,4 +2550,147 @@ main { height: auto !important; }
     .modo-tv-local {
         text-align: left;
     }
+}
+
+html[data-theme="dark"] .stats-meta,
+html[data-theme="dark"] .countdown-label,
+html[data-theme="dark"] .dash-kpi-label,
+html[data-theme="dark"] .dash-kpi-sub,
+html[data-theme="dark"] .dash-kpi-unit,
+html[data-theme="dark"] .periodo-hora,
+html[data-theme="dark"] .periodo-equipe,
+html[data-theme="dark"] .periodo-stats,
+html[data-theme="dark"] .genero-equipe,
+html[data-theme="dark"] .stats-vazio {
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] .tab {
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] .tab:hover,
+html[data-theme="dark"] .tab-ativa {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .stats-barra-acao,
+html[data-theme="dark"] .team-stat-body,
+html[data-theme="dark"] .dash-kpi,
+html[data-theme="dark"] .dash-card,
+html[data-theme="dark"] .periodo-item,
+html[data-theme="dark"] .equipe-tab-bloco,
+html[data-theme="dark"] .historico-equipe-bloco,
+html[data-theme="dark"] .modal-export-conteudo,
+html[data-theme="dark"] .modal-editar-conteudo {
+    background: var(--fundo-superficie);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .dash-kpi-destaque {
+    background: linear-gradient(135deg, #311721, #1c1c24);
+    border-color: #8f183f;
+}
+
+html[data-theme="dark"] .stat-valor,
+html[data-theme="dark"] .stat-atleta,
+html[data-theme="dark"] .dash-kpi-valor,
+html[data-theme="dark"] .dash-card-titulo,
+html[data-theme="dark"] .periodo-nome,
+html[data-theme="dark"] .periodo-atleta-nome,
+html[data-theme="dark"] .dash-turno-atleta,
+html[data-theme="dark"] .genero-nome,
+html[data-theme="dark"] .equipe-tab-nome,
+html[data-theme="dark"] .historico-equipe-nome,
+html[data-theme="dark"] .modal-export-conteudo h2,
+html[data-theme="dark"] .modal-export-opcao span,
+html[data-theme="dark"] .modal-editar-conteudo h2,
+html[data-theme="dark"] .modal-editar-conteudo label,
+html[data-theme="dark"] .tabela-historico td,
+html[data-theme="dark"] .tabela-atletas td {
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .modal-export-desc,
+html[data-theme="dark"] .modal-export-grupo-titulo,
+html[data-theme="dark"] .modal-export-fixas span {
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] .modal-export-fixas span {
+    background: var(--fundo-suave);
+}
+
+html[data-theme="dark"] .modal-export-opcao {
+    background: var(--fundo-suave);
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] .modal-export-opcao:hover {
+    background: #2a1a24;
+    border-color: var(--vermelho);
+}
+
+html[data-theme="dark"] .dash-turno-pos,
+html[data-theme="dark"] .genero-pos,
+html[data-theme="dark"] .genero-barra-wrap,
+html[data-theme="dark"] .avatar-circle {
+    background: var(--fundo-suave);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .tabela-historico th,
+html[data-theme="dark"] .tabela-atletas th {
+    background: var(--fundo-suave);
+    color: var(--texto-secundario);
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] .tabela-historico td,
+html[data-theme="dark"] .tabela-atletas td,
+html[data-theme="dark"] .periodo-item,
+html[data-theme="dark"] .historico-equipe-bloco,
+html[data-theme="dark"] .equipe-tab-bloco {
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] .tabela-historico tr:hover td,
+html[data-theme="dark"] .tabela-atletas tr:hover td {
+    background: var(--fundo-suave);
+}
+
+html[data-theme="dark"] .modal-editar-conteudo input,
+html[data-theme="dark"] .modal-editar-conteudo select,
+html[data-theme="dark"] .btn-editar-turno {
+    background: var(--fundo-suave);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .stat-icone {
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+}
+
+html[data-theme="dark"] .stat-label,
+html[data-theme="dark"] .dash-turno-equipe,
+html[data-theme="dark"] .genero-titulo,
+html[data-theme="dark"] .periodo-sem-dados,
+html[data-theme="dark"] .col-auditor {
+    color: #c4c4ce;
+}
+
+html[data-theme="dark"] .periodo-nome,
+html[data-theme="dark"] .dash-turno-atleta,
+html[data-theme="dark"] .genero-nome {
+    color: #f4f4f7;
+}
+
+.tv-unidade-escura,
+.modo-tv-pace-card > div:first-child > strong small.tv-unidade-escura,
+.modo-tv-recorde-arte > strong small.tv-unidade-escura {
+    color: #17003f !important;
+    -webkit-text-fill-color: #17003f;
+    text-shadow: none;
 }
