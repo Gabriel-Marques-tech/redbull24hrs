@@ -8,8 +8,13 @@
     <% } else { %>
     <div class="cards">
         <% lista.forEach(event => {
-            const destino = `/manager/event/${event.id}`; %>
-        <a class="card card-event" href="<%= destino %>">
+            const destino = `/manager/event/${event.id}`;
+            // se houver imagem do evento, ela substitui o gradiente; só o rodapé do card
+            // mantém um gradiente escuro para legibilidade do texto sobreposto
+            const estilo = event.image_url
+                ? `background-image: linear-gradient(to bottom, transparent 0%, transparent 55%, rgba(15,0,105,0.95) 100%), url('${event.image_url}');`
+                : ""; %>
+        <a class="card card-event" href="<%= destino %>"<% if (estilo) { %> style="<%= estilo %>"<% } %>>
             <span class="card-status status-<%= event.status || 'pending' %>"></span>
             <h3><%= event.title || 'Red Bull 24h' %></h3>
             <p class="card-local"><%= event.local %></p>
