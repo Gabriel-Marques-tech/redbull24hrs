@@ -6007,8 +6007,6 @@ Para trabalhos futuros, o grupo identificou três frentes principais de evoluç�
 
 ¹² ABRAPE. **Setor de eventos segue em crescimento e registra, em 2024, nível de emprego 60,8% superior ao período pré-pandemia**. Associação Brasileira dos Promotores de Eventos, 2024. Disponível em: https://www.abrape.com.br/setor-de-eventos-segue-em-crescimento-e-registra-em-2024-nivel-de-emprego-608-superior-ao-periodo-pre-pandemia/. Acesso em: 1 jun. 2026.
 
-¹⁹ AEGIS AI. **Quanto custa desenvolver software sob medida em 2026? Preços reais + guia**. Aegis AI, 2026. Disponível em: https://www.aegisai.com.br/blog/preco-desenvolvimento-software-sob-medida-2026. Acesso em: 6 jun. 2026.
-
 ²⁰ BANGOR, Aaron; KORTUM, Philip T.; MILLER, James T. An empirical evaluation of the System Usability Scale. *International Journal of Human-Computer Interaction*, v. 24, n. 6, p. 574–594, 2008. Disponível em: https://www.tandfonline.com/doi/abs/10.1080/10447310802205776. Acesso em: 24 jun. 2026.
 
 ²¹ BARROS, Myrela. *Guia atualizado de como utilizar a escala SUS (System Usability Scale) no seu produto*. UX Collective, out. 2022. Disponível em: <https://brasil.uxdesign.cc/guia-atualizado-de-como-utilizar-a-escala-sus-system-usability-scale-no-seu-produto-ab773f29c522>. Acesso em: 22 jun. 2026.
@@ -6044,3 +6042,5 @@ Para trabalhos futuros, o grupo identificou três frentes principais de evoluç�
 ⁷ PROJECT MANAGEMENT INSTITUTE. **Um guia do conhecimento em gerenciamento de projetos (Guia PMBOK®)**. 7. ed. Newtown Square: PMI, 2021.
 
 ² TIMES BRASIL. **Saiba quais são as marcas favoritas pela Geração Z**. 19 fev. 2025. Disponível em: https://timesbrasil.com.br/empresas-e-negocios/red-bull-marcas-geracao-z/. Acesso em: 28 abr. 2026.
+
+¹⁹ UDS TECNOLOGIA. **Quanto custa um software sob medida? Faixas e fatores**. UDS, 20 set. 2024. Disponível em: https://uds.com.br/blog/quanto-custa-um-software-sob-medida/. Acesso em: 25 jun. 2026.
