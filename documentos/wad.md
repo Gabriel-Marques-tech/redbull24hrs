@@ -5359,7 +5359,7 @@ Observa-se que diversos serviços atingiram **100% de cobertura**, incluindo *al
 | RN41 | RF027 | Controle de sessão e autenticação |
 
 O mapeamento evidencia que as **41 Regras de Negócio** implementadas na plataforma estão vinculadas aos respectivos requisitos funcionais e aos principais fluxos validados pela suíte automatizada, demonstrando elevada cobertura das funcionalidades críticas da aplicação.
-/
+
 ## 5.2. Testes de usabilidade (sprint 5)
 
 ### 5.2.1. Relatório de testes de guerrilha
