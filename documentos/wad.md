@@ -3388,6 +3388,14 @@ O modelo físico implementa o DER da seção 3.6.2 como **migrations DDL version
 | [`015_treadmillNumberNotUnique.sql`](../src/database/migrations/015_treadmillNumberNotUnique.sql) | 4 | Remove a constraint `UNIQUE` de `treadmills.number`, permitindo o mesmo número em equipes distintas. A migration não adiciona `UNIQUE(team_id, number)`, portanto a unicidade dentro da equipe ainda depende da aplicação. |
 | [`016_logsValueNumeric.sql`](../src/database/migrations/016_logsValueNumeric.sql)           | 4      | Converte `logs.old_value` e `logs.new_value` de `INT` para `NUMERIC(8,2)`, preservando a precisão decimal nos registros de auditoria de alterações de distância após a migration 014. |
 | [`017_checkpointOldDistanceNumeric.sql`](../src/database/migrations/017_checkpointOldDistanceNumeric.sql) | 4 | Converte `checkpoints.old_distance` de `INT` para `NUMERIC(8,2)`, completando a propagação do tipo decimal à trilha de auditoria de checkpoints (complemento da migration 014). |
+| [`018_shiftKmDecimal.sql`](../src/database/migrations/018_shiftKmDecimal.sql)               | 4      | Converte `km_start`, `km_end` e `speed` de `shifts` de `INT` para `NUMERIC(8,2)`, permitindo registrar quilometragem e velocidade fracionárias (ex.: `10.50`) reportadas pelas esteiras. |
+| [`019_imageUrl.sql`](../src/database/migrations/019_imageUrl.sql)                           | 4      | RF013/RF014: adiciona `image_url TEXT` (opcional) às tabelas `shifts` e `checkpoints`, viabilizando o anexo de imagem comprobatória ao registro de turno e checkpoint (issue #268). |
+| [`020_athleteEventImageUrl.sql`](../src/database/migrations/020_athleteEventImageUrl.sql)   | 4      | Adiciona `image_url TEXT` (opcional) às tabelas `athletes` e `events`, suportando foto de atleta e imagem de evento armazenadas no Supabase Storage (issue #255). |
+| [`021_eventPause.sql`](../src/database/migrations/021_eventPause.sql)                       | 4      | Pausa de competição: adiciona `events.paused_at TIMESTAMP` (instante da pausa, `NULL` = rodando) e `events.paused_ms BIGINT DEFAULT 0` (tempo acumulado pausado), congelando o cronômetro de 24h sem encerrar o evento. Cria também a tabela `pause_log` (intervalos de pausa com `paused_at`, `resumed_at`, `duration_seconds`), índice por `event_id` e índice único parcial `WHERE resumed_at IS NULL` que garante no máximo uma pausa em aberto por evento. |
+| [`022_shiftPace.sql`](../src/database/migrations/022_shiftPace.sql)                         | 4      | Adiciona `shifts.pace VARCHAR(8)` (nullable) para registro manual do ritmo configurado na esteira pelo auditor (formato `MM:SS` por km). |
+| [`023_user_image_url.sql`](../src/database/migrations/023_user_image_url.sql)               | 4      | Adiciona `image_url TEXT` (opcional) às tabelas `managers` e `auditors` para foto de perfil. Cria a sequência `auditor_reg_num_seq` (início 1000) e a aplica como `DEFAULT` de `auditors.registration_number`, automatizando a numeração funcional. |
+| [`024_athleteShareToken.sql`](../src/database/migrations/024_athleteShareToken.sql)         | 4      | Card compartilhável de atleta: adiciona `athletes.share_token UUID` (índice único) para gerar link público de compartilhamento e `athletes.email VARCHAR(255)` para envio do card por e-mail. |
+| [`025_ocrFields.sql`](../src/database/migrations/025_ocrFields.sql)                         | 4      | Campos de OCR em `shifts` e `checkpoints` (`ocr_speed NUMERIC(5,2)`, `ocr_distance NUMERIC(6,3)`, `ocr_pace VARCHAR(8)`, `ocr_time VARCHAR(9)`), armazenando os valores extraídos automaticamente da leitura do painel da esteira. |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -4809,9 +4817,73 @@ O **bug #227** (sessionStorage não persistido ao navegar entre telas) revelou u
 
 ## 4.3. Versão final da aplicação web (sprint 5)
 
----
+### a) O que foi refinado ou adicionado desde a sprint 4
 
-_Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas._
+A sprint teve dois objetivos simultâneos: fechar as pendências identificadas na sprint anterior e entregar as funcionalidades que tornam o sistema completo para uso real no evento. O resultado foi um conjunto de dez entregas que cobrem desde a leitura automática de quilometragem por câmera até o card de desempenho que o atleta compartilha nas redes sociais após as 24 horas de corrida.
+
+**Upload de imagem no checkpoint e OCR (#268, #270)**
+
+A principal aposta tecnológica da sprint foi reduzir ainda mais o trabalho manual do auditor durante o evento. Em vez de ler o display da esteira e digitar o valor no tablet, o auditor agora pode simplesmente fotografar o display: o sistema envia a imagem para análise via OCR — combinando Google Generative AI e Groq SDK — e preenche a quilometragem automaticamente no campo do modal. Um spinner indica que a análise está em andamento enquanto o modelo processa a imagem. As fotos são armazenadas no Supabase Storage com URL persistida no banco (migration `019_imageUrl.sql`), servindo também como evidência rastreável de cada registro. A integração exigiu novos módulos dedicados — `imageController`, `imageService`, `imageRepository` e `uploadMiddleware` — além de duas novas suítes de teste: `image.service.test.ts` e `ocr.service.test.ts`.
+
+**Fotos de atletas e usuários (#255, #281)**
+
+O cadastro de atletas passou a aceitar foto de perfil com limite de 5 MB e opção de remoção. A imagem aparece nos avatares durante a operação do evento, facilitando a identificação visual do corredor em pista — especialmente nas trocas rápidas de 15 segundos que são marca do Red Bull 24 Horas. Auditores e gerentes também passaram a ter foto de perfil e e-mail no cadastro, com formulários diferenciados por tipo de usuário: o formulário de gerente, por exemplo, não solicita CPF nem número de registro de atleta. Duas migrations trataram dessa mudança: `020_athleteEventImageUrl.sql` e `024_user_image_url.sql`.
+
+**Pausa de competição (#256)**
+
+O gerente ganhou a capacidade de pausar e retomar o evento durante as 24 horas, cobrindo cenários como falha elétrica ou interrupção técnica das esteiras. Com o evento pausado, o sistema bloqueia automaticamente o registro de novos turnos e checkpoints, evitando que entradas aconteçam durante um período sem corrida ativa. Cada pausa é gravada em log com timestamp de início e fim (migration `022_pauseLog.sql`), o que permite calcular o tempo real de competição e auditar qualquer interrupção ocorrida durante o evento.
+
+**Pace por turno (#251)**
+
+Ao finalizar um turno, o auditor agora vê o pace médio do atleta calculado automaticamente, exibido lado a lado com a quilometragem percorrida no modal de encerramento. Essa métrica — que antes só aparecia nas estatísticas gerais — permite identificar na hora se o valor digitado é plausível para aquele corredor, funcionando como uma camada extra de validação humana. O pace é persistido por turno (migration `023_shiftPace.sql`) e incluído na exportação CSV.
+
+**Modo TV com polling adequado (#254)**
+
+O modo TV estava funcionando desde a sprint 4, mas com um intervalo de atualização de 60 segundos — quase o triplo do que o critério de aceite RF021 exige. Nesta sprint o polling foi ajustado para 10 segundos, garantindo que o placar exibido nas telas do evento esteja no máximo 10 segundos defasado em relação ao banco. A página foi refinada para funcionar em eventos com etapa única e para liberar corretamente a sessão ao encerrar a apresentação.
+
+**Seleção de colunas na exportação (#274)**
+
+A exportação evoluiu de um CSV com colunas fixas para um modal interativo que permite ao auditor escolher exatamente quais informações incluir no arquivo antes de baixá-lo. A coluna de CPF foi removida da seleção padrão de turnos por razões de privacidade. O `exportService` passou a filtrar dinamicamente as colunas com base na seleção informada pelo controlador, mantendo a lógica de agregação existente sem reescrita.
+
+**Compartilhamento de desempenho do atleta (#269, #279)**
+
+O fluxo previsto nas user stories US12 e RF050 foi entregue completo. Ao final do evento, o gerente pode enviar e-mails individuais para todos os atletas com um link público para a página de desempenho pessoal, que exibe distância total percorrida, tempo em pista e velocidade média sem exigir autenticação. A partir dessa página, o atleta pode gerar e baixar um card visual em PNG — produzido via `canvas` no navegador — com logo RedRun, dados da conquista e identidade visual da marca, pronto para publicar em redes sociais. O favicon RedRun foi adicionado a todas as views da aplicação nesta entrega.
+
+**Modo escuro (#275)**
+
+O modo escuro foi implementado em todo o sistema com um toggle acessível na barra de navegação. O estado do tema é persistido entre sessões e funciona corretamente no modo TV e no painel público do card compartilhável. A principal decisão de implementação foi adotar variáveis CSS — `var(--cor-fundo)`, `var(--cor-texto)`, `var(--cor-superficie)`, `var(--cor-borda)` — em vez de classes alternativas, o que tornou a alternância consistente em todos os módulos sem duplicação de regras. Esta sprint também trouxe um refinamento visual extenso: modais de auditoria foram compactados, o overview do gerente ficou mais legível, o cadastro de equipes e atletas foi reorganizado e a tela de estatísticas ganhou nova hierarquia visual.
+
+**Imagem personalizada do evento (#257)**
+
+O fluxo de criação de evento ganhou uma etapa dedicada ao upload de imagem (`gerente-imagem-evento.ejs`). A foto é exibida como plano de fundo do card do evento na lista de competições, com gradiente aplicado para manter a legibilidade do título e da data. Quando nenhuma imagem é cadastrada, o card mantém o visual padrão com as cores da marca.
+
+**Correções finais de integração (#281)**
+
+Com todas as features entregues em paralelo, a última semana da sprint foi dedicada a fazer as integrações funcionarem juntas corretamente: o OCR voltou a preencher campos no modal após ter sido desconectado em um refactor intermediário; a foto de evento voltou a aparecer no card após ajuste de referência de URL; os avatares de auditor passaram a exibir a foto de perfil. Uma validação de negócio também foi adicionada: o sistema agora bloqueia o início do evento quando alguma equipe não tem atletas cadastrados, cobrindo o cenário mais crítico do RF003. A suíte de testes encerrou a sprint com 21 arquivos e cobertura atualizada para os novos módulos de imagem e OCR.
+
+
+### b) Pendências remanescentes
+
+O sistema foi entregue completo para o escopo do MVP acordado com o parceiro. A única funcionalidade identificada como evolução natural para versões futuras é a comparação de resultados entre etapas regionais: hoje cada evento é registrado de forma independente, e não há uma visão consolidada que permita comparar a quilometragem total, pace médio ou número de trocas entre as diferentes regionais do Red Bull 24 Horas. Essa funcionalidade não foi incluída no escopo desta sprint porque depende de dados de múltiplos eventos já realizados e de decisões de modelagem sobre como agregar resultados de competições distintas — algo que se alinha mais a uma segunda versão do produto do que a um ajuste incremental.
+
+
+### c) Dificuldades técnicas enfrentadas
+
+**OCR bloqueado pelo authFetch**
+
+A integração de upload de imagem com a camada de autenticação trouxe um problema sutil. O `authFetch` — wrapper que injeta o token JWT nos requests da aplicação — definia `Content-Type: application/json` de forma incondicional, o que impedia o envio de `FormData` para upload de arquivo: quando o header é definido manualmente, o browser não consegue calcular o boundary do `multipart/form-data`, e o servidor recebe um body malformado. A solução foi simples mas exigiu entender o problema: antes de setar o header, o código passou a verificar se o body é uma instância de `FormData`, omitindo o header nesse caso e deixando o browser gerenciar o content-type automaticamente.
+
+**Perda de integrações durante refatoração paralela**
+
+O modal de auditoria foi o arquivo mais disputado da sprint — alterado em paralelo pelas branches de OCR, pace, modo escuro e redesign visual. Durante o refinamento de layout da branch `feat/tema-escuro`, o OCR e o lightbox de visualização de imagem foram removidos acidentalmente do template `audit.ejs`. O problema só apareceu depois do merge, e a restauração exigiu um commit dedicado. No total, seis commits consecutivos foram necessários para estabilizar `audit.ejs` e `auditoria.css` antes que a tela voltasse ao estado correto com todas as integrações presentes. Essa experiência evidenciou a necessidade de uma checklist de regressão visual antes de cada merge em arquivos compartilhados.
+
+**Variáveis CSS não padronizadas**
+
+A implementação do modo escuro revelou que boa parte dos arquivos CSS usava cores hexadecimais fixas em vez de variáveis. Não havia um token de design centralizado, então cada módulo tinha seus próprios valores hardcoded para fundos, textos e bordas. A conversão exigiu uma varredura completa por todos os arquivos de estilo, substituindo os valores por variáveis compartilhadas. O painel do modo TV e o card compartilhável precisaram de tratamento separado, pois são páginas independentes que não herdam o contexto de tema da aplicação principal.
+
+**Supabase Storage sem isolamento de testes**
+
+O armazenamento de imagens via Supabase Storage funcionou bem em produção, mas criou uma dificuldade nos testes automatizados: não há um bucket de testes isolado, o que significa que qualquer teste que realmente chamasse o Storage estaria operando sobre dados reais. A solução adotada foi limitar `image.service.test.ts` à lógica de transformação de dados, com mocks do cliente Supabase, abrindo mão da validação de ponta a ponta do upload em ambiente de CI.
 
 # <a name="c5"></a>5. Testes
 
