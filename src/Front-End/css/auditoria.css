@@ -2974,3 +2974,715 @@ html[data-theme="dark"] #modalEsteira .opcao-esteira.opcao-ocupada {
 html[data-theme="dark"] .fila-lista.fila-aberta::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.22);
 }
+
+@media (max-width: 900px) {
+    .topo {
+        height: auto;
+        min-height: 82px;
+        padding: 18px 14px;
+        gap: 12px;
+    }
+
+    .operador {
+        min-width: 0;
+    }
+
+    .operador p {
+        max-width: 180px;
+        font-size: 15px;
+        overflow-wrap: anywhere;
+    }
+
+    .tempo-restante {
+        position: static;
+        transform: none;
+        margin-left: auto;
+        font-size: 13px;
+    }
+
+    .conteudo-auditoria {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 12px 44px;
+        overflow-x: hidden;
+    }
+
+    .cronometro {
+        width: 100%;
+        height: auto;
+        min-height: 132px;
+        font-size: clamp(54px, 16vw, 76px);
+    }
+
+    .acoes-wrapper,
+    .input-km,
+    .acoes-corrida {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .acoes-corrida {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 64px;
+    }
+
+    .btn-iniciar {
+        width: 100%;
+    }
+
+    .area-registros {
+        width: 100%;
+        max-width: 100%;
+        flex-direction: column;
+        gap: 18px;
+        overflow: hidden;
+    }
+
+    .ultimos-registros,
+    .proximos-corredores {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .ultimos-registros {
+        overflow-x: hidden;
+    }
+
+    .ultimos-registros table {
+        width: 100%;
+        min-width: 0;
+        table-layout: fixed;
+        font-size: 10.5px;
+    }
+
+    th,
+    td {
+        padding: 7px 5px;
+        line-height: 1.15;
+    }
+
+    th:nth-child(1),
+    td:nth-child(1) { width: 24%; }
+    th:nth-child(2),
+    td:nth-child(2),
+    th:nth-child(3),
+    td:nth-child(3) { width: 18%; }
+    th:nth-child(4),
+    td:nth-child(4),
+    th:nth-child(5),
+    td:nth-child(5) { width: 20%; }
+
+    .modal-esteira,
+    .modal-turno,
+    .modal-finalizar-competicao,
+    .modal-lembrete-cp,
+    .modal-km-menor,
+    .modal-overlay {
+        padding: 12px;
+    }
+
+    #modalEsteira .modal-conteudo,
+    .modal-conteudo,
+    .modal-turno-conteudo,
+    #modalTurno .modal-turno-conteudo,
+    #modalCheckpoint .modal-checkpoint-conteudo,
+    .modal-finalizar-conteudo,
+    .modal-km-menor-conteudo,
+    .modal-lembrete-conteudo,
+    .modal-operador,
+    .bandeja-corredores {
+        width: min(100%, calc(100vw - 24px)) !important;
+        max-width: calc(100vw - 24px) !important;
+        max-height: calc(100dvh - 24px) !important;
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: auto;
+        box-sizing: border-box;
+    }
+
+    #modalEsteira .modal-conteudo,
+    .modal-conteudo {
+        padding: 28px 16px 24px;
+    }
+
+    #modalEsteira .modal-conteudo h2,
+    .modal-conteudo h2 {
+        width: 100%;
+        margin-bottom: 20px;
+        font-size: 24px;
+        line-height: 1.14;
+        text-align: left;
+    }
+
+    #modalEsteira .opcoes-esteira,
+    .opcoes-esteira {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        width: 100%;
+    }
+
+    #modalEsteira .opcao-esteira,
+    .opcao-esteira {
+        width: 100%;
+        height: auto;
+        min-height: 156px;
+        padding: 16px 8px;
+    }
+
+    #modalEsteira .opcao-esteira .icone-esteira,
+    .opcao-esteira .icone-esteira {
+        width: 78px;
+    }
+
+    #modalEsteira .acoes-modal,
+    .acoes-modal,
+    .acoes-finalizar,
+    .acoes-modal-turno,
+    .modal-checkpoint-conteudo .checkpoint-acoes {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        width: 100%;
+    }
+
+    #modalEsteira .btn-cancelar-modal,
+    #modalEsteira .btn-selecionar-modal,
+    .btn-cancelar-modal,
+    .btn-selecionar-modal,
+    .btn-cancelar-finalizar,
+    .btn-confirmar-finalizar,
+    .btn-cancelar-turno,
+    .btn-registrar-turno {
+        width: 100% !important;
+        min-width: 0 !important;
+        flex: initial !important;
+        height: 52px;
+        font-size: 16px;
+    }
+
+    #modalCheckpoint .modal-checkpoint-conteudo,
+    .modal-turno-conteudo,
+    #modalTurno .modal-turno-conteudo {
+        padding: 22px 16px;
+    }
+
+    #modalCheckpoint .checkpoint-cronometro-topo {
+        width: 100%;
+        margin: 0 0 16px;
+        padding: 12px 14px;
+        box-sizing: border-box;
+        border-radius: 8px;
+    }
+
+    #modalCheckpoint .checkpoint-corredor {
+        width: 100%;
+    }
+
+    #modalCheckpoint .checkpoint-conteudo {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+        padding-top: 10px;
+    }
+
+    #modalCheckpoint .checkpoint-foto,
+    #modalCheckpoint .checkpoint-dados {
+        width: 100%;
+        padding: 0;
+    }
+
+    #modalCheckpoint .checkpoint-dados {
+        border-left: 0;
+    }
+
+    #modalCheckpoint .checkpoint-foto-preview {
+        height: 180px;
+    }
+
+    #modalCheckpoint .modal-checkpoint-conteudo {
+        padding-bottom: 72px;
+    }
+
+    #modalCheckpoint .modal-checkpoint-conteudo .checkpoint-acoes {
+        padding-bottom: 12px;
+    }
+
+    .checkpoint-conteudo {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .checkpoint-divisor {
+        display: none;
+    }
+
+    .checkpoint-foto,
+    .checkpoint-dados {
+        width: 100%;
+        padding: 0;
+    }
+
+    .modal-turno-conteudo::before {
+        margin-bottom: 18px;
+        font-size: 24px;
+    }
+
+    #modalTurno .finalizar-turno-foto,
+    .finalizar-turno-foto {
+        display: grid;
+        grid-template-columns: 78px minmax(0, 1fr);
+        align-items: center;
+        gap: 12px;
+        min-height: 0;
+        padding: 10px;
+    }
+
+    #modalTurno .finalizar-turno-foto-preview,
+    .finalizar-turno-foto-preview {
+        width: 78px !important;
+        height: 62px !important;
+        flex: 0 0 78px !important;
+        flex-basis: 78px !important;
+    }
+
+    #modalTurno .finalizar-turno-foto-info,
+    .finalizar-turno-foto-info {
+        min-width: 0;
+    }
+
+    #modalTurno .finalizar-turno-foto-info strong,
+    .finalizar-turno-foto-info strong {
+        font-size: 14px;
+        line-height: 1.1;
+    }
+
+    #modalTurno .finalizar-turno-foto-info small,
+    .finalizar-turno-foto-info small {
+        margin: 2px 0 6px;
+        font-size: 11px;
+        line-height: 1.2;
+    }
+
+    #modalTurno .btn-finalizar-turno-foto,
+    .btn-finalizar-turno-foto {
+        width: max-content;
+        height: 32px;
+        padding: 0 12px;
+        font-size: 12px;
+    }
+
+    #modalTurno .campos-km,
+    .campos-turno {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        width: 100%;
+    }
+
+    #modalTurno .campo-quilometragem,
+    #modalTurno .campo-pace,
+    .campo-quilometragem,
+    .campo-turno {
+        width: 100%;
+        transform: none;
+        margin-top: 0;
+    }
+
+    #modalTurno .campo-quilometragem input,
+    #modalTurno .campo-pace input,
+    .campo-turno select,
+    .campo-turno input {
+        width: 100%;
+        height: 48px;
+        font-size: 16px;
+    }
+
+    .modal-finalizar-conteudo,
+    .modal-km-menor-conteudo,
+    .modal-lembrete-conteudo {
+        padding: 28px 18px;
+    }
+
+    .modal-finalizar-conteudo h2,
+    .modal-km-menor-conteudo h2,
+    .modal-lembrete-conteudo h2 {
+        font-size: 24px;
+    }
+
+    .modal-finalizar-conteudo p,
+    .modal-km-menor-conteudo p,
+    .modal-lembrete-conteudo p {
+        font-size: 16px;
+    }
+
+    body:has(.modal-turno:not(.escondido)) .tema-toggle,
+    body:has(.modal-esteira:not(.escondido)) .tema-toggle,
+    body:has(.modal-finalizar-competicao:not(.escondido)) .tema-toggle,
+    body:has(.modal-km-menor:not(.escondido)) .tema-toggle,
+    body:has(.modal-lembrete-cp:not(.escondido)) .tema-toggle {
+        bottom: 72px;
+    }
+}
+
+@media (max-width: 420px) {
+    .conteudo-auditoria {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .cronometro {
+        min-height: 112px;
+    }
+
+    .ultimos-registros table {
+        font-size: 9.5px;
+    }
+
+    th,
+    td {
+        padding: 6px 4px;
+    }
+
+    .acoes-corrida,
+    #modalEsteira .opcoes-esteira,
+    .opcoes-esteira,
+    #modalTurno .campos-km,
+    .campos-turno {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #modalEsteira .opcao-esteira,
+    .opcao-esteira {
+        min-height: 128px;
+    }
+
+    #modalEsteira .acoes-modal,
+    .acoes-modal,
+    .acoes-finalizar,
+    .acoes-modal-turno,
+    .modal-checkpoint-conteudo .checkpoint-acoes {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #modalTurno .finalizar-turno-foto,
+    .finalizar-turno-foto {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #modalTurno .finalizar-turno-foto-preview,
+    .finalizar-turno-foto-preview {
+        width: 100% !important;
+        height: 92px !important;
+        flex-basis: 92px !important;
+    }
+
+    #modalTurno .btn-finalizar-turno-foto,
+    .btn-finalizar-turno-foto {
+        width: 100%;
+    }
+}
+
+@media (max-width: 900px) {
+    body:has(.conteudo-auditoria) .topo {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 32px;
+        align-items: center;
+        min-height: 84px;
+        padding: 18px 14px 14px;
+        column-gap: 10px;
+    }
+
+    body:has(.conteudo-auditoria) .operador {
+        min-width: 0;
+        gap: 7px;
+    }
+
+    body:has(.conteudo-auditoria) .avatar-operador {
+        width: 42px;
+        height: 42px;
+    }
+
+    body:has(.conteudo-auditoria) .operador p,
+    body:has(.conteudo-auditoria) .tempo-restante {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.08;
+    }
+
+    body:has(.conteudo-auditoria) .operador p {
+        display: -webkit-box;
+        font-size: 15px;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        white-space: normal;
+    }
+
+    body:has(.conteudo-auditoria) .tempo-restante {
+        position: absolute;
+        top: calc(100% + 54px);
+        left: 50%;
+        z-index: 2;
+        width: min(100%, 260px);
+        margin: 0;
+        transform: translateX(-50%);
+        font-size: 14px;
+        text-align: center;
+        white-space: normal;
+    }
+
+    body:has(.conteudo-auditoria) .btn-sair {
+        justify-self: end;
+        width: 28px;
+        height: 28px;
+        padding: 0;
+        border-radius: 8px;
+    }
+
+    body:has(.conteudo-auditoria) .btn-sair:hover,
+    body:has(.conteudo-auditoria) .btn-sair:focus-visible {
+        background: transparent;
+        color: var(--vermelho);
+        outline: none;
+    }
+
+    body:has(.conteudo-auditoria) .btn-sair:hover .icone-sair-svg,
+    body:has(.conteudo-auditoria) .btn-sair:focus-visible .icone-sair-svg {
+        stroke: var(--vermelho);
+    }
+
+    body:has(.conteudo-auditoria) .conteudo-auditoria {
+        padding-bottom: 92px;
+    }
+
+    body:has(.conteudo-auditoria) .cronometro-area,
+    body:has(.conteudo-auditoria) .acoes-wrapper {
+        width: min(100%, 320px);
+    }
+
+    body:has(.conteudo-auditoria) .corredor-atual {
+        margin: 54px 0 14px;
+    }
+
+    body:has(.conteudo-auditoria) .corredor-atual p {
+        font-size: 23px;
+        line-height: 1.1;
+    }
+
+    body:has(.conteudo-auditoria) .cronometro {
+        width: 100%;
+        min-height: 110px;
+        padding: 0 16px;
+        font-size: clamp(48px, 15vw, 66px);
+        box-sizing: border-box;
+    }
+
+    body:has(.conteudo-auditoria) .acoes-corrida,
+    body:has(.conteudo-auditoria) .acoes-corrida:has(.btn-proximo-corredor.escondido) {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) 63px !important;
+        width: 100% !important;
+        gap: 7px !important;
+    }
+
+    body:has(.conteudo-auditoria) .btn-iniciar {
+        width: 100% !important;
+        height: 64px;
+    }
+
+    body:has(.conteudo-auditoria) .btn-esteira {
+        display: flex !important;
+        width: 63px !important;
+        height: 64px !important;
+        padding: 0;
+    }
+
+    body:has(.conteudo-auditoria) .acoes-corrida:has(.btn-proximo-corredor:not(.escondido)) {
+        grid-template-columns: minmax(0, 1fr) minmax(124px, .78fr) !important;
+        gap: 7px !important;
+    }
+
+    body:has(.conteudo-auditoria) .acoes-corrida:has(.btn-proximo-corredor:not(.escondido)) .btn-proximo-corredor {
+        width: 100% !important;
+        height: 64px !important;
+        padding: 0 10px !important;
+        font-size: 16px !important;
+        white-space: normal;
+        line-height: 1.08;
+    }
+
+    body:has(.conteudo-auditoria) .acoes-corrida:has(.btn-proximo-corredor:not(.escondido)) .btn-esteira {
+        display: none !important;
+    }
+
+    body:has(.conteudo-auditoria) .input-km {
+        width: 100%;
+    }
+
+    body:has(.conteudo-auditoria) .area-registros {
+        margin-top: 16px;
+        padding-bottom: 24px;
+    }
+
+    body:has(.conteudo-auditoria) .ultimos-registros {
+        overflow-x: auto;
+        padding-bottom: 8px;
+    }
+
+    body:has(.conteudo-auditoria) .ultimos-registros table {
+        min-width: 520px;
+        table-layout: fixed;
+    }
+
+    body:has(.conteudo-auditoria) .tema-toggle {
+        display: none;
+    }
+}
+
+@media (max-width: 420px) {
+    body:has(.conteudo-auditoria) .topo {
+        grid-template-columns: minmax(0, 1fr) 28px;
+        padding-right: 12px;
+        padding-left: 12px;
+        column-gap: 10px;
+    }
+
+    body:has(.conteudo-auditoria) .avatar-operador {
+        width: 40px;
+        height: 40px;
+    }
+
+    body:has(.conteudo-auditoria) .operador p {
+        font-size: 14px;
+    }
+
+    body:has(.conteudo-auditoria) .tempo-restante {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 900px) {
+    #modalTurno {
+        align-items: flex-start;
+        padding: 14px 12px 24px;
+        overflow-y: auto;
+    }
+
+    #modalTurno .modal-turno-conteudo {
+        width: min(100%, 366px) !important;
+        max-width: 100% !important;
+        max-height: none !important;
+        margin: 0 auto 20px;
+        padding: 22px 16px !important;
+        overflow: visible !important;
+    }
+
+    #modalTurno .modal-turno-conteudo::before {
+        margin: 0 0 18px;
+        font-size: 24px;
+        line-height: 1.12;
+    }
+
+    #modalTurno .finalizar-turno-foto {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 10px !important;
+        width: 100% !important;
+        min-height: 0 !important;
+        padding: 10px !important;
+        box-sizing: border-box;
+    }
+
+    #modalTurno .finalizar-turno-foto-preview {
+        width: 100% !important;
+        height: 90px !important;
+        flex: none !important;
+        flex-basis: auto !important;
+        order: 1;
+    }
+
+    #modalTurno .finalizar-turno-foto-info {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 4px;
+        order: 2;
+        width: 100%;
+    }
+
+    #modalTurno .finalizar-turno-foto-info strong,
+    #modalTurno .finalizar-turno-foto-info small {
+        display: none;
+    }
+
+    #modalTurno .btn-finalizar-turno-foto {
+        order: 3;
+        width: 100% !important;
+        height: 34px !important;
+        margin: 0 !important;
+        padding: 0 12px !important;
+        font-size: 13px !important;
+    }
+
+    #modalTurno .campos-turno,
+    #modalTurno .campos-km {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 12px !important;
+        width: 100% !important;
+        margin: 12px 0 0 !important;
+    }
+
+    #modalTurno .campo-turno,
+    #modalTurno .campo-corredor,
+    #modalTurno .campo-tempo,
+    #modalTurno .campo-pace,
+    #modalTurno .campo-quilometragem {
+        width: 100% !important;
+        margin: 0 !important;
+        transform: none !important;
+    }
+
+    #modalTurno .campo-turno label {
+        margin-bottom: 6px;
+        font-size: 15px;
+    }
+
+    #modalTurno .campo-turno select,
+    #modalTurno .campo-turno input,
+    #modalTurno .campo-quilometragem input,
+    #modalTurno .campo-pace input {
+        width: 100% !important;
+        height: 48px !important;
+        box-sizing: border-box;
+        font-size: 16px !important;
+    }
+
+    #modalTurno .tempo-percorrido {
+        font-size: 26px !important;
+        font-weight: 800;
+    }
+
+    #modalTurno .relacao-horario {
+        display: block;
+        margin-top: 6px;
+        font-size: 13px;
+    }
+
+    #modalTurno .acoes-modal-turno {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 12px !important;
+        width: 100% !important;
+        margin-top: 14px !important;
+        padding-bottom: 0 !important;
+    }
+
+    #modalTurno .btn-cancelar-turno,
+    #modalTurno .btn-registrar-turno {
+        width: 100% !important;
+        height: 52px !important;
+        margin: 0 !important;
+        font-size: 16px !important;
+    }
+}

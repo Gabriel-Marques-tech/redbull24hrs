@@ -79,3 +79,190 @@ button:disabled{
 button:disabled:hover{
     background-color: #C8C8C8;
 }
+
+@media (max-width: 900px) {
+    body {
+        min-height: 100vh;
+        background-color: var(--fundo-pagina);
+    }
+
+    main {
+        gap: 20px;
+        padding-top: 118px !important;
+        padding-bottom: 112px;
+    }
+
+    body:has(.lista-competicoes) .cancelar,
+    body:has(.lista-competicoes) .cancelar:hover,
+    body:has(.lista-competicoes) .cancelar:focus-visible {
+        position: absolute;
+        top: 50px;
+        left: 28px;
+        z-index: 40;
+        width: 34px;
+        height: 34px;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        place-items: center;
+        background-color: var(--vermelho);
+        box-shadow: 0 10px 24px rgba(210, 0, 60, 0.22);
+    }
+
+    body:has(.lista-competicoes) .cancelar img {
+        display: none;
+    }
+
+    body:has(.lista-competicoes) .cancelar::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 8px;
+        height: 8px;
+        border-bottom: 2.5px solid var(--branco);
+        border-left: 2.5px solid var(--branco);
+        border-radius: 1px;
+        transform: translate(-35%, -50%) rotate(45deg);
+    }
+
+    body:has(.lista-competicoes) main > .etapas {
+        top: 52px;
+        left: 50% !important;
+        width: min(244px, calc(100vw - 150px)) !important;
+        padding: 0;
+    }
+
+    body:has(.lista-competicoes) main > .etapas .etapa {
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    body:has(.lista-competicoes) .etapa span {
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
+        line-height: 1;
+        padding: 0;
+    }
+
+    body:has(.lista-competicoes) main > .etapas .etapa:not(:last-child)::after {
+        top: 50%;
+        left: calc(50% + 14px);
+        width: calc(100% - 28px);
+        transform: translateY(-50%);
+    }
+
+    .conteudo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: calc(100dvh - 230px);
+    }
+
+    .conteudo h2 {
+        width: min(100%, 360px) !important;
+        margin-bottom: 22px;
+        font-size: clamp(28px, 7.5vw, 34px) !important;
+        line-height: 1.08;
+        letter-spacing: 0;
+    }
+
+    .lista-competicoes {
+        width: min(100%, 360px);
+        gap: 14px;
+    }
+
+    .competicao {
+        grid-template-columns: 26px minmax(0, 1fr);
+        gap: 6px 12px;
+        min-height: 78px;
+        padding: 16px 14px;
+        border: 1px solid var(--borda);
+        border-radius: 9px;
+        background-color: var(--fundo-superficie);
+        font-size: 17px;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .competicao span {
+        align-self: start;
+        padding-top: 1px;
+        font-weight: 800;
+    }
+
+    .competicao p {
+        min-width: 0;
+        line-height: 1.2;
+    }
+
+    .competicao p:nth-of-type(1) {
+        font-size: 17px;
+        font-weight: 700;
+    }
+
+    .competicao p:nth-of-type(2) {
+        margin-top: 2px;
+        font-size: 14px;
+        color: var(--texto-secundario);
+    }
+
+    .competicao span,
+    .competicao small,
+    .competicao strong {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .competicao > :nth-child(n + 3) {
+        grid-column: 2;
+        font-size: 14px;
+        color: var(--texto-secundario);
+    }
+
+    .competicao:hover > :nth-child(n + 3),
+    .competicao.selecionada > :nth-child(n + 3) {
+        color: currentColor;
+    }
+
+    #btn-proximo {
+        position: fixed;
+        right: auto;
+        bottom: 24px;
+        left: 50%;
+        z-index: 80;
+        width: min(360px, calc(100vw - 36px));
+        height: 58px;
+        margin: 0;
+        border-radius: 10px;
+        font-size: 22px;
+        transform: translateX(-50%);
+        box-shadow: 0 14px 28px rgba(210, 0, 60, 0.28);
+    }
+
+    #btn-proximo:disabled {
+        box-shadow: none;
+    }
+
+    body:has(.lista-competicoes) .tema-toggle {
+        display: none;
+    }
+}
+
+@media (max-width: 420px) {
+    body:has(.lista-competicoes) main > .etapas {
+        left: 50% !important;
+        width: min(230px, calc(100vw - 132px)) !important;
+    }
+
+    .conteudo h2 {
+        font-size: 27px !important;
+    }
+
+    #btn-proximo {
+        bottom: 18px;
+    }
+}
