@@ -8,8 +8,11 @@
     <% } else { %>
     <div class="cards">
         <% lista.forEach(event => {
-            const destino = `/manager/event/${event.id}`; %>
-        <a class="card card-event" href="<%= destino %>"<% if (event.image_url) { %> style="background-image: linear-gradient(160deg, rgba(15,0,105,0.45) 0%, rgba(210,0,60,0.55) 100%), url('<%= event.image_url %>'); background-size: cover; background-position: center;"<% } %>>
+            const destino = `/manager/event/${event.id}`;
+            const estilo = event.image_url
+                ? `background-image: linear-gradient(to bottom, transparent 0%, transparent 55%, rgba(15,0,105,0.95) 100%), url('${event.image_url}');`
+                : ""; %>
+        <a class="card card-event" href="<%= destino %>"<% if (estilo) { %> style="<%= estilo %>"<% } %>>
             <span class="card-status status-<%= event.status || 'pending' %>"></span>
             <h3><%= event.title || 'Red Bull 24h' %></h3>
             <p class="card-local"><%= event.local %></p>
