@@ -113,7 +113,7 @@
                     ]; %>
                     <% filaPreview.forEach(athlete => { %>
                     <div class="corredor-fila" draggable="true" data-id="<%= athlete.id %>" title="Arraste para reorganizar a fila">
-                        <span class="avatar"></span>
+                        <span class="avatar" <% if (athlete.image_url) { %>style="background-image:url('<%= athlete.image_url %>');background-size:cover;background-position:center;"<% } %>></span>
                         <p><%= athlete.name %></p>
                         <span class="drag" aria-hidden="true">⠿</span>
                     </div>
