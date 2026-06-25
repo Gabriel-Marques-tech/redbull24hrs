@@ -1,0 +1,117 @@
+body {
+    overflow: hidden;
+}
+
+main {
+    height: calc(100vh - 145px);
+    align-items: flex-start;
+}
+
+.conteudo-imagem-evento {
+    width: 760px;
+    margin-top: -70px;
+    align-items: center;
+}
+
+.formulario-imagem-evento {
+    width: 100%;
+    transform: translateY(45px);
+}
+
+.formulario-imagem-evento h1 {
+    margin: 0 0 18px;
+    font-size: 36px;
+}
+
+.upload-imagem-evento {
+    width: 100%;
+    min-height: 150px;
+    padding: 22px;
+    border: 1px dashed #8d8d8d;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    box-sizing: border-box;
+}
+
+.imagem-evento-preview {
+    width: 106px;
+    height: 106px;
+    flex: 0 0 106px;
+    border-radius: 6px;
+    background: #eeeeee;
+    color: #8d8d8d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-size: 46px;
+    font-weight: 500;
+}
+
+.imagem-evento-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload-imagem-evento strong {
+    display: block;
+    color: var(--vermelho);
+    font-size: 22px;
+}
+
+.upload-imagem-evento p {
+    margin: 6px 0 14px;
+    color: #777777;
+    font-size: 17px;
+}
+
+.upload-imagem-evento button {
+    padding: 9px 16px;
+    border: 1px solid var(--vermelho);
+    border-radius: 5px;
+    background: transparent;
+    color: var(--vermelho);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#imagemEvento {
+    display: none;
+}
+
+.botoes-imagem-evento {
+    margin-top: clamp(155px, 17vh, 195px);
+}
+
+.conteudo-imagem-evento .botoes button {
+    width: 180px;
+    height: 60px;
+    padding: 0;
+    border-radius: 6px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.btn-proximo-imagem {
+    border: none;
+    background: var(--vermelho);
+    color: var(--branco);
+    cursor: pointer;
+}
+
+html[data-theme="dark"] .upload-imagem-evento {
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] .imagem-evento-preview {
+    background: var(--fundo-superficie);
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] .upload-imagem-evento p {
+    color: var(--texto-secundario);
+}
