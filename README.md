@@ -51,7 +51,7 @@ O RedRun substitui um processo frágil e manual por um sistema rastreável e con
 
 ## 📝 Link de demonstração
 
-_Coloque aqui o link para o vídeo de demonstração do projeto_
+[Vídeo de demonstração do RedRun](https://youtu.be/A1usFifXgXE)
 
 ## 📁 Estrutura de pastas
 
