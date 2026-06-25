@@ -32,7 +32,7 @@ const noCache = {
 	setHeaders: (res: Response) => res.setHeader("Cache-Control", "no-store"),
 };
 
-app.use("/docs", express.static(path.join(process.cwd(), "docs/api")));
+app.use("/docs", express.static(path.join(process.cwd(), "documentos/outros/WebAPI")));
 app.use("/css", express.static(path.join(process.cwd(), "src/Front-End/css"), noCache));
 app.use("/js", express.static(path.join(process.cwd(), "src/Front-End/js"), noCache));
 app.use("/assets", express.static(path.join(process.cwd(), "src/Front-End/assets")));
