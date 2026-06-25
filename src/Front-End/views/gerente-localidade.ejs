@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Competição - Local</title>
     <link rel="stylesheet" href="/css/global.css">
+    <script src="/js/tema.js"></script>
     <link rel="stylesheet" href="/css/equipe.css">
     <link rel="stylesheet" href="/css/gerente-localidade.css">
 </head>
@@ -20,8 +21,9 @@
         <aside class="etapas">
             <h3>Etapas</h3>
             <div class="etapa ativa"><span>1</span><p>Local</p></div>
-            <div class="etapa"><span>2</span><p>Data e hora</p></div>
-            <div class="etapa"><span>3</span><p>Equipes</p></div>
+            <div class="etapa"><span>2</span><p>Imagem</p></div>
+            <div class="etapa"><span>3</span><p>Data e hora</p></div>
+            <div class="etapa"><span>4</span><p>Equipes</p></div>
         </aside>
 
         <section class="conteudo conteudo-localidade">
@@ -32,12 +34,6 @@
                 <div class="campo-select">
                     <input id="nomeCompeticao" name="nomeCompeticao" type="text" autocomplete="off"
                            placeholder="Ex: Red Bull 24h São Paulo">
-                </div>
-
-                <label for="fotoCompeticao">Foto da competição (opcional)</label>
-                <div class="campo-foto-evento">
-                    <img id="previewFotoEvento" alt="Pré-visualização da foto" hidden>
-                    <input id="fotoCompeticao" type="file" accept="image/*">
                 </div>
 
                 <label for="estado">Estado</label>
