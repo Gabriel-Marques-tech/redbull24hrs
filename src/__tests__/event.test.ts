@@ -12,6 +12,7 @@ jest.mock("../repositories/eventRepository", () => ({
 		finish: jest.fn(),
 		pause: jest.fn(),
 		resume: jest.fn(),
+		teamsWithoutAthletes: jest.fn(),
 	},
 }));
 
@@ -207,6 +208,7 @@ describe("DELETE /events/treadmills/:id", () => {
 describe("PATCH /events/:id/start", () => {
 	it("200 – manager inicia evento pendente", async () => {
 		(eventRepository.findById as jest.Mock).mockResolvedValue({ ...mockEvent, status: "pending" });
+		(eventRepository.teamsWithoutAthletes as jest.Mock).mockResolvedValue([]);
 		(eventRepository.start as jest.Mock).mockResolvedValue({ ...mockEvent, status: "in_progress" });
 		const res = await request(app).patch("/events/1/start").set(managerHeader).send({});
 		expect(res.status).toBe(200);
