@@ -40,8 +40,6 @@
 
 [8. Referências](#8-referências)
 
-[Anexos](#anexos)
-
 <br>
 
 # <a name="c1"></a>1. Introdução (sprints 1 a 5)
@@ -1678,7 +1676,7 @@ Dessa forma, o sistema se torna uma ferramenta de suporte confiável, permitindo
 Na sprint 1, os RNFs foram definidos em nível conceitual, com critérios mensuráveis (SMART). Nesta sprint, com a implementação do backend, cada eixo da ISO/IEC 25010 evoluiu para **decisões técnicas concretas e verificáveis no código**. O quadro a seguir registra, por RNF, a decisão de implementação adotada e a evidência correspondente no repositório. Os RNFs ligados predominantemente ao frontend ou a processos organizacionais têm sua evolução estrutural indicada e a verificação final prevista para as próximas sprints, mantendo a rastreabilidade.
 
 <div align = "center">
-  <sub> Quadro 16.1 - Evolução dos RNFs para decisões técnicas </sub><br>
+  <sub> Quadro 17 - Evolução dos RNFs para decisões técnicas </sub><br>
 
 | RNF | Eixo | Decisão técnica concreta nesta sprint | Evidência no código |
 | :-- | :--- | :------------------------------------ | :------------------ |
@@ -1713,7 +1711,7 @@ Na sprint 1, os RNFs foram definidos em nível conceitual, com critérios mensur
 Na sprint 4, com a integração ponta a ponta dos fluxos de auditoria, gerência e estatísticas, os RNFs pendentes de aferição foram atualizados. O quadro a seguir apresenta, para cada RNF com evolução nesta sprint, a atualização técnica realizada, a **métrica de verificação** com valor-alvo concreto e o **procedimento de verificação** — forma objetiva de atestar o cumprimento do critério — mantendo formato uniforme entre todos os eixos.
 
 <div align = "center">
-  <sub> Quadro 16.2 - Evolução dos RNFs: Sprint 4 — métricas e procedimentos de verificação </sub><br>
+  <sub> Quadro 18 - Evolução dos RNFs: Sprint 4 — métricas e procedimentos de verificação </sub><br>
 
 | RNF | Eixo | Atualização Sprint 4 | Métrica de Verificação | Procedimento de Verificação | Evidência |
 | :-- | :--- | :------------------- | :--------------------- | :-------------------------- | :-------- |
@@ -2013,7 +2011,7 @@ O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 H
 ---
 
 <div align = "center">
-  <sub> Quadro 17 - Atores de Casos de Uso </sub><br>
+  <sub> Quadro 19 - Atores de Casos de Uso </sub><br>
 
 | Ator                      | Tipo                                | Descrição                                                                                                                                                                                                                                                                                                                                          |
 | ------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -2029,7 +2027,7 @@ O diagrama abaixo modela o sistema de registro de quilometragem do Red Bull 24 H
 Os casos de uso foram identificados a partir dos requisitos funcionais da seção 3.1.1 e do escopo do MVP descrito no TAPI. Cada caso representa um caminho até um valor concreto entregue ao usuário, conforme orientação do guia: _"a use case is all the ways of using a system to achieve a goal of a particular user"_.
 
 <div align = "center">
-  <sub> Quadro 18 - Casos de Uso </sub><br>
+  <sub> Quadro 20 - Casos de Uso </sub><br>
 
 | Caso de uso                       | Ator primário                   | Objetivo                                                                                                                                                                                | Pré-requisitos                                                                      | Atores secundários                                                          | Pós-requisitos                                                                                           |
 | --------------------------------- | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
@@ -2054,7 +2052,7 @@ Como a esteira é zerada a cada troca de corredor (dinâmica do evento), a quilo
 Os relacionamentos foram aplicados com a semântica precisa definida pelo guia: **`<<include>>`** representa comportamento _obrigatório_ e reutilizável que sempre é executado pelo caso-base; **`<<extend>>`** representa comportamento _opcional_ que ocorre apenas em condições específicas, sem que o caso-base precise ter conhecimento do caso estensor. Como recomenda Jacobson et al.[⁹](#8-referências) na prática _Structured Use-Case Modeling_, esses recursos foram usados com parcimônia — apenas onde tornam o modelo mais claro, e não para fragmentar o diagrama em micro-fluxos.
 
 <div align = "center">
-  <sub> Quadro 19 - Relacionamentos include e extend </sub><br>
+  <sub> Quadro 21 - Relacionamentos include e extend </sub><br>
 
 | Relacionamento | Caso-base                 | Caso relacionado                           | Justificativa                                                                                                                                                                                                                                                                                                              |
 | -------------- | ------------------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -3164,7 +3162,7 @@ Além da organização dos fluxos de navegação, o protótipo aplica o Guia de 
 
 O protótipo completo pode ser acessado no Figma por meio do seguinte link: [Protótipo de alta fidelidade](https://www.figma.com/design/yf3pdWLwWF26GFlfaqid1O/Prot%C3%B3tipo?node-id=174-693&t=RxclnTyFX2daABXi-1).
 
-## 3.6. Modelagem do banco de dados (sprints 2 e 4)
+## 3.6. Modelagem do banco de dados
 
 ---
 
@@ -3174,7 +3172,7 @@ O Modelo Entidade-Relacionamento (MER) apresenta a visão conceitual consolidada
 
 <div align="center">
   <sub>Imagem 72 - Modelo Entidade-Relacionamento</sub><br>
-  <img src="./assets/modelo_entidade_relacionamento/mer.png" width="95%" alt="Modelo Entidade-Relacionamento consolidado do projeto Red Bull 24 Horas"><br>
+  <img src="./assets/modelo_entidade_relacionamento/mer.svg" width="95%" alt="Modelo Entidade-Relacionamento consolidado do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -3189,16 +3187,17 @@ As entidades foram derivadas do domínio e revisadas conforme o schema resultant
 
 | Entidade | Descrição | Atributos principais | Chave |
 | :--- | :--- | :--- | :--- |
-| **Managers** | Gerentes que administram eventos e também podem operar turnos. | `id`, `name`, `cpf`, `email`, `password` | `id` |
-| **Events** | Edições da competição, incluindo seu ciclo de vida operacional. | `id`, `title`, `local`, `date`, `status`, `started_at`, `finished_at`, `deleted_at` | `id` |
-| **Teams** | Equipes vinculadas a uma edição específica. | `id`, `name`, `deleted_at` | `id` |
-| **Athletes** | Atletas pertencentes a uma equipe. | `id`, `name`, `gender`, `cpf`, `deleted_at` | `id` |
-| **Auditors** | Operadores responsáveis pelo registro dos turnos e checkpoints. | `id`, `name`, `cpf`, `registration_number`, `is_active`, `email`, `password` | `id` |
-| **Shifts** | Sessões individuais de corrida de um atleta em uma esteira. | `id`, `status`, `start_at`, `end_at`, `total_time`, `speed`, `km_start`, `km_end`, `distance` | `id` |
-| **Treadmills** | Esteiras numeradas e vinculadas à equipe que as utiliza. | `id`, `number` | `id` |
-| **Checkpoints** | Leituras parciais do turno, com suporte a revisão e sincronização offline. | `id`, `timestamp`, `distance`, `type`, `reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`, `sync_id` | `id` |
-| **Logs** | Registros imutáveis de ações e alterações relacionadas a um turno. | `id`, `timestamp`, `type`, `old_value`, `new_value`, `author_id`, `author_role`, `justification` | `id` |
-| **RefreshToken** | Sessão renovável pertencente exclusivamente a um gerente ou auditor. | `id`, `token_hash`, `expires_at`, `revoked_at`, `created_at` | `id` |
+| **Managers** | Gerente que administra eventos. | `id`, `name`, `cpf`, `email`, `password` | `id` |
+| **Events** | Edição da competição, incluindo seu ciclo de vida operacional e o estado de pausa. | `id`, `title`, `local`, `date`, `status`, `started_at`, `finished_at`, `paused_at`, `paused_ms`, `image_url`, `deleted_at` | `id` |
+| **Teams** | Equipe vinculada a uma edição específica. | `id`, `name`, `deleted_at` | `id` |
+| **Athletes** | Atleta pertencente a uma equipe, com suporte a foto de perfil e acompanhamento compartilhável via link. | `id`, `name`, `gender`, `cpf`, `email`, `image_url`, `share_token`, `deleted_at` | `id` |
+| **Auditors** | Operador responsável por operar e auditar turnos, além de registrar checkpoints. | `id`, `name`, `cpf`, `registration_number`, `is_active`, `email`, `password` | `id` |
+| **Shifts** | Sessão individual de corrida de um atleta em uma esteira, com suporte a foto, leitura óptica (OCR) para verificação e identificador do gerente. | `id`, `status`, `start_at`, `end_at`, `total_time`, `speed`, `km_start`, `km_end`, `distance`, `image_url`, `ocr_speed`, `ocr_pace`, `ocr_distance`, `ocr_time`, `manager_id` | `id` |
+| **Treadmills** | Esteira numerada e vinculada à equipe que a utiliza. | `id`, `number` | `id` |
+| **Checkpoints** | Leitura parcial do turno com suporte a revisão, sincronização offline, verificação por foto/OCR e derivação de tipo (`mandatory` ou `voluntary`). | `id`, `timestamp`, `distance`, `type`, `mandatory`, `voluntary`, `reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`, `sync_id`, `image_url`, `ocr_speed`, `ocr_pace`, `ocr_distance`, `ocr_time` | `id` |
+| **Logs** | Registro imutável de ações e alterações relacionadas a um turno, mapeando estados específicos (`created`, `updated`, `finished`). | `id`, `timestamp`, `type`, `created`, `updated`, `finished`, `old_value`, `new_value`, `author_id`, `author_role`, `justification`, `shift_id` | `id` |
+| **PauseLog** | Registro histórico das pausas aplicadas a um evento (ex.: interrupções climáticas ou técnicas), controlando duração exata. | `id`, `event_id`, `paused_at`, `resumed_at`, `duration_ms` | `id` |
+| **RefreshToken** | Sessão renovável vinculada diretamente a um gerente ou auditor por chaves estrangeiras explícitas. | `id`, `token_hash`, `expires_at`, `revoked_at`, `created_at`, `manager_id`, `auditor_id` | `id` |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -3207,7 +3206,7 @@ As entidades foram derivadas do domínio e revisadas conforme o schema resultant
 
 #### Relacionamentos e cardinalidades
 
-Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui atletas e esteiras; um turno aponta para a esteira utilizada; e o operador do turno pode ser um gerente ou um auditor, mas nunca os dois simultaneamente. A posse de sessões de autenticação (refresh tokens) é modelada por dois relacionamentos independentes e mutuamente exclusivos: um para gerentes e outro para auditores.
+Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui atletas e esteiras; um turno aponta para a esteira utilizada; e o turno passou a ser operado e auditado exclusivamente por auditores, sem participação de gerentes nesse fluxo. A posse de sessões de autenticação (refresh tokens) continua modelada por dois relacionamentos independentes e mutuamente exclusivos: um para gerentes e outro para auditores. Eventos passaram a registrar seu histórico de pausas em uma entidade própria.
 
 <div align="center">
   <sub>Quadro 21 - Relacionamentos e cardinalidades do MER</sub>
@@ -3215,17 +3214,18 @@ Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui
 
 | Relacionamento | Entidade A | Cardinalidade | Entidade B | Descrição |
 | :--- | :--- | :--- | :--- | :--- |
-| **Manages** | Managers | N:N | Events | Gerentes podem administrar vários eventos e eventos podem possuir vários gerentes. |
+| **Manages** | Managers | N:N | Events | Gerentes podem administrar vários eventos e eventos podem possuir vários gerentes *(identificado graficamente como "Menages")*. |
 | **Has** | Events | 1:N | Teams | Cada equipe pertence a um único evento. |
 | **Rosters** | Teams | 1:N | Athletes | Cada atleta pertence a uma única equipe. |
 | **Has** | Teams | 1:N | Treadmills | Uma equipe pode possuir várias esteiras; uma esteira pode ficar temporariamente sem equipe. |
 | **Performs** | Athletes | 1:N | Shifts | Um atleta pode realizar vários turnos; cada turno possui um atleta. |
-| **Operates** | Managers | 1:N | Shifts | Um gerente pode operar turnos quando atua na função operacional. |
-| **Audits** | Auditors | 1:N | Shifts | Um auditor pode operar vários turnos. |
+| **Operates** | Auditors | 1:N | Shifts | Um auditor pode operar vários turnos, sendo o responsável direto pela condução da corrida no momento do registro. |
+| **Audits** | Auditors | 1:N | Shifts | Um auditor pode auditar (revisar) vários turnos; o turno pode ser auditado por um auditor diferente do que o operou. |
 | **Hosts** | Treadmills | 1:N | Shifts | Uma esteira recebe vários turnos e cada turno referencia no máximo uma esteira. |
 | **Records** | Shifts | 1:N | Checkpoints | Todo checkpoint pertence a um turno. |
 | **Generates** | Shifts | 1:N | Logs | Todo log pertence a um turno. |
 | **References** | Checkpoints | 1:N opcional | Logs | Um log pode apontar para um checkpoint; vários logs podem referenciar o mesmo checkpoint. |
+| **Records** | Events | 1:N | PauseLog | Um evento pode acumular vários registros de pausa ao longo de sua execução. |
 | **Owns Session** | Managers | 1:N | RefreshToken | Cada refresh token de gerente pertence exatamente a um gerente. |
 | **Has Session** | Auditors | 1:N | RefreshToken | Cada refresh token de auditor pertence exatamente a um auditor. |
 
@@ -3236,12 +3236,15 @@ Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui
 
 #### Decisões de modelagem
 
-- **Shift como entidade central:** cada entrada de um atleta em uma esteira gera um turno próprio. Os totais do evento são calculados pela agregação dos turnos finalizados.
-- **Operador exclusivo:** a constraint `chk_shifts_operator` exige exatamente um responsável por turno, usando `auditor_id` ou `manager_id`. No MER, isso é refletido pelos relacionamentos independentes **Operates** e **Audits**, ambos direcionados a Shifts.
-- **Esteira vinculada à equipe:** o relacionamento **Has** liga Teams a Treadmills (`treadmills.team_id`), enquanto o relacionamento **Hosts** liga Treadmills a Shifts (`shifts.treadmill_id`), preservando o histórico de uso por turno.
-- **Auditoria de checkpoints:** checkpoints guardam dados de revisão e `sync_id`; logs registram valores anteriores e novos, autoria, justificativa e vínculo opcional ao checkpoint.
-- **Ciclo de vida do evento:** `status`, `started_at` e `finished_at` distinguem eventos pendentes, em andamento e finalizados.
-- **Autenticação com integridade:** refresh tokens são modelados por dois relacionamentos mutuamente exclusivos — **Owns Session** (Manager–RefreshToken) e **Has Session** (Auditor–RefreshToken) — garantindo que cada token pertença a exatamente um gerente ou a um auditor existente, nunca aos dois simultaneamente.
+- **Shift como entidade central:** cada entrada de um atleta em uma esteira gera um turno próprio. Os totais do evento são calculados pela agregação dos turnos finalizados. O atributo `manager_id` em `Shifts` serve para vinculação histórica/auditoria do criador do registro, embora o fluxo operacional seja restrito a auditores.
+- **Operação e auditoria exclusivas do Auditor:** o turno não é operado por um gerente em tempo real. Os relacionamentos independentes **Operates** (auditor que conduz o turno) e **Audits** (auditor que audita/revisa o turno) conectam exclusivamente Auditors a Shifts.
+- **Esteira vinculada à equipe:** o relacionamento **Has** liga Teams a Treadmills, enquanto o relacionamento **Hosts** liga Treadmills a Shifts, preservando o histórico de uso por turno.
+- **Verificação por foto e OCR:** Shifts e Checkpoints armazenam `image_url` e os campos de leitura óptica (`ocr_distance`, `ocr_speed`, `ocr_pace`, `ocr_time`), permitindo conferir o valor inserido manualmente contra o valor lido automaticamente do painel da esteira.
+- **Classificação de checkpoints:** o atributo `type` de Checkpoints assume os valores derivados dos sub-atributos `mandatory` ou `voluntary`, distinguindo de forma clara pontos de controle obrigatórios dos opcionais diretamente na estrutura visual.
+- **Pausas no evento:** Events contém os atributos `image_url`, `paused_at` e `paused_ms` para refletir seu estado atual, enquanto a entidade **PauseLog** registra o histórico cronológico e preciso por meio de `paused_at`, `resumed_at` e `duration_ms`.
+- **Atletas com acompanhamento compartilhável:** Athletes possui `image_url`, `share_token` e `email`, possibilitando a geração de um link público e seguro de acompanhamento da corrida do atleta.
+- **Auditoria de checkpoints e logs:** checkpoints guardam dados de revisão e `sync_id`; logs registram de forma robusta os estados (`created`, `updated`, `finished`), os valores anteriores e novos, autoria (`author_id`, `author_role`), justificativa e vínculo relacional explícito (`shift_id`).
+- **Autenticação com integridade:** os refresh tokens contêm mapeamento explícito para `manager_id` e `auditor_id`, sendo modelados por dois relacionamentos mutuamente exclusivos — **Owns Session** (Manager–RefreshToken) e **Has Session** (Auditor–RefreshToken) — garantindo que cada token pertença a exatamente uma classe de usuário, respeitando as restrições do banco de dados.
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER)
 
@@ -3844,7 +3847,7 @@ O schema resultante possui constraints de estado, período, quilometragem e prop
 Entre os principais conectivos lógicos utilizados, temos:
  
 <div align="center">
-  <sub> Quadro 25 - Conectivos Lógicos </sub><br>
+  <sub> Quadro 22 - Conectivos Lógicos </sub><br>
 
 | Tipos de conectivos lógicos | Representação     |
 | ---------------------------- | ------------------- |
@@ -3881,7 +3884,7 @@ ON CONFLICT (sync_id) WHERE sync_id IS NOT NULL DO NOTHING
 
 <br>
 <div align="center">
-  <sub> Quadro 26 - Lógica Proposicional: 1 </sub><br>
+  <sub> Quadro 23 - Lógica Proposicional: 1 </sub><br>
 
 | | |
 | :--- | :--- |
@@ -3911,7 +3914,7 @@ ORDER BY total_km DESC
 
 <br>
 <div align="center">
-  <sub> Quadro 27 - Lógica Proposicional: 2 </sub><br>
+  <sub> Quadro 24 - Lógica Proposicional: 2 </sub><br>
 
 | | |
 |---|---|
@@ -3941,7 +3944,7 @@ WHERE t.event_id = $1
 
 <br>
 <div align="center">
-  <sub> Quadro 28 - Lógica Proposicional: 3 </sub><br>
+  <sub> Quadro 25 - Lógica Proposicional: 3 </sub><br>
 
 | | |
 |---|---|
@@ -3993,7 +3996,7 @@ RETURNING *
 
 <br>
 <div align="center">
-  <sub> Quadro 29 - Lógica Proposicional: 4 </sub><br>
+  <sub> Quadro 26 - Lógica Proposicional: 4 </sub><br>
 
 | | |
 | :--- | :--- |
@@ -4286,7 +4289,7 @@ O frontend nunca é fonte de verdade para autorização: cada tela EJS renderiza
 O quadro abaixo mapeia os grupos de rotas ao nível de autorização exigido:
 
 <div align = "center">
-  <sub> Quadro 34 - Mapeamento de autorização por grupo de rota </sub><br>
+  <sub> Quadro 27 - Mapeamento de autorização por grupo de rota </sub><br>
 
 | Nível de Acesso | Rotas / Endpoints | Middleware |
 | :-------------- | :---------------- | :--------- |
@@ -4382,7 +4385,7 @@ Os endpoints mapeados nesta matriz estão implementados e cobertos por testes au
 > - **Sprint 5** — contrato definido (método, path, RN), implementação planejada para a sprint 5 (ver Quadro 31).
 
 <div align = "center">
-  <sub> Quadro 30 - Matriz de Rastreabilidade (RTM) </sub><br>
+  <sub> Quadro 28 - Matriz de Rastreabilidade (RTM) </sub><br>
 
 Linhas sem marcação na coluna *Status* = **Implementado** na sprint 4.
 
@@ -4451,7 +4454,7 @@ Linhas sem marcação na coluna *Status* = **Implementado** na sprint 4.
 Com a integração ponta a ponta realizada na sprint 4, todos os endpoints da RTM estão implementados e cobertos por testes, com exceção de **um único endpoint planejado para a sprint 5**: a validação de aptidão de equipe (RF003). O contrato (método, path e RN governante) já está definido para que a implementação seja uma evolução incremental, sem alterar os endpoints existentes.
 
 <div align = "center">
-  <sub> Quadro 31 - Endpoint planejado para a sprint 5 </sub><br>
+  <sub> Quadro 29 - Endpoint planejado para a sprint 5 </sub><br>
 
 | RF | Endpoint planejado | RN | Status | Descrição e plano de implementação |
 |----|--------------------|----|--------|------------------------------------|
@@ -5414,7 +5417,268 @@ Os problemas observados durante os testes de guerrilha foram consolidados e prio
 
 ---
 
-_Posicione aqui o relatório dos testes SUS realizados._
+Como complemento ao teste de guerrilha documentado na seção anterior, foi aplicada a escala SUS (System Usability Scale) para medir de forma padronizada a usabilidade percebida do sistema. Enquanto o teste de guerrilha captura comportamentos e dificuldades observadas durante o uso, o SUS quantifica a percepção subjetiva dos participantes após a experiência, permitindo comparar o resultado com benchmarks consolidados da área [²¹](#8-referências). O SUS é composto por 10 afirmações respondidas em uma escala de 1 a 5 (sendo 1 = "Discordo totalmente" e 5 = "Concordo totalmente"), e o resultado final gera uma pontuação de 0 a 100.
+
+O formulário foi respondido por 6 participantes logo após a realização do teste de guerrilha, com base na experiência que acabaram de ter com o sistema. Os participantes eram alunos da própria instituição, sem vínculo com a Red Bull ou conhecimento prévio do contexto do evento. Vale destacar que as afirmações do SUS alternam entre positivas e negativas: as perguntas de número ímpar (1, 3, 5, 7 e 9) são formuladas de forma positiva, enquanto as de número par (2, 4, 6, 8 e 10) são formuladas de forma negativa. Essa alternância é intencional e serve para reduzir vieses nas respostas [²¹](#8-referências).
+
+
+**Fórmula de cálculo:**
+
+Para cada resposta, é aplicada a seguinte lógica [²¹](#8-referências):
+- Perguntas ímpares (1, 3, 5, 7 e 9): subtrai-se 1 do valor respondido
+- Perguntas pares (2, 4, 6, 8 e 10): subtrai-se o valor respondido de 5
+
+A soma de todos os valores convertidos é multiplicada por 2,5, gerando o score final de cada participante. A média entre todos os participantes representa o score SUS do sistema. A pontuação média do SUS é 68, fazendo com que uma pontuação acima ou abaixo da média forneça uma visão imediata da usabilidade geral da solução de design do projeto. [²¹](#8-referências).
+
+| Score SUS | Classificação | Aceitabilidade |
+|---|---|---|
+| 85 a 100 | Excelente / Melhor imaginável | Aceitável |
+| 71 a 84 | Bom | Aceitável |
+| 51 a 70 | OK / Marginal | Marginal |
+| 26 a 50 | Ruim | Não aceitável |
+| 0 a 25 | Inaceitável / Pior imaginável | Não aceitável |
+
+
+<div align="center">'
+<sub>Imagem 101 - Escala de classificação SUS </sub><br>
+ <img src="./assets/teste-sus/escala_sus.png" width="100%" alt="Escala de classificação SUS"><br>
+  <sub>Fonte: Bangor, Kortum e Miller (2008) [²⁰](#8-referências).</sub>
+  <br><br><br>
+</div>
+
+## Respostas por Participante
+
+### Testador: Enzo Braga
+**Perfil:** Estudante de Ciência da Computação
+
+| # | Afirmação | Nota |
+|---|-----------|------|
+| 1 | Eu acho que gostaria de usar esse sistema com frequência. | 4 |
+| 2 | Eu acho o sistema desnecessariamente complexo. | 2 |
+| 3 | Eu achei o sistema fácil de usar. | 3 |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema. | 3 |
+| 5 | Eu acho que as várias funções do sistema estão muito bem integradas. | 4 |
+| 6 | Eu acho que o sistema apresenta muita inconsistência. | 2 |
+| 7 | Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente. | 3 |
+| 8 | Eu achei o sistema atrapalhado de usar. | 2 |
+| 9 | Eu me senti confiante ao usar o sistema. | 4 |
+| 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 2 |
+
+**Score SUS: 67,5**
+
+---
+
+### Testador: Lucas Levi
+**Perfil:** Estudante de Engenharia da Computação
+
+| # | Afirmação | Nota |
+|---|-----------|------|
+| 1 | Eu acho que gostaria de usar esse sistema com frequência. | 2 |
+| 2 | Eu acho o sistema desnecessariamente complexo. | 4 |
+| 3 | Eu achei o sistema fácil de usar. | 2 |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema. | 4 |
+| 5 | Eu acho que as várias funções do sistema estão muito bem integradas. | 2 |
+| 6 | Eu acho que o sistema apresenta muita inconsistência. | 3 |
+| 7 | Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente. | 2 |
+| 8 | Eu achei o sistema atrapalhado de usar. | 4 |
+| 9 | Eu me senti confiante ao usar o sistema. | 2 |
+| 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 4 |
+
+**Score SUS: 32,5**
+
+---
+
+### Testador: Paulo Roberto
+**Perfil:** Estudante de Engenharia da Computação
+
+| # | Afirmação | Nota |
+|---|-----------|------|
+| 1 | Eu acho que gostaria de usar esse sistema com frequência. | 3 |
+| 2 | Eu acho o sistema desnecessariamente complexo. | 3 |
+| 3 | Eu achei o sistema fácil de usar. | 3 |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema. | 3 |
+| 5 | Eu acho que as várias funções do sistema estão muito bem integradas. | 3 |
+| 6 | Eu acho que o sistema apresenta muita inconsistência. | 3 |
+| 7 | Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente. | 3 |
+| 8 | Eu achei o sistema atrapalhado de usar. | 2 |
+| 9 | Eu me senti confiante ao usar o sistema. | 3 |
+| 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 3 |
+
+**Score SUS: 52,5**
+
+---
+
+### Testadora: Lais Victoria
+**Perfil:** Estudante de Ciência da Computação
+
+| # | Afirmação | Nota |
+|---|-----------|------|
+| 1 | Eu acho que gostaria de usar esse sistema com frequência. | 4 |
+| 2 | Eu acho o sistema desnecessariamente complexo. | 2 |
+| 3 | Eu achei o sistema fácil de usar. | 4 |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema. | 2 |
+| 5 | Eu acho que as várias funções do sistema estão muito bem integradas. | 4 |
+| 6 | Eu acho que o sistema apresenta muita inconsistência. | 2 |
+| 7 | Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente. | 3 |
+| 8 | Eu achei o sistema atrapalhado de usar. | 2 |
+| 9 | Eu me senti confiante ao usar o sistema. | 4 |
+| 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 2 |
+
+**Score SUS: 72,4**
+
+---
+
+### Testador: Pedro Negri
+**Perfil:** Estudante de Ciência da Computação
+
+| # | Afirmação | Nota |
+|---|-----------|------|
+| 1 | Eu acho que gostaria de usar esse sistema com frequência. | 4 |
+| 2 | Eu acho o sistema desnecessariamente complexo. | 2 |
+| 3 | Eu achei o sistema fácil de usar. | 4 |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema. | 2 |
+| 5 | Eu acho que as várias funções do sistema estão muito bem integradas. | 4 |
+| 6 | Eu acho que o sistema apresenta muita inconsistência. | 2 |
+| 7 | Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente. | 4 |
+| 8 | Eu achei o sistema atrapalhado de usar. | 2 |
+| 9 | Eu me senti confiante ao usar o sistema. | 4 |
+| 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 2 |
+
+**Score SUS: 75,0**
+
+---
+
+### Testador: Valter Lima
+**Perfil:** Estudante de Sistemas da Informação
+
+| # | Afirmação | Nota |
+|---|-----------|------|
+| 1 | Eu acho que gostaria de usar esse sistema com frequência. | 3 |
+| 2 | Eu acho o sistema desnecessariamente complexo. | 3 |
+| 3 | Eu achei o sistema fácil de usar. | 2 |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema. | 4 |
+| 5 | Eu acho que as várias funções do sistema estão muito bem integradas. | 3 |
+| 6 | Eu acho que o sistema apresenta muita inconsistência. | 3 |
+| 7 | Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente. | 2 |
+| 8 | Eu achei o sistema atrapalhado de usar. | 3 |
+| 9 | Eu me senti confiante ao usar o sistema. | 2 |
+| 10 | Eu precisei aprender várias coisas novas antes de conseguir usar o sistema. | 4 |
+
+**Score SUS: 37,5**
+
+---
+
+## Consolidação dos Resultados
+
+| Participante | Score SUS | Classificação |
+|---|---|---|
+| Enzo Braga | 67,5 | OK/Marginal |
+| Lucas Levi | 32,5 | Ruim |
+| Paulo Roberto | 52,5 | OK / Marginal |
+| Lais Victoria | 72,5 | Bom |
+| Pedro Negri | 75,0 | Bom |
+| Valter Lima | 37,5 | Ruim |
+| **Média final** | **56,25** | **OK / Marginal** |
+
+
+<div align="center">
+ <sub>Imagem 102 - Gráfico SUS - Pergunta 1</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_1.png" width="100%" alt="Gráfico SUS - Pergunta 1"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 103 - Gráfico SUS - Pergunta 2</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_2.png" width="100%" alt="Gráfico SUS - Pergunta 2"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 104 - Gráfico SUS - Pergunta 3</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_3.png" width="100%" alt="Gráfico SUS - Pergunta 3"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 105 - Gráfico SUS - Pergunta 4</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_4.png" width="100%" alt="Gráfico SUS - Pergunta 4"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 106 - Gráfico SUS - Pergunta 5</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_5.png" width="100%" alt="Gráfico SUS - Pergunta 5"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 107 - Gráfico SUS - Pergunta 6</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_6.png" width="100%" alt="Gráfico SUS - Pergunta 6"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 108 - Gráfico SUS - Pergunta 7</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_7.png" width="100%" alt="Gráfico SUS - Pergunta 7"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 109 - Gráfico SUS - Pergunta 8</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_8.png" width="100%" alt="Gráfico SUS - Pergunta 8"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 110 - Gráfico SUS - Pergunta 9</sub><br>
+ <img src="./assets/teste-sus/grafico_pergunta_9.png" width="100%" alt="Gráfico SUS - Pergunta 9"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+<div align="center">
+ <sub>Imagem 111 - Gráfico SUS - Pergunta 10</sub><br>
+<img src="./assets/teste-sus/grafico_pergunta_10.png" width="100%" alt="Gráfico SUS - Pergunta 10"><br>
+ <sub>Fonte: Elaborado pelo grupo, 2026.</sub>
+ <br><br><br>
+</div>
+
+
+## Análise dos Resultados
+
+O score médio de 56,25 posiciona o RedRun abaixo da média de referência do SUS (68) [²⁰](#8-referências), com scores individuais variando entre 32,5 e 75,0, uma amplitude de 42,5 pontos que revela experiências bastante assimétricas entre os participantes. Essa dispersão não é aleatória: ela acompanha diretamente o desempenho observado no teste de guerrilha. Participantes que navegaram com mais naturalidade pelo fluxo de gerente, como Lais Victoria (72,5) e Pedro Negri (75,0), avaliaram o sistema de forma positiva. Já os que enfrentaram barreiras no fluxo de auditoria, como Lucas Levi (32,5) e Valter Lima (37,5), reportaram dificuldades que impactaram diretamente sua percepção de usabilidade.
+
+Vale destacar um caso específico: Lucas Levi foi o único participante que não concluiu nenhuma das três tarefas do teste de guerrilha (T1, T2 e T3), e seu score de 32,5 é o mais baixo da amostra, o que reforça a coerência entre desempenho objetivo e percepção subjetiva. Esse caso ilustra bem como o SUS, quando analisado junto ao guerrilha, oferece uma leitura mais completa da experiência do usuário.
+
+Nas perguntas positivas, os resultados mostram uma percepção moderada: na pergunta 1 ("gostaria de usar o sistema com frequência"), 3 de 6 participantes (50%) responderam 4 e 2 responderam 3, sem nenhuma resposta acima de 4. Na pergunta 3 ("achei o sistema fácil de usar"), as respostas ficaram distribuídas igualmente entre 2, 3 e 4, cada uma com 33,3%, sem nenhum 5. Na pergunta 5 ("funções bem integradas"), 3 de 6 (50%) responderam 4, resultado positivo mas contido. Na pergunta 7 ("as pessoas aprenderão rapidamente"), metade dos participantes (50%) respondeu 3 e 33,3% responderam 2, indicando baixa confiança na curva de aprendizado. Na pergunta 9 ("me senti confiante"), 3 de 6 responderam 4, mas 2 responderam 2.
+
+Nas perguntas negativas, os dados são mais preocupantes do que o esperado: na pergunta 2 ("o sistema é desnecessariamente complexo"), 50% responderam 2 e 33,3% responderam 3, ou seja, apenas 1 participante discordou fortemente. Na pergunta 4 ("precisaria de ajuda técnica"), as respostas ficaram divididas igualmente entre 2, 3 e 4 (33,3% cada), o que confirma o achado catastrófico número 2 do guerrilha: a ausência de documentação contextual. Como essa é uma afirmação negativa, concordância alta nela indica problema de usabilidade. Na pergunta 6 ("o sistema apresenta muita inconsistência"), as respostas se dividiram entre 2 e 3 (50% cada), sem nenhuma nota 1, indicando que parte dos participantes percebeu algum grau de inconsistência. Na pergunta 8 ("o sistema é atrapalhado de usar"), 4 de 6 participantes (66,7%) responderam 2, o que é positivo, mas 1 respondeu 3 e 1 respondeu 4. Na pergunta 10 ("precisei aprender coisas novas"), 50% responderam 2, mas 33,3% responderam 4, reforçando a dificuldade de onboarding identificada no guerrilha.
+
+Os dois problemas classificados como catastróficos no teste de guerrilha, o fluxo de auditoria pouco intuitivo e a ausência de documentação contextual, são os principais responsáveis pela queda do score médio abaixo de 68. Eles afetaram diretamente quatro dos seis participantes (Enzo, Lucas, Paulo Roberto e Valter Lima) e impactaram a dimensão mais crítica do sistema: o registro da quilometragem durante o evento.
+
+Por outro lado, o sistema apresenta aspectos avaliados de forma consistente e positiva, como a integração das funcionalidades de gerente, a validação de CPF elogiada por dois testadores e a estabilidade geral da aplicação. Esses pontos são refletidos nos scores mais altos e indicam que a base do sistema é funcional, sendo os ajustes necessários localizados, porém estratégicos.
+
+Com base nos resultados do SUS e nos achados do teste de guerrilha, o grupo realizou melhorias direcionadas ao fluxo de auditoria e à interface do sistema, priorizando os problemas de severidade 3 e 4 identificados. As correções incluíram reestruturação do fluxo de auditoria, adição de instruções contextuais e melhorias na seleção de perfil. Por limitações de tempo e disponibilidade dos participantes, não foi possível reaplicar o SUS após as refatorações para mensurar o impacto das mudanças.
+
+Como limitação, vale registrar que a amostra é pequena (n=6), não probabilística e composta por participantes sem contexto operacional do evento, o que pode ter introduzido viés de cortesia nas respostas e amplificado a percepção de dificuldade em tarefas que um auditor real executaria com mais familiaridade.
+
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
 
@@ -5442,9 +5706,9 @@ O principal diferencial da RedRun reside em sua aderência total à dinâmica do
 
 A aplicação RedRun está inserida na convergência entre eventos esportivos experienciais, brand activation e tecnologia para gestão operacional de eventos (EventTech). Trata-se de um nicho no qual marcas utilizam experiências esportivas, como corridas de endurance e desafios coletivos, para fortalecer relacionamento com comunidades, gerar engajamento presencial e produzir dados sobre participação e desempenho. No caso do Red Bull 24 Horas, a criticidade operacional é elevada, pois a legitimidade da competição depende da precisão contínua dos registros ao longo de 24 horas.
 
-Economicamente, o setor de eventos no Brasil demonstra retomada consistente: segundo a ABRAPE, em 2024 o nível de emprego no núcleo do setor ficou **60,8% acima do período pré-pandemia**, evidenciando sua relevância para cadeias de serviços, tecnologia, marketing e entretenimento ao vivo [¹⁹](#8-referências). Esse crescimento se articula à digitalização da operação de eventos, impulsionada pela demanda por plataformas com registros em tempo real, automação, dashboards e capacidade de auditoria [²⁰](#8-referências).
+Economicamente, o setor de eventos no Brasil demonstra retomada consistente: segundo a ABRAPE, em 2024 o nível de emprego no núcleo do setor ficou **60,8% acima do período pré-pandemia**, evidenciando sua relevância para cadeias de serviços, tecnologia, marketing e entretenimento ao vivo [¹²](#8-referências). Esse crescimento se articula à digitalização da operação de eventos, impulsionada pela demanda por plataformas com registros em tempo real, automação, dashboards e capacidade de auditoria [¹³](#8-referências).
 
-No âmbito regulatório, a RedRun deve atender à LGPD, pois processa dados de corredores, equipes, auditores, registros de turnos, horários de atividade e métricas de desempenho. Portanto, controle de acesso, minimização de dados, rastreabilidade e segurança da informação são requisitos estruturais da solução [²¹](#8-referências). Nesse contexto, a RedRun posiciona-se como uma solução de digitalização operacional para eventos esportivos de endurance, atuando especificamente na coleta, validação e rastreabilidade de dados de desempenho em tempo real. Sua proposta responde à necessidade de reduzir erros manuais, aumentar a confiabilidade dos registros e fornecer informações consolidadas para auditoria, tomada de decisão operacional e análise pós-evento.
+No âmbito regulatório, a RedRun deve atender à LGPD, pois processa dados de corredores, equipes, auditores, registros de turnos, horários de atividade e métricas de desempenho. Portanto, controle de acesso, minimização de dados, rastreabilidade e segurança da informação são requisitos estruturais da solução [¹⁴](#8-referências). Nesse contexto, a RedRun posiciona-se como uma solução de digitalização operacional para eventos esportivos de endurance, atuando especificamente na coleta, validação e rastreabilidade de dados de desempenho em tempo real. Sua proposta responde à necessidade de reduzir erros manuais, aumentar a confiabilidade dos registros e fornecer informações consolidadas para auditoria, tomada de decisão operacional e análise pós-evento.
 
 ### 6.2.2 Tamanho e Crescimento do Mercado
 
@@ -5452,13 +5716,13 @@ No âmbito regulatório, a RedRun deve atender à LGPD, pois processa dados de c
 
 O mercado relacionado à RedRun deve ser analisado a partir de dois níveis: o setor demandante, composto por empresas e operações de eventos, e o mercado tecnológico, formado por soluções digitais voltadas à automação operacional, registro de dados, acompanhamento em tempo real e geração de relatórios. A RedRun não representa o setor de eventos como um todo, mas uma solução de camada operacional — uma API e aplicação web voltadas ao controle de turnos, rastreabilidade dos registros e consolidação automatizada de dados em eventos de endurance. Na ausência de dados públicos específicos para esse nicho, a análise utiliza o mercado de softwares de gestão de eventos como aproximação mais próxima, dado que a RedRun opera dentro desse ecossistema tecnológico.
 
-No recorte brasileiro, o setor demandante apresenta dimensão econômica expressiva. O III Dimensionamento Econômico do Setor de Eventos no Brasil, elaborado pela ABEOC Brasil, Sebrae e FIEC, estimou faturamento de **R\$ 813,5 bilhões em 2024** para o setor de eventos [²²](#8-referências). Esse valor não corresponde diretamente ao mercado de softwares de gestão, mas representa a escala econômica das organizações que demandam soluções digitais de controle, rastreabilidade e digitalização de processos operacionais.
+No recorte brasileiro, o setor demandante apresenta dimensão econômica expressiva. O III Dimensionamento Econômico do Setor de Eventos no Brasil, elaborado pela ABEOC Brasil, Sebrae e FIEC, estimou faturamento de **R\$ 813,5 bilhões em 2024** para o setor de eventos [¹⁵](#8-referências). Esse valor não corresponde diretamente ao mercado de softwares de gestão, mas representa a escala econômica das organizações que demandam soluções digitais de controle, rastreabilidade e digitalização de processos operacionais.
 
-No mercado global de tecnologia para eventos, a Grand View Research estima que o segmento de softwares de gestão de eventos foi avaliado em **US\$ 8,40 bilhões em 2024** e deve alcançar **US\$ 17,33 bilhões até 2030**, com CAGR de **13,2%** entre 2025 e 2030 [²⁰](#8-referências). Ainda que as estimativas variem conforme a metodologia e o ano-base adotados, as fontes convergem em um ponto central: um crescimento anual sustentado acima de 13%, o que evidencia a expansão consistente do mercado em que a RedRun se insere. A Global Market Insights reforça essa tendência ao estimar o mesmo mercado em **US\$ 7,6 bilhões em 2023**, com crescimento superior a **13%** ao ano entre 2024 e 2032 [²³](#8-referências).
+No mercado global de tecnologia para eventos, a Grand View Research estima que o segmento de softwares de gestão de eventos foi avaliado em **US\$ 8,40 bilhões em 2024** e deve alcançar **US\$ 17,33 bilhões até 2030**, com CAGR de **13,2%** entre 2025 e 2030 [¹³](#8-referências). Ainda que as estimativas variem conforme a metodologia e o ano-base adotados, as fontes convergem em um ponto central: um crescimento anual sustentado acima de 13%, o que evidencia a expansão consistente do mercado em que a RedRun se insere. A Global Market Insights reforça essa tendência ao estimar o mesmo mercado em **US\$ 7,6 bilhões em 2023**, com crescimento superior a **13%** ao ano entre 2024 e 2032 [¹⁶](#8-referências).
 
-Além do crescimento em valor de mercado, a composição tecnológica do setor reforça a aderência da RedRun a esse contexto: segundo a Grand View Research, soluções baseadas em nuvem representaram mais de **63,0%** do mercado global de softwares de gestão de eventos em 2024 [²⁰](#8-referências). Esse dado aproxima diretamente a solução do comportamento do mercado, pois a RedRun opera como aplicação web e API, com potencial de acesso multiplataforma, atualização contínua e menor dependência de infraestrutura local.
+Além do crescimento em valor de mercado, a composição tecnológica do setor reforça a aderência da RedRun a esse contexto: segundo a Grand View Research, soluções baseadas em nuvem representaram mais de **63,0%** do mercado global de softwares de gestão de eventos em 2024 [¹³](#8-referências). Esse dado aproxima diretamente a solução do comportamento do mercado, pois a RedRun opera como aplicação web e API, com potencial de acesso multiplataforma, atualização contínua e menor dependência de infraestrutura local.
 
-O recorte latino-americano indica oportunidade regional direta: o mercado de softwares de gestão de eventos na América Latina gerou **US\$ 624 milhões em 2024** e deve atingir **US\$ 1,26 bilhão até 2030**, com CAGR de **12,8%** [²⁴](#8-referências). Esses dados indicam que a RedRun está inserida em um mercado tecnológico em expansão acelerada, impulsionado pela digitalização de operações, necessidade de monitoramento em tempo real e automação de processos em eventos de grande porte.
+O recorte latino-americano indica oportunidade regional direta: o mercado de softwares de gestão de eventos na América Latina gerou **US\$ 624 milhões em 2024** e deve atingir **US\$ 1,26 bilhão até 2030**, com CAGR de **12,8%** [¹⁷](#8-referências). Esses dados indicam que a RedRun está inserida em um mercado tecnológico em expansão acelerada, impulsionado pela digitalização de operações, necessidade de monitoramento em tempo real e automação de processos em eventos de grande porte.
 
 ### 6.2.3 Tendências de Mercado
 
@@ -5466,9 +5730,9 @@ O recorte latino-americano indica oportunidade regional direta: o mercado de sof
 
 A adoção da RedRun é influenciada por três tendências estruturais que reorganizam o setor de eventos e definem o espaço em que a solução opera: a digitalização da operação, o uso crescente de dados em experiências esportivas e a busca por ferramentas especializadas de controle em tempo real.
 
-No eixo tecnológico, o mercado de softwares de gestão de eventos é impulsionado pela automação de processos, pela migração para arquiteturas em nuvem e pela análise de dados como apoio à decisão operacional. Soluções baseadas em nuvem já representam mais de 63% desse mercado global [²⁰](#8-referências), comportamento ao qual a RedRun adere diretamente por ser uma aplicação web integrada a uma API, com acesso multiplataforma e baixa dependência de infraestrutura local. A tendência favorece justamente o tipo de fluxo que a solução propõe: a substituição de registros manuais por uma camada digital capaz de consolidar dados com precisão e rastreabilidade.
+No eixo tecnológico, o mercado de softwares de gestão de eventos é impulsionado pela automação de processos, pela migração para arquiteturas em nuvem e pela análise de dados como apoio à decisão operacional. Soluções baseadas em nuvem já representam mais de 63% desse mercado global [¹³](#8-referências), comportamento ao qual a RedRun adere diretamente por ser uma aplicação web integrada a uma API, com acesso multiplataforma e baixa dependência de infraestrutura local. A tendência favorece justamente o tipo de fluxo que a solução propõe: a substituição de registros manuais por uma camada digital capaz de consolidar dados com precisão e rastreabilidade.
 
-No eixo comportamental, organizações esportivas e marcas ampliam o uso de dados para qualificar experiências ao vivo, fortalecer o relacionamento com comunidades e sustentar propostas de patrocínio. A Deloitte aponta que bases de dados de participantes permitem personalizar o engajamento e agregar valor comercial a eventos presenciais [²⁵](#8-referências). A RedRun acompanha essa mudança: o evento deixa de ser apenas uma experiência presencial e passa a gerar dados estruturados sobre participação, desempenho e operação.
+No eixo comportamental, organizações esportivas e marcas ampliam o uso de dados para qualificar experiências ao vivo, fortalecer o relacionamento com comunidades e sustentar propostas de patrocínio. A Deloitte aponta que bases de dados de participantes permitem personalizar o engajamento e agregar valor comercial a eventos presenciais [¹⁸](#8-referências). A RedRun acompanha essa mudança: o evento deixa de ser apenas uma experiência presencial e passa a gerar dados estruturados sobre participação, desempenho e operação.
 
 No eixo mercadológico, consolida-se a demanda por soluções especializadas em eficiência operacional, voltadas a eventos com múltiplos registros simultâneos, consolidação de métricas e acompanhamento contínuo. Em vez de plataformas genéricas de inscrição ou bilheteria, as organizações passam a buscar ferramentas específicas de controle e rastreabilidade — camada exata em que a RedRun atua.
 
@@ -5483,7 +5747,7 @@ A concorrência enfrentada pela RedRun não se concentra em um produto equivalen
 **Concorrentes indiretos.** Em uma camada distinta operam as **plataformas comerciais de gestão de eventos** (como Sympla, Even3 e Eventbrite) e as **soluções de cronometragem esportiva por chip RFID** (amplamente usadas em corridas de rua). As primeiras são maduras e escaláveis, mas resolvem inscrição, bilheteria e credenciamento — não o registro de desempenho em tempo real. As segundas pressupõem um percurso físico com pontos de captura, premissa que não se aplica a uma esteira estática, onde não há deslocamento espacial a ser cronometrado. Nenhuma das duas modela a semântica central do evento: a sessão de corrida em uma esteira zerada a cada troca de corredor.
  
 <div align="center">
-  <sub> Quadro 32 - Análise comparativa da concorrência </sub><br>
+  <sub> Quadro 30 - Análise comparativa da concorrência </sub><br>
 
 | Critério | Método manual (prancheta) | Dispositivos vestíveis | Plataformas genéricas / chip RFID | **RedRun** |
 | :--- | :---: | :---: | :---: | :---: |
@@ -5515,7 +5779,7 @@ A adoção da RedRun é influenciada por três tendências principais: digitaliz
 
 A RedRun atende a um segmento primário bem delimitado: as equipes operacionais do Red Bull 24 Horas no Brasil. Geograficamente, o evento é realizado em múltiplas regiões do país, incluindo capitais e cidades de médio porte, e cada edição regional opera com sua própria equipe, tornando a solução replicável sem adaptações estruturais.
 
-Dentro desse segmento, dois grupos compõem o público direto. O primeiro é o gerente do evento, responsável pela configuração e coordenação geral da operação antes e durante a competição. O segundo é formado pelos auditores, membros da equipe de Field Marketing da Red Bull que atuam na linha de frente ao longo das 24 horas. Segundo a ABRAPE (2025), o setor de eventos registrou 179.133 empregos formais em 2024, evidenciando a profissionalização crescente das equipes operacionais que sustentam eventos dessa escala [¹⁹](#8-referências).
+Dentro desse segmento, dois grupos compõem o público direto. O primeiro é o gerente do evento, responsável pela configuração e coordenação geral da operação antes e durante a competição. O segundo é formado pelos auditores, membros da equipe de Field Marketing da Red Bull que atuam na linha de frente ao longo das 24 horas. Segundo a ABRAPE (2025), o setor de eventos registrou 179.133 empregos formais em 2024, evidenciando a profissionalização crescente das equipes operacionais que sustentam eventos dessa escala [¹²](#8-referências).
 
 Como segmento secundário, identifica-se o mercado de eventos de corrida em revezamento de forma geral: competições universitárias, corporativas e de academias que operam no mesmo formato de equipes em esteira por períodos prolongados e que enfrentam o mesmo problema de apuração manual. Esse mercado representa uma oportunidade de expansão natural da solução após a validação no contexto Red Bull.
 
@@ -5579,7 +5843,7 @@ O benefício central reside na redução da fragilidade da apuração manual, co
 
 Identificou-se que, por ter sido desenvolvida exclusivamente para o Red Bull 24 Horas Brasil, o modelo de precificação mais adequado à RedRun é o de desenvolvimento sob encomenda, com entrega da aplicação web e da API ao cliente ao final do projeto. Nesse formato, o valor não decorre de assinatura ou licenciamento recorrente, mas da construção de uma solução personalizada para uma necessidade operacional específica.
 
-Como referência de mercado, observou-se que projetos de software sob medida no Brasil variam de aproximadamente R$ 40.000, em soluções simples, a mais de R$ 500.000, em sistemas de maior complexidade [²⁶](#8-referências). Por se tratar de parceria institucional, a RedRun não possui valor comercial público; ainda assim, seu escopo, que abrange aplicação web, API, autenticação, dashboard, histórico, exportação, sincronização, testes e documentação, posiciona-a acima de uma aplicação institucional simples e abaixo de um sistema enterprise.
+Como referência de mercado, observou-se que projetos de software sob medida no Brasil variam de aproximadamente R$ 40.000, em soluções simples, a mais de R$ 500.000, em sistemas de maior complexidade [¹⁹](#8-referências). Por se tratar de parceria institucional, a RedRun não possui valor comercial público; ainda assim, seu escopo, que abrange aplicação web, API, autenticação, dashboard, histórico, exportação, sincronização, testes e documentação, posiciona-a acima de uma aplicação institucional simples e abaixo de um sistema enterprise.
 
 Concluiu-se que a precificação deve contemplar levantamento de requisitos, prototipação, desenvolvimento, testes, implantação e documentação. Após a entrega, hospedagem, suporte e manutenções evolutivas passam à responsabilidade do cliente, podendo ser tratadas como novos contratos. O modelo justifica-se pela personalização da solução e pelo valor operacional gerado na redução de erros e no aumento da confiabilidade dos registros.
 
@@ -5637,66 +5901,44 @@ Para trabalhos futuros, o grupo identificou três frentes principais de evoluç�
 
 ---
 
-¹⁷ ABRAMOV, Dan. **Presentational and Container Components.** Medium, 23 mar. 2015. Disponível em: https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0. Acesso em: 26 mai. 2026.
+¹⁵ ABEOC BRASIL; SEBRAE; FIEC. **III Dimensionamento Econômico do Setor de Eventos no Brasil 2024/2025**. 2026. Disponível em: https://abeoc.org.br/wp-content/uploads/2026/05/III-Dimensionamento-setor-eventos-digital.pdf. Acesso em: 6 jun. 2026.
 
-⁸ BUSINESS RULES GROUP. **Business Rules Manifesto:** the principles of rule independence. Version 2.0. S. l.: Business Rules Group, 2003. Disponível em: <https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf>. Acesso em: 27 abr. 2026.
+¹² ABRAPE. **Setor de eventos segue em crescimento e registra, em 2024, nível de emprego 60,8% superior ao período pré-pandemia**. Associação Brasileira dos Promotores de Eventos, 2024. Disponível em: https://www.abrape.com.br/setor-de-eventos-segue-em-crescimento-e-registra-em-2024-nivel-de-emprego-608-superior-ao-periodo-pre-pandemia/. Acesso em: 1 jun. 2026.
 
-¹ ESPM. **Runaholic Club: lifestyle e comunidade de wellness para a Geração Z**. Disponível em: <https://www.espm.br/blog/runaholic-club-lifestyle-e-comunidade-de-wellness-para-a-geracao-z/>. Acesso em: 28 abr. 2026.
+¹⁹ AEGIS AI. **Quanto custa desenvolver software sob medida em 2026? Preços reais + guia**. Aegis AI, 2026. Disponível em: https://www.aegisai.com.br/blog/preco-desenvolvimento-software-sob-medida-2026. Acesso em: 6 jun. 2026.
 
-¹⁰ FIELDING, Roy Thomas. **Architectural Styles and the Design of Network-based Software Architectures**. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: <https://ics.uci.edu/~fielding/pubs/dissertation/top.htm>. Acesso em: 27 abr. 2026.
+²⁰ BANGOR, Aaron; KORTUM, Philip T.; MILLER, James T. An empirical evaluation of the System Usability Scale. *International Journal of Human-Computer Interaction*, v. 24, n. 6, p. 574–594, 2008. Disponível em: https://www.tandfonline.com/doi/abs/10.1080/10447310802205776. Acesso em: 24 jun. 2026.
 
-¹⁴ FOWLER, Martin. **Patterns of Enterprise Application Architecture.** Boston: Addison-Wesley, 2002. Disponível em: https://martinfowler.com/books/eaa.html. Acesso em: 25 mai. 2026.
+²¹ BARROS, Myrela. *Guia atualizado de como utilizar a escala SUS (System Usability Scale) no seu produto*. UX Collective, out. 2022. Disponível em: <https://brasil.uxdesign.cc/guia-atualizado-de-como-utilizar-a-escala-sus-system-usability-scale-no-seu-produto-ab773f29c522>. Acesso em: 22 jun. 2026.
 
-¹³ GAMMA, Erich; HELM, Richard; JOHNSON, Ralph; VLISSIDES, John. **Design Patterns: Elements of Reusable Object-Oriented Software.** Reading: Addison-Wesley, 1994.
+¹⁴ BRASIL. Lei nº 13.709, de 14 de agosto de 2018. Lei Geral de Proteção de Dados Pessoais (LGPD). Brasília, DF: Presidência da República, 2018. Disponível em: https://www.gov.br/pt-br/lgpd/lei-geral-de-protecao-de-dados-lgpd. Acesso em: 1 jun. 2026.
 
-¹⁸ FOWLER, Martin. **Presentation Model**. martinfowler.com, 19 jul. 2004. Disponível em: https://martinfowler.com/eaaDev/PresentationModel.html. Acesso em: 26 mai. 2026.
+⁸ BUSINESS RULES GROUP. **Business Rules Manifesto: the principles of rule independence**. Version 2.0. S. l.: Business Rules Group, 2003. Disponível em: https://www.businessrulesgroup.org/brmanifesto/BRManifesto.pdf. Acesso em: 27 abr. 2026.
 
-³ H.PRIME SAÚDE. **A revolução da geração wellness: por que a saúde se tornou o novo símbolo de sucesso**. Disponível em: <https://hprimesaude.com.br/blog/a-revolucao-da-geracao-wellness-por-que-a-saude-se-tornou-o-novo-simbolo-de-sucesso/>. Acesso em: 28 abr. 2026.
+¹⁸ DELOITTE INSIGHTS. **2025 Sports Industry Outlook**. Deloitte Insights, 2025. Disponível em: https://www2.deloitte.com/us/en/insights/industry/technology/technology-media-and-telecom-predictions.html. Acesso em: 12 jun. 2026.
 
-⁹ JACOBSON, Ivar; SPENCE, Ian; BITTNER, Kurt. **Use-Case 3.0 — The Definitive Guide**. S. l.: Ivar Jacobson International, 2024.
+¹ ESPM. **Runaholic Club: lifestyle e comunidade de wellness para a Geração Z**. 9 abr. 2026. Disponível em: https://www.espm.br/blog/runaholic-club-lifestyle-e-comunidade-de-wellness-para-a-geracao-z/. Acesso em: 28 abr. 2026.
 
-¹⁵ MARTIN, Robert C. **Agile Software Development, Principles, Patterns, and Practices.** Upper Saddle River: Prentice Hall, 2002. Disponível em: https://www.pearson.com/en-us/subject-catalog/p/agile-software-development-principles-patterns-and-practices/P200000009487. Acesso em: 25 mai. 2026.
+⁹ FIELDING, Roy Thomas. **Architectural Styles and the Design of Network-based Software Architectures**. 2000. Tese (Doutorado em Ciências da Computação) — University of California, Irvine, 2000. Disponível em: https://ics.uci.edu/~fielding/pubs/dissertation/top.htm. Acesso em: 27 abr. 2026.
 
-¹⁶ MARTIN, Robert C. **Clean Architecture: A Craftsman's Guide to Software Structure and Design.** Upper Saddle River: Prentice Hall, 2017. Disponível em: https://www.pearson.com/en-us/subject-catalog/p/clean-architecture-a-craftsmans-guide-to-software-structure-and-design/P200000009528. Acesso em: 25 mai. 2026.
+¹⁶ GLOBAL MARKET INSIGHTS. **Event Management Software Market Share, Size and Forecast 2024-2032**. Global Market Insights, 2024. Disponível em: https://www.gminsights.com/industry-analysis/event-management-software-market. Acesso em: 6 jun. 2026.
 
-¹¹ MONTGOMERY, Cynthia A.; PORTER, Michael E. (org.). **Estratégia:** a busca da vantagem competitiva. Rio de Janeiro: Elsevier, 1998.
+¹³ GRAND VIEW RESEARCH. **Event Management Software Market Size, Share & Trends Analysis Report**. Grand View Research, 2024. Disponível em: https://www.grandviewresearch.com/industry-analysis/event-management-software-market-report. Acesso em: 1 jun. 2026.
 
-⁴ MUNDO DO MARKETING. **Baly Brasil ultrapassa Red Bull e assume vice-liderança no mercado de energéticos**. Disponível em: <https://mundodomarketing.com.br/baly-brasil-ultrapassa-red-bull-e-assume-vice-lideranca-no-mercado-de-energeticos>. Acesso em: 28 abr. 2026.
+¹⁷ GRAND VIEW RESEARCH. **Latin America Event Management Software Market Size & Outlook, 2030**. Grand View Research, 2024. Disponível em: https://www.grandviewresearch.com/horizon/outlook/event-management-software-market/latin-america. Acesso em: 12 jun. 2026.
 
-⁶ OSTERWALDER, Alexander; PIGNEUR, Yves. **Value Proposition Design:** how to create products and services customers want. Hoboken: Wiley, 2014.
+³ H.PRIME SAÚDE. **A revolução da geração wellness: por que a saúde se tornou o novo símbolo de sucesso**. 20 ago. 2025. Disponível em: https://hprimesaude.com.br/blog/a-revolucao-da-geracao-wellness-por-que-a-saude-se-tornou-o-novo-simbolo-de-sucesso/. Acesso em: 28 abr. 2026.
 
-⁵ PORTER, Michael E. **Estratégia competitiva:** técnicas para análise de indústrias e da concorrência. 2. ed. Rio de Janeiro: Elsevier, 2004.
+¹⁰ JACOBSON, Ivar; SPENCE, Ian; BITTNER, Kurt. **Use-Case 3.0 — The Definitive Guide**. S. l.: Ivar Jacobson International, 2024.
+
+¹¹ MONTGOMERY, Cynthia A.; PORTER, Michael E. (org.). **Estratégia: a busca da vantagem competitiva**. Rio de Janeiro: Elsevier, 1998.
+
+⁴ MUNDO DO MARKETING. **Baly Brasil ultrapassa Red Bull e assume vice-liderança no mercado de energéticos**. 23 mai. 2025. Disponível em: https://mundodomarketing.com.br/baly-brasil-ultrapassa-red-bull-e-assume-vice-lideranca-no-mercado-de-energeticos. Acesso em: 28 abr. 2026.
+
+⁶ OSTERWALDER, Alexander; PIGNEUR, Yves. **Value Proposition Design: how to create products and services customers want**. Hoboken: Wiley, 2014.
+
+⁵ PORTER, Michael E. **Estratégia competitiva: técnicas para análise de indústrias e da concorrência**. 2. ed. Rio de Janeiro: Elsevier, 2004.
 
 ⁷ PROJECT MANAGEMENT INSTITUTE. **Um guia do conhecimento em gerenciamento de projetos (Guia PMBOK®)**. 7. ed. Newtown Square: PMI, 2021.
 
-² TIMES BRASIL. **Red Bull e marcas para a Geração Z**. Disponível em: <https://timesbrasil.com.br/empresas-e-negocios/red-bull-marcas-geracao-z/>. Acesso em: 28 abr. 2026.
-
-¹⁹ ABRAPE. **Setor de eventos segue em crescimento e registra, em 2024, nível de emprego 60,8% superior ao período pré-pandemia**. Associação Brasileira dos Promotores de Eventos, 2024. Disponível em: <https://www.abrape.com.br/setor-de-eventos-segue-em-crescimento-e-registra-em-2024-nivel-de-emprego-608-superior-ao-periodo-pre-pandemia/>. Acesso em: 1 jun. 2026.
-
-²⁰ GRAND VIEW RESEARCH. **Event Management Software Market Size, Share & Trends Analysis Report**. Grand View Research, 2024. Disponível em: <https://www.grandviewresearch.com/industry-analysis/event-management-software-market-report>. Acesso em: 1 jun. 2026.
-
-²¹ BRASIL. **Lei Geral de Proteção de Dados Pessoais (LGPD)**. Gov.br, 2026. Disponível em: <https://www.gov.br/pt-br/lgpd/lei-geral-de-protecao-de-dados-lgpd>. Acesso em: 1 jun. 2026.
-
-²⁶ AEGIS AI. **Quanto custa desenvolver software sob medida em 2026? Preços reais + guia**. Aegis AI, 2026. Disponível em: <https://www.aegisai.com.br/blog/preco-desenvolvimento-software-sob-medida-2026>. Acesso em: 6 jun. 2026.
-
-²² ABEOC BRASIL; SEBRAE; FIEC. **III Dimensionamento Econômico do Setor de Eventos no Brasil 2024/2025**. 2026. Disponível em: <https://abeoc.org.br/wp-content/uploads/2026/05/III-Dimensionamento-setor-eventos-digital.pdf>. Acesso em: 6 jun. 2026.
-
-²³ GLOBAL MARKET INSIGHTS. **Event Management Software Market Share, Size and Forecast 2024-2032**. Global Market Insights, 2024. Disponível em: <https://www.gminsights.com/industry-analysis/event-management-software-market>. Acesso em: 6 jun. 2026.
-
-²⁴ GRAND VIEW RESEARCH. Latin America Event Management Software Market Size & Outlook, 2030. Grand View Research, 2024. Disponível em: <https://www.grandviewresearch.com/horizon/outlook/event-management-software-market/latin-america>. Acesso em: 12 jun. 2026.
-
-²⁵ DELOITTE. 2025 Sports Industry Outlook. Deloitte Insights, 2025. Disponível em: <https://www2.deloitte.com/us/en/insights/industry/technology/technology-media-and-telecom-predictions.html>. Acesso em: 12 jun. 2026.
-
-# <a name="c9"></a>Anexos
-
----
-
-_Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)_
-
-```
-
-```
-
-```
-
-```
+² TIMES BRASIL. **Saiba quais são as marcas favoritas pela Geração Z**. 19 fev. 2025. Disponível em: https://timesbrasil.com.br/empresas-e-negocios/red-bull-marcas-geracao-z/. Acesso em: 28 abr. 2026.
