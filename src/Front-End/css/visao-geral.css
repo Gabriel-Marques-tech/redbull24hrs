@@ -145,29 +145,30 @@ html[data-theme="dark"] .rotulo-resumo {
     color: var(--texto-secundario);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
     main {
-        margin-top: 10px;
+        gap: 22px;
     }
 
     .conteudo {
-        width: calc(100vw - 32px);
-        margin-top: 0;
+        align-items: stretch;
     }
 
     .conteudo h2 {
-        font-size: 22px;
-        margin-bottom: 20px;
-        width: 100%;
+        align-self: stretch;
     }
 
     .card-resumo {
-        width: 100%;
         grid-template-columns: 1fr;
+        align-self: stretch;
     }
 
-    .botoes {
-        margin-top: 24px;
-        padding-bottom: 80px;
+    .linha-resumo {
+        min-height: 54px;
+        padding: 12px 14px;
+    }
+
+    .linha-resumo p {
+        font-size: 15px;
     }
 }
