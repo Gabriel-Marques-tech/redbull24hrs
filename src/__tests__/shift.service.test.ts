@@ -91,6 +91,7 @@ describe("shiftService.startShift", () => {
     ).resolves.toBeDefined();
   });
 
+
   it("throws when treadmill is occupied", async () => {
     mockRepo.athleteExists.mockResolvedValue(true);
     mockRepo.eventStatusByAthlete.mockResolvedValue({ status: "in_progress", paused_at: null });
