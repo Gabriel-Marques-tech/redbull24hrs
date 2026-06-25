@@ -1,7 +1,9 @@
 // ---- authFetch (necessário no modo event-edit) ----
 async function authFetch(url, options = {}) {
     const token = localStorage.getItem("accessToken");
-    const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
+    // FormData define seu próprio Content-Type (com boundary); não sobrescrever.
+    const ehFormData = options.body instanceof FormData;
+    const headers = { ...(ehFormData ? {} : { "Content-Type": "application/json" }), ...(options.headers || {}) };
     if (token) headers["Authorization"] = `Bearer ${token}`;
     let res = await fetch(url, { ...options, headers, credentials: "include" });
     if (res.status === 401) {
@@ -31,8 +33,11 @@ const genero     = document.getElementById("generoAtleta");
 const cargo      = document.getElementById("cargoAtleta");
 const emailPessoa = document.getElementById("emailPessoa");
 const senhaPessoa = document.getElementById("senhaPessoa");
+const cpfApoio = document.getElementById("cpfApoio");
 const linkCancelar = document.getElementById("linkCancelar");
 let fotoPerfilData = "";
+// true quando o usuário escolhe uma nova imagem nesta tela (diferencia de uma image_url já salva no DB)
+let novaFotoSelecionada = false;
 
 const modoEventEdit = edicao?.modoEdicao === "event-edit";
 const modoDrawer = edicao?.origem === "drawer";
@@ -77,9 +82,15 @@ function atualizarTipoCadastro() {
 
     camposAtleta.classList.toggle("escondido", !ehAtleta);
     camposAcesso.classList.toggle("ativo", !ehAtleta);
+    formulario.classList.toggle("cadastro-apoio", !ehAtleta);
+    document.body.classList.toggle("cadastro-apoio", !ehAtleta);
 
+    nascimento.required = ehAtleta;
     genero.required = ehAtleta;
-    emailPessoa.required = !ehAtleta;
+    cargo.required = ehAtleta;
+    cpf.required = false;
+    emailPessoa.required = ehAtleta;
+    cpfApoio.required = !ehAtleta;
     senhaPessoa.required = !ehAtleta;
 
     if (!ehAtleta) {
@@ -127,8 +138,9 @@ if (!edicao) {
         const d = edicao.atletaData;
         if (d) {
             nome.value  = d.name   || "";
-            cpf.value   = d.cpf    || "";
+            cpf.value   = formatarCpf(d.cpf || "");
             if (d.gender) genero.value = d.gender;
+            if (d.image_url) fotoPerfilData = d.image_url; // foto atual do DB (URL pública do Storage)
         }
         // cargo não existe no modelo athlete do DB, ocultar select se quiser
     } else {
@@ -142,7 +154,8 @@ if (!edicao) {
         if (cadastroSalvo) {
             nome.value       = cadastroSalvo.nome       || "";
             nascimento.value = cadastroSalvo.nascimento || "";
-            cpf.value        = cadastroSalvo.cpf        || "";
+            cpf.value        = formatarCpf(cadastroSalvo.cpf || "");
+            cpfApoio.value   = formatarCpf(cadastroSalvo.cpf || "");
             emailPessoa.value = cadastroSalvo.email     || "";
             senhaPessoa.value = cadastroSalvo.senha     || "";
             fotoPerfilData    = cadastroSalvo.fotoPerfil || "";
@@ -173,6 +186,7 @@ fotoPerfil.addEventListener("change", async () => {
 
     try {
         fotoPerfilData = await compactarImagemPerfil(arquivo);
+        novaFotoSelecionada = true;
         atualizarPreviewFoto();
     } catch {
         alert("Não foi possível carregar a imagem. Tente outro arquivo.");
@@ -194,6 +208,23 @@ function cpfValido(digitos) {
     return d2 === Number(digitos[10]);
 }
 
+function formatarCpf(valor) {
+    return valor
+        .replace(/\D/g, "")
+        .slice(0, 11)
+        .replace(/(\d{3})(\d)/, "$1.$2")
+        .replace(/(\d{3})(\d)/, "$1.$2")
+        .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+}
+
+cpf.addEventListener("input", () => {
+    cpf.value = formatarCpf(cpf.value);
+});
+
+cpfApoio.addEventListener("input", () => {
+    cpfApoio.value = formatarCpf(cpfApoio.value);
+});
+
 formulario.addEventListener("submit", async (evento) => {
     evento.preventDefault();
 
@@ -205,20 +236,30 @@ formulario.addEventListener("submit", async (evento) => {
         return;
     }
 
-    if (ehAtleta && !genero.value) { alert("Selecione o gênero do atleta."); return; }
+    const emailValor = emailPessoa.value.trim();
 
-    const cpfDigitos = ehAtleta ? cpf.value.replace(/\D/g, "") : "";
+    if (ehAtleta && !emailValor) { alert("Preencha o e-mail."); return; }
+    if (ehAtleta && !nascimento.value) { alert("Preencha a data de nascimento do atleta."); return; }
+    if (ehAtleta && !genero.value) { alert("Selecione o gênero do atleta."); return; }
+    if (ehAtleta && !cargo.value) { alert("Selecione o cargo do atleta."); return; }
+
+    const cpfDigitos = (ehAtleta ? cpf.value : cpfApoio.value).replace(/\D/g, "");
+    if (!ehAtleta && !cpfDigitos) { alert("Preencha o CPF."); return; }
     if (cpfDigitos && !cpfValido(cpfDigitos)) {
         alert("CPF inválido. Confira os números digitados."); return;
     }
 
     if (modoEventEdit) {
-        // ---- salva direto na API ----
-        const body = JSON.stringify({
-            name:   nome.value.trim(),
-            gender: genero.value,
-            cpf:    cpfDigitos || null
-        });
+        // ---- salva direto na API (multipart: campos texto + foto opcional) ----
+        const corpo = new FormData();
+        corpo.append("name", nome.value.trim());
+        corpo.append("gender", genero.value);
+        if (cpfDigitos) corpo.append("cpf", cpfDigitos);
+        // só envia foto se o usuário escolheu uma nova nesta tela (a image_url existente fica como está)
+        if (novaFotoSelecionada && fotoPerfilData) {
+            corpo.append("photo", dataURLparaBlob(fotoPerfilData), "foto.jpg");
+        }
+
         const url = edicao.atletaId
             ? `/teams/${edicao.teamId}/athletes/${edicao.atletaId}`
             : `/teams/${edicao.teamId}/athletes`;
@@ -227,7 +268,7 @@ formulario.addEventListener("submit", async (evento) => {
         const btn = formulario.querySelector("button[type=submit]");
         btn.disabled = true; btn.textContent = "Salvando...";
 
-        const res = await authFetch(url, { method, body });
+        const res = await authFetch(url, { method, body: corpo });
         if (!res || !res.ok) {
             const err = await res?.json().catch(() => ({}));
             alert(err?.error || "Erro ao salvar atleta.");
@@ -267,14 +308,19 @@ formulario.addEventListener("submit", async (evento) => {
             if (duplicado) { alert("Este CPF já foi cadastrado em outro atleta."); return; }
         }
 
-        const emailValor = emailPessoa.value.trim();
-        if (!ehAtleta) {
-            const duplicadoEmail = ["auditor", "gerente"].some((tipo) =>
-                (estado.cadastrosApoio[tipo] || []).some((pessoa, i) =>
-                    pessoa?.email === emailValor && !(tipo === tipoCadastroAtual && i === edicao.indice)
-                )
-            );
-            if (duplicadoEmail) { alert("Este e-mail já foi cadastrado."); return; }
+        const duplicadoCpfApoio = ["auditor", "gerente"].some((tipo) =>
+            (estado.cadastrosApoio[tipo] || []).some((pessoa, i) =>
+                pessoa?.cpf === cpfDigitos && !(tipo === tipoCadastroAtual && i === edicao.indice)
+            )
+        );
+        const duplicadoEmailAtleta = ehAtleta && ["primeira", "segunda"].some((tipo) =>
+            (estado.atletas[tipo] || []).some((atleta, i) =>
+                atleta?.email === emailValor && !(tipo === edicao.tipo && i === edicao.indice)
+            )
+        );
+        if (duplicadoCpfApoio || duplicadoEmailAtleta) {
+            alert(duplicadoCpfApoio ? "Este CPF já foi cadastrado." : "Este e-mail já foi cadastrado.");
+            return;
         }
 
         const cadastro = {
@@ -286,10 +332,11 @@ formulario.addEventListener("submit", async (evento) => {
         if (ehAtleta) {
             cadastro.nascimento = nascimento.value;
             cadastro.cpf        = cpfDigitos;
+            cadastro.email      = emailValor;
             cadastro.genero     = genero.value;
             cadastro.cargo      = cargo.value || "Atleta";
         } else {
-            cadastro.email = emailValor;
+            cadastro.cpf = cpfDigitos;
             cadastro.senha = senhaPessoa.value;
             cadastro.cargo = tipoCadastroAtual === "auditor" ? "Auditor" : "Gerente";
         }

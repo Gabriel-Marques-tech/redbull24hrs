@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Competição - Equipes</title>
     <link rel="stylesheet" href="/css/global.css">
+    <script src="/js/tema.js"></script>
     <link rel="stylesheet" href="/css/equipe.css">
     <link rel="stylesheet" href="/css/gerente-equipes.css">
 </head>
@@ -22,8 +23,9 @@
         <aside class="etapas">
             <h3>Etapas</h3>
             <div class="etapa"><span>1</span><p>Local</p></div>
-            <div class="etapa"><span>2</span><p>Data e hora</p></div>
-            <div class="etapa ativa"><span>3</span><p>Equipes</p></div>
+            <div class="etapa"><span>2</span><p>Imagem</p></div>
+            <div class="etapa"><span>3</span><p>Data e hora</p></div>
+            <div class="etapa ativa"><span>4</span><p>Equipes</p></div>
         </aside>
 
         <section class="conteudo conteudo-equipes-gerente">
@@ -44,10 +46,10 @@
                         </div>
                     </div>
                     <div class="rodape-lista-atletas">
-                        <button class="btn-adicionar-atleta" type="button" data-adicionar-atleta="primeira">
-                            Adicionar
+                        <button class="btn-adicionar-atleta" type="button" data-adicionar-atleta="primeira" aria-label="Adicionar atleta">
+                            <span aria-hidden="true"></span>
                         </button>
-                        <strong class="contador-atletas">1/16</strong>
+                        <strong class="contador-atletas">1 atleta(s)</strong>
                     </div>
                 </div>
             </div>
@@ -69,10 +71,10 @@
                         </div>
                     </div>
                     <div class="rodape-lista-atletas">
-                        <button class="btn-adicionar-atleta" type="button" data-adicionar-atleta="segunda">
-                            Adicionar
+                        <button class="btn-adicionar-atleta" type="button" data-adicionar-atleta="segunda" aria-label="Adicionar atleta">
+                            <span aria-hidden="true"></span>
                         </button>
-                        <strong class="contador-atletas">1/16</strong>
+                        <strong class="contador-atletas">1 atleta(s)</strong>
                     </div>
                 </div>
             </div>
@@ -85,6 +87,7 @@
     </main>
 
     <script>window.MANAGER_ID = <%- manager_id %>; window.PASSO_INICIAL = <%- passo_inicial %>;</script>
+    <script src="/js/imageUtils.js"></script>
     <script src="/js/gerente-equipes.js"></script>
 </body>
 </html>

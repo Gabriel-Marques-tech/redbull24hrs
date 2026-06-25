@@ -426,6 +426,12 @@
       <a class="nav-link" href="#patch-events-start">
         <span class="mb mb-patch">PATCH</span>/events/:id/start
       </a>
+      <a class="nav-link" href="#patch-events-pause">
+        <span class="mb mb-patch">PATCH</span>/events/:id/pause
+      </a>
+      <a class="nav-link" href="#patch-events-resume">
+        <span class="mb mb-patch">PATCH</span>/events/:id/resume
+      </a>
       <a class="nav-link" href="#patch-events-finish">
         <span class="mb mb-patch">PATCH</span>/events/:id/finish
       </a>
@@ -506,6 +512,20 @@
       </a>
       <a class="nav-link" href="#patch-audit-checkpoints-id">
         <span class="mb mb-patch">PATCH</span>/audit/checkpoints/:id
+      </a>
+    </nav>
+
+    <!-- Imagens e OCR -->
+    <nav class="nav-group" aria-label="Imagens e OCR">
+      <div class="nav-group-title">Imagens e OCR</div>
+      <a class="nav-link" href="#post-audit-ocr">
+        <span class="mb mb-post">POST</span>/audit/ocr
+      </a>
+      <a class="nav-link" href="#patch-audit-shifts-image">
+        <span class="mb mb-patch">PATCH</span>/audit/shifts/:id/image
+      </a>
+      <a class="nav-link" href="#patch-audit-checkpoints-image">
+        <span class="mb mb-patch">PATCH</span>/audit/checkpoints/:id/image
       </a>
     </nav>
 
@@ -1209,6 +1229,108 @@
               <tr><td><span class="status-code s4xx">403</span></td><td>Forbidden</td><td>Usuário não é manager</td></tr>
               <tr><td><span class="status-code s4xx">404</span></td><td>Not Found</td><td><code class="inline">{ "error": "Evento não encontrado" }</code></td></tr>
               <tr><td><span class="status-code s4xx">409</span></td><td>Conflict</td><td>Evento já está em andamento ou já está encerrado</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PATCH /events/:id/pause -->
+      <div class="endpoint-card" id="patch-events-pause"
+           data-method="PATCH" data-path="/events/:id/pause" data-rfs="">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-patch">PATCH</span>
+          <code class="endpoint-path">/events/<span class="param-placeholder">:id</span>/pause</code>
+          <span class="endpoint-summary">Pausa a competição (congela o cronômetro de 24h)</span>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Marca <code class="inline">paused_at</code> no evento, congelando o cronômetro de 24h sem encerrar a competição. Enquanto pausado, auditores ficam bloqueados de salvar turnos e checkpoints. O evento precisa estar <code class="inline">in_progress</code> e não pode já estar pausado. <strong>Acesso restrito a manager</strong> (<code class="inline">requireAuth</code> + <code class="inline">requireRole("manager")</code>).</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">id</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">{
+  <span class="key">"id"</span>:        <span class="num">1</span>,
+  <span class="key">"status"</span>:    <span class="str">"in_progress"</span>,
+  <span class="key">"paused_at"</span>: <span class="str">"2026-06-15T14:30:00.000Z"</span>
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Evento pausado</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td><code class="inline">{ "error": "ID inválido" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Token ausente ou inválido</td></tr>
+              <tr><td><span class="status-code s4xx">403</span></td><td>Forbidden</td><td>Usuário não é manager</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td>Not Found</td><td><code class="inline">{ "error": "Evento não encontrado" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">409</span></td><td>Conflict</td><td>Evento não está em andamento ou já está pausado</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PATCH /events/:id/resume -->
+      <div class="endpoint-card" id="patch-events-resume"
+           data-method="PATCH" data-path="/events/:id/resume" data-rfs="">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-patch">PATCH</span>
+          <code class="endpoint-path">/events/<span class="param-placeholder">:id</span>/resume</code>
+          <span class="endpoint-summary">Retoma a competição pausada (religa o cronômetro)</span>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Limpa <code class="inline">paused_at</code>, religando o cronômetro de 24h e liberando novamente a operação de turnos e checkpoints. O evento precisa estar <code class="inline">in_progress</code> e atualmente pausado. <strong>Acesso restrito a manager</strong> (<code class="inline">requireAuth</code> + <code class="inline">requireRole("manager")</code>).</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">id</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">{
+  <span class="key">"id"</span>:        <span class="num">1</span>,
+  <span class="key">"status"</span>:    <span class="str">"in_progress"</span>,
+  <span class="key">"paused_at"</span>: <span class="kw">null</span>
+}</pre>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Evento retomado</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td><code class="inline">{ "error": "ID inválido" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Token ausente ou inválido</td></tr>
+              <tr><td><span class="status-code s4xx">403</span></td><td>Forbidden</td><td>Usuário não é manager</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td>Not Found</td><td><code class="inline">{ "error": "Evento não encontrado" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">409</span></td><td>Conflict</td><td>Evento não está em andamento ou não está pausado</td></tr>
             </tbody>
           </table>
         </div>
@@ -2288,6 +2410,203 @@
               <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Token ausente, inválido ou usuário não autenticado</td></tr>
               <tr><td><span class="status-code s4xx">404</span></td><td>Not Found</td><td>Checkpoint ou turno não encontrado</td></tr>
               <tr><td><span class="status-code s4xx">422</span></td><td>Unprocessable Entity</td><td>Distância inválida (fora do intervalo dos vizinhos)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         IMAGENS E OCR
+         ════════════════════════════════════════════════════════════════════ -->
+    <section class="flow-section" id="images">
+      <h2>Imagens e OCR</h2>
+      <p class="flow-meta">
+        Captura de foto do display da esteira e leitura automática dos campos (velocidade, distância, pace, tempo)
+        via OCR multimodal (Gemini, com fallback Groq). A imagem é enviada ao Supabase Storage e a URL pública é
+        gravada em <code class="inline">image_url</code> do turno ou checkpoint; o OCR é persistido em paralelo (melhor esforço).
+        Upload via <code class="inline">multipart/form-data</code> no campo <code class="inline">image</code>
+        (tipos aceitos: jpeg, png, webp, gif; máx. 10&nbsp;MB).
+        Todos os endpoints exigem <strong>autenticação JWT</strong>.
+      </p>
+
+      <!-- POST /audit/ocr -->
+      <div class="endpoint-card" id="post-audit-ocr"
+           data-method="POST" data-path="/audit/ocr" data-rfs="">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-post">POST</span>
+          <code class="endpoint-path">/audit/ocr</code>
+          <span class="endpoint-summary">Extrai os dados do display da esteira de uma imagem (sem persistir)</span>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Recebe uma imagem do display e retorna os campos lidos por OCR, sem gravar a imagem nem associá-la a um turno ou checkpoint. Útil para pré-visualizar a leitura antes de confirmar um checkpoint.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+              <tr><td><code class="inline">Content-Type</code></td><td><code class="inline">multipart/form-data</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Request Body (form-data)</p>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Validações</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">image</code></td><td>file</td><td><span class="required">Sim</span></td><td>jpeg, png, webp ou gif; máx. 10&nbsp;MB</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">{
+  <span class="key">"ocr"</span>: {
+    <span class="key">"speed"</span>:    <span class="num">8.5</span>,
+    <span class="key">"distance"</span>: <span class="num">1.25</span>,
+    <span class="key">"pace"</span>:     <span class="str">"07:03"</span>,
+    <span class="key">"time"</span>:     <span class="str">"00:08:50"</span>
+  }
+}</pre>
+          <p>Cada campo pode ser <code class="inline">null</code> quando o rótulo não é visível ou o valor é ilegível.</p>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Leitura concluída</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td><code class="inline">{ "error": "Nenhuma imagem enviada" }</code> ou tipo de arquivo inválido</td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Token ausente ou inválido</td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Internal Server Error</td><td>Falha no provedor de OCR</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PATCH /audit/shifts/:id/image -->
+      <div class="endpoint-card" id="patch-audit-shifts-image"
+           data-method="PATCH" data-path="/audit/shifts/:id/image" data-rfs="">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-patch">PATCH</span>
+          <code class="endpoint-path">/audit/shifts/<span class="param-placeholder">:id</span>/image</code>
+          <span class="endpoint-summary">Anexa foto ao turno e roda OCR</span>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Envia a imagem ao Supabase Storage, grava a URL pública em <code class="inline">image_url</code> do turno e roda o OCR em paralelo, persistindo o resultado quando disponível. A falha do OCR não impede o upload da imagem.</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+              <tr><td><code class="inline">Content-Type</code></td><td><code class="inline">multipart/form-data</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">id</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Request Body (form-data)</p>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Validações</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">image</code></td><td>file</td><td><span class="required">Sim</span></td><td>jpeg, png, webp ou gif; máx. 10&nbsp;MB</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">{
+  <span class="key">"image_url"</span>: <span class="str">"https://&lt;projeto&gt;.supabase.co/storage/v1/object/public/photos/shifts/1/1718462400000.png"</span>,
+  <span class="key">"ocr"</span>: {
+    <span class="key">"speed"</span>:    <span class="num">8.5</span>,
+    <span class="key">"distance"</span>: <span class="num">1.25</span>,
+    <span class="key">"pace"</span>:     <span class="str">"07:03"</span>,
+    <span class="key">"time"</span>:     <span class="str">"00:08:50"</span>
+  }
+}</pre>
+          <p><code class="inline">ocr</code> é <code class="inline">null</code> quando a leitura falha; a imagem ainda assim é gravada.</p>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Imagem anexada</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td><code class="inline">{ "error": "ID inválido" }</code> ou <code class="inline">{ "error": "Nenhuma imagem enviada" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Token ausente ou inválido</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td>Not Found</td><td><code class="inline">{ "error": "Turno não encontrado" }</code></td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Internal Server Error</td><td>Falha no upload ao Storage</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PATCH /audit/checkpoints/:id/image -->
+      <div class="endpoint-card" id="patch-audit-checkpoints-image"
+           data-method="PATCH" data-path="/audit/checkpoints/:id/image" data-rfs="">
+        <div class="endpoint-header" onclick="toggleCard(this)" role="button" tabindex="0"
+             aria-expanded="false">
+          <span class="badge badge-patch">PATCH</span>
+          <code class="endpoint-path">/audit/checkpoints/<span class="param-placeholder">:id</span>/image</code>
+          <span class="endpoint-summary">Anexa foto ao checkpoint e roda OCR</span>
+          <span class="collapse-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="endpoint-body">
+          <p>Idêntico ao upload de imagem do turno, mas associado a um checkpoint: grava a URL pública em <code class="inline">image_url</code> do checkpoint e persiste o OCR em paralelo (melhor esforço).</p>
+
+          <p class="section-label">Headers</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Valor</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">Authorization</code></td><td><code class="inline">Bearer &lt;accessToken&gt;</code></td><td><span class="required">Sim</span></td></tr>
+              <tr><td><code class="inline">Content-Type</code></td><td><code class="inline">multipart/form-data</code></td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Path Parameters</p>
+          <table class="doc-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">id</code></td><td>integer</td><td><span class="required">Sim</span></td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Request Body (form-data)</p>
+          <table class="doc-table">
+            <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Validações</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">image</code></td><td>file</td><td><span class="required">Sim</span></td><td>jpeg, png, webp ou gif; máx. 10&nbsp;MB</td></tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Response — 200 OK</p>
+          <pre class="code-block">{
+  <span class="key">"image_url"</span>: <span class="str">"https://&lt;projeto&gt;.supabase.co/storage/v1/object/public/photos/checkpoints/1/1718462400000.png"</span>,
+  <span class="key">"ocr"</span>: {
+    <span class="key">"speed"</span>:    <span class="num">8.5</span>,
+    <span class="key">"distance"</span>: <span class="num">1.25</span>,
+    <span class="key">"pace"</span>:     <span class="str">"07:03"</span>,
+    <span class="key">"time"</span>:     <span class="str">"00:08:50"</span>
+  }
+}</pre>
+          <p><code class="inline">ocr</code> é <code class="inline">null</code> quando a leitura falha; a imagem ainda assim é gravada.</p>
+
+          <p class="section-label">Status Codes</p>
+          <table class="doc-table">
+            <thead><tr><th>Código</th><th>Significado</th><th>Quando ocorre</th></tr></thead>
+            <tbody>
+              <tr><td><span class="status-code s2xx">200</span></td><td>OK</td><td>Imagem anexada</td></tr>
+              <tr><td><span class="status-code s4xx">400</span></td><td>Bad Request</td><td><code class="inline">{ "error": "ID inválido" }</code> ou <code class="inline">{ "error": "Nenhuma imagem enviada" }</code></td></tr>
+              <tr><td><span class="status-code s4xx">401</span></td><td>Unauthorized</td><td>Token ausente ou inválido</td></tr>
+              <tr><td><span class="status-code s4xx">404</span></td><td>Not Found</td><td><code class="inline">{ "error": "Checkpoint não encontrado" }</code></td></tr>
+              <tr><td><span class="status-code s5xx">500</span></td><td>Internal Server Error</td><td>Falha no upload ao Storage</td></tr>
             </tbody>
           </table>
         </div>

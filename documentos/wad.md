@@ -1746,14 +1746,20 @@ Na sprint 4, com a integração ponta a ponta dos fluxos de auditoria, gerência
 ## 3.2. Arquitetura (sprints 1 a 5)
 
 ---
-A seção de Arquitetura apresenta a estrutura organizacional e a modelagem dos principais componentes do sistema desenvolvidos ao longo das sprints 1 a 5. Por meio dos diagramas arquiteturais, diagramas de classes e diagramas de casos de uso, é possível compreender como os módulos da aplicação se relacionam, quais são as responsabilidades de cada camada e como ocorre o fluxo de dados entre os componentes. Esses artefatos auxiliam na documentação técnica do projeto, facilitando o entendimento da solução, a manutenção do software e a evolução contínua da arquitetura proposta.
+A seção de Arquitetura apresenta os principais artefatos utilizados para representar a estrutura e o funcionamento da solução desenvolvida ao longo das sprints 1 a 5. Por meio dos diagramas de arquitetura, diagramas de classes arquiteturais e diagramas de casos de uso, é possível compreender a organização dos módulos da aplicação, as responsabilidades atribuídas a cada componente e as interações estabelecidas entre as diferentes camadas do sistema.
+
+Esses diagramas documentam tanto a visão estrutural quanto a visão funcional da solução, evidenciando o fluxo de processamento das requisições, a aplicação das regras de negócio e os mecanismos de persistência de dados. Dessa forma, os artefatos apresentados contribuem para a validação da arquitetura implementada, facilitam a comunicação entre os membros da equipe e servem como referência para futuras atividades de manutenção e evolução do software.
 
 ### 3.2.1. Diagramas de Arquitetura 
 
 ---
-Os diagramas de arquitetura representam a estrutura organizacional do sistema, demonstrando como os componentes, camadas e módulos da aplicação se relacionam entre si. Eles auxiliam na visualização do fluxo de dados, das responsabilidades de cada camada e da comunicação entre os elementos da arquitetura, facilitando o entendimento, manutenção e evolução do software.
+Os diagramas de arquitetura apresentados nesta seção detalham a organização dos principais módulos da aplicação, evidenciando a comunicação entre controladores, serviços, repositórios e banco de dados em cada funcionalidade do sistema. Cada diagrama representa um contexto específico da solução, permitindo visualizar o fluxo das requisições, o processamento das regras de negócio e a persistência das informações.
+
+A divisão por módulos facilita a compreensão da arquitetura implementada, destacando as responsabilidades de cada componente e as dependências existentes entre as camadas da aplicação. Dessa forma, os diagramas servem como apoio para a manutenção, evolução e validação da estrutura arquitetural do sistema, além de demonstrar a aderência ao padrão de separação de responsabilidades adotado durante o desenvolvimento.
 
 ALERTAS
+
+O diagrama de arquitetura do módulo de Alertas apresenta o fluxo responsável pela geração, consulta e gerenciamento de notificações do sistema. A arquitetura evidencia a comunicação entre as camadas de controle, serviço e persistência, garantindo que eventos relevantes sejam identificados, processados e disponibilizados aos usuários de forma organizada e rastreável.
 
 <div align="center">
   <sub>Imagem 9 - Diagrama de Arquitetura - ALERTAS </sub><br>
@@ -1764,6 +1770,8 @@ ALERTAS
 
 AUTENTICAÇÃO
 
+O diagrama de Autenticação demonstra o fluxo de validação de credenciais e controle de acesso à aplicação. A estrutura apresentada evidencia a interação entre controlador, serviço de autenticação e camada de persistência, assegurando que apenas usuários autorizados possam acessar as funcionalidades administrativas do sistema.
+
 <div align="center">
   <sub>Imagem 10 - Diagrama de Arquitetura - AUTENTICAÇÃO </sub><br>
   <img src= "./assets/diagramas_arquitetura/auth.svg" width="100%" alt="Diagrama de Arquitetura - 2"><br>
@@ -1772,6 +1780,8 @@ AUTENTICAÇÃO
 </div>
 
 DASHBOARD 
+
+O diagrama de Dashboard representa a arquitetura responsável pela consolidação e disponibilização das principais informações da competição. Por meio da integração entre diferentes serviços e repositórios, o módulo centraliza indicadores e dados operacionais, fornecendo uma visão geral atualizada para os administradores da plataforma.
 
 <div align="center">
   <sub>Imagem 11 - Diagrama de Arquitetura - DASHBOARD </sub><br>
@@ -1782,6 +1792,8 @@ DASHBOARD
 
 EVENTO HISTÓRICO
 
+O diagrama de Evento Histórico apresenta a arquitetura utilizada para armazenar e consultar registros históricos relacionados às operações do sistema. Essa estrutura possibilita a rastreabilidade de ações e eventos ocorridos durante a execução da aplicação, contribuindo para auditorias e análises posteriores.
+
 <div align="center">
   <sub>Imagem 12 - Diagrama de Arquitetura - EVENTO HISTÓRICO </sub><br>
   <img src= "./assets/diagramas_arquitetura/evento_historico.svg" width="100%" alt="Diagrama de Arquitetura - 4"><br>
@@ -1790,6 +1802,8 @@ EVENTO HISTÓRICO
 </div>
 
 EVENTOS
+
+O diagrama de Eventos demonstra o fluxo responsável pelo gerenciamento dos eventos cadastrados na plataforma. A arquitetura contempla operações de criação, consulta, atualização e remoção, garantindo o tratamento adequado das regras de negócio associadas às competições e atividades monitoradas pelo sistema.
 
 <div align="center">
   <sub>Imagem 13 - Diagrama de Arquitetura - EVENTOS </sub><br>
@@ -1800,6 +1814,8 @@ EVENTOS
 
 EXPORTAÇÃO
 
+O diagrama de Exportação representa a arquitetura utilizada para geração e disponibilização de relatórios e arquivos de saída. O fluxo demonstra como os dados são coletados, processados e convertidos em formatos adequados para compartilhamento e análise externa, preservando a consistência das informações exportadas.
+
 <div align="center">
   <sub>Imagem 14 - Diagrama de Arquitetura - EXPORTAÇÃO </sub><br>
   <img src= "./assets/diagramas_arquitetura/export.svg" width="100%" alt="Diagrama de Arquitetura - 6"><br>
@@ -1808,6 +1824,8 @@ EXPORTAÇÃO
 </div>
 
 HISTÓRICO
+
+O diagrama de Histórico evidencia a estrutura responsável pela consulta e recuperação de registros armazenados ao longo da utilização da plataforma. Esse módulo permite a visualização de informações passadas, contribuindo para análises operacionais e acompanhamento da evolução dos dados da competição.
 
 <div align="center">
   <sub>Imagem 15 - Diagrama de Arquitetura - HISTÓRICO </sub><br>
@@ -1818,6 +1836,8 @@ HISTÓRICO
 
 LOGS
 
+O diagrama de Logs apresenta a arquitetura destinada ao registro e monitoramento das operações executadas pelo sistema. A estrutura permite o armazenamento de informações relacionadas a ações, sincronizações e eventos relevantes, auxiliando processos de auditoria, rastreabilidade e diagnóstico de problemas.
+
 <div align="center">
   <sub>Imagem 16 - Diagrama de Arquitetura - LOGS </sub><br>
   <img src= "./assets/diagramas_arquitetura/logs.svg" width="100%" alt="Diagrama de Arquitetura - 8"><br>
@@ -1826,6 +1846,8 @@ LOGS
 </div>
 
 MÉTRICAS
+
+O diagrama de Métricas demonstra o fluxo de coleta, processamento e disponibilização de indicadores utilizados para acompanhamento do desempenho da competição. A arquitetura integra diferentes fontes de dados para fornecer informações quantitativas que apoiam a tomada de decisão e o monitoramento operacional.
 
 <div align="center">
   <sub>Imagem 17 - Diagrama de Arquitetura - MÉTRICAS </sub><br>
@@ -1836,6 +1858,8 @@ MÉTRICAS
 
 EQUIPES
 
+O diagrama de Equipes representa a arquitetura responsável pelo gerenciamento das equipes participantes da competição. O fluxo contempla operações de cadastro, consulta e manutenção dos dados das equipes, garantindo a correta associação entre competições, atletas e demais informações relacionadas.
+
 <div align="center">
   <sub>Imagem 18 - Diagrama de Arquitetura - EQUIPES </sub><br>
   <img src= "./assets/diagramas_arquitetura/teams.svg" width="100%" alt="Diagrama de Arquitetura - 10"><br>
@@ -1844,6 +1868,8 @@ EQUIPES
 </div>
 
 TURNOS
+
+O diagrama de Turnos apresenta a estrutura utilizada para administrar os períodos de participação dos atletas durante a competição. A arquitetura assegura o controle das informações relacionadas à escala, organização e acompanhamento dos turnos, contribuindo para a correta gestão operacional do evento.
 
 <div align="center">
   <sub>Imagem 19 - Diagrama de Arquitetura - TURNOS </sub><br>
@@ -1855,7 +1881,9 @@ TURNOS
 #### 3.2.1.1. Diagrama de Classes Arquiteturais 
 
 ---
-A seção de Diagramas de Classes Arquiteturais apresenta a modelagem estrutural dos principais módulos do sistema, evidenciando as classes, responsabilidades e relacionamentos existentes entre os componentes da aplicação. Esses diagramas auxiliam na compreensão da organização interna do software, demonstrando como entidades, serviços, controladores e repositórios interagem para garantir o funcionamento adequado das funcionalidades implementadas.
+Os Diagramas de Classes Arquiteturais apresentados nesta seção descrevem a estrutura interna dos principais módulos da aplicação, evidenciando as classes que compõem cada funcionalidade, suas responsabilidades e os relacionamentos estabelecidos entre os componentes do sistema. Os diagramas foram organizados de acordo com os módulos implementados, permitindo visualizar a separação das camadas de controle, serviço e persistência adotada pela arquitetura da solução.
+
+Por meio dessa representação, é possível compreender como as requisições são processadas, como as regras de negócio são executadas e como ocorre o acesso aos dados da aplicação. Além disso, os diagramas auxiliam na identificação das dependências entre os componentes, contribuindo para a manutenção, evolução e validação da arquitetura implementada.
 
 ALERTAS
 
@@ -1886,6 +1914,8 @@ AUTENTICAÇÃO
 
 DASHBOARD
 
+O diagrama de classes arquiteturais do módulo Dashboard apresenta os principais componentes responsáveis pela consolidação e exibição das informações da competição. O modelo evidencia a interação entre controladores, serviços e repositórios utilizados para coletar, processar e disponibilizar métricas e indicadores relevantes aos usuários administrativos da plataforma.
+
 <div align="center">
   <sub>Imagem 23 - Diagrama de Classes Arquiteturais - DASHBOARD </sub><br>
   <img src= "./assets/diagramas_arquiteturais/DASHBOARD_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 4"><br>
@@ -1895,6 +1925,8 @@ DASHBOARD
 
 EVENTOS
 
+O diagrama de classes arquiteturais do módulo Events representa a estrutura responsável pelo gerenciamento dos eventos da aplicação. São demonstradas as relações entre as classes que realizam o tratamento das regras de negócio, acesso aos dados e manipulação das entidades relacionadas às competições, esteiras e demais elementos vinculados aos eventos monitorados pelo sistema.
+
 <div align="center">
   <sub>Imagem 24 - Diagrama de Classes Arquiteturais - EVENTOS </sub><br>
   <img src= "./assets/diagramas_arquiteturais/EVENTS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 5"><br>
@@ -1903,6 +1935,8 @@ EVENTOS
 </div>
 
 EXPORTAÇÃO
+
+O diagrama de classes arquiteturais do módulo History apresenta a organização das classes envolvidas na consulta e recuperação de registros históricos. A modelagem evidencia como os componentes colaboram para disponibilizar informações armazenadas anteriormente, garantindo rastreabilidade e suporte às análises operacionais realizadas pelos usuários.
 
 <div align="center">
   <sub>Imagem 25 - Diagrama de Classes Arquiteturais - EXPORTAÇÃO </sub><br>
@@ -1922,6 +1956,8 @@ HISTÓRICO
 
 LOGS
 
+O diagrama de classes arquiteturais do módulo Logs demonstra a estrutura responsável pelo registro e gerenciamento dos logs da aplicação. As relações entre controladores, serviços e repositórios evidenciam o fluxo utilizado para armazenar, consultar e sincronizar informações de auditoria, contribuindo para a rastreabilidade das operações executadas no sistema.
+
 <div align="center">
   <sub>Imagem 27 - Diagrama de Classes Arquiteturais - LOGS </sub><br>
   <img src= "./assets/diagramas_arquiteturais/LOGS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 8"><br>
@@ -1931,6 +1967,8 @@ LOGS
 
 MÉTRICAS
 
+O diagrama de classes arquiteturais do módulo Teams representa os componentes responsáveis pelo gerenciamento das equipes e atletas participantes da competição. A modelagem destaca as relações entre as entidades e os mecanismos de persistência utilizados para garantir a integridade das informações e o correto funcionamento das operações de cadastro e consulta.
+
 <div align="center">
   <sub>Imagem 28 - Diagrama de Classes Arquiteturais - MÉTRICAS </sub><br>
   <img src= "./assets/diagramas_arquiteturais/METRICS_ClassDiagram.png" width="100%" alt="Diagrama de Classes Arquiteturais - 9"><br>
@@ -1939,6 +1977,8 @@ MÉTRICAS
 </div>
 
 EQUIPES
+
+O diagrama de classes arquiteturais do módulo Turns apresenta a estrutura utilizada para controlar os turnos dos atletas durante a competição. O modelo evidencia as classes responsáveis pelo gerenciamento das escalas, regras de negócio e persistência dos dados, assegurando a correta organização e acompanhamento dos períodos de participação dos corredores.
 
 <div align="center">
   <sub>Imagem 29 - Diagrama de Classes Arquiteturais - TEAMS </sub><br>
@@ -2080,8 +2120,8 @@ Não há fluxos alternativos explícitos neste diagrama. Falhas de validação n
 O Diagrama de Sequência de Equipes cobre quatro fluxos: cadastro de equipe, cadastro individual de atletas, consulta de equipe com seus atletas e consulta de quilometragem acumulada por equipe.
 
 <div align="center">
-  <sub>Imagem 34 - Diagrama de Sequência: Equipes</sub>
-    <br><img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
+  <sub>Imagem 34 - Diagrama de Sequência: Equipes</sub><br>
+  <img src="./assets/diagrama_sequencia/Teams_SequenceDiagram.svg" width="900px" alt="Diagrama de sequência do processo de equipes"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026 </sub>
   <br><br><br>
 </div>
@@ -2189,7 +2229,7 @@ O Diagrama de Sequência do Dashboard cobre dois fluxos: o polling automático d
 
 <div align="center">
   <sub>Imagem 38 - Diagrama de Sequência: Dashboard</sub><br>
-  <img src="assets/diagrama_sequencia/Dashboard_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do painel de controle (dashboard)"><br>
+  <img src="./assets/diagrama_sequencia/Dashboard_SequenceDiagram.svg" width="900px" alt="Diagrama de sequencia do painel de controle (dashboard)"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -2368,7 +2408,7 @@ O segundo nó é o **servidor de aplicação** (`<<executionEnvironment>>`), exe
 
 O terceiro nó é o **banco de dados** (`<<database>>`), PostgreSQL 15+, acessado pelo servidor de aplicação via TCP na porta 5432 por meio de um pool de conexões (`pg`, máximo de 10 conexões simultâneas). O schema é composto por 17 migrations DDL versionadas, aplicadas em ordem sequencial, cobrindo as tabelas `events`, `treadmills`, `teams`, `athletes`, `shifts`, `checkpoints`, `managers`, `auditors`, `refresh_tokens` e `audit_logs`. As migrations garantem reprodutibilidade do ambiente em qualquer máquina de desenvolvimento ou servidor de produção.
 
-O quarto nó é o **GitLab** (`<<cloud>>`), que hospeda o repositório do projeto (branches `main` e `develop`) e executa o pipeline de CI/CD. O pipeline publica automaticamente o arquivo `docs/api/index.html` no GitLab Pages, disponibilizando a documentação navegável da WebAPI publicamente em `g02-73a453.pages.git.inteli.edu.br/api/`. O deploy da aplicação em si é realizado manualmente via `npm run build` seguido de `npm start` no servidor de destino.
+O quarto nó é o **GitLab** (`<<cloud>>`), que hospeda o repositório do projeto (branches `main` e `develop`) e executa o pipeline de CI/CD. O pipeline publica automaticamente o arquivo `documentos/outros/WebAPI/index.html` no GitLab Pages, disponibilizando a documentação navegável da WebAPI publicamente em `g02-73a453.pages.git.inteli.edu.br/api/`. O deploy da aplicação em si é realizado manualmente via `npm run build` seguido de `npm start` no servidor de destino.
 
 ### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
@@ -3134,7 +3174,7 @@ O Modelo Entidade-Relacionamento (MER) apresenta a visão conceitual consolidada
 
 <div align="center">
   <sub>Imagem 72 - Modelo Entidade-Relacionamento</sub><br>
-  <img src="./assets/modelo_entidade_relacionamento/modelo_entidade_relacionamento.svg" width="95%" alt="Modelo Entidade-Relacionamento consolidado do projeto Red Bull 24 Horas"><br>
+  <img src="./assets/modelo_entidade_relacionamento/mer.png" width="95%" alt="Modelo Entidade-Relacionamento consolidado do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br><br>
 </div>
@@ -3149,15 +3189,15 @@ As entidades foram derivadas do domínio e revisadas conforme o schema resultant
 
 | Entidade | Descrição | Atributos principais | Chave |
 | :--- | :--- | :--- | :--- |
-| **Manager** | Gerente que administra eventos e também pode operar turnos. | `id`, `name`, `cpf`, `email`, `password` | `id` |
-| **Event** | Edição da competição, incluindo seu ciclo de vida operacional. | `id`, `title`, `local`, `date`, `status`, `started_at`, `finished_at`, `deleted_at` | `id` |
-| **Team** | Equipe vinculada a uma edição específica. | `id`, `name`, `deleted_at` | `id` |
-| **Athlete** | Atleta pertencente a uma equipe. | `id`, `name`, `gender`, `cpf`, `deleted_at` | `id` |
-| **Auditor** | Operador responsável pelo registro dos turnos e checkpoints. | `id`, `name`, `cpf`, `registration_number`, `is_active`, `email`, `password` | `id` |
-| **Shift** | Sessão individual de corrida de um atleta em uma esteira. | `id`, `status`, `start_at`, `end_at`, `total_time`, `speed`, `km_start`, `km_end`, `distance` | `id` |
-| **Treadmill** | Esteira numerada e vinculada à equipe que a utiliza. | `id`, `number` | `id` |
-| **Checkpoint** | Leitura parcial do turno, com suporte a revisão e sincronização offline. | `id`, `timestamp`, `distance`, `type`, `reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`, `sync_id` | `id` |
-| **Log** | Registro imutável de ações e alterações relacionadas a um turno. | `id`, `timestamp`, `type`, `old_value`, `new_value`, `author_id`, `author_role`, `justification` | `id` |
+| **Managers** | Gerentes que administram eventos e também podem operar turnos. | `id`, `name`, `cpf`, `email`, `password` | `id` |
+| **Events** | Edições da competição, incluindo seu ciclo de vida operacional. | `id`, `title`, `local`, `date`, `status`, `started_at`, `finished_at`, `deleted_at` | `id` |
+| **Teams** | Equipes vinculadas a uma edição específica. | `id`, `name`, `deleted_at` | `id` |
+| **Athletes** | Atletas pertencentes a uma equipe. | `id`, `name`, `gender`, `cpf`, `deleted_at` | `id` |
+| **Auditors** | Operadores responsáveis pelo registro dos turnos e checkpoints. | `id`, `name`, `cpf`, `registration_number`, `is_active`, `email`, `password` | `id` |
+| **Shifts** | Sessões individuais de corrida de um atleta em uma esteira. | `id`, `status`, `start_at`, `end_at`, `total_time`, `speed`, `km_start`, `km_end`, `distance` | `id` |
+| **Treadmills** | Esteiras numeradas e vinculadas à equipe que as utiliza. | `id`, `number` | `id` |
+| **Checkpoints** | Leituras parciais do turno, com suporte a revisão e sincronização offline. | `id`, `timestamp`, `distance`, `type`, `reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`, `sync_id` | `id` |
+| **Logs** | Registros imutáveis de ações e alterações relacionadas a um turno. | `id`, `timestamp`, `type`, `old_value`, `new_value`, `author_id`, `author_role`, `justification` | `id` |
 | **RefreshToken** | Sessão renovável pertencente exclusivamente a um gerente ou auditor. | `id`, `token_hash`, `expires_at`, `revoked_at`, `created_at` | `id` |
 
 <div align="center">
@@ -3167,7 +3207,7 @@ As entidades foram derivadas do domínio e revisadas conforme o schema resultant
 
 #### Relacionamentos e cardinalidades
 
-Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui atletas e esteiras; um turno aponta para a esteira utilizada; e o operador do turno pode ser um gerente ou um auditor, mas nunca os dois simultaneamente.
+Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui atletas e esteiras; um turno aponta para a esteira utilizada; e o operador do turno pode ser um gerente ou um auditor, mas nunca os dois simultaneamente. A posse de sessões de autenticação (refresh tokens) é modelada por dois relacionamentos independentes e mutuamente exclusivos: um para gerentes e outro para auditores.
 
 <div align="center">
   <sub>Quadro 21 - Relacionamentos e cardinalidades do MER</sub>
@@ -3175,19 +3215,19 @@ Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui
 
 | Relacionamento | Entidade A | Cardinalidade | Entidade B | Descrição |
 | :--- | :--- | :--- | :--- | :--- |
-| **Manages** | Manager | N:N | Event | Gerentes podem administrar vários eventos e eventos podem possuir vários gerentes. |
-| **Has** | Event | 1:N | Team | Cada equipe pertence a um único evento. |
-| **Rosters** | Team | 1:N | Athlete | Cada atleta pertence a uma única equipe. |
-| **Owns** | Team | 1:N | Treadmill | Uma equipe pode possuir várias esteiras; uma esteira pode ficar temporariamente sem equipe. |
-| **Performs** | Athlete | 1:N | Shift | Um atleta pode realizar vários turnos; cada turno possui um atleta. |
-| **Operates** | Manager | 1:N | Shift | Um gerente pode operar turnos quando atua na função operacional. |
-| **Audits** | Auditor | 1:N | Shift | Um auditor pode operar vários turnos. |
-| **Operator XOR** | Manager/Auditor | 1:N | Shift | Cada turno possui exatamente um operador: gerente ou auditor. |
-| **Occurs on** | Treadmill | 1:N | Shift | Uma esteira recebe vários turnos e cada turno referencia no máximo uma esteira. |
-| **Records** | Shift | 1:N | Checkpoint | Todo checkpoint pertence a um turno. |
-| **Generates** | Shift | 1:N | Log | Todo log pertence a um turno. |
-| **References** | Checkpoint | 1:N opcional | Log | Um log pode apontar para um checkpoint; vários logs podem referenciar o mesmo checkpoint. |
-| **Owns session** | Manager/Auditor | 1:N | RefreshToken | Cada token pertence exatamente a um dos dois tipos de usuário. |
+| **Manages** | Managers | N:N | Events | Gerentes podem administrar vários eventos e eventos podem possuir vários gerentes. |
+| **Has** | Events | 1:N | Teams | Cada equipe pertence a um único evento. |
+| **Rosters** | Teams | 1:N | Athletes | Cada atleta pertence a uma única equipe. |
+| **Has** | Teams | 1:N | Treadmills | Uma equipe pode possuir várias esteiras; uma esteira pode ficar temporariamente sem equipe. |
+| **Performs** | Athletes | 1:N | Shifts | Um atleta pode realizar vários turnos; cada turno possui um atleta. |
+| **Operates** | Managers | 1:N | Shifts | Um gerente pode operar turnos quando atua na função operacional. |
+| **Audits** | Auditors | 1:N | Shifts | Um auditor pode operar vários turnos. |
+| **Hosts** | Treadmills | 1:N | Shifts | Uma esteira recebe vários turnos e cada turno referencia no máximo uma esteira. |
+| **Records** | Shifts | 1:N | Checkpoints | Todo checkpoint pertence a um turno. |
+| **Generates** | Shifts | 1:N | Logs | Todo log pertence a um turno. |
+| **References** | Checkpoints | 1:N opcional | Logs | Um log pode apontar para um checkpoint; vários logs podem referenciar o mesmo checkpoint. |
+| **Owns Session** | Managers | 1:N | RefreshToken | Cada refresh token de gerente pertence exatamente a um gerente. |
+| **Has Session** | Auditors | 1:N | RefreshToken | Cada refresh token de auditor pertence exatamente a um auditor. |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
@@ -3197,11 +3237,11 @@ Os relacionamentos refletem o schema consolidado. Em especial, uma equipe possui
 #### Decisões de modelagem
 
 - **Shift como entidade central:** cada entrada de um atleta em uma esteira gera um turno próprio. Os totais do evento são calculados pela agregação dos turnos finalizados.
-- **Operador exclusivo:** a constraint `chk_shifts_operator` exige exatamente um responsável por turno, usando `auditor_id` ou `manager_id`.
-- **Esteira vinculada à equipe:** `treadmills.team_id` registra diretamente qual equipe utiliza o equipamento, enquanto `shifts.treadmill_id` preserva o histórico de uso por turno.
+- **Operador exclusivo:** a constraint `chk_shifts_operator` exige exatamente um responsável por turno, usando `auditor_id` ou `manager_id`. No MER, isso é refletido pelos relacionamentos independentes **Operates** e **Audits**, ambos direcionados a Shifts.
+- **Esteira vinculada à equipe:** o relacionamento **Has** liga Teams a Treadmills (`treadmills.team_id`), enquanto o relacionamento **Hosts** liga Treadmills a Shifts (`shifts.treadmill_id`), preservando o histórico de uso por turno.
 - **Auditoria de checkpoints:** checkpoints guardam dados de revisão e `sync_id`; logs registram valores anteriores e novos, autoria, justificativa e vínculo opcional ao checkpoint.
 - **Ciclo de vida do evento:** `status`, `started_at` e `finished_at` distinguem eventos pendentes, em andamento e finalizados.
-- **Autenticação com integridade:** refresh tokens possuem duas FKs mutuamente exclusivas, garantindo que cada token pertença a um gerente ou a um auditor existente.
+- **Autenticação com integridade:** refresh tokens são modelados por dois relacionamentos mutuamente exclusivos — **Owns Session** (Manager–RefreshToken) e **Has Session** (Auditor–RefreshToken) — garantindo que cada token pertença a exatamente um gerente ou a um auditor existente, nunca aos dois simultaneamente.
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER)
 
@@ -3209,7 +3249,7 @@ O DER traduz o MER para a estrutura relacional do PostgreSQL. A versão abaixo r
 
 <div align="center">
   <sub>Imagem 73 - Diagrama Entidade-Relacionamento</sub><br>
-  <img src="./assets/diagrama_entidade_relacionamento/diagrama_entidade_relacionamento.svg" width="100%" alt="Diagrama Entidade-Relacionamento consolidado do projeto Red Bull 24 Horas"><br>
+  <img src="./assets/diagrama_entidade_relacionamento/der.svg" width="100%" alt="Diagrama Entidade-Relacionamento consolidado do projeto Red Bull 24 Horas"><br>
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
@@ -3218,58 +3258,73 @@ O DER traduz o MER para a estrutura relacional do PostgreSQL. A versão abaixo r
   <sub>Quadro 22 - Tabelas e colunas do DER</sub>
 </div>
 
-| Tabela | Colunas consolidadas | Restrições e observações |
-| :--- | :--- | :--- |
-| **managers** | `id`, `cpf`, `name`, `password`, `email` | PK em `id`; CPF validado quando preenchido; `email` único e obrigatório. |
-| **manager_events** | `manager_id`, `event_id` | PK composta; ambas as colunas são FKs com `ON DELETE CASCADE`. |
-| **events** | `id`, `title`, `local`, `date`, `deleted_at`, `status`, `started_at`, `finished_at` | `title` único; `UNIQUE(date, local)`; status `pending`, `in_progress` ou `finished`. |
-| **teams** | `id`, `name`, `event_id`, `deleted_at` | FK obrigatória para `events`; `UNIQUE(event_id, name)`. |
-| **athletes** | `id`, `name`, `gender`, `cpf`, `team_id`, `deleted_at` | FK obrigatória para `teams`; CPF único quando preenchido. |
-| **auditors** | `id`, `name`, `cpf`, `registration_number`, `is_active`, `password`, `email` | Registro e e-mail únicos; CPF validado quando preenchido. |
-| **shifts** | `id`, `status`, `athlete_id`, `auditor_id`, `manager_id`, `treadmill_id`, `start_at`, `total_time`, `end_at`, `speed`, `km_start`, `km_end`, `distance` | `distance NUMERIC(8,2)`; exatamente um entre `auditor_id` e `manager_id`; FK de atleta e esteira. |
-| **treadmills** | `id`, `number`, `team_id` | `team_id` é FK nullable com `ON DELETE SET NULL`; `number` não possui unicidade no schema atual. |
-| **checkpoints** | `id`, `shift_id`, `timestamp`, `distance`, `type`, `reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`, `sync_id` | Distâncias em `NUMERIC(8,2)`; `sync_id` possui índice único parcial; campos de revisão são nullable. |
-| **logs** | `id`, `shift_id`, `timestamp`, `type`, `checkpoint_id`, `old_value`, `new_value`, `author_id`, `author_role`, `justification` | Tipos: `created`, `updated`, `finished`, `abandoned`, `force_closed`; valores em `NUMERIC(8,2)`; vínculo com checkpoint é opcional. |
-| **refresh_tokens** | `id`, `token_hash`, `manager_id`, `auditor_id`, `expires_at`, `revoked_at`, `created_at` | Exatamente um proprietário; FKs para gerente e auditor com `ON DELETE CASCADE`. |
+#### Entidades e atributos
+
+As entidades foram derivadas do domínio e revisadas conforme o schema resultante das migrations `001` a `025`. O DER inclui as entidades de autenticação porque seus vínculos possuem integridade referencial no banco e fazem parte da responsabilidade operacional dos usuários.
+
+<div align="center">
+  <sub>Quadro 22 - Entidades e atributos do DER</sub>
+</div>
+
+| Entidade | Descrição | Atributos principais | Chave |
+| :--- | :--- | :--- | :--- |
+| **Managers** | Gerentes que administram eventos. | `id`, `name`, `cpf`, `email`, `password` | `id` |
+| **Events** | Edições da competição, incluindo seu ciclo de vida operacional e controle de pausas. | `id`, `title`, `local`, `date`, `status`, `started_at`, `finished_at`, `deleted_at`, `image_url`, `paused_at`, `paused_ms` | `id` |
+| **Teams** | Equipes vinculadas a uma edição específica. | `id`, `name`, `event_id`, `deleted_at` | `id` |
+| **Athletes** | Atletas pertencentes a uma equipe, com suporte a foto e compartilhamento de desempenho. | `id`, `name`, `gender`, `cpf`, `team_id`, `deleted_at`, `image_url`, `share_token`, `email` | `id` |
+| **Auditors** | Operadores responsáveis pelo registro dos turnos e checkpoints. | `id`, `name`, `cpf`, `registration_number`, `is_active`, `email`, `password` | `id` |
+| **Shifts** | Sessões individuais de corrida de um atleta em uma esteira, com suporte a leitura OCR e foto. | `id`, `status`, `athlete_id`, `auditor_id`, `manager_id`, `treadmill_id`, `start_at`, `end_at`, `total_time`, `speed`, `km_start`, `km_end`, `distance`, `ocr_speed`, `ocr_distance`, `ocr_pace`, `ocr_time`, `image_url` | `id` |
+| **Treadmills** | Esteiras físicas numeradas, referenciadas pelos turnos que nelas ocorrem. | `id`, `number` | `id` |
+| **Checkpoints** | Leituras parciais do turno, com suporte a revisão, sincronização offline e leitura OCR. | `id`, `shift_id`, `timestamp`, `distance`, `type`, `reviewed`, `justification`, `reviewed_at`, `reviewed_by_id`, `reviewed_by_role`, `old_distance`, `sync_id`, `ocr_speed`, `ocr_distance`, `ocr_pace`, `ocr_time`, `image_url` | `id` |
+| **Logs** | Registros imutáveis de ações e alterações relacionadas a um turno. | `id`, `shift_id`, `timestamp`, `type`, `checkpoint_id`, `old_value`, `new_value`, `author_id`, `author_role`, `justification` | `id` |
+| **PauseLog** | Intervalos de pausa de uma competição, com rastreio de início, retomada e duração. | `id`, `event_id`, `paused_at`, `resumed_at`, `duration_ms` | `id` |
+| **RefreshToken** | Sessão renovável pertencente exclusivamente a um gerente ou auditor. | `id`, `token_hash`, `manager_id`, `auditor_id`, `expires_at`, `revoked_at`, `created_at` | `id` |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
+#### Relacionamentos e cardinalidades
+
+Os relacionamentos refletem o schema consolidado após as migrations da Sprint 5. A FK de esteira passou a residir em `shifts.treadmill_id`, corrigindo o vínculo anterior. O controle de pausas foi extraído para a entidade `PauseLog`, vinculada diretamente ao evento. O operador de cada turno pode ser um auditor ou um gerente, nunca os dois simultaneamente. A posse de sessões de autenticação é modelada por dois relacionamentos independentes e mutuamente exclusivos: um para gerentes e outro para auditores.
+
 <div align="center">
-  <sub>Quadro 23 - Relacionamentos e chaves estrangeiras do DER</sub>
+  <sub>Quadro 23 - Relacionamentos e cardinalidades do DER</sub>
 </div>
 
-| Tabela origem | Coluna FK | Tabela referenciada | Cardinalidade | Política |
+| Relacionamento | Entidade A | Cardinalidade | Entidade B | Descrição |
 | :--- | :--- | :--- | :--- | :--- |
-| **manager_events** | `manager_id` | managers | N:1 | `ON DELETE CASCADE` |
-| **manager_events** | `event_id` | events | N:1 | `ON DELETE CASCADE` |
-| **teams** | `event_id` | events | N:1 | `ON DELETE CASCADE` |
-| **athletes** | `team_id` | teams | N:1 | `ON DELETE CASCADE` |
-| **treadmills** | `team_id` | teams | N:1 opcional | `ON DELETE SET NULL` |
-| **shifts** | `athlete_id` | athletes | N:1 | `ON DELETE RESTRICT` |
-| **shifts** | `manager_id` | managers | N:1 opcional | Padrão PostgreSQL (`NO ACTION`) |
-| **shifts** | `treadmill_id` | treadmills | N:1 opcional | `ON DELETE RESTRICT` |
-| **checkpoints** | `shift_id` | shifts | N:1 | `ON DELETE CASCADE` |
-| **logs** | `shift_id` | shifts | N:1 | `ON DELETE CASCADE` |
-| **logs** | `checkpoint_id` | checkpoints | N:1 opcional | `ON DELETE CASCADE` |
-| **refresh_tokens** | `manager_id` | managers | N:1 opcional | `ON DELETE CASCADE` |
-| **refresh_tokens** | `auditor_id` | auditors | N:1 opcional | `ON DELETE CASCADE` |
+| **Manages** | Managers | N:N | Events | Gerentes podem administrar vários eventos e eventos podem possuir vários gerentes. |
+| **Has** | Events | 1:N | Teams | Cada equipe pertence a um único evento. |
+| **Records** | Events | 1:N | PauseLog | Cada intervalo de pausa pertence a um único evento; um evento pode ter vários intervalos registrados. |
+| **Rosters** | Teams | 1:N | Athletes | Cada atleta pertence a uma única equipe. |
+| **Performs** | Athletes | 1:N | Shifts | Um atleta pode realizar vários turnos; cada turno possui exatamente um atleta. |
+| **Audits** | Auditors | 1:N | Shifts | Um auditor pode operar vários turnos. |
+| **Operates** | Managers | 1:N | Shifts | Um gerente pode operar turnos quando atua na função operacional. |
+| **Hosts** | Treadmills | 1:N | Shifts | Uma esteira recebe vários turnos; cada turno referencia no máximo uma esteira. |
+| **Generates** | Shifts | 1:N | Checkpoints | Todo checkpoint pertence a um turno. |
+| **Produces** | Shifts | 1:N | Logs | Todo log pertence a um turno. |
+| **References** | Checkpoints | 1:N opcional | Logs | Um log pode apontar para um checkpoint; vários logs podem referenciar o mesmo checkpoint. |
+| **Owns Session** | Managers | 1:N | RefreshToken | Cada refresh token de gerente pertence exatamente a um gerente. |
+| **Has Session** | Auditors | 1:N | RefreshToken | Cada refresh token de auditor pertence exatamente a um auditor. |
 
 <div align="center">
   <sub>Fonte: Desenvolvido pelo próprio grupo, 2026.</sub>
   <br><br>
 </div>
 
-#### Pendências de integridade identificadas
+#### Decisões de modelagem
 
-A consolidação das migrations revelou dois pontos que devem ser tratados em migrations futuras. Eles são documentados aqui para que o DER não atribua ao banco garantias que ainda não existem:
-
-1. A migration `008_managerAsAuditor.sql` remove a constraint `fk_shifts_auditor` para tornar `auditor_id` opcional, mas não recria a FK para `auditors(id)`. Assim, no schema atual, `shifts.auditor_id` participa do `CHECK` de operador, porém não possui integridade referencial.
-2. A migration `015_treadmillNumberNotUnique.sql` remove a unicidade global de `treadmills.number`, mas não cria uma constraint composta como `UNIQUE(team_id, number)`. Portanto, o banco atualmente permite números repetidos inclusive dentro da mesma equipe.
-
-Essas pendências não alteram a estrutura visual principal do domínio, mas precisam ser consideradas em validações e em uma próxima evolução do modelo físico.
+- **Shift como entidade central:** cada entrada de um atleta em uma esteira gera um turno próprio. Os totais do evento são calculados pela agregação dos turnos finalizados.
+- **Operador exclusivo:** a constraint `chk_shifts_operator` exige exatamente um responsável por turno, usando `auditor_id` ou `manager_id`. No DER, isso é refletido pelos relacionamentos independentes **Operates** e **Audits**, ambos direcionados a `Shifts`.
+- **Esteira vinculada ao turno:** o relacionamento **Hosts** liga `Treadmills` a `Shifts` via `shifts.treadmill_id`, preservando o histórico de uso por turno. A FK reside em `Shifts`, corrigindo o modelo anterior onde `treadmill_id` estava incorretamente em `Treadmills`.
+- **Verificação por foto e OCR:** `Shifts` e `Checkpoints` passam a armazenar `image_url` (foto da esteira) e os campos `ocr_speed`, `ocr_distance`, `ocr_pace` e `ocr_time`, permitindo auditoria visual e leitura automatizada de dados da esteira.
+- **Controle de pausas:** a entidade `PauseLog` registra cada intervalo de pausa de um evento, com `paused_at`, `resumed_at` e `duration_ms`. O evento em si mantém `paused_at` e `paused_ms` para refletir o estado corrente, enquanto o histórico completo de intervalos fica em `PauseLog`.
+- **Compartilhamento de desempenho:** atletas recebem `share_token UUID` gerado ao final do evento e `email VARCHAR(255)`, habilitando o envio de links individuais de desempenho via `feat/shareSystem`.
+- **Tipos numéricos revisados:** `speed`, `km_start`, `km_end` e `distance` em `Shifts`, e `distance` em `Checkpoints`, foram convertidos de `INT` para `NUMERIC(8,2)`, refletindo a migration `018_shiftKmDecimal`. Os campos `old_value` e `new_value` em `Logs` também passaram de `INT` para `NUMERIC` para suportar valores decimais.
+- **Auditoria de checkpoints:** checkpoints guardam dados de revisão e `sync_id`; logs registram valores anteriores e novos, autoria, justificativa e vínculo opcional ao checkpoint.
+- **Autenticação com integridade:** refresh tokens são modelados por dois relacionamentos mutuamente exclusivos — **Owns Session** (Manager–RefreshToken) e **Has Session** (Auditor–RefreshToken) — garantindo que cada token pertença a exatamente um gerente ou a um auditor existente, nunca aos dois simultaneamente.
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
@@ -3951,7 +4006,7 @@ RETURNING *
 </div>
 
 &nbsp;&nbsp;&nbsp;&nbsp;Assim, é possível afirmar que o entendimento da lógica proposicional possui papel essencial no desenvolvimento e na administração do banco de dados do nosso sistema. A estrutura implementada evidencia a utilização adequada de proposições, conectivos lógicos e operadores booleanos em consultas SQL, possibilitando a criação de comandos eficientes, consistentes e seguros para processos de filtragem, seleção e associação de dados do nosso sistema para o evento. Além disso, as tabelas verdade apresentadas ilustram as operações lógicas efetivamente aplicadas no código, contemplando funcionalidades como inserir ou ignorar o Sync Offline.
-A documentação completa e navegável dos endpoints está disponível em [`docs/api/index.html`](../docs/api/index.html) e também servida pelo próprio backend em `GET /docs` (acessível sem autenticação).
+A documentação completa e navegável dos endpoints está disponível em [`documentos/outros/WebAPI/index.html`](outros/WebAPI/index.html) e também servida pelo próprio backend em `GET /docs` (acessível sem autenticação).
 
 ### Resumo dos fluxos implementados
 
@@ -3978,7 +4033,7 @@ Cada endpoint contém: método HTTP, path completo, headers, body request (com c
 
 ---
 
-A documentação técnica completa da WebAPI está disponível de forma navegável no arquivo [`docs/api/index.html`](../docs/api/index.html), presente no repositório do projeto, e também pode ser acessada publicamente pelo link [https://g02-73a453.pages.git.inteli.edu.br/api/](https://g02-73a453.pages.git.inteli.edu.br/api/). A documentação reúne 49 endpoints organizados em doze fluxos:
+A documentação técnica completa da WebAPI está disponível de forma navegável no arquivo [`documentos/outros/WebAPI/index.html`](outros/WebAPI/index.html), presente no repositório do projeto, e também pode ser acessada publicamente pelo link [https://g02-73a453.pages.git.inteli.edu.br/api/](https://g02-73a453.pages.git.inteli.edu.br/api/). A documentação reúne 54 endpoints organizados em treze fluxos:
 
 ### 3.7.1. Tratamento de Erros (Error Handling)
 
@@ -4022,7 +4077,7 @@ Os Services lançam `new Error("<mensagem>")` com textos padronizados. Os Contro
 
 ### 3.7.2. Endpoints por grupo funcional e mapeamento RF
 
-A tabela abaixo lista todos os 49 endpoints organizados por grupo, com método HTTP, path completo, requisitos funcionais atendidos e requisito de autenticação. Para o contrato completo de cada endpoint — headers, body com campos e validações, exemplos de payload JSON e tabela de status codes (200, 201, 204, 400, 401, 403, 404, 409, 422 e 500) — consulte a documentação navegável em [`docs/api/index.html`](../docs/api/index.html) ou o endereço público [https://g02-73a453.pages.git.inteli.edu.br/api/](https://g02-73a453.pages.git.inteli.edu.br/api/).
+A tabela abaixo lista todos os 54 endpoints organizados por grupo, com método HTTP, path completo, requisitos funcionais atendidos e requisito de autenticação. Para o contrato completo de cada endpoint — headers, body com campos e validações, exemplos de payload JSON e tabela de status codes (200, 201, 204, 400, 401, 403, 404, 409, 422 e 500) — consulte a documentação navegável em [`documentos/outros/WebAPI/index.html`](outros/WebAPI/index.html) ou o endereço público [https://g02-73a453.pages.git.inteli.edu.br/api/](https://g02-73a453.pages.git.inteli.edu.br/api/).
 
 **Legenda de Auth:** `—` = público; `JWT` = cookie `accessToken` obrigatório; `(manager)` = restrito ao perfil gerente; `[mgr|aud]` = ambos os perfis.
 
@@ -4038,7 +4093,7 @@ A tabela abaixo lista todos os 49 endpoints organizados por grupo, com método H
 | `GET` | `/auth/me` | RF027 | JWT |
 | `GET` | `/auth/auditors` | RF027 | JWT (manager) |
 
-#### Eventos — 7 endpoints
+#### Eventos — 9 endpoints
 
 | Método | Path | RF | Auth |
 |--------|------|----|------|
@@ -4048,7 +4103,11 @@ A tabela abaixo lista todos os 49 endpoints organizados por grupo, com método H
 | `PATCH` | `/events/:id` | RF051 | JWT (manager) |
 | `DELETE` | `/events/:id` | RF051 | JWT (manager) |
 | `PATCH` | `/events/:id/start` | RF010, RF051 | JWT (manager) |
+| `PATCH` | `/events/:id/pause` | RF051 | JWT (manager) |
+| `PATCH` | `/events/:id/resume` | RF051 | JWT (manager) |
 | `PATCH` | `/events/:id/finish` | RF011, RF051 | JWT (manager) |
+
+> `pause` congela o cronômetro de 24h (`paused_at`) sem encerrar a competição e bloqueia auditores de salvar turnos e checkpoints; `resume` religa o cronômetro. Ambos exigem o evento em `in_progress`.
 
 #### Esteiras — 4 endpoints
 
@@ -4091,6 +4150,16 @@ A tabela abaixo lista todos os 49 endpoints organizados por grupo, com método H
 | `PATCH` | `/audit/shifts/:id/abandon` | RF014 | JWT |
 | `PATCH` | `/audit/shifts/:id` | RF031 | JWT (manager) |
 | `PATCH` | `/audit/checkpoints/:id` | RF031 | JWT (manager) |
+
+#### Imagens e OCR — 3 endpoints
+
+| Método | Path | RF | Auth |
+|--------|------|----|------|
+| `POST` | `/audit/ocr` | — | JWT |
+| `PATCH` | `/audit/shifts/:id/image` | — | JWT |
+| `PATCH` | `/audit/checkpoints/:id/image` | — | JWT |
+
+> Evolução além do escopo original (o WAD registrava a captura por foto do display apenas como capacidade futura via visão computacional). Os três endpoints recebem a imagem via `multipart/form-data` no campo `image` (jpeg, png, webp ou gif; máx. 10 MB). `POST /audit/ocr` extrai os campos do display (velocidade, distância, pace, tempo) por OCR multimodal (Gemini, com fallback Groq) sem persistir. Os dois `PATCH .../image` enviam a imagem ao Supabase Storage, gravam a URL pública em `image_url` do turno/checkpoint e persistem o OCR em paralelo (melhor esforço — a falha do OCR não impede o upload). Sem RF formal associado.
 
 #### Histórico — 1 endpoint
 
@@ -5072,17 +5141,274 @@ Os resultados evidenciam ampla cobertura das regras de negócio implementadas na
 
 Esse mapeamento garante que as 41 Regras de Negócio estejam ligadas aos RFs correspondentes e aos principais fluxos testáveis da WebAPI.
 
----
-
 ## 5.2. Testes de usabilidade (sprint 5)
-
----
 
 ### 5.2.1. Relatório de testes de guerrilha
 
----
+Os testes de guerrilha são uma técnica de avaliação de usabilidade informal e de baixo custo, na qual o sistema é apresentado a usuários reais recrutados de forma espontânea, sem agendamento prévio ou laboratório controlado. O objetivo é identificar rapidamente problemas de usabilidade com base em tarefas específicas, enquanto um facilitador observa e registra dificuldades e sugestões sem interferir no processo.
 
-_Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização)._
+#### Descrição dos Testes e das Etapas
+
+| # | Teste | Enunciado da Tarefa |
+|---|-------|---------------------|
+| T1 | Login e Criação de Evento | "Como gerente, você deve fazer login e criar um evento." |
+| T2 | Criação de Equipes e Início do Evento | "Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado." |
+| T3 | Auditoria de Equipe | "Como auditor, você deve auditar uma equipe no evento criado." |
+
+| Teste | Etapa | Descrição da Etapa |
+|-------|-------|--------------------|
+| T1 | Etapa 1 | Adicionar as credenciais de gerente e realizar o login |
+| T1 | Etapa 2 | Iniciar a criação de um evento |
+| T1 | Etapa 3 | Adicionar as informações do evento |
+| T1 | Etapa 4 | Concluir a criação do evento e realizar o logout |
+| T2 | Etapa 1 | Durante a criação do evento, criar duas equipes |
+| T2 | Etapa 2 | Durante a criação do evento, adicionar atletas às duas equipes |
+| T2 | Etapa 3 | Concluir a criação do evento e iniciá-lo |
+| T3 | Etapa 1 | Adicionar as credenciais de auditor e realizar o login |
+| T3 | Etapa 2 | Selecionar o evento criado |
+| T3 | Etapa 3 | Realizar a auditoria de um período de 2 minutos |
+| T3 | Etapa 4 | Concluir a auditoria e realizar o logout |
+
+#### Resultados dos Testes de Guerrilha
+
+**Testador:** Enzo Braga
+
+**Perfil:** Estudante de Ciência da Computação / Produzindo um projeto para a BrPec Agropecuária
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Nenhuma ocorrência | — |
+| 2 | Iniciar a criação de um evento | Nenhuma ocorrência | — |
+| 3 | Adicionar as informações do evento | Enzo sentiu dificuldade em inserir o nome da cidade, e sugeriu que o formulário de escolha do nome aceitasse nomes sem acento, facilitando a seleção da cidade do evento | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrões |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Enzo sentiu dificuldade de encontrar o botão de criar a segunda equipe | H6 – Reconhecimento em vez de lembrança |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Nenhuma ocorrência | — |
+| 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
+
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Nenhuma ocorrência | — |
+| 2 | Selecionar o evento criado | Enzo sentiu dificuldade em iniciar a auditoria, clicando diretamente no evento criado ao invés do botão "iniciar auditoria" | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrões |
+| 3 | Realizar a auditoria de um período de 2 minutos | Enzo sentiu muita dificuldade em realizar a auditoria; mesmo com as explicações fornecidas no início do teste, ele não soube como realizar um checkpoint, nem como inserir o quilômetro inicial ou registrar o quilômetro final | H6 – Reconhecimento em vez de lembrança; H10 – Ajuda e documentação; H2 – Correspondência entre o sistema e o mundo real |
+| 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
+
+**Testador:** Lucas Levi
+
+**Perfil:** Estudante de Engenharia da Computação / Produzindo um projeto para a Defesa Civil de Santo André
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
+**Panorama Geral:** ❌ Não conseguiu
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Nenhuma ocorrência | — |
+| 2 | Iniciar a criação de um evento | Lucas não compreendeu a instrução "defina a data e horário de início", travando nessa etapa | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrões |
+| 3 | Adicionar as informações do evento | Nenhuma ocorrência | — |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
+**Panorama Geral:** ❌ Não conseguiu
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Nenhuma ocorrência | — |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Lucas achou a tela de adição de atletas confusa; o botão de adicionar em cinza gerou ambiguidade, e sugeriu que o botão deixasse claro se é para adicionar atleta ou líder | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões; H8 – Design estético e minimalista |
+| 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
+
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
+**Panorama Geral:** ❌ Não conseguiu
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Nenhuma ocorrência | — |
+| 2 | Selecionar o evento criado | Lucas sentiu dificuldade para iniciar a auditoria, clicando diretamente no evento ao invés do botão "iniciar auditoria"; também teve dificuldade na seleção da equipe; o botão "próximo" em cinza não sinalizava que era clicável | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões; H6 – Reconhecimento em vez de lembrança |
+| 3 | Realizar a auditoria de um período de 2 minutos | Lucas teve muita dificuldade para iniciar e finalizar a auditoria, incluindo o preenchimento de km inicial e final; também não compreendeu o fluxo de saída de checkpoints | H6 – Reconhecimento em vez de lembrança; H10 – Ajuda e documentação; H2 – Correspondência entre o sistema e o mundo real |
+| 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
+
+**Testador:** Paulo Roberto
+
+**Perfil:** Estudante de Engenharia da Computação / Produzindo um projeto para a Defesa Civil de Santo André
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Paulo não percebeu que precisava clicar no perfil "gerente" além de inserir as credenciais | H6 – Reconhecimento em vez de lembrança; H3 – Controle e liberdade do usuário |
+| 2 | Iniciar a criação de um evento | Paulo teve dificuldade em compreender como prosseguir após inserir as credenciais do evento; ao retornar à tela, as informações não eram salvas | H1 – Visibilidade do status do sistema; H5 – Prevenção de erros; H9 – Ajudar os usuários a reconhecer, diagnosticar e recuperar erros |
+| 3 | Adicionar as informações do evento | Paulo criou o evento com data anterior à atual; o sistema também permitia registrar corredores com data de nascimento no futuro; Paulo elogiou a validação do CPF | H5 – Prevenção de erros; H9 – Ajudar os usuários a reconhecer, diagnosticar e recuperar erros |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Paulo novamente não percebeu que precisava clicar no perfil "gerente" além de inserir as credenciais | H6 – Reconhecimento em vez de lembrança |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | O sistema permitia cadastrar corredores com data de nascimento no futuro; Paulo elogiou a validação do CPF | H5 – Prevenção de erros |
+| 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
+
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Paulo novamente teve dificuldade em perceber que precisava clicar no perfil além de inserir as credenciais | H6 – Reconhecimento em vez de lembrança |
+| 2 | Selecionar o evento criado | Paulo teve dificuldade em selecionar a equipe no momento de iniciar a auditoria, e também ao selecionar o próximo corredor | H1 – Visibilidade do status do sistema; H6 – Reconhecimento em vez de lembrança |
+| 3 | Realizar a auditoria de um período de 2 minutos | Paulo teve dificuldade para finalizar a auditoria | H1 – Visibilidade do status do sistema; H10 – Ajuda e documentação |
+| 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
+
+**Testadora:** Laís Victoria
+
+**Perfil:** Estudante de Ciência da Computação / Produzindo um projeto para a BrPec Agropecuária
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Nenhuma ocorrência | — |
+| 2 | Iniciar a criação de um evento | Laís criou o evento com data anterior à atual, sem que o sistema impedisse | H5 – Prevenção de erros; H9 – Ajudar os usuários a reconhecer, diagnosticar e recuperar erros |
+| 3 | Adicionar as informações do evento | Nenhuma ocorrência | — |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
+**Panorama Geral:** *(não registrado)*
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Nenhuma ocorrência | — |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Laís criou o evento com data anterior à atual | H5 – Prevenção de erros |
+| 3 | Concluir a criação do evento e iniciá-lo | Laís teve dificuldade em encontrar a opção de logout | H4 – Consistência e padrões; H6 – Reconhecimento em vez de lembrança |
+
+**Teste 3 (T3):** *"Como auditora, você deve auditar uma equipe no evento criado."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Laís teve dificuldade em encontrar a opção de logout da sessão anterior | H4 – Consistência e padrões; H6 – Reconhecimento em vez de lembrança |
+| 2 | Selecionar o evento criado | Laís teve dificuldade ao adicionar um checkpoint, não compreendendo o layout; também não identificou claramente qual era o corredor atual sendo auditado | H1 – Visibilidade do status do sistema; H2 – Correspondência entre o sistema e o mundo real; H8 – Design estético e minimalista |
+| 3 | Realizar a auditoria de um período de 2 minutos | Nenhuma dificuldade em encerrar as auditorias | — |
+| 4 | Concluir a auditoria e realizar o logout | Nenhuma ocorrência | — |
+
+**Testador:** Pedro Negri 
+
+**Perfil:** Estudante de Engenharia de Software / Produzindo um projeto para a BrPec Agropecuária
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Nenhuma ocorrência; diferente de outros testadores, Pedro identificou de imediato a necessidade de selecionar o perfil "gerente" antes de inserir as credenciais | — |
+| 2 | Iniciar a criação de um evento | Pedro teve uma breve hesitação ao preencher o campo de data e horário de início, por não haver um exemplo de formato esperado (placeholder); conseguiu prosseguir por tentativa | H2 – Correspondência entre o sistema e o mundo real; H10 – Ajuda e documentação |
+| 3 | Adicionar as informações do evento | Nenhuma ocorrência; Pedro também elogiou a validação do CPF, assim como outros testadores | — |
+| 4 | Concluir a criação do evento e realizar o logout | Nenhuma ocorrência | — |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Nenhuma ocorrência | — |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Pedro também identificou o botão de adicionar atleta em cinza como pouco intuitivo, reforçando a observação feita anteriormente por Lucas Levi; sugeriu que o botão indicasse explicitamente "Adicionar atleta" ou "Adicionar líder" | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões |
+| 3 | Concluir a criação do evento e iniciá-lo | Nenhuma ocorrência | — |
+
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
+**Panorama Geral:** ✅ Sucesso
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Nenhuma ocorrência | — |
+| 2 | Selecionar o evento criado | Pedro notou que, ao selecionar a equipe para iniciar a auditoria, o botão "próximo" aparecia na cor vermelha, o que pode causar confusão visual já que essa cor costuma ser associada a erros ou ações destrutivas | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões |
+| 3 | Realizar a auditoria de um período de 2 minutos | Nenhuma ocorrência registrada | — |
+| 4 | Concluir a auditoria e realizar o logout | Pedro considerou a usabilidade geral tranquila, mas sugeriu melhorar a diferenciação visual entre o botão de "finalizar turno" (concluir a auditoria) e o botão de logout, já que ambos pareciam semelhantes | H4 – Consistência e padrões; H8 – Design estético e minimalista |
+
+**Testador:** Valter Lima
+
+**Perfil:** Estudante de Sistemas da Informação / Produzindo um projeto para a Defesa Civil de Santo André
+
+**Teste 1 (T1):** *"Como gerente, você deve fazer login e criar um evento."*
+
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de gerente e realizar o login | Valter inseriu corretamente as credenciais, porém inicialmente não percebeu que deveria selecionar o perfil "gerente" antes de prosseguir | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrões |
+| 2 | Iniciar a criação de um evento | Nenhuma ocorrência | — |
+| 3 | Adicionar as informações do evento | Valter teve dificuldade para identificar quais campos eram obrigatórios, pois não havia diferenciação visual clara entre campos obrigatórios e opcionais | H1 – Visibilidade do status do sistema; H5 – Prevenção de erros |
+| 4 | Concluir a criação do evento e realizar o logout | Após finalizar o cadastro, Valter procurou uma confirmação mais explícita de que o evento havia sido criado com sucesso | H1 – Visibilidade do status do sistema |
+
+**Teste 2 (T2):** *"Como gerente, você deve criar equipes, adicionar corredores e iniciar o evento criado."*
+
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Durante a criação do evento, criar duas equipes | Valter criou a primeira equipe sem dificuldades, porém não percebeu imediatamente como adicionar a segunda equipe | H6 – Reconhecimento em vez de lembrança |
+| 2 | Durante a criação do evento, adicionar atletas às duas equipes | Demonstrou insegurança ao utilizar o botão de adição de participantes, pois não ficou claro se o cadastro estava sendo realizado para atleta ou líder da equipe | H1 – Visibilidade do status do sistema; H4 – Consistência e padrões |
+| 3 | Concluir a criação do evento e iniciá-lo | Valter procurou uma tela de revisão antes de iniciar o evento, esperando validar todas as informações cadastradas | H3 – Controle e liberdade do usuário; H5 – Prevenção de erros |
+
+**Teste 3 (T3):** *"Como auditor, você deve auditar uma equipe no evento criado."*
+
+**Panorama Geral:** ⚠️ Conseguiu com dificuldade
+
+| Etapa | Descrição da Etapa | Ocorrência | Heurísticas de Nielsen |
+|-------|--------------------|------------|------------------------|
+| 1 | Adicionar as credenciais de auditor e realizar o login | Nenhuma ocorrência | — |
+| 2 | Selecionar o evento criado | Valter clicou inicialmente no card do evento esperando iniciar automaticamente a auditoria, sem perceber a necessidade de utilizar o botão específico para essa ação | H6 – Reconhecimento em vez de lembrança; H4 – Consistência e padrõess |
+| 3 | Realizar a auditoria de um período de 2 minutos | Valter compreendeu o conceito geral da auditoria, porém apresentou dificuldade para identificar a sequência correta entre registrar quilometragem inicial, checkpoints e quilometragem final. Também sugeriu que o sistema apresentasse orientações contextuais durante a execução da auditoria | H10 – Ajuda e documentação; H2 – Correspondência entre o sistema e o mundo real; H6 – Reconhecimento em vez de lembrança |
+| 4 | Concluir a auditoria e realizar o logout | Após finalizar a auditoria, Valter não teve certeza se os dados haviam sido efetivamente salvos, procurando uma confirmação visual mais evidente | H1 – Visibilidade do status do sistema |
+
+#### Pontos de Melhoria Identificados
+
+Os problemas observados durante os testes de guerrilha foram consolidados e priorizados conforme a escala de severidade proposta por Nielsen, variando de 0 (Sem Importância) a 4 (Catastrófico). A classificação considerou a frequência com que o problema ocorreu, o impacto na execução das tarefas e o risco de impedir a conclusão dos fluxos principais do sistema.
+
+| Prioridade | Problema Identificado | Evidências Observadas | Recomendação |
+| :--- | :--- | :--- | :--- |
+| **4 – Catastrófico** | Fluxo de auditoria pouco intuitivo, dificultando o registro de quilometragem inicial, checkpoints e quilometragem final | Identificado por Enzo Braga, Lucas Levi, Paulo Roberto e Valter Lima. Em alguns casos impediu ou comprometeu a conclusão da tarefa T3. | Reestruturar o fluxo de auditoria com orientação passo a passo, indicadores visuais de progresso e instruções contextuais durante a execução. |
+| **4 – Catastrófico** | Ausência de auxílio ou documentação contextual para realização da auditoria | Usuários não compreenderam o significado de checkpoints, quilometragem inicial e final, mesmo após explicação prévia. | Adicionar tutoriais rápidos, tooltips e mensagens de ajuda diretamente na interface de auditoria. |
+| **3 – Grave** | Sistema permite cadastrar eventos com datas anteriores à data atual | Identificado por Paulo Roberto e Laís Victoria. Possibilita o registro de dados inconsistentes. | Implementar validação de datas para impedir eventos em períodos inválidos. |
+| **3 – Grave** | Sistema permite cadastrar corredores com data de nascimento futura | Identificado por Paulo Roberto durante a criação de equipes. | Implementar validação de data de nascimento compatível com a realidade do usuário. |
+| **3 – Grave** | Usuários não percebem que precisam selecionar o perfil (Gerente ou Auditor) antes do login | Problema recorrente identificado por Paulo Roberto e Valter Lima. | Tornar a seleção de perfil mais evidente ou automatizar a identificação do perfil após autenticação. |
+| **3 – Grave** | Dificuldade para iniciar a auditoria devido à expectativa de clicar diretamente no evento | Observado por Enzo Braga, Lucas Levi e Valter Lima. | Transformar o card do evento em elemento clicável ou destacar visualmente o botão de início da auditoria. |
+| **2 – Simples** | Botão de adicionar atleta/líder possui significado ambíguo | Relatado por Lucas Levi, Pedro Negri e Valter Lima. | Alterar os rótulos dos botões para ações explícitas, como "Adicionar Atleta" e "Adicionar Líder". |
+| **2 – Simples** | Dificuldade para criar uma segunda equipe durante a configuração do evento | Relatada por Enzo Braga e Valter Lima. | Destacar visualmente a funcionalidade de criação de novas equipes e apresentar feedback após a criação da primeira. |
+| **2 – Simples** | Campo de seleção de cidade exige acentuação correta para localização dos resultados | Relatado por Enzo Braga. | Implementar busca tolerante a acentos e variações ortográficas. |
+| **2 – Simples** | Usuários têm dificuldade em identificar a equipe ou corredor atualmente auditado | Relatado por Laís Victoria e Paulo Roberto. | Destacar visualmente o corredor ativo e a equipe selecionada durante a auditoria. |
+| **2 – Simples** | Ausência de tela de revisão antes da inicialização do evento | Relatado por Valter Lima. | Adicionar uma etapa de confirmação contendo resumo das informações cadastradas. |
+| **1 – Cosmético** | Botão "Próximo" utiliza cor vermelha, associada normalmente a erros ou exclusões | Observado por Pedro Negri. | Utilizar cores compatíveis com a ação executada, seguindo padrões de interface. |
+| **1 – Cosmético** | Dificuldade para localizar a opção de logout | Relatada por Laís Victoria. | Reposicionar ou destacar visualmente a funcionalidade de logout. |
+| **1 – Cosmético** | Ausência de confirmação visual clara após criação de eventos ou finalização de auditorias | Relatada por Valter Lima. | Exibir mensagens de sucesso e indicadores visuais de conclusão da operação. |
+| **1 – Cosmético** | Ausência de indicação clara dos campos obrigatórios nos formulários | Relatada por Valter Lima. | Utilizar marcações visuais padronizadas para diferenciar campos obrigatórios dos opcionais. |
+| **0 – Sem Importância** | Validação correta do CPF durante o cadastro de participantes | Elogiada por Paulo Roberto e Pedro Negri. Não representa problema de usabilidade. | Manter a implementação atual. |
 
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
