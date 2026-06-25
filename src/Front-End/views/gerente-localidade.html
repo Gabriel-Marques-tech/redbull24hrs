@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Competi&ccedil;&atilde;o Pr&eacute; Sele&ccedil;&atilde;o 1 - Gerente</title>
     <link rel="stylesheet" href="../css/global.css">
+    <script src="/js/tema.js"></script>
     <link rel="stylesheet" href="../css/equipe.css">
     <link rel="stylesheet" href="../css/gerente-localidade.css">
 </head>
@@ -39,6 +40,16 @@
         <section class="conteudo conteudo-localidade">
             <div class="formulario-localidade">
                 <h1>Selecione uma localidade</h1>
+
+                <div class="campo-imagem-evento">
+                    <div class="imagem-evento-preview" id="imagemEventoPreview" aria-hidden="true">+</div>
+                    <div>
+                        <strong>Imagem do evento <span>*</span></strong>
+                        <p>Escolha a imagem que vai identificar o evento.</p>
+                        <button class="btn-imagem-evento" id="btnImagemEvento" type="button">Escolher imagem</button>
+                    </div>
+                    <input id="imagemEvento" type="file" accept="image/*">
+                </div>
 
                 <label for="estado">Estado</label>
                 <div class="campo-select">

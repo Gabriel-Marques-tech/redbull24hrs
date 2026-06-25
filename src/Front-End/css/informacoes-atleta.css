@@ -4,9 +4,9 @@
 
 .conteudo-atleta {
     position: relative;
-    width: 470px;
-    margin-left: 120px;
-    margin-top: -35px;
+    width: 760px;
+    margin-left: 60px;
+    margin-top: -80px;
 }
 
 .subetapa-atleta {
@@ -19,7 +19,7 @@
 
 .conteudo-atleta h1 {
     font-size: 35px;
-    margin-bottom: 30px;
+    margin-bottom: 18px;
 }
 
 .cabecalho-cadastro-pessoa {
@@ -33,13 +33,14 @@
 }
 
 #formAtleta {
+    width: 760px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 }
 
-#formAtleta label {
-    width: 470px;
+#formAtleta .campo-cadastro-pessoa {
+    width: 100%;
     height: 52px;
     padding: 0 16px;
     border: 1px solid #777;
@@ -51,7 +52,20 @@
     font-weight: 700;
 }
 
-#formAtleta input {
+#formAtleta .campo-cadastro-pessoa span {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+#formAtleta .campo-cadastro-pessoa strong {
+    color: var(--vermelho);
+}
+
+.asterisco-obrigatorio {
+    color: var(--vermelho);
+}
+
+#formAtleta .campo-cadastro-pessoa input {
     flex: 1;
     min-width: 0;
     height: 100%;
@@ -75,9 +89,9 @@
 }
 
 .campo-foto-perfil {
-    width: 470px;
-    min-height: 78px;
-    padding: 10px 14px;
+    width: 100%;
+    min-height: 66px;
+    padding: 8px 14px;
     border: 1px dashed #bdbdbd;
     border-radius: 8px;
     display: flex;
@@ -86,9 +100,9 @@
 }
 
 .foto-perfil-preview {
-    width: 58px;
-    height: 58px;
-    flex: 0 0 58px;
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
     border-radius: 50%;
     background-color: #eeeeee;
     color: #999999;
@@ -113,7 +127,7 @@
 }
 
 .campo-foto-perfil p {
-    margin: 2px 0 8px;
+    margin: 1px 0 6px;
     color: #777777;
     font-size: 14px;
 }
@@ -138,9 +152,84 @@
 
 .campos-atleta,
 .campos-acesso {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 18px;
+}
+
+.grid-cadastro-pessoa {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.campo-cpf-apoio {
+    display: none !important;
+}
+
+#formAtleta.cadastro-apoio #campoEmailPessoa {
+    display: none;
+}
+
+#formAtleta.cadastro-apoio .campo-cpf-apoio {
+    display: flex !important;
+}
+
+#formAtleta.cadastro-apoio {
+    display: grid;
+    margin-top: -18px;
+    grid-template-columns: 264px minmax(0, 1fr);
+    grid-template-areas:
+        "foto dados"
+        "foto senha"
+        "acao acao";
+    column-gap: 18px;
+    row-gap: 10px;
+}
+
+#formAtleta.cadastro-apoio .campo-foto-perfil {
+    grid-area: foto;
+    min-height: 0;
+    height: auto;
+    align-self: stretch;
+    padding: 14px;
     flex-direction: column;
-    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#formAtleta.cadastro-apoio .foto-perfil-preview {
+    width: 52px;
+    height: 52px;
+    flex-basis: 52px;
+}
+
+#formAtleta.cadastro-apoio .campo-foto-perfil p {
+    margin: 0 0 4px;
+}
+
+#formAtleta.cadastro-apoio .campo-foto-perfil button {
+    align-self: center;
+}
+
+#formAtleta.cadastro-apoio .grid-cadastro-pessoa {
+    grid-area: dados;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+#formAtleta.cadastro-apoio .campos-acesso {
+    grid-area: senha;
+    grid-template-columns: 1fr;
+    gap: 0;
+}
+
+#formAtleta.cadastro-apoio > button[type="submit"] {
+    grid-area: acao;
+    margin-top: 100px;
 }
 
 .campos-atleta.escondido,
@@ -149,19 +238,24 @@
 }
 
 .campos-acesso.ativo {
-    display: flex;
+    display: grid;
 }
 
 .campo-data-atleta {
     justify-content: space-between;
 }
 
+.campo-data-atleta span {
+    flex: 0 0 auto;
+}
+
 #nascimentoAtleta {
-    flex: 0 0 205px;
+    flex: 1;
+    min-width: 0;
     margin-left: auto;
     padding-left: 0;
-    padding-right: 2px;
-    text-align: right;
+    padding-right: 4px;
+    text-align: left;
 }
 
 #nascimentoAtleta::-webkit-calendar-picker-indicator {
@@ -171,12 +265,14 @@
 }
 
 .seletores-atleta {
-    display: flex;
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 18px;
 }
 
 .seletores-atleta select {
-    width: 226px;
+    width: 100%;
     height: 52px;
     padding: 0 58px 0 22px;
     border: none;
@@ -196,7 +292,7 @@
 #formAtleta > button[type="submit"] {
     width: 180px;
     height: 60px;
-    margin: 16px auto 0;
+    margin: 8px auto 0;
     border: none;
     border-radius: 6px;
     background-color: var(--vermelho);
@@ -207,7 +303,11 @@
 }
 
 body:not(.cadastro-pelo-drawer) .conteudo-atleta {
-    margin-top: -55px;
+    margin-top: -80px;
+}
+
+body.cadastro-apoio:not(.cadastro-pelo-drawer) .conteudo-atleta {
+    margin-top: -135px;
 }
 
 
@@ -222,11 +322,47 @@ body:not(.cadastro-pelo-drawer) .conteudo-atleta {
 }
 
 .cadastro-pelo-drawer .conteudo-atleta {
-    width: 470px;
+    width: 760px;
     margin-left: 0;
     margin-top: -10px;
 }
 
+body.cadastro-pelo-drawer.cadastro-apoio .conteudo-atleta {
+    margin-top: -70px;
+}
+
 .cadastro-pelo-drawer .subetapa-atleta {
     display: none;
+}
+
+/* tema escuro */
+html[data-theme="dark"] #formAtleta .campo-cadastro-pessoa,
+html[data-theme="dark"] .campo-foto-perfil {
+    background-color: var(--fundo-pagina);
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] #formAtleta input {
+    background-color: var(--fundo-superficie);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .foto-perfil-preview {
+    background-color: var(--fundo-superficie);
+    color: var(--texto-secundario);
+    border: 1px solid var(--borda);
+}
+
+html[data-theme="dark"] .campo-foto-perfil p {
+    color: var(--texto-secundario);
+}
+
+html[data-theme="dark"] .campo-foto-perfil button {
+    background-color: var(--fundo-superficie);
+    color: #ff4f7d;
+    border-color: var(--vermelho);
+}
+
+html[data-theme="dark"] .campo-tipo-cadastro select {
+    color: var(--texto-principal);
 }

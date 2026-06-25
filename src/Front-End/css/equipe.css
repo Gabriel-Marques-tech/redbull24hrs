@@ -15,8 +15,9 @@ main {
 /* ---------------- CONTEUDO ---------------- */
 
 .conteudo {
+    position: relative;
     width: 700px;
-    margin-top: 40px;
+    margin-top: -35px;
     display: flex;
     flex-direction: column;
 }
@@ -146,6 +147,7 @@ main {
     display: flex;
     justify-content: center;
     gap: 15px;
+    margin-top: 50px;
     padding-bottom: 20px;
     flex-shrink: 0;
 }
@@ -184,6 +186,12 @@ main {
     color: var(--branco);
 }
 
+.btn-proximo:not(:disabled) {
+    background-color: var(--vermelho);
+    color: var(--branco);
+    cursor: pointer;
+}
+
 .btn-proximo-equipes {
     background-color: var(--vermelho);
 }
@@ -193,7 +201,7 @@ main {
     color: var(--vermelho);
 }
 
-.btn-proximo:hover {
+.btn-proximo:not(:disabled):hover {
     background-color: var(--vermelho);
 }
 
@@ -204,7 +212,9 @@ main {
     flex-direction: column;
     gap: 10px;
     overflow-y: auto;
-    flex: 1;
+    flex: 0 0 280px;
+    height: 280px;
+    max-height: 280px;
     margin-bottom: 20px;
 }
 
@@ -212,7 +222,6 @@ main {
     border: 1px solid #ddd;
     border-radius: 10px;
     overflow: hidden;
-    cursor: pointer;
     transition: border-color 0.15s;
 }
 
@@ -235,6 +244,26 @@ main {
     transition: background 0.15s;
 }
 
+.selecao-seta {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    margin: -10px;
+    padding: 10px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+}
+
+.selecao-seta:hover,
+.selecao-seta:focus-visible {
+    background: rgba(128, 128, 128, 0.15);
+    outline: none;
+}
+
 .selecao-topo:hover {
     background: #fafafa;
 }
@@ -244,7 +273,7 @@ main {
     color: #fff;
 }
 
-.selecao-topo img {
+.selecao-seta img {
     width: 16px;
     height: 16px;
     opacity: 0.5;
@@ -252,22 +281,24 @@ main {
     transition: transform 0.2s;
 }
 
-.selecao-equipe.selecionada .selecao-topo img {
+.selecao-equipe.selecionada .selecao-seta img {
     filter: invert(1);
     opacity: 1;
 }
 
-.selecao-equipe.expandida .selecao-topo img {
+.selecao-equipe.expandida .selecao-seta img {
     transform: rotate(270deg);
 }
 
-.selecao-equipe.selecionada.expandida .selecao-topo img {
+.selecao-equipe.selecionada.expandida .selecao-seta img {
     transform: rotate(270deg);
 }
 
 .selecao-lista {
     display: none;
+    max-height: 90px;
     padding: 12px 20px;
+    overflow-y: auto;
     background: #fafafa;
     border-top: 1px solid #f0f0f0;
 }
@@ -288,4 +319,67 @@ main {
     border-bottom: none;
 }
 
+/* tema escuro */
+html[data-theme="dark"] .btn-voltar {
+    background-color: var(--fundo-superficie);
+    border-color: var(--borda);
+    color: var(--texto-principal);
+}
 
+html[data-theme="dark"] .btn-proximo:disabled {
+    background-color: #555560;
+    color: #b8b8c3;
+    opacity: 1;
+}
+
+html[data-theme="dark"] .btn-proximo:not(:disabled) {
+    background-color: var(--vermelho);
+    color: #fff;
+    opacity: 1;
+}
+
+html[data-theme="dark"] .selecao-equipe {
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] .selecao-topo,
+html[data-theme="dark"] .selecao-lista {
+    background-color: var(--fundo-superficie);
+    color: var(--texto-principal);
+}
+
+html[data-theme="dark"] .selecao-topo:hover {
+    background-color: var(--fundo-superficie);
+}
+
+html[data-theme="dark"] .selecao-equipe.selecionada {
+    border-color: var(--vermelho);
+}
+
+html[data-theme="dark"] .selecao-equipe.selecionada .selecao-topo {
+    background-color: var(--vermelho);
+    color: #fff;
+}
+
+html[data-theme="dark"] .selecao-equipe.selecionada .selecao-topo:hover {
+    background-color: var(--vermelho);
+}
+
+html[data-theme="dark"] .selecao-lista {
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] .selecao-lista p {
+    color: var(--texto-secundario);
+    border-color: var(--borda);
+}
+
+html[data-theme="dark"] .selecao-seta img {
+    filter: brightness(0) invert(1);
+    opacity: 0.75;
+}
+
+html[data-theme="dark"] .selecao-equipe.selecionada .selecao-seta img {
+    filter: brightness(0) invert(1);
+    opacity: 1;
+}
