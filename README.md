@@ -249,15 +249,13 @@ Abra `http://localhost:3000` no navegador (ajuste a porta se alterou `SERVER_POR
 
 ### Logins de teste
 
-Ao abrir a aplicação, a primeira tela é a de login. Para explorar o sistema sem precisar cadastrar usuários, utilize uma das três contas de teste já disponíveis no banco. As contas de **auditor** acessam os fluxos de registro em campo, e a de **manager** (gerente) acessa, além disso, a configuração de eventos e o acompanhamento geral.
+Ao abrir a aplicação, a primeira tela é a de login. Para explorar o sistema sem precisar cadastrar usuários, utilize a conta de desenvolvimento **MasterManager**, criada automaticamente ao final das migrations (`025_ocrFields.sql`). Por ser um perfil de **manager** (gerente), ela acessa tanto os fluxos de registro em campo quanto a configuração de eventos e o acompanhamento geral.
 
 | Perfil | E-mail | Senha |
 |---|---|---|
-| Auditor 1 | `auditor1@test.com` | `senha123` |
-| Auditor 2 | `auditor2@test.com` | `senha123` |
-| Manager 1 | `manager1@test.com` | `senha123` |
+| MasterManager | `master@email.com` | `senha123` |
 
-> As credenciais acima são exclusivas para teste/demonstração. Não as utilize em ambiente de produção.
+> A credencial acima é exclusiva para desenvolvimento/demonstração. Não a utilize em ambiente de produção.
 
 ### Scripts disponíveis
 
