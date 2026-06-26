@@ -396,3 +396,63 @@ html[data-theme="dark"] .user-drawer-rodape {
 body.drawer-aberto .tema-toggle {
   right: 342px;
 }
+
+@media (max-width: 600px) {
+    header {
+        height: 180px;
+    }
+
+    header img {
+        width: 110px;
+    }
+
+    main {
+        padding-top: 100px;
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-top: -100px;
+    }
+
+    .Bem-vindo {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .Bem-vindo button {
+        width: 100%;
+        max-width: 320px;
+        height: 76px;
+        font-size: 18px;
+    }
+
+    .Bem-vindo .btn-registrar-competicao {
+        width: 100%;
+        max-width: 340px;
+    }
+
+    .Histórico {
+        margin-top: 40px;
+        margin-right: 0;
+    }
+
+    .historico-titulo h2 {
+        font-size: 26px;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+    }
+
+    .card {
+        font-size: 16px;
+        padding: 14px;
+    }
+
+    body.drawer-aberto .tema-toggle {
+        right: 14px;
+    }
+}
