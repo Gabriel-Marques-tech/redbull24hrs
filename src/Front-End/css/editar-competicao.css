@@ -3,7 +3,7 @@ body { overflow: auto !important; }
 main { height: auto !important; }
 
 .conteudo-editar {
-    width: 700px;
+    width: min(700px, calc(100vw - 48px));
     display: flex;
     flex-direction: column;
     justify-content: center;
