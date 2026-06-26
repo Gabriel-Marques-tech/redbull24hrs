@@ -8,7 +8,7 @@ main {
 }
 
 .conteudo-imagem-evento {
-    width: 760px;
+    width: min(760px, calc(100vw - 48px));
     margin-top: -70px;
     align-items: center;
 }
@@ -114,4 +114,52 @@ html[data-theme="dark"] .imagem-evento-preview {
 
 html[data-theme="dark"] .upload-imagem-evento p {
     color: var(--texto-secundario);
+}
+
+@media (max-width: 600px) {
+    body {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    main {
+        height: auto;
+        min-height: calc(100vh - 170px);
+    }
+
+    .conteudo-imagem-evento {
+        width: calc(100vw - 32px);
+        margin-top: 0;
+    }
+
+    .formulario-imagem-evento {
+        transform: none;
+    }
+
+    .formulario-imagem-evento h1 {
+        font-size: 24px;
+    }
+
+    .upload-imagem-evento {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .imagem-evento-preview {
+        width: 80px;
+        height: 80px;
+        flex-basis: 80px;
+        font-size: 36px;
+    }
+
+    .botoes-imagem-evento {
+        margin-top: 24px;
+        padding-bottom: 80px;
+    }
+
+    .conteudo-imagem-evento .botoes button {
+        flex: 1;
+    }
 }

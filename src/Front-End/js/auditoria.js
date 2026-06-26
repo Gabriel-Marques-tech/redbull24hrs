@@ -651,7 +651,7 @@ function criarItemFila(athlete) {
     div.dataset.id = athlete.id
     div.title = 'Arraste para reorganizar a fila'
     div.innerHTML = `
-        <span class="avatar"></span>
+        <span class="avatar" ${athlete.image_url ? `style="background-image:url('${athlete.image_url}');background-size:cover;background-position:center;"` : ''}></span>
         <p>${athlete.name}</p>
         <span class="drag">⠿</span>
     `

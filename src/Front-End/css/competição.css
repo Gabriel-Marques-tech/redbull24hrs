@@ -79,3 +79,36 @@ button:disabled{
 button:disabled:hover{
     background-color: #C8C8C8;
 }
+
+@media (max-width: 600px) {
+    main {
+        margin-top: 10px;
+    }
+
+    .conteudo {
+        width: calc(100vw - 32px);
+    }
+
+    .conteudo h2 {
+        font-size: 22px;
+        margin-bottom: 16px;
+    }
+
+    .competicao {
+        grid-template-columns: 24px 1fr auto;
+        font-size: 15px;
+        padding: 14px 8px;
+        gap: 8px;
+    }
+
+    /* esconde coluna extra (4ª coluna vazia) */
+    .competicao > *:nth-child(4) {
+        display: none;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 24px;
+        font-size: 20px;
+    }
+}

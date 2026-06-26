@@ -232,3 +232,49 @@ html[data-theme="dark"] .btn-adicionar-atleta {
     background-color: var(--vermelho);
     color: var(--branco);
 }
+
+@media (max-width: 600px) {
+    body {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    main {
+        height: auto;
+        min-height: calc(100vh - 170px);
+    }
+
+    .conteudo-equipes-gerente,
+    .formulario-equipes-gerente {
+        width: calc(100vw - 32px);
+    }
+
+    .formulario-equipes-gerente h2 {
+        font-size: 24px;
+        margin-bottom: 16px;
+    }
+
+    .formulario-equipes-gerente label {
+        font-size: 16px;
+    }
+
+    .formulario-equipes-gerente input {
+        width: 100%;
+        height: 52px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    .lista-atletas {
+        width: 100%;
+    }
+
+    .botoes-equipes-gerente {
+        margin-top: 24px;
+        padding-bottom: 80px;
+    }
+
+    .conteudo-equipes-gerente .botoes button {
+        flex: 1;
+    }
+}

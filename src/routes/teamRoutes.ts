@@ -17,4 +17,6 @@ router.get("/:teamId/athletes/:id", teamController.getAthlete);
 router.patch("/:teamId/athletes/:id", upload.single("photo"), teamController.updateAthlete);
 router.delete("/:teamId/athletes/:id", teamController.deleteAthlete);
 
+// RF003 (GET /:teamId/validation) descartado — regra de composição de equipe será revisada em sprint futura.
 export default router;
+

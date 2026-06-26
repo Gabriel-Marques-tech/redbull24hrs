@@ -8,7 +8,7 @@ main {
 }
 
 .conteudo-data-horario {
-    width: 760px;
+    width: min(760px, calc(100vw - 48px));
     margin-top: -70px;
     align-items: center;
 }
@@ -111,5 +111,53 @@ main {
     .campo-data-horario input {
         height: 68px;
         font-size: 22px;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    main {
+        height: auto;
+        min-height: calc(100vh - 170px);
+    }
+
+    .conteudo-data-horario {
+        width: calc(100vw - 32px);
+        margin-top: 0;
+    }
+
+    .formulario-data-horario {
+        transform: none;
+    }
+
+    .formulario-data-horario h2 {
+        font-size: 24px;
+    }
+
+    .campos-data-horario {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .campo-data-horario input {
+        height: 56px;
+        font-size: 18px;
+    }
+
+    .grupo-data-horario {
+        font-size: 18px;
+    }
+
+    .botoes-data-horario {
+        margin-top: 24px;
+        padding-bottom: 80px;
+    }
+
+    .conteudo-data-horario .botoes button {
+        flex: 1;
     }
 }
