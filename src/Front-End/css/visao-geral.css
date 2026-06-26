@@ -144,3 +144,30 @@ html[data-theme="dark"] .linha-resumo {
 html[data-theme="dark"] .rotulo-resumo {
     color: var(--texto-secundario);
 }
+
+@media (max-width: 600px) {
+    main {
+        margin-top: 10px;
+    }
+
+    .conteudo {
+        width: calc(100vw - 32px);
+        margin-top: 0;
+    }
+
+    .conteudo h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    .card-resumo {
+        width: 100%;
+        grid-template-columns: 1fr;
+    }
+
+    .botoes {
+        margin-top: 24px;
+        padding-bottom: 80px;
+    }
+}
