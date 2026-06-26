@@ -2976,3 +2976,194 @@ html[data-theme="dark"] #modalEsteira .opcao-esteira.opcao-ocupada {
 html[data-theme="dark"] .fila-lista.fila-aberta::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.22);
 }
+
+@media (max-width: 600px) {
+    body {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    /* --- topo --- */
+    .topo {
+        height: 64px;
+        padding: 0 14px;
+    }
+
+    .operador p {
+        font-size: 14px;
+    }
+
+    .tempo-restante {
+        font-size: 13px;
+    }
+
+    /* --- cronômetro --- */
+    .conteudo-auditoria {
+        padding: 0 16px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .cronometro-area {
+        width: 100%;
+    }
+
+    .corredor-atual p {
+        font-size: 17px;
+    }
+
+    .cronometro {
+        width: 100%;
+        height: 100px;
+        font-size: 52px;
+    }
+
+    /* --- ações --- */
+    .acoes-wrapper {
+        width: 100%;
+    }
+
+    .input-km {
+        max-width: 100%;
+    }
+
+    .acoes-corrida {
+        width: 100%;
+    }
+
+    .btn-iniciar {
+        flex: 1;
+    }
+
+    /* --- modal de esteira --- */
+    .modal-conteudo {
+        width: 96vw;
+        height: auto;
+        max-height: 90vh;
+        padding: 20px 16px;
+        overflow-y: auto;
+        justify-content: flex-start;
+    }
+
+    .modal-conteudo h2 {
+        font-size: 18px;
+        margin-bottom: 16px;
+        text-align: center;
+    }
+
+    .opcoes-esteira {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .opcao-esteira {
+        width: 100%;
+        height: 72px;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 12px;
+        padding: 0 16px;
+        font-size: 16px;
+    }
+
+    .opcao-esteira .icone-esteira {
+        width: 40px;
+        flex-shrink: 0;
+    }
+
+    .acoes-modal {
+        margin-top: 16px;
+        width: 100%;
+    }
+
+    .btn-cancelar-modal,
+    .btn-selecionar-modal {
+        flex: 1;
+        font-size: 15px;
+    }
+
+    /* --- modal finalizar competição --- */
+    .modal-finalizar-conteudo {
+        width: 94vw;
+        height: auto;
+        padding: 24px 18px;
+    }
+
+    .modal-finalizar-conteudo h2 {
+        font-size: 22px;
+    }
+
+    .modal-finalizar-conteudo p {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    /* --- modal operador --- */
+    .modal-operador {
+        width: calc(100vw - 32px);
+    }
+
+    /* --- registros --- */
+    .area-registros {
+        width: 100%;
+        flex-direction: column;
+        gap: 16px;
+        margin-top: 14px;
+    }
+
+    .ultimos-registros {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .proximos-corredores {
+        width: 100%;
+    }
+
+    /* --- modal de turno (campos) --- */
+    .campos-turno {
+        flex-direction: column;
+        gap: 16px;
+        width: 100%;
+        align-items: stretch;
+    }
+
+    .campo-corredor,
+    .campo-corredor select {
+        width: 100%;
+    }
+
+    .campo-horario,
+    .campo-horario input {
+        width: 100%;
+    }
+
+    .campo-turno label {
+        font-size: 18px;
+    }
+
+    .campo-turno select,
+    .campo-turno input {
+        height: 52px;
+        font-size: 18px;
+    }
+
+    .campo-quilometragem {
+        width: 100%;
+        transform: none;
+        margin-top: 24px;
+    }
+
+    .campo-quilometragem input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .btn-registrar-turno {
+        width: 100%;
+        margin-top: 32px;
+        font-size: 22px;
+        height: 60px;
+    }
+}
