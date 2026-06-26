@@ -7,11 +7,7 @@ main {
 }
 
 .progresso-equipes {
-    position: absolute;
-    top: 64px;
-    right: 52px;
-    color: #9f9f9f;
-    font-size: 18px;
+    display: none !important;
 }
 
 .conteudo-equipes-gerente {
@@ -231,4 +227,122 @@ html[data-theme="dark"] .contador-atletas {
 html[data-theme="dark"] .btn-adicionar-atleta {
     background-color: var(--vermelho);
     color: var(--branco);
+}
+
+@media (max-width: 900px) {
+    body {
+        overflow-y: auto;
+    }
+
+    main:has(.conteudo-equipes-gerente) {
+        padding-bottom: 148px;
+    }
+
+    .conteudo-equipes-gerente,
+    .formulario-equipes-gerente {
+        width: 100% !important;
+        max-width: 366px !important;
+        min-width: 0 !important;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .formulario-equipes-gerente h2 {
+        width: 100%;
+        margin-bottom: 28px;
+        font-size: clamp(28px, 7.2vw, 34px);
+        line-height: 1.08;
+        overflow-wrap: anywhere;
+        word-break: normal;
+        hyphens: auto;
+    }
+
+    .progresso-equipes {
+        display: none !important;
+    }
+
+    .formulario-equipes-gerente input {
+        width: 100%;
+        height: 52px;
+        font-size: 16px;
+    }
+
+    .lista-atletas {
+        width: 100%;
+        min-height: 0;
+        max-height: none;
+        border-radius: 8px;
+    }
+
+    .lista-atletas-scroll {
+        height: auto;
+        max-height: 154px;
+        padding: 14px;
+    }
+
+    .rodape-lista-atletas {
+        position: static;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 48px;
+        gap: 12px;
+        height: auto;
+        padding: 12px 14px;
+    }
+
+    .campo-atleta {
+        grid-template-columns: 28px minmax(0, 1fr);
+        gap: 10px;
+        min-height: 78px;
+        padding: 0 10px;
+    }
+
+    .campo-atleta input {
+        min-width: 0;
+        height: auto;
+        font-size: 17px;
+    }
+
+    .campo-atleta small {
+        display: none;
+    }
+
+    .contador-atletas {
+        align-self: center;
+        font-size: 15px;
+    }
+
+    .btn-adicionar-atleta {
+        width: 48px;
+        height: 48px;
+    }
+
+    .botoes-equipes-gerente,
+    .conteudo-equipes-gerente.modo-atletas .botoes-equipes-gerente {
+        position: fixed !important;
+        right: 28px !important;
+        bottom: 24px !important;
+        left: 28px !important;
+        z-index: 80;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        width: auto !important;
+        max-width: none !important;
+        gap: 12px;
+        margin: 0;
+        transform: none !important;
+        box-sizing: border-box;
+    }
+
+    .conteudo-equipes-gerente .botoes-equipes-gerente button {
+        width: 100% !important;
+        height: 52px;
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 420px) {
+    .conteudo-equipes-gerente,
+    .formulario-equipes-gerente {
+        max-width: 100% !important;
+    }
 }

@@ -396,3 +396,84 @@ html[data-theme="dark"] .user-drawer-rodape {
 body.drawer-aberto .tema-toggle {
   right: 342px;
 }
+
+@media (max-width: 900px) {
+  main {
+    margin-top: -120px;
+    padding: 140px 28px 64px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  header {
+    height: 220px;
+  }
+
+  header img {
+    width: 132px;
+  }
+
+  main {
+    min-height: auto;
+    margin: -96px 0 24px;
+    padding: 118px 18px 48px;
+    border-radius: 24px 24px 0 0;
+  }
+
+  .Bem-vindo {
+    width: 100%;
+  }
+
+  h1 {
+    font-size: clamp(32px, 10vw, 42px);
+    line-height: 1.08;
+  }
+
+  .Bem-vindo button,
+  .Bem-vindo .btn-registrar-competicao {
+    width: 100%;
+    height: 72px;
+    grid-template-columns: 48px minmax(0, 1fr);
+    font-size: 18px;
+  }
+
+  .Bem-vindo button strong {
+    white-space: normal;
+  }
+
+  .HistÃ³rico {
+    margin: 42px 0 0;
+  }
+
+  .historico-titulo h2 {
+    font-size: 30px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .card {
+    min-height: 170px;
+    aspect-ratio: 16 / 10;
+    font-size: 20px;
+  }
+
+  .drawer-identidade-linha {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  body.drawer-aberto .tema-toggle {
+    right: 14px;
+  }
+}

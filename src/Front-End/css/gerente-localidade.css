@@ -258,3 +258,48 @@ html[data-theme="dark"] .combo-lista li {
 html[data-theme="dark"] .combo-lista li:hover {
     background-color: var(--fundo-suave);
 }
+
+@media (max-width: 900px) {
+    body {
+        overflow-y: auto;
+    }
+
+    main {
+        height: auto;
+    }
+
+    .conteudo-localidade {
+        justify-content: flex-start;
+    }
+
+    .campo-imagem-evento {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 14px;
+    }
+
+    .imagem-evento-preview {
+        width: 72px;
+        height: 72px;
+        flex-basis: 72px;
+    }
+
+    .campo-select select,
+    .campo-select input {
+        height: 52px;
+        padding-right: 48px;
+        padding-left: 14px;
+        font-size: 16px;
+    }
+
+    .campo-foto-evento {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    #previewFotoEvento {
+        width: 100%;
+        height: auto;
+        max-height: 180px;
+    }
+}
