@@ -199,7 +199,6 @@
 
   async function enviarParaTodos() {
     const comEmail = athletes.filter(a => a.email && a.share_token);
-    if (!comEmail.length) { alert('Nenhum atleta com email e link gerado.'); return; }
     const btns = [document.getElementById('btnEnviarTodos'), document.getElementById('btnEnviarTodosRodape')];
     btns.forEach(b => { b.disabled = true; b.textContent = `Enviando 0/${comEmail.length}…`; });
     let ok = 0, err = 0;
