@@ -3190,23 +3190,91 @@ html[data-theme="dark"] .fila-lista.fila-aberta::-webkit-scrollbar-thumb {
         font-size: 14px;
     }
 
-    #modalCheckpoint .checkpoint-acoes {
+    /* especificidade (1,2,0) para bater linha 2799-2813 */
+    #modalCheckpoint .modal-checkpoint-conteudo .checkpoint-acoes {
         gap: 10px;
         margin-top: 10px;
+        justify-content: stretch;
     }
 
-    #modalCheckpoint .btn-cancelar-turno,
-    #modalCheckpoint .btn-registrar-turno {
+    #modalCheckpoint .modal-checkpoint-conteudo .btn-cancelar-turno,
+    #modalCheckpoint .modal-checkpoint-conteudo .btn-registrar-turno {
         height: 40px;
         font-size: 14px;
         flex: 1;
         width: auto;
+        min-width: 0;
         margin: 0;
         padding: 0;
     }
 }
 
 @media (max-width: 600px) {
+
+    /* ── Checkpoint iPhone: inputs 2 colunas para caber na tela ── */
+    #modalCheckpoint .modal-turno-conteudo {
+        padding: 12px 14px 14px;
+    }
+
+    #modalCheckpoint .checkpoint-cronometro-topo {
+        margin-bottom: 6px;
+    }
+
+    #modalCheckpoint .checkpoint-cronometro-valor {
+        font-size: 17px;
+    }
+
+    #modalCheckpoint .checkpoint-corredor select {
+        height: 34px;
+        font-size: 14px;
+    }
+
+    #modalCheckpoint .checkpoint-divisor {
+        margin-top: 6px;
+    }
+
+    #modalCheckpoint .checkpoint-conteudo {
+        gap: 6px;
+        padding-top: 6px;
+    }
+
+    #modalCheckpoint .btn-checkpoint-foto {
+        height: 30px;
+        font-size: 12px;
+    }
+
+    /* distância e velocidade em linha, tempo abaixo sozinho */
+    #modalCheckpoint .checkpoint-campos {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+
+    /* tempo ocupa as 2 colunas */
+    #modalCheckpoint .checkpoint-campo:nth-child(2) {
+        grid-column: 1 / -1;
+    }
+
+    #modalCheckpoint .checkpoint-input-linha input {
+        height: 32px;
+        font-size: 13px;
+    }
+
+    #modalCheckpoint .checkpoint-campo label {
+        font-size: 11px;
+    }
+
+    #modalCheckpoint .modal-checkpoint-conteudo .checkpoint-acoes {
+        margin-top: 8px;
+        gap: 8px;
+    }
+
+    #modalCheckpoint .modal-checkpoint-conteudo .btn-cancelar-turno,
+    #modalCheckpoint .modal-checkpoint-conteudo .btn-registrar-turno {
+        height: 36px;
+        font-size: 13px;
+    }
+
     body {
         overflow-y: auto;
         overflow-x: hidden;
