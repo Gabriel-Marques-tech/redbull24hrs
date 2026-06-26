@@ -1,9 +1,9 @@
-const mockSend = jest.fn();
+const mockSendMail = jest.fn();
 
-jest.mock("resend", () => ({
-	Resend: jest.fn().mockImplementation(() => ({
-		emails: { send: mockSend },
-	})),
+jest.mock("nodemailer", () => ({
+	createTransport: jest.fn().mockReturnValue({
+		sendMail: mockSendMail,
+	}),
 }));
 
 import { emailService } from "../services/emailService";
@@ -11,12 +11,12 @@ import { emailService } from "../services/emailService";
 beforeEach(() => jest.clearAllMocks());
 
 describe("emailService.sendShareLink", () => {
-	it("chama resend.emails.send com os parâmetros corretos", async () => {
-		mockSend.mockResolvedValue({ data: { id: "email-id" }, error: null });
+	it("chama nodemailer.sendMail com os parâmetros corretos", async () => {
+		mockSendMail.mockResolvedValue({ messageId: "test-id" });
 
 		await emailService.sendShareLink("ana@teste.com", "Ana Lima", "uuid-abc-123");
 
-		expect(mockSend).toHaveBeenCalledWith(
+		expect(mockSendMail).toHaveBeenCalledWith(
 			expect.objectContaining({
 				to: "ana@teste.com",
 				subject: expect.stringContaining("Ana Lima"),
@@ -25,11 +25,11 @@ describe("emailService.sendShareLink", () => {
 		);
 	});
 
-	it("lança exceção quando Resend retorna erro", async () => {
-		mockSend.mockResolvedValue({ data: null, error: { message: "Resend API error" } });
+	it("lança exceção quando sendMail falha", async () => {
+		mockSendMail.mockRejectedValue(new Error("SMTP connection failed"));
 
 		await expect(
 			emailService.sendShareLink("ana@teste.com", "Ana Lima", "uuid-abc-123")
-		).rejects.toThrow("Resend API error");
+		).rejects.toThrow("SMTP connection failed");
 	});
 });
