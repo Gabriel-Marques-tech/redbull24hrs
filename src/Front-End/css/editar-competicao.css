@@ -271,3 +271,45 @@ main { height: auto !important; }
     cursor: pointer;
 }
 .btn-remover-foto:hover { background: #fff0f1; }
+
+@media (max-width: 600px) {
+    .conteudo-editar {
+        width: calc(100vw - 32px);
+    }
+
+    .conteudo-editar h1 {
+        font-size: 24px;
+    }
+
+    .linha-dupla {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .linha-atleta {
+        grid-template-columns: 1fr 40px;
+        gap: 6px;
+    }
+
+    .linha-atleta input:nth-child(2),
+    .linha-atleta select {
+        grid-column: 1;
+    }
+
+    .linha-atleta .btn-remover-atleta {
+        grid-column: 2;
+        grid-row: 1;
+        align-self: center;
+    }
+
+    .botoes-secao {
+        flex-direction: column;
+        gap: 10px;
+        padding-right: 0;
+    }
+
+    .btn-salvar,
+    .btn-avancar-secao {
+        width: 100%;
+    }
+}
