@@ -3,7 +3,7 @@ body { overflow: auto !important; }
 main { height: auto !important; }
 
 .conteudo-editar {
-    width: min(700px, calc(100vw - 48px));
+    width: 700px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -272,44 +272,50 @@ main { height: auto !important; }
 }
 .btn-remover-foto:hover { background: #fff0f1; }
 
-@media (max-width: 600px) {
-    .conteudo-editar {
-        width: calc(100vw - 32px);
-    }
-
+@media (max-width: 900px) {
     .conteudo-editar h1 {
-        font-size: 24px;
+        font-size: clamp(26px, 8vw, 34px);
+        line-height: 1.12;
     }
 
-    .linha-dupla {
-        flex-direction: column;
-        gap: 0;
+    .bloco {
+        padding: 16px;
     }
 
-    .linha-atleta {
-        grid-template-columns: 1fr 40px;
-        gap: 6px;
-    }
-
-    .linha-atleta input:nth-child(2),
-    .linha-atleta select {
-        grid-column: 1;
-    }
-
-    .linha-atleta .btn-remover-atleta {
-        grid-column: 2;
-        grid-row: 1;
-        align-self: center;
-    }
-
+    .linha-dupla,
+    .campo-foto-editar,
     .botoes-secao {
+        align-items: stretch;
         flex-direction: column;
-        gap: 10px;
-        padding-right: 0;
+    }
+
+    .linha-atleta,
+    .campo-atleta--edit {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 12px;
+        border: 1px solid var(--borda);
+        border-radius: 8px;
+    }
+
+    .btn-remover-atleta,
+    .btn-slot-editar,
+    .btn-slot-remover {
+        width: 100%;
+        border-radius: 8px;
+    }
+
+    #editPreviewFoto {
+        width: 100%;
+        height: auto;
+        max-height: 180px;
     }
 
     .btn-salvar,
-    .btn-avancar-secao {
+    .btn-excluir,
+    .btn-avancar-secao,
+    .btn-voltar-secao,
+    .btn-remover-foto {
         width: 100%;
     }
 }
