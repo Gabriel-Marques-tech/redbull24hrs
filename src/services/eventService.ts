@@ -1,5 +1,6 @@
 import { eventRepository } from "../repositories/eventRepository";
 import { treadmillRepository } from "../repositories/treadmillRepository";
+import { shareRepository } from "../repositories/shareRepository";
 import { removeFromStorage } from "../utils/supabaseStorage";
 
 export const eventService = {
@@ -80,6 +81,7 @@ export const eventService = {
 		if (event.status === "finished") throw new Error("Evento já está encerrado");
 		const finished = await eventRepository.finish(id);
 		if (!finished) throw new Error("Não foi possível encerrar o evento");
+		await shareRepository.generateTokensForEvent(id);
 		return finished;
 	},
 
