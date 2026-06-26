@@ -2808,8 +2808,9 @@ html[data-theme="dark"] #modalCheckpoint .checkpoint-input-linha input::placehol
 #modalCheckpoint .modal-checkpoint-conteudo .btn-registrar-turno,
 #modalCheckpoint .modal-checkpoint-conteudo .btn-cancelar-turno {
     position: static;
-    width: 178px;
-    flex: 0 0 178px;
+    width: auto;
+    flex: 1;
+    min-width: 0;
 }
 
 #modalCheckpoint .modal-checkpoint-conteudo .btn-registrar-turno {
@@ -2977,6 +2978,100 @@ html[data-theme="dark"] #modalEsteira .opcao-esteira.opcao-ocupada {
 
 html[data-theme="dark"] .fila-lista.fila-aberta::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.22);
+}
+
+/* ────────────────────────────────────────────────────────────
+   MODAL CHECKPOINT: 1 coluna em viewports ≤ 900px (iPad incluído)
+   ──────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+
+    #modalCheckpoint .modal-turno-conteudo {
+        height: auto;
+        padding: 16px 20px 18px;
+        overflow: hidden;
+        align-items: stretch;
+    }
+
+    #modalCheckpoint .checkpoint-cronometro-topo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    #modalCheckpoint .checkpoint-corredor {
+        width: 100%;
+    }
+
+    #modalCheckpoint .checkpoint-corredor select {
+        height: 38px;
+        font-size: 15px;
+    }
+
+    #modalCheckpoint .checkpoint-conteudo {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        padding-top: 8px;
+        padding-bottom: 4px;
+        gap: 8px;
+    }
+
+    #modalCheckpoint .checkpoint-foto {
+        padding-right: 0;
+        padding-bottom: 0;
+    }
+
+    #modalCheckpoint .checkpoint-foto .checkpoint-secao-titulo {
+        display: none;
+    }
+
+    #modalCheckpoint .checkpoint-foto-preview {
+        display: none;
+    }
+
+    #modalCheckpoint .btn-checkpoint-foto {
+        margin: 0;
+        width: 100%;
+        height: 36px;
+        font-size: 13px;
+    }
+
+    #modalCheckpoint .checkpoint-dados {
+        padding-left: 0;
+        border-left: none;
+    }
+
+    #modalCheckpoint .checkpoint-dados .checkpoint-secao-titulo {
+        display: none;
+    }
+
+    #modalCheckpoint .checkpoint-campos {
+        gap: 6px;
+        margin-top: 0;
+    }
+
+    #modalCheckpoint .checkpoint-input-linha input {
+        height: 36px;
+        font-size: 14px;
+    }
+
+    #modalCheckpoint .modal-checkpoint-conteudo .checkpoint-acoes {
+        gap: 10px;
+        margin-top: 10px;
+        justify-content: stretch;
+    }
+
+    #modalCheckpoint .modal-checkpoint-conteudo .btn-cancelar-turno,
+    #modalCheckpoint .modal-checkpoint-conteudo .btn-registrar-turno {
+        height: 40px;
+        font-size: 14px;
+        flex: 1;
+        width: auto;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+    }
 }
 
 /* ────────────────────────────────────────────────────────────
