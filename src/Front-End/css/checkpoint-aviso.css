@@ -1,4 +1,4 @@
-﻿* {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -97,6 +97,41 @@ body {
     cursor: pointer;
 }
 
+@media (max-width: 900px) {
+    .pagina-checkpoint-aviso {
+        align-items: stretch;
+        padding: 70px 14px 24px;
+    }
+
+    .btn-sair-checkpoint {
+        top: 22px;
+        right: 22px;
+        font-size: 28px;
+    }
+
+    .modal-checkpoint-aviso-teste {
+        width: 100%;
+        min-height: 0;
+        padding: 42px 20px 28px;
+    }
+
+    .icone-checkpoint-aviso-teste {
+        width: 68px;
+        margin-bottom: 18px;
+    }
+
+    .modal-checkpoint-aviso-teste h1 {
+        font-size: 22px;
+    }
+
+    .modal-checkpoint-aviso-teste p {
+        font-size: 16px;
+    }
+
+    .btn-registrar-checkpoint {
+        width: 100%;
+    }
+}
 
 
 

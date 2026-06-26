@@ -50,6 +50,97 @@
         html[data-theme="dark"] .contador,
         html[data-theme="dark"] .subtitulo,
         html[data-theme="dark"] .empty { color: var(--texto-secundario); }
+
+        @media (max-width: 900px) {
+            body {
+                padding: 28px 18px 72px;
+                overflow-x: hidden;
+            }
+
+            .barra-topo {
+                align-items: stretch;
+                flex-direction: column;
+                gap: 18px;
+                margin-bottom: 28px;
+            }
+
+            .barra-topo > div:first-child {
+                min-width: 0;
+            }
+
+            .barra-topo > div:last-child {
+                display: grid !important;
+                grid-template-columns: minmax(0, 1fr);
+                gap: 12px !important;
+                align-items: stretch !important;
+                width: 100%;
+            }
+
+            h1 {
+                max-width: 260px;
+                font-size: 30px;
+                line-height: 1.08;
+            }
+
+            .subtitulo {
+                max-width: 280px;
+                margin-bottom: 0;
+                font-size: 16px;
+                line-height: 1.18;
+            }
+
+            .contador {
+                order: 2;
+                font-size: 15px;
+            }
+
+            .btn-voltar {
+                order: 1;
+                width: 100%;
+                min-width: 0;
+                height: 48px;
+                padding: 0 16px;
+            }
+
+            table {
+                display: block;
+                width: 100%;
+                min-width: 0;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                font-size: 14px;
+            }
+
+            thead,
+            tbody {
+                display: table;
+                width: 620px;
+                table-layout: fixed;
+            }
+
+            th,
+            td {
+                padding: 12px 12px;
+                line-height: 1.15;
+                vertical-align: top;
+                word-break: normal;
+            }
+
+            th:nth-child(n+5),
+            td:nth-child(n+5) {
+                display: none;
+            }
+
+            th:nth-child(1),
+            td:nth-child(1) { width: 66px; }
+
+            th:nth-child(2),
+            td:nth-child(2),
+            th:nth-child(3),
+            td:nth-child(3),
+            th:nth-child(4),
+            td:nth-child(4) { width: 150px; }
+        }
     </style>
 </head>
 <body>

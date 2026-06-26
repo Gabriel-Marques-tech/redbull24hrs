@@ -96,7 +96,7 @@ body {
   background-color: #b90039;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .modal-checkpoint {
     width: 86%;
     min-height: 320px;
