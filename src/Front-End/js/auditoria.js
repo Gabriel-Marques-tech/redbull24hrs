@@ -153,8 +153,9 @@ async function enviarOp(op) {
     if (op.tipo === 'finish') {
         const r = await tentarEnvio(`/audit/shifts/${idTurno}/finish`, 'PATCH', op.corpo)
         if (r.rede) return 'depois'
-        // "Turno não está em andamento" = este fim já tinha sido gravado numa tentativa anterior
-        if (r.ok || r.data?.error === 'Turno não está em andamento') return 'feito'
+        // Reenvio do mesmo fim devolve 200 (o servidor reconhece pelo finish_id).
+        // Qualquer recusa vai para o aviso vermelho, com o km, para lançamento manual.
+        if (r.ok) return 'feito'
         registrarFalha(op, r.data?.error || `erro ${r.status}`)
         return 'feito'
     }
@@ -780,7 +781,7 @@ if (btnRegistrarCheckpoint) {
 })()
 
 async function finalizarCorrida(kmEnd, athleteIdOverride = null, durationSeconds = null, pace = null) {
-    const body = { km_end: kmEnd }
+    const body = { km_end: kmEnd, finish_id: novoId() }  // reenvio nunca aplica o fim duas vezes
     // Troca de corredor: só envia se diferir do atleta atual do turno
     if (athleteIdOverride && (!atletaAtual || athleteIdOverride !== atletaAtual.id)) {
         body.athlete_id = athleteIdOverride

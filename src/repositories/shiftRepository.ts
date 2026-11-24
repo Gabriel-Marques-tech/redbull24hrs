@@ -400,7 +400,8 @@ export const shiftRepository = {
 		);
 	},
 
-	async finish(id: number, km_end: number, duration_seconds?: number, pace?: string) {
+	// finish_id: identificador gerado pelo tablet para este encerramento (reenvio offline).
+	async finish(id: number, km_end: number, duration_seconds?: number, pace?: string, finish_id?: string) {
 		// Quando há duração editada, calcula end_at = start_at + duração no SQL.
 		// Tudo no domínio do Postgres → zero conversão de timezone (TIMESTAMP sem tz).
 		const [sql, params] = duration_seconds != null
@@ -416,10 +417,11 @@ export const shiftRepository = {
 				               THEN ROUND(($1 - km_start) / ($3 / 3600.0))
 				               ELSE 0
 				             END,
-				     pace = $4
+				     pace = $4,
+				     finish_client_id = $5
 				 WHERE id = $2 AND status = 'in_progress'
 				 RETURNING *`,
-				[km_end, id, duration_seconds, pace ?? null]
+				[km_end, id, duration_seconds, pace ?? null, finish_id ?? null]
 			  ]
 			: [
 				`UPDATE shifts
@@ -433,10 +435,11 @@ export const shiftRepository = {
 				               THEN ROUND(($1 - km_start) / (EXTRACT(EPOCH FROM (NOW() - start_at)) / 3600.0))
 				               ELSE 0
 				             END,
-				     pace = $3
+				     pace = $3,
+				     finish_client_id = $4
 				 WHERE id = $2 AND status = 'in_progress'
 				 RETURNING *`,
-				[km_end, id, pace ?? null]
+				[km_end, id, pace ?? null, finish_id ?? null]
 			  ];
 		const result = await pool.query(sql, params);
 		const shift = result.rows[0] ?? null;

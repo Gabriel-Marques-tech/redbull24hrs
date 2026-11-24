@@ -169,12 +169,22 @@ export const shiftService = {
 		await shiftRepository.abandon(shift_id, forceClose);
 	},
 
-	async finishShift(shift_id: number, km_end: number, athlete_id?: number, duration_seconds?: number, pace?: string) {
+	async finishShift(shift_id: number, km_end: number, athlete_id?: number, duration_seconds?: number, pace?: string, finish_id?: string) {
 		if (km_end < 0) throw new Error("km final inválido: deve ser maior ou igual a zero");
 
 		const shift = await shiftRepository.findById(shift_id);
 		if (!shift) throw new Error("Turno não encontrado");
-		if (shift.status !== "in_progress") throw new Error("Turno não está em andamento");
+		if (shift.status !== "in_progress") {
+			if (finish_id) {
+				// Reenvio do tablet: este mesmo encerramento já foi gravado antes.
+				if (shift.finish_client_id === finish_id) return shift;
+				// O turno foi fechado por outro caminho (encerramento forçado, abandono)
+				// enquanto o tablet estava sem conexão. O km final do auditor NÃO foi
+				// aplicado: o tablet mostra o valor para lançamento manual pelo gestor.
+				throw new Error("Turno já foi encerrado por outro meio: km final do auditor não aplicado");
+			}
+			throw new Error("Turno não está em andamento");
+		}
 
 		const eventInfo = await shiftRepository.eventStatusByShift(shift_id);
 		if (eventInfo?.status !== "in_progress")
@@ -200,7 +210,9 @@ export const shiftService = {
 			safeDuration = undefined;
 		}
 
-		const finished = await shiftRepository.finish(shift_id, km_end, safeDuration, pace);
+		const finished = finish_id
+			? await shiftRepository.finish(shift_id, km_end, safeDuration, pace, finish_id)
+			: await shiftRepository.finish(shift_id, km_end, safeDuration, pace);
 		if (!finished) throw new Error("Turno não está em andamento");
 		return finished;
 	},
