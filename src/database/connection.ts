@@ -19,4 +19,11 @@ const pool = new Pool({
 	connectionTimeoutMillis: 5000,
 });
 
+// Sem este listener, a queda de uma conexão ociosa (reinício do banco, rede)
+// emite 'error' sem tratamento e derruba o processo inteiro no meio do evento.
+// O pool descarta a conexão ruim sozinho; aqui só registramos.
+pool.on("error", (error) => {
+	console.error("[DB] Conexão ociosa perdida:", error.message);
+});
+
 export { pool };

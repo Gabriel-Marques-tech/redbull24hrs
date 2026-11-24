@@ -8,9 +8,16 @@ export const shiftService = {
 		operator_id: number,
 		operator_role: 'auditor' | 'manager',
 		treadmill_id: number,
-		km_start: number
+		km_start: number,
+		opts?: { client_id?: string; started_at?: string }
 	) {
 		if (km_start < 0) throw new Error("km inicial inválido: deve ser maior ou igual a zero");
+
+		// Reenvio do tablet (modo offline): se este início já foi gravado, devolve o mesmo turno.
+		if (opts?.client_id) {
+			const existing = await shiftRepository.findByClientId(opts.client_id);
+			if (existing) return existing;
+		}
 
 		if (!(await shiftRepository.athleteExists(athlete_id)))
 			throw new Error("Atleta não encontrado");
@@ -67,6 +74,8 @@ export const shiftService = {
 		const openByTreadmill = await shiftRepository.findOpenByTreadmill(treadmill_id);
 		if (openByTreadmill) throw new Error("Esteira ocupada por outro turno em andamento");
 
+		if (opts?.client_id || opts?.started_at)
+			return shiftRepository.start(athlete_id, operator_id, operator_role, treadmill_id, km_start, opts);
 		return shiftRepository.start(athlete_id, operator_id, operator_role, treadmill_id, km_start);
 	},
 
@@ -74,11 +83,22 @@ export const shiftService = {
 		return shiftRepository.listCheckpointsByShift(shift_id);
 	},
 
-	async registerCheckpoint(shift_id: number, distance: number, type?: string) {
+	async registerCheckpoint(
+		shift_id: number,
+		distance: number,
+		type?: string,
+		opts?: { sync_id?: string; timestamp?: string }
+	) {
 		const checkpointType = type ?? "voluntary";
 		if (!CHECKPOINT_TYPES.includes(checkpointType))
 			throw new Error("Tipo de checkpoint inválido: use 'mandatory' ou 'voluntary'");
 		if (distance < 0) throw new Error("km do checkpoint inválido: deve ser maior ou igual a zero");
+
+		// Reenvio do tablet (modo offline): se já foi gravado, devolve o mesmo checkpoint.
+		if (opts?.sync_id) {
+			const existing = await shiftRepository.findCheckpointBySyncId(opts.sync_id);
+			if (existing) return existing;
+		}
 
 		const shift = await shiftRepository.findById(shift_id);
 		if (!shift) throw new Error("Turno não encontrado");
@@ -95,6 +115,7 @@ export const shiftService = {
 		if (distance < floor)
 			throw new Error("km do checkpoint inválido: menor que o último km registrado");
 
+		if (opts?.sync_id) return shiftRepository.addCheckpoint(shift_id, distance, checkpointType, opts);
 		return shiftRepository.addCheckpoint(shift_id, distance, checkpointType);
 	},
 

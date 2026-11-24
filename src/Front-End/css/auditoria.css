@@ -4092,3 +4092,7 @@ html[data-theme="dark"] .fila-lista.fila-aberta::-webkit-scrollbar-thumb {
         font-size: 16px !important;
     }
 }
+
+/* O JS esconde o campo de km inicial durante a corrida (o km do checkpoint vai no modal),
+   mas não havia regra para .input-km.escondido e o campo continuava na tela. */
+.input-km.escondido { display: none !important; }

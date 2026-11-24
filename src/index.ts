@@ -18,4 +18,12 @@ async function bootstrap() {
 	}
 }
 
+// Um erro isolado em uma requisição não pode tirar o sistema do ar durante o evento.
+process.on("unhandledRejection", (reason) => {
+	console.error("[FATAL-EVITADO] Promise rejeitada sem tratamento:", reason);
+});
+process.on("uncaughtException", (error) => {
+	console.error("[FATAL-EVITADO] Exceção não tratada:", error);
+});
+
 bootstrap();
