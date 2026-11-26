@@ -76,6 +76,9 @@ const saveRefreshToken = async (
   );
 };
 
+// Um token recém-trocado continua aceito por 30 s. Sem essa folga, duas renovações
+// simultâneas (duas chamadas da mesma tela, ou tela + requisição de página) fazem a
+// segunda falhar e o usuário é jogado para o login no meio do uso.
 const findActiveRefreshToken = async (
   tokenHash: string,
 ): Promise<{
@@ -88,7 +91,7 @@ const findActiveRefreshToken = async (
     `SELECT id, manager_id, auditor_id, expires_at
      FROM refresh_tokens
      WHERE token_hash = $1
-       AND revoked_at IS NULL
+       AND (revoked_at IS NULL OR revoked_at > NOW() - INTERVAL '30 seconds')
        AND expires_at > NOW()`,
     [tokenHash],
   );
@@ -105,7 +108,7 @@ const findActiveRefreshToken = async (
 
 const revokeRefreshToken = async (tokenHash: string): Promise<void> => {
   await pool.query(
-    `UPDATE refresh_tokens SET revoked_at = NOW() WHERE token_hash = $1`,
+    `UPDATE refresh_tokens SET revoked_at = COALESCE(revoked_at, NOW()) WHERE token_hash = $1`,
     [tokenHash],
   );
 };

@@ -55,7 +55,7 @@
                     <span class="icone"><img src="/assets/visao-geral/calendario.svg" alt=""></span>
                     <div>
                         <span class="rotulo-resumo">Data</span>
-                        <p><%= new Date(event.date).toLocaleDateString('pt-BR') %></p>
+                        <p><%= new Date(event.date).toLocaleDateString('pt-BR', { timeZone: 'UTC' }) %></p>
                     </div>
                 </div>
 
