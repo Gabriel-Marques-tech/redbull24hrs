@@ -84,6 +84,62 @@ async function tryGemini(imageBuffer: Buffer, mimetype: string): Promise<Treadmi
 	throw lastError;
 }
 
+// OpenRouter: conta pré-paga que dá acesso aos mesmos modelos Gemini, sem o teto
+// diário da camada gratuita do Google. É o primeiro provedor quando a chave existe.
+const OPENROUTER_MODELS = (
+	process.env.OPENROUTER_MODELS ??
+	"google/gemini-3.5-flash-lite,google/gemini-3.1-flash-lite,google/gemini-3.8-flash"
+)
+	.split(",")
+	.map((m) => m.trim())
+	.filter(Boolean);
+
+async function tryOpenRouter(imageBuffer: Buffer, mimetype: string): Promise<TreadmillData> {
+	const apiKey = process.env.OPENROUTER_API_KEY;
+	if (!apiKey) throw new Error("OPENROUTER_API_KEY não configurada");
+
+	const dataUrl = `data:${mimetype};base64,${imageBuffer.toString("base64")}`;
+
+	let lastError: unknown = new Error("Nenhum modelo OpenRouter configurado");
+	for (const modelName of OPENROUTER_MODELS) {
+		try {
+			console.log(`[OCR] Tentando OpenRouter: ${modelName}`);
+			const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+				method: "POST",
+				signal: AbortSignal.timeout(GEMINI_TIMEOUT_MS),
+				headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+				body: JSON.stringify({
+					model: modelName,
+					temperature: 0,
+					// Folga para modelos com raciocínio (ex.: 3.8-flash), que gastam tokens antes do JSON.
+					max_tokens: 2000,
+					response_format: { type: "json_object" },
+					messages: [
+						{
+							role: "user",
+							content: [
+								{ type: "text", text: PROMPT },
+								{ type: "image_url", image_url: { url: dataUrl } },
+							],
+						},
+					],
+				}),
+			});
+			const body: any = await response.json().catch(() => ({}));
+			if (!response.ok || body?.error) {
+				throw new Error(`HTTP ${response.status}: ${body?.error?.message ?? "sem detalhe"}`);
+			}
+			const raw = String(body?.choices?.[0]?.message?.content ?? "").trim();
+			console.log(`[OCR] OpenRouter resposta: ${raw}`);
+			return parseOcr(raw);
+		} catch (err: any) {
+			console.error(`[OCR] OpenRouter ${modelName} falhou:`, err?.message?.slice(0, 160));
+			lastError = err;
+		}
+	}
+	throw lastError;
+}
+
 async function tryGroq(imageBuffer: Buffer, mimetype: string): Promise<TreadmillData> {
 	if (!process.env.GROQ_API_KEY) throw new Error("GROQ_API_KEY não configurada");
 
@@ -112,6 +168,13 @@ async function tryGroq(imageBuffer: Buffer, mimetype: string): Promise<Treadmill
 
 export const ocrService = {
 	async extractFromImage(imageBuffer: Buffer, mimetype: string): Promise<TreadmillData> {
+		if (process.env.OPENROUTER_API_KEY) {
+			try {
+				return await tryOpenRouter(imageBuffer, mimetype);
+			} catch {
+				console.warn("[OCR] OpenRouter indisponível, tentando Gemini direto...");
+			}
+		}
 		try {
 			return await tryGemini(imageBuffer, mimetype);
 		} catch (geminiErr: any) {
