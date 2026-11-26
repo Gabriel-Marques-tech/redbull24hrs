@@ -48,6 +48,46 @@
     <!-- Overlay do drawer -->
     <div id="drawerOverlay" onclick="fecharDrawer()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:1000;"></div>
 
+    <!-- Alterar a própria senha (gerente e auditor) -->
+    <div id="alterarSenhaOverlay" style="
+        display:none; position:fixed; inset:0; z-index:1200;
+        background:rgba(0,0,0,0.5); align-items:center; justify-content:center;
+    ">
+        <form id="formAlterarSenha" onsubmit="enviarAlterarSenha(event)" style="
+            width:min(420px, calc(100vw - 32px)); padding:30px;
+            background:#fff; color:#111; border-radius:16px;
+            box-shadow:0 10px 40px rgba(0,0,0,0.25);
+            font-family:'Inter',sans-serif; display:flex; flex-direction:column; gap:14px;
+        ">
+            <h2 style="font-size:22px; margin:0;">Alterar senha</h2>
+            <label style="display:flex; flex-direction:column; gap:6px; font-size:13px; font-weight:600; color:#444;">
+                Senha atual
+                <input id="senhaAtual" type="password" autocomplete="current-password" required style="height:46px; padding:0 12px; border:1.5px solid #ccc; border-radius:8px; font-size:15px;">
+            </label>
+            <label style="display:flex; flex-direction:column; gap:6px; font-size:13px; font-weight:600; color:#444;">
+                Nova senha (mínimo de 6 caracteres)
+                <input id="senhaNova" type="password" autocomplete="new-password" minlength="6" required style="height:46px; padding:0 12px; border:1.5px solid #ccc; border-radius:8px; font-size:15px;">
+            </label>
+            <label style="display:flex; flex-direction:column; gap:6px; font-size:13px; font-weight:600; color:#444;">
+                Repita a nova senha
+                <input id="senhaNovaConfirmacao" type="password" autocomplete="new-password" minlength="6" required style="height:46px; padding:0 12px; border:1.5px solid #ccc; border-radius:8px; font-size:15px;">
+            </label>
+            <p id="alterarSenhaMensagem" role="alert" style="min-height:18px; margin:0; font-size:14px; color:#c62828;"></p>
+            <div style="display:flex; gap:12px;">
+                <button type="button" onclick="fecharAlterarSenha()" style="
+                    flex:1; height:48px; border:1.5px solid var(--vermelho);
+                    border-radius:8px; background:#fff; color:var(--vermelho);
+                    font-size:15px; font-weight:700; cursor:pointer;
+                ">Cancelar</button>
+                <button id="btnSalvarSenha" type="submit" style="
+                    flex:1; height:48px; border:none; border-radius:8px;
+                    background:var(--vermelho); color:#fff;
+                    font-size:15px; font-weight:700; cursor:pointer;
+                ">Salvar</button>
+            </div>
+        </form>
+    </div>
+
     <% if (user && user.role === 'manager') { %>
     <div id="confirmacaoCadastroOverlay" style="
         display:none; position:fixed; inset:0; z-index:1200;
@@ -179,6 +219,17 @@
                 <span style="font-size:20px; font-weight:300;">›</span>
             </a>
             <% } %>
+
+            <button class="user-drawer-alterar-senha" type="button" onclick="abrirAlterarSenha()" style="
+                width:100%; display:flex; align-items:center; justify-content:space-between;
+                padding:14px 16px; background:#fff;
+                border:1.5px solid var(--azul); border-radius:8px;
+                color:var(--azul); font-family:'Inter',sans-serif;
+                font-size:15px; font-weight:600; cursor:pointer;
+            ">
+                Alterar senha
+                <span style="font-size:20px; font-weight:300;">›</span>
+            </button>
         </div>
 
         <!-- Logout -->
@@ -304,6 +355,58 @@ function cadastrarOutroUsuario() {
     const cadastro = JSON.parse(sessionStorage.getItem('cadastroUsuarioConcluido') || '{}')
     sessionStorage.removeItem('cadastroUsuarioConcluido')
     abrirCadastroUsuario(cadastro.tipoCadastro || 'auditor')
+}
+function abrirAlterarSenha() {
+    fecharDrawer()
+    document.getElementById('formAlterarSenha').reset()
+    const msg = document.getElementById('alterarSenhaMensagem')
+    msg.textContent = ''
+    msg.style.color = '#c62828'
+    document.getElementById('alterarSenhaOverlay').style.display = 'flex'
+    document.getElementById('senhaAtual').focus()
+}
+function fecharAlterarSenha() {
+    document.getElementById('alterarSenhaOverlay').style.display = 'none'
+}
+async function enviarAlterarSenha(evento) {
+    evento.preventDefault()
+    const atual = document.getElementById('senhaAtual').value
+    const nova = document.getElementById('senhaNova').value
+    const confirmacao = document.getElementById('senhaNovaConfirmacao').value
+    const msg = document.getElementById('alterarSenhaMensagem')
+    const btn = document.getElementById('btnSalvarSenha')
+    msg.style.color = '#c62828'
+    if (nova !== confirmacao) { msg.textContent = 'As duas senhas novas não são iguais.'; return }
+
+    const enviar = () => fetch('/auth/change-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ current_password: atual, new_password: nova })
+    })
+    btn.disabled = true
+    try {
+        let res = await enviar()
+        if (res.status === 401) {
+            // Sessão expirada: renova e tenta de novo uma vez.
+            const renovou = await fetch('/auth/refresh', { method: 'POST', credentials: 'include' })
+            if (renovou.ok) res = await enviar()
+        }
+        if (res.ok) {
+            msg.style.color = '#1b7f3a'
+            msg.textContent = 'Senha alterada.'
+            setTimeout(fecharAlterarSenha, 1200)
+            return
+        }
+        const erro = await res.json().catch(() => ({}))
+        msg.textContent = res.status === 401
+            ? 'Sua sessão expirou. Entre de novo e repita.'
+            : (erro.error || 'Não foi possível alterar a senha.')
+    } catch {
+        msg.textContent = 'Sem conexão. Tente de novo.'
+    } finally {
+        btn.disabled = false
+    }
 }
 async function fazerLogout() {
     try {

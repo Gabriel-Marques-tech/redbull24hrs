@@ -135,4 +135,30 @@ const listAuditors = async () => {
   return UserRepository.listAuditors();
 };
 
-export default { registerManager, registerAuditor, loginUser, refresh, logout, listAuditors };
+export const MIN_PASSWORD_LENGTH = 6;
+
+export type ChangePasswordResult = "ok" | "invalid" | "same" | "wrong_current" | "not_found";
+
+// Troca a senha do próprio usuário logado: exige a senha atual.
+const changePassword = async (
+  role: UserRole,
+  id: number,
+  currentPassword: string,
+  newPassword: string,
+): Promise<ChangePasswordResult> => {
+  if (typeof currentPassword !== "string" || typeof newPassword !== "string") return "invalid";
+  if (!currentPassword || newPassword.length < MIN_PASSWORD_LENGTH) return "invalid";
+  if (currentPassword === newPassword) return "same";
+
+  const storedHash = await UserRepository.findPasswordHashById(role, id);
+  if (!storedHash) return "not_found";
+
+  const matches = await bcrypt.compare(currentPassword, storedHash);
+  if (!matches) return "wrong_current";
+
+  const newHash = await bcrypt.hash(newPassword, SALT_ROUNDS);
+  const updated = await UserRepository.updatePassword(role, id, newHash);
+  return updated ? "ok" : "not_found";
+};
+
+export default { registerManager, registerAuditor, loginUser, refresh, logout, listAuditors, changePassword };

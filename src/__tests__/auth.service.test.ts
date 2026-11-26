@@ -271,3 +271,43 @@ describe("logout", () => {
     expect(mockRepo.revokeRefreshToken).toHaveBeenCalledWith("hashed");
   });
 });
+
+describe("changePassword", () => {
+  it("Recusa nova senha curta sem consultar o banco", async () => {
+    const result = await authService.changePassword("auditor", 7, "atual123", "12345");
+    expect(result).toBe("invalid");
+    expect(mockRepo.findPasswordHashById).not.toHaveBeenCalled();
+  });
+
+  it("Recusa quando a nova senha é igual à atual", async () => {
+    const result = await authService.changePassword("auditor", 7, "mesma123", "mesma123");
+    expect(result).toBe("same");
+  });
+
+  it("Retorna not_found quando o usuário não existe", async () => {
+    mockRepo.findPasswordHashById.mockResolvedValue(null);
+    const result = await authService.changePassword("manager", 99, "atual123", "nova1234");
+    expect(result).toBe("not_found");
+  });
+
+  it("Recusa quando a senha atual não confere e não grava nada", async () => {
+    mockRepo.findPasswordHashById.mockResolvedValue("hash-antigo");
+    (mockBcrypt.compare as jest.Mock).mockResolvedValue(false);
+    const result = await authService.changePassword("auditor", 7, "errada", "nova1234");
+    expect(result).toBe("wrong_current");
+    expect(mockRepo.updatePassword).not.toHaveBeenCalled();
+  });
+
+  it("Grava o hash da nova senha na tabela do perfil do usuário", async () => {
+    mockRepo.findPasswordHashById.mockResolvedValue("hash-antigo");
+    (mockBcrypt.compare as jest.Mock).mockResolvedValue(true);
+    (mockBcrypt.hash as jest.Mock).mockResolvedValue("hash-novo");
+    mockRepo.updatePassword.mockResolvedValue(true);
+
+    const result = await authService.changePassword("auditor", 7, "atual123", "nova1234");
+
+    expect(result).toBe("ok");
+    expect(mockBcrypt.compare).toHaveBeenCalledWith("atual123", "hash-antigo");
+    expect(mockRepo.updatePassword).toHaveBeenCalledWith("auditor", 7, "hash-novo");
+  });
+});

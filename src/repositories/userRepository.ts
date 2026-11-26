@@ -120,7 +120,22 @@ const listAuditors = async (): Promise<{ id: number; name: string; email: string
   return result.rows;
 };
 
+// A tabela vem de uma lista fixa (nunca de entrada do usuário).
+const tableFor = (role: UserRole): string => (role === "manager" ? "managers" : "auditors");
+
+const findPasswordHashById = async (role: UserRole, id: number): Promise<string | null> => {
+  const result = await pool.query(`SELECT password FROM ${tableFor(role)} WHERE id = $1`, [id]);
+  return result.rows[0]?.password ?? null;
+};
+
+const updatePassword = async (role: UserRole, id: number, hashedPassword: string): Promise<boolean> => {
+  const result = await pool.query(`UPDATE ${tableFor(role)} SET password = $1 WHERE id = $2`, [hashedPassword, id]);
+  return (result.rowCount ?? 0) > 0;
+};
+
 export default {
+  findPasswordHashById,
+  updatePassword,
   registerManager,
   registerAuditor,
   findManagerByEmail,

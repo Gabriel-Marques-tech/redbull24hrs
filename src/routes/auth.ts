@@ -12,6 +12,8 @@ router.post("/login", AuthController.loginUser);
 router.post("/refresh", AuthController.refreshToken);
 router.post("/logout", AuthController.logout);
 
+router.post("/change-password", AuthMiddleware.requireAuth, AuthController.changePassword);
+
 router.get("/auditors", AuthController.listAuditors);
 router.get("/me", AuthMiddleware.requireAuth, (req, res) => {
   res.status(200).json(req.user);

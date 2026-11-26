@@ -285,3 +285,41 @@ describe("logout", () => {
     expect(res.json).toHaveBeenCalledWith({ error: "Erro ao encerrar sessão" });
   });
 });
+
+describe("changePassword", () => {
+  const user = { id: "7", email: "a@a.com", role: "auditor", name: "A", image_url: null };
+
+  it("Retorna 401 sem usuário autenticado", async () => {
+    const req = { body: { current_password: "a", new_password: "b" } } as Request;
+    const res = buildRes();
+    await AuthController.changePassword(req, res);
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(mockService.changePassword).not.toHaveBeenCalled();
+  });
+
+  it("Troca a senha do próprio usuário logado, não a de um id enviado no corpo", async () => {
+    mockService.changePassword.mockResolvedValue("ok");
+    const req = { user, body: { id: 1, role: "manager", current_password: "atual123", new_password: "nova1234" } } as unknown as Request;
+    const res = buildRes();
+    await AuthController.changePassword(req, res);
+    expect(mockService.changePassword).toHaveBeenCalledWith("auditor", 7, "atual123", "nova1234");
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
+
+  it("Retorna 400 quando a senha atual está errada", async () => {
+    mockService.changePassword.mockResolvedValue("wrong_current");
+    const req = { user, body: { current_password: "errada", new_password: "nova1234" } } as unknown as Request;
+    const res = buildRes();
+    await AuthController.changePassword(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({ error: "Senha atual incorreta" });
+  });
+
+  it("Retorna 400 quando os dados são inválidos", async () => {
+    mockService.changePassword.mockResolvedValue("invalid");
+    const req = { user, body: {} } as unknown as Request;
+    const res = buildRes();
+    await AuthController.changePassword(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+  });
+});
