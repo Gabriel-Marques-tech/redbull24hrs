@@ -2,6 +2,13 @@ import { Request, Response } from "express";
 import { teamService } from "../services/teamService";
 import { uploadToStorage } from "../utils/supabaseStorage";
 
+// E-mail do atleta é opcional; valor vazio ou malformado é ignorado em vez de recusar o cadastro.
+function normalizeEmail(value: unknown): string | null {
+	if (typeof value !== "string") return null;
+	const email = value.trim().toLowerCase();
+	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 255 ? email : null;
+}
+
 export const teamController = {
 	async getTeams(req: Request, res: Response) {
 		const event_id = req.query.event_id ? Number(req.query.event_id) : undefined;
@@ -76,6 +83,7 @@ export const teamController = {
 	async createAthlete(req: Request, res: Response) {
 		const team_id = Number(req.params.teamId);
 		const { name, gender, cpf } = req.body;
+		const email = normalizeEmail(req.body.email);
 		if (!name || !gender) {
 			res.status(400).json({ error: "Campos obrigatórios: name, gender" });
 			return;
@@ -85,7 +93,9 @@ export const teamController = {
 			if (req.file) {
 				image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos", "athletes");
 			}
-			const athlete = await teamService.registerAthlete(team_id, name, gender, cpf ?? null, image_url);
+			const athlete = email
+				? await teamService.registerAthlete(team_id, name, gender, cpf ?? null, image_url, email)
+				: await teamService.registerAthlete(team_id, name, gender, cpf ?? null, image_url);
 			res.status(201).json(athlete);
 		} catch (error: any) {
 			if (error.code === "23505") {
@@ -116,7 +126,9 @@ export const teamController = {
 		const team_id = Number(req.params.teamId);
 		const id = Number(req.params.id);
 		const { name, gender, cpf } = req.body;
-		const fields: { name?: string; gender?: string; cpf?: string | null; image_url?: string | null } = { name, gender, cpf };
+		const fields: { name?: string; gender?: string; cpf?: string | null; image_url?: string | null; email?: string | null } = { name, gender, cpf };
+		const email = normalizeEmail(req.body.email);
+		if (email) fields.email = email;
 		try {
 			if (req.file) {
 				fields.image_url = await uploadToStorage(req.file.buffer, req.file.mimetype, req.file.originalname, "photos", "athletes");

@@ -297,7 +297,8 @@ async function submeterCadastro() {
                     body: montarCorpo({
                         name:   atleta.nome,
                         gender: atleta.genero || "Outro",
-                        cpf:    atleta.cpf    || null
+                        cpf:    atleta.cpf    || null,
+                        email:  atleta.email  || null
                     }, atleta.fotoPerfil)
                 });
                 if (!atletaRes || !atletaRes.ok) {

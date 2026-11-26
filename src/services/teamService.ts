@@ -45,10 +45,13 @@ export const teamService = {
 		return team;
 	},
 
-	async registerAthlete(team_id: number, name: string, gender: string, cpf: string | null, image_url: string | null = null) {
+	async registerAthlete(team_id: number, name: string, gender: string, cpf: string | null, image_url: string | null = null, email?: string | null) {
 		const team = await teamRepository.findById(team_id);
 		if (!team) throw new Error("Equipe não encontrada");
-		return athleteRepository.create(name, gender, cpf ?? null, team_id, image_url ?? null);
+		// o e-mail só entra na chamada quando informado (é para onde vai o link de desempenho)
+		return email
+			? athleteRepository.create(name, gender, cpf ?? null, team_id, image_url ?? null, email)
+			: athleteRepository.create(name, gender, cpf ?? null, team_id, image_url ?? null);
 	},
 
 	async listAthletes(team_id: number) {
@@ -65,7 +68,7 @@ export const teamService = {
 		return athlete;
 	},
 
-	async updateAthlete(team_id: number, id: number, fields: { name?: string; gender?: string; cpf?: string | null; image_url?: string | null }) {
+	async updateAthlete(team_id: number, id: number, fields: { name?: string; gender?: string; cpf?: string | null; image_url?: string | null; email?: string | null }) {
 		const team = await teamRepository.findById(team_id);
 		if (!team) throw new Error("Equipe não encontrada");
 

@@ -137,6 +137,7 @@ if (!edicao) {
         if (d) {
             nome.value  = d.name   || "";
             cpf.value   = formatarCpf(d.cpf || "");
+            emailPessoa.value = d.email || "";
             if (d.gender) genero.value = d.gender;
             if (d.image_url) fotoPerfilData = d.image_url; // foto atual do DB (URL pública do Storage)
         }
@@ -253,6 +254,7 @@ formulario.addEventListener("submit", async (evento) => {
         corpo.append("name", nome.value.trim());
         corpo.append("gender", genero.value);
         if (cpfDigitos) corpo.append("cpf", cpfDigitos);
+        if (emailValor) corpo.append("email", emailValor);
         // só envia foto se o usuário escolheu uma nova nesta tela (a image_url existente fica como está)
         if (novaFotoSelecionada && fotoPerfilData) {
             corpo.append("photo", dataURLparaBlob(fotoPerfilData), "foto.jpg");
