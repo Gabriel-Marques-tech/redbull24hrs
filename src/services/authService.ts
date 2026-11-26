@@ -161,4 +161,29 @@ const changePassword = async (
   return updated ? "ok" : "not_found";
 };
 
-export default { registerManager, registerAuditor, loginUser, refresh, logout, listAuditors, changePassword };
+// Lista de contas para a tela de gerenciamento do gerente (sem senhas).
+const listUsers = async () => {
+  const [managers, auditors] = await Promise.all([
+    UserRepository.listManagers(),
+    UserRepository.listAuditors(),
+  ]);
+  return [
+    ...managers.map((m) => ({ id: m.id, name: m.name, email: m.email, role: "manager" as UserRole })),
+    ...auditors.map((a) => ({ id: a.id, name: a.name, email: a.email, role: "auditor" as UserRole })),
+  ];
+};
+
+export type ResetPasswordResult = "ok" | "invalid" | "not_found";
+
+// Um gerente define uma nova senha para outra conta (não pede a senha atual dela).
+const resetPassword = async (role: UserRole, id: number, newPassword: string): Promise<ResetPasswordResult> => {
+  if (role !== "manager" && role !== "auditor") return "invalid";
+  if (!Number.isInteger(id) || id <= 0) return "invalid";
+  if (typeof newPassword !== "string" || newPassword.length < MIN_PASSWORD_LENGTH) return "invalid";
+
+  const newHash = await bcrypt.hash(newPassword, SALT_ROUNDS);
+  const updated = await UserRepository.updatePassword(role, id, newHash);
+  return updated ? "ok" : "not_found";
+};
+
+export default { registerManager, registerAuditor, loginUser, refresh, logout, listAuditors, changePassword, listUsers, resetPassword };

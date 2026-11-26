@@ -14,6 +14,10 @@ router.post("/logout", AuthController.logout);
 
 router.post("/change-password", AuthMiddleware.requireAuth, AuthController.changePassword);
 
+// Gerenciamento de contas: só gerente.
+router.get("/users", AuthMiddleware.requireAuth, AuthMiddleware.requireRole("manager"), AuthController.listUsers);
+router.post("/users/:role/:id/password", AuthMiddleware.requireAuth, AuthMiddleware.requireRole("manager"), AuthController.resetUserPassword);
+
 router.get("/auditors", AuthController.listAuditors);
 router.get("/me", AuthMiddleware.requireAuth, (req, res) => {
   res.status(200).json(req.user);

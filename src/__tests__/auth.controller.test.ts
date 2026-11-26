@@ -323,3 +323,41 @@ describe("changePassword", () => {
     expect(res.status).toHaveBeenCalledWith(400);
   });
 });
+
+describe("resetUserPassword", () => {
+  const manager = { id: "1", email: "admin@email.com", role: "manager", name: "Admin", image_url: null };
+
+  it("Redefine a senha de um auditor", async () => {
+    mockService.resetPassword.mockResolvedValue("ok");
+    const req = { user: manager, params: { role: "auditor", id: "4" }, body: { new_password: "nova1234" } } as unknown as Request;
+    const res = buildRes();
+    await AuthController.resetUserPassword(req, res);
+    expect(mockService.resetPassword).toHaveBeenCalledWith("auditor", 4, "nova1234");
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
+
+  it("Redefine a senha de outro gerente", async () => {
+    mockService.resetPassword.mockResolvedValue("ok");
+    const req = { user: manager, params: { role: "manager", id: "2" }, body: { new_password: "nova1234" } } as unknown as Request;
+    const res = buildRes();
+    await AuthController.resetUserPassword(req, res);
+    expect(mockService.resetPassword).toHaveBeenCalledWith("manager", 2, "nova1234");
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
+
+  it("Não redefine a própria senha por esse caminho", async () => {
+    const req = { user: manager, params: { role: "manager", id: "1" }, body: { new_password: "nova1234" } } as unknown as Request;
+    const res = buildRes();
+    await AuthController.resetUserPassword(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(mockService.resetPassword).not.toHaveBeenCalled();
+  });
+
+  it("Retorna 404 quando a conta não existe", async () => {
+    mockService.resetPassword.mockResolvedValue("not_found");
+    const req = { user: manager, params: { role: "auditor", id: "999" }, body: { new_password: "nova1234" } } as unknown as Request;
+    const res = buildRes();
+    await AuthController.resetUserPassword(req, res);
+    expect(res.status).toHaveBeenCalledWith(404);
+  });
+});

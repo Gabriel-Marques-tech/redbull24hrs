@@ -133,7 +133,13 @@ const updatePassword = async (role: UserRole, id: number, hashedPassword: string
   return (result.rowCount ?? 0) > 0;
 };
 
+const listManagers = async (): Promise<{ id: number; name: string; email: string }[]> => {
+  const result = await pool.query(`SELECT id, name, email FROM managers ORDER BY name ASC`);
+  return result.rows;
+};
+
 export default {
+  listManagers,
   findPasswordHashById,
   updatePassword,
   registerManager,
