@@ -57,12 +57,12 @@ inputImagemEvento.addEventListener("change", async () => {
 });
 
 btnProximoImagem.addEventListener("click", () => {
-    if (!imagemEventoData) {
-        alert("Escolha uma imagem para o evento.");
-        return;
+    // A imagem do evento é opcional: sem ela, a competição é criada do mesmo jeito.
+    if (imagemEventoData) {
+        localStorage.setItem("imagemEvento", imagemEventoData);
+    } else {
+        localStorage.removeItem("imagemEvento");
     }
-
-    localStorage.setItem("imagemEvento", imagemEventoData);
     window.location.href = "/manager/create-event/schedule";
 });
 

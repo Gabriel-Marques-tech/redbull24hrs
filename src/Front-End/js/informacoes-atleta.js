@@ -88,16 +88,16 @@ function atualizarTipoCadastro() {
     document.body.classList.toggle("cadastro-apoio", !ehAtleta);
 
     const ehAuditor = tipo === "auditor";
-    const ehGerente = tipo === "gerente";
     nascimento.required = ehAtleta;
     genero.required = ehAtleta;
     cargo.required = ehAtleta;
     cpf.required = false;
     emailPessoa.required = true;
-    cpfApoio.required = ehAuditor;
+    cpfApoio.required = false;
     senhaPessoa.required = !ehAtleta;
     const campoCpfApoioEl = document.getElementById("campoCpfApoio");
-    if (campoCpfApoioEl) campoCpfApoioEl.classList.toggle("escondido", ehGerente);
+    // CPF não é pedido para gerente nem auditor (o cadastro de acesso não usa esse dado).
+    if (campoCpfApoioEl) campoCpfApoioEl.classList.add("escondido");
     if (campoRegistroAuditor) campoRegistroAuditor.classList.toggle("escondido", !ehAuditor);
     if (registroAuditor) registroAuditor.required = ehAuditor;
 
@@ -230,11 +230,6 @@ formulario.addEventListener("submit", async (evento) => {
     const tipoCadastroAtual = tipoCadastroInicial;
     const ehAtleta = tipoCadastroAtual === "atleta";
 
-    if (!fotoPerfilData && !modoEventEdit && !modoDrawer) {
-        alert("Envie uma imagem de perfil para este cadastro.");
-        return;
-    }
-
     const emailValor = emailPessoa.value.trim();
 
     if (!emailValor) { alert("Preencha o e-mail."); return; }
@@ -243,7 +238,6 @@ formulario.addEventListener("submit", async (evento) => {
     if (ehAtleta && !cargo.value) { alert("Selecione o cargo do atleta."); return; }
 
     const cpfDigitos = (ehAtleta ? cpf.value : cpfApoio.value).replace(/\D/g, "");
-    if (!ehAtleta && !cpfDigitos) { alert("Preencha o CPF."); return; }
     if (cpfDigitos && !cpfValido(cpfDigitos)) {
         alert("CPF inválido. Confira os números digitados."); return;
     }
