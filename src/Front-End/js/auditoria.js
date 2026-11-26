@@ -298,7 +298,26 @@ function parseTempo(str) {
     return h * 3600 + m * 60 + s
 }
 
+// Tempo informado no último checkpoint (lido do painel da esteira) e quanto o
+// cronômetro marcava naquele momento. Quando os dois diferem, vale o da esteira:
+// o tempo do turno passa a ser esse valor mais o que o cronômetro andou depois.
+let ajusteTempoCp = null   // { tempo: segundos da esteira, timer: segundos do cronômetro }
+
+// Aceita "HH:MM:SS" ou "MM:SS" (como alguns painéis mostram).
+function parseTempoFlex(str) {
+    if (!str) return null
+    const t = String(str).trim()
+    return parseTempo(t.split(':').length === 2 ? `00:${t}` : t)
+}
+
+// Tempo do turno: o do cronômetro, corrigido pelo último tempo informado em checkpoint.
+function tempoDoTurno() {
+    if (!ajusteTempoCp) return segundos
+    return Math.max(0, ajusteTempoCp.tempo + (segundos - ajusteTempoCp.timer))
+}
+
 function iniciarTimer(inicial = 0) {
+    ajusteTempoCp = null
     segundos = inicial
     // Conta pelo relógio do tablet, não por soma de 1 em 1: com a tela apagada
     // ou a aba em segundo plano o navegador atrasa o setInterval e o tempo ficava errado.
@@ -660,7 +679,7 @@ function renderizarCpsSessao() {
 function abrirModalCheckpoint() {
     if (!modalCheckpoint) return
     if (kmCheckpointModal) { kmCheckpointModal.value = ''; }
-    if (tempoCheckpointModal) tempoCheckpointModal.value = formatarTempo(segundos)
+    if (tempoCheckpointModal) tempoCheckpointModal.value = formatarTempo(tempoDoTurno())
     if (velocidadeCheckpointModal) velocidadeCheckpointModal.value = ''
     if (corredorCheckpointModal) {
         const option = document.createElement('option')
@@ -751,10 +770,24 @@ if (btnRegistrarCheckpoint) {
             }
         }
 
+        // Tempo digitado ou lido da foto: se for válido, passa a valer para o turno.
+        const tempoInformado = parseTempoFlex(tempoCheckpointModal?.value)
+        const timerNoRegistro = segundos
+
         btnRegistrarCheckpoint.disabled = true
         const registrado = await registrarCheckpoint(km)
         btnRegistrarCheckpoint.disabled = false
-        if (registrado) fecharModalCheckpoint()
+        if (registrado) {
+            if (tempoInformado != null) {
+                ajusteTempoCp = { tempo: tempoInformado, timer: timerNoRegistro }
+                // Guarda no tablet para o ajuste sobreviver a um recarregamento da página.
+                try {
+                    const idTurno = idServidorDoTurno(shiftId)
+                    if (idTurno != null) localStorage.setItem('redrunAjusteTempoCp', JSON.stringify({ turno: idTurno, ...ajusteTempoCp }))
+                } catch { /* sem armazenamento: o ajuste vale só até recarregar */ }
+            }
+            fecharModalCheckpoint()
+        }
     })
 }
 
@@ -1065,6 +1098,12 @@ if (OPEN_SHIFT) {
     // Cronômetro retoma do tempo decorrido (calculado no servidor, sem TZ)
     const decorrido = Math.max(0, Number(OPEN_SHIFT.elapsed_seconds) || 0)
     iniciarTimer(decorrido)
+    try {
+        const salvo = JSON.parse(localStorage.getItem('redrunAjusteTempoCp') || 'null')
+        if (salvo && salvo.turno === OPEN_SHIFT.id && Number.isFinite(salvo.tempo) && Number.isFinite(salvo.timer)) {
+            ajusteTempoCp = { tempo: salvo.tempo, timer: salvo.timer }
+        }
+    } catch { /* ignora ajuste salvo inválido */ }
     agendarLembrete() // inicia contagem de 5 min ao retomar turno
 
     // UI de corrida em andamento
@@ -1262,7 +1301,7 @@ function abrirModalTurno() {
         .join('')
 
     // Tempo percorrido: editável (input de texto HH:MM:SS)
-    if (tempoPercorridoTurno) tempoPercorridoTurno.value = formatarTempo(segundos)
+    if (tempoPercorridoTurno) tempoPercorridoTurno.value = formatarTempo(tempoDoTurno())
 
     // Relação de horários abaixo (contexto): início do turno e agora
     const fmtHora = { hour: '2-digit', minute: '2-digit', second: '2-digit' }
