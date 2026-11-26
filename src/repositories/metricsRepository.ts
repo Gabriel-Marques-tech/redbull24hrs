@@ -154,9 +154,9 @@ export const metricsRepository = {
 			pool.query(
 				`SELECT
 				        CASE
-				          WHEN EXTRACT(HOUR FROM s.end_at AT TIME ZONE 'America/Sao_Paulo') < 6  THEN 'Madrugada'
-				          WHEN EXTRACT(HOUR FROM s.end_at AT TIME ZONE 'America/Sao_Paulo') < 12 THEN 'Manhã'
-				          WHEN EXTRACT(HOUR FROM s.end_at AT TIME ZONE 'America/Sao_Paulo') < 18 THEN 'Tarde'
+				          WHEN EXTRACT(HOUR FROM (s.end_at AT TIME ZONE 'UTC') AT TIME ZONE 'America/Sao_Paulo') < 6  THEN 'Madrugada'
+				          WHEN EXTRACT(HOUR FROM (s.end_at AT TIME ZONE 'UTC') AT TIME ZONE 'America/Sao_Paulo') < 12 THEN 'Manhã'
+				          WHEN EXTRACT(HOUR FROM (s.end_at AT TIME ZONE 'UTC') AT TIME ZONE 'America/Sao_Paulo') < 18 THEN 'Tarde'
 				          ELSE 'Noite'
 				        END AS periodo,
 				        a.id AS athlete_id, a.name AS athlete_name, t.name AS team_name,

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import AuthService from "../services/authService";
+import AuthService, { MIN_PASSWORD_LENGTH } from "../services/authService";
 import { UserRole } from "../types/user.types";
 import { uploadToStorage } from "../utils/supabaseStorage";
 
@@ -135,7 +135,81 @@ const listAuditors = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+const changePassword = async (req: Request, res: Response): Promise<void> => {
+  if (!req.user) {
+    res.status(401).json({ error: "Não autenticado" });
+    return;
+  }
+  const { current_password, new_password } = req.body ?? {};
+  try {
+    const result = await AuthService.changePassword(
+      req.user.role,
+      Number(req.user.id),
+      current_password,
+      new_password,
+    );
+    if (result === "ok") {
+      res.status(200).json({ ok: true });
+      return;
+    }
+    if (result === "wrong_current") {
+      res.status(400).json({ error: "Senha atual incorreta" });
+      return;
+    }
+    if (result === "same") {
+      res.status(400).json({ error: "A nova senha precisa ser diferente da atual" });
+      return;
+    }
+    if (result === "not_found") {
+      res.status(404).json({ error: "Usuário não encontrado" });
+      return;
+    }
+    res.status(400).json({ error: `Informe a senha atual e uma nova senha com pelo menos ${MIN_PASSWORD_LENGTH} caracteres` });
+  } catch {
+    res.status(500).json({ error: "Erro ao alterar senha" });
+  }
+};
+
+const listUsers = async (_req: Request, res: Response): Promise<void> => {
+  try {
+    res.status(200).json(await AuthService.listUsers());
+  } catch {
+    res.status(500).json({ error: "Erro ao listar usuários" });
+  }
+};
+
+const resetUserPassword = async (req: Request, res: Response): Promise<void> => {
+  if (!req.user) {
+    res.status(401).json({ error: "Não autenticado" });
+    return;
+  }
+  const role = String(req.params.role) as UserRole;
+  const id = Number(req.params.id);
+  // A própria senha é trocada em /auth/change-password, que confere a senha atual.
+  if (role === req.user.role && id === Number(req.user.id)) {
+    res.status(400).json({ error: "Para a sua própria senha, use a opção Alterar senha" });
+    return;
+  }
+  try {
+    const result = await AuthService.resetPassword(role, id, req.body?.new_password);
+    if (result === "ok") {
+      res.status(200).json({ ok: true });
+      return;
+    }
+    if (result === "not_found") {
+      res.status(404).json({ error: "Usuário não encontrado" });
+      return;
+    }
+    res.status(400).json({ error: `Informe uma nova senha com pelo menos ${MIN_PASSWORD_LENGTH} caracteres` });
+  } catch {
+    res.status(500).json({ error: "Erro ao redefinir senha" });
+  }
+};
+
 export default {
+  listUsers,
+  resetUserPassword,
+  changePassword,
   registerManager,
   registerAuditor,
   loginUser,

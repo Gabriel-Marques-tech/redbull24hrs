@@ -172,10 +172,6 @@ body {
     display: flex;
 }
 
-#formAtleta.cadastro-apoio .campo-cpf-apoio {
-    display: flex !important;
-}
-
 #formAtleta.cadastro-apoio {
     display: grid;
     margin-top: -18px;

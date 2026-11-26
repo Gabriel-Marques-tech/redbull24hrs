@@ -76,6 +76,9 @@ const saveRefreshToken = async (
   );
 };
 
+// Um token recém-trocado continua aceito por 30 s. Sem essa folga, duas renovações
+// simultâneas (duas chamadas da mesma tela, ou tela + requisição de página) fazem a
+// segunda falhar e o usuário é jogado para o login no meio do uso.
 const findActiveRefreshToken = async (
   tokenHash: string,
 ): Promise<{
@@ -88,7 +91,7 @@ const findActiveRefreshToken = async (
     `SELECT id, manager_id, auditor_id, expires_at
      FROM refresh_tokens
      WHERE token_hash = $1
-       AND revoked_at IS NULL
+       AND (revoked_at IS NULL OR revoked_at > NOW() - INTERVAL '30 seconds')
        AND expires_at > NOW()`,
     [tokenHash],
   );
@@ -105,7 +108,7 @@ const findActiveRefreshToken = async (
 
 const revokeRefreshToken = async (tokenHash: string): Promise<void> => {
   await pool.query(
-    `UPDATE refresh_tokens SET revoked_at = NOW() WHERE token_hash = $1`,
+    `UPDATE refresh_tokens SET revoked_at = COALESCE(revoked_at, NOW()) WHERE token_hash = $1`,
     [tokenHash],
   );
 };
@@ -117,7 +120,28 @@ const listAuditors = async (): Promise<{ id: number; name: string; email: string
   return result.rows;
 };
 
+// A tabela vem de uma lista fixa (nunca de entrada do usuário).
+const tableFor = (role: UserRole): string => (role === "manager" ? "managers" : "auditors");
+
+const findPasswordHashById = async (role: UserRole, id: number): Promise<string | null> => {
+  const result = await pool.query(`SELECT password FROM ${tableFor(role)} WHERE id = $1`, [id]);
+  return result.rows[0]?.password ?? null;
+};
+
+const updatePassword = async (role: UserRole, id: number, hashedPassword: string): Promise<boolean> => {
+  const result = await pool.query(`UPDATE ${tableFor(role)} SET password = $1 WHERE id = $2`, [hashedPassword, id]);
+  return (result.rowCount ?? 0) > 0;
+};
+
+const listManagers = async (): Promise<{ id: number; name: string; email: string }[]> => {
+  const result = await pool.query(`SELECT id, name, email FROM managers ORDER BY name ASC`);
+  return result.rows;
+};
+
 export default {
+  listManagers,
+  findPasswordHashById,
+  updatePassword,
   registerManager,
   registerAuditor,
   findManagerByEmail,

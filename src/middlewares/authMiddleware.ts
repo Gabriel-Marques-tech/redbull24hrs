@@ -5,28 +5,36 @@ import AuthService from "../services/authService";
 
 const requireAuth = (req: Request, res: Response, next: NextFunction): void => {
   const header = req.headers.authorization;
-  const token = header?.startsWith("Bearer ")
-    ? header.slice("Bearer ".length).trim()
-    : req.cookies?.accessToken;
+  const headerToken = header?.startsWith("Bearer ") ? header.slice("Bearer ".length).trim() : "";
+  // As telas guardam o token no navegador e às vezes enviam "Bearer undefined"/"Bearer null"
+  // (o login só devolve o token em cookie). Nesses casos, e quando o token do cabeçalho
+  // é inválido, vale o cookie — evita um 401 seguido de renovação em toda primeira chamada.
+  const candidates = [headerToken, req.cookies?.accessToken].filter(
+    (t): t is string => typeof t === "string" && t !== "" && t !== "undefined" && t !== "null",
+  );
 
-  if (!token) {
+  if (candidates.length === 0) {
     res.status(401).json({ error: "Token de acesso ausente" });
     return;
   }
 
-  try {
-    const payload = verifyAccessToken(token);
-    req.user = {
-      id: payload.sub,
-      email: payload.email,
-      role: payload.role,
-      name: payload.name,
-      image_url: payload.image_url ?? null,
-    };
-    next();
-  } catch {
-    res.status(401).json({ error: "Token de acesso inválido ou expirado" });
+  for (const token of candidates) {
+    try {
+      const payload = verifyAccessToken(token);
+      req.user = {
+        id: payload.sub,
+        email: payload.email,
+        role: payload.role,
+        name: payload.name,
+        image_url: payload.image_url ?? null,
+      };
+      next();
+      return;
+    } catch {
+      // tenta o próximo candidato
+    }
   }
+  res.status(401).json({ error: "Token de acesso inválido ou expirado" });
 };
 
 const requireRole = (...roles: UserRole[]) => {

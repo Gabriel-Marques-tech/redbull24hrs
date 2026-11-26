@@ -14,6 +14,7 @@ import SyncRoutes from "./routes/syncRoutes";
 import LogsRoutes from "./routes/logsRoutes";
 import PageRoutes from "./routes/pageRoutes";
 import ShareRoutes from "./routes/shareRoutes";
+import { createLocalStorageRouter, LOCAL_STORAGE_PREFIX } from "./routes/localStorageRoutes";
 
 
 config();
@@ -22,6 +23,12 @@ const app = express();
 
 app.set("view engine", "ejs");
 app.set("views", path.join(process.cwd(), "src/Front-End/views"));
+
+// Armazenamento local de imagens (opcional). Vem antes do express.json porque o
+// corpo dessas requisições é o arquivo bruto, não JSON.
+if (process.env.LOCAL_STORAGE_DIR) {
+	app.use(LOCAL_STORAGE_PREFIX, createLocalStorageRouter());
+}
 
 app.use(express.json());
 app.use(cookieParser());

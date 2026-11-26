@@ -249,11 +249,11 @@ Abra `http://localhost:3000` no navegador (ajuste a porta se alterou `SERVER_POR
 
 ### Logins de teste
 
-Ao abrir a aplicação, a primeira tela é a de login. Para explorar o sistema sem precisar cadastrar usuários, utilize a conta de desenvolvimento **MasterManager**, criada automaticamente ao final das migrations (`025_ocrFields.sql`). Por ser um perfil de **manager** (gerente), ela acessa tanto os fluxos de registro em campo quanto a configuração de eventos e o acompanhamento geral.
+Ao abrir a aplicação, a primeira tela é a de login. Para explorar o sistema sem precisar cadastrar usuários, utilize a conta de desenvolvimento **Admin**, criada automaticamente ao final das migrations (`025_ocrFields.sql`). Por ser um perfil de **manager** (gerente), ela acessa tanto os fluxos de registro em campo quanto a configuração de eventos e o acompanhamento geral.
 
 | Perfil | E-mail | Senha |
 |---|---|---|
-| MasterManager | `master@email.com` | `senha123` |
+| Admin | `admin@email.com` | `senha123` |
 
 > A credencial acima é exclusiva para desenvolvimento/demonstração. Não a utilize em ambiente de produção.
 

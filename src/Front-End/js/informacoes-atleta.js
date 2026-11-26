@@ -88,16 +88,16 @@ function atualizarTipoCadastro() {
     document.body.classList.toggle("cadastro-apoio", !ehAtleta);
 
     const ehAuditor = tipo === "auditor";
-    const ehGerente = tipo === "gerente";
     nascimento.required = ehAtleta;
     genero.required = ehAtleta;
     cargo.required = ehAtleta;
     cpf.required = false;
     emailPessoa.required = true;
-    cpfApoio.required = ehAuditor;
+    cpfApoio.required = false;
     senhaPessoa.required = !ehAtleta;
     const campoCpfApoioEl = document.getElementById("campoCpfApoio");
-    if (campoCpfApoioEl) campoCpfApoioEl.classList.toggle("escondido", ehGerente);
+    // CPF não é pedido para gerente nem auditor (o cadastro de acesso não usa esse dado).
+    if (campoCpfApoioEl) campoCpfApoioEl.classList.add("escondido");
     if (campoRegistroAuditor) campoRegistroAuditor.classList.toggle("escondido", !ehAuditor);
     if (registroAuditor) registroAuditor.required = ehAuditor;
 
@@ -137,6 +137,7 @@ if (!edicao) {
         if (d) {
             nome.value  = d.name   || "";
             cpf.value   = formatarCpf(d.cpf || "");
+            emailPessoa.value = d.email || "";
             if (d.gender) genero.value = d.gender;
             if (d.image_url) fotoPerfilData = d.image_url; // foto atual do DB (URL pública do Storage)
         }
@@ -229,11 +230,6 @@ formulario.addEventListener("submit", async (evento) => {
     const tipoCadastroAtual = tipoCadastroInicial;
     const ehAtleta = tipoCadastroAtual === "atleta";
 
-    if (!fotoPerfilData && !modoEventEdit && !modoDrawer) {
-        alert("Envie uma imagem de perfil para este cadastro.");
-        return;
-    }
-
     const emailValor = emailPessoa.value.trim();
 
     if (!emailValor) { alert("Preencha o e-mail."); return; }
@@ -242,7 +238,6 @@ formulario.addEventListener("submit", async (evento) => {
     if (ehAtleta && !cargo.value) { alert("Selecione o cargo do atleta."); return; }
 
     const cpfDigitos = (ehAtleta ? cpf.value : cpfApoio.value).replace(/\D/g, "");
-    if (!ehAtleta && !cpfDigitos) { alert("Preencha o CPF."); return; }
     if (cpfDigitos && !cpfValido(cpfDigitos)) {
         alert("CPF inválido. Confira os números digitados."); return;
     }
@@ -253,6 +248,7 @@ formulario.addEventListener("submit", async (evento) => {
         corpo.append("name", nome.value.trim());
         corpo.append("gender", genero.value);
         if (cpfDigitos) corpo.append("cpf", cpfDigitos);
+        if (emailValor) corpo.append("email", emailValor);
         // só envia foto se o usuário escolheu uma nova nesta tela (a image_url existente fica como está)
         if (novaFotoSelecionada && fotoPerfilData) {
             corpo.append("photo", dataURLparaBlob(fotoPerfilData), "foto.jpg");

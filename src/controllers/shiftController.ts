@@ -1,6 +1,14 @@
 import { Request, Response } from "express";
 import { shiftService } from "../services/shiftService";
 
+// Campos opcionais enviados pelo tablet no modo offline.
+function optionalString(value: unknown, max: number): string | undefined {
+	return typeof value === "string" && value.length > 0 && value.length <= max ? value : undefined;
+}
+function optionalIsoDate(value: unknown): string | undefined {
+	return typeof value === "string" && !isNaN(Date.parse(value)) ? value : undefined;
+}
+
 function statusFromError(message: string): number {
 	if (message.includes("não encontrad")) return 404;
 	if (message.includes("em aberto") || message.includes("ocupada") || message.includes("em andamento") || message.includes("encerrado"))
@@ -12,7 +20,7 @@ function statusFromError(message: string): number {
 
 export const shiftController = {
 	async startShift(req: Request, res: Response) {
-		const { athlete_id, auditor_id, treadmill_id, km_start, operator_role } = req.body;
+		const { athlete_id, auditor_id, treadmill_id, km_start, operator_role, client_id, started_at } = req.body;
 		if (athlete_id == null || auditor_id == null || treadmill_id == null || km_start == null) {
 			res.status(400).json({
 				error: "Campos obrigatórios: athlete_id, auditor_id, treadmill_id, km_start",
@@ -26,7 +34,8 @@ export const shiftController = {
 				Number(auditor_id),
 				role,
 				Number(treadmill_id),
-				Number(km_start)
+				Number(km_start),
+				{ client_id: optionalString(client_id, 64), started_at: optionalIsoDate(started_at) }
 			);
 			res.status(201).json(shift);
 		} catch (error: any) {
@@ -57,13 +66,16 @@ export const shiftController = {
 
 	async registerCheckpoint(req: Request, res: Response) {
 		const shift_id = Number(req.params.id);
-		const { distance, type } = req.body;
+		const { distance, type, sync_id, timestamp } = req.body;
 		if (distance == null) {
 			res.status(400).json({ error: "Campos obrigatórios: distance" });
 			return;
 		}
 		try {
-			const checkpoint = await shiftService.registerCheckpoint(shift_id, Number(distance), type);
+			const checkpoint = await shiftService.registerCheckpoint(shift_id, Number(distance), type, {
+				sync_id: optionalString(sync_id, 64),
+				timestamp: optionalIsoDate(timestamp),
+			});
 			res.status(201).json(checkpoint);
 		} catch (error: any) {
 		console.error(`[ERROR] ${error?.message ?? error}`, error?.stack ?? "");
@@ -118,7 +130,7 @@ export const shiftController = {
 
 	async finishShift(req: Request, res: Response) {
 		const shift_id = Number(req.params.id);
-		const { km_end, athlete_id, duration_seconds, pace } = req.body;
+		const { km_end, athlete_id, duration_seconds, pace, finish_id } = req.body;
 		if (km_end == null) {
 			res.status(400).json({ error: "Campos obrigatórios: km_end" });
 			return;
@@ -129,7 +141,8 @@ export const shiftController = {
 				Number(km_end),
 				athlete_id != null ? Number(athlete_id) : undefined,
 				duration_seconds != null ? Number(duration_seconds) : undefined,
-				pace != null ? String(pace) : undefined
+				pace != null ? String(pace) : undefined,
+				optionalString(finish_id, 64)
 			);
 			res.status(200).json(shift);
 		} catch (error: any) {

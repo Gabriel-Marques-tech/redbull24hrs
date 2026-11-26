@@ -23,7 +23,9 @@ async function submitLogin(event) {
 		return;
 	}
 
-	localStorage.setItem("accessToken", data.accessToken);
+	// O login devolve o token apenas em cookie; não gravar "undefined" no navegador.
+	if (data.accessToken) localStorage.setItem("accessToken", data.accessToken);
+	else localStorage.removeItem("accessToken");
 	localStorage.setItem("user", JSON.stringify(data.user));
 	window.location.href = "/home";
 }

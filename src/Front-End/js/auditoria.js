@@ -1,26 +1,261 @@
+// ─── Requisição com limite de tempo ──────────────────────────
+// Sem limite, uma rede ruim deixava a tela esperando para sempre.
+const TEMPO_LIMITE_MS        = 8000   // registros (início, checkpoint, fim)
+const TEMPO_LIMITE_UPLOAD_MS = 60000  // foto + leitura automática
+
+function fetchComLimite(url, options = {}, limiteMs = TEMPO_LIMITE_MS) {
+    const controle = new AbortController()
+    const relogio  = setTimeout(() => controle.abort(), limiteMs)
+    return fetch(url, { ...options, signal: controle.signal }).finally(() => clearTimeout(relogio))
+}
+
 // ─── Auth fetch com refresh automático ───────────────────────
+// Devolve undefined quando não há conexão (ou a resposta não chega a tempo).
 async function authFetch(url, options = {}) {
-    const token = localStorage.getItem('accessToken')
+    const token  = localStorage.getItem('accessToken')
+    const limite = options.body instanceof FormData ? TEMPO_LIMITE_UPLOAD_MS : TEMPO_LIMITE_MS
     const makeReq = (t) => {
         const headers = { 'Authorization': `Bearer ${t}`, ...options.headers }
         if (!(options.body instanceof FormData)) headers['Content-Type'] = 'application/json'
-        return fetch(url, { credentials: 'include', ...options, headers })
+        return fetchComLimite(url, { credentials: 'include', ...options, headers }, limite)
     }
 
-    const res = await makeReq(token)
-    if (res.status !== 401) return res
+    try {
+        const res = await makeReq(token)
+        if (res.status !== 401) return res
 
-    // Token expirado — tenta refresh via cookie
-    const refreshRes = await fetch('/auth/refresh', { method: 'POST', credentials: 'include' })
-    if (!refreshRes.ok) { window.location.href = '/login'; return }
+        // Token expirado — tenta refresh via cookie
+        const refreshRes = await fetchComLimite('/auth/refresh', { method: 'POST', credentials: 'include' })
+        if (!refreshRes.ok) { window.location.href = '/login'; return }
 
-    const { accessToken: newToken } = await refreshRes.json()
-    localStorage.setItem('accessToken', newToken)
-    return makeReq(newToken)
+        const { accessToken: newToken } = await refreshRes.json()
+        localStorage.setItem('accessToken', newToken)
+        return await makeReq(newToken)
+    } catch (e) {
+        console.warn('Sem resposta do servidor:', url, e?.name || e)
+        return undefined
+    }
+}
+
+// ─── Modo sem internet (RF016) ───────────────────────────────
+// Início, checkpoint e fim de turno que não chegam ao servidor ficam guardados
+// no tablet (localStorage) e são reenviados, na mesma ordem, quando a conexão
+// volta. Cada registro leva um identificador próprio, então reenviar o mesmo
+// registro várias vezes nunca cria duplicata no servidor.
+const FILA_KEY   = 'rr_fila_v1'    // registros aguardando envio
+const MAPA_KEY   = 'rr_mapa_v1'    // id local do turno → id no servidor
+const FALHAS_KEY = 'rr_falhas_v1'  // registros que o servidor recusou
+
+function lerJson(chave, padrao) {
+    try { return JSON.parse(localStorage.getItem(chave)) ?? padrao } catch { return padrao }
+}
+function gravarJson(chave, valor) {
+    try { localStorage.setItem(chave, JSON.stringify(valor)); return true }
+    catch (e) { console.error('Falha ao gravar no tablet:', e); return false }
+}
+const lerFila   = () => lerJson(FILA_KEY, [])
+const lerFalhas = () => lerJson(FALHAS_KEY, [])
+const filaTemPendencias = () => lerFila().length > 0
+
+// 64 caracteres hexadecimais (mesmo formato do sync_id usado no backend)
+function novoId() {
+    const bytes = new Uint8Array(32)
+    if (window.crypto?.getRandomValues) window.crypto.getRandomValues(bytes)
+    else for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256)
+    return Array.from(bytes, b => b.toString(16).padStart(2, '0')).join('')
+}
+
+// Turno criado sem internet usa o id local (texto) até o servidor responder.
+function idServidorDoTurno(ref) {
+    if (typeof ref === 'number') return ref
+    if (ref == null) return null
+    return lerJson(MAPA_KEY, {})[ref] ?? null
+}
+
+function enfileirar(op) {
+    const fila = lerFila()
+    fila.push({ opId: novoId(), criadoEm: Date.now(), ...op })
+    const ok = gravarJson(FILA_KEY, fila)
+    if (!ok) alert('Não foi possível guardar o registro no tablet. Anote o valor em papel e avise o gestor.')
+    atualizarAvisoFila()
+    setTimeout(processarFila, 0)
+    return ok
+}
+
+// Envia um registro. Devolve:
+//   { rede: true }            → sem conexão ou servidor fora: tentar de novo depois
+//   { ok, status, data }      → o servidor respondeu
+async function tentarEnvio(url, method, corpo) {
+    let res
+    try {
+        res = await fetchComLimite(url, {
+            method,
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('accessToken') || ''}`,
+            },
+            body: JSON.stringify(corpo),
+        })
+    } catch { return { rede: true } }
+    // 5xx / 429 / 401 / 403: problema do servidor ou da sessão, não do registro
+    if (res.status >= 500 || res.status === 429 || res.status === 401 || res.status === 403) return { rede: true }
+    let data = {}
+    try { data = await res.json() } catch { /* corpo vazio */ }
+    return { ok: res.ok, status: res.status, data }
+}
+
+function registrarFalha(op, motivo) {
+    const falhas = lerFalhas()
+    falhas.push({ ...op, motivo, falhouEm: Date.now() })
+    gravarJson(FALHAS_KEY, falhas)
+}
+
+// Reenvia UM registro da fila. Devolve 'depois' (tentar mais tarde) ou 'feito'.
+async function enviarOp(op) {
+    if (op.tipo === 'start') {
+        const r = await tentarEnvio('/audit/shifts/start', 'POST', op.corpo)
+        if (r.rede) return 'depois'
+        if (r.ok) {
+            const mapa = lerJson(MAPA_KEY, {})
+            mapa[op.turno] = r.data.id
+            gravarJson(MAPA_KEY, mapa)
+            aoConfirmarInicio(op.turno, r.data)
+            return 'feito'
+        }
+        if (String(r.data?.error || '').includes('pausada')) return 'depois'
+        // Início recusado: os registros seguintes do mesmo turno também não têm onde entrar
+        const motivo = r.data?.error || `erro ${r.status}`
+        registrarFalha(op, motivo)
+        const resto = []
+        for (const o of lerFila()) {
+            if (o.opId === op.opId) { resto.push(o); continue }
+            if (o.turno === op.turno) registrarFalha(o, 'turno não foi criado: ' + motivo)
+            else resto.push(o)
+        }
+        gravarJson(FILA_KEY, resto)
+        aoRecusarInicio(op.turno, motivo)
+        return 'feito'
+    }
+
+    const idTurno = idServidorDoTurno(op.turno)
+    if (idTurno == null) { registrarFalha(op, 'turno não encontrado no tablet'); return 'feito' }
+
+    if (op.tipo === 'checkpoint') {
+        const r = await tentarEnvio(`/audit/shifts/${idTurno}/checkpoints`, 'POST', op.corpo)
+        if (r.rede) return 'depois'
+        if (r.ok) { aoConfirmarCheckpoint(op.corpo.sync_id, r.data); return 'feito' }
+        if (String(r.data?.error || '').includes('pausada')) return 'depois'
+        registrarFalha(op, r.data?.error || `erro ${r.status}`)
+        return 'feito'
+    }
+
+    if (op.tipo === 'finish') {
+        const r = await tentarEnvio(`/audit/shifts/${idTurno}/finish`, 'PATCH', op.corpo)
+        if (r.rede) return 'depois'
+        // Reenvio do mesmo fim devolve 200 (o servidor reconhece pelo finish_id).
+        // Qualquer recusa vai para o aviso vermelho, com o km, para lançamento manual.
+        if (r.ok) return 'feito'
+        registrarFalha(op, r.data?.error || `erro ${r.status}`)
+        return 'feito'
+    }
+
+    registrarFalha(op, 'tipo de registro desconhecido')
+    return 'feito'
+}
+
+let enviandoFila = false
+let recarregandoTela = false  // recarga automática não deve disparar o aviso de saída
+async function processarFila() {
+    if (enviandoFila) return
+    enviandoFila = true
+    atualizarAvisoFila()
+    try {
+        while (true) {
+            const op = lerFila()[0]
+            if (!op) break
+            const resultado = await enviarOp(op)
+            if (resultado === 'depois') break
+            const fila = lerFila()
+            if (fila[0]?.opId === op.opId) { fila.shift(); gravarJson(FILA_KEY, fila) }
+        }
+    } catch (e) {
+        console.error('Erro ao reenviar registros:', e)
+    } finally {
+        enviandoFila = false
+        atualizarAvisoFila()
+    }
+}
+
+window.addEventListener('online',  () => { atualizarAvisoFila(); processarFila() })
+window.addEventListener('offline', () => atualizarAvisoFila())
+setInterval(() => { if (filaTemPendencias()) processarFila() }, 5000)
+
+// ─── Aviso na tela: sem conexão / registros guardados / recusados ─────
+const avisoFilaEl = document.createElement('div')
+avisoFilaEl.setAttribute('role', 'status')
+avisoFilaEl.style.cssText = 'position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:9999;' +
+    'display:none;align-items:center;gap:12px;max-width:92vw;padding:12px 18px;border-radius:10px;' +
+    'font:600 15px/1.3 Inter,system-ui,sans-serif;color:#fff;box-shadow:0 6px 20px rgba(0,0,0,.25)'
+document.body.appendChild(avisoFilaEl)
+
+const ROTULO_OP = { start: 'Início de turno', checkpoint: 'Checkpoint', finish: 'Fim de turno' }
+
+function atualizarAvisoFila() {
+    const pendentes = lerFila().length
+    const falhas    = lerFalhas().length
+    const semRede   = navigator.onLine === false
+
+    if (!pendentes && !falhas && !semRede) { avisoFilaEl.style.display = 'none'; return }
+
+    const plural = (n, um, varios) => `${n} ${n === 1 ? um : varios}`
+    let texto, cor
+    if (falhas) {
+        cor   = '#D2003C'
+        texto = `${plural(falhas, 'registro não foi aceito', 'registros não foram aceitos')} pelo servidor. Avise o gestor.`
+        if (pendentes) texto += ` Outros ${pendentes} aguardando envio.`
+    } else if (pendentes && enviandoFila && !semRede) {
+        cor   = '#0F0069'
+        texto = `Enviando ${plural(pendentes, 'registro guardado', 'registros guardados')}…`
+    } else if (pendentes) {
+        cor   = '#0F0069'
+        texto = `Sem conexão. ${plural(pendentes, 'registro guardado', 'registros guardados')} no tablet. Pode continuar: o envio é automático.`
+    } else {
+        cor   = '#0F0069'
+        texto = 'Sem conexão. Pode continuar: os registros ficam guardados no tablet.'
+    }
+
+    avisoFilaEl.style.background = cor
+    avisoFilaEl.style.display = 'flex'
+    avisoFilaEl.replaceChildren(document.createTextNode(texto))
+
+    if (falhas) {
+        const btn = document.createElement('button')
+        btn.type = 'button'
+        btn.textContent = 'Ver'
+        btn.style.cssText = 'flex:none;min-width:64px;min-height:44px;border:0;border-radius:8px;background:#fff;color:#D2003C;font:inherit;cursor:pointer'
+        btn.addEventListener('click', mostrarFalhas)
+        avisoFilaEl.appendChild(btn)
+    }
+}
+
+function mostrarFalhas() {
+    const falhas = lerFalhas()
+    const linhas = falhas.map((f, i) => {
+        const hora  = new Date(f.criadoEm).toLocaleTimeString('pt-BR')
+        const valor = f.corpo?.distance ?? f.corpo?.km_end ?? f.corpo?.km_start
+        return `${i + 1}. ${ROTULO_OP[f.tipo] || f.tipo} · ${valor ?? '?'} km · ${hora}\n   Motivo: ${f.motivo}`
+    })
+    const msg = 'Registros que o servidor não aceitou:\n\n' + linhas.join('\n\n') +
+                '\n\nAnote estes valores e passe ao gestor para lançamento manual.' +
+                '\n\nJá foi resolvido? OK remove o aviso desta tela.'
+    if (confirm(msg)) { gravarJson(FALHAS_KEY, []); atualizarAvisoFila() }
 }
 
 // ─── Estado ───────────────────────────────────────────────────
-let shiftId        = null
+let shiftId        = null   // número (id no servidor) ou texto (id local, turno ainda não enviado)
+let kmInicioTurno  = 0      // km inicial do turno em andamento
+let timerBase      = 0      // instante (ms) em que o cronômetro estaria em zero
 let timerInterval  = null
 let segundos       = 0
 let emCorrida      = false
@@ -63,13 +298,36 @@ function parseTempo(str) {
     return h * 3600 + m * 60 + s
 }
 
+// Tempo informado no último checkpoint (lido do painel da esteira) e quanto o
+// cronômetro marcava naquele momento. Quando os dois diferem, vale o da esteira:
+// o tempo do turno passa a ser esse valor mais o que o cronômetro andou depois.
+let ajusteTempoCp = null   // { tempo: segundos da esteira, timer: segundos do cronômetro }
+
+// Aceita "HH:MM:SS" ou "MM:SS" (como alguns painéis mostram).
+function parseTempoFlex(str) {
+    if (!str) return null
+    const t = String(str).trim()
+    return parseTempo(t.split(':').length === 2 ? `00:${t}` : t)
+}
+
+// Tempo do turno: o do cronômetro, corrigido pelo último tempo informado em checkpoint.
+function tempoDoTurno() {
+    if (!ajusteTempoCp) return segundos
+    return Math.max(0, ajusteTempoCp.tempo + (segundos - ajusteTempoCp.timer))
+}
+
 function iniciarTimer(inicial = 0) {
+    ajusteTempoCp = null
     segundos = inicial
+    // Conta pelo relógio do tablet, não por soma de 1 em 1: com a tela apagada
+    // ou a aba em segundo plano o navegador atrasa o setInterval e o tempo ficava errado.
+    timerBase = Date.now() - inicial * 1000
     cronometro.textContent = formatarTempo(segundos)
     document.body.classList.add('corrida-ativa')
-    if (cronometroModal) cronometroModal.textContent = formatarTempo(segundos)
+    if (typeof cronometroModal !== 'undefined' && cronometroModal) cronometroModal.textContent = formatarTempo(segundos)
+    clearInterval(timerInterval)
     timerInterval = setInterval(() => {
-        segundos++
+        segundos = Math.max(0, Math.floor((Date.now() - timerBase) / 1000))
         cronometro.textContent = formatarTempo(segundos)
     }, 1000)
 }
@@ -114,36 +372,41 @@ async function iniciarCorrida(kmStart) {
     inputKm.classList.add('escondido')
     inputKm.value = ''
 
-    const res = await authFetch('/audit/shifts/start', {
-        method: 'POST',
-        body: JSON.stringify({
-            athlete_id:    atletaAtual.id,
-            auditor_id:    AUDITOR_ID,
-            operator_role: OPERATOR_ROLE,
-            treadmill_id:  TREADMILL_ID,
-            km_start:      kmStart
-        })
-    })
+    const clientId = novoId()
+    const inicioMs = Date.now()
+    const corpo = {
+        athlete_id:    atletaAtual.id,
+        auditor_id:    AUDITOR_ID,
+        operator_role: OPERATOR_ROLE,
+        treadmill_id:  TREADMILL_ID,
+        km_start:      kmStart,
+        client_id:     clientId,                          // reenvio nunca duplica o turno
+        started_at:    new Date(inicioMs).toISOString(),  // horário real do início
+    }
+
+    // Se já há registros aguardando envio, este entra atrás deles (mantém a ordem)
+    const r = filaTemPendencias()
+        ? { rede: true }
+        : await tentarEnvio('/audit/shifts/start', 'POST', corpo)
 
     btnAcao.disabled = false
 
-    if (!res || !res.ok) {
-        // Reverte UI
-        pararTimer()
-        segundos = 0
-        cronometro.textContent = '00:00:00'
-        emCorrida = false
-        btnAcao.textContent = 'Iniciar corrida'
-        if (btnProximoCorredor) btnProximoCorredor.classList.add('escondido')
-        if (btnAbrirEsteiraEl)  btnAbrirEsteiraEl.classList.remove('inativa')
-        inputKm.classList.remove('escondido')
-        inputKm.value = kmStart
+    if (r.rede) {
+        // Sem conexão: o turno segue valendo no tablet e é enviado depois
+        enfileirar({ tipo: 'start', turno: clientId, corpo })
+        shiftId = clientId
+        kmInicioTurno = kmStart
+        corridaInicioAt = new Date(inicioMs).toISOString()
+        checkpointsSessao = []
+        agendarLembrete()
+        return
+    }
 
-        if (!res) return  // refresh falhou → redirect /login
+    if (!r.ok) {
+        reverterInicioNaTela(kmStart)
+        const err = r.data || {}
 
-        const err = res ? await res.json() : {}
-
-        if (res.status === 409 && err.conflict_shift_id) {
+        if (r.status === 409 && err.conflict_shift_id) {
             const inicio = err.conflict_start_at
                 ? new Date(err.conflict_start_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
                 : '?'
@@ -159,24 +422,66 @@ async function iniciarCorrida(kmStart) {
             return
         }
 
-        alert('Erro ao iniciar: ' + err.error)
+        alert('Erro ao iniciar: ' + (err.error || 'tente novamente'))
         return false
     }
 
-    const shift = await res.json()
+    const shift = r.data
     shiftId = shift.id
+    kmInicioTurno = kmStart
     corridaInicioAt = shift.start_at
     checkpointsSessao = []
     agendarLembrete()
+    salvarTurnoAtivo(shift.id, shift.start_at)
+}
 
-    // Persiste referência do turno ativo no localStorage para recuperação
+function reverterInicioNaTela(kmStart) {
+    pararTimer()
+    segundos = 0
+    cronometro.textContent = '00:00:00'
+    emCorrida = false
+    shiftId = null
+    btnAcao.textContent = 'Iniciar corrida'
+    if (btnProximoCorredor) btnProximoCorredor.classList.add('escondido')
+    if (btnAbrirEsteiraEl)  btnAbrirEsteiraEl.classList.remove('inativa')
+    inputKm.classList.remove('escondido')
+    inputKm.value = kmStart ?? ''
+}
+
+// Persiste referência do turno ativo no localStorage para recuperação
+function salvarTurnoAtivo(id, startAt) {
     localStorage.setItem('activeShift', JSON.stringify({
-        shiftId:     shift.id,
+        shiftId:     id,
         treadmillId: TREADMILL_ID,
         teamId:      typeof TEAM_ID !== 'undefined' ? TEAM_ID : null,
         eventId:     typeof EVENT_ID !== 'undefined' ? EVENT_ID : null,
-        startAt:     shift.start_at,
+        startAt,
     }))
+}
+
+// ─── Retorno dos registros que estavam guardados no tablet ────
+function aoConfirmarInicio(idLocal, shift) {
+    if (shiftId !== idLocal) return
+    shiftId = shift.id
+    salvarTurnoAtivo(shift.id, shift.start_at)
+}
+
+function aoRecusarInicio(idLocal, motivo) {
+    if (shiftId !== idLocal) return
+    cancelarLembrete()
+    checkpointsSessao = []
+    atualizarUltimoCp()
+    reverterInicioNaTela(kmInicioTurno)
+    alert('O servidor não aceitou o início deste turno:\n' + motivo +
+          '\n\nOs valores ficaram guardados no aviso vermelho. Avise o gestor.')
+}
+
+function aoConfirmarCheckpoint(syncId, cp) {
+    const local = checkpointsSessao.find(c => c.syncId === syncId)
+    if (!local) return
+    local.id = cp.id
+    local.pendente = false
+    renderizarCpsSessao()
 }
 
 async function forcarEncerramento(conflictId) {
@@ -209,20 +514,33 @@ function abrirLightbox(src) {
 }
 
 async function registrarCheckpoint(kmDistance) {
-    const res = await authFetch(`/audit/shifts/${shiftId}/checkpoints`, {
-        method: 'POST',
-        body: JSON.stringify({ distance: kmDistance, type: 'voluntary' })
-    })
+    const syncId = novoId()
+    const agora  = Date.now()
+    const corpo  = {
+        distance:  kmDistance,
+        type:      'voluntary',
+        sync_id:   syncId,                          // reenvio nunca duplica o checkpoint
+        timestamp: new Date(agora).toISOString(),   // horário real do registro
+    }
+    const nomeOperadorAtual = document.getElementById('nomeOperador')?.textContent?.trim() || '—'
+    const idTurno = idServidorDoTurno(shiftId)
 
-    if (!res || !res.ok) {
-        const err = await res.json()
-        alert('Erro ao registrar checkpoint: ' + err.error)
+    const r = (filaTemPendencias() || idTurno == null)
+        ? { rede: true }
+        : await tentarEnvio(`/audit/shifts/${idTurno}/checkpoints`, 'POST', corpo)
+
+    if (r.rede) {
+        // Sem conexão: guarda no tablet e segue. O envio é automático.
+        if (!enfileirar({ tipo: 'checkpoint', turno: shiftId, corpo })) return
+        checkpointsSessao.push({ id: null, syncId, pendente: true, km: kmDistance, ts: agora, hora: new Date(agora).toLocaleTimeString('pt-BR'), auditor: nomeOperadorAtual })
+    } else if (!r.ok) {
+        alert('Erro ao registrar checkpoint: ' + (r.data?.error || 'tente novamente'))
         return
+    } else {
+        const cp = r.data
+        checkpointsSessao.push({ id: cp.id, syncId, km: cp.distance, ts: new Date(cp.timestamp).getTime(), hora: new Date(cp.timestamp).toLocaleTimeString('pt-BR'), auditor: nomeOperadorAtual })
     }
 
-    const cp = await res.json()
-    const nomeOperadorAtual = document.getElementById('nomeOperador')?.textContent?.trim() || '—'
-    checkpointsSessao.push({ id: cp.id, km: cp.distance, ts: new Date(cp.timestamp).getTime(), hora: new Date(cp.timestamp).toLocaleTimeString('pt-BR'), auditor: nomeOperadorAtual })
     inputKm.value = ''
     atualizarUltimoCp()
     renderizarCpsSessao()
@@ -336,7 +654,10 @@ function renderizarCpsSessao() {
             const novoKm = parseFloat(input.value)
             if (isNaN(novoKm) || novoKm < 0) { input.focus(); return }
             const cp = checkpointsSessao[idx]
-            if (!cp?.id) return
+            if (!cp?.id) {
+                alert('Este checkpoint ainda não foi enviado ao servidor. A correção fica disponível assim que a conexão voltar.')
+                return
+            }
             btn.disabled = true
             const res = await authFetch(`/audit/checkpoints/${cp.id}`, {
                 method: 'PATCH',
@@ -358,7 +679,7 @@ function renderizarCpsSessao() {
 function abrirModalCheckpoint() {
     if (!modalCheckpoint) return
     if (kmCheckpointModal) { kmCheckpointModal.value = ''; }
-    if (tempoCheckpointModal) tempoCheckpointModal.value = formatarTempo(segundos)
+    if (tempoCheckpointModal) tempoCheckpointModal.value = formatarTempo(tempoDoTurno())
     if (velocidadeCheckpointModal) velocidadeCheckpointModal.value = ''
     if (corredorCheckpointModal) {
         const option = document.createElement('option')
@@ -449,10 +770,24 @@ if (btnRegistrarCheckpoint) {
             }
         }
 
+        // Tempo digitado ou lido da foto: se for válido, passa a valer para o turno.
+        const tempoInformado = parseTempoFlex(tempoCheckpointModal?.value)
+        const timerNoRegistro = segundos
+
         btnRegistrarCheckpoint.disabled = true
         const registrado = await registrarCheckpoint(km)
         btnRegistrarCheckpoint.disabled = false
-        if (registrado) fecharModalCheckpoint()
+        if (registrado) {
+            if (tempoInformado != null) {
+                ajusteTempoCp = { tempo: tempoInformado, timer: timerNoRegistro }
+                // Guarda no tablet para o ajuste sobreviver a um recarregamento da página.
+                try {
+                    const idTurno = idServidorDoTurno(shiftId)
+                    if (idTurno != null) localStorage.setItem('redrunAjusteTempoCp', JSON.stringify({ turno: idTurno, ...ajusteTempoCp }))
+                } catch { /* sem armazenamento: o ajuste vale só até recarregar */ }
+            }
+            fecharModalCheckpoint()
+        }
     })
 }
 
@@ -479,7 +814,7 @@ if (btnRegistrarCheckpoint) {
 })()
 
 async function finalizarCorrida(kmEnd, athleteIdOverride = null, durationSeconds = null, pace = null) {
-    const body = { km_end: kmEnd }
+    const body = { km_end: kmEnd, finish_id: novoId() }  // reenvio nunca aplica o fim duas vezes
     // Troca de corredor: só envia se diferir do atleta atual do turno
     if (athleteIdOverride && (!atletaAtual || athleteIdOverride !== atletaAtual.id)) {
         body.athlete_id = athleteIdOverride
@@ -488,18 +823,37 @@ async function finalizarCorrida(kmEnd, athleteIdOverride = null, durationSeconds
     if (durationSeconds != null) body.duration_seconds = durationSeconds
     if (pace) body.pace = pace
 
-    const res = await authFetch(`/audit/shifts/${shiftId}/finish`, {
-        method: 'PATCH',
-        body: JSON.stringify(body)
-    })
+    const idTurno = idServidorDoTurno(shiftId)
+    const r = (filaTemPendencias() || idTurno == null)
+        ? { rede: true }
+        : await tentarEnvio(`/audit/shifts/${idTurno}/finish`, 'PATCH', body)
 
-    if (!res || !res.ok) {
-        const err = await res.json()
-        alert('Erro ao finalizar: ' + err.error)
+    let shift
+    if (r.rede) {
+        // Sem conexão: o servidor não pode validar agora, então conferimos aqui
+        const ultimoCp = checkpointsSessao[checkpointsSessao.length - 1]
+        if (kmEnd < kmInicioTurno) { alert('Erro ao finalizar: km final menor que o km inicial.'); return }
+        if (ultimoCp && kmEnd < Number(ultimoCp.km)) { alert('Erro ao finalizar: km final menor que o último checkpoint.'); return }
+
+        // Sem duração explícita o servidor usaria a hora do reenvio, não a do fim real
+        if (body.duration_seconds == null || !(body.duration_seconds > 0)) body.duration_seconds = Math.max(1, segundos)
+        if (!enfileirar({ tipo: 'finish', turno: shiftId, corpo: body })) return
+
+        const inicioMs = corridaInicioAt ? new Date(corridaInicioAt).getTime() : Date.now() - body.duration_seconds * 1000
+        shift = {
+            km_start: kmInicioTurno,
+            km_end:   kmEnd,
+            pace:     body.pace || null,
+            start_at: new Date(inicioMs).toISOString(),
+            end_at:   new Date(inicioMs + body.duration_seconds * 1000).toISOString(),
+        }
+    } else if (!r.ok) {
+        alert('Erro ao finalizar: ' + (r.data?.error || 'tente novamente'))
         return
+    } else {
+        shift = r.data
     }
 
-    const shift = await res.json()
     pararTimer()
 
     // Nome do corredor a registrar (respeita a troca, se houve)
@@ -728,6 +1082,7 @@ atualizarResumoFila()
 // ─── Turno aberto ao carregar: RETOMA (não encerra) ───────────
 if (OPEN_SHIFT) {
     shiftId   = OPEN_SHIFT.id
+    kmInicioTurno = Number(OPEN_SHIFT.km_start) || 0
     emCorrida = true
     corridaInicioAt = OPEN_SHIFT.start_at
     checkpointsSessao = []
@@ -743,6 +1098,12 @@ if (OPEN_SHIFT) {
     // Cronômetro retoma do tempo decorrido (calculado no servidor, sem TZ)
     const decorrido = Math.max(0, Number(OPEN_SHIFT.elapsed_seconds) || 0)
     iniciarTimer(decorrido)
+    try {
+        const salvo = JSON.parse(localStorage.getItem('redrunAjusteTempoCp') || 'null')
+        if (salvo && salvo.turno === OPEN_SHIFT.id && Number.isFinite(salvo.tempo) && Number.isFinite(salvo.timer)) {
+            ajusteTempoCp = { tempo: salvo.tempo, timer: salvo.timer }
+        }
+    } catch { /* ignora ajuste salvo inválido */ }
     agendarLembrete() // inicia contagem de 5 min ao retomar turno
 
     // UI de corrida em andamento
@@ -783,7 +1144,8 @@ if (OPEN_SHIFT) {
 // Turno permanece in_progress + activeShift persiste no localStorage,
 // para que ao reabrir o site apareça a opção de retomar o turno.
 window.addEventListener('beforeunload', (e) => {
-    if (!emCorrida || !shiftId) return
+    if (recarregandoTela) return
+    if (!(emCorrida && shiftId) && !filaTemPendencias()) return
     e.preventDefault()
     e.returnValue = 'Há uma corrida em andamento. Você poderá retomá-la ao reabrir o site.'
 })
@@ -825,7 +1187,13 @@ if (btnConfirmarFinalizarComp) {
         btnConfirmarFinalizarComp.disabled = true
 
         // Encerra turno em andamento antes de sair
-        if (emCorrida && shiftId) {
+        if (filaTemPendencias() &&
+            !confirm('Há registros guardados no tablet que ainda não foram enviados.\n' +
+                     'Eles continuam guardados e serão enviados quando esta tela for aberta de novo com internet.\n\nSair mesmo assim?')) {
+            btnConfirmarFinalizarComp.disabled = false
+            return
+        }
+        if (emCorrida && typeof shiftId === 'number') {
             navigator.sendBeacon(
                 `/audit/shifts/${shiftId}/abandon`,
                 new Blob([JSON.stringify({ force_close: true })], { type: 'application/json' })
@@ -908,7 +1276,7 @@ if (finalizarTurnoFotoInput && finalizarTurnoFotoPreview) {
         finalizarTurnoFotoPreview.querySelector('img')?.addEventListener('click', () => abrirLightbox(finalizarTurnoFotoUrl))
         if (btnFinalizarTurnoFoto) btnFinalizarTurnoFoto.textContent = 'Tirar nova foto'
 
-        if (!shiftId) return
+        if (typeof shiftId !== 'number') return  // turno ainda só no tablet: sem envio de foto
         if (btnFinalizarTurnoFoto) btnFinalizarTurnoFoto.disabled = true
         finalizarTurnoFotoPreview.classList.add('ocr-loading')
         try {
@@ -933,7 +1301,7 @@ function abrirModalTurno() {
         .join('')
 
     // Tempo percorrido: editável (input de texto HH:MM:SS)
-    if (tempoPercorridoTurno) tempoPercorridoTurno.value = formatarTempo(segundos)
+    if (tempoPercorridoTurno) tempoPercorridoTurno.value = formatarTempo(tempoDoTurno())
 
     // Relação de horários abaixo (contexto): início do turno e agora
     const fmtHora = { hour: '2-digit', minute: '2-digit', second: '2-digit' }
@@ -1197,3 +1565,20 @@ function selecionarCorredorManual(el) {
 
     fecharBandejaCorredores()
 }
+
+// ─── Registros guardados de uma sessão anterior ───────────────
+// A tela acabou de ser carregada do servidor, mas ainda há registros no tablet
+// que ele não conhece. Envia tudo antes de liberar a operação e recarrega,
+// para a tela refletir o estado real (turno aberto, histórico).
+atualizarAvisoFila()
+;(async () => {
+    if (!filaTemPendencias()) return
+    const estavaDesabilitado = btnAcao.disabled
+    btnAcao.disabled = true
+    for (let tentativa = 0; tentativa < 20 && filaTemPendencias(); tentativa++) {
+        await processarFila()
+        if (filaTemPendencias()) await new Promise(r => setTimeout(r, 3000))
+    }
+    if (!filaTemPendencias()) { recarregandoTela = true; window.location.reload(); return }
+    btnAcao.disabled = estavaDesabilitado
+})()

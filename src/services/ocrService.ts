@@ -49,27 +49,95 @@ function parseOcr(raw: string): TreadmillData {
 	};
 }
 
-const GEMINI_MODELS = ["gemini-2.5-flash"];
+// O gemini-2.5-flash foi desligado para contas novas (404). A ordem abaixo vai do
+// mais rápido/barato ao mais pesado; GEMINI_MODELS no .env troca a lista sem deploy.
+const GEMINI_MODELS = (process.env.GEMINI_MODELS ?? "gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.8-flash")
+	.split(",")
+	.map((m) => m.trim())
+	.filter(Boolean);
+
+// O auditor fica esperando a leitura na tela: melhor desistir e cair no próximo
+// modelo (ou na digitação manual) do que travar em um modelo sobrecarregado.
+const GEMINI_TIMEOUT_MS = Number(process.env.GEMINI_TIMEOUT_MS ?? 10000);
 
 async function tryGemini(imageBuffer: Buffer, mimetype: string): Promise<TreadmillData> {
 	const imagePart = { inlineData: { data: imageBuffer.toString("base64"), mimeType: mimetype } };
 
+	let lastError: unknown = new Error("Nenhum modelo Gemini configurado");
 	for (const modelName of GEMINI_MODELS) {
 		try {
 			console.log(`[OCR] Tentando Gemini: ${modelName}`);
-			const model = genAI.getGenerativeModel({ model: modelName });
+			const model = genAI.getGenerativeModel(
+				{ model: modelName, generationConfig: { temperature: 0, responseMimeType: "application/json" } },
+				{ timeout: GEMINI_TIMEOUT_MS }
+			);
 			const result = await model.generateContent([PROMPT, imagePart]);
 			const raw = result.response.text().trim();
 			console.log(`[OCR] Gemini resposta: ${raw}`);
 			return parseOcr(raw);
 		} catch (err: any) {
+			// Qualquer falha (sobrecarga, timeout, modelo desligado, JSON inválido) passa para o próximo.
 			console.error(`[OCR] Gemini ${modelName} falhou:`, err?.message?.slice(0, 120));
-			const isRetryable = err?.message?.includes("503") || err?.message?.includes("429") || err?.message?.includes("overloaded");
-			if (!isRetryable || modelName === GEMINI_MODELS[GEMINI_MODELS.length - 1]) throw err;
+			lastError = err;
 		}
 	}
-	/* istanbul ignore next: inalcançável — o loop sempre retorna ou lança no último modelo */
-	throw new Error("Todos os modelos Gemini falharam");
+	throw lastError;
+}
+
+// OpenRouter: conta pré-paga que dá acesso aos mesmos modelos Gemini, sem o teto
+// diário da camada gratuita do Google. É o primeiro provedor quando a chave existe.
+const OPENROUTER_MODELS = (
+	process.env.OPENROUTER_MODELS ??
+	"google/gemini-3.5-flash-lite,google/gemini-3.1-flash-lite,google/gemini-3.8-flash"
+)
+	.split(",")
+	.map((m) => m.trim())
+	.filter(Boolean);
+
+async function tryOpenRouter(imageBuffer: Buffer, mimetype: string): Promise<TreadmillData> {
+	const apiKey = process.env.OPENROUTER_API_KEY;
+	if (!apiKey) throw new Error("OPENROUTER_API_KEY não configurada");
+
+	const dataUrl = `data:${mimetype};base64,${imageBuffer.toString("base64")}`;
+
+	let lastError: unknown = new Error("Nenhum modelo OpenRouter configurado");
+	for (const modelName of OPENROUTER_MODELS) {
+		try {
+			console.log(`[OCR] Tentando OpenRouter: ${modelName}`);
+			const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+				method: "POST",
+				signal: AbortSignal.timeout(GEMINI_TIMEOUT_MS),
+				headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+				body: JSON.stringify({
+					model: modelName,
+					temperature: 0,
+					// Folga para modelos com raciocínio (ex.: 3.8-flash), que gastam tokens antes do JSON.
+					max_tokens: 2000,
+					response_format: { type: "json_object" },
+					messages: [
+						{
+							role: "user",
+							content: [
+								{ type: "text", text: PROMPT },
+								{ type: "image_url", image_url: { url: dataUrl } },
+							],
+						},
+					],
+				}),
+			});
+			const body: any = await response.json().catch(() => ({}));
+			if (!response.ok || body?.error) {
+				throw new Error(`HTTP ${response.status}: ${body?.error?.message ?? "sem detalhe"}`);
+			}
+			const raw = String(body?.choices?.[0]?.message?.content ?? "").trim();
+			console.log(`[OCR] OpenRouter resposta: ${raw}`);
+			return parseOcr(raw);
+		} catch (err: any) {
+			console.error(`[OCR] OpenRouter ${modelName} falhou:`, err?.message?.slice(0, 160));
+			lastError = err;
+		}
+	}
+	throw lastError;
 }
 
 async function tryGroq(imageBuffer: Buffer, mimetype: string): Promise<TreadmillData> {
@@ -100,6 +168,13 @@ async function tryGroq(imageBuffer: Buffer, mimetype: string): Promise<Treadmill
 
 export const ocrService = {
 	async extractFromImage(imageBuffer: Buffer, mimetype: string): Promise<TreadmillData> {
+		if (process.env.OPENROUTER_API_KEY) {
+			try {
+				return await tryOpenRouter(imageBuffer, mimetype);
+			} catch {
+				console.warn("[OCR] OpenRouter indisponível, tentando Gemini direto...");
+			}
+		}
 		try {
 			return await tryGemini(imageBuffer, mimetype);
 		} catch (geminiErr: any) {

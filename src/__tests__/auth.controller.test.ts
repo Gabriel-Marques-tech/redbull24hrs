@@ -285,3 +285,79 @@ describe("logout", () => {
     expect(res.json).toHaveBeenCalledWith({ error: "Erro ao encerrar sessão" });
   });
 });
+
+describe("changePassword", () => {
+  const user = { id: "7", email: "a@a.com", role: "auditor", name: "A", image_url: null };
+
+  it("Retorna 401 sem usuário autenticado", async () => {
+    const req = { body: { current_password: "a", new_password: "b" } } as Request;
+    const res = buildRes();
+    await AuthController.changePassword(req, res);
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(mockService.changePassword).not.toHaveBeenCalled();
+  });
+
+  it("Troca a senha do próprio usuário logado, não a de um id enviado no corpo", async () => {
+    mockService.changePassword.mockResolvedValue("ok");
+    const req = { user, body: { id: 1, role: "manager", current_password: "atual123", new_password: "nova1234" } } as unknown as Request;
+    const res = buildRes();
+    await AuthController.changePassword(req, res);
+    expect(mockService.changePassword).toHaveBeenCalledWith("auditor", 7, "atual123", "nova1234");
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
+
+  it("Retorna 400 quando a senha atual está errada", async () => {
+    mockService.changePassword.mockResolvedValue("wrong_current");
+    const req = { user, body: { current_password: "errada", new_password: "nova1234" } } as unknown as Request;
+    const res = buildRes();
+    await AuthController.changePassword(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({ error: "Senha atual incorreta" });
+  });
+
+  it("Retorna 400 quando os dados são inválidos", async () => {
+    mockService.changePassword.mockResolvedValue("invalid");
+    const req = { user, body: {} } as unknown as Request;
+    const res = buildRes();
+    await AuthController.changePassword(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+  });
+});
+
+describe("resetUserPassword", () => {
+  const manager = { id: "1", email: "admin@email.com", role: "manager", name: "Admin", image_url: null };
+
+  it("Redefine a senha de um auditor", async () => {
+    mockService.resetPassword.mockResolvedValue("ok");
+    const req = { user: manager, params: { role: "auditor", id: "4" }, body: { new_password: "nova1234" } } as unknown as Request;
+    const res = buildRes();
+    await AuthController.resetUserPassword(req, res);
+    expect(mockService.resetPassword).toHaveBeenCalledWith("auditor", 4, "nova1234");
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
+
+  it("Redefine a senha de outro gerente", async () => {
+    mockService.resetPassword.mockResolvedValue("ok");
+    const req = { user: manager, params: { role: "manager", id: "2" }, body: { new_password: "nova1234" } } as unknown as Request;
+    const res = buildRes();
+    await AuthController.resetUserPassword(req, res);
+    expect(mockService.resetPassword).toHaveBeenCalledWith("manager", 2, "nova1234");
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
+
+  it("Não redefine a própria senha por esse caminho", async () => {
+    const req = { user: manager, params: { role: "manager", id: "1" }, body: { new_password: "nova1234" } } as unknown as Request;
+    const res = buildRes();
+    await AuthController.resetUserPassword(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(mockService.resetPassword).not.toHaveBeenCalled();
+  });
+
+  it("Retorna 404 quando a conta não existe", async () => {
+    mockService.resetPassword.mockResolvedValue("not_found");
+    const req = { user: manager, params: { role: "auditor", id: "999" }, body: { new_password: "nova1234" } } as unknown as Request;
+    const res = buildRes();
+    await AuthController.resetUserPassword(req, res);
+    expect(res.status).toHaveBeenCalledWith(404);
+  });
+});

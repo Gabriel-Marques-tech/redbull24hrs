@@ -48,7 +48,88 @@
     <!-- Overlay do drawer -->
     <div id="drawerOverlay" onclick="fecharDrawer()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:1000;"></div>
 
+    <!-- Alterar a própria senha (gerente e auditor) -->
+    <div id="alterarSenhaOverlay" style="
+        display:none; position:fixed; inset:0; z-index:1200;
+        background:rgba(0,0,0,0.5); align-items:center; justify-content:center;
+    ">
+        <form id="formAlterarSenha" onsubmit="enviarAlterarSenha(event)" style="
+            width:min(420px, calc(100vw - 32px)); padding:30px;
+            background:#fff; color:#111; border-radius:16px;
+            box-shadow:0 10px 40px rgba(0,0,0,0.25);
+            font-family:'Inter',sans-serif; display:flex; flex-direction:column; gap:14px;
+        ">
+            <h2 style="font-size:22px; margin:0;">Alterar senha</h2>
+            <label style="display:flex; flex-direction:column; gap:6px; font-size:13px; font-weight:600; color:#444;">
+                Senha atual
+                <input id="senhaAtual" type="password" autocomplete="current-password" required style="height:46px; padding:0 12px; border:1.5px solid #ccc; border-radius:8px; font-size:15px;">
+            </label>
+            <label style="display:flex; flex-direction:column; gap:6px; font-size:13px; font-weight:600; color:#444;">
+                Nova senha (mínimo de 6 caracteres)
+                <input id="senhaNova" type="password" autocomplete="new-password" minlength="6" required style="height:46px; padding:0 12px; border:1.5px solid #ccc; border-radius:8px; font-size:15px;">
+            </label>
+            <label style="display:flex; flex-direction:column; gap:6px; font-size:13px; font-weight:600; color:#444;">
+                Repita a nova senha
+                <input id="senhaNovaConfirmacao" type="password" autocomplete="new-password" minlength="6" required style="height:46px; padding:0 12px; border:1.5px solid #ccc; border-radius:8px; font-size:15px;">
+            </label>
+            <p id="alterarSenhaMensagem" role="alert" style="min-height:18px; margin:0; font-size:14px; color:#c62828;"></p>
+            <div style="display:flex; gap:12px;">
+                <button type="button" onclick="fecharAlterarSenha()" style="
+                    flex:1; height:48px; border:1.5px solid var(--vermelho);
+                    border-radius:8px; background:#fff; color:var(--vermelho);
+                    font-size:15px; font-weight:700; cursor:pointer;
+                ">Cancelar</button>
+                <button id="btnSalvarSenha" type="submit" style="
+                    flex:1; height:48px; border:none; border-radius:8px;
+                    background:var(--vermelho); color:#fff;
+                    font-size:15px; font-weight:700; cursor:pointer;
+                ">Salvar</button>
+            </div>
+        </form>
+    </div>
+
     <% if (user && user.role === 'manager') { %>
+    <!-- Gerente redefine a senha de auditores e de outros gerentes -->
+    <div id="senhasUsuariosOverlay" style="
+        display:none; position:fixed; inset:0; z-index:1200;
+        background:rgba(0,0,0,0.5); align-items:center; justify-content:center;
+    ">
+        <div style="
+            width:min(520px, calc(100vw - 32px)); max-height:calc(100vh - 48px); padding:28px;
+            background:#fff; color:#111; border-radius:16px;
+            box-shadow:0 10px 40px rgba(0,0,0,0.25);
+            font-family:'Inter',sans-serif; display:flex; flex-direction:column; gap:14px;
+        ">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                <h2 style="font-size:22px; margin:0;">Senhas dos usuários</h2>
+                <button type="button" onclick="fecharSenhasUsuarios()" aria-label="Fechar" style="
+                    width:36px; height:36px; border:1.5px solid #ccc; border-radius:50%;
+                    background:#fff; color:#444; font-size:20px; line-height:1; cursor:pointer;
+                ">×</button>
+            </div>
+            <p style="margin:0; font-size:14px; color:#666;">Defina uma nova senha para um auditor ou outro gerente. Passe a senha nova para a pessoa.</p>
+            <div id="senhasUsuariosLista" style="overflow-y:auto; display:flex; flex-direction:column; gap:8px; min-height:60px;"></div>
+
+            <form id="formRedefinirSenha" onsubmit="enviarRedefinirSenha(event)" style="display:none; flex-direction:column; gap:10px; padding-top:14px; border-top:1px solid #eee;">
+                <p id="redefinirSenhaAlvo" style="margin:0; font-size:14px; font-weight:600;"></p>
+                <input id="redefinirSenhaNova" type="text" autocomplete="off" minlength="6" required placeholder="Nova senha (mínimo de 6 caracteres)" style="height:46px; padding:0 12px; border:1.5px solid #ccc; border-radius:8px; font-size:15px;">
+                <div style="display:flex; gap:12px;">
+                    <button type="button" onclick="cancelarRedefinirSenha()" style="
+                        flex:1; height:46px; border:1.5px solid var(--vermelho);
+                        border-radius:8px; background:#fff; color:var(--vermelho);
+                        font-size:15px; font-weight:700; cursor:pointer;
+                    ">Cancelar</button>
+                    <button id="btnRedefinirSenha" type="submit" style="
+                        flex:1; height:46px; border:none; border-radius:8px;
+                        background:var(--vermelho); color:#fff;
+                        font-size:15px; font-weight:700; cursor:pointer;
+                    ">Salvar nova senha</button>
+                </div>
+            </form>
+            <p id="senhasUsuariosMensagem" role="alert" style="min-height:18px; margin:0; font-size:14px; color:#c62828;"></p>
+        </div>
+    </div>
+
     <div id="confirmacaoCadastroOverlay" style="
         display:none; position:fixed; inset:0; z-index:1200;
         background:rgba(0,0,0,0.5); align-items:center; justify-content:center;
@@ -178,7 +259,28 @@
                 </div>
                 <span style="font-size:20px; font-weight:300;">›</span>
             </a>
+            <button class="user-drawer-senhas-usuarios" type="button" onclick="abrirSenhasUsuarios()" style="
+                width:100%; display:flex; align-items:center; justify-content:space-between;
+                padding:14px 16px; background:#fff;
+                border:1.5px solid var(--azul); border-radius:8px;
+                color:var(--azul); font-family:'Inter',sans-serif;
+                font-size:15px; font-weight:600; cursor:pointer;
+            ">
+                Senhas dos usuários
+                <span style="font-size:20px; font-weight:300;">›</span>
+            </button>
             <% } %>
+
+            <button class="user-drawer-alterar-senha" type="button" onclick="abrirAlterarSenha()" style="
+                width:100%; display:flex; align-items:center; justify-content:space-between;
+                padding:14px 16px; background:#fff;
+                border:1.5px solid var(--azul); border-radius:8px;
+                color:var(--azul); font-family:'Inter',sans-serif;
+                font-size:15px; font-weight:600; cursor:pointer;
+            ">
+                Alterar senha
+                <span style="font-size:20px; font-weight:300;">›</span>
+            </button>
         </div>
 
         <!-- Logout -->
@@ -304,6 +406,159 @@ function cadastrarOutroUsuario() {
     const cadastro = JSON.parse(sessionStorage.getItem('cadastroUsuarioConcluido') || '{}')
     sessionStorage.removeItem('cadastroUsuarioConcluido')
     abrirCadastroUsuario(cadastro.tipoCadastro || 'auditor')
+}
+// ---- Gerente: redefinir a senha de outras contas ----
+let usuarioRedefinirSenha = null
+async function comRenovacao(fazer) {
+    let res = await fazer()
+    if (res.status === 401) {
+        const renovou = await fetch('/auth/refresh', { method: 'POST', credentials: 'include' })
+        if (renovou.ok) res = await fazer()
+    }
+    return res
+}
+function mensagemSenhasUsuarios(texto, ok) {
+    const msg = document.getElementById('senhasUsuariosMensagem')
+    if (!msg) return
+    msg.style.color = ok ? '#1b7f3a' : '#c62828'
+    msg.textContent = texto
+}
+async function abrirSenhasUsuarios() {
+    fecharDrawer()
+    cancelarRedefinirSenha()
+    mensagemSenhasUsuarios('', false)
+    const lista = document.getElementById('senhasUsuariosLista')
+    lista.textContent = 'Carregando...'
+    document.getElementById('senhasUsuariosOverlay').style.display = 'flex'
+    try {
+        const res = await comRenovacao(() => fetch('/auth/users', { credentials: 'include' }))
+        if (!res.ok) throw new Error('falha')
+        const usuarios = await res.json()
+        const euId = <%- JSON.stringify(user ? String(user.id) : '') %>
+        const outros = usuarios.filter(u => !(u.role === 'manager' && String(u.id) === euId))
+        lista.replaceChildren()
+        if (!outros.length) { lista.textContent = 'Nenhuma outra conta cadastrada.'; return }
+        outros.forEach(u => {
+            const linha = document.createElement('div')
+            linha.className = 'senha-usuario-linha'
+            linha.style.cssText = 'display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 12px; border:1px solid #e3e3e3; border-radius:8px;'
+            const info = document.createElement('div')
+            info.style.cssText = 'min-width:0;'
+            const nome = document.createElement('p')
+            nome.style.cssText = 'margin:0; font-size:15px; font-weight:600; overflow-wrap:anywhere;'
+            nome.textContent = u.name
+            const detalhe = document.createElement('p')
+            detalhe.style.cssText = 'margin:2px 0 0; font-size:12px; color:#777; overflow-wrap:anywhere;'
+            detalhe.textContent = `${u.role === 'manager' ? 'Gerente' : 'Auditor'} · ${u.email}`
+            info.append(nome, detalhe)
+            const btn = document.createElement('button')
+            btn.type = 'button'
+            btn.textContent = 'Nova senha'
+            btn.style.cssText = 'flex-shrink:0; height:38px; padding:0 14px; border:1.5px solid var(--azul); border-radius:8px; background:#fff; color:var(--azul); font-size:14px; font-weight:600; cursor:pointer;'
+            btn.addEventListener('click', () => escolherUsuarioSenha(u))
+            linha.append(info, btn)
+            lista.append(linha)
+        })
+    } catch {
+        lista.textContent = ''
+        mensagemSenhasUsuarios('Não foi possível carregar os usuários.', false)
+    }
+}
+function fecharSenhasUsuarios() {
+    document.getElementById('senhasUsuariosOverlay').style.display = 'none'
+}
+function escolherUsuarioSenha(u) {
+    usuarioRedefinirSenha = u
+    mensagemSenhasUsuarios('', false)
+    document.getElementById('redefinirSenhaAlvo').textContent = `Nova senha para ${u.name} (${u.role === 'manager' ? 'gerente' : 'auditor'})`
+    document.getElementById('redefinirSenhaNova').value = ''
+    document.getElementById('formRedefinirSenha').style.display = 'flex'
+    document.getElementById('redefinirSenhaNova').focus()
+}
+function cancelarRedefinirSenha() {
+    usuarioRedefinirSenha = null
+    const form = document.getElementById('formRedefinirSenha')
+    if (form) form.style.display = 'none'
+}
+async function enviarRedefinirSenha(evento) {
+    evento.preventDefault()
+    const u = usuarioRedefinirSenha
+    if (!u) return
+    const nova = document.getElementById('redefinirSenhaNova').value
+    const btn = document.getElementById('btnRedefinirSenha')
+    btn.disabled = true
+    try {
+        const res = await comRenovacao(() => fetch(`/auth/users/${u.role}/${u.id}/password`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ new_password: nova })
+        }))
+        if (res.ok) {
+            cancelarRedefinirSenha()
+            mensagemSenhasUsuarios(`Senha de ${u.name} alterada.`, true)
+            return
+        }
+        const erro = await res.json().catch(() => ({}))
+        mensagemSenhasUsuarios(erro.error || 'Não foi possível alterar a senha.', false)
+    } catch {
+        mensagemSenhasUsuarios('Sem conexão. Tente de novo.', false)
+    } finally {
+        btn.disabled = false
+    }
+}
+
+function abrirAlterarSenha() {
+    fecharDrawer()
+    document.getElementById('formAlterarSenha').reset()
+    const msg = document.getElementById('alterarSenhaMensagem')
+    msg.textContent = ''
+    msg.style.color = '#c62828'
+    document.getElementById('alterarSenhaOverlay').style.display = 'flex'
+    document.getElementById('senhaAtual').focus()
+}
+function fecharAlterarSenha() {
+    document.getElementById('alterarSenhaOverlay').style.display = 'none'
+}
+async function enviarAlterarSenha(evento) {
+    evento.preventDefault()
+    const atual = document.getElementById('senhaAtual').value
+    const nova = document.getElementById('senhaNova').value
+    const confirmacao = document.getElementById('senhaNovaConfirmacao').value
+    const msg = document.getElementById('alterarSenhaMensagem')
+    const btn = document.getElementById('btnSalvarSenha')
+    msg.style.color = '#c62828'
+    if (nova !== confirmacao) { msg.textContent = 'As duas senhas novas não são iguais.'; return }
+
+    const enviar = () => fetch('/auth/change-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ current_password: atual, new_password: nova })
+    })
+    btn.disabled = true
+    try {
+        let res = await enviar()
+        if (res.status === 401) {
+            // Sessão expirada: renova e tenta de novo uma vez.
+            const renovou = await fetch('/auth/refresh', { method: 'POST', credentials: 'include' })
+            if (renovou.ok) res = await enviar()
+        }
+        if (res.ok) {
+            msg.style.color = '#1b7f3a'
+            msg.textContent = 'Senha alterada.'
+            setTimeout(fecharAlterarSenha, 1200)
+            return
+        }
+        const erro = await res.json().catch(() => ({}))
+        msg.textContent = res.status === 401
+            ? 'Sua sessão expirou. Entre de novo e repita.'
+            : (erro.error || 'Não foi possível alterar a senha.')
+    } catch {
+        msg.textContent = 'Sem conexão. Tente de novo.'
+    } finally {
+        btn.disabled = false
+    }
 }
 async function fazerLogout() {
     try {

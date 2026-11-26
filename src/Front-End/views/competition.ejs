@@ -53,7 +53,7 @@
                 <div class="competicao" data-id="<%= event.id %>">
                     <span><b><%= index + 1 %></b></span>
                     <p><%= event.local %></p>
-                    <p><%= new Date(event.date).toLocaleDateString('pt-BR') %></p>
+                    <p><%= new Date(event.date).toLocaleDateString('pt-BR', { timeZone: 'UTC' }) %></p>
                 </div>
                 <% }) %>
 

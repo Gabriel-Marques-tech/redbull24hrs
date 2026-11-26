@@ -16,8 +16,22 @@ const BASE_URL = process.env.APP_BASE_URL || "https://redbull24hrs.onrender.com"
 // Cole aqui os dados do forms — só nome + email obrigatórios.
 // equipe, km e pace são opcionais — se omitir, gera aleatório.
 const ATTENDEES = [
-  { nome: "Gabriel Marques", email: "gabriel.marques@sou.inteli.edu.br" },
-  { nome: "Rei do Universo", email: "gabrielmarques.t3ch@gmail.com"}
+  { nome: "MAIS LINDO DO UNIVERSO", email: "gabriel.marques@sou.inteli.edu.br" },
+  { nome: "Miguel (Mike)", email: "miguel.silva@sou.inteli.edu.br" },
+  { nome: "Letícia", email: "leticia@ovocom.com.br" },
+  { nome: "Candido Luiz", email: "cluizcidrao@gmail.com" },
+  { nome: "Laura Faria Damasceno", email: "dlaurafaria@gmail.com" },
+  { nome: "Cauan", email: "Cauan.martins@sou.inteli.edu.br" },
+  { nome: "André Lopes de Melo", email: "andrelopesdemelo@gmail.com" },
+  { nome: "Vinicius", email: "vinicius.castiglia@sou.inteli.edu.br" },
+  { nome: "Lucas", email: "lucas.margoni@sou.inteli.edu.br" },
+  { nome: "isabella santos", email: "isabella.santos@sou.inteli.edu.br" },
+  { nome: "Vinícius Corrêa Bonani", email: "vinicius.bonani@sou.inteli.edu.br" },
+  { nome: "Luckas milfont", email: "Luckas.milfont@sou.inteli.edu.br" },
+  { nome: "Julia Khristina", email: "juliakhristina18@gmail.com" },
+  { nome: "Sofia", email: "sofiapinheiro006@gmail.com" },
+  { nome: "Jobert", email: "jobertsribeiro@gmail.com" },
+  { nome: "Thaissa Bruno Gonçalves Dias", email: "tdias@streetopia.me" },
 ];
 // ─────────────────────────────────────────────────────────────────────────────
 

@@ -271,3 +271,77 @@ describe("logout", () => {
     expect(mockRepo.revokeRefreshToken).toHaveBeenCalledWith("hashed");
   });
 });
+
+describe("changePassword", () => {
+  it("Recusa nova senha curta sem consultar o banco", async () => {
+    const result = await authService.changePassword("auditor", 7, "atual123", "12345");
+    expect(result).toBe("invalid");
+    expect(mockRepo.findPasswordHashById).not.toHaveBeenCalled();
+  });
+
+  it("Recusa quando a nova senha é igual à atual", async () => {
+    const result = await authService.changePassword("auditor", 7, "mesma123", "mesma123");
+    expect(result).toBe("same");
+  });
+
+  it("Retorna not_found quando o usuário não existe", async () => {
+    mockRepo.findPasswordHashById.mockResolvedValue(null);
+    const result = await authService.changePassword("manager", 99, "atual123", "nova1234");
+    expect(result).toBe("not_found");
+  });
+
+  it("Recusa quando a senha atual não confere e não grava nada", async () => {
+    mockRepo.findPasswordHashById.mockResolvedValue("hash-antigo");
+    (mockBcrypt.compare as jest.Mock).mockResolvedValue(false);
+    const result = await authService.changePassword("auditor", 7, "errada", "nova1234");
+    expect(result).toBe("wrong_current");
+    expect(mockRepo.updatePassword).not.toHaveBeenCalled();
+  });
+
+  it("Grava o hash da nova senha na tabela do perfil do usuário", async () => {
+    mockRepo.findPasswordHashById.mockResolvedValue("hash-antigo");
+    (mockBcrypt.compare as jest.Mock).mockResolvedValue(true);
+    (mockBcrypt.hash as jest.Mock).mockResolvedValue("hash-novo");
+    mockRepo.updatePassword.mockResolvedValue(true);
+
+    const result = await authService.changePassword("auditor", 7, "atual123", "nova1234");
+
+    expect(result).toBe("ok");
+    expect(mockBcrypt.compare).toHaveBeenCalledWith("atual123", "hash-antigo");
+    expect(mockRepo.updatePassword).toHaveBeenCalledWith("auditor", 7, "hash-novo");
+  });
+});
+
+describe("resetPassword", () => {
+  it("Recusa senha curta, perfil inválido e id inválido sem gravar", async () => {
+    expect(await authService.resetPassword("auditor", 3, "123")).toBe("invalid");
+    expect(await authService.resetPassword("outro" as any, 3, "nova1234")).toBe("invalid");
+    expect(await authService.resetPassword("auditor", NaN, "nova1234")).toBe("invalid");
+    expect(mockRepo.updatePassword).not.toHaveBeenCalled();
+  });
+
+  it("Grava o hash da nova senha sem pedir a senha atual", async () => {
+    (mockBcrypt.hash as jest.Mock).mockResolvedValue("hash-novo");
+    mockRepo.updatePassword.mockResolvedValue(true);
+    expect(await authService.resetPassword("manager", 2, "nova1234")).toBe("ok");
+    expect(mockRepo.updatePassword).toHaveBeenCalledWith("manager", 2, "hash-novo");
+    expect(mockBcrypt.compare).not.toHaveBeenCalled();
+  });
+
+  it("Retorna not_found quando a conta não existe", async () => {
+    (mockBcrypt.hash as jest.Mock).mockResolvedValue("hash-novo");
+    mockRepo.updatePassword.mockResolvedValue(false);
+    expect(await authService.resetPassword("auditor", 999, "nova1234")).toBe("not_found");
+  });
+});
+
+describe("listUsers", () => {
+  it("Junta gerentes e auditores com o perfil de cada um", async () => {
+    mockRepo.listManagers.mockResolvedValue([{ id: 1, name: "Admin", email: "admin@email.com" }]);
+    mockRepo.listAuditors.mockResolvedValue([{ id: 4, name: "Aud", email: "aud@a.com", image_url: null }]);
+    expect(await authService.listUsers()).toEqual([
+      { id: 1, name: "Admin", email: "admin@email.com", role: "manager" },
+      { id: 4, name: "Aud", email: "aud@a.com", role: "auditor" },
+    ]);
+  });
+});

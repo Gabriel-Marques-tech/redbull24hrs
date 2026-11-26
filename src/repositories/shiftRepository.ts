@@ -139,15 +139,48 @@ export const shiftRepository = {
 		return result.rows;
 	},
 
-	async start(athlete_id: number, operator_id: number, operator_role: 'auditor' | 'manager', treadmill_id: number, km_start: number) {
+	// Idempotência do modo offline: o tablet gera um client_id por turno e pode
+	// reenviar o mesmo início várias vezes até ter resposta.
+	async findByClientId(client_id: string) {
+		const result = await pool.query(`SELECT * FROM shifts WHERE client_id = $1`, [client_id]);
+		return result.rows[0] ?? null;
+	},
+
+	async start(
+		athlete_id: number,
+		operator_id: number,
+		operator_role: 'auditor' | 'manager',
+		treadmill_id: number,
+		km_start: number,
+		opts: { client_id?: string; started_at?: string } = {}
+	) {
 		const idCol = operator_role === 'manager' ? 'manager_id' : 'auditor_id'
 
-		const result = await pool.query(
-			`INSERT INTO shifts (status, athlete_id, ${idCol}, treadmill_id, start_at, km_start, km_end, distance, speed)
-			 VALUES ('in_progress', $1, $2, $3, NOW(), $4, $4, 0, 0)
-			 RETURNING *`,
-			[athlete_id, operator_id, treadmill_id, km_start]
-		);
+		// started_at vem do tablet quando o início foi registrado sem internet.
+		// LEAST evita horário no futuro por relógio adiantado.
+		let result;
+		try {
+			result = await pool.query(
+				`INSERT INTO shifts (status, athlete_id, ${idCol}, treadmill_id, start_at, km_start, km_end, distance, speed, client_id)
+				 VALUES ('in_progress', $1, $2, $3, LEAST(COALESCE($5::timestamptz, NOW()), NOW()), $4, $4, 0, 0, $6)
+				 RETURNING *`,
+				[athlete_id, operator_id, treadmill_id, km_start, opts.started_at ?? null, opts.client_id ?? null]
+			);
+		} catch (error: any) {
+			// 23505 = violação de índice único (migration 026): duas requisições
+			// simultâneas passaram pelas checagens do service ao mesmo tempo.
+			if (error?.code === "23505") {
+				const constraint = String(error.constraint ?? "");
+				if (constraint === "idx_shifts_client_id" && opts.client_id) {
+					const existing = await this.findByClientId(opts.client_id);
+					if (existing) return existing;
+				}
+				if (constraint === "idx_shifts_open_treadmill")
+					throw new Error("Esteira ocupada por outro turno em andamento");
+				throw new Error("Atleta já possui um turno em aberto");
+			}
+			throw error;
+		}
 		const shift = result.rows[0];
 
 		// RF024/RN23: registra abertura do turno na trilha de auditoria
@@ -177,12 +210,36 @@ export const shiftRepository = {
 		return ts ?? null;
 	},
 
-	async addCheckpoint(shift_id: number, distance: number, type: string) {
+	async addCheckpoint(
+		shift_id: number,
+		distance: number,
+		type: string,
+		opts: { sync_id?: string; timestamp?: string } = {}
+	) {
+		// Sem sync_id: caminho original (online).
+		if (!opts.sync_id) {
+			const result = await pool.query(
+				`INSERT INTO checkpoints (shift_id, distance, type) VALUES ($1, $2, $3) RETURNING *`,
+				[shift_id, distance, type]
+			);
+			return result.rows[0];
+		}
+
+		// Com sync_id: reenvio do tablet. Mantém o horário original e ignora duplicata.
 		const result = await pool.query(
-			`INSERT INTO checkpoints (shift_id, distance, type) VALUES ($1, $2, $3) RETURNING *`,
-			[shift_id, distance, type]
+			`INSERT INTO checkpoints (shift_id, distance, type, timestamp, sync_id)
+			 VALUES ($1, $2, $3, LEAST(COALESCE($4::timestamptz, NOW()), NOW()), $5)
+			 ON CONFLICT (sync_id) WHERE sync_id IS NOT NULL DO NOTHING
+			 RETURNING *`,
+			[shift_id, distance, type, opts.timestamp ?? null, opts.sync_id]
 		);
-		return result.rows[0];
+		if (result.rows[0]) return result.rows[0];
+		return this.findCheckpointBySyncId(opts.sync_id);
+	},
+
+	async findCheckpointBySyncId(sync_id: string) {
+		const result = await pool.query(`SELECT * FROM checkpoints WHERE sync_id = $1`, [sync_id]);
+		return result.rows[0] ?? null;
 	},
 
 	async findCheckpointById(checkpoint_id: number) {
@@ -263,18 +320,37 @@ export const shiftRepository = {
 		return cp.rows[0];
 	},
 
+	// Encerramento sem leitura final (abandono, encerramento forçado, fim da
+	// competição). O km final passa a ser o do ÚLTIMO CHECKPOINT registrado:
+	// é a última quilometragem conferida pelo auditor. Antes o turno era
+	// fechado com distância 0 e os quilômetros já auditados eram perdidos.
 	async abandon(id: number, forceClose = false) {
-		await pool.query(
-			`UPDATE shifts
+		const result = await pool.query(
+			`WITH ultimo AS (
+			     SELECT GREATEST(s.km_start, COALESCE(MAX(c.distance), s.km_start)) AS km
+			     FROM shifts s
+			     LEFT JOIN checkpoints c ON c.shift_id = s.id
+			     WHERE s.id = $1
+			     GROUP BY s.km_start
+			 )
+			 UPDATE shifts s
 			 SET status = 'completed',
 			     end_at = NOW(),
-			     km_end = km_start,
-			     distance = 0,
-			     total_time = NOW() - start_at,
-			     speed = 0
-			 WHERE id = $1 AND status = 'in_progress'`,
+			     km_end = u.km,
+			     distance = u.km - s.km_start,
+			     total_time = NOW() - s.start_at,
+			     speed = CASE
+			               WHEN EXTRACT(EPOCH FROM (NOW() - s.start_at)) > 0
+			               THEN ROUND((u.km - s.km_start) / (EXTRACT(EPOCH FROM (NOW() - s.start_at)) / 3600.0))
+			               ELSE 0
+			             END
+			 FROM ultimo u
+			 WHERE s.id = $1 AND s.status = 'in_progress'
+			 RETURNING s.id`,
 			[id]
 		);
+		// Só registra o log se este chamado realmente fechou o turno.
+		if ((result.rowCount ?? 0) === 0) return;
 		const logType = forceClose ? 'force_closed' : 'abandoned';
 		await pool.query(
 			`INSERT INTO logs (shift_id, type) VALUES ($1, $2)`,
@@ -324,7 +400,8 @@ export const shiftRepository = {
 		);
 	},
 
-	async finish(id: number, km_end: number, duration_seconds?: number, pace?: string) {
+	// finish_id: identificador gerado pelo tablet para este encerramento (reenvio offline).
+	async finish(id: number, km_end: number, duration_seconds?: number, pace?: string, finish_id?: string) {
 		// Quando há duração editada, calcula end_at = start_at + duração no SQL.
 		// Tudo no domínio do Postgres → zero conversão de timezone (TIMESTAMP sem tz).
 		const [sql, params] = duration_seconds != null
@@ -340,10 +417,11 @@ export const shiftRepository = {
 				               THEN ROUND(($1 - km_start) / ($3 / 3600.0))
 				               ELSE 0
 				             END,
-				     pace = $4
+				     pace = $4,
+				     finish_client_id = $5
 				 WHERE id = $2 AND status = 'in_progress'
 				 RETURNING *`,
-				[km_end, id, duration_seconds, pace ?? null]
+				[km_end, id, duration_seconds, pace ?? null, finish_id ?? null]
 			  ]
 			: [
 				`UPDATE shifts
@@ -357,10 +435,11 @@ export const shiftRepository = {
 				               THEN ROUND(($1 - km_start) / (EXTRACT(EPOCH FROM (NOW() - start_at)) / 3600.0))
 				               ELSE 0
 				             END,
-				     pace = $3
+				     pace = $3,
+				     finish_client_id = $4
 				 WHERE id = $2 AND status = 'in_progress'
 				 RETURNING *`,
-				[km_end, id, pace ?? null]
+				[km_end, id, pace ?? null, finish_id ?? null]
 			  ];
 		const result = await pool.query(sql, params);
 		const shift = result.rows[0] ?? null;
