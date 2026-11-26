@@ -1,4 +1,4 @@
-import { Pool, types } from "pg";
+import { Pool, types, defaults } from "pg";
 import { config } from "dotenv";
 
 config();
@@ -8,6 +8,10 @@ config();
 // (America/Sao_Paulo), adicionando +3h indevidamente. Forçamos a leitura como UTC.
 // OID 1114 = timestamp without time zone.
 types.setTypeParser(1114, (value: string) => new Date(value.replace(" ", "T") + "Z"));
+// Mesmo cuidado na escrita: por padrão o node-pg envia um Date no horário LOCAL do
+// processo, e a coluna TIMESTAMP grava esse valor sem fuso. Com o servidor em
+// America/Sao_Paulo isso gravava 3 h a menos (ex.: pausa da competição contando 3 h a mais).
+defaults.parseInputDatesAsUTC = true;
 const pool = new Pool({
 	connectionString: process.env.DATABASE_URL,
 	password: process.env.DATABASE_KEY,
