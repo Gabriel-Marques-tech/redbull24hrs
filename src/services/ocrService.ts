@@ -49,27 +49,39 @@ function parseOcr(raw: string): TreadmillData {
 	};
 }
 
-const GEMINI_MODELS = ["gemini-2.5-flash"];
+// O gemini-2.5-flash foi desligado para contas novas (404). A ordem abaixo vai do
+// mais rápido/barato ao mais pesado; GEMINI_MODELS no .env troca a lista sem deploy.
+const GEMINI_MODELS = (process.env.GEMINI_MODELS ?? "gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.8-flash")
+	.split(",")
+	.map((m) => m.trim())
+	.filter(Boolean);
+
+// O auditor fica esperando a leitura na tela: melhor desistir e cair no próximo
+// modelo (ou na digitação manual) do que travar em um modelo sobrecarregado.
+const GEMINI_TIMEOUT_MS = Number(process.env.GEMINI_TIMEOUT_MS ?? 10000);
 
 async function tryGemini(imageBuffer: Buffer, mimetype: string): Promise<TreadmillData> {
 	const imagePart = { inlineData: { data: imageBuffer.toString("base64"), mimeType: mimetype } };
 
+	let lastError: unknown = new Error("Nenhum modelo Gemini configurado");
 	for (const modelName of GEMINI_MODELS) {
 		try {
 			console.log(`[OCR] Tentando Gemini: ${modelName}`);
-			const model = genAI.getGenerativeModel({ model: modelName });
+			const model = genAI.getGenerativeModel(
+				{ model: modelName, generationConfig: { temperature: 0, responseMimeType: "application/json" } },
+				{ timeout: GEMINI_TIMEOUT_MS }
+			);
 			const result = await model.generateContent([PROMPT, imagePart]);
 			const raw = result.response.text().trim();
 			console.log(`[OCR] Gemini resposta: ${raw}`);
 			return parseOcr(raw);
 		} catch (err: any) {
+			// Qualquer falha (sobrecarga, timeout, modelo desligado, JSON inválido) passa para o próximo.
 			console.error(`[OCR] Gemini ${modelName} falhou:`, err?.message?.slice(0, 120));
-			const isRetryable = err?.message?.includes("503") || err?.message?.includes("429") || err?.message?.includes("overloaded");
-			if (!isRetryable || modelName === GEMINI_MODELS[GEMINI_MODELS.length - 1]) throw err;
+			lastError = err;
 		}
 	}
-	/* istanbul ignore next: inalcançável — o loop sempre retorna ou lança no último modelo */
-	throw new Error("Todos os modelos Gemini falharam");
+	throw lastError;
 }
 
 async function tryGroq(imageBuffer: Buffer, mimetype: string): Promise<TreadmillData> {
